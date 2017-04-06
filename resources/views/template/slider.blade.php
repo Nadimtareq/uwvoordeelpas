@@ -3,8 +3,8 @@
 
     @if (Route::getCurrentRoute()->uri() == '/' && $userAuth == FALSE)
     <img class="background" src="{{ url('images/voordeelpas.jpg') }}" alt=""
-    data-focus-left=".30" data-focus-top=".12" data-focus-right=".79" data-focus-bottom=".66" style="height: 450px!important;" />
-        @endif
+         data-focus-left=".30" data-focus-top=".12" data-focus-right=".79" data-focus-bottom=".66" style="height: 450px!important;" />
+    @endif
 
     <div class="container">
 
@@ -13,15 +13,15 @@
             @if (Route::getCurrentRoute()->uri() == '/' && $userAuth == FALSE)
             <div class="heading {{ Route::getCurrentRoute()->uri() == '/' && $userAuth == FALSE ? ' userLoggedOut' : 'userLoggedIn' }}">
                 @if (Route::getCurrentRoute()->uri() == '/')
-                    <h1 class="noUppercase">{!! isset($contentBlock[1]) ? $contentBlock[1] : '' !!}</h1>
+                <h1 class="noUppercase">{!! isset($contentBlock[1]) ? $contentBlock[1] : '' !!}</h1>
                 @else
                 <h2 class="noUppercase">{!! isset($contentBlock[1]) ? $contentBlock[1] : '' !!}</h2>
                 @endif
             </div>
             @endif
 
-{{--            @if (Route::getCurrentRoute()->uri() == '/' AND ($userAuth && $userInfo->extension_downloaded == 1))--}}
-            @if (Route::getCurrentRoute()->uri() != '/' )
+            {{--            @if (Route::getCurrentRoute()->uri() == '/' AND ($userAuth && $userInfo->extension_downloaded == 1))--}}
+            @if ($userAuth)
             <!-- Desktop -->
             <div id="sliderDesktopForm" >
                 <form action="<?php echo url('search'); ?>" method="GET" class="ui form">
@@ -47,9 +47,9 @@
                         <div class="field">
                             <div id="timeSliderField" class="ui normal selection tiny dropdown time searchReservation">
                                 @if (Request::segment(1) == 'search' && Request::has('sltime'))
-                                    <input type="hidden" name="sltime" value="{{ date('H:i', strtotime(Request::get('sltime'))) }}">
+                                <input type="hidden" name="sltime" value="{{ date('H:i', strtotime(Request::get('sltime'))) }}">
                                 @else
-                                    <input type="hidden" name="sltime" value="{{ isset($disabled[0]) ? $disabled[0] : '' }}">
+                                <input type="hidden" name="sltime" value="{{ isset($disabled[0]) ? $disabled[0] : '' }}">
                                 @endif 
 
                                 <i class="time icon"></i>
@@ -58,9 +58,9 @@
 
                                 <div class="menu">
                                     @foreach ($getTimes as $time)
-                                        @if ($time >= '00:00' && $time >= '08:00')
-                                            <div class="item" data-value="{{ $time }}" data-dd="0">{{ $time }}</div>
-                                        @endif
+                                    @if ($time >= '00:00' && $time >= '08:00')
+                                    <div class="item" data-value="{{ $time }}" data-dd="0">{{ $time }}</div>
+                                    @endif
                                     @endforeach
                                 </div>
                             </div>
@@ -69,7 +69,7 @@
                         <div class="field">
                             <div id="personsField2" class="ui normal selection dropdown">
                                 <input type="hidden" name="persons" value="{{ (Request::get('persons') != '' ? Request::get('persons') : ($userAuth && $userInfo->kids != 'null' && $userInfo->kids != NULL && $userInfo->kids != '[""]' ? $userInfo->kids : 2)) }}">
-                                
+
                                 <i class="male icon"></i>
                                 <div class="default text">Personen</div>
                                 <i class="dropdown icon"></i>
@@ -115,48 +115,48 @@
                                         </div>
                                     </div>
                                 </div> 
-                                    
+
                                 <div class="sixteen wide mobile seven wide tablet seven wide computer column">
                                     <div class="ui two columns no-padded grid">
                                         <div class="column">
                                             <div id="timeSliderField" class="ui normal fluid selection dropdown time searchReservation">
-                                               @if (Request::segment(1) == 'search' && Request::has('sltime'))
-                                               <input type="hidden" name="sltime" value="{{ date('H:i', strtotime(Request::get('sltime'))) }}">
-                                               @else
-                                               <input type="hidden" name="sltime" value="{{ isset($disabled[0]) ? $disabled[0] : '' }}">
-                                               @endif 
+                                                @if (Request::segment(1) == 'search' && Request::has('sltime'))
+                                                <input type="hidden" name="sltime" value="{{ date('H:i', strtotime(Request::get('sltime'))) }}">
+                                                @else
+                                                <input type="hidden" name="sltime" value="{{ isset($disabled[0]) ? $disabled[0] : '' }}">
+                                                @endif 
 
-                                               <i class="time icon"></i>
-                                               <div class="default text">Tijd</div>
-                                               <i class="dropdown icon"></i>
+                                                <i class="time icon"></i>
+                                                <div class="default text">Tijd</div>
+                                                <i class="dropdown icon"></i>
 
-                                               <div class="menu">
-                                                  @foreach ($getTimes as $time)
-                                                      @if ($time >= '00:00' && $time >= '08:00')
-                                                      <div class="item" data-value="{{ $time }}" data-dd="0">{{ $time }}</div>
-                                                      @endif
-                                                  @endforeach
-                                               </div>
+                                                <div class="menu">
+                                                    @foreach ($getTimes as $time)
+                                                    @if ($time >= '00:00' && $time >= '08:00')
+                                                    <div class="item" data-value="{{ $time }}" data-dd="0">{{ $time }}</div>
+                                                    @endif
+                                                    @endforeach
+                                                </div>
                                             </div>
 
                                         </div>
 
                                         <div class="column">
                                             <div id="personsField2" class="ui normal fluid input selection dropdown">
-                                               <input type="hidden" name="persons" value="{{ (Request::get('persons') != '' ? Request::get('persons') : ($userAuth && $userInfo->kids != 'null' && $userInfo->kids != NULL && $userInfo->kids != '[""]' ? $userInfo->kids : 2)) }}">
-                                               <i class="male icon"></i>
+                                                <input type="hidden" name="persons" value="{{ (Request::get('persons') != '' ? Request::get('persons') : ($userAuth && $userInfo->kids != 'null' && $userInfo->kids != NULL && $userInfo->kids != '[""]' ? $userInfo->kids : 2)) }}">
+                                                <i class="male icon"></i>
 
-                                               <div class="default text">Personen</div>
-                                               <i class="dropdown icon"></i>
+                                                <div class="default text">Personen</div>
+                                                <i class="dropdown icon"></i>
 
-                                               <div class="menu">
-                                                  @for ($i = 1; $i <= 10; $i++)
-                                                  <div class="item" data-value="{{ $i }}">{{ $i }} {{ $i == 1 ? 'persoon' : 'personen' }}</div>
-                                                  @endfor
-                                               </div>
+                                                <div class="menu">
+                                                    @for ($i = 1; $i <= 10; $i++)
+                                                    <div class="item" data-value="{{ $i }}">{{ $i }} {{ $i == 1 ? 'persoon' : 'personen' }}</div>
+                                                    @endfor
+                                                </div>
                                             </div>
                                         </div>
-                                   </div>
+                                    </div>
                                 </div>
 
                                 <div class="two wide column">
@@ -167,7 +167,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div id="mobileSliderSearchButton" class="ui two buttons">
                                 <button class="ui blue fluid text aligned center button no-radius  filter" type="submit">ZOEK</button>
 
@@ -187,30 +187,30 @@
 
         @if (Route::getCurrentRoute()->uri() != '/' AND ($userAuth && $userInfo->extension_downloaded == 1))
         {{--<ul id="flexiselDemo1">--}}
-            {{--@foreach($topAffiliates as $key => $aff)--}}
-            {{--<li>--}}
-                {{--<div class="ui basic segment">--}}
-                    {{--<a id="{{ $key }}" href="{{ url('tegoed-sparen/company/'.$aff->slug) }}">--}}
-                        {{--<div class="logoHeight">--}}
-                            {{--@if (file_exists(public_path('images/affiliates/'.$aff->affiliate_network.'/'.$aff->program_id.'.'.$aff->image_extension)))--}}
-                            {{--<img class="ui huge image"--}}
-                                {{--alt="{{ $aff->title }}"--}}
-                                {{--src="{{ url('images/affiliates/'.$aff->affiliate_network.'/'.$aff->program_id.'.'.$aff->image_extension) }}">--}}
-                            {{--@else--}}
-                            {{--<img class="ui huge image"--}}
-                                {{--alt="{{ $aff->title }}"--}}
-                                {{--src="{{ url('images/placeholder.png') }}">--}}
-                            {{--@endif--}}
-                        {{--</div>--}}
+        {{--@foreach($topAffiliates as $key => $aff)--}}
+        {{--<li>--}}
+        {{--<div class="ui basic segment">--}}
+        {{--<a id="{{ $key }}" href="{{ url('tegoed-sparen/company/'.$aff->slug) }}">--}}
+        {{--<div class="logoHeight">--}}
+        {{--@if (file_exists(public_path('images/affiliates/'.$aff->affiliate_network.'/'.$aff->program_id.'.'.$aff->image_extension)))--}}
+        {{--<img class="ui huge image"--}}
+        {{--alt="{{ $aff->title }}"--}}
+        {{--src="{{ url('images/affiliates/'.$aff->affiliate_network.'/'.$aff->program_id.'.'.$aff->image_extension) }}">--}}
+        {{--@else--}}
+        {{--<img class="ui huge image"--}}
+        {{--alt="{{ $aff->title }}"--}}
+        {{--src="{{ url('images/placeholder.png') }}">--}}
+        {{--@endif--}}
+        {{--</div>--}}
 
-                        {{--<span data-html="{!! isset($contentBlock[54]) ? $contentBlock[54] : '' !!}" class="ui bottom right attached label visible tool hover">{{ $affiliateHelper->commissionMaxValue($aff->compensations) }}</span>--}}
-                    {{--</a>--}}
-                {{--</div>--}}
+        {{--<span data-html="{!! isset($contentBlock[54]) ? $contentBlock[54] : '' !!}" class="ui bottom right attached label visible tool hover">{{ $affiliateHelper->commissionMaxValue($aff->compensations) }}</span>--}}
+        {{--</a>--}}
+        {{--</div>--}}
 
-                {{--<div class="clear"></div><br>--}}
-                {{--<small><span class="hide mobile device">max.</span> spaartegoed</small>--}}
-            {{--</li>--}}
-            {{--@endforeach--}}
+        {{--<div class="clear"></div><br>--}}
+        {{--<small><span class="hide mobile device">max.</span> spaartegoed</small>--}}
+        {{--</li>--}}
+        {{--@endforeach--}}
         {{--</ul>--}}
 
         <div class="clear"></div>
@@ -218,7 +218,7 @@
         @endif
 
         @if (Route::getCurrentRoute()->uri() == '/n234d' && $userAuth == FALSE)
-         <?php echo Form::open(array('url' => 'search-redirect', 'class' => 'ui form', 'method' => 'post')) ?>
+        <?php echo Form::open(array('url' => 'search-redirect', 'class' => 'ui form', 'method' => 'post')) ?>
         <div id="searchLoggedOut" class="ui grid">
             <div class="row">
                 <div class="sixteen wide mobile eight wide computer column">
@@ -235,14 +235,11 @@
                 <div class="sixteen wide mobile four wide computer column">
                     <?php
                     echo Form::select(
-                        'page',
-                        array(
-                            'restaurant' => 'Restaurants',
-                            'saldo' => 'Tegoed sparen',
-                            'faq' => 'Veelgestelde vragen'
-                        ),
-                        'saldo',
-                        array('class' => 'ui fluid normal dropdown searchRedirectCategories')
+                            'page', array(
+                        'restaurant' => 'Restaurants',
+                        'saldo' => 'Tegoed sparen',
+                        'faq' => 'Veelgestelde vragen'
+                            ), 'saldo', array('class' => 'ui fluid normal dropdown searchRedirectCategories')
                     );
                     ?>
                 </div>
@@ -288,28 +285,31 @@
         <div class="clear"></div>
         @endif
 
-{{--        @if (Route::getCurrentRoute()->uri() == '/' && $userAuth == FALSE)--}}
+        {{--        @if (Route::getCurrentRoute()->uri() == '/' && $userAuth == FALSE)--}}
         @if ((Route::getCurrentRoute()->uri() == '/' && $userAuth == FALSE) OR (Route::getCurrentRoute()->uri() == '/' && $userAuth && $userInfo->extension_downloaded == 0))
 
 
 
-<div class="homepage_block_container">
-    <div class="homepage_block_1">
-        <a href="">
-        <img style=" width: auto; height: 315px;" src="{{ url('images/landingpage_notebook.jpeg') }}">
-        </a>
-    </div>
+        <div class="homepage_block_container">
+            <div class="homepage_block_1">
+                <a href="">
+                    <img style=" width: auto; height: 315px;" src="{{ url('images/landingpage_notebook.jpeg') }}">
+                </a>
+            </div>
 
-    <div class="homepage_block_2">
+            <div class="homepage_block_2">
 
-        <h3 style="color: #808080; margin: 48px 29px 0px 0px; font-size: 1.9em; text-align: center;"><em>"Wilt u na 1 klik automatisch tot<br> wel 10% sparen bij 2000+ webshops?"</em></h3>
+                <h3 style="color: #808080; margin: 48px 29px 0px 0px; font-size: 1.9em; text-align: center;"><em>"Wilt u na 1 klik automatisch tot<br> wel 10% sparen bij 2000+ webshops?"</em></h3>
+                <?php @$browser = Session::get('browser'); ?>
+               
+                    <a  style="margin-top: 80px; display: inline-block;" class="homepage_btn install {{$browser['name']}}" 
+                        href="">Ja! Ik wil gratis sparen!</a>
+               
+            </div>
 
-    <a style="margin-top: 80px; display: inline-block;" class="homepage_btn install" href="">Ja! Ik wil gratis sparen!</a>
-    </div>
-    
-    <span style="clear: both;"></span>
-    
-</div>
+            <span style="clear: both;"></span>
+
+        </div>
 
 
 

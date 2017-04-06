@@ -14,6 +14,8 @@ class CreateReservationsOptionsTable extends Migration
     {
         Schema::create('reservations_options', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('price');
+            $table->integer('price_from');
             $table->integer('total_amount');
             $table->integer('total_reservations');
             $table->integer('company_id');

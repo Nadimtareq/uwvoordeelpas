@@ -24,7 +24,7 @@
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
     <meta name="description" content="{{ isset($metaDescription) ? strip_tags($metaDescription) : 'Reserveer in enkele stappen met uw spaartegoed!' }}">
-
+   
 <style>
     .homepage_btn {
         background: #3498db;
@@ -601,6 +601,7 @@
     @endif
 
     <script type="text/javascript">
+        
     $(document).ready(function() {
         @if(count($errors) > 0)
             var errorMessage = [];

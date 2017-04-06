@@ -6,16 +6,17 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	@if(session('success_email_message'))
-		swal({ title: "Bedankt!", text: '{{ session('success_email_message') }}', type: "success", confirmButtonText: "OK" });
+		swal({ html:true, title: "Bedankt!", text: '{{ session('success_email_message') }}', type: "success", confirmButtonText: "OK" });
 	@elseif(session('success_message'))
-		swal({ title: "Bedankt!", text: '{{ session('success_message') }}', type: "success", confirmButtonText: "OK" });
+		swal({ html:true, title: "Bedankt!", text: '{{ session('success_message') }}', type: "success", confirmButtonText: "OK" });
 	@endif
 
 	$('#removeButton').click(function() {
   		swal({   
 			title: "Weet u het zeker?",   
 			text: "Weet u zeker dat u definitief uw account wil verwijderen?",   
-			type: "warning",   
+			type: "warning",  
+                        html:true,
 			showCancelButton: true,   
 			confirmButtonColor: "#DD6B55",  
 			cancelButtonText: "Nee",   
