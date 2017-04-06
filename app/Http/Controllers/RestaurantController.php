@@ -219,7 +219,7 @@ class RestaurantController extends Controller
                                  <span class=\'ui star disabled no-rating rating\' data-rating=\''.$request->input('decor').'\'></span><br /><br />
                                  Klopt dit niet? <a href=\''.url('account/reviews/edit/'.$data->id).'\'>Klik hier om uw recensie aan te passen.</a>';
 
-            Alert::success(preg_replace('/[\n\r]/', '', $successMessage), 'Bedankt')->persistent('Sluiten');
+            Alert::success(preg_replace('/[\n\r]/', '', $successMessage), 'Bedankt')->html()->persistent('Sluiten');
 
             $mailtemplate = new MailTemplate();
                 

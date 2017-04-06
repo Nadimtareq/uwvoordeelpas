@@ -18,6 +18,7 @@ use App\Models\CompanyReservation;
 use App\Models\Barcode;
 use App\Models\News;
 use App\Helpers\SmsHelper;
+use App\Helpers\BrowerHelper;
 use Sentinel; 
 use Reminder;
 use Redirect;
@@ -35,6 +36,10 @@ class HomeController extends Controller
 
     public function __construct() 
     {  
+        
+       $browser = new BrowerHelper(); 
+       Session::set('browser',$browser->detect()->getInfo());
+      
         $this->user = Sentinel::getUser();
         
         $this->news  = News::select(
@@ -370,7 +375,7 @@ class HomeController extends Controller
         }
 
         if (!$request->has('no_filter') && count($companies) == 0) {
-            alert()->error('', 'Er zijn geen zoekresultaten gevonden met uw selectiecriteria.<br /> <br /><small>Klik <a href=\''.URL::to('account').'\'> hier</a> om uw criteria aan te passen.</small>')->persistent('Sluiten');
+            alert()->error('', 'Er zijn geen zoekresultaten gevonden met uw selectiecriteria.<br /> <br /><small>Klik <a href=\''.URL::to('account').'\'> hier</a> om uw criteria aan te passen.</small>')->html()->persistent('Sluiten');
 
             return Redirect::to('/?no_filter=1'.($request->has('mobilefilter') ? '&mobilefilter=1' : ''));
         }   

@@ -5,6 +5,9 @@
     <i class="question mark icon"></i>
     <span class="text">Veelgestelde vragen</span>
 </a><br />
+<script type="text/javascript">
+        $("#pageLoader").fadeOut('slow');
+</script>
 @stop
 
 @section('content')

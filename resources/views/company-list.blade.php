@@ -142,8 +142,8 @@
                         @endif
                     @endif
                 </div>
-
-                <p>{{ str_limit($data->description, (isset($limitChar) ? $limitChar : 210)) }}</p>
+              
+                <p>{{ str_limit($deal->description, (isset($limitChar) ? $limitChar : 210)) }}</p>
 
                 {!!
                     $companyReservation->getTimeCarousel(
@@ -157,7 +157,7 @@
                 !!}
 
                 <div style="display: inline; float: right; font-size: 20px; color: #5e80b2;">
-                    <span style="position: relative; font-weight: normal;  ">
+                   <span style="position: relative; font-weight: normal;  ">
                         <s>&euro; {{ $deal->price_from }}</s>
                     </span>
                     <span style="position: relative;  font-weight: bold; margin-top:10px; margin-left: 10px;">
