@@ -264,8 +264,9 @@ class StatisticsController extends Controller
     public function search(Request $request)
     {
         $data = new SearchHistory();
-
+        $searchSection = '';
         if ($request->has('section'))  {
+            $searchSection = $request->input('section');
             $data = $data->where('page', '=', '/'.$request->input('section'));
         }
 
@@ -304,7 +305,8 @@ class StatisticsController extends Controller
             'paginationQueryString' => $request->query(),
             'limit' => $request->input('limit', 15),
             'section' => $this->section, 
-            'currentPage' => 'Overzicht'        
+            'currentPage' => 'Overzicht',
+            'searchSection' => $searchSection
         ]);
     }
 

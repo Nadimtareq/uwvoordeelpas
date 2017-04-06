@@ -11,11 +11,11 @@
         <span class="text">Sectie</span>
 
         <i class="dropdown icon"></i>
-
+        
         <div class="menu">
-            <a href="{{ url('admin/statistics?'.http_build_query(array_add($queryString, 'section', 'search'))) }}" data-value="search" class="item">Zoekpagina</a>
-            <a href="{{ url('admin/statistics?'.http_build_query(array_add($queryString, 'section', 'tegoed-sparen'))) }}" data-value="tegoed-sparen" class="item">Tegoed sparen</a>
-            <a href="{{ url('admin/statistics?'.http_build_query(array_add($queryString, 'section', 'faq'))) }}" data-value="faq" class="item">Veelgestelde vragen</a>
+            <a href="{{ url('admin/statistics/search?'.http_build_query(array_add($queryString, 'section', 'search'))) }}" data-value="search" class="item">Zoekpagina</a>
+            <a href="{{ url('admin/statistics/search?'.http_build_query(array_add($queryString, 'section', 'tegoed-sparen'))) }}" data-value="tegoed-sparen" class="item">Tegoed sparen</a>
+            <a href="{{ url('admin/statistics/search?'.http_build_query(array_add($queryString, 'section', 'faq'))) }}" data-value="faq" class="item">Veelgestelde vragen</a>
         </div>
     </div>
     
@@ -42,7 +42,11 @@
     <?php echo Form::close(); ?>
 
     {{--{!! with(new \App\Presenter\Pagination($data->appends($paginationQueryString)))->render() !!}--}}
+    @if(isset($searchSection) && !empty($searchSection))
+    {{ $data->appends(['section' => $searchSection])->links() }}
+    @else
     {{ $data->links() }}
+    @endif
 </div>
 <div class="clear"></div>
 @stop
