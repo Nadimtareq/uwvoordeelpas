@@ -52975,6 +52975,16 @@ $(document).ready(function() {
     	selectMonths: true
 	});
 	
+        var $datepickerInputWithoutMin = $('.datepicker_no_min_date').pickadate({		
+		formatSubmit: 'yyyy-mm-dd',
+		format: 'd mmmm, yyyy',
+		hiddenName: true,
+    	selectYears: true,
+    	selectMonths: true,        
+	});
+                
+//        Date now_dt=new Date();
+//        $datepickerInputWithoutMin.set('select',now_dt);
 	var datepicker = $datepickerInput.pickadate('picker');
 
     $('.timepicker').pickatime({

@@ -36,7 +36,7 @@
                         'from',
                         '',
                         array(
-                            'class' => 'datepicker',
+                            'class' => 'datepicker_no_min_date',
                             'placeholder' => 'Startdatum'
                         )
                     );
@@ -49,7 +49,7 @@
                         'to',
                         '',
                         array(
-                            'class' => 'datepicker',
+                            'class' => 'datepicker_no_min_date',
                             'placeholder' => 'Einddatum'
                         )
                     );
@@ -99,7 +99,7 @@
             <div class="statistic">
                 <div class="value">
                     {{--{{ $topStatistics->topTransactions }}--}}
-                    {{ count(\App\Models\Transaction::all()) }}
+                    {{ $totalTransactions }}
                 </div>
 
                 <div class="label">
@@ -110,7 +110,7 @@
             <div class="statistic">
                 <div class="value">
                     {{--{{ $topStatistics->topReservations }}--}}
-                    {{ count(\App\Models\Reservation::all()) }}
+                    {{ $totalReservation }}
                 </div>
 
                 <div class="label">

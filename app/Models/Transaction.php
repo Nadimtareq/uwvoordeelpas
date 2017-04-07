@@ -25,5 +25,15 @@ class Transaction extends Model
         // Een functie die 90 dagen bij de created_at datum toevoegd
         return Carbon::createFromTimestamp(strtotime($this->created_at))->addDays(90)->format('d-m-Y');
     }
-
+     public static function countTransactionByCriteria($params = array()) {
+        $from_date = (isset($params['from_date']) && !empty($params['from_date'])) ? $params['from_date'] : NULL;
+        $to_date = (isset($params['to_date']) && !empty($params['to_date'])) ? $params['to_date'] : NULL;        
+        $transactions = DB::table('transactions');
+        if ($from_date && $to_date) {
+            $transactions->where('created_at', '>=', $from_date)
+                    ->where('created_at', '<=', $to_date);
+        }
+      
+        return $transactions->get();        
+    }
 }

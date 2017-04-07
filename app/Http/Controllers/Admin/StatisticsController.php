@@ -22,6 +22,7 @@ class StatisticsController extends Controller
 
     public function reservations(Request $request)
     {
+        $pass_array = array();        
         $topDays = DB::table('reservations')
             ->select(
                 DB::raw('weekday(date) as nameRow'),
@@ -105,6 +106,8 @@ class StatisticsController extends Controller
         ;
 
         if ($request->has('from') && $request->has('to')) {
+            $pass_array['from_date'] = $request->input('from');
+            $pass_array['to_date'] = $request->input('to');
             $topDays = $topDays
                 ->where('date', '>=', $request->input('from'))
                 ->where('date', '<=', $request->input('to'))
@@ -127,6 +130,7 @@ class StatisticsController extends Controller
         }
 
         if ($request->has('source')) {
+            $pass_array['source'] = $request->input('source');
             switch ($request->input('source')) {
                 case 'wifi':
                     $topDays = $topDays 
@@ -170,7 +174,8 @@ class StatisticsController extends Controller
                     break;
             }
         }
-
+        $totalReservation = count(\App\Models\Reservation::countReservationByCriteria($pass_array));
+        $totalTransactions = count(\App\Models\Transaction::countTransactionByCriteria($pass_array));
         $topStatistics = DB::table('reservations')
             ->select(
                 DB::raw('(
@@ -254,6 +259,8 @@ class StatisticsController extends Controller
             'topClicksPreferences' => $topClicksPreferences->get(),
             'topClicksFaqs' => $topClicksFaqs->get(),
             'dayName' => Config::get('preferences.days'),
+            'totalReservation' => $totalReservation,
+            'totalTransactions' => $totalTransactions,
             'slugController' => $this->slugController,
             'limit' => $request->input('limit', 15),
             'section' => $this->section, 
