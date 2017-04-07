@@ -1386,13 +1386,17 @@
                 <td style="width: 8%">Aantal</td>
                 <td style="width: 8%">Prijs</td>
                 <td style="width: 8%">BTW</td>
+                <td style="width: 8%">BTW Aantal</td>
                 <td style="width: 5%">Totaal incl btw</td>
             </tr>
-
+            <?php 
+                $totalPriceExTax = $totalTax = $totalPrice = 0;
+                
+            ?>
             @foreach ($products as $product)
                 <?php 
-                if (isset($product->amount, $product->price, $product->tax)) { 
-                    $totalTax = $product->tax; 
+                if (isset($product->amount, $product->price, $product->tax)) {
+                    $totalTax += (($product->amount * $product->price * $product->tax) / 100); 
                     $totalPriceExTax += $product->amount * $product->price; 
                     $totalPrice += $product->amount * $product->price * ($product->tax / 100 + 1); 
                 }
@@ -1414,7 +1418,10 @@
                     @if (isset($product->tax))
                     <td>{{ $product->tax }}%</td>
                     @endif
-
+                    @if (isset($product->amount, $product->price, $product->tax))
+                    <td>&euro;{{ ($product->amount * $product->price * $product->tax) / 100 }}</td>
+                    @endif
+                    
                     @if (isset($product->amount, $product->price, $product->tax))
                     <td>&euro;{{ $company['debit_credit']  == 'credit' ? '-' : '' }}{{ $product->amount * $product->price * ($product->tax / 100 + 1)  }}</td>
                     @endif
@@ -1434,7 +1441,7 @@
             <tr class="list_row">
                 <td style="width: 70%"></td>
                 <td style="width: 20%"><strong>Totaal btw</strong></td>
-                <td style="width: 20%">21 %</td>
+                <td style="width: 20%"><?php echo $totalTax;?></td>
             </tr>
 
             <tr class="list_row">
