@@ -160,6 +160,7 @@ class TransactionsController extends Controller
             'accepted' => 'Goedgekeurd',
             'open' => 'In behandeling (open)',
             'rejected' => 'Afgekeurd',
+            'expired' => 'Vervallen'
         );
 
         return view('admin/'.$this->slugController.'/create', [
@@ -220,6 +221,7 @@ class TransactionsController extends Controller
             'accepted' => 'Goedgekeurd',
             'open' => 'In behandeling (open)',
             'rejected' => 'Afgekeurd',
+            'expired' => 'Vervallen'
         );
 
         return view('admin/'.$this->slugController.'/update', [

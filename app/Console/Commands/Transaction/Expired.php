@@ -41,14 +41,16 @@ class Expired extends Command
                     'created_at'
                 )
                     ->where('status', '=', 'accepted')
-                    ->whereRaw('date(date_add(procesed, interval 90 day)) = "'.date('Y-m-d').'"')
+                    ->whereRaw('date(date_add(created_at, interval 90 day)) <= "'.date('Y-m-d').'"')
                     ->get()
                 ; 
-                
-                if (count($this->transaction) >= 1) {
+                $expired_ids = array();
+                if (count($this->transaction) >= 1) {                    
                     foreach ($this->transaction as $transaction) {
-                        $expireTransaction->status = 'expired';
-                        $expireTransaction->save();
+                        $expired_ids[] = $transaction->id;
+                    }                    
+                    if(!empty($expired_ids)){                     
+                        Transaction::whereIn('id', $expired_ids)->update(['status' => 'expired']);
                     }
                 }
     }

@@ -209,6 +209,8 @@
                             <div class="ui red empty circular label"></div>  Verlopen
                         @elseif($transaction->status == 'rejected')
                             <div class="ui red empty circular label"></div> Afgekeurd
+                        @elseif($transaction->status == 'expired')
+                            <div class="ui red empty circular label"></div> Vervallen    
                         @endif
                     </td>
                     <td>{{ $transaction->getExpiredDate() }}</td>
