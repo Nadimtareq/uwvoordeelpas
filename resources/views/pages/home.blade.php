@@ -15,6 +15,7 @@
     $arrayMerge = array_filter(array_merge($breadcrumbArray1, $breadcrumbArray2, $breadcrumbArray3, $breadcrumbArray4, $breadcrumbArray5));
     ?>
 
+
     @if ($userAuth == FALSE)
         <div class="clear"></div>
         {{--<h2  style="color: blue" class="home login header" data-type="login">"Meld je nu aan en spaar direct!"</h2>--}}
