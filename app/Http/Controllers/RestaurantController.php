@@ -10,6 +10,7 @@ use App\Models\Company;
 use App\Models\CompanyReservation;
 use App\Models\MailTemplate;
 use App\Models\Preference;
+use App\Models\ReservationOption;
 use App\Models\Review;
 use App\Models\News;
 use App\Helpers\CalendarHelper;
@@ -29,9 +30,7 @@ class RestaurantController extends Controller
         $company = Company::with('media')
             ->where('no_show', 0)
             ->where('slug', $slug)
-            ->first()
-        ;
-
+            ->first();
         if ($company) {
             // Add Click
             $companyClick = new Company;
@@ -42,8 +41,7 @@ class RestaurantController extends Controller
             $news = News::with('media')
                 ->where('company_id', $company->id)
                 ->where('is_published', 1)
-                ->paginate(15)
-            ;
+                ->paginate(15);
 
             $reviews = Review::select(
                 'reviews.*',
@@ -52,8 +50,7 @@ class RestaurantController extends Controller
                 ->leftJoin('users', 'users.id', '=', 'reviews.user_id')
                 ->where('reviews.company_id', $company->id)
                 ->where('reviews.is_approved', 1)
-                ->get()
-            ;
+                ->get();
             
             $companyRegioArray = json_decode($company->regio);
 
@@ -87,8 +84,7 @@ class RestaurantController extends Controller
                 ->where('no_show', '=', 0)
                 ->with('media')
                 ->take(20)
-                ->get()
-            ;
+                ->get();
 
             $companyId = array();
 
@@ -111,7 +107,9 @@ class RestaurantController extends Controller
                     'selectPersons' => NULL
                 )
             );
-
+            $deals=  ReservationOption::where('company_id',$company->id)
+                     ->where('date_to','<=',date('Y-m-d'))
+                    ->get();
             $disabled = array();
 
             $preferences = Preference::getPreferences();
@@ -132,6 +130,7 @@ class RestaurantController extends Controller
                 'reservationTimesArray' => (isset($reservationTimesArray) ? $reservationTimesArray : array()),
                 'tomorrowArray' => (isset($tomorrowArray) ? $tomorrowArray : array()),
                 'reviews' => $reviews,
+                'deals' => $deals,
                 'reviewModel' => new Review,
                 'times' => CompanyReservation::getAllTimes(),
                 'paginationQueryString' => $request->query(),

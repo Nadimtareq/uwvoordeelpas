@@ -561,6 +561,7 @@
         console.log('ServiceWorker registration failed: ', err);
       });
     }
+    $("#pageLoader").fadeOut('slow');
     </script>
 
     <script type="text/javascript">
@@ -571,6 +572,7 @@
 
         ga('create', 'UA-71271118-1', 'auto');
         ga('send', 'pageview');
+        
     </script>
 
     @if(Request::has('iframe') == FALSE)
@@ -586,6 +588,7 @@
     s1.setAttribute('crossorigin','*');
     s0.parentNode.insertBefore(s1,s0);
     })();
+    
     </script>
     <!--End of Tawk.to Script-->
     @endif
@@ -622,7 +625,7 @@
             });
         @endif
 
-        $("#pageLoader").fadeOut('slow');
+        
 
 
         // Chrome install:

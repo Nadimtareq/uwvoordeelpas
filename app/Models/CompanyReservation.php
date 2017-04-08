@@ -235,8 +235,7 @@ class CompanyReservation extends Model
             ->where('is_cancelled', 0)
             ->whereIn('status', array('reserved', 'reserved-pending', 'reserved-present', 'present', 'iframe', 'iframe-pending', 'iframe-reserved', 'iframe-present'))
             ->groupBy('date', 'company_id', 'time')
-            ->get()
-        ;
+            ->get();
 
         foreach ($reservedQuery as $reservedFetch) {
             $time = date('H:i', strtotime($reservedFetch->time));
@@ -260,8 +259,7 @@ class CompanyReservation extends Model
             ->where('company_reservations.date', $options['date'])
             ->whereIn('company_reservations.company_id', $options['company_id'])
             ->where('company_reservations.is_locked', 0)
-            ->get()
-        ;
+            ->get();
 
         $datesArray = array();
         $timeArray = array();
@@ -363,7 +361,9 @@ class CompanyReservation extends Model
 
         foreach ($timeResult as $timeKey => $times) {
             foreach ($times as $companyId => $time) {
+               
                 if (isset($timeResult[$timeKey][$companyId])) {
+                  
                     $carbonDates = Carbon::create(
                         date('Y', strtotime($options['date'])), 
                         date('m', strtotime($options['date'])), 
@@ -385,7 +385,7 @@ class CompanyReservation extends Model
                     $timeNumber = explode(':', $timeKey);
 
                     $timeNumberArray[$timeNumber[0]][] = $timeResult[$timeKey][$companyId]['persons'];
-
+ 
                     $closedBeforeTime = $timeResult[$timeKey][$companyId]['closedBeforeTime'];
                     $reservationsAvailable = $timeResult[$timeKey][$companyId]['availablePersons'];
                     $reservationsReserved = $timeResult[$timeKey][$companyId]['persons'];
@@ -421,7 +421,6 @@ class CompanyReservation extends Model
                 }
             }
         }
-        
         foreach ($timeResult as $timeKey => $times) {
             foreach ($times as $companyId => $time) {
                 $timeNumber = explode(':', $timeKey);

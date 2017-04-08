@@ -498,7 +498,6 @@
 
 			<div class="right section" style="padding-left: 20px;">
 				<div class="field">
-
     				<div class="field">
 						<label>Logo</label>
 						<?php echo Form::file('logo'); ?><br /><br />
@@ -506,7 +505,7 @@
 							@foreach($logoItem as $id => $images)
 							  	<div class="card">
 							    	<div class="image">
-							      		<img src="{{ url('public/'.$images->getUrl()) }}">
+							      		<img src="{{ url($images->getUrl()) }}">
 							    	</div>
 							    	<div class="extra">
 						    			<a href="{{ url('admin/'.$slugController.'/crop/image/'.$data->slug.'/'.$id.'?type=logo') }}">
