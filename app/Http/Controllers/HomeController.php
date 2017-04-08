@@ -788,7 +788,7 @@ class HomeController extends Controller
         
         $reservationDate = ($request->has('date') ? date('Y-m-d', strtotime($request->input('date'))) : date('Y-m-d'));
         $tomorrowDate = date('Y-m-d', strtotime('+1 days'));
-      
+     
         if ($request->has('sltime') && $request->has('date')) {
             if (isset($reservationTimesArray[$time])) {
                 foreach ($reservationTimesArray[$time] as $key => $reservation) {
@@ -871,10 +871,9 @@ class HomeController extends Controller
             array(
                 'company_id' => $companyId, 
                 'date' => $reservationDate,
-                'selectPersons' => ($request->has('persons') ? $request->input('persons') : null)
+               'selectPersons' => ($request->has('persons') ? $request->input('persons') : null)
             )
         );
-
         $tomorrowArray = CompanyReservation::getReservationTimesArray(
             array(
                 'company_id' => $companyId, 

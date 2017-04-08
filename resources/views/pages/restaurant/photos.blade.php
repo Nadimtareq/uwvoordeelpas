@@ -26,7 +26,7 @@
 			@if($media != '[]')
 				@foreach ($media as $key => $mediaItem)
 			  	<a href="#" data-slide-index="{{ $key }}">
-			  		<img class="ui image" src="{{ url('public'.$mediaItem->getUrl('175Thumb')) }}" />
+			  		<img class="ui image" src="{{ url($mediaItem->getUrl('175Thumb')) }}" />
 			  	</a>
 				@endforeach
 			@endif

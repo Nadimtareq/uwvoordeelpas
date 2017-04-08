@@ -47,16 +47,18 @@ class ReservationsOptionsController extends Controller
             'reservations_options.id',
             'reservations_options.name',
             'reservations_options.total_amount',
+            'reservations_options.date_from',
+            'reservations_options.date_to',
+            'reservations_options.time_from',
+            'reservations_options.time_to',
             DB::raw('count(reservations.option_id) as total_res')
-        )
-            ->leftJoin('companies', 'companies.id', '=', 'reservations_options.company_id')
+        )->leftJoin('companies', 'companies.id', '=', 'reservations_options.company_id')
             ->leftJoin('reservations', function ($join) {
                 $join
                     ->on('reservations.company_id', '=', 'reservations_options.company_id')
                     ->on('reservations.option_id', '=', 'reservations_options.id')
                 ;
-            })
-        ;
+            });
 
         if ($request->has('q')) {
             $data = $data->where('reservations_options.name', 'LIKE', '%'.$request->input('q').'%');
@@ -84,7 +86,9 @@ class ReservationsOptionsController extends Controller
 
             return Redirect::to($request->url().'?'.http_build_query($lastPageQueryString));
         }
-
+//        echo "<pre>";
+//        print_r($data->toArray());
+//        die();
         $queryString = $request->query();
         unset($queryString['limit']);
 
@@ -124,7 +128,7 @@ class ReservationsOptionsController extends Controller
             }
         }
 
-        Alert::success('De gekozen selectie is succesvol verwijderd.')->persistent("Sluiten");
+        Alert::success('De gekozen selectie is succesvol verwijderd.')->html()->persistent("Sluiten");
         return Redirect::to('admin/'.$this->slugController);
     }
 
@@ -173,7 +177,7 @@ class ReservationsOptionsController extends Controller
         $data->company_id = ($slug != NULL ? $this->isCompanyOwner($slug)['id'] : $request->input('company_id'));    
         $data->save();
 
-        Alert::success('U heeft succesvol een nieuwe reserverings optie aangemaakt.')->persistent('Sluiten');
+        Alert::success('U heeft succesvol een nieuwe reserverings optie aangemaakt.')->html()->persistent('Sluiten');
         
         return Redirect::to('admin/'.$this->slugController.'/create');
     }
@@ -265,7 +269,7 @@ class ReservationsOptionsController extends Controller
             $data->date_to = $request->input('date_to');    
             $data->save();
 
-            Alert::success('U heeft succesvol deze reserverings optie aangepast.')->persistent('Sluiten');
+            Alert::success('U heeft deze aanbieding veranderd')->html()->persistent('Sluiten');
             
             return Redirect::to('admin/'.$this->slugController.'/update/'.$id);
         }

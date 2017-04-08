@@ -103,12 +103,12 @@ class ReservationController extends Controller
                     'iframe' => $request->input('iframe')
                 ]);
             } else {
-                alert()->error('', 'Het is niet mogelijk om op dit tijdstip te reserveren of er zijn geen plaatsen beschikbaar.')->persistent('Sluiten');
+                alert()->error('', 'Het is niet mogelijk om op dit tijdstip te reserveren of er zijn geen plaatsen beschikbaar.')->html()->persistent('Sluiten');
 
                 return Redirect::to($request->input('iframe') == 1 ? 'widget/calendar/restaurant/'.$slug : 'restaurant/'.$slug);
             }
         } else {
-            alert()->error('', 'Dit bedrijf bestaat niet of is tijdelijk niet beschikbaar.')->persistent('Sluiten');
+            alert()->error('', 'Dit bedrijf bestaat niet of is tijdelijk niet beschikbaar.')->html()->persistent('Sluiten');
 
             return Redirect::to($request->input('iframe') == 1 ? 'widget/calendar/restaurant/'.$slug : '/');
         }
@@ -292,7 +292,7 @@ class ReservationController extends Controller
                     Alert::warning(
                         'Uw reservering voor '.$company->name.' op '.$date->formatLocalized('%A %d %B %Y').' om '.date('H:i', strtotime($request->input('time'))).' met '.$request->input('persons').' '.($request->input('persons') == 1 ? 'persoon' : 'personen').' wordt doorgegeven aan het restaurant, welke contact met u opneemt.<br /><br /> U heeft aangegeven &euro;'.$request->input('saldo').' korting op de rekening te willen. Klopt dit niet? <a href=\''.URL::to('account/reservations').'\' target=\'_blank\'>Klik hier</a><br /><br /> '.$calendar.'<br /> <span class=\'addthis_sharing_toolbox\'></span>',
                         'Let op, '.$request->input('name').'!'
-                    )->persistent('Sluiten');
+                    )->html()->persistent('Sluiten');
 
                     // Send to client
                     $mailtemplate->sendMail(array(
@@ -352,7 +352,7 @@ class ReservationController extends Controller
                     Alert::success(
                         'Uw reservering voor '.$company->name.' op '.$date->formatLocalized('%A %d %B %Y').' om '.date('H:i', strtotime($request->input('time'))).' met '.$request->input('persons').' '.($request->input('persons') == 1 ? 'persoon' : 'personen').' is succesvol geplaatst. <br /><br /> U heeft aangegeven &euro;'.$request->input('saldo').' korting op de rekening te willen. Klopt dit niet? <a href=\''.URL::to('account/reservations').'\' target=\'_blank\'>Klik hier</a><br /><br />'.$calendar.'<br /> <span class=\'addthis_sharing_toolbox\'></span>',
                         'Bedankt '.$request->input('name').'!'
-                    )->persistent('Sluiten');
+                    )->html()->persistent('Sluiten');
 
                     // Send mail to user
                     $mailtemplate->sendMail(array(
@@ -382,12 +382,12 @@ class ReservationController extends Controller
 
                 return Redirect::to('restaurant/'.$slug.($request->has('iframe') ? '?iframe=1' : ''));
             } else {
-                alert()->error('', 'Het is niet mogelijk om op dit tijdstip te reserveren of er zijn geen plaatsen beschikbaar.')->persistent('Sluiten');
+                alert()->error('', 'Het is niet mogelijk om op dit tijdstip te reserveren of er zijn geen plaatsen beschikbaar.')->html()->persistent('Sluiten');
 
                 return Redirect::to($request->input('iframe') == 1 ? 'widget/calendar/restaurant/'.$slug : 'restaurant/'.$slug);
             }
         } else {
-            alert()->error('', 'Dit bedrijf bestaat niet of is tijdelijk niet beschikbaar.')->persistent('Sluiten');
+            alert()->error('', 'Dit bedrijf bestaat niet of is tijdelijk niet beschikbaar.')->html()->persistent('Sluiten');
 
             return Redirect::to($request->input('iframe') == 1 ? 'widget/calendar/restaurant/'.$slug : '/');
         }
@@ -441,7 +441,7 @@ class ReservationController extends Controller
 
                 $reservation->deleteMeta('saldo_update');
 
-                alert()->success('', 'Uw spaartegoed is succesvol aangepast.')->persistent('Sluiten');
+                alert()->success('', 'Uw spaartegoed is succesvol aangepast.')->html()->persistent('Sluiten');
 
                 return Redirect::to('/');
             } else {
@@ -461,18 +461,18 @@ class ReservationController extends Controller
                                 'user' => Sentinel::getUser()
                             ]);
                         } else {
-                            Alert::error('Het is niet meer mogelijk om deze reservering te wijzigen.')->persistent('Sluiten');
+                            Alert::error('Het is niet meer mogelijk om deze reservering te wijzigen.')->html()->persistent('Sluiten');
                             return Redirect::to('account/reservations/edit/'.$id);
                         }
                     } else {
-                        Alert::error('Het is niet meer mogelijk om deze reservering te wijzigen.')->persistent('Sluiten');
+                        Alert::error('Het is niet meer mogelijk om deze reservering te wijzigen.')->html()->persistent('Sluiten');
 
                         return Redirect::to('account/reservations/edit/'.$id);
                     }
                 }
             }
         } else {
-            alert()->error('', 'Deze reservering bestaat niet.')->persistent('Sluiten');
+            alert()->error('', 'Deze reservering bestaat niet.')->html()->persistent('Sluiten');
             return Redirect::to('account');
         }
     }
@@ -530,9 +530,9 @@ class ReservationController extends Controller
                                 ) {
                                     Reservation::cancel($reservation);
 
-                                    Alert::success('Uw reservering is succesvol geannuleerd.')->persistent('Sluiten');
+                                    Alert::success('Uw reservering is succesvol geannuleerd.')->html()->persistent('Sluiten');
                                 } else {
-                                    alert()->error('', 'Deze reservering kunt u niet meer annuleren.')->persistent('Sluiten');
+                                    alert()->error('', 'Deze reservering kunt u niet meer annuleren.')->html()->persistent('Sluiten');
                                 }
 
                                 if ($request->has('companyPage')) {
@@ -541,7 +541,7 @@ class ReservationController extends Controller
                                     return Redirect::to('account/reservations');
                                 }
                             } else {
-                                alert()->error('', 'Wij konden de opgegeven reservering niet vinden.')->persistent('Sluiten');
+                                alert()->error('', 'Wij konden de opgegeven reservering niet vinden.')->html()->persistent('Sluiten');
                
                                 return Redirect::to($request->has('companyPage') ? 'admin/reservations/clients/'.$company->id : 'account/reservations');
                             }
@@ -570,7 +570,7 @@ class ReservationController extends Controller
                                         $amount = $newSaldo - $oldSaldo;
 
                                         if ($amount > $userSaldo) {
-                                            alert()->error('', 'Het spaartegoed van deze gebruiker is te laag om meer spaartegoed er op te zetten.')->persistent('Sluiten');
+                                            alert()->error('', 'Het spaartegoed van deze gebruiker is te laag om meer spaartegoed er op te zetten.')->html()->persistent('Sluiten');
                                             return Redirect::to('reservation/edit/'.$reservation->id.'?company_page=1');
                                         }
                                     }
@@ -703,9 +703,9 @@ class ReservationController extends Controller
                                         ));
                                     }
 
-                                    Alert::success('Uw reservering is succesvol gewijzigd.')->persistent('Sluiten');
+                                    Alert::success('Uw reservering is succesvol gewijzigd.')->html()->persistent('Sluiten');
                                 } else {
-                                    alert()->error('', 'Deze reservering kunt u niet meer wijzigen.')->persistent('Sluiten');
+                                    alert()->error('', 'Deze reservering kunt u niet meer wijzigen.')->html()->persistent('Sluiten');
                                 }
 
                                 if ($request->has('companyPage')) {
@@ -714,19 +714,19 @@ class ReservationController extends Controller
                                     return Redirect::to('reservation/edit/'.$reservation->id);
                                 }
                             } else {
-                                alert()->error('', 'Wij konden de opgegeven reservering niet vinden.')->persistent('Sluiten');
+                                alert()->error('', 'Wij konden de opgegeven reservering niet vinden.')->html()->persistent('Sluiten');
                
                                 return Redirect::to($request->has('companyPage') ? 'admin/reservations/clients/'.$company->id : 'account/reservations');
                             }
                             break;
                     }
                 } else {
-                    alert()->error('', 'Wij konden de opgegeven reservering niet vinden.')->persistent('Sluiten');
+                    alert()->error('', 'Wij konden de opgegeven reservering niet vinden.')->html()->persistent('Sluiten');
    
                     return Redirect::to($request->has('companyPage') ? 'admin/reservations/clients/'.$company->id : 'account/reservations');
                 }
             } else {
-                alert()->error('', 'Het is niet mogelijk om op dit tijdstip te reserveren of er zijn geen plaatsen beschikbaar.')->persistent('Sluiten');
+                alert()->error('', 'Het is niet mogelijk om op dit tijdstip te reserveren of er zijn geen plaatsen beschikbaar.')->html()->persistent('Sluiten');
 
                 return Redirect::to($request->has('companyPage') ? 'admin/reservations/clients/'.$company->id : 'account/reservations');
             }
