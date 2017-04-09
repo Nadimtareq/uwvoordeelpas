@@ -52977,7 +52977,7 @@ $(document).ready(function() {
 	
         var $datepickerInputWithoutMin = $('.datepicker_no_min_date').pickadate({		
 		formatSubmit: 'yyyy-mm-dd',
-		format: 'd mmmm, yyyy',
+		format: 'yyyy-mm-dd',
 		hiddenName: true,
     	selectYears: true,
     	selectMonths: true,        

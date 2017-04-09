@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
 
 use App;
@@ -10,54 +11,54 @@ use Sentinel;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use Redirect;
+use Illuminate\Support\Facades\DB;
 
-class TransactionsController extends Controller 
-{
+class TransactionsController extends Controller {
 
-    public function __construct(Request $request)
-    {
+    public function __construct(Request $request) {
         $this->slugController = 'transactions';
         $this->section = 'Transacties';
     }
 
-    public function index(Request $request)
-    {   
+    public function index(Request $request) {
         $limit = $request->input('limit', 15);
 
         $data = Transaction::select(
-            'transactions.*',
-            'users.name',
-            'affiliates.name as programName',
-            'affiliates.slug as programSlug'
-        )
-            ->leftJoin('users', 'transactions.user_id', '=', 'users.id')
-            ->leftJoin('affiliates', function ($join) {
-                $join
-                    ->on('transactions.program_id', '=', 'affiliates.program_id')
-                    ->on('transactions.affiliate_network', '=', 'affiliates.affiliate_network')
-                ;
-            })
+                        'transactions.*', 'users.name', 'affiliates.name as programName', 'affiliates.slug as programSlug'
+                )
+                ->leftJoin('users', 'transactions.user_id', '=', 'users.id')
+                ->leftJoin('affiliates', function ($join) {
+            $join
+            ->on('transactions.program_id', '=', 'affiliates.program_id')
+            ->on('transactions.affiliate_network', '=', 'affiliates.affiliate_network')
+            ;
+        })
         ;
 
         if ($request->has('source')) {
             switch ($request->input('source')) {
                 case 'wifi':
                     $data = $data
-                        ->leftJoin('guests_wifi', 'guests_wifi.email', '=', 'users.email') 
-                        ->whereNotNull('guests_wifi.email')
-                        ->whereNotNull('guests_wifi.name')
+                            ->leftJoin('guests_wifi', 'guests_wifi.email', '=', 'users.email')
+                            ->whereNotNull('guests_wifi.email')
+                            ->whereNotNull('guests_wifi.name')
                     ;
                     break;
-                
+
                 default:
-                     $data = $data
-                        ->leftJoin('reservations', 'reservations.user_id', '=', 'users.id')  
-                        ->where('reservations.source', '=', $request->input('source'))
+                    $data = $data
+                            ->leftJoin('reservations', 'reservations.user_id', '=', 'users.id')
+                            ->where('reservations.source', '=', $request->input('source'))
                     ;
                     break;
             }
         }
-
+        if (!empty($request->input('from'))) {
+            $data->where(DB::raw('(transactions.created_at + INTERVAL 90 DAY)'), '>=', $request->input('from'));
+        }
+        if (!empty($request->input('to'))) {
+            $data->where(DB::raw('(transactions.created_at + INTERVAL 90 DAY)'), '<=', $request->input('to'));
+        }
         if ($request->has('city')) {
             $preferences = new Preference();
             $regio = $preferences->getRegio();
@@ -66,9 +67,9 @@ class TransactionsController extends Controller
 
             if (isset($regio['regioNumber'][$regioName])) {
                 $data = $data->whereNotNull(
-                    'users.city'
-                )
-                    ->where('users.city', 'REGEXP', '"([^"]*)'.$regio['regioNumber'][$regioName].'([^"]*)"')
+                                'users.city'
+                        )
+                        ->where('users.city', 'REGEXP', '"([^"]*)' . $regio['regioNumber'][$regioName] . '([^"]*)"')
                 ;
             }
         }
@@ -87,8 +88,8 @@ class TransactionsController extends Controller
 
         if ($request->has('q')) {
             $data = $data
-                ->where('users.name', 'LIKE', '%'.$request->input('q').'%')
-                ->orWhere('transactions.affiliate_network', 'LIKE', '%'.$request->input('q').'%')
+                    ->where('users.name', 'LIKE', '%' . $request->input('q') . '%')
+                    ->orWhere('transactions.affiliate_network', 'LIKE', '%' . $request->input('q') . '%')
             ;
         }
 
@@ -98,8 +99,8 @@ class TransactionsController extends Controller
                 'created_at'
             );
 
-            if(in_array($request->input('sort'), $companiesColumn)) {
-                $data = $data->orderBy('transactions.'.$request->input('sort'), $request->input('order'));
+            if (in_array($request->input('sort'), $companiesColumn)) {
+                $data = $data->orderBy('transactions.' . $request->input('sort'), $request->input('order'));
             } else {
                 $data = $data->orderBy($request->input('sort'), $request->input('order'));
             }
@@ -108,54 +109,61 @@ class TransactionsController extends Controller
         } else {
             $data = $data->orderBy('transactions.id', 'desc');
         }
+        $totalAmountForQuery = 0;
 
         $dataCount = $data->count();
-
+        if ($dataCount > 0) {
+            $records_for_cnt_amounts = $data->get();
+            foreach ($records_for_cnt_amounts as $rec) {                
+                if(isset($rec['amount']) && !empty($rec['amount'])){
+                    $totalAmountForQuery += $rec['amount'];
+                }                
+            }
+        }
         $data = $data->groupBy('transactions.id')->paginate($limit);
 
         # Redirect to last page when page don't exist
-        if ($request->input('page') > $data->lastPage()) { 
+        if ($request->input('page') > $data->lastPage()) {
             $lastPageQueryString = json_decode(json_encode($request->query()), true);
             $lastPageQueryString['page'] = $data->lastPage();
 
-            return Redirect::to($request->url().'?'.http_build_query($lastPageQueryString));
+            return Redirect::to($request->url() . '?' . http_build_query($lastPageQueryString));
         }
-
+        $request->flash();
         $queryString = $request->query();
         unset($queryString['source']);
         unset($queryString['status']);
         unset($queryString['city']);
         unset($queryString['network']);
         unset($queryString['limit']);
-        
+
         if ($data) {
-            return view('admin/'.$this->slugController.'/index', [
-                'data' => $data, 
+            return view('admin/' . $this->slugController . '/index', [
+                'data' => $data,
                 'countItems' => $dataCount,
-                'slugController' =>  'transactions',
+                'slugController' => 'transactions',
                 'section' => $this->section,
                 'queryString' => $queryString,
                 'paginationQueryString' => $request->query(),
                 'limit' => $limit,
-                'currentPage' => 'Overzicht'        
+                'currentPage' => 'Overzicht',
+                'totalAmountForQuery' => $totalAmountForQuery
             ]);
-        } else  {
+        } else {
             App::abort(404);
         }
     }
 
-    public function indexAction(Request $request)
-    {
+    public function indexAction(Request $request) {
         if ($request->has('id')) {
             Transaction::whereIn('id', $request->input('id'))->delete();
         }
 
         Alert::success('De gekozen selectie is succesvol verwijderd.')->persistent("Sluiten");
-        return Redirect::to('admin/'.$this->slugController);
+        return Redirect::to('admin/' . $this->slugController);
     }
 
-    public function create()
-    {
+    public function create() {
         $statusArray = array(
             'accepted' => 'Goedgekeurd',
             'open' => 'In behandeling (open)',
@@ -163,16 +171,15 @@ class TransactionsController extends Controller
             'expired' => 'Vervallen'
         );
 
-        return view('admin/'.$this->slugController.'/create', [
+        return view('admin/' . $this->slugController . '/create', [
             'statusArray' => $statusArray,
             'slugController' => $this->slugController,
-            'section' => $this->section, 
+            'section' => $this->section,
             'currentPage' => 'Transactie toevoegen',
         ]);
     }
 
-    public function createAction(Request $request)
-    {
+    public function createAction(Request $request) {
         $this->validate($request, [
             'status' => 'required',
             'user_id' => 'required',
@@ -192,29 +199,25 @@ class TransactionsController extends Controller
         }
 
         $transaction->save();
-          
-        Alert::success('Deze transactie is succesvol aangepast.')->persistent('Sluiten');   
 
-        return Redirect::to('admin/'.$this->slugController);
+        Alert::success('Deze transactie is succesvol aangepast.')->persistent('Sluiten');
+
+        return Redirect::to('admin/' . $this->slugController);
     }
 
-    public function update($id)
-    {
+    public function update($id) {
         $data = Transaction::select(
-            'transactions.*',
-            'users.name',
-            'affiliates.name as programName',
-            'affiliates.slug as programSlug'
-        )
-            ->leftJoin('users', 'transactions.user_id', '=', 'users.id')
-            ->leftJoin('affiliates', function ($join) {
-                $join
+                        'transactions.*', 'users.name', 'affiliates.name as programName', 'affiliates.slug as programSlug'
+                )
+                ->leftJoin('users', 'transactions.user_id', '=', 'users.id')
+                ->leftJoin('affiliates', function ($join) {
+                    $join
                     ->on('transactions.program_id', '=', 'affiliates.program_id')
                     ->on('transactions.affiliate_network', '=', 'affiliates.affiliate_network')
-                ;
-            })
-            ->where('transactions.id', '=', $id)
-            ->first()
+                    ;
+                })
+                ->where('transactions.id', '=', $id)
+                ->first()
         ;
 
         $statusArray = array(
@@ -224,17 +227,16 @@ class TransactionsController extends Controller
             'expired' => 'Vervallen'
         );
 
-        return view('admin/'.$this->slugController.'/update', [
+        return view('admin/' . $this->slugController . '/update', [
             'statusArray' => $statusArray,
             'data' => $data,
             'slugController' => $this->slugController,
-            'section' => $this->section, 
+            'section' => $this->section,
             'currentPage' => 'Wijzig transactie',
         ]);
     }
 
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $this->validate($request, [
             'status' => 'required',
         ]);
@@ -244,21 +246,21 @@ class TransactionsController extends Controller
         if ($request->input('status') != $transaction->status) {
             $transaction->addMeta('transaction_stop_changes', 1);
         }
-        
+
         $transaction->status = $request->input('status');
         $transaction->program_id = $request->input('program_id');
         $transaction->user_id = $request->input('user_id');
         $transaction->amount = $request->input('amount');
-        
+
         if ($transaction->status != 'accepted' && $request->input('status') == 'accepted') {
             $transaction->processed = date('Y-m-d H:i:s');
         }
 
         $transaction->save();
-          
-        Alert::success('Deze transactie is succesvol aangepast.')->persistent('Sluiten');   
 
-        return Redirect::to('admin/'.$this->slugController);
+        Alert::success('Deze transactie is succesvol aangepast.')->persistent('Sluiten');
+
+        return Redirect::to('admin/' . $this->slugController);
     }
 
 }

@@ -1386,7 +1386,7 @@
                 <td style="width: 8%">Aantal</td>
                 <td style="width: 8%">Prijs</td>
                 <td style="width: 8%">BTW</td>
-                <td style="width: 8%">BTW Aantal</td>
+                <td style="width: 8%">BTW Bedrag</td>
                 <td style="width: 5%">Totaal incl btw</td>
             </tr>
             <?php 
@@ -1440,8 +1440,8 @@
 
             <tr class="list_row">
                 <td style="width: 70%"></td>
-                <td style="width: 20%"><strong>Totaal btw</strong></td>
-                <td style="width: 20%"><?php echo $totalTax;?></td>
+                <td style="width: 20%"><strong>Totaal btw</strong></td>                
+                <td style="width: 20%">&euro;{{ number_format($totalTax, 2, ',', ' ') }}</td>
             </tr>
 
             <tr class="list_row">
