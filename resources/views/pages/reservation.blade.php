@@ -20,7 +20,17 @@
         <span class="active section"><h1>Reserveren bij {{ $company->name }}</h1></span>
     </div>
     @endif
-
+    <div class="ui grid">
+          <div class="row"> 
+           <img id="image" src="{{ url($mediaItems[0]->getUrl('175Thumb')) }}">
+           <h2>{{$deal->name}}</h2>
+            <div style="display: inline; float: right; font-size: 20px; color: #5e80b2;">
+                  <span style="position: relative;  font-weight: bold; margin-top:10px; margin-left: 10px;">
+                        &euro; {{ $deal->price }}
+                    </span>
+                </div>
+          </div>
+    </div>
     @if(isset($iframe))
     <div style="width: 100%;">
         @endif
@@ -31,7 +41,7 @@
         <?php echo Form::hidden('encode_url', 1); ?>
         <?php echo Form::hidden('setTimeBack', 0); ?>
         <?php echo Form::hidden('reservation_url', URL::to('restaurant/reservation/' . $company->slug)); ?>
-
+        <input type="hidden" name="deal_price" class="deal_price" id="deal_price" value="<?php echo $deal->price ?>">
         @if (isset($iframe))<br>
         @if ($userAuth == FALSE)
         <button data-type="iframe" class="ui blue fluid login button" data-redirect="{{ URL::full() }}">
@@ -196,7 +206,7 @@
                     <i class="dropdown icon"></i>
                     <div class="menu">
                         @for($i = 1; $i <= 10; $i++) 
-                        <div class="item" data-value="<?php echo $i; ?>"><?php echo $i; ?> <?php echo $i == 1 ? 'persoon' : 'personen'; ?></div>
+                        <div class="item"  data-value="<?php echo $i; ?>"><?php echo $i; ?> <?php echo $i == 1 ? 'persoon' : 'personen'; ?></div>
                         @endfor
                     </div>
                 </div>
@@ -291,12 +301,38 @@
             </div>  
         </div>
         @endif
-
+        @if($userInfo->saldo >= ($deal->price * Request::get('persons')))
         <button class="ui tiny button" type="submit"><i class="plus icon"></i> Bevestig</button>
+        @endif
         <?php echo Form::close(); ?>
+        @if($userInfo->saldo <= ($deal->price * Request::get('persons')))
+         <?php echo Form::open(array('id' => 'formList', 'url' => 'payment/pay'.(Request::has('buy') ? '?buy=voordeelpas' : ''), 'method' => 'post', 'class' => 'ui form')) ?>
+    <input id="actionMan" type="hidden" name="action">
+
+    @if (isset($error) && trim($error) != '') 
+        <div class="ui red message">{{ $error }}</div>
+    @endif
+
+    <div class="fields">
+        <div class="four wide field">
+           <input type="hidden" name="amount" class="amount" id="charge_amount" value="<?php echo $deal->price * Request::get('persons') ?>">
+        </div>
+    </div>
+
+    <button class="ui button" type="submit">Saldo opwaarderen</button>
+    <?php echo Form::close(); ?>
         @if(isset($iframe))
     </div>
     @endif
+      @endif
 </div>
 <div class="clear"></div>
+<script type="text/javascript">
+$('#personsField').find('.item').on('click',function(){
+       person=$(this).data('value');
+       deal_price=$('#deal_price').val();
+       amout=parseFloat(deal_price)*parseInt(person);
+       $('#charge_amount').val(amout);
+    })
+</script>
 @stop

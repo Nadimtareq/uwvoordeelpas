@@ -11,6 +11,7 @@ use App\Http\Requests\ReservationEditRequest;
 use App\Models\Company;
 use App\Models\Page;
 use App\Models\Reservation;
+use App\Models\ReservationOption;
 use App\Models\Guest;
 use App\Models\TemporaryAuth;
 use App\Models\Preference;
@@ -49,9 +50,9 @@ class ReservationController extends Controller
             'date' => date('Ymd', strtotime($request->input('date'))),
             'time' => date('Hi', strtotime($request->input('time'))),
             'persons' => $request->input('persons'),
-            'iframe' => $request->input('iframe')
+            'deal' => $request->input('deal'),
+            'iframe' => $request->input('iframe'),
         );
-
         return Redirect::to('restaurant/reservation/'.$slug.'?'.http_build_query($data));
     }
 
@@ -60,7 +61,7 @@ class ReservationController extends Controller
         $time = date('H:i', strtotime($request->input('time')));
         $date = date('Y-m-d', strtotime($request->input('date')));
 
-        $company = Company::select(
+        $company = Company::with('media')->select(
             'id',
             'slug',
             'name',
@@ -78,6 +79,7 @@ class ReservationController extends Controller
         ;
 
         if ($company) {
+        	$mediaItems = $company->getMedia('default'); 
             // get the available reservation times
             $reservationTimes = CompanyReservation::getReservationTimesArray(
                 array(
@@ -93,11 +95,14 @@ class ReservationController extends Controller
                 $request->input('date'), 
                 $request->input('time')
             );
-
+         	$deal=ReservationOption::where('id',$request->input('deal'))->first();
+        
             if (isset($reservationTimes[$time])) {
                 return view('pages/reservation', [
                     'discountMessage' => Company::getDiscountMessage($company->days, $company->discount, $company->discount_comment),
                     'company' => $company,
+                    'deal'=>$deal,
+                    'mediaItems'=>$mediaItems,
                     'reservationOptions' => $reservationsOptions,
                     'user' => Sentinel::getUser(),
                     'iframe' => $request->input('iframe')
