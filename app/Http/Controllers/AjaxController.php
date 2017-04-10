@@ -93,7 +93,7 @@ class AjaxController extends Controller
             $preferencesArray[str_slug($preference->slug)] = array(
                 'slug' => str_slug($preference->slug),
                 'name' => $preference->name,
-                'image' => isset($media[0]) ? URL::to('public'.$media[0]->getUrl('thumb')) : ''
+                'image' => isset($media[0]) ? URL::to($media[0]->getUrl('thumb')) : ''
             );
         }
 
@@ -153,7 +153,7 @@ class AjaxController extends Controller
             $preferencesArray[str_slug($preference->slug)] = array(
                 'slug' => str_slug($preference->slug),
                 'name' => $preference->name,
-                'image' => isset($media[0]) ? URL::to('public'.$media[0]->getUrl('thumb')) : ''
+                'image' => isset($media[0]) ? URL::to($media[0]->getUrl('thumb')) : ''
             );
         }
 
@@ -587,7 +587,7 @@ class AjaxController extends Controller
             $company[$key]['link'] = URL::to('restaurant/'.$info['slug']);
 
             if (isset($media[0])) {
-                $company[$key]['image'] = url('public'.($media[0]->getUrl('175Thumb')));
+                $company[$key]['image'] = url(($media[0]->getUrl('175Thumb')));
             } else {
                $company[$key]['image'] = url('public/images/placeholdimage.png');
             }     

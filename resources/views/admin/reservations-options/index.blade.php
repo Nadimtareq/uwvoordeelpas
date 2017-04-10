@@ -50,7 +50,6 @@
         <th data-slug="total_amount" class="four wide">Aantal plaatsen</th>
         <th data-slug="total_res" class="four wide">Aantal reservering</th>
         <th data-slug="total_res" class="four wide">Staat</th>
-        <th data-slug="total_res" class="four wide">Staat</th>
         <th data-slug="disabled">online</th>
         </tr>
         </thead>
@@ -71,7 +70,7 @@
                     {{ $result->total_amount }}
                 </td>
                 <td>
-                    {{ $result->total_res }}
+                    {{ ($result->total_res)?$result->total_res:0 }}
                 </td>
                 <td>
                     <?php
@@ -87,16 +86,7 @@
                     }
                     ?>
                 </td>
-                <td>
-                    <?php
-                    $currentTime = date('h:m:i', strtotime(date('Y-m-d')));
-                    if (($currentTime >= $result->time_from) && ($currentTime <= $result->time_to)) {
-                        echo "Online";
-                    } else {
-                        echo "Offline";
-                    }
-                    ?>
-                </td>
+               
                 <td>
                     <a href="{{ url('admin/'.$slugController.'/update/'.$result->id) }}" class="ui icon tiny button">
                         <i class="pencil icon"></i>

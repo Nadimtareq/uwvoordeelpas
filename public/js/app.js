@@ -53310,7 +53310,7 @@ $(document).ready(function() {
 	var owlWrap = $('.owl-wrapper');
 
     // checking if the dom element exists
-    if (owlWrap.length > 0) {
+   
     	var startTime = new Date(2016, 2, 20, 7, 45);
 		var endTime = new Date(2016, 2, 20, 23, 45);
 
@@ -53397,7 +53397,7 @@ $(document).ready(function() {
 	            });
             });
         };
-    };
+    
 });
 register('registerButton', 'tegoed-sparen');
 register('registerButton2', 'tegoed-sparen');

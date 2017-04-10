@@ -98,7 +98,7 @@
                     </div>
                 </div>	
             </div>	
-
+            <div class="two fields">
             <div class="field">
                 <label>Aantal beschikbaar</label>
                 <?php echo Form::number('total_amount', $data->total_amount, array('min' => 1)); ?>
@@ -113,7 +113,7 @@
                 <label>Prijs</label>
                 <?php echo Form::text('price', $data->price); ?>
             </div>
-
+            </div>
             <div class="field">
                 <label>Omschrijving</label>
                 <?php echo Form::textarea('content', $data->description,['class' => 'editor']); ?>

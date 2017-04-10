@@ -39,6 +39,13 @@ class Company extends Model implements SluggableInterface, HasMediaConversions
 //        return $this->hasOne('App\Models\Company');
         return $this->hasMany('App\Models\ReservationOption', 'company_id', 'id')->first();
     }
+    public function ReservationOptions2()
+    {
+//        return $this->hasOne('App\Models\Company');
+        return $this->hasMany('App\Models\ReservationOption', 'company_id', 'id')
+            ->where('date_from', '<', date('Y-m-d'))
+            ->where('date_to', '>', date('Y-m-d'));
+    }
 
     public static function getReservationOption($companyId, $date, $time)
     {

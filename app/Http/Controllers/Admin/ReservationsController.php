@@ -438,17 +438,17 @@ class ReservationsController extends Controller
             'companies.days', 
             'companies.discount', 
             'reservations.*',
-            'barcodes_users.created_at as barcodeDate'
+            'barcodes_users.created_at as barcodeDate',
+            'reservations_options.name as deal'
         )
             ->leftJoin('companies', 'reservations.company_id', '=', 'companies.id')
+            ->leftJoin('reservations_options','reservations.option_id', '=', 'reservations_options.id')
             ->leftJoin('users', 'reservations.user_id', '=', 'users.id') 
             ->leftJoin('barcodes_users', function($join) {
                 $join
                     ->on('barcodes_users.company_id', '=', 'companies.id')
-                    ->on('barcodes_users.user_id', '=', 'reservations.user_id')
-                ;
-            })
-        ;  
+                    ->on('barcodes_users.user_id', '=', 'reservations.user_id');
+            });  
 
         if ($request->has('source')) {
             switch ($request->input('source')) {
@@ -523,9 +523,8 @@ class ReservationsController extends Controller
 
         $data = $data
             ->where('reservations.is_cancelled', ($request->has('cancelled') ? 1 : 0))
-            ->paginate($this->limit)
-        ;
-
+            ->paginate($this->limit);
+ 
         if ($request->input('page') > $data->lastPage()) { 
             $lastPageQueryString = json_decode(json_encode($request->query()), true);
             $lastPageQueryString['page'] = $data->lastPage();
@@ -552,7 +551,7 @@ class ReservationsController extends Controller
             unset($queryString['limit']);
             unset($queryString['source']);
             unset($queryString['city']);
-
+          
             return view('admin/'.$this->slugController.'/clients', [
                 'data' => $data, 
                 'date' => $date, 
@@ -576,8 +575,7 @@ class ReservationsController extends Controller
     public function listClientsAction(Request $request, $company = NULL, $date = NULL)
     {
         $reservationInfo = Reservation::join('companies', 'reservations.company_id', '=', 'companies.id')
-            ->join('company_reservations', 'company_reservations.id', '=', 'reservations.reservation_id')
-        ;
+            ->join('company_reservations', 'company_reservations.id', '=', 'reservations.reservation_id') ;
 
         if (Sentinel::inRole('admin') == FALSE) {
             if (Sentinel::inRole('bedrijf')) {

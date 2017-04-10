@@ -19,7 +19,7 @@ class ApiController extends Controller
         $users = User::all();
 
         if ($key == env('API_KEY')) {
-            return $users->toJson();
+           return $users->toJson();
         } else {
             return "ACCES DENIED";
         }

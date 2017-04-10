@@ -560,7 +560,7 @@
 						<ol class="serialization">
 						  	@foreach($media as $id => $images)
 						  	<li class="ui segment" data-id="{{ $images->id }}">
-						      	<img src="{{ url('public/'.$images->getUrl('thumb')) }}" class="ui image"><br>
+						      	<img src="{{ url($images->getUrl('thumb')) }}" class="ui image"><br>
 						      		<!-- <a href="{{ url('admin/'.$slugController.'/crop/image/'.$data->slug.'/'.$id.'?type=images') }}">
 							     		<i class="crop icon"></i> Uitknippen
 							     	</a> -->

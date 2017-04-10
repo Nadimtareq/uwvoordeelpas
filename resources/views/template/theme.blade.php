@@ -16,7 +16,7 @@
     <link rel="shortcut icon" sizes="144x144" href="launcher-icon-3x.png"> 
     <link rel="shortcut icon" sizes="144x144" href="launcher-icon-3x.png">
     <meta name="mobile-web-app-capable" content="yes">
-
+   <link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/idnomlffdbadkainngpiabkecmapeaad">
     <meta name="robots" content="nofollow" />
     <meta name="_token" content="{!! csrf_token() !!}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
@@ -553,7 +553,7 @@
     
     <script type="text/javascript">
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('js/sw.js').then(function(registration) {
+      navigator.serviceWorker.register('/js/sw.js').then(function(registration) {
         // Registration was successful
         console.log('ServiceWorker registration successful with scope: ', registration.scope);
       }).catch(function(err) {
@@ -634,17 +634,22 @@
             e.preventDefault();
 
             $('body').addClass('extension-install-overlay').find('.extension-install-fade .text').addClass('chrome ');
-//            chrome.webstore.install(
-//                'https://chrome.google.com/webstore/detail/bfbmjmiodbnnpllbbbfblcplfjjepjdn',
-//                chromeCallbackTrue, chromeCallbackFalse
-//            );
+           chrome.webstore.install(
+              'https://chrome.google.com/webstore/detail/idnomlffdbadkainngpiabkecmapeaad',
+             function(d){
+                 console.log('installed')
+              },
+              function(e){
+                 console.log('not installed: '+ e)
+              }
+           );
 
-            $( ".login.button" ).trigger( "click" );
+           // $( ".login.button" ).trigger( "click" );
 
             overlay_timer = setTimeout(function() {
-                $('.extension-install-fade').animate({opacity:0},500, function() {
-                    $(this).css({opacity:1});
-                })
+              $('.extension-install-fade').animate({opacity:0},500, function() {
+                   $(this).css({opacity:1});
+              })
             }, 10000);
         });
 

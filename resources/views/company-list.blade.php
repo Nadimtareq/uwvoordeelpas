@@ -5,8 +5,7 @@
 
 @foreach ($companies as $data)
 
-
-    @foreach ($data->ReservationOptions()->get() as $deal)
+    @foreach ($data->ReservationOptions2()->get() as $deal)
 
         <?php
         $media = $data->getMedia('default');
@@ -177,7 +176,7 @@
                 </div>
 
                 <div style="display: inline;">
-                    <a class="deal_btn" style="float: right;" href="{{ url('restaurant/'.$data->slug).'?deal='.$data->id }}">NAAR DE DEAL</a>
+                    <a class="deal_btn" style="float: right;" href="{{ url('restaurant/'.$data->slug) }}">NAAR DE DEAL</a>
                     {{--<img src="{{ url('images/pricetag.png') }}" style="width: 90px">--}}
                 </div>
                 </div>

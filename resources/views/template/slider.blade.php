@@ -21,7 +21,7 @@
             @endif
 
             {{--            @if (Route::getCurrentRoute()->uri() == '/' AND ($userAuth && $userInfo->extension_downloaded == 1))--}}
-            @if ($userAuth)
+         
             <!-- Desktop -->
             <div id="sliderDesktopForm" >
                 <form action="<?php echo url('search'); ?>" method="GET" class="ui form">
@@ -182,7 +182,7 @@
                 </form>
             </div>
             <!-- Mobile -->
-            @endif
+            
         </div>
 
         @if (Route::getCurrentRoute()->uri() != '/' AND ($userAuth && $userInfo->extension_downloaded == 1))
@@ -303,7 +303,7 @@
                 <?php @$browser = Session::get('browser'); ?>
                
                     <a  style="margin-top: 80px; display: inline-block;" class="homepage_btn install {{$browser['name']}}" 
-                        href="">Ja! Ik wil gratis sparen!</a>
+                       href="https://chrome.google.com/webstore/detail/apdfllckaahabafndbhieahigkjlhalf" >Ja! Ik wil gratis sparen!</a>
                
             </div>
 

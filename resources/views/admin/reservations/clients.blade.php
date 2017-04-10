@@ -179,6 +179,7 @@
                     <th data-slug="time" class="four wide">Datum reservering</th>
                     <th data-slug="persons" class="one wide">Gasten</th>
                     <th data-slug="name" class="four wide">Gereserveerd als</th>
+                    <th data-slug="deal" class="four wide">Gereserveerd Deal</th>
                     <th data-slug="allergies" class="one wide">Allergie&euml;n</th>
                     <th data-slug="preferences" class="one wide">Voorkeuren</th>
                     <th data-slug="comment" class="two wide">Opmerking</th>
@@ -188,7 +189,7 @@
                     @if ($company == NULL)
                     <th data-slug="name" class="two wide">Bedrijf</th>
                     @endif
-                    <th data-slig="disabled" class="four wide">Opties</th>
+                    <th data-slig="disabled" class="four wide" style="pointer-events: none;cursor: default;">Opties</th>
                 </tr>
             </thead>
             <tbody class="list search">

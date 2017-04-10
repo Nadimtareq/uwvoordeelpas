@@ -118,13 +118,14 @@ class RestaurantController extends Controller
                 'data-theme' => 'light',
                 'data-type' => 'audio',
             ];
-
+            
             return view('pages/restaurant', [
                 'attributes' => $attributes, 
                 'companies' => $companies, 
                 'preferences' => $preferences, 
                 'company' => $company, 
                 'media' => $mediaItems,
+                'deals' => $deals,
                 'news' => $news,
                 'iframe' => $request->has('iframe'),
                 'reservationTimesArray' => (isset($reservationTimesArray) ? $reservationTimesArray : array()),

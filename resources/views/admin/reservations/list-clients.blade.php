@@ -62,6 +62,8 @@ $classBarcode = $barcodeDate->addYear(1)->isPast() ? '' : isset($days[date('N')]
         Via: {{ $data->source }}
         @endif
     </td>
+    <td>  {{ $data->deal }}</td>
+        
     <td>
         @if ($data->allergies != 'null' && $data->allergies != NULL && $data->allergies != '[""]')
         <div class="ui normal floating dropdown small labeled basic button">

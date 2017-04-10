@@ -335,8 +335,7 @@ class HomeController extends Controller
         if ($request->has('time') && $request->has('date')) {
             $companies = $companies
                 ->join('company_reservations', 'company_reservations.company_id', '=', 'companies.id')
-                ->where('company_reservations.date', '=', $request->input('date'))
-            ;
+                ->where('company_reservations.date', '=', $request->input('date'));
         } 
 
         $companies = $companies

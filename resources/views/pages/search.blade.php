@@ -73,7 +73,7 @@
 </div>
 
 <div id="companies" class="content">
-    <div class="left section">
+    <div class="section">
         <div class="companies home">
             @if (count($companies) >= 1)
                 @include('company-list')
@@ -105,9 +105,9 @@
         </div>
     </div>
 
-    <div class="right section">
-        @include('template.sidebar')
-    </div>
+   {{--   <div class="right section">
+      @include('template.sidebar')
+    </div>  --}}
 </div>
 <div class="clear"></div>
 @stop

@@ -35,6 +35,20 @@ while ($st->lte($dt)) {
 			</div>
 			
 			<div class="field">
+				<div id="dealField" class="ui normal compact selection dropdown deal">
+					<input type="hidden" name="deal" value="{{ ($userAuth && $userInfo->kids != 'null' && $userInfo->kids != NULL && $userInfo->kids != '[""]' ? $userInfo->kids : 1) }}">
+														
+					<div class="default text">Deal</div>
+					<i class="dropdown icon"></i>
+
+					<div class="menu">
+						@foreach($deals as $deal)
+						<div class="item" data-deal="<?php echo $deal->id?>" data-value="<?php echo $deal->id?>"><?php echo $deal->name  ?></div>
+						@endforeach
+					</div>
+				</div>
+			</div>	
+			<div class="field">
 				<div id="personsField" class="ui normal compact selection dropdown persons searchReservation calendarInput">
 					<input type="hidden" name="persons" value="{{ ($userAuth && $userInfo->kids != 'null' && $userInfo->kids != NULL && $userInfo->kids != '[""]' ? $userInfo->kids : 1) }}">
 														

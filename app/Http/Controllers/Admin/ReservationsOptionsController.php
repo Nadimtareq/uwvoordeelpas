@@ -42,7 +42,8 @@ class ReservationsOptionsController extends Controller
             User::getRoleErrorPopup();
             return Redirect::to('/');
         }
-
+// $data= ReservationOption::with('reservationCount')
+ //               ->select('id','name','total_amount','date_from','date_to','time_from','time_to');
         $data = ReservationOption::select(
             'reservations_options.id',
             'reservations_options.name',
@@ -51,7 +52,7 @@ class ReservationsOptionsController extends Controller
             'reservations_options.date_to',
             'reservations_options.time_from',
             'reservations_options.time_to',
-            DB::raw('count(reservations.option_id) as total_res')
+            DB::raw('sum(reservations.persons) as total_res')
         )->leftJoin('companies', 'companies.id', '=', 'reservations_options.company_id')
             ->leftJoin('reservations', function ($join) {
                 $join
@@ -59,7 +60,6 @@ class ReservationsOptionsController extends Controller
                     ->on('reservations.option_id', '=', 'reservations_options.id')
                 ;
             });
-
         if ($request->has('q')) {
             $data = $data->where('reservations_options.name', 'LIKE', '%'.$request->input('q').'%');
         }
@@ -76,9 +76,9 @@ class ReservationsOptionsController extends Controller
             $data = $data->orderBy('reservations_options.id', 'desc');
         }
 
-        $data = $data->groupBy('option_id')->paginate($this->limit);
+        $data = $data->groupBy('reservations_options.id')->paginate($this->limit);
         $data->setPath($this->slugController.(trim($slug) != '' ? '/'.$slug : ''));
-        
+     
         # Redirect to last page when page don't exist
         if ($request->input('page') > $data->lastPage()) { 
             $lastPageQueryString = json_decode(json_encode($request->query()), true);

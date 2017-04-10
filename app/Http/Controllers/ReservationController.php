@@ -121,8 +121,7 @@ class ReservationController extends Controller
 
         $company = Company::where('slug', $slug)
             ->where('no_show', '=', 0)
-            ->first()
-        ;
+            ->first();
 
         if ($company) {
             $time = date('H:i', strtotime($request->input('time')));
