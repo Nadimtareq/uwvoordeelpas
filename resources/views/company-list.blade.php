@@ -1,4 +1,4 @@
-<?php $i = 0; ?>
+<?php use App\Http\Controllers\HomeController; $i = 0; ?>
 
 @inject('discountHelper', 'App\Helpers\DiscountHelper')
 @inject('companyReservation', 'App\Models\companyReservation')
@@ -141,8 +141,8 @@
                         @endif
                     @endif
                 </div>
-              
-                <p>{{ str_limit($deal->description, (isset($limitChar) ? $limitChar : 210)) }}</p>
+            <p><?php echo html_entity_decode($deal->description);?></p>
+                <p>{{-- str_limit($deal->description, (isset($limitChar) ? $limitChar : 210)) --}}</p>
 
                 {!!
                     $companyReservation->getTimeCarousel(
@@ -154,7 +154,10 @@
                         Request::input('date')
                     )
                 !!}
-
+                 <?php                 
+                    $getRec        = HomeController::getPersons($deal->id);
+                    $count_persons = $getRec[0]->total_persons;
+                ?>
                 <div style="display: inline; float: right; font-size: 20px; color: #5e80b2;">
                    <span style="position: relative; font-weight: normal;  ">
                         <s>&euro; {{ $deal->price_from }}</s>
@@ -176,8 +179,17 @@
                 </div>
 
                 <div style="display: inline;">
-                    <a class="deal_btn" style="float: right;" href="{{ url('restaurant/'.$data->slug) }}">NAAR DE DEAL</a>
-                    {{--<img src="{{ url('images/pricetag.png') }}" style="width: 90px">--}}
+                   <?php
+                    if($count_persons >= $deal->total_amount){
+                ?>
+                    <a class="deal_btn" style="float: right;" href="javascript:void(0)">SOLD OUT</a>
+                <?php        
+                    }else{
+                ?>
+                    <a class="deal_btn" style="float: right;" href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}">NAAR DE DEAL</a>
+                <?php        
+                    }
+                ?>
                 </div>
                 </div>
 

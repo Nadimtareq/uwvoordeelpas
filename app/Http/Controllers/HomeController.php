@@ -997,5 +997,13 @@ class HomeController extends Controller
             }
         }
     }
+    
+    public static function getPersons($option_id){
+        
+        $data = DB::table('reservations')->select(DB::raw('SUM(persons) as total_persons'))->where("option_id",$option_id)->get();
+         
+         return $data;
+         
+    }
 
 }

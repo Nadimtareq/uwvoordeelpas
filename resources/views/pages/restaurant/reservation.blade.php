@@ -36,7 +36,7 @@ while ($st->lte($dt)) {
 			
 			<div class="field">
 				<div id="dealField" class="ui normal compact selection dropdown deal">
-					<input type="hidden" name="deal" value="{{ ($userAuth && $userInfo->kids != 'null' && $userInfo->kids != NULL && $userInfo->kids != '[""]' ? $userInfo->kids : 1) }}">
+					<input type="hidden" name="deal" value="{{ (@app('request')->input('deal'))?app('request')->input('deal'):1 }}">
 														
 					<div class="default text">Deal</div>
 					<i class="dropdown icon"></i>

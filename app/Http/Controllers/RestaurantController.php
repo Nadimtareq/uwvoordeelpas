@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Alert;
@@ -22,69 +23,66 @@ use URL;
 use Illuminate\Http\Request;
 use Setting;
 
-class RestaurantController extends Controller 
-{
+class RestaurantController extends Controller {
 
-    public function index($slug, Request $request)
-    {
+    public function index($slug, Request $request) {
         $company = Company::with('media')
-            ->where('no_show', 0)
-            ->where('slug', $slug)
-            ->first();
+                ->where('no_show', 0)
+                ->where('slug', $slug)
+                ->first();
         if ($company) {
             // Add Click
             $companyClick = new Company;
             $companyClick->addClick($request->getClientIp(), $company->id);
 
-            $mediaItems = $company->getMedia('default'); 
+            $mediaItems = $company->getMedia('default');
 
             $news = News::with('media')
-                ->where('company_id', $company->id)
-                ->where('is_published', 1)
-                ->paginate(15);
+                    ->where('company_id', $company->id)
+                    ->where('is_published', 1)
+                    ->paginate(15);
 
             $reviews = Review::select(
-                'reviews.*',
-                'users.name'
-            )
-                ->leftJoin('users', 'users.id', '=', 'reviews.user_id')
-                ->where('reviews.company_id', $company->id)
-                ->where('reviews.is_approved', 1)
-                ->get();
-            
+                            'reviews.*', 'users.name'
+                    )
+                    ->leftJoin('users', 'users.id', '=', 'reviews.user_id')
+                    ->where('reviews.company_id', $company->id)
+                    ->where('reviews.is_approved', 1)
+                    ->get();
+
             $companyRegioArray = json_decode($company->regio);
 
             $companies = Company::where('name', '!=', $company->name)
-                ->where(function ($query) use($company, $companyRegioArray) {
-                    if (is_array($companyRegioArray)) {
-                        foreach ($companyRegioArray as $key => $regio) {  
-                            if ($key == 0) {                 
-                                $query->where(function ($subQuery) use($regio) {
-                                    $subQuery
-                                        ->where('regio', 'REGEXP', '"[[:<:]]'.$regio.'[[:>:]]"')
+                    ->where(function ($query) use($company, $companyRegioArray) {
+                        if (is_array($companyRegioArray)) {
+                            foreach ($companyRegioArray as $key => $regio) {
+                                if ($key == 0) {
+                                    $query->where(function ($subQuery) use($regio) {
+                                        $subQuery
+                                        ->where('regio', 'REGEXP', '"[[:<:]]' . $regio . '[[:>:]]"')
                                         ->orWhere('regio', '=', $regio)
-                                    ;
-                                });
-                            } else {
-                                $query->orWhere(function ($subQuery) use($regio) {
-                                    $subQuery
-                                        ->where('regio', 'REGEXP', '"[[:<:]]'.$regio.'[[:>:]]"')
+                                        ;
+                                    });
+                                } else {
+                                    $query->orWhere(function ($subQuery) use($regio) {
+                                        $subQuery
+                                        ->where('regio', 'REGEXP', '"[[:<:]]' . $regio . '[[:>:]]"')
                                         ->orWhere('regio', '=', $regio)
-                                    ;
-                                });
+                                        ;
+                                    });
+                                }
                             }
-                        }
-                    } else {
-                        $query
-                            ->where('regio', 'REGEXP', '"[[:<:]]'.$company->regio.'[[:>:]]"')
+                        } else {
+                            $query
+                            ->where('regio', 'REGEXP', '"[[:<:]]' . $company->regio . '[[:>:]]"')
                             ->orWhere('regio', '=', $company->regio)
-                        ;
-                    }
-                })
-                ->where('no_show', '=', 0)
-                ->with('media')
-                ->take(20)
-                ->get();
+                            ;
+                        }
+                    })
+                    ->where('no_show', '=', 0)
+                    ->with('media')
+                    ->take(20)
+                    ->get();
 
             $companyId = array();
 
@@ -93,37 +91,38 @@ class RestaurantController extends Controller
             }
 
             $reservationTimesArray = CompanyReservation::getReservationTimesArray(
-                array(
-                    'company_id' => $companyId, 
-                    'date' => date('Y-m-d'),
-                    'selectPersons' => NULL
-                )
+                            array(
+                                'company_id' => $companyId,
+                                'date' => date('Y-m-d'),
+                                'selectPersons' => NULL
+                            )
             );
 
             $tomorrowArray = CompanyReservation::getReservationTimesArray(
-                array(
-                    'company_id' => $companyId, 
-                    'date' => date('Y-m-d', strtotime('+1 days')),
-                    'selectPersons' => NULL
-                )
+                            array(
+                                'company_id' => $companyId,
+                                'date' => date('Y-m-d', strtotime('+1 days')),
+                                'selectPersons' => NULL
+                            )
             );
-            $deals=  ReservationOption::where('company_id',$company->id)
-                     ->where('date_to','<=',date('Y-m-d'))
+            $deals = ReservationOption::where('company_id', $company->id)
+                    ->where('date_from', '<', date('Y-m-d'))
+                    ->where('date_to', '>', date('Y-m-d'))
                     ->get();
             $disabled = array();
 
             $preferences = Preference::getPreferences();
-            
+
             $attributes = [
                 'data-theme' => 'light',
                 'data-type' => 'audio',
             ];
-            
+
             return view('pages/restaurant', [
-                'attributes' => $attributes, 
-                'companies' => $companies, 
-                'preferences' => $preferences, 
-                'company' => $company, 
+                'attributes' => $attributes,
+                'companies' => $companies,
+                'preferences' => $preferences,
+                'company' => $company,
                 'media' => $mediaItems,
                 'deals' => $deals,
                 'news' => $news,
@@ -131,7 +130,6 @@ class RestaurantController extends Controller
                 'reservationTimesArray' => (isset($reservationTimesArray) ? $reservationTimesArray : array()),
                 'tomorrowArray' => (isset($tomorrowArray) ? $tomorrowArray : array()),
                 'reviews' => $reviews,
-                'deals' => $deals,
                 'reviewModel' => new Review,
                 'times' => CompanyReservation::getAllTimes(),
                 'paginationQueryString' => $request->query(),
@@ -143,11 +141,10 @@ class RestaurantController extends Controller
         }
     }
 
-    public function landingpage($slug)
-    {
+    public function landingpage($slug) {
         $company = Company::where('no_show', 0)
-            ->where('slug', $slug)
-            ->first()
+                ->where('slug', $slug)
+                ->first()
         ;
 
         if ($company) {
@@ -156,18 +153,17 @@ class RestaurantController extends Controller
             return view('pages/restaurant/landingpage', [
                 'websiteSettings' => $websiteSettings,
                 'company' => $company,
-                'restaurantUrl' => URL::to('restaurant/'.$company['slug'].'?open_popup_res=1'),
+                'restaurantUrl' => URL::to('restaurant/' . $company['slug'] . '?open_popup_res=1'),
             ]);
         } else {
             App::abort(404);
         }
     }
 
-    public function contact($slug, RestaurantRequest $request)
-    {
+    public function contact($slug, RestaurantRequest $request) {
         $company = Company::where('slug', $slug)
-            ->where('no_show', 0)    
-            ->first()
+                ->where('no_show', 0)
+                ->first()
         ;
 
         if ($company) {
@@ -185,20 +181,19 @@ class RestaurantController extends Controller
                 $message->to((trim($company->contact_email) == '' ? $company->email : $company->contact_email))->subject($request->input('subject'));
             });
 
-            return Redirect::to('restaurant/'.$slug);
+            return Redirect::to('restaurant/' . $slug);
         } else {
             App::abort(404);
         }
     }
 
-    public function reviewsAction(ReviewRequest $request, $slug)
-    {
+    public function reviewsAction(ReviewRequest $request, $slug) {
         $company = Company::where('slug', $slug)
-            ->where('no_show', 0)    
-            ->first()
+                ->where('no_show', 0)
+                ->first()
         ;
 
-        if ($company)  {
+        if ($company) {
             $this->validate($request, []);
 
             $data = new Review;
@@ -210,21 +205,21 @@ class RestaurantController extends Controller
             $data->user_id = Sentinel::getUser()->id;
             $data->save();
 
-            $successMessage = 'Voor het plaatsen van uw feedback. Wij waarderen uw mening. U heeft '.$company->name.' beoordeeld met <br /><br />
+            $successMessage = 'Voor het plaatsen van uw feedback. Wij waarderen uw mening. U heeft ' . $company->name . ' beoordeeld met <br /><br />
                                  <strong>Eten</strong><br />
-                                 <span class=\'ui star disabled no-rating rating\' data-rating=\''.$request->input('food').'\'></span><br /><br />
+                                 <span class=\'ui star disabled no-rating rating\' data-rating=\'' . $request->input('food') . '\'></span><br /><br />
                                  <strong>Service</strong><br />
-                                 <span class=\'ui star disabled no-rating rating\' data-rating=\''.$request->input('service').'\'></span><br /><br />
+                                 <span class=\'ui star disabled no-rating rating\' data-rating=\'' . $request->input('service') . '\'></span><br /><br />
                                  <strong>Decor</strong><br />
-                                 <span class=\'ui star disabled no-rating rating\' data-rating=\''.$request->input('decor').'\'></span><br /><br />
-                                 Klopt dit niet? <a href=\''.url('account/reviews/edit/'.$data->id).'\'>Klik hier om uw recensie aan te passen.</a>';
+                                 <span class=\'ui star disabled no-rating rating\' data-rating=\'' . $request->input('decor') . '\'></span><br /><br />
+                                 Klopt dit niet? <a href=\'' . url('account/reviews/edit/' . $data->id) . '\'>Klik hier om uw recensie aan te passen.</a>';
 
             Alert::success(preg_replace('/[\n\r]/', '', $successMessage), 'Bedankt')->html()->persistent('Sluiten');
 
             $mailtemplate = new MailTemplate();
-                
+
             $mailtemplate->sendMail(array(
-                'email' =>  Sentinel::getUser()->email,
+                'email' => Sentinel::getUser()->email,
                 'template_id' => 'new-review-client',
                 'company_id' => $company->id,
                 'replacements' => array(
@@ -239,7 +234,7 @@ class RestaurantController extends Controller
                     '%allergies%' => '',
                     '%preferences%' => ''
                 )
-            )); 
+            ));
 
             $mailtemplate->sendMail(array(
                 'email' => $company->email,
@@ -258,28 +253,27 @@ class RestaurantController extends Controller
                     '%allergies%' => '',
                     '%preferences%' => ''
                 )
-            )); 
+            ));
 
-            return Redirect::to('restaurant/'.$slug.'#reviews');
+            return Redirect::to('restaurant/' . $slug . '#reviews');
         } else {
             App::abort(404);
         }
     }
 
-    public function widgetCalendar($slug)
-    {
+    public function widgetCalendar($slug) {
         $company = Company::where('slug', $slug)
-            ->where('no_show', 0)    
-            ->first()
+                ->where('no_show', 0)
+                ->first()
         ;
 
         if ($company) {
             $reservationTimesArray = CompanyReservation::getReservationTimesArray(
-                array(
-                    'company_id' => array($company->id), 
-                    'date' => date('Y-m-d'),
-                    'selectPersons' => NULL
-                )
+                            array(
+                                'company_id' => array($company->id),
+                                'date' => date('Y-m-d'),
+                                'selectPersons' => NULL
+                            )
             );
 
             return view('pages/restaurant/widgets/calendar', [
@@ -295,4 +289,5 @@ class RestaurantController extends Controller
             }
         }
     }
+
 }
