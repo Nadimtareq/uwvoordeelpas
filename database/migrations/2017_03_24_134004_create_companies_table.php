@@ -12,7 +12,8 @@ class CreateCompaniesTable extends Migration
      */
     public function up()
     {
-        Schema::create('companies', function (Blueprint $table) {
+        if (!Schema::hasTable('companies')) {
+            Schema::create('companies', function (Blueprint $table) {
             $table->increments('id');
             $table->string('slug');
             $table->string('name');
@@ -63,6 +64,8 @@ class CreateCompaniesTable extends Migration
             $table->text('discount_comment');
             $table->integer('clicks');
         });
+        }
+        
     }
 
     /**
@@ -72,6 +75,6 @@ class CreateCompaniesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('companies');
+        Schema::dropIfExists('companies');
     }
 }

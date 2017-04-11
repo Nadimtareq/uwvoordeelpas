@@ -12,7 +12,8 @@ class CreatePagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('pages', function (Blueprint $table) {
+        if (!Schema::hasTable('pages')) {
+            Schema::create('pages', function (Blueprint $table) {
             $table->increments('id');
             $table->string('slug');
             $table->integer('category_id');
@@ -23,6 +24,8 @@ class CreatePagesTable extends Migration
             $table->string('link_to');
             $table->string('meta_description');
         });
+        }
+        
     }
 
     /**
@@ -32,6 +35,6 @@ class CreatePagesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('pages');
+        Schema::dropIfExists('pages');
     }
 }

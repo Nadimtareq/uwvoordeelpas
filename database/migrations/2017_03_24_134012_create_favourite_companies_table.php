@@ -3,21 +3,22 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFavouriteCompaniesTable extends Migration
-{
+class CreateFavouriteCompaniesTable extends Migration {
+
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
-        Schema::create('favorite_companies', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('company_id');
-            $table->integer('user_id');
-            $table->timestamps();
-        });
+    public function up() {
+        if (!Schema::hasTable('favorite_companies')) {
+            Schema::create('favorite_companies', function (Blueprint $table) {
+                $table->increments('id');
+                $table->integer('company_id');
+                $table->integer('user_id');
+                $table->timestamps();
+            });
+        }
     }
 
     /**
@@ -25,8 +26,8 @@ class CreateFavouriteCompaniesTable extends Migration
      *
      * @return void
      */
-    public function down()
-    {
-        Schema::drop('favorite_companies');
+    public function down() {
+        Schema::dropIfExists('favorite_companies');
     }
+
 }

@@ -3,22 +3,23 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateNewslettersTable extends Migration
-{
+class CreateNewslettersTable extends Migration {
+
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
-        Schema::create('newsletters', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('subject');
-            $table->longText('content');
-            $table->longText('companies_ids');
-            $table->timestamps();
-        });
+    public function up() {
+        if (!Schema::hasTable('newsletters')) {
+            Schema::create('newsletters', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('subject');
+                $table->longText('content');
+                $table->longText('companies_ids');
+                $table->timestamps();
+            });
+        }
     }
 
     /**
@@ -26,8 +27,8 @@ class CreateNewslettersTable extends Migration
      *
      * @return void
      */
-    public function down()
-    {
-        Schema::drop('newsletters');
+    public function down() {
+        Schema::dropIfExists('newsletters');
     }
+
 }

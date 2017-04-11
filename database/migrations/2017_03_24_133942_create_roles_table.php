@@ -3,22 +3,23 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRolesTable extends Migration
-{
+class CreateRolesTable extends Migration {
+
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
-        Schema::create('roles', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('slug');
-            $table->string('name');
-            $table->text('permissions');
-            $table->timestamps();
-        });
+    public function up() {
+        if (!Schema::hasTable('roles')) {
+            Schema::create('roles', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('slug');
+                $table->string('name');
+                $table->text('permissions');
+                $table->timestamps();
+            });
+        }
     }
 
     /**
@@ -26,8 +27,8 @@ class CreateRolesTable extends Migration
      *
      * @return void
      */
-    public function down()
-    {
-        Schema::drop('roles');
+    public function down() {
+        Schema::dropIfExists('roles');
     }
+
 }

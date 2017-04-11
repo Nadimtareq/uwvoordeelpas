@@ -3,22 +3,23 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSearchHistoryTable extends Migration
-{
+class CreateSearchHistoryTable extends Migration {
+
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
-        Schema::create('search_history', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('term');
-            $table->integer('count');
-            $table->string('page');
-            $table->timestamps();
-        });
+    public function up() {
+        if (!Schema::hasTable('search_history')) {
+            Schema::create('search_history', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('term');
+                $table->integer('count');
+                $table->string('page');
+                $table->timestamps();
+            });
+        }
     }
 
     /**
@@ -26,8 +27,8 @@ class CreateSearchHistoryTable extends Migration
      *
      * @return void
      */
-    public function down()
-    {
-        Schema::drop('search_history');
+    public function down() {
+        Schema::dropIfExists('search_history');
     }
+
 }

@@ -3,22 +3,23 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersBansTable extends Migration
-{
+class CreateUsersBansTable extends Migration {
+
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
-        Schema::create('users_bans', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('user_id');
-            $table->text('reason');
-            $table->date('expired_date');
-            $table->timestamps();
-        });
+    public function up() {
+        if (!Schema::hasTable('users_bans')) {
+            Schema::create('users_bans', function (Blueprint $table) {
+                $table->increments('id');
+                $table->integer('user_id');
+                $table->text('reason');
+                $table->date('expired_date');
+                $table->timestamps();
+            });
+        }
     }
 
     /**
@@ -26,8 +27,8 @@ class CreateUsersBansTable extends Migration
      *
      * @return void
      */
-    public function down()
-    {
-        Schema::drop('users_bans');
+    public function down() {
+        Schema::dropIfExists('users_bans');
     }
+
 }

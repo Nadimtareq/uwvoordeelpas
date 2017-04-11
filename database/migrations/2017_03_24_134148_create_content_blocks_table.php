@@ -12,7 +12,8 @@ class CreateContentBlocksTable extends Migration
      */
     public function up()
     {
-        Schema::create('content_blocks', function (Blueprint $table) {
+        if (!Schema::hasTable('content_blocks')) {
+            Schema::create('content_blocks', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('category');
             $table->string('slug');
@@ -20,6 +21,8 @@ class CreateContentBlocksTable extends Migration
             $table->longText('content');
             $table->timestamps();
         });
+        }
+        
     }
 
     /**
@@ -29,6 +32,6 @@ class CreateContentBlocksTable extends Migration
      */
     public function down()
     {
-        Schema::drop('content_blocks');
+        Schema::dropIfExists('content_blocks');
     }
 }
