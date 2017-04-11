@@ -53357,8 +53357,6 @@ $(document).ready(function() {
 					}
 				}
 
-            	$(window).scroll(function() {
-            		 if ($(document).scrollTop() > positionTop) {
             		 	if (wrapper.hasClass('active')) {
 				            carousel.owlCarousel({
 			                    items: 5,
@@ -53384,8 +53382,7 @@ $(document).ready(function() {
 
 							wrapper.removeClass('active');
 			        	}
-			        }
-            	});
+			       
 
 	            // Custom Navigation Events
 	            prevBtn.click(function(){
