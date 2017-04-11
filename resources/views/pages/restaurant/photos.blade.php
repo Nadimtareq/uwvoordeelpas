@@ -6,7 +6,8 @@
 			@if($media != '[]')
 				@foreach ($media as $mediaItem)
 				<li>
-					<a href="{{ url($mediaItem->getUrl()) }}" data-lightbox="roadtrip"><img class="ui image" src="{{ url($mediaItem->getUrl()) }}"></a>
+				<a href="{{ url($mediaItem->getUrl()) }}" data-lightbox="roadtrip">
+                                    <img class="ui image" src="{{ url($mediaItem->getUrl()) }}"></a>
 
 	                {!! $discountHelper->replaceKeys(
 	                        $company, 
