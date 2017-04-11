@@ -12,7 +12,8 @@ class CreateMediaTable extends Migration
      */
     public function up()
     {
-        Schema::create('media', function (Blueprint $table) {
+        if (!Schema::hasTable('media')) {
+            Schema::create('media', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('model_id');
             $table->string('model_type');
@@ -26,6 +27,8 @@ class CreateMediaTable extends Migration
             $table->integer('order_column');
             $table->timestamps();
         });
+        }
+        
     }
 
     /**
@@ -35,6 +38,6 @@ class CreateMediaTable extends Migration
      */
     public function down()
     {
-        Schema::drop('media');
+        Schema::dropIfExists('media');
     }
 }

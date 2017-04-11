@@ -12,7 +12,8 @@ class CreateIncassosTable extends Migration
      */
     public function up()
     {
-        Schema::create('incassos', function (Blueprint $table) {
+        if (!Schema::hasTable('incassos')) {
+            Schema::create('incassos', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('paid');
             $table->string('invoicenumber');
@@ -22,6 +23,8 @@ class CreateIncassosTable extends Migration
             $table->decimal('amount', 10, 2);
             $table->timestamps();
         });
+        }
+        
     }
 
     /**
@@ -31,6 +34,6 @@ class CreateIncassosTable extends Migration
      */
     public function down()
     {
-        Schema::drop('incassos');
+        Schema::dropIfExists('incassos');
     }
 }

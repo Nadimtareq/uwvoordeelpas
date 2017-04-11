@@ -12,7 +12,8 @@ class CreateAlertNotificationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('alert_notifications', function (Blueprint $table) {
+        if (!Schema::hasTable('alert_notifications')) {
+            Schema::create('alert_notifications', function (Blueprint $table) {
             $table->increments('id');
             $table->longText('content');
             $table->integer('is_on');
@@ -20,6 +21,8 @@ class CreateAlertNotificationsTable extends Migration
             $table->integer('width');
             $table->integer('height');
         });
+        }
+        
     }
 
     /**
@@ -29,6 +32,6 @@ class CreateAlertNotificationsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('alert_notifications');
+        Schema::dropIfExists('alert_notifications');
     }
 }

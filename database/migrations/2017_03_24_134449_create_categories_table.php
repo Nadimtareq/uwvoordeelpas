@@ -12,7 +12,8 @@ class CreateCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
+        if (!Schema::hasTable('categories')) {
+            Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('slug');
             $table->string('name');
@@ -22,6 +23,8 @@ class CreateCategoriesTable extends Migration
             $table->integer('ad_page_id');
             $table->integer('no_show');
         });
+        }
+        
     }
 
     /**
@@ -31,6 +34,6 @@ class CreateCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('categories');
+        Schema::dropIfExists('categories');
     }
 }
