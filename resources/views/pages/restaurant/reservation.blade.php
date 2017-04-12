@@ -15,6 +15,7 @@ while ($st->lte($dt)) {
 		<?php echo Form::hidden('company_id', $company->id); ?>
 		<?php echo Form::hidden('year', date('Y')); ?>
 		<?php echo Form::hidden('month', date('m')); ?>
+		<input type="hidden" name="deal" value="{{ (@app('request')->input('deal'))?app('request')->input('deal'):'' }}">
 		<?php echo Form::hidden('reservation_url', URL::to('restaurant/reservation/'.$company->slug)); ?>
 		<div class="two fields">
 			<div class="field">
@@ -33,21 +34,7 @@ while ($st->lte($dt)) {
 					</div>
 				</div>
 			</div>
-			
-			<div class="field">
-				<div id="dealField" class="ui normal compact selection dropdown deal">
-					<input type="hidden" name="deal" value="{{ (@app('request')->input('deal'))?app('request')->input('deal'):1 }}">
-														
-					<div class="default text">Deal</div>
-					<i class="dropdown icon"></i>
-
-					<div class="menu">
-						@foreach($deals as $deal)
-						<div class="item" data-deal="<?php echo $deal->id?>" data-value="<?php echo $deal->id?>"><?php echo $deal->name  ?></div>
-						@endforeach
-					</div>
-				</div>
-			</div>	
+				
 			<div class="field">
 				<div id="personsField" class="ui normal compact selection dropdown persons searchReservation calendarInput">
 					<input type="hidden" name="persons" value="{{ ($userAuth && $userInfo->kids != 'null' && $userInfo->kids != NULL && $userInfo->kids != '[""]' ? $userInfo->kids : 1) }}">

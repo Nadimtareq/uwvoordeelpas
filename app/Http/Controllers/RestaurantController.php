@@ -106,8 +106,8 @@ class RestaurantController extends Controller {
                             )
             );
             $deals = ReservationOption::where('company_id', $company->id)
-                    ->where('date_from', '<', date('Y-m-d'))
-                    ->where('date_to', '>', date('Y-m-d'))
+                    ->where('date_from', '<=', date('Y-m-d'))
+                    ->where('date_to', '>=', date('Y-m-d'))
                     ->get();
             $disabled = array();
 

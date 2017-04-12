@@ -96,7 +96,11 @@ class ReservationController extends Controller
                 $request->input('time')
             );
          	$deal=ReservationOption::where('id',$request->input('deal'))->first();
-        
+        	if(!$deal){
+        		 alert()->error('', 'Het is niet mogelijk om op dit tijdstip te reserveren of er zijn geen plaatsen beschikbaar.')->html()->persistent('Sluiten');
+
+                return Redirect::to('/');
+        	}
             if (isset($reservationTimes[$time])) {
                 return view('pages/reservation', [
                     'discountMessage' => Company::getDiscountMessage($company->days, $company->discount, $company->discount_comment),
