@@ -706,6 +706,7 @@ Route::any('{slug}', 'HomeController@page')->where('slug', '[\-_A-Za-z0-9]+')->m
 Route::group(['prefix' => 'api'], function () {
     Route::get('/users/{key}', 'ApiController@getUsers');
     Route::get('/affiliates/{key}', 'ApiController@getAffiliates');
+    Route::get('/afflinks', 'ApiController@getAffiliatesUrl');
     Route::get('affiliates/find/{userid}/{url}', 'ApiController@findProgram');
     Route::get('auth', 'ApiController@checkAuth');
 });
