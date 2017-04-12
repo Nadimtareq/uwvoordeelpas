@@ -20,11 +20,11 @@
             <div class="image" style="width: auto !important;">
                 <div title="{{ $data->name }}" class="computerImage">
                     @if (isset($media[0]))
-                        <a href="{{ url('restaurant/'.$data->slug) }}" title="{{ $data->name }}">
+                        <a href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}" title="{{ $data->name }}">
                             <img src="{{ url($media[0]->getUrl('175Thumb')) }}" alt="{{ $data->name }}" style="width: 275px; height: 235px;" />
                         </a>
                     @else
-                        <a href="{{ url('restaurant/'.$data->slug) }}" title="{{ $data->name }}">
+                        <a href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}" title="{{ $data->name }}">
                             <img src="{{ url('images/placeholdimage.png') }}" alt="{{ $data->name }}" style="width: 275px; height: 235px;" />
                         </a>
                     @endif
@@ -40,7 +40,7 @@
 
                 <!-- Mobile -->
                 <div class="mobileImage">
-                    <a href="{{ url('restaurant/'.$data->slug) }}" title="{{ $data->name }}">
+                    <a href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}" title="{{ $data->name }}">
                         @if(isset($media[0]))
                             <img src="{{ url($media[0]->getUrl('mobileThumb')) }}"  style="width: 275px; height: 235px;"/>
                         @else
@@ -59,7 +59,7 @@
 
                 <div class="mobileInfo">
                     <div class="right">
-                        <a href="{{ url('restaurant/'.$data->slug) }}" title="{{ $data->name }}">
+                        <a href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}" title="{{ $data->name }}">
                             <h2>{{ $deal->name }}</h2>
                         </a>
 
@@ -103,7 +103,7 @@
             </div>
 
             <div class="text">
-                <a href="{{ url('restaurant/'.$data->slug) }}" title="{{ $data->name }}">
+                <a href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}" title="{{ $data->name }}">
                     <h2>{{ $deal->name }}</h2>
                 </a>
                 {{--<span> Van: <strike>{{ $data->price_from }}</strike> | Voor: {{ $data->price }}</span>--}}
@@ -151,7 +151,8 @@
                         Request::input('persons', 2),
                         $reservationTimesArray,
                         $tomorrowArray,
-                        Request::input('date')
+                        Request::input('date'),
+                        Request::input('deal', $deal->id)
                     )
                 !!}
                  <?php                 
