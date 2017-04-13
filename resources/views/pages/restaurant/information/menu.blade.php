@@ -5,9 +5,9 @@
   @if(isset($deals) && count($deals))
         <?php foreach ($deals as $deal): ?>
 <div class="row">
-    <div class="col-md-3">
+<!--    <div class="col-md-3">
         <img id="image" src="{{ url($media[0]->getUrl('175Thumb')) }}" class="img-responsive" alt="" />
-    </div>
+    </div>-->
 
     <div class="col-md-6">
       
@@ -29,7 +29,7 @@
                     </span>
                 </p>
                
-                <?php
+                <?php /*
                 if (isset($deal->reservation_count) && ($deal->reservation_count[0]['total_reservation'] >= $deal->total_amount)) {
                     ?>
                     <a class="deal_btn" style="float: right;" href="javascript:void(0)">SOLD OUT</a>
@@ -42,7 +42,7 @@
                         <span><i class="right chevron icon divider"></i></span>
                     </button>
                     <?php
-                }
+                } */
                 ?>
             </div>
         </div>

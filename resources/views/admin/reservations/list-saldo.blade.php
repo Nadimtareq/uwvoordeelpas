@@ -4,6 +4,7 @@ setlocale(LC_TIME, 'Dutch');
 @foreach($data as $result)
 <?php 
 $date = \Carbon\Carbon::create(date('Y', strtotime($result->date)), date('m', strtotime($result->date)), date('d', strtotime($result->date))); 
+
 ?>
 <tr>
     <td>
@@ -29,6 +30,6 @@ $date = \Carbon\Carbon::create(date('Y', strtotime($result->date)), date('m', st
     </td>
     <td>{{ $result->persons }}</td>
     <td class="text-aligned center">{!! ($result->restaurant_is_paid == 1 ? '<i class="green icon checkmark"></i>' : '<i class="red remove icon"></i>') !!}</td>
-    <td><i class="euro icon"></i> {{ $result->saldo }}</td>
+    <td><i class="euro icon"></i> {{ (int)$result->persons * (float)$result->deal_price }}</td>
 </tr>
 @endforeach

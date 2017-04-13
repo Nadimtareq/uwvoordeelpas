@@ -17,7 +17,7 @@ class CompanyReservation extends Model
         60 => '1 hour'
     );
 
-    public function getTimeCarousel($reservationDate = NULL, $data, $persons, $reservationTimesArray, $tomorrowArray, $hasDate)
+    public function getTimeCarousel($reservationDate = NULL, $data, $persons, $reservationTimesArray, $tomorrowArray, $hasDate,$deal)
     {
         $allTimesArray = static::getAllTimes();
 
@@ -69,7 +69,7 @@ class CompanyReservation extends Model
                 $i++;
 
                 // Available
-                $reservationUrl = url('restaurant/reservation/'.$data->slug.'?date='.$dateReservation.'&time='.date('Hi', strtotime($time)).'&persons='.$persons);
+                $reservationUrl = url('restaurant/reservation/'.$data->slug.'?date='.$dateReservation.'&time='.date('Hi', strtotime($time)).'&persons='.$persons.'&deal='.@$deal);
 
                 $timeCarousel .= '<div class="available-'.$i.' time-available" data-time="'.date('Hi', strtotime($time)).'">
                                     <a href="'.$reservationUrl.'" data-redirect="'.$reservationUrl.'" data-type-redirect="1" class="ui fluid blue mini '.(Sentinel::check() == FALSE ? 'login' : '').' button guestClick">

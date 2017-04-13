@@ -180,14 +180,16 @@ class ReservationsController extends Controller
             'reservations.user_id',
             'reservations.date',
             'reservations.time',
+            'reservations_options.price as deal_price',
+            'reservations_options.name as deal_name',
             'companies.slug as companySlug',
             'companies.name as companyName'
         )
             ->leftJoin('users', 'reservations.user_id', '=', 'users.id') 
+            ->leftJoin('reservations_options','reservations.option_id', '=', 'reservations_options.id')
             ->leftJoin('companies', 'reservations.company_id', '=', 'companies.id')
             ->where('reservations.is_cancelled', 0)
-            ->whereIn('reservations.status', array('reserved', 'present'))
-        ;
+            ->whereIn('reservations.status', array('reserved', 'present'));
 
         if ($company != NULL) {
             $reservations = $reservations->where('companies.slug', '=', $company);
@@ -306,7 +308,7 @@ class ReservationsController extends Controller
         # Count total persons and saldo
         foreach($reservations->get() as $reservation) {
             $totalPersons += $reservation->persons;
-            $totalSaldo += $reservation->saldo;
+            $totalSaldo += (int)$reservation->persons* (float)$reservation->deal_price;
         }
         
         $reservations = $reservations->paginate($this->limit);
@@ -327,7 +329,7 @@ class ReservationsController extends Controller
 
         $role = Sentinel::findRoleBySlug('callcenter');
         $callcenterUsers = $role->users()->with('roles')->get();
-
+       
         return view('admin/'.$this->slugController.'/saldo', [
             'data' => $reservations, 
             'callcenterUsers' => $callcenterUsers, 

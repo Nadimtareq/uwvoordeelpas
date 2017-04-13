@@ -21,7 +21,7 @@
             @endif
 
             {{-- @if (Route::getCurrentRoute()->uri() == '/' AND ($userAuth && $userInfo->extension_downloaded == 1))--}}
-         @if(Route::getCurrentRoute()->uri() != '/')
+         @if(Route::getCurrentRoute()->uri() != '/' ||  $userAuth == true)
             <!-- Desktop -->
             <div id="sliderDesktopForm" >
                 <form action="<?php echo url('search'); ?>" method="GET" class="ui form">

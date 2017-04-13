@@ -53212,7 +53212,7 @@ $(document).ready(function() {
 
 		// check if the form id exists
 		if ($form[0]) {
-			$(this).attr('data-redirect',  $('input[name="reservation_url"]').val() + '?date=' + $('input[name="date"]').val().replace(/-/g, '') + '&time=' + $('input[name="time"]').val().replace(':', '') + '&persons=' + $('input[name="persons"]').val() + ($('input[name="iframe"]').val() == 1 ?  '&iframe=1' : ''));
+			$(this).attr('data-redirect',  $('input[name="reservation_url"]').val() + '?date=' + $('input[name="date"]').val().replace(/-/g, '') + '&time=' + $('input[name="time"]').val().replace(':', '') +'&deal=' + $('input[name="deal"]').val()+ '&persons=' + $('input[name="persons"]').val() + ($('input[name="iframe"]').val() == 1 ?  '&iframe=1' : ''));
 		}
 	});
 
@@ -53822,9 +53822,9 @@ $(document).ready(function() {
 				if ($(this).attr('id') == 'submitField') {
 					if ($form[0]) {
 						if ($encode !== undefined) {
-							var reservationUrl = encodeURIComponent($('input[name="reservation_url"]').val() + '?date=' + $('input[name="date_hidden"]').val().replace(/-/g, '') + '&time=' + $('input[name="time"]').val().replace(':', '') + '&persons=' + $('input[name="persons"]').val() + ($('input[name="iframe"]').val() == 1 ?  '&iframe=1' : ''));
+							var reservationUrl = encodeURIComponent($('input[name="reservation_url"]').val() + '?date=' + $('input[name="date_hidden"]').val().replace(/-/g, '') + '&time=' + $('input[name="time"]').val().replace(':', '') + '&persons=' + $('input[name="persons"]').val()+'&deal=' + $('input[name="deal"]').val()  + ($('input[name="iframe"]').val() == 1 ?  '&iframe=1' : ''));
 						} else {
-							var reservationUrl = encodeURIComponent($('input[name="reservation_url"]').val() + '?date=' + $('input[name="date"]').val().replace(/-/g, '') + '&time=' + $('input[name="time"]').val().replace(':', '') + '&persons=' + $('input[name="persons"]').val() + ($('input[name="iframe"]').val() == 1 ?  '&iframe=1' : ''));
+							var reservationUrl = encodeURIComponent($('input[name="reservation_url"]').val() + '?date=' + $('input[name="date"]').val().replace(/-/g, '') + '&time=' + $('input[name="time"]').val().replace(':', '') + '&persons=' + $('input[name="persons"]').val() +'&deal=' + $('input[name="deal"]').val()  + ($('input[name="iframe"]').val() == 1 ?  '&iframe=1' : ''));
 						}
 					}
 				}
@@ -53867,9 +53867,9 @@ $(document).ready(function() {
 				// check if the form id exists
 				if ($form[0]) {
 					if ($encode !== undefined) {
-						var reservationUrl = encodeURIComponent($('input[name="reservation_url"]').val() + '?date=' + $('input[name="date_hidden"]').val().replace(/-/g, '') + '&time=' + $('input[name="time"]').val().replace(':', '') + '&persons=' + $('input[name="persons"]').val() + ($('input[name="iframe"]').val() == 1 ?  '&iframe=1' : ''));
+						var reservationUrl = encodeURIComponent($('input[name="reservation_url"]').val() + '?date=' + $('input[name="date_hidden"]').val().replace(/-/g, '') + '&time=' + $('input[name="time"]').val().replace(':', '') + '&persons=' + $('input[name="persons"]').val() +'&deal=' + $('input[name="deal"]').val()+ ($('input[name="iframe"]').val() == 1 ?  '&iframe=1' : ''));
 					} else {
-						var reservationUrl = encodeURIComponent($('input[name="reservation_url"]').val() + '?date=' + $('input[name="date"]').val().replace(/-/g, '') + '&time=' + $('input[name="time"]').val().replace(':', '') + '&persons=' + $('input[name="persons"]').val() + ($('input[name="iframe"]').val() == 1 ?  '&iframe=1' : ''));
+						var reservationUrl = encodeURIComponent($('input[name="reservation_url"]').val() + '?date=' + $('input[name="date"]').val().replace(/-/g, '') + '&time=' + $('input[name="time"]').val().replace(':', '') + '&persons=' + $('input[name="persons"]').val()+'&deal=' + $('input[name="deal"]').val() + ($('input[name="iframe"]').val() == 1 ?  '&iframe=1' : ''));
 					}
 				}
 
