@@ -140,7 +140,7 @@ img { border: 0; }
 .reviews .segment { padding: 0; border: 0!important; }
 .ui.comments .comment .text { color: #aab2bd; font-size: 13px; }
 .ui.comments .comment .author { font-weight: 400; font-size: 19px; margin: 0; margin-top: 10px; color: #434a54; }
-.ui.tabular.menu .item { background: none #aaa !important; color: #fff !important; border-top-width: 1px; border-color: #d4d4d5; font-weight: bold; border: 0; margin-bottom: -1px; box-shadow: none; margin-right: 5px; text-transform: uppercase; border-radius: 0 !important; margin-top: 3px; }
+.ui.tabular.menu .item { background: none #666 !important; color: #fff !important; border-top-width: 1px; border-color: #d4d4d5; font-weight: bold; border: 0; margin-bottom: -1px; box-shadow: none; margin-right: 5px; text-transform: uppercase; border-radius: 0 !important; margin-top: 3px; }
 .ui.tabular.menu .active.item { border-radius: none!important; background: none #1e70bf !important; color: #fff !important; }
 .ui.grid > .grey.row, .ui.grid > .grey.column, .ui.grid > .row > .grey.column { background-color: #eee!important; margin-bottom: 10px; }
 .pushable:not(body)>.fixed, .pushable:not(body)>.pusher:after, .pushable:not(body)>.ui.sidebar { z-index: 200; }
@@ -516,6 +516,9 @@ footer .footer .bottom { margin-top: 0; }
 .header .logo { width: 90px; }
 .header .logo img { max-width: none!important; }
 #restaurantPage .ui.breadcrumb { text-align: center; line-height: 30px; }
+}
+ @media (max-width: 620px) {
+.slider { display: none; }
 }
 .fieldList .field { width: 25%!important; }
 .ui.column.grid > .column, .ui.column.grid > .row > .column { display: block; float: left; }
@@ -14713,3 +14716,11 @@ button.btn-success.pull-right span i { color: #fff; font-size: 15px; }
     text-align: right;
     width: 100%;
 }
+
+.ui.vertically.grid.info.container .ui .text h2 { font-size: 30px; }
+#restaurantPage #menuRestaurant .ui.top.attached.tabular.menu {
+	float: left;
+    margin-bottom: 20px;
+    width: 100%;
+}
+#restaurantPage #menuRestaurant .ui.top.attached.tabular.menu a.item { font-size: 17px; }

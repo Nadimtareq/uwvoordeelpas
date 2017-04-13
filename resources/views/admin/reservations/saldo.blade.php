@@ -183,12 +183,13 @@
             @if(count($data) >= 1)
                 @include('admin/reservations.list-saldo')
                 <tr>
-                    <td colspan="4">Totaal</td>
+                    <td colspan="5">Totaal</td>
                     <td colspan="2"><i class="euro icon"></i> {{ $totalPersons }}</td>
                     <td><i class="euro icon"></i> {{ number_format($totalSaldo, 2, '.', '') }}</td>
                 </tr>
                 <tr>
-                    <td colspan="6">Totaal bedrag</td>
+                    <td colspan="7">Totaal bedrag</td>
+                  
                     <td><i class="euro icon"></i> {{ number_format($totalSaldo - $totalPersons, 2, '.', '') }}</td>
                 </tr>
             @else
