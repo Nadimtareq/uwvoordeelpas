@@ -34,7 +34,7 @@ class ApiController extends Controller {
         
 
           $affiliate = Affiliate::where('no_show', 0)
-                ->where('affiliates.name', 'LIKE', '%' . $domain . '%')
+                ->where('affiliates.name', '=', $domain )
                 ->first();
       
         if (count($affiliate) == 1) {
