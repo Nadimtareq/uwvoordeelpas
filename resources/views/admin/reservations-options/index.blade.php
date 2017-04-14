@@ -48,7 +48,11 @@
         </th>
         <th data-slug="name" class="three wide">Naam</th>
         <th data-slug="total_amount" class="four wide">Aantal plaatsen</th>
-        <th data-slug="total_res" class="four wide">Aantal reservering</th>
+        <th data-slug="total_res" class="four wide">Aantal gasten</th>
+        <th data-slug="date_from" class="four wide">Online van</th>
+        <th data-slug="date_to" class="four wide">Online tot</th>
+        <th data-slug="price_from" class="four wide">prijs van</th>
+        <th data-slug="price" class="four wide">prijs tot</th>
         <th data-slug="total_res" class="four wide">Staat</th>
         <th data-slug="disabled">online</th>
         </tr>
@@ -56,6 +60,7 @@
         <tbody class="list">
             @if(count($data) >= 1)
             @foreach($data as $result)
+        
             <tr>
                 <td>
                     <div class="ui child checkbox">
@@ -71,6 +76,18 @@
                 </td>
                 <td>
                     {{ ($result->total_res)?$result->total_res:0 }}
+                </td>
+                <td>
+                    {{ ($result->date_from)?$result->date_from:'' }}
+                </td>
+                <td>
+                    {{ ($result->date_to)?$result->date_to:'' }}
+                </td>
+                <td>
+                    {{ ($result->price_from)?$result->price_from:'' }}
+                </td>
+                <td>
+                    {{ ($result->price)?$result->price:'' }}
                 </td>
                 <td>
                     <?php

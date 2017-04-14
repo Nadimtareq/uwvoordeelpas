@@ -159,41 +159,41 @@
                     $getRec        = HomeController::getPersons($deal->id);
                     $count_persons = $getRec[0]->total_persons;
                 ?>
-                <div style="display: inline; float: right; font-size: 20px; color: #5e80b2;">
-                   <span style="position: relative; font-weight: normal;  ">
-                        <s>&euro; {{ $deal->price_from }}</s>
-                    </span>
-                    <span style="position: relative;  font-weight: bold; margin-top:10px; margin-left: 10px;">
-                        &euro; {{ $deal->price }}
-                    </span>
-                </div>
-                
-              <br><br>
-                <div style="display: block;">
-                <div style="display: inline;">
-                    {{--<span style="position: relative; font-weight: bold; ">--}}
-                        {{--<s>{{ $deal->price_from }}</s>--}}
-                    {{--</span>--}}
-                    {{--<span style="position: relative;  font-weight: bold; margin-top:10px; margin-left: 10px;">--}}
-                        {{--{{ $deal->price }}--}}
-                    {{--</span>--}}
-                </div>
+                <div class="mdg-price-a">
+                    <div class="mdg-price-b">
+                        <span>
+                            <s>&euro; {{ $deal->price_from }}</s>
+                        </span>
+                        <span style="font-weight: bold; margin-left: 10px;">
+                            &euro; {{ $deal->price }}
+                        </span>
+                    </div>
 
-                <div style="display: inline;">
-                   <?php
-                    if($count_persons >= $deal->total_amount){
-                ?>
-                    <a class="deal_btn" style="float: right;" href="javascript:void(0)">SOLD OUT</a>
-                <?php        
-                    }else{
-                ?>
-                    <a class="deal_btn" style="float: right;" href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}">NAAR DE DEAL</a>
-                <?php        
-                    }
-                ?>
-                </div>
-                </div>
+                    <div class="mdg-price-b">
+                        <div class="mdg-price-c">
+                            {{--<span>--}}
+                                {{--<s>{{ $deal->price_from }}</s>--}}
+                            {{--</span>--}}
+                            {{--<span style="margin-left: 10px;">--}}
+                                {{--{{ $deal->price }}--}}
+                            {{--</span>--}}
+                        </div>
 
+                        <div class="mdg-price-c">
+                           <?php
+                            if($count_persons >= $deal->total_amount){
+                            ?>
+                                <a class="deal_btn" style="float: right;" href="javascript:void(0)">SOLD OUT</a>
+                            <?php        
+                            }else{
+                            ?>
+                                <a class="deal_btn" style="float: right;" href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}">NAAR DE DEAL</a>
+                            <?php        
+                                }
+                            ?>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="clear"></div>
         </div>
