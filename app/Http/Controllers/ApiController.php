@@ -25,13 +25,18 @@ class ApiController extends Controller {
 
     public function findProgram($userId, $url) {
         $domain = preg_replace('/^www\./', '', $url);
-        $urlPieces = explode('.', $domain);
+//        $urlPieces = explode('.', $domain);
 
-        $affiliate = Affiliate::where('no_show', 0)
-                ->where('affiliates.name', 'LIKE', '%' . $urlPieces[0] . '%')
-                ->first()
-        ;
+//        $affiliate = Affiliate::where('no_show', 0)
+//                ->where('affiliates.name', 'LIKE', '%' . $urlPieces[0] . '%')
+//                ->first()
+//        ;
+        
 
+          $affiliate = Affiliate::where('no_show', 0)
+                ->where('affiliates.link', 'LIKE', '%' . $domain . '%' )
+                ->first();
+      
         if (count($affiliate) == 1) {
             $affiliateHelper = new AffiliateHelper();
 
