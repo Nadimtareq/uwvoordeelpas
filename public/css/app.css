@@ -257,7 +257,9 @@ section .content { width: 1000px; margin: 10px auto; }
 /* Companies */
 .content .companies .company { padding: 10px 0 10px 0; }
 .content .companies .company .image { width: 30%; position: relative; float: left; }
-.content .companies .company .image img { border-radius: 10px; -webkit-border-radius: 10px; -moz-border-radius: 10px; }
+.content .companies .company .image img { border-radius: 10px; -webkit-border-radius: 10px; -moz-border-radius: 10px; height: auto !important;
+    max-width: 100% !important;
+    width: 100% !important; }
 .content .companies .company .info { color: #444; font-size: 13px; }
 .content .companies .company .info a { color: #444; }
 .content .companies .company .info i { color: #444; font-size: 15px; }
@@ -476,7 +478,7 @@ footer .footer .col { display: block!important; }
 .content .column.text { display: none; }
 .content { width: 100%!important; margin: 0 !important; }
 .content .left.section, .content .right.section { width: 100%; float: none; }
-.content .companies .company .text { width: 65%; margin-left: 10px; float: left; }
+.content .companies .company .text { /*width: 65%;*/ margin-left: 10px; float: left; }
 .content .column img { margin-left: 0; }
 .content .companies .company .image { padding-left: 6px; padding-right: 3px; }
 .content .companies .company .text p, .content .companies .company .image { margin-right: 10px; }
@@ -508,9 +510,23 @@ footer .footer .bottom { margin-top: 0; }
 #sliderDesktopForm { display: none; }
 #sliderMobileTabletForm { display: block; }
 #optionTwo .inline.fields { display: block; }
+/*.text .owl-wrapper{ width: 100%; display: inline-block;}*/
+.text .owl-wrapper .owl-carousel-container { width: 100%; display: inline-block; }
+.owl-wrapper { float: left; width: 70%; }
+.mdg-price-a { float: left; width: 30%; }
 }
  @media (min-width: 900px) {
 .fixMenu { display: block; }
+.content .companies .company .text { width: 75%;}
+}
+@media (max-width: 920px) {
+	.mdg-price-a .mdg-price-b span { font-size: 15px !important; }
+	.deal_btn { float: left !important; font-size: 13px !important; margin-left: 20px;}
+}
+@media (max-width: 800px) {
+	.content .companies .company .text { width: 70%;}
+	.mdg-price-a { float: left; margin-top: 20px; width: 100% !important; }
+	/*.owl-carousel .owl-item { width: 100px!important; }*/
 }
  @media (max-width: 320px) {
 .header .logo { width: 90px; }
@@ -519,6 +535,15 @@ footer .footer .bottom { margin-top: 0; }
 }
  @media (max-width: 620px) {
 .slider { display: none; }
+body.index .slider { display: block; }
+.content .companies .company .text { margin: 0 2% !important; width: 96%; }
+.owl-wrapper { width: 70%; }
+.mdg-price-a { width: 100% !important; }
+.mdg-price-a .mdg-price-b .mdg-price-c { float: left; }
+}
+@media (max-width: 520px) {
+	.content .companies .company .text { width: 65%;}
+	/*.owl-wrapper { float: left; margin-bottom: 20px; width: 100%; }*/
 }
 .fieldList .field { width: 25%!important; }
 .ui.column.grid > .column, .ui.column.grid > .row > .column { display: block; float: left; }
@@ -14724,3 +14749,16 @@ button.btn-success.pull-right span i { color: #fff; font-size: 15px; }
     width: 100%;
 }
 #restaurantPage #menuRestaurant .ui.top.attached.tabular.menu a.item { font-size: 17px; }
+
+.mdg-price-a { display: inline; float: left; font-size: 20px; color: #5e80b2; width: 26%; }
+.mdg-price-a span { float: left;
+    font-weight: normal;
+    margin: 0 0 10px 25px;
+    padding: 0;
+    position: relative; }
+.mdg-price-b { display: block;
+    float: left;
+    text-align: center;
+    width: 100%; }
+.mdg-price-c { display: inline; }
+.mdg-price-c span { position: relative; font-weight: bold;  }

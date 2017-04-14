@@ -217,7 +217,7 @@
 
         @endif
 
-        @if (Route::getCurrentRoute()->uri() == '/n234d' && $userAuth == FALSE)
+        @if (Route::getCurrentRoute()->uri() == '/' && $userAuth == FALSE)
         <?php echo Form::open(array('url' => 'search-redirect', 'class' => 'ui form', 'method' => 'post')) ?>
         <div id="searchLoggedOut" class="ui grid">
             <div class="row">
@@ -286,7 +286,7 @@
         @endif
 
         {{--        @if (Route::getCurrentRoute()->uri() == '/' && $userAuth == FALSE)--}}
-        @if ((Route::getCurrentRoute()->uri() == '/' && $userAuth == FALSE) OR (Route::getCurrentRoute()->uri() == '/' && $userAuth && $userInfo->extension_downloaded == 0))
+        @if ((Route::getCurrentRoute()->uri() == '/' && $userAuth == true) OR (Route::getCurrentRoute()->uri() == '/' && $userAuth && $userInfo->extension_downloaded == 0))
 
 
 

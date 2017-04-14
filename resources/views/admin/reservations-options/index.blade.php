@@ -48,7 +48,7 @@
         </th>
         <th data-slug="name" class="three wide">Naam</th>
         <th data-slug="total_amount" class="four wide">Aantal plaatsen</th>
-        <th data-slug="total_res" class="four wide">Aantal reservering</th>
+        <th data-slug="total_res" class="four wide">Aantal gasten</th>
         <th data-slug="date_from" class="four wide">Online van</th>
         <th data-slug="date_to" class="four wide">Online tot</th>
         <th data-slug="price_from" class="four wide">prijs van</th>
