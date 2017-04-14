@@ -24,7 +24,14 @@ class ApiController extends Controller {
     }
 
     public function findProgram($userId, $url) {
-        $domain = preg_replace('/^www\./', '', $url);
+        $match_links_array = array();
+        $match_links_array[] = $domain_without_www = preg_replace('/^www\./', '', $url);
+        $match_links_array[] = $domain_with_www = 'www.'.$domain_without_www;
+        $match_links_array[] = $with_http_1 = "http://". $domain_without_www;
+        $match_links_array[] = $with_http_2 = "http://". $domain_with_www;
+        $match_links_array[] = $with_https_1 = "https://". $domain_without_www;
+        $match_links_array[] = $with_https_2 = "https://". $domain_with_www;
+        
 //        $urlPieces = explode('.', $domain);
 
 //        $affiliate = Affiliate::where('no_show', 0)
@@ -33,10 +40,10 @@ class ApiController extends Controller {
 //        ;
         
 
-          $affiliate = Affiliate::where('no_show', 0)
-                ->where('affiliates.link', 'LIKE', '%' . $domain . '%' )
-                ->first();
-      
+            $affiliate = Affiliate::where('no_show', 0)
+                    ->whereIn('affiliates.link', $match_links_array)
+                    ->first();
+                    
         if (count($affiliate) == 1) {
             $affiliateHelper = new AffiliateHelper();
 
