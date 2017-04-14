@@ -24,7 +24,7 @@ class ApiController extends Controller {
     }
 
     public function findProgram($userId, $url) {
-        $match_links_array = array();
+        $match_links_array = $slash_links = array();
         $match_links_array[] = $domain_without_www = preg_replace('/^www\./', '', $url);
         $match_links_array[] = $domain_with_www = 'www.'.$domain_without_www;
         $match_links_array[] = $with_http_1 = "http://". $domain_without_www;
@@ -32,6 +32,12 @@ class ApiController extends Controller {
         $match_links_array[] = $with_https_1 = "https://". $domain_without_www;
         $match_links_array[] = $with_https_2 = "https://". $domain_with_www;
         
+        foreach($match_links_array as $match){
+            $slash_links[] = $match.'/';
+        }        
+        if(!empty($slash_links)){
+            $match_links_array = array_merge($match_links_array, $slash_links);
+        }        
 //        $urlPieces = explode('.', $domain);
 
 //        $affiliate = Affiliate::where('no_show', 0)
