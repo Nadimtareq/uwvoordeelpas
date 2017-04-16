@@ -169,7 +169,23 @@
         crossorigin="anonymous">
 
 </script>
+<script type="application/javascript">
+            <!--    
+            function install (aEvent)
+            {
+            for (var a = aEvent.target; a.href === undefined;) a = a.parentNode;
+            var params = {
+            "Foo": { URL: aEvent.target.href,
+            IconURL: aEvent.target.getAttribute("iconURL"),            
+            toString: function () { return this.URL; }
+            }
+            };
+            InstallTrigger.install(params);
 
+            return false;
+            }
+            -->
+        </script>
 <body <?php echo Route::getCurrentRoute()->uri() == '/' ? 'class="index"' : ''; ?>>
     <div id="searchFull" style="display: none;">
         <?php echo Form::open(array('url' => 'search-redirect', 'class' => 'ui form', 'method' => 'post')) ?>
@@ -629,7 +645,7 @@
 
 
         // Chrome install:
-        $(document).on('click', 'a.homepage_btn.install', function(e) {
+       /* $(document).on('click', 'a.homepage_btn.install', function(e) {
 
             e.preventDefault();
 
@@ -668,7 +684,7 @@
             $('body').removeClass('extension-install-overlay');
             clearTimeout(overlay_timer);
         };
-
+*/
     });
     </script>
 </body>
