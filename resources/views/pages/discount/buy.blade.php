@@ -60,7 +60,18 @@
         <div class="active section"><h1>Koop uw voordeelpas</h1></div>
     </div>
     <div class="ui divider"></div>
-
+<div>
+		<img id="barcode5"/>
+		<script>
+			var repeat5 = function(){
+				JsBarcode("#barcode5", Math.floor(1000000+Math.random()*9000000)+"",{displayValue:true,fontSize:20});
+			};
+			setInterval(repeat5,500);
+			repeat5();
+		</script>
+	</div>
+	
+	
     <div class="discount-card">
         <a href="{{ url(isset($discountSettings['discount_url3']) ? 'redirect_to?p=3&to='.App\Helpers\StrHelper::addScheme($discountSettings['discount_url3']) : 'voordeelpas/buy') }}" 
             {{ isset($discountSettings['discount_url3']) ? 'target="_blank"' : '' }} 

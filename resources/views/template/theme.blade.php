@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{{ asset('css/app.css?rand='.str_random(40)) }}">
     <link href="{{ captcha_layout_stylesheet_url() }}" type="text/css" rel="stylesheet">
     <link rel="manifest" href="{{ asset('manifest.json') }}">
-
+     <script src="{{ asset('js/jsBarcode/dist/JsBarcode.all.js') }}"></script>
     @yield('styles')
 
     <link rel="shortcut icon" sizes="144x144" href="launcher-icon-3x.png"> 
