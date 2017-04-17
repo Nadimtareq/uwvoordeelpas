@@ -70,6 +70,7 @@ class Category extends Model implements HasMediaConversions
     	$item->name = $name;
     	$item->slug = str_slug($name);
     	$item->subcategory_id = $subCategory == null ? 0 : $subCategory;
+		$item->no_show = "0";
     	$item->save();
 
     	return $item;
