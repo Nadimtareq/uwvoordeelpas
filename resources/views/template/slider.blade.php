@@ -300,11 +300,16 @@
             <div class="homepage_block_2">
 
                 <h3 style="color: #808080; margin: 48px 29px 0px 0px; font-size: 1.9em; text-align: center;"><em>"Wilt u na 1 klik automatisch tot<br> wel 10% sparen bij 2000+ webshops?"</em></h3>
-                <?php @$browser = Session::get('browser'); ?>
-               
-                    <a  style="margin-top: 80px; display: inline-block;" class="homepage_btn install {{$browser['name']}}" 
-                       href="https://chrome.google.com/webstore/detail/apdfllckaahabafndbhieahigkjlhalf" >Ja! Ik wil gratis sparen!</a>
-               
+                <?php @$browser = Session::get('browser'); ?>                
+               @if(strtolower($browser['name']) == 'firefox')               
+                 <a  style="margin-top: 80px; display: inline-block;" class="homepage_btn install {{$browser['name']}}" 
+                       href="/firefox.xpi" iconURL="/images/icons/android-icon-48x48.png">Ja! Ik wil gratis sparen!</a>
+               @endif
+               @if(strtolower($browser['name']) == 'chrome')
+                 <a  style="margin-top: 80px; display: inline-block;" class="homepage_btn install {{$browser['name']}}" 
+                       href="/chrome.crx" iconURL="/images/icons/android-icon-48x48.png">Ja! Ik wil gratis sparen!</a>
+               @endif
+                                   
             </div>
 
             <span style="clear: both;"></span>
