@@ -692,5 +692,14 @@
 		<button class="ui tiny button" type="submit"><i class="plus icon"></i> Opslaan</button>
 		<?php echo Form::close() ?>
 	</div>
+	
+	       <div class="ui bottom attached tab segment" data-tab="nieuwsbrief">
+		<?php echo Form::open(array('url' => 'admin/settings/newsletter', 'method' => 'post', 'class' => 'ui form')) ?>
+		
+				<button class="ui tiny button" type="submit"><i class="plus icon"></i> Opslaan</button>
+		
+		<?php echo Form::close() ?>
+		</div>
+	
 </div>
 @stop
