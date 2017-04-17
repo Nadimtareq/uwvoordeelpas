@@ -21,7 +21,7 @@ class CreateCategoriesTable extends Migration
 				$table->longText('extra_categories_id');
 				$table->timestamps();
 				$table->integer('ad_page_id');
-				$table->integer('no_show')->default('0');
+				$table->integer('no_show')->nullable();
 			});
         }
         
