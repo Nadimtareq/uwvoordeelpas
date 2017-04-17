@@ -708,6 +708,7 @@ Route::group(['prefix' => 'api'], function () {
     Route::get('/affiliates/{key}', 'ApiController@getAffiliates');
     Route::get('/afflinks', 'ApiController@getAffiliatesUrl');
     Route::get('affiliates/find/{userid}/{url}', 'ApiController@findProgram');
+    Route::get('extension-saldo', 'ApiController@saldoForExtension');
     Route::get('auth', 'ApiController@checkAuth');
 });
 
