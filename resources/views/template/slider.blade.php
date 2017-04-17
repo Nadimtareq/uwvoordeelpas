@@ -8,7 +8,7 @@
 
     <div class="container">
 
-        <div class="info" style="{{ Route::getCurrentRoute()->uri() == '/' && $userAuth == FALSE ? '' : 'padding-top: 10px !important;' }}">
+       
 
             @if (Route::getCurrentRoute()->uri() == '/' && $userAuth == FALSE)
             <div class="heading {{ Route::getCurrentRoute()->uri() == '/' && $userAuth == FALSE ? ' userLoggedOut' : 'userLoggedIn' }}">

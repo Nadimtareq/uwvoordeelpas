@@ -387,6 +387,7 @@
                         </div>
                     </div>
                 </div>
+				 <div class="info" style="{{ Route::getCurrentRoute()->uri() == '/' && $userAuth == FALSE ? '' : 'padding-top: 10px !important;' }}">
             </header>
 
             <setion>
@@ -686,7 +687,7 @@
         };
 */     
 
-      $('#sliderImage').addClass('original').clone().insertAfter('#sliderImage').addClass('cloned').css('position','fixed').css('top','0').css('margin-top','0').css('z-index','500').removeClass('original').hide();
+      $('#info').addClass('original').clone().insertAfter('#info').addClass('cloned').css('position','fixed').css('top','0').css('margin-top','0').css('z-index','500').removeClass('original').hide();
 
 scrollIntervalID = setInterval(stickIt, 10);
 
