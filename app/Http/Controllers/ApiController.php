@@ -109,11 +109,11 @@ class ApiController extends Controller {
                     $result = User::where('id', $current_user->id)->update(array('extension_downloaded' => 1, 'saldo' => $update_balance));
                     
                      $insertTransaction[] = array(
-                        'program_id' => 'uwvoordeelpas',
+                        'program_id' => 0,
                         'ip' => '',
-                        'external_id' => 0,
+                        'external_id' => 'uwvoordeelpas',
                         'user_id' => $current_user->id,
-                        'status' => 'open',
+                        'status' => 'accepted',
                         'processed' => date('Y-m-d H:i:s'),
                         'amount' => $extension_download_bonus,
                         'affiliate_network' => 'uwvoordeelpas',

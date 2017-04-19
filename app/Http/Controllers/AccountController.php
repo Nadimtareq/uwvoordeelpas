@@ -307,11 +307,12 @@ class AccountController extends Controller
             'transactions.amount AS amount',
             'transactions.status AS status',
             DB::raw('"Transactie" as type'),
-            DB::raw('affiliates.name as company'),
+            DB::raw('IF(transactions.external_id = "uwvoordeelpas", "uwvoordeelpas", "affiliates.name") as company'),
             DB::raw('date(date_add(transactions.created_at, interval 90 day)) as expired_date')
         )
             ->leftJoin('affiliates', 'transactions.program_id', '=', 'affiliates.program_id')
             ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
+            ->groupBy('transactions.id')    
             ->where('transactions.user_id', Sentinel::inRole('admin') && $userId != null ? $userId : Sentinel::getUser()->id)
         ;
 
