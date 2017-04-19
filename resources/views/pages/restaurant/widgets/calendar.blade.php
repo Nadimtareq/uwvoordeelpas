@@ -3,7 +3,7 @@
 <head>
 	<title>Uwvoordeelpas</title>
 
-    <link rel="stylesheet" href="{{ asset('public/css/app.css?rand='.str_random(40)) }}">
+    <link rel="stylesheet" href="{{ asset('css/app.css?rand='.str_random(40)) }}">
 
     <style type="text/css">
     	body { background: rgba(0, 0, 0, 0)!important; }
@@ -95,7 +95,7 @@
 					</div>
 
 					<a href="<?php echo URL::to('restaurant/'.$company->slug) ?>" target="_blank">
-						<img src="{{ url('public/images/vplogo.png') }}" width="70%" />
+						<img src="{{ url('images/vplogo.png') }}" width="70%" />
 					</a>
 				</div>
 			<?php echo Form::close(); ?>
@@ -106,6 +106,6 @@
 		var activateAjax = 'restaurant';
 	</script>
 
-    <script type="text/javascript" src="{{ asset('public/js/app.js?rand='.str_random(40)) }}"></script>
+    <script type="text/javascript" src="{{ asset('js/app.js?rand='.str_random(40)) }}"></script>
 </body>
 </html>

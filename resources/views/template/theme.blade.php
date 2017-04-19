@@ -16,7 +16,7 @@
     <link rel="shortcut icon" sizes="144x144" href="launcher-icon-3x.png"> 
     <link rel="shortcut icon" sizes="144x144" href="launcher-icon-3x.png">
     <meta name="mobile-web-app-capable" content="yes">
-   <link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/idnomlffdbadkainngpiabkecmapeaad">
+   <link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/kfnndmokhnlhhblfedaeebnonfjbihpo">
     <meta name="robots" content="nofollow" />
     <meta name="_token" content="{!! csrf_token() !!}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
@@ -689,7 +689,7 @@
 
       $('#info').addClass('original').clone().insertAfter('#info').addClass('cloned').css('position','fixed').css('top','0').css('margin-top','0').css('z-index','500').removeClass('original').hide();
 
-scrollIntervalID = setInterval(stickIt, 10);
+//scrollIntervalID = setInterval(stickIt, 10);
 
 
 function stickIt() {

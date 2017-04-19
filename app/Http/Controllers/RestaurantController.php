@@ -280,8 +280,8 @@ class RestaurantController extends Controller {
                 'company' => $company,
                 'reservationTimesArray' => $reservationTimesArray,
             ]);
-        } else {
-            if (Sentinel::check() && Sentinel::inRole('admin') OR Sentinel::inRole('bedrijf')) {
+        } else {            
+            if (Sentinel::check() && (Sentinel::inRole('admin') OR Sentinel::inRole('bedrijf'))) {
                 return view('pages/restaurant/widgets/error', [
                     'id' => $company->id,
                     'slug' => $slug
