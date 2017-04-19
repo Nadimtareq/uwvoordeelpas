@@ -697,6 +697,7 @@
 		<?php echo Form::open(array('url' => 'admin/settings/newsletter', 'method' => 'post', 'class' => 'ui form')) ?>
 		           <div class="field"> 
 Stuur nieuwsbrief  <input type="text" name="emailto"><br></div>
+<input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
 <div class="field"> 
 				<button class="ui tiny button" type="submit"><i class="plus icon"></i> Stuur nieuwsbrief</button>
 		</div>
