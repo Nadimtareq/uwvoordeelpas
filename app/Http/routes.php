@@ -344,6 +344,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', '
         Route::resource('eetnu', 'Admin\SettingsController@eetnuAction');
         Route::resource('cronjobs', 'Admin\SettingsController@cronjobsAction');
         Route::resource('invoices', 'Admin\SettingsController@invoicesAction');
+		Route::resource('newsletter', 'Admin\SettingsController@newsletterAction');
     });
 
     # Transactions #
