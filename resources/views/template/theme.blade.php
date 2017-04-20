@@ -163,12 +163,7 @@
 
 </head>
 
-<script
-        src="https://code.jquery.com/jquery-2.2.4.js"
-        integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
-        crossorigin="anonymous">
 
-</script>
 <script type="application/javascript">
             <!--    
             function install (aEvent)
@@ -568,6 +563,13 @@
     @include('sweet::alert')
     @include('admin.template.search.js')
     
+	<script
+        src="https://code.jquery.com/jquery-2.2.4.js"
+        integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
+        crossorigin="anonymous">
+
+</script>
+	
     <script type="text/javascript">
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('/js/sw.js').then(function(registration) {
