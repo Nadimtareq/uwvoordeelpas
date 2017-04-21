@@ -335,7 +335,7 @@ class ReservationController extends Controller
                     Alert::success(
                         'Uw reservering voor '.$company->name.' op '.$date->formatLocalized('%A %d %B %Y').' om '.date('H:i', strtotime($request->input('time'))).' met '.$request->input('persons').' '.($request->input('persons') == 1 ? 'persoon' : 'personen').' is succesvol geplaatst. <br /><br />'.$calendar.'<br /> <span class=\'addthis_sharing_toolbox\'></span>',
                         'Bedankt '.$request->input('name').'!'
-                    )->html()->persistent("Dicht");
+                    )->html()->persistent("Sluit");
                     // Send mail to user
                     $mailtemplate->sendMail(array(
                         'email' => $request->input('email'),
