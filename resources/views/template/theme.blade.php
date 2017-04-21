@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{{ asset('css/app.css?rand='.str_random(40)) }}">
     <link href="{{ captcha_layout_stylesheet_url() }}" type="text/css" rel="stylesheet">
     <link rel="manifest" href="{{ asset('manifest.json') }}">
-     <script src="{{ asset('js/jsBarcode/dist/JsBarcode.all.js') }}"></script>
+     <!--<script src="{{ asset('js/jsBarcode/dist/JsBarcode.all.js') }}"></script>-->
     @yield('styles')
 
     <link rel="shortcut icon" sizes="144x144" href="launcher-icon-3x.png"> 
@@ -563,12 +563,7 @@
     @include('sweet::alert')
     @include('admin.template.search.js')
     
-	<script
-        src="https://code.jquery.com/jquery-2.2.4.js"
-        integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
-        crossorigin="anonymous">
-
-</script>
+	
 	
     <script type="text/javascript">
     if ('serviceWorker' in navigator) {

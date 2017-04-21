@@ -95,7 +95,12 @@ class ReservationController extends Controller
                 $request->input('date'), 
                 $request->input('time')
             );
-         	$deal=ReservationOption::where('id',$request->input('deal'))->first();
+            if($request->input('deal')){
+                $deal=ReservationOption::where('id',$request->input('deal'))->first();
+            }
+            else{
+                $deal=ReservationOption::where('company_id',$company->id)->first();
+            }         	
         	if(!$deal){
         		 alert()->error('', 'Het is niet mogelijk om op dit tijdstip te reserveren of er zijn geen plaatsen beschikbaar.')->html()->persistent('Sluiten');
 
@@ -330,8 +335,7 @@ class ReservationController extends Controller
                     Alert::success(
                         'Uw reservering voor '.$company->name.' op '.$date->formatLocalized('%A %d %B %Y').' om '.date('H:i', strtotime($request->input('time'))).' met '.$request->input('persons').' '.($request->input('persons') == 1 ? 'persoon' : 'personen').' is succesvol geplaatst. <br /><br />'.$calendar.'<br /> <span class=\'addthis_sharing_toolbox\'></span>',
                         'Bedankt '.$request->input('name').'!'
-                    );
-
+                    )->html()->persistent("Dicht");
                     // Send mail to user
                     $mailtemplate->sendMail(array(
                         'email' => $request->input('email'),
