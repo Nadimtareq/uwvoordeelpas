@@ -5,8 +5,13 @@
 @section('content')
 <script type="text/javascript">
     var activateAjax = 'reservation';
+    var user_current_balance = 0;
 </script>
 
+<?php $reservation_charge = (float) ($deal->price * Request::get('persons')); ?>
+<?php if (($userAuth == TRUE) && isset($userInfo->saldo)): ?>
+    <script type="text/javascript"> user_current_balance = "<?php echo $userInfo->saldo; ?>"; </script>
+<?php endif; ?>
 <div class="container mdg">
     @if (!isset($iframe))
     <div class="ui breadcrumb">
@@ -21,24 +26,24 @@
     </div>
     @endif
     <div class="ui grid">
-		<div class="row"> 
-          	<div class="col-md-3">
-                    @if(!empty($mediaItems) && isset($mediaItems[0]))
-				<img id="image" src="{{ url($mediaItems[0]->getUrl('175Thumb')) }}" class="img-responsive" alt="" />
-                    @endif 
-           	</div>
-           	<div class="col-md-6">
-				<h2>{{$deal->name}}</h2>
-				<p><?php echo html_entity_decode($deal->description);?></p>
-		    </div>
-		    <div class="col-md-3 pull-right">
-				<div class="mdg_price">
-					<span>
-						&euro; {{ $deal->price }}
-					</span>
-				</div>
-			</div>
-		</div>
+        <div class="row"> 
+            <div class="col-md-3">
+                @if(!empty($mediaItems) && isset($mediaItems[0]))
+                <img id="image" src="{{ url($mediaItems[0]->getUrl('175Thumb')) }}" class="img-responsive" alt="" />
+                @endif 
+            </div>
+            <div class="col-md-6">
+                <h2>{{$deal->name}}</h2>
+                <p><?php echo html_entity_decode($deal->description); ?></p>
+            </div>
+            <div class="col-md-3 pull-right">
+                <div class="mdg_price">
+                    <span>
+                        &euro; {{ $deal->price }}
+                    </span>
+                </div>
+            </div>
+        </div>
     </div>
     @if(isset($iframe))
     <div style="width: 100%;">
@@ -114,9 +119,7 @@
 
             <div class="<?php echo ((isset($iframe) ? 'two' : 'three')); ?> column row"> 
                 @if($userAuth && !isset($iframe))
-                <?php echo Form::hidden('saldo', $userAuth ? $user->saldo : '', array('min' => 0, 'max' => 500)); ?>                
-                @else
-                <?php echo Form::hidden('saldo', 0); ?>
+                <?php echo Form::hidden('saldo', $reservation_charge, array('min' => 0, 'max' => 500)); ?>                
                 @endif
 
                 <div class="column">
@@ -219,9 +222,9 @@
 
         <div class="two fields">
             @if($userAuth)
-                    
-                <?php echo Form::hidden('saldo', $userAuth ? $user->saldo : '', array('min' => 0, 'max' => 500)); ?>
-            
+
+            <?php echo Form::hidden('saldo', $reservation_charge, array('min' => 0, 'max' => 500)); ?>
+
             @endif
 
             <div class="field">
@@ -252,7 +255,7 @@
             </div>
         </div>
 
-        
+
 
         <div class="field">
             <label>Opmerking</label>
@@ -298,41 +301,46 @@
         </div>
         @endif
         @if($userAuth == TRUE)
-            @if((float) $userInfo->saldo >= (int) ($deal->price * Request::get('persons')))
-                <button class="ui tiny button" type="submit"><i class="plus icon"></i> Bevestig</button>
-                <?php echo Form::close(); ?>
-            @elseif((float) $userInfo->saldo <=  (int) ($deal->price * Request::get('persons')))
-                <?php echo Form::open(array('id' => 'formList', 'url' => 'payment/pay'.(Request::has('buy') ? '?buy=voordeelpas' : ''), 'method' => 'post', 'class' => 'ui form')) ?>
-                    <input id="actionMan" type="hidden" name="action">
-                    
-                    @if (isset($error) && trim($error) != '') 
-                        <div class="ui red message">{{ $error }}</div>
-                    @endif
-                    
-                    <div class="fields">
-                        <div class="four wide field">
-                           <input type="hidden" name="amount" class="amount" id="charge_amount" value="<?php echo (float)$deal->price * (int)Request::get('persons') ?>">
-                        </div>
-                    </div>
+        @if((float) $userInfo->saldo >= (int) ($deal->price * Request::get('persons')))
+        <button class="ui tiny button" type="submit"><i class="plus icon"></i> Bevestig</button>
+        <?php echo Form::close(); ?>
+        @elseif((float) $userInfo->saldo <=  (int) ($deal->price * Request::get('persons')))
+        <?php echo Form::open(array('id' => 'formList', 'url' => 'payment/pay' . (Request::has('buy') ? '?buy=voordeelpas' : ''), 'method' => 'post', 'class' => 'ui form')) ?>
+        <input id="actionMan" type="hidden" name="action">
 
-                    <button class="ui button" type="submit">Bevestig</button>
-                    <?php echo Form::close(); ?>
-            @endif
+        @if (isset($error) && trim($error) != '') 
+        <div class="ui red message">{{ $error }}</div>
+        @endif
+
+        <div class="fields">
+            <div class="four wide field">
+                <input type="hidden" name="amount" class="amount" id="charge_amount" value="<?php echo (float) $deal->price * (int) Request::get('persons') ?>">
+            </div>
+        </div>
+
+        <button class="ui button" type="submit">Bevestig</button>
+        <?php echo Form::close(); ?>
+        @endif
         @else
-            <button class="ui tiny button" type="submit"><i class="plus icon"></i> Bevestig</button>
-            <?php echo Form::close(); ?>
+        <button class="ui tiny button" type="submit"><i class="plus icon"></i> Bevestig</button>
+        <?php echo Form::close(); ?>
         @endif
         @if(isset($iframe))
     </div>
     @endif
 </div>
 <div class="clear"></div>
-<script type="text/javascript">
-$('#personsField').find('.item').on('click',function(){
-       person=$(this).data('value');
-       deal_price=$('#deal_price').val();
-       amout=parseFloat(deal_price)*parseInt(person);
-       $('#charge_amount').val(amout);
-    })
-</script>
 @stop
+@push('inner_scripts')
+<script type="text/javascript">
+    $(function () {
+        $('#personsField').find('.item').on('click', function () {            
+            person = $(this).data('value');
+            deal_price = $('#deal_price').val();
+            amout = parseFloat(deal_price) * parseInt(person);
+            $('[name="saldo"]').val(amout);
+        });
+    });
+
+</script>
+@endpush

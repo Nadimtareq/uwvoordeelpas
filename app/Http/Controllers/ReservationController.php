@@ -130,6 +130,7 @@ class ReservationController extends Controller
 
     public function reservationAction(ReservationTwoRequest $request, $slug) 
     {
+        
         setlocale(LC_TIME, 'Dutch');
         $this->validate($request, []);
 
@@ -159,6 +160,7 @@ class ReservationController extends Controller
                 $loginAfter = 0;
 
                 if (!$user) {
+                    exit('without login after submit12');
                     $loginAfter = 1;
 
                     $randomPassword = str_random(20);
@@ -172,7 +174,7 @@ class ReservationController extends Controller
                     $user->name = $request->input('name');
                     $user->expire_code = str_random(64);
                     $user->source = app('request')->cookie('source');
-                } else {
+                } else {                                        
                     if ($request->has('saldo')) {
                         $user->saldo = MoneyHelper::getAmount($user->saldo) - MoneyHelper::getAmount($request->input('saldo'));
                     }

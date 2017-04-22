@@ -713,5 +713,6 @@ function stickIt() {
 	   
     });
     </script>
+     @stack('inner_scripts')
 </body>
 </html>
