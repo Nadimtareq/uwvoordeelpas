@@ -308,7 +308,7 @@ class ReservationsController extends Controller
         # Count total persons and saldo
         foreach($reservations->get() as $reservation) {
             $totalPersons += $reservation->persons;
-            $totalSaldo += (int)$reservation->persons* (float)$reservation->deal_price;
+            $totalSaldo += (float)$reservation->saldo;
         }
         
         $reservations = $reservations->paginate($this->limit);
