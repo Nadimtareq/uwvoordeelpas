@@ -54,6 +54,7 @@
         <?php echo Form::hidden('iframe', $iframe); ?>
         <?php echo Form::hidden('encode_url', 1); ?>
         <?php echo Form::hidden('setTimeBack', 0); ?>
+        <?php echo Form::hidden('reservations_options', $deal->id); ?>
         <?php echo Form::hidden('reservation_url', URL::to('restaurant/reservation/' . $company->slug)); ?>
         <input type="hidden" name="deal_price" class="deal_price" id="deal_price" value="<?php echo $deal->price ?>">
         @if (isset($iframe))<br>
