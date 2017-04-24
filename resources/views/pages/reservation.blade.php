@@ -6,11 +6,13 @@
 <script type="text/javascript">
     var activateAjax = 'reservation';
     var user_current_balance = 0;
+    var user_authenticate = false;
 </script>
 
 <?php $reservation_charge = (float) ($deal->price * Request::get('persons')); ?>
 <?php if (($userAuth == TRUE) && isset($userInfo->saldo)): ?>
-    <script type="text/javascript"> user_current_balance = "<?php echo $userInfo->saldo; ?>"; </script>
+    <script type="text/javascript"> user_current_balance = "<?php echo $userInfo->saldo; ?>";
+            user_authenticate = true;</script>
 <?php endif; ?>
 <div class="container mdg">
     @if (!isset($iframe))
@@ -301,31 +303,29 @@
             </div>  
         </div>
         @endif
-        @if($userAuth == TRUE)
-        @if((float) $userInfo->saldo >= (int) ($deal->price * Request::get('persons')))
-        <button class="ui tiny button" type="submit"><i class="plus icon"></i> Bevestig</button>
-        <?php echo Form::close(); ?>
-        @elseif((float) $userInfo->saldo <=  (int) ($deal->price * Request::get('persons')))
-        <?php echo Form::open(array('id' => 'formList', 'url' => 'payment/pay' . (Request::has('buy') ? '?buy=voordeelpas' : ''), 'method' => 'post', 'class' => 'ui form')) ?>
-        <input id="actionMan" type="hidden" name="action">
-
-        @if (isset($error) && trim($error) != '') 
-        <div class="ui red message">{{ $error }}</div>
-        @endif
-
-        <div class="fields">
-            <div class="four wide field">
-                <input type="hidden" name="amount" class="amount" id="charge_amount" value="<?php echo (float) $deal->price * (int) Request::get('persons') ?>">
-            </div>
+        {{-- CODE FOR SUBMIT BUTTON AND FORM END --}}        
+        <div id="normal_case">
+            <button class="ui tiny button" type="submit"><i class="plus icon"></i> Bevestig</button>
+            <?php echo Form::close(); ?>
         </div>
+        <div id="extra_pay_case" style="display:none;">
+            <?php echo Form::open(array('id' => 'formList', 'url' => 'payment/pay' . (Request::has('buy') ? '?buy=voordeelpas' : ''), 'method' => 'post', 'class' => 'ui form')) ?>
+            <input id="actionMan" type="hidden" name="action">
 
-        <button class="ui button" type="submit">Bevestig</button>
-        <?php echo Form::close(); ?>
-        @endif
-        @else
-        <button class="ui tiny button" type="submit"><i class="plus icon"></i> Bevestig</button>
-        <?php echo Form::close(); ?>
-        @endif
+            @if (isset($error) && trim($error) != '') 
+            <div class="ui red message">{{ $error }}</div>
+            @endif
+
+            <div class="fields">
+                <div class="four wide field">
+                    <input type="hidden" name="amount" class="amount" id="charge_amount" value="<?php echo (float) $deal->price * (int) Request::get('persons') ?>">
+                </div>
+            </div>
+
+            <button class="ui button" type="submit">Bevestig</button>
+            <?php echo Form::close(); ?>
+        </div>
+        {{-- END CODE FOR SUBMIT BUTTON AND FORM END --}}
         @if(isset($iframe))
     </div>
     @endif
@@ -335,11 +335,25 @@
 @push('inner_scripts')
 <script type="text/javascript">
     $(function () {
-        $('#personsField').find('.item').on('click', function () {            
+        $('#personsField').find('.item').on('click', function () {
             person = $(this).data('value');
             deal_price = $('#deal_price').val();
             amout = parseFloat(deal_price) * parseInt(person);
             $('[name="saldo"]').val(amout);
+            $('[name="persons"]').val(person);
+        });
+        $('#reservationForm').submit(function () {
+            person = $('[name="persons"]').val();
+            deal_price = $('#deal_price').val();
+            amout = parseFloat(deal_price) * parseInt(person);            
+            if ((user_authenticate) && (amout > user_current_balance)) {
+                $('#charge_amount').val();
+                var charge_balance = amout - user_current_balance;
+                $('#charge_amount').val(charge_balance);
+                $('#formList').submit();
+                return false;
+            }
+            return true;
         });
     });
 
