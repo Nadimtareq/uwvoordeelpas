@@ -484,10 +484,13 @@ class AccountController extends Controller
             'companies.name as company', 
             'companies.slug', 
             'company_reservations.cancel_before_time',
+            'reservations_options.name as dealname',    
             'reservations.*'
         )
             ->leftJoin('companies', 'reservations.company_id', '=', 'companies.id')
             ->leftJoin('company_reservations', 'company_reservations.id', '=', 'reservations.reservation_id')
+            ->leftJoin('reservations_options', 'reservations.option_id', '=', 'reservations_options.id')
+            ->groupBy('reservations.id')
             ->where('reservations.user_id', Sentinel::getUser()->id)
         ;
 

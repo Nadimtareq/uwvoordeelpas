@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\Reservation;
 use App\Models\TempReservation;
 use App\Models\Company;
+use App\Models\CompanyReservation;
 use App\Helpers\CalendarHelper;
 use Carbon\Carbon;
 use Cartalyst\Sentinel\Checkpoints\ThrottlingException;
@@ -146,6 +147,7 @@ class PaymentController extends Controller {
     }
 
     public function validatePayment(Request $request) {
+        setlocale(LC_TIME, 'Dutch');
         $userPayments = Payment::where(
                         'user_id', Sentinel::getUser()->id
                 )
@@ -206,19 +208,97 @@ class PaymentController extends Controller {
 
                             DB::table('temp_reservations')->where('id', '=', $temp_transaction_id)->delete();
 
-                            $date = Carbon::create(
+                            $carbon_date = Carbon::create(
                                             date('Y', strtotime($data->date)), date('m', strtotime($data->date)), date('d', strtotime($data->date)), 0, 0, 0
                             );
 
-                            $calendarHelper = new CalendarHelper();
+//                            $calendarHelper = new CalendarHelper();
+                            $deal = DB::table('reservations_options')->where('id', '=', $data->option_id)->first();
                             $company = Company::where('id', $data->company_id)->where('no_show', '=', 0)->first();
-                            if ($company) {
-                                $calendar = $calendarHelper->displayCalendars(
-                                        1, 'Reservering bij ' . $company->name, 'Reservering voor ' . $company->name . ' op ' . $date->formatLocalized('%A %d %B %Y') . ' om ' . date('H:i', strtotime($data->time)) . ' met ' . $data->persons . ' ' . ($data->persons == 1 ? 'persoon' : 'personen'), ($company->address . ', ' . $company->zipcode . ', ' . $company->city), date('Y-m-d', strtotime($data->date)) . ' ' . date('H:i:s', strtotime($data->time))
-                                );
+                            if ($company && $deal) {
+//                                $calendar = $calendarHelper->displayCalendars(
+//                                        1, 'Reservering bij ' . $company->name, 'Reservering voor ' . $company->name . ' op ' . $date->formatLocalized('%A %d %B %Y') . ' om ' . date('H:i', strtotime($data->time)) . ' met ' . $data->persons . ' ' . ($data->persons == 1 ? 'persoon' : 'personen'), ($company->address . ', ' . $company->zipcode . ', ' . $company->city), date('Y-m-d', strtotime($data->date)) . ' ' . date('H:i:s', strtotime($data->time))
+//                                );
+                                // Send mail to company owner
+                                $time = date('H:i', strtotime($data->time));
+                                $date = date('Y-m-d', strtotime($data->date));
 
+                                $reservationTimes = CompanyReservation::getReservationTimesArray(
+                                                array(
+                                                    'company_id' => array($company->id),
+                                                    'date' => $date,
+                                                    'selectPersons' => $data->persons,
+                                                    'groupReservations' => NULL
+                                                )
+                                );
+                                $discount = json_decode($company->discount);
+                                $discountDays = json_decode($company->days);
+                                $daysArray = Config::get('preferences.days');
+
+                                if (is_array($discountDays)) {
+                                    foreach ($discountDays as $discountDay) {
+                                        $day[] = lcfirst($daysArray[$discountDay]);
+                                    }
+
+                                    $day = implode(',', $day);
+                                }
+                                $allergies = json_decode($data->allergies);
+                                $preferences = json_decode($data->preferences);
+
+                                $mailtemplate = new MailTemplate();
+                                $mailtemplate->sendMail(array(
+                                    'email' => $company->email,
+                                    'reservation_id' => $data->id,
+                                    'template_id' => 'new-reservation-company',
+                                    'company_id' => $company->id,
+                                    'manual' => $reservationTimes[$time][$company->id]['isManual'],
+                                    'replacements' => array(
+                                        '%name%' => $data->name,
+                                        '%cname%' => $company->contact_name,
+                                        '%saldo%' => $data->saldo,
+                                        '%phone%' => $data->phone,
+                                        '%email%' => $data->email,
+                                        '%date%' => date('d-m-Y', strtotime($data->date)),
+                                        '%time%' => date('H:i', strtotime($data->time)),
+                                        '%persons%' => $data->persons,
+                                        '%comment%' => $data->comment,
+                                        '%discount%' => isset($discount[0]) ? $discount[0] : '',
+                                        '%discount_comment%' => $company->discount_comment,
+                                        '%days%' => isset($day) ? $day : '',
+                                        '%allergies%' => ($allergies === null) ? '' : implode(",", $allergies),
+                                        '%preferences%' => ($preferences === null) ? '' : implode(",", $preferences),
+                                    )
+                                ));
+
+
+                                // Send to client
+                                $mailtemplate->sendMail(array(
+                                    'email' => $data->email,
+                                    'reservation_id' => $data->id,
+                                    'template_id' => 'reservation-pending-client',
+                                    'company_id' => $company->id,
+                                    'fromEmail' => $company->email,
+                                    'replacements' => array(
+                                        '%name%' => $data->name,
+                                        '%cname%' => $company->contact_name,
+                                        '%saldo%' => $data->saldo,
+                                        '%phone%' => $data->phone,
+                                        '%email%' => $data->email,
+                                        '%date%' => date('d-m-Y', strtotime($data->date)),
+                                        '%time%' => date('H:i', strtotime($data->time)),
+                                        '%persons%' => $data->persons,
+                                        '%comment%' => $data->comment,
+                                        '%discount%' => isset($discount[0]) ? $discount[0] : '',
+                                        '%discount_comment%' => $company->discount_comment,
+                                        '%days%' => isset($day) ? $day : '',
+                                        '%allergies%' => ($allergies === null) ? '' : implode(",", $allergies),
+                                        '%preferences%' => ($preferences === null) ? '' : implode(",", $preferences),
+                                    )
+                                ));
+
+                                
                                 Alert::success(
-                                        'Uw reservering voor ' . $company->name . ' op ' . $date->formatLocalized('%A %d %B %Y') . ' om ' . date('H:i', strtotime($data->time)) . ' met ' . $data->persons . ' ' . ($data->persons == 1 ? 'persoon' : 'personen') . ' wordt doorgegeven aan het restaurant, welke contact met u opneemt.<br /><br /> U heeft aangegeven &euro;' . $data->saldo . ' korting op de rekening te willen. Klopt dit niet? <a href=\'' . URL::to('account/reservations') . '\' target=\'_blank\'>Klik hier</a><br /><br /> ' . $calendar . '<br /> <span class=\'addthis_sharing_toolbox\'></span>', 'Let op, ' . $data->name . '!'
+                                        'Uw reservering voor ' . $deal->name . 'bij' . $company->name . ' op ' . $carbon_date->formatLocalized('%A %d %B %Y') . ' om ' . date('H:i', strtotime($data->time)) . ' met ' . $data->persons . ' ' . ($data->persons == 1 ? 'persoon' : 'personen') . ' wordt doorgegeven aan het restaurant, welke contact met u opneemt.', 'Bedankt ' . Sentinel::getUser()->name
                                 )->html()->persistent('Sluiten');
                                 return Redirect::to('restaurant/' . $company->slug);
                             }

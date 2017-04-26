@@ -72,6 +72,7 @@ $(document).ready(function() {
 	    					</div>
 	    				</th>
 	                    <th data-slug="company" class="four wide">Bedrijf</th>
+                            <th data-slug="dealname" class="four wide">Gereserveerd Deal</th>
 	                    <th data-slug="created_at" class="four wide">Datum en tijd</th>
 	                    <th data-slug="persons" class="two wide">Personen</th>
 	                    <th data-slug="disabled" class="four wide">Persoonsgegevens</th>
@@ -106,6 +107,7 @@ $(document).ready(function() {
 								@endif
 							</td>
 							<td><a href="{{ url('restaurant/'.$data->slug) }}">{{ $data->company }}</a></td>
+                                                        <td>{{ $data->dealname }}</td>
 							<td {!! $data->is_cancelled ? 'class="disabled"' : '' !!}>
 								<i class="calendar icon"></i> {{ $date->formatLocalized('%d %B %Y') }}<br />
 								<i class="clock icon"></i> {{ date('H:i', strtotime($data->time)) }}
