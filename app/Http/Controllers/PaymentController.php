@@ -245,7 +245,7 @@ class PaymentController extends Controller {
                                 $allergies = json_decode($data->allergies);
                                 $preferences = json_decode($data->preferences);
 
-                                $mailtemplate = new MailTemplate();
+                                /*$mailtemplate = new MailTemplate();
                                 $mailtemplate->sendMail(array(
                                     'email' => $company->email,
                                     'reservation_id' => $data->id,
@@ -294,8 +294,7 @@ class PaymentController extends Controller {
                                         '%allergies%' => ($allergies === null) ? '' : implode(",", $allergies),
                                         '%preferences%' => ($preferences === null) ? '' : implode(",", $preferences),
                                     )
-                                ));
-
+                                ));*/
                                 
                                 Alert::success(
                                         'Uw reservering voor ' . $deal->name . 'bij' . $company->name . ' op ' . $carbon_date->formatLocalized('%A %d %B %Y') . ' om ' . date('H:i', strtotime($data->time)) . ' met ' . $data->persons . ' ' . ($data->persons == 1 ? 'persoon' : 'personen') . ' wordt doorgegeven aan het restaurant, welke contact met u opneemt.', 'Bedankt ' . Sentinel::getUser()->name

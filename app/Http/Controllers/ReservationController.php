@@ -263,7 +263,7 @@ class ReservationController extends Controller {
                 $mailtemplate = new MailTemplate();
 
                 // Send mail to company owner
-                 $mailtemplate->sendMail(array(
+                 /*$mailtemplate->sendMail(array(
                   'email' => $company->email,
                   'reservation_id' => $data->id,
                   'template_id' => 'new-reservation-company',
@@ -285,7 +285,7 @@ class ReservationController extends Controller {
                   '%allergies%' => ($request->has('allergies') ? implode(",", json_decode($data->allergies)) : ''),
                   '%preferences%' => ($request->has('preferences') ? implode(",", json_decode($data->preferences)) : '')
                   )
-                  )); 
+                  )); */
 
                 $calendarHelper = new CalendarHelper();
                 $calendar = $calendarHelper->displayCalendars(
@@ -303,7 +303,7 @@ class ReservationController extends Controller {
                     )->html()->persistent('Sluiten');
 
                     // Send to client
-                    $mailtemplate->sendMail(array(
+                    /*$mailtemplate->sendMail(array(
                       'email' => $request->input('email'),
                       'reservation_id' => $data->id,
                       'template_id' => 'reservation-pending-client',
@@ -325,13 +325,13 @@ class ReservationController extends Controller {
                       '%allergies%' => ($request->has('allergies') ? implode(",", json_decode($data->allergies)) : ''),
                       '%preferences%' => ($request->has('preferences') ? implode(",", json_decode($data->preferences)) : '')
                       )
-                      )); 
+                      )); */
                 } elseif ($request->has('iframe')) {
                     Alert::success(
                             'Uw reservering voor ' . $company->name . ' op ' . $date->formatLocalized('%A %d %B %Y') . ' om ' . date('H:i', strtotime($request->input('time'))) . ' met ' . $request->input('persons') . ' ' . ($request->input('persons') == 1 ? 'persoon' : 'personen') . ' is succesvol geplaatst. <br /><br />' . $calendar . '<br /> <span class=\'addthis_sharing_toolbox\'></span>', 'Bedankt ' . $request->input('name') . '!'
                     )->html()->persistent("Sluit");
                     // Send mail to user
-                    $mailtemplate->sendMail(array(
+                    /*$mailtemplate->sendMail(array(
                       'email' => $request->input('email'),
                       'reservation_id' => $data->id,
                       'template_id' => 'new-reservation-client',
@@ -353,14 +353,14 @@ class ReservationController extends Controller {
                       '%allergies%' => ($request->has('allergies') ? implode(",", json_decode($data->allergies)) : ''),
                       '%preferences%' => ($request->has('preferences') ? implode(",", json_decode($data->preferences)) : '')
                       )
-                      )); 
+                      )); */
                 } else {
                     Alert::success(
                             'Uw reservering voor ' . $company->name . ' op ' . $date->formatLocalized('%A %d %B %Y') . ' om ' . date('H:i', strtotime($request->input('time'))) . ' met ' . $request->input('persons') . ' ' . ($request->input('persons') == 1 ? 'persoon' : 'personen') . ' is succesvol geplaatst. <br /><br /> U heeft aangegeven &euro;' . $request->input('saldo') . ' korting op de rekening te willen. Klopt dit niet? <a href=\'' . URL::to('account/reservations') . '\' target=\'_blank\'>Klik hier</a><br /><br />' . $calendar . '<br /> <span class=\'addthis_sharing_toolbox\'></span>', 'Bedankt ' . $request->input('name') . '!'
                     )->html()->persistent('Sluiten');
 
                     // Send mail to user
-                    $mailtemplate->sendMail(array(
+                    /*$mailtemplate->sendMail(array(
                       'email' => $request->input('email'),
                       'template_id' => 'new-reservation-client',
                       'company_id' => $company->id,
@@ -382,7 +382,7 @@ class ReservationController extends Controller {
                       '%allergies%' => ($request->has('allergies') ? implode(",", json_decode($data->allergies)) : ''),
                       '%preferences%' => ($request->has('preferences') ? implode(",", json_decode($data->preferences)) : '')
                       )
-                      )); 
+                      )); */
                 }
 
                 return Redirect::to('restaurant/' . $slug . ($request->has('iframe') ? '?iframe=1' : ''));
