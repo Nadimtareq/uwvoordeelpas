@@ -147,7 +147,7 @@ class PaymentController extends Controller {
     }
 
     public function validatePayment(Request $request) {
-        setlocale(LC_TIME, 'Dutch');
+        setlocale(LC_ALL, 'nl_NL');
         $userPayments = Payment::where(
                         'user_id', Sentinel::getUser()->id
                 )
