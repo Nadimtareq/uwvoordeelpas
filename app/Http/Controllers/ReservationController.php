@@ -356,7 +356,7 @@ class ReservationController extends Controller {
                       )); */
                 } else {
                     Alert::success(
-                            'Uw reservering voor ' . $company->name . ' op ' . $date->formatLocalized('%A %d %B %Y') . ' om ' . date('H:i', strtotime($request->input('time'))) . ' met ' . $request->input('persons') . ' ' . ($request->input('persons') == 1 ? 'persoon' : 'personen') . ' is succesvol geplaatst. <br /><br /> U heeft aangegeven &euro;' . $request->input('saldo') . ' korting op de rekening te willen. Klopt dit niet? <a href=\'' . URL::to('account/reservations') . '\' target=\'_blank\'>Klik hier</a><br /><br />' . $calendar . '<br /> <span class=\'addthis_sharing_toolbox\'></span>', 'Bedankt ' . $request->input('name') . '!'
+                            'Uw reservering voor ' . $company->name . ' op ' . $date->formatLocalized('%A %d %B %Y') . ' om ' . date('H:i', strtotime($request->input('time'))) . ' met ' . $request->input('persons') . ' ' . ($request->input('persons') == 1 ? 'persoon' : 'personen') . ' is succesvol geplaatst. <br /><br /> U heeft aangegeven &euro;' . $request->input('saldo') . ' korting op de rekening te willen. Klopt dit niet? <a href=\'' . URL::to('account/reservations') . '\' target=\'_blank\'>Klik hier</a><br /><br />' . $calendar . '<br /><br /> <span class=\'addthis_sharing_toolbox\'></span>', 'Bedankt ' . $request->input('name') . '!'
                     )->html()->persistent('Sluiten');
 
                     // Send mail to user
