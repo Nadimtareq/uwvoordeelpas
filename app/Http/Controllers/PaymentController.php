@@ -297,7 +297,7 @@ class PaymentController extends Controller {
                                 ));*/
                                 
                                 Alert::success(
-                                        'Uw reservering voor ' . $deal->name . 'bij' . $company->name . ' op ' . $carbon_date->formatLocalized('%A %d %B %Y') . ' om ' . date('H:i', strtotime($data->time)) . ' met ' . $data->persons . ' ' . ($data->persons == 1 ? 'persoon' : 'personen') . ' wordt doorgegeven aan het restaurant, welke contact met u opneemt.', 'Bedankt ' . Sentinel::getUser()->name
+                                        'Uw reservering voor ' . $deal->name . ' bij ' . $company->name . ' op ' . $carbon_date->formatLocalized('%A %d %B %Y') . ' om ' . date('H:i', strtotime($data->time)) . ' met ' . $data->persons . ' ' . ($data->persons == 1 ? 'persoon' : 'personen') . ' wordt doorgegeven aan het restaurant, welke contact met u opneemt.', 'Bedankt ' . Sentinel::getUser()->name
                                 )->html()->persistent('Sluiten');
                                 return Redirect::to('restaurant/' . $company->slug);
                             }
