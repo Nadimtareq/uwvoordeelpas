@@ -116,7 +116,7 @@ class ReservationController extends Controller {
 
     public function reservationAction(ReservationTwoRequest $request, $slug) {
 
-        setlocale(LC_TIME, 'Dutch');
+        setlocale(LC_ALL, 'nl_NL', 'Dutch');
         $this->validate($request, []);
         $enough_balance = true;
         $rest_amount = 0;
