@@ -79,6 +79,7 @@ Route::group(array('prefix' => 'payment', 'middleware' => array('userInfo')), fu
     Route::get('pay-invoice/pay/{invoicenumber}', 'PaymentController@invoiceToPayment')->middleware(['auth']);
     ## Post routes - Payment ##
     Route::post('pay', 'PaymentController@initiateIdealPayment');
+    Route::get('rest-pay', 'PaymentController@initiateIdealPayment');
     Route::post('pay-invoice/pay', 'PaymentController@directInvoiceToPayment')->middleware(['auth']);
 });
 

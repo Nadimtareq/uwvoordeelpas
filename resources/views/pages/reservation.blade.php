@@ -309,7 +309,7 @@
             <?php echo Form::close(); ?>
         </div>
         <div id="extra_pay_case" style="display:none;">
-            <?php echo Form::open(array('id' => 'formList', 'url' => 'payment/pay' . (Request::has('buy') ? '?buy=voordeelpas' : ''), 'method' => 'post', 'class' => 'ui form')) ?>
+            <?php echo Form::open(array('id' => 'formList', 'url' => 'payment/pay?buy=pay_extra_for_deal', 'method' => 'post', 'class' => 'ui form')) ?>
             <input id="actionMan" type="hidden" name="action">
 
             @if (isset($error) && trim($error) != '') 
@@ -346,13 +346,13 @@
             person = $('[name="persons"]').val();
             deal_price = $('#deal_price').val();
             amout = parseFloat(deal_price) * parseInt(person);            
-            if ((user_authenticate) && (amout > user_current_balance)) {
+            /*if ((user_authenticate) && (amout > user_current_balance)) {
                 $('#charge_amount').val();
                 var charge_balance = amout - user_current_balance;
                 $('#charge_amount').val(charge_balance);
                 $('#formList').submit();
                 return false;
-            }
+            }*/
             return true;
         });
     });

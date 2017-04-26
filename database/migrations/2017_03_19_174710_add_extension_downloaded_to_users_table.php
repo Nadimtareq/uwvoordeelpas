@@ -13,8 +13,9 @@ class AddExtensionDownloadedToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            //
-            $table->integer('extension_downloaded')->default(0)->nullable();
+            if(!Schema::hasColumn('users', 'extension_downloaded')){
+                $table->integer('extension_downloaded')->default(0)->nullable();
+            }            
         });
     }
 
@@ -27,7 +28,9 @@ class AddExtensionDownloadedToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //
-            $table->dropColumn('extension_downloaded');
+            if(Schema::hasColumn('users', 'extension_downloaded')){
+                $table->dropColumn('extension_downloaded');
+            }            
         });
     }
 }

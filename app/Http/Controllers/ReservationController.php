@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Alert;
@@ -11,6 +12,7 @@ use App\Http\Requests\ReservationEditRequest;
 use App\Models\Company;
 use App\Models\Page;
 use App\Models\Reservation;
+use App\Models\TempReservation;
 use App\Models\ReservationOption;
 use App\Models\Guest;
 use App\Models\TemporaryAuth;
@@ -32,18 +34,15 @@ use URL;
 use Illuminate\Http\Request;
 use DateTime;
 
-class ReservationController extends Controller
-{
+class ReservationController extends Controller {
 
-    public function __construct()
-    {
-        setlocale(LC_ALL,'nl_NL.ISO8859-1');
-        setlocale(LC_TIME,'nl_NL.ISO8859-1');
-        setlocale(LC_TIME,'Dutch');
+    public function __construct() {
+        setlocale(LC_ALL, 'nl_NL.ISO8859-1');
+        setlocale(LC_TIME, 'nl_NL.ISO8859-1');
+        setlocale(LC_TIME, 'Dutch');
     }
 
-    public function reservationStepOne(ReservationOneRequest $request, $slug)
-    {
+    public function reservationStepOne(ReservationOneRequest $request, $slug) {
         $this->validate($request, []);
 
         $data = array(
@@ -53,65 +52,52 @@ class ReservationController extends Controller
             'deal' => $request->input('deal'),
             'iframe' => $request->input('iframe'),
         );
-        return Redirect::to('restaurant/reservation/'.$slug.'?'.http_build_query($data));
+        return Redirect::to('restaurant/reservation/' . $slug . '?' . http_build_query($data));
     }
 
-    public function reservationStepTwo(Request $request, $slug) 
-    {
+    public function reservationStepTwo(Request $request, $slug) {
         $time = date('H:i', strtotime($request->input('time')));
         $date = date('Y-m-d', strtotime($request->input('date')));
 
         $company = Company::with('media')->select(
-            'id',
-            'slug',
-            'name',
-            'kitchens',
-            'days',
-            'discount',
-            'preferences',
-            'allergies',
-            DB::raw('(SELECT count(id) FROM reservations WHERE user_id = '.(Sentinel::check() ? Sentinel::getUser()->id : 'NULL').' AND company_id = companies.id AND newsletter_company = 1) as newsletter'),
-            DB::raw('(SELECT comment FROM reservations WHERE user_id = '.(Sentinel::check() ? Sentinel::getUser()->id : 'NULL').' AND company_id = companies.id ORDER BY created_at desc LIMIT 1) as lastComment')
-        )
-            ->where('slug', '=', $slug)
-            ->where('no_show', '=', 0)
-            ->first()
+                        'id', 'slug', 'name', 'kitchens', 'days', 'discount', 'preferences', 'allergies', DB::raw('(SELECT count(id) FROM reservations WHERE user_id = ' . (Sentinel::check() ? Sentinel::getUser()->id : 'NULL') . ' AND company_id = companies.id AND newsletter_company = 1) as newsletter'), DB::raw('(SELECT comment FROM reservations WHERE user_id = ' . (Sentinel::check() ? Sentinel::getUser()->id : 'NULL') . ' AND company_id = companies.id ORDER BY created_at desc LIMIT 1) as lastComment')
+                )
+                ->where('slug', '=', $slug)
+                ->where('no_show', '=', 0)
+                ->first()
         ;
 
         if ($company) {
-        	$mediaItems = $company->getMedia('default'); 
+            $mediaItems = $company->getMedia('default');
             // get the available reservation times
             $reservationTimes = CompanyReservation::getReservationTimesArray(
-                array(
-                    'company_id' => array($company->id), 
-                    'date' => $date,
-                    'selectPersons' => $request->input('persons')
-                )
+                            array(
+                                'company_id' => array($company->id),
+                                'date' => $date,
+                                'selectPersons' => $request->input('persons')
+                            )
             );
 
             // get the available reservation options
             $reservationsOptions = Company::getReservationOption(
-                $company->id, 
-                $request->input('date'), 
-                $request->input('time')
+                            $company->id, $request->input('date'), $request->input('time')
             );
-            if($request->input('deal')){
-                $deal=ReservationOption::where('id',$request->input('deal'))->first();
+            if ($request->input('deal')) {
+                $deal = ReservationOption::where('id', $request->input('deal'))->first();
+            } else {
+                $deal = ReservationOption::where('company_id', $company->id)->first();
             }
-            else{
-                $deal=ReservationOption::where('company_id',$company->id)->first();
-            }         	
-        	if(!$deal){
-        		 alert()->error('', 'Het is niet mogelijk om op dit tijdstip te reserveren of er zijn geen plaatsen beschikbaar.')->html()->persistent('Sluiten');
+            if (!$deal) {
+                alert()->error('', 'Het is niet mogelijk om op dit tijdstip te reserveren of er zijn geen plaatsen beschikbaar.')->html()->persistent('Sluiten');
 
                 return Redirect::to('/');
-        	}
+            }
             if (isset($reservationTimes[$time])) {
                 return view('pages/reservation', [
                     'discountMessage' => Company::getDiscountMessage($company->days, $company->discount, $company->discount_comment),
                     'company' => $company,
-                    'deal'=>$deal,
-                    'mediaItems'=>$mediaItems,
+                    'deal' => $deal,
+                    'mediaItems' => $mediaItems,
                     'reservationOptions' => $reservationsOptions,
                     'user' => Sentinel::getUser(),
                     'iframe' => $request->input('iframe')
@@ -119,48 +105,47 @@ class ReservationController extends Controller
             } else {
                 alert()->error('', 'Het is niet mogelijk om op dit tijdstip te reserveren of er zijn geen plaatsen beschikbaar.')->html()->persistent('Sluiten');
 
-                return Redirect::to($request->input('iframe') == 1 ? 'widget/calendar/restaurant/'.$slug : 'restaurant/'.$slug);
+                return Redirect::to($request->input('iframe') == 1 ? 'widget/calendar/restaurant/' . $slug : 'restaurant/' . $slug);
             }
         } else {
             alert()->error('', 'Dit bedrijf bestaat niet of is tijdelijk niet beschikbaar.')->html()->persistent('Sluiten');
 
-            return Redirect::to($request->input('iframe') == 1 ? 'widget/calendar/restaurant/'.$slug : '/');
+            return Redirect::to($request->input('iframe') == 1 ? 'widget/calendar/restaurant/' . $slug : '/');
         }
     }
 
-    public function reservationAction(ReservationTwoRequest $request, $slug) 
-    {
-        
+    public function reservationAction(ReservationTwoRequest $request, $slug) {
+
         setlocale(LC_TIME, 'Dutch');
         $this->validate($request, []);
-
+        $enough_balance = true;
+        $rest_amount = 0;
         $company = Company::where('slug', $slug)
-            ->where('no_show', '=', 0)
-            ->first();
+                ->where('no_show', '=', 0)
+                ->first();
 
         if ($company) {
             $time = date('H:i', strtotime($request->input('time')));
             $date = date('Y-m-d', strtotime($request->input('date')));
 
             $reservationTimes = CompanyReservation::getReservationTimesArray(
-                array(
-                    'company_id' => array($company->id), 
-                    'date' => $date,
-                    'selectPersons' => $request->input('persons'),
-                    'groupReservations' => ($request->has('group_reservation') ? 1 : NULL)
-                )
+                            array(
+                                'company_id' => array($company->id),
+                                'date' => $date,
+                                'selectPersons' => $request->input('persons'),
+                                'groupReservations' => ($request->has('group_reservation') ? 1 : NULL)
+                            )
             );
-            
+
             if (isset($reservationTimes[$time])) {
                 // Create only a new user when the user is not logged in, if you use an other email address
                 $user = Sentinel::findByCredentials(array(
-                    'login' => Sentinel::check() && $request->input('email') != Sentinel::getUser()->email ? Sentinel::getUser()->email : $request->input('email')
+                            'login' => Sentinel::check() && $request->input('email') != Sentinel::getUser()->email ? Sentinel::getUser()->email : $request->input('email')
                 ));
 
                 $loginAfter = 0;
 
                 if (!$user) {
-                    exit('without login after submit12');
                     $loginAfter = 1;
 
                     $randomPassword = str_random(20);
@@ -174,12 +159,18 @@ class ReservationController extends Controller
                     $user->name = $request->input('name');
                     $user->expire_code = str_random(64);
                     $user->source = app('request')->cookie('source');
-                } else {                                        
+                } else {
                     if ($request->has('saldo')) {
-                        $user->saldo = MoneyHelper::getAmount($user->saldo) - MoneyHelper::getAmount($request->input('saldo'));
+                        $user_saldo = (float) MoneyHelper::getAmount($user->saldo);
+                        $deal_saldo = (float) MoneyHelper::getAmount($request->input('saldo'));
+                        if ($deal_saldo > $user_saldo) {
+                            $enough_balance = false;
+                            $rest_amount = $deal_saldo - $user_saldo;
+                        } else {
+                            $user->saldo = $user_saldo - $deal_saldo;
+                        }
                     }
                 }
-                
                 $allergies = json_decode($user->allergies, true);
                 $preferences = json_decode($user->preferences, true);
 
@@ -203,7 +194,7 @@ class ReservationController extends Controller
                 if ($allergies != null) {
                     $user->allergies = json_encode(array_values(array_unique(array_filter($allergies))));
                 }
-                
+
                 if ($preferences != null) {
                     $user->preferences = json_encode(array_values(array_unique(array_filter($preferences))));
                 }
@@ -220,9 +211,14 @@ class ReservationController extends Controller
                 ));
 
                 // Add a reservation
-                $data = new Reservation;
+                if ($enough_balance) {
+                    $data = new Reservation;
+                } else {
+                    $data = new TempReservation;
+                    $data->rest_pay = $rest_amount;
+                }
                 $data->date = date('Y-m-d', strtotime($request->input('date')));
-                $data->time = date('H:i', strtotime($request->input('time'))).':00';
+                $data->time = date('H:i', strtotime($request->input('time'))) . ':00';
                 $data->persons = $request->input('persons');
                 $data->company_id = $company->id;
                 $data->user_id = $user->id;
@@ -234,22 +230,22 @@ class ReservationController extends Controller
                 if ($request->has('reservations_options')) {
                     $data->option_id = $request->input('reservations_options');
                 }
-                
+
                 $data->comment = $request->input('comment');
                 $data->saldo = $request->has('saldo') ? MoneyHelper::getAmount($request->input('saldo')) : 0;
                 $data->newsletter_company = $request->input('newsletter') == '' ? 0 : 1;
                 $data->allergies = json_encode($request->input('allergies'));
                 $data->preferences = json_encode($request->input('preferences'));
                 $data->status = $request->input('iframe') == 1 ? ($reservationTimes[$time][$company->id]['isManual'] == 1 ? 'iframe-pending' : 'iframe') : ($reservationTimes[$time][$company->id]['isManual'] == 1 ? 'reserved-pending' : 'reserved');
-                $data->save();
-
+                $data->save();                
+                if (!$enough_balance && $rest_amount) {                    
+                    return view('pages/discount/extra-pay', array(
+                        'amount' => $rest_amount,
+                        'temp_reservation_id' => $data->id
+                    ));
+                }
                 $date = Carbon::create(
-                    date('Y', strtotime($request->input('date'))), 
-                    date('m', strtotime($request->input('date'))), 
-                    date('d', strtotime($request->input('date'))), 
-                    0, 
-                    0, 
-                    0
+                                date('Y', strtotime($request->input('date'))), date('m', strtotime($request->input('date'))), date('d', strtotime($request->input('date'))), 0, 0, 0
                 );
 
                 $discount = json_decode($company->discount);
@@ -265,171 +261,158 @@ class ReservationController extends Controller
                 }
 
                 $mailtemplate = new MailTemplate();
-                
+
                 // Send mail to company owner
-                /*$mailtemplate->sendMail(array(
-                    'email' => $company->email,
-                    'reservation_id' => $data->id,
-                    'template_id' => 'new-reservation-company',
-                    'company_id' => $company->id,
-                    'manual' => $reservationTimes[$time][$company->id]['isManual'],
-                    'replacements' => array(
-                        '%name%' => $data->name,
-                        '%cname%' => $company->contact_name,
-                        '%saldo%' => $data->saldo,
-                        '%phone%' => $data->phone,
-                        '%email%' => $data->email,
-                        '%date%' => date('d-m-Y', strtotime($data->date)),
-                        '%time%' => date('H:i', strtotime($data->time)),
-                        '%persons%' => $data->persons,
-                        '%comment%' => $data->comment,
-                        '%discount%' => isset($discount[0]) ? $discount[0] : '',
-                        '%discount_comment%' =>  $company->discount_comment,
-                        '%days%' => isset($day) ? $day : '',
-                        '%allergies%' => ($request->has('allergies') ? implode(",", json_decode($data->allergies)) : ''),
-                        '%preferences%' => ($request->has('preferences') ? implode(",", json_decode($data->preferences)) : '')
-                    )
-                ));*/
+                /* $mailtemplate->sendMail(array(
+                  'email' => $company->email,
+                  'reservation_id' => $data->id,
+                  'template_id' => 'new-reservation-company',
+                  'company_id' => $company->id,
+                  'manual' => $reservationTimes[$time][$company->id]['isManual'],
+                  'replacements' => array(
+                  '%name%' => $data->name,
+                  '%cname%' => $company->contact_name,
+                  '%saldo%' => $data->saldo,
+                  '%phone%' => $data->phone,
+                  '%email%' => $data->email,
+                  '%date%' => date('d-m-Y', strtotime($data->date)),
+                  '%time%' => date('H:i', strtotime($data->time)),
+                  '%persons%' => $data->persons,
+                  '%comment%' => $data->comment,
+                  '%discount%' => isset($discount[0]) ? $discount[0] : '',
+                  '%discount_comment%' =>  $company->discount_comment,
+                  '%days%' => isset($day) ? $day : '',
+                  '%allergies%' => ($request->has('allergies') ? implode(",", json_decode($data->allergies)) : ''),
+                  '%preferences%' => ($request->has('preferences') ? implode(",", json_decode($data->preferences)) : '')
+                  )
+                  )); */
 
                 $calendarHelper = new CalendarHelper();
                 $calendar = $calendarHelper->displayCalendars(
-                    1,
-                    'Reservering bij '.$company->name,  
-                    'Reservering voor '.$company->name.' op '.$date->formatLocalized('%A %d %B %Y').' om '.date('H:i', strtotime($request->input('time'))).' met '.$request->input('persons').' '.($request->input('persons') == 1 ? 'persoon' : 'personen'), ($company->address.', '.$company->zipcode.', '.$company->city), date('Y-m-d', strtotime($data->date)).' '.date('H:i:s', strtotime($data->time))
+                        1, 'Reservering bij ' . $company->name, 'Reservering voor ' . $company->name . ' op ' . $date->formatLocalized('%A %d %B %Y') . ' om ' . date('H:i', strtotime($request->input('time'))) . ' met ' . $request->input('persons') . ' ' . ($request->input('persons') == 1 ? 'persoon' : 'personen'), ($company->address . ', ' . $company->zipcode . ', ' . $company->city), date('Y-m-d', strtotime($data->date)) . ' ' . date('H:i:s', strtotime($data->time))
                 );
 
                 if (Sentinel::check() == FALSE) {
                     $loginAs = Sentinel::findById($user->id);
                     Sentinel::login($user);
                 }
-    
+
                 if ($reservationTimes[$time][$company->id]['isManual'] == 1) {
                     Alert::warning(
-                        'Uw reservering voor '.$company->name.' op '.$date->formatLocalized('%A %d %B %Y').' om '.date('H:i', strtotime($request->input('time'))).' met '.$request->input('persons').' '.($request->input('persons') == 1 ? 'persoon' : 'personen').' wordt doorgegeven aan het restaurant, welke contact met u opneemt.<br /><br /> U heeft aangegeven &euro;'.$request->input('saldo').' korting op de rekening te willen. Klopt dit niet? <a href=\''.URL::to('account/reservations').'\' target=\'_blank\'>Klik hier</a><br /><br /> '.$calendar.'<br /> <span class=\'addthis_sharing_toolbox\'></span>',
-                        'Let op, '.$request->input('name').'!'
+                            'Uw reservering voor ' . $company->name . ' op ' . $date->formatLocalized('%A %d %B %Y') . ' om ' . date('H:i', strtotime($request->input('time'))) . ' met ' . $request->input('persons') . ' ' . ($request->input('persons') == 1 ? 'persoon' : 'personen') . ' wordt doorgegeven aan het restaurant, welke contact met u opneemt.<br /><br /> U heeft aangegeven &euro;' . $request->input('saldo') . ' korting op de rekening te willen. Klopt dit niet? <a href=\'' . URL::to('account/reservations') . '\' target=\'_blank\'>Klik hier</a><br /><br /> ' . $calendar . '<br /> <span class=\'addthis_sharing_toolbox\'></span>', 'Let op, ' . $request->input('name') . '!'
                     )->html()->persistent('Sluiten');
 
                     // Send to client
-                    /*$mailtemplate->sendMail(array(
-                        'email' => $request->input('email'),
-                        'reservation_id' => $data->id,
-                        'template_id' => 'reservation-pending-client',
-                        'company_id' => $company->id,
-                        'fromEmail' => $company->email,
-                        'replacements' => array(
-                            '%name%' => $data->name,
-                            '%cname%' => $company->contact_name,
-                            '%saldo%' => $data->saldo,
-                            '%phone%' => $data->phone,
-                            '%email%' => $data->email,
-                            '%date%' => date('d-m-Y', strtotime($data->date)),
-                            '%time%' => date('H:i', strtotime($data->time)),
-                            '%persons%' => $data->persons,
-                            '%comment%' => $data->comment,
-                            '%discount%' => isset($discount[0]) ? $discount[0] : '',
-                            '%discount_comment%' =>  $company->discount_comment,
-                            '%days%' => isset($day) ? $day : '',
-                            '%allergies%' => ($request->has('allergies') ? implode(",", json_decode($data->allergies)) : ''),
-                            '%preferences%' => ($request->has('preferences') ? implode(",", json_decode($data->preferences)) : '')
-                        )
-                    ));*/
-                } elseif ($request->has('iframe')) {                    
+                    /* $mailtemplate->sendMail(array(
+                      'email' => $request->input('email'),
+                      'reservation_id' => $data->id,
+                      'template_id' => 'reservation-pending-client',
+                      'company_id' => $company->id,
+                      'fromEmail' => $company->email,
+                      'replacements' => array(
+                      '%name%' => $data->name,
+                      '%cname%' => $company->contact_name,
+                      '%saldo%' => $data->saldo,
+                      '%phone%' => $data->phone,
+                      '%email%' => $data->email,
+                      '%date%' => date('d-m-Y', strtotime($data->date)),
+                      '%time%' => date('H:i', strtotime($data->time)),
+                      '%persons%' => $data->persons,
+                      '%comment%' => $data->comment,
+                      '%discount%' => isset($discount[0]) ? $discount[0] : '',
+                      '%discount_comment%' =>  $company->discount_comment,
+                      '%days%' => isset($day) ? $day : '',
+                      '%allergies%' => ($request->has('allergies') ? implode(",", json_decode($data->allergies)) : ''),
+                      '%preferences%' => ($request->has('preferences') ? implode(",", json_decode($data->preferences)) : '')
+                      )
+                      )); */
+                } elseif ($request->has('iframe')) {
                     Alert::success(
-                        'Uw reservering voor '.$company->name.' op '.$date->formatLocalized('%A %d %B %Y').' om '.date('H:i', strtotime($request->input('time'))).' met '.$request->input('persons').' '.($request->input('persons') == 1 ? 'persoon' : 'personen').' is succesvol geplaatst. <br /><br />'.$calendar.'<br /> <span class=\'addthis_sharing_toolbox\'></span>',
-                        'Bedankt '.$request->input('name').'!'
+                            'Uw reservering voor ' . $company->name . ' op ' . $date->formatLocalized('%A %d %B %Y') . ' om ' . date('H:i', strtotime($request->input('time'))) . ' met ' . $request->input('persons') . ' ' . ($request->input('persons') == 1 ? 'persoon' : 'personen') . ' is succesvol geplaatst. <br /><br />' . $calendar . '<br /> <span class=\'addthis_sharing_toolbox\'></span>', 'Bedankt ' . $request->input('name') . '!'
                     )->html()->persistent("Sluit");
                     // Send mail to user
-                    /*$mailtemplate->sendMail(array(
-                        'email' => $request->input('email'),
-                        'reservation_id' => $data->id,
-                        'template_id' => 'new-reservation-client',
-                        'company_id' => $company->id,
-                        'fromEmail' => $company->email,
-                        'replacements' => array(
-                            '%name%' => $data->name,
-                            '%cname%' => $company->contact_name,
-                            '%saldo%' => $data->saldo,
-                            '%phone%' => $data->phone,
-                            '%email%' => $data->email,
-                            '%date%' => date('d-m-Y', strtotime($data->date)),
-                            '%time%' => date('H:i', strtotime($data->time)),
-                            '%persons%' => $data->persons,
-                            '%comment%' => $data->comment,
-                            '%discount_comment%' =>  $company->discount_comment,
-                            '%discount%' => isset($discount[0]) ? $discount[0] : '',
-                            '%days%' => isset($day) ? $day : '',
-                            '%allergies%' => ($request->has('allergies') ? implode(",", json_decode($data->allergies)) : ''),
-                            '%preferences%' => ($request->has('preferences') ? implode(",", json_decode($data->preferences)) : '')
-                        )
-                    ));*/
+                    /* $mailtemplate->sendMail(array(
+                      'email' => $request->input('email'),
+                      'reservation_id' => $data->id,
+                      'template_id' => 'new-reservation-client',
+                      'company_id' => $company->id,
+                      'fromEmail' => $company->email,
+                      'replacements' => array(
+                      '%name%' => $data->name,
+                      '%cname%' => $company->contact_name,
+                      '%saldo%' => $data->saldo,
+                      '%phone%' => $data->phone,
+                      '%email%' => $data->email,
+                      '%date%' => date('d-m-Y', strtotime($data->date)),
+                      '%time%' => date('H:i', strtotime($data->time)),
+                      '%persons%' => $data->persons,
+                      '%comment%' => $data->comment,
+                      '%discount_comment%' =>  $company->discount_comment,
+                      '%discount%' => isset($discount[0]) ? $discount[0] : '',
+                      '%days%' => isset($day) ? $day : '',
+                      '%allergies%' => ($request->has('allergies') ? implode(",", json_decode($data->allergies)) : ''),
+                      '%preferences%' => ($request->has('preferences') ? implode(",", json_decode($data->preferences)) : '')
+                      )
+                      )); */
                 } else {
                     Alert::success(
-                        'Uw reservering voor '.$company->name.' op '.$date->formatLocalized('%A %d %B %Y').' om '.date('H:i', strtotime($request->input('time'))).' met '.$request->input('persons').' '.($request->input('persons') == 1 ? 'persoon' : 'personen').' is succesvol geplaatst. <br /><br /> U heeft aangegeven &euro;'.$request->input('saldo').' korting op de rekening te willen. Klopt dit niet? <a href=\''.URL::to('account/reservations').'\' target=\'_blank\'>Klik hier</a><br /><br />'.$calendar.'<br /> <span class=\'addthis_sharing_toolbox\'></span>',
-                        'Bedankt '.$request->input('name').'!'
+                            'Uw reservering voor ' . $company->name . ' op ' . $date->formatLocalized('%A %d %B %Y') . ' om ' . date('H:i', strtotime($request->input('time'))) . ' met ' . $request->input('persons') . ' ' . ($request->input('persons') == 1 ? 'persoon' : 'personen') . ' is succesvol geplaatst. <br /><br /> U heeft aangegeven &euro;' . $request->input('saldo') . ' korting op de rekening te willen. Klopt dit niet? <a href=\'' . URL::to('account/reservations') . '\' target=\'_blank\'>Klik hier</a><br /><br />' . $calendar . '<br /> <span class=\'addthis_sharing_toolbox\'></span>', 'Bedankt ' . $request->input('name') . '!'
                     )->html()->persistent('Sluiten');
 
                     // Send mail to user
-                    /*$mailtemplate->sendMail(array(
-                        'email' => $request->input('email'),
-                        'template_id' => 'new-reservation-client',
-                        'company_id' => $company->id,
-                        'reservation_id' => $data->id,
-                        'fromEmail' => $company->email,
-                        'replacements' => array(
-                            '%name%' => $data->name,
-                            '%cname%' => $company->contact_name,
-                            '%saldo%' => $data->saldo,
-                            '%phone%' => $data->phone,
-                            '%email%' => $data->email,
-                            '%date%' => date('d-m-Y', strtotime($data->date)),
-                            '%time%' => date('H:i', strtotime($data->time)),
-                            '%persons%' => $data->persons,
-                            '%comment%' => $data->comment,
-                            '%discount%' => isset($discount[0]) ? $discount[0] : '',
-                            '%discount_comment%' =>  $company->discount_comment,
-                            '%days%' => isset($day) ? $day : '',
-                            '%allergies%' => ($request->has('allergies') ? implode(",", json_decode($data->allergies)) : ''),
-                            '%preferences%' => ($request->has('preferences') ? implode(",", json_decode($data->preferences)) : '')
-                        )
-                    ));*/
+                    /* $mailtemplate->sendMail(array(
+                      'email' => $request->input('email'),
+                      'template_id' => 'new-reservation-client',
+                      'company_id' => $company->id,
+                      'reservation_id' => $data->id,
+                      'fromEmail' => $company->email,
+                      'replacements' => array(
+                      '%name%' => $data->name,
+                      '%cname%' => $company->contact_name,
+                      '%saldo%' => $data->saldo,
+                      '%phone%' => $data->phone,
+                      '%email%' => $data->email,
+                      '%date%' => date('d-m-Y', strtotime($data->date)),
+                      '%time%' => date('H:i', strtotime($data->time)),
+                      '%persons%' => $data->persons,
+                      '%comment%' => $data->comment,
+                      '%discount%' => isset($discount[0]) ? $discount[0] : '',
+                      '%discount_comment%' =>  $company->discount_comment,
+                      '%days%' => isset($day) ? $day : '',
+                      '%allergies%' => ($request->has('allergies') ? implode(",", json_decode($data->allergies)) : ''),
+                      '%preferences%' => ($request->has('preferences') ? implode(",", json_decode($data->preferences)) : '')
+                      )
+                      )); */
                 }
 
-                return Redirect::to('restaurant/'.$slug.($request->has('iframe') ? '?iframe=1' : ''));
+                return Redirect::to('restaurant/' . $slug . ($request->has('iframe') ? '?iframe=1' : ''));
             } else {
                 alert()->error('', 'Het is niet mogelijk om op dit tijdstip te reserveren of er zijn geen plaatsen beschikbaar.')->html()->persistent('Sluiten');
 
-                return Redirect::to($request->input('iframe') == 1 ? 'widget/calendar/restaurant/'.$slug : 'restaurant/'.$slug);
+                return Redirect::to($request->input('iframe') == 1 ? 'widget/calendar/restaurant/' . $slug : 'restaurant/' . $slug);
             }
         } else {
             alert()->error('', 'Dit bedrijf bestaat niet of is tijdelijk niet beschikbaar.')->html()->persistent('Sluiten');
 
-            return Redirect::to($request->input('iframe') == 1 ? 'widget/calendar/restaurant/'.$slug : '/');
+            return Redirect::to($request->input('iframe') == 1 ? 'widget/calendar/restaurant/' . $slug : '/');
         }
     }
 
-    public function reservationEdit(Request $request, $id)
-    {
+    public function reservationEdit(Request $request, $id) {
         $reservation = Reservation::select(
-            DB::raw(
-                'DATE_SUB(CONCAT(reservations.date, " ", reservations.time), INTERVAL company_reservations.update_before_time MINUTE) as updateBeforeTime'
-            ),
-            'companies.name as companyName',
-            'companies.allergies as companyAllergies',
-            'companies.preferences as companyPreferences',
-            'companies.user_id as companyOwner',
-            'reservations.*'
-        )
-            ->leftJoin('companies', 'reservations.company_id', '=', 'companies.id')
-            ->leftJoin('company_reservations', 'company_reservations.id', '=', 'reservations.reservation_id')
-            ->find($id)
+                        DB::raw(
+                                'DATE_SUB(CONCAT(reservations.date, " ", reservations.time), INTERVAL company_reservations.update_before_time MINUTE) as updateBeforeTime'
+                        ), 'companies.name as companyName', 'companies.allergies as companyAllergies', 'companies.preferences as companyPreferences', 'companies.user_id as companyOwner', 'reservations.*'
+                )
+                ->leftJoin('companies', 'reservations.company_id', '=', 'companies.id')
+                ->leftJoin('company_reservations', 'company_reservations.id', '=', 'reservations.reservation_id')
+                ->find($id)
         ;
 
         if ($reservation) {
             $saldo = $reservation->getMeta('saldo_update');
-             if (
-                $request->has('saldo_update') 
-                && $saldo != NULL
-                && $saldo->code == $request->input('saldo_update') 
+            if (
+                    $request->has('saldo_update') && $saldo != NULL && $saldo->code == $request->input('saldo_update')
             ) {
                 $oldSaldo = $saldo->old_saldo;
                 $newSaldo = $saldo->new_saldo;
@@ -460,15 +443,15 @@ class ReservationController extends Controller
                 return Redirect::to('/');
             } else {
                 if (
-                    $reservation->user_id == Sentinel::getUser()->id
-                    OR $reservation->companyOwner == Sentinel::getUser()->id
-                    OR Sentinel::inRole('admin')
+                        $reservation->user_id == Sentinel::getUser()->id
+                        OR $reservation->companyOwner == Sentinel::getUser()->id
+                        OR Sentinel::inRole('admin')
                 ) {
-                    if (date('Y-m-d H:i') < date('Y-m-d H:i', strtotime($reservation->date.' '.$reservation->time))) {
+                    if (date('Y-m-d H:i') < date('Y-m-d H:i', strtotime($reservation->date . ' ' . $reservation->time))) {
                         if (
-                            new DateTime() < new DateTime($reservation->updateBeforeTime)
-                            OR $reservation->companyOwner == Sentinel::getUser()->id
-                            OR Sentinel::inRole('admin')
+                                new DateTime() < new DateTime($reservation->updateBeforeTime)
+                                OR $reservation->companyOwner == Sentinel::getUser()->id
+                                OR Sentinel::inRole('admin')
                         ) {
                             return view('pages/reservation/edit', [
                                 'reservation' => $reservation,
@@ -476,12 +459,12 @@ class ReservationController extends Controller
                             ]);
                         } else {
                             Alert::error('Het is niet meer mogelijk om deze reservering te wijzigen.')->html()->persistent('Sluiten');
-                            return Redirect::to('account/reservations/edit/'.$id);
+                            return Redirect::to('account/reservations/edit/' . $id);
                         }
                     } else {
                         Alert::error('Het is niet meer mogelijk om deze reservering te wijzigen.')->html()->persistent('Sluiten');
 
-                        return Redirect::to('account/reservations/edit/'.$id);
+                        return Redirect::to('account/reservations/edit/' . $id);
                     }
                 }
             }
@@ -491,8 +474,7 @@ class ReservationController extends Controller
         }
     }
 
-    public function reservationEditAction(ReservationTwoRequest $request, $id)
-    {
+    public function reservationEditAction(ReservationTwoRequest $request, $id) {
         setlocale(LC_TIME, 'Dutch');
 
         $company = Company::where('id', '=', $request->input('company_id'))->first();
@@ -503,44 +485,34 @@ class ReservationController extends Controller
             $date = date('Y-m-d', strtotime($request->input('date')));
 
             $reservationTimes = CompanyReservation::getReservationTimesArray(
-                array(
-                    'company_id' => array($company->id), 
-                    'date' => $date,
-                    'selectPersons' => $request->input('persons')
-                )
+                            array(
+                                'company_id' => array($company->id),
+                                'date' => $date,
+                                'selectPersons' => $request->input('persons')
+                            )
             );
 
             $reservationCheck = $oldTime != $time ? isset($reservationTimes[$time]) : 1;
 
             if ($reservationCheck == 1) {
                 $reservation = Reservation::select(
-                    DB::raw('DATE_SUB(CONCAT(reservations.date, " ", reservations.time), INTERVAL company_reservations.update_before_time MINUTE) as updateBeforeTime'),
-                    DB::raw( 'DATE_SUB(CONCAT(reservations.date, " ", reservations.time), INTERVAL company_reservations.cancel_before_time MINUTE) as cancelBeforeTime'),
-                    'companies.name as companyName',
-                    'company_reservations.cancel_before_time', 
-                    'companies.allergies as companyAllergies',
-                    'companies.preferences as companyPreferences',
-                    'companies.user_id as companyOwner',
-                    'reservations.*',
-                    'reservations.id as resId'
-                )
-                    ->leftJoin('companies', 'reservations.company_id', '=', 'companies.id')
-                    ->leftJoin('company_reservations', 'company_reservations.id', '=', 'reservations.reservation_id')
-                    ->find($id)
+                                DB::raw('DATE_SUB(CONCAT(reservations.date, " ", reservations.time), INTERVAL company_reservations.update_before_time MINUTE) as updateBeforeTime'), DB::raw('DATE_SUB(CONCAT(reservations.date, " ", reservations.time), INTERVAL company_reservations.cancel_before_time MINUTE) as cancelBeforeTime'), 'companies.name as companyName', 'company_reservations.cancel_before_time', 'companies.allergies as companyAllergies', 'companies.preferences as companyPreferences', 'companies.user_id as companyOwner', 'reservations.*', 'reservations.id as resId'
+                        )
+                        ->leftJoin('companies', 'reservations.company_id', '=', 'companies.id')
+                        ->leftJoin('company_reservations', 'company_reservations.id', '=', 'reservations.reservation_id')
+                        ->find($id)
                 ;
 
                 if (count($reservation) == 1) {
                     switch ($request->input('type')) {
                         case 'cancel':
-                            if ( 
-                                $reservation->user_id == Sentinel::getUser()->id
-                                OR $reservation->companyOwner == Sentinel::getUser()->id
-                                OR Sentinel::inRole('admin')
+                            if (
+                                    $reservation->user_id == Sentinel::getUser()->id
+                                    OR $reservation->companyOwner == Sentinel::getUser()->id
+                                    OR Sentinel::inRole('admin')
                             ) {
                                 if (
-                                    new DateTime() < new DateTime($reservation->date.''.$reservation->time)
-                                    && new DateTime() < new DateTime($reservation->cancelBeforeTime)
-                                    && $reservation->is_cancelled == 0
+                                        new DateTime() < new DateTime($reservation->date . '' . $reservation->time) && new DateTime() < new DateTime($reservation->cancelBeforeTime) && $reservation->is_cancelled == 0
                                 ) {
                                     Reservation::cancel($reservation);
 
@@ -550,29 +522,29 @@ class ReservationController extends Controller
                                 }
 
                                 if ($request->has('companyPage')) {
-                                    return Redirect::to('admin/reservations/clients/'.$company->id.'/'. date('Ymd', strtotime($reservation->date)));
+                                    return Redirect::to('admin/reservations/clients/' . $company->id . '/' . date('Ymd', strtotime($reservation->date)));
                                 } else {
                                     return Redirect::to('account/reservations');
                                 }
                             } else {
                                 alert()->error('', 'Wij konden de opgegeven reservering niet vinden.')->html()->persistent('Sluiten');
-               
-                                return Redirect::to($request->has('companyPage') ? 'admin/reservations/clients/'.$company->id : 'account/reservations');
+
+                                return Redirect::to($request->has('companyPage') ? 'admin/reservations/clients/' . $company->id : 'account/reservations');
                             }
                             break;
 
                         case 'edit':
                             $this->validate($request, []);
 
-                            if ( 
-                                $reservation->user_id == Sentinel::getUser()->id
-                                OR $reservation->companyOwner == Sentinel::getUser()->id
-                                OR Sentinel::inRole('admin')
-                            ) {
-                                if (
-                                    new DateTime() < new DateTime($reservation->updateBeforeTime)
+                            if (
+                                    $reservation->user_id == Sentinel::getUser()->id
                                     OR $reservation->companyOwner == Sentinel::getUser()->id
                                     OR Sentinel::inRole('admin')
+                            ) {
+                                if (
+                                        new DateTime() < new DateTime($reservation->updateBeforeTime)
+                                        OR $reservation->companyOwner == Sentinel::getUser()->id
+                                        OR Sentinel::inRole('admin')
                                 ) {
 
                                     $userSaldo = Sentinel::findById($reservation->user_id)->saldo;
@@ -585,12 +557,12 @@ class ReservationController extends Controller
 
                                         if ($amount > $userSaldo) {
                                             alert()->error('', 'Het spaartegoed van deze gebruiker is te laag om meer spaartegoed er op te zetten.')->html()->persistent('Sluiten');
-                                            return Redirect::to('reservation/edit/'.$reservation->id.'?company_page=1');
+                                            return Redirect::to('reservation/edit/' . $reservation->id . '?company_page=1');
                                         }
                                     }
 
                                     $reservation->date = date('Y-m-d', strtotime($request->input('date')));
-                                    $reservation->time = date('H:i', strtotime($request->input('time'))).':00';
+                                    $reservation->time = date('H:i', strtotime($request->input('time'))) . ':00';
                                     $reservation->persons = $request->input('persons');
                                     $reservation->name = $request->input('name');
                                     $reservation->email = $request->input('email');
@@ -602,8 +574,8 @@ class ReservationController extends Controller
                                         $reservation->saldo = $request->input('saldo');
 
                                         $user = Sentinel::findById($reservation->user_id);
-                                
-                                        if ($request->has('saldo') && $request->input('saldo') > 0 && $request->input('saldo') > $request->input('old_saldo') ) {
+
+                                        if ($request->has('saldo') && $request->input('saldo') > 0 && $request->input('saldo') > $request->input('old_saldo')) {
                                             $user->saldo = MoneyHelper::getAmount($user->saldo) - MoneyHelper::getAmount($request->input('saldo'));
                                         }
 
@@ -614,19 +586,16 @@ class ReservationController extends Controller
                                     $reservation->allergies = json_encode($request->input('allergies'));
                                     $reservation->preferences = json_encode($request->input('preferences'));
                                     $reservation->save();
-                                    
+
                                     $mailtemplate = new MailTemplate();
                                     $temporaryAuth = new TemporaryAuth();
 
                                     if (
-                                        $reservation->companyOwner == Sentinel::getUser()->id 
-                                        OR Sentinel::inRole('admin')
-                                        && $reservation->user_id != Sentinel::getUser()->id
-                                        && $request->has('saldo')
-                                        && $request->input('saldo') > 0
+                                            $reservation->companyOwner == Sentinel::getUser()->id
+                                            OR Sentinel::inRole('admin') && $reservation->user_id != Sentinel::getUser()->id && $request->has('saldo') && $request->input('saldo') > 0
                                     ) {
                                         $code = str_random(64);
-                                        $authLinkUpdate = $temporaryAuth->createCode($reservation->user_id, 'reservation/edit/'.$reservation->id.'?saldo_update='.$code);
+                                        $authLinkUpdate = $temporaryAuth->createCode($reservation->user_id, 'reservation/edit/' . $reservation->id . '?saldo_update=' . $code);
 
                                         $reservation->deleteMeta('saldo_update');
                                         $reservation->addMeta('saldo_update', array(
@@ -641,7 +610,7 @@ class ReservationController extends Controller
                                             'template_id' => 'saldo-update',
                                             'company_id' => $company->id,
                                             'replacements' => array(
-                                                '%url%' => url('auth/set/'.$authLinkUpdate),
+                                                '%url%' => url('auth/set/' . $authLinkUpdate),
                                                 '%name%' => $reservation->name,
                                                 '%saldo%' => $reservation->saldo,
                                                 '%old_saldo%' => $reservation->saldo,
@@ -723,26 +692,26 @@ class ReservationController extends Controller
                                 }
 
                                 if ($request->has('companyPage')) {
-                                    return Redirect::to('admin/reservations/clients/'.$company->id.'/'. date('Ymd', strtotime($reservation->date)));
+                                    return Redirect::to('admin/reservations/clients/' . $company->id . '/' . date('Ymd', strtotime($reservation->date)));
                                 } else {
-                                    return Redirect::to('reservation/edit/'.$reservation->id);
+                                    return Redirect::to('reservation/edit/' . $reservation->id);
                                 }
                             } else {
                                 alert()->error('', 'Wij konden de opgegeven reservering niet vinden.')->html()->persistent('Sluiten');
-               
-                                return Redirect::to($request->has('companyPage') ? 'admin/reservations/clients/'.$company->id : 'account/reservations');
+
+                                return Redirect::to($request->has('companyPage') ? 'admin/reservations/clients/' . $company->id : 'account/reservations');
                             }
                             break;
                     }
                 } else {
                     alert()->error('', 'Wij konden de opgegeven reservering niet vinden.')->html()->persistent('Sluiten');
-   
-                    return Redirect::to($request->has('companyPage') ? 'admin/reservations/clients/'.$company->id : 'account/reservations');
+
+                    return Redirect::to($request->has('companyPage') ? 'admin/reservations/clients/' . $company->id : 'account/reservations');
                 }
             } else {
                 alert()->error('', 'Het is niet mogelijk om op dit tijdstip te reserveren of er zijn geen plaatsen beschikbaar.')->html()->persistent('Sluiten');
 
-                return Redirect::to($request->has('companyPage') ? 'admin/reservations/clients/'.$company->id : 'account/reservations');
+                return Redirect::to($request->has('companyPage') ? 'admin/reservations/clients/' . $company->id : 'account/reservations');
             }
         } else {
             App::abort(404);

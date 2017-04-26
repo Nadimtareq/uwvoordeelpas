@@ -1,10 +1,16 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Payment;
 use App\Models\Invoice;
 use App\Models\MailTemplate;
 use Illuminate\Http\Request;
+use App\Models\Reservation;
+use App\Models\TempReservation;
+use App\Models\Company;
+use App\Helpers\CalendarHelper;
+use Carbon\Carbon;
 use Cartalyst\Sentinel\Checkpoints\ThrottlingException;
 use Cartalyst\Sentinel\Checkpoints\NotActivatedException;
 use Sentinel;
@@ -20,18 +26,16 @@ use Config;
 use URL;
 use Mollie_API_Client;
 
-class PaymentController extends Controller 
-{
+class PaymentController extends Controller {
+
     private $mollie;
 
-    public function __construct() 
-    {
+    public function __construct() {
         $this->mollie = new Mollie_API_Client;
         $this->mollie->setApiKey(App::environment('production') ? getenv('MOLLIE_PRODKEY') : getenv('MOLLIE_TESTKEY'));
     }
 
-    public function updateDirectory() 
-    {
+    public function updateDirectory() {
         $coreCommunicator = new \CoreCommunicator(\Configuration::getDefault());
         $diRes = $coreCommunicator->Directory();
 
@@ -42,8 +46,7 @@ class PaymentController extends Controller
         }
     }
 
-    public function initiateIdealPayment(Request $request) 
-    {
+    public function initiateIdealPayment(Request $request) {
         $this->validate($request, [
             'amount' => 'required'
         ]);
@@ -54,21 +57,27 @@ class PaymentController extends Controller
         }
 
         if (!is_numeric($request->amount)) {
-            if (preg_match('/[0-9]{1,3},[0-9]{1,2}/', $request->amount) 
-                || preg_match('/[0-9]{1,3}.[0-9]{1,2}/', $request->amount)
+            if (preg_match('/[0-9]{1,3},[0-9]{1,2}/', $request->amount) || preg_match('/[0-9]{1,3}.[0-9]{1,2}/', $request->amount)
             ) {
-                if(preg_match('/[0-9]{1,3},[0-9]{1,2}/', $request->amount)) {
-                    $request->amount = preg_replace('/,/','.',$request->amount);
+                if (preg_match('/[0-9]{1,3},[0-9]{1,2}/', $request->amount)) {
+                    $request->amount = preg_replace('/,/', '.', $request->amount);
                 }
             } else {
-                return view('payments/charge')->with('error','Graag een geldig bedrag invoeren');
+                return view('payments/charge')->with('error', 'Graag een geldig bedrag invoeren');
             }
         }
 
+        $redirection_url = URL::to('payment/success');
+        if ($request->has('buy') && $request->input('buy') == 'voordeelpas') {
+            $redirection_url = URL::to('payment/success?voordeelpas=1');
+        } elseif ($request->has('buy') && $request->input('buy') == 'pay_extra_for_deal' && $request->input('temp_reservation_id')) {
+            $temp_reservation_id = $request->input('temp_reservation_id');
+            $redirection_url = URL::to('payment/success?trid=' . base64_encode($temp_reservation_id) . '&pay_extra_for_deal=1');
+        }
         $payment = $this->mollie->payments->create(array(
             'amount' => $request->amount,
-            'description' => 'Saldo ophogen uwvoordeelpas met '.$request->amount,
-            'redirectUrl' => ($request->has('buy') && $request->input('buy') == 'voordeelpas' ? URL::to('payment/success?voordeelpas=1') : URL::to('payment/success'))
+            'description' => 'Saldo ophogen uwvoordeelpas met ' . $request->amount,
+            'redirectUrl' => $redirection_url
         ));
 
         $oPayment = new Payment();
@@ -82,14 +91,13 @@ class PaymentController extends Controller
         return Redirect::to($payment->links->paymentUrl);
     }
 
-    public function validatePaymentInvoice(Request $request) 
-    {
+    public function validatePaymentInvoice(Request $request) {
         $userPayments = Payment::where('user_id', Sentinel::getUser()->id)
-            ->where('mollie_id', '!=', '')
-            ->where('type', 'LIKE', '%invoice_%')
-            ->where('status', 'open')
-            ->orderBy('created_at','desc')
-            ->first()
+                ->where('mollie_id', '!=', '')
+                ->where('type', 'LIKE', '%invoice_%')
+                ->where('status', 'open')
+                ->orderBy('created_at', 'desc')
+                ->first()
         ;
 
         if ($userPayments == null) {
@@ -99,7 +107,7 @@ class PaymentController extends Controller
         }
 
         $payment = $this->mollie->payments->get($userPayments['mollie_id']);
-   
+
         $userPayments->payment_type = $payment->method;
         $userPayments->status = $payment->status;
         $userPayments->save();
@@ -107,29 +115,12 @@ class PaymentController extends Controller
         if ($payment->status == 'paid') {
             if (count($userPayments) >= 1) {
                 preg_match('/(\d+)/', $userPayments->type, $matches, PREG_OFFSET_CAPTURE);
-                
+
                 $invoice = Invoice::select(
-                    'invoices.id',
-                    'invoices.invoice_number',
-                    'invoices.start_date',
-                    'invoices.products',
-                    'invoices.type',
-                    'invoices.debit_credit',
-                    'invoices.total_persons as totalPersons',
-                    'invoices.total_saldo as totalSaldo',
-                    'companies.slug as companySlug',
-                    'companies.name as companyName',
-                    'companies.kvk as companyKVK',
-                    'companies.address as companyAddress',
-                    'companies.city as companyCity',
-                    'companies.email as companyEmail',
-                    'companies.btw as companyBTW',
-                    'companies.financial_iban as companyFinancialIban',
-                    'companies.financial_iban_tnv as companyFinancialIbantnv',
-                    'companies.zipcode as companyZipcode'
-                )
-                    ->where('paid', '=', 0)
-                    ->leftJoin('companies', 'companies.id', '=', 'invoices.company_id')
+                                'invoices.id', 'invoices.invoice_number', 'invoices.start_date', 'invoices.products', 'invoices.type', 'invoices.debit_credit', 'invoices.total_persons as totalPersons', 'invoices.total_saldo as totalSaldo', 'companies.slug as companySlug', 'companies.name as companyName', 'companies.kvk as companyKVK', 'companies.address as companyAddress', 'companies.city as companyCity', 'companies.email as companyEmail', 'companies.btw as companyBTW', 'companies.financial_iban as companyFinancialIban', 'companies.financial_iban_tnv as companyFinancialIbantnv', 'companies.zipcode as companyZipcode'
+                        )
+                        ->where('paid', '=', 0)
+                        ->leftJoin('companies', 'companies.id', '=', 'invoices.company_id')
                 ;
 
                 if (Sentinel::inRole('admin') == FALSE) {
@@ -142,9 +133,8 @@ class PaymentController extends Controller
             }
 
             alert()->success('', 'Uw factuur is succesvol betaald.')->persistent('Sluiten');
-            return Redirect::to('admin/invoices/overview/'.$invoice->companySlug);
-
-        } elseif($payment->status == 'cancelled') {
+            return Redirect::to('admin/invoices/overview/' . $invoice->companySlug);
+        } elseif ($payment->status == 'cancelled') {
             alert()->error('', 'U heeft de transactie geannuleerd')->persistent('Sluiten');
 
             return Redirect::to('payments/charge');
@@ -155,81 +145,130 @@ class PaymentController extends Controller
         }
     }
 
-    public function validatePayment(Request $request) 
-    {
+    public function validatePayment(Request $request) {
         $userPayments = Payment::where(
-            'user_id', Sentinel::getUser()->id
-        )
-            ->where('mollie_id', '!=', '')
-            ->where('type', '=', 'mollie')
-            ->where('status', 'open')
-            ->orderBy('created_at','desc')
-            ->first()
+                        'user_id', Sentinel::getUser()->id
+                )
+                ->where('mollie_id', '!=', '')
+                ->where('type', '=', 'mollie')
+                ->where('status', 'open')
+                ->orderBy('created_at', 'desc')
+                ->first()
         ;
 
         if ($userPayments == null) {
             Alert::error(
-                'Er is een fout opgetreden, probeert u het alstublieft opnieuw'
-            )
-                ->persistent('Sluiten')
+                            'Er is een fout opgetreden, probeert u het alstublieft opnieuw'
+                    )
+                    ->persistent('Sluiten')
             ;
 
             return Redirect::to('payments/charge');
         }
 
         $payment = $this->mollie->payments->get($userPayments['mollie_id']);
-   
+
         $userPayments->payment_type = $payment->method;
         $userPayments->status = $payment->status;
         $userPayments->save();
 
         if ($payment->status == 'paid') {
             if (count($userPayments) >= 1) {
-                $oUser = Sentinel::getUserRepository()->findById($userPayments->user_id);
-                $oUser->saldo += $userPayments['amount'];
-                $oUser->save();
+                if ($request->has('pay_extra_for_deal') && $request->get('pay_extra_for_deal') == '1' && $request->get('trid')) {
+                    $temp_transaction_id = base64_decode($request->get('trid'));
+                    $obj_tr = DB::table('temp_reservations')->where('id', '=', $temp_transaction_id)->first();
+                    if ($obj_tr) {
+                        $data = new Reservation;
+                        $data->date = $obj_tr->date;
+                        $data->time = $obj_tr->time;
+                        $data->persons = $obj_tr->persons;
+                        $data->company_id = $obj_tr->company_id;
+                        $data->user_id = $obj_tr->user_id;
+                        $data->reservation_id = $obj_tr->reservation_id;
+                        $data->name = $obj_tr->name;
+                        $data->email = $obj_tr->email;
+                        $data->phone = $obj_tr->phone;
 
-                $mailtemplate = new MailTemplate();
-                $mailtemplate->sendMailSite(array(
-                    'email' => $oUser->email,
-                    'template_id' => 'saldo_charge',
-                    'replacements' => array(
-                        '%name%' => $oUser->name,
-                        '%email%' => $oUser->email,
-                        '%euro%' => $userPayments['amount']
-                    )
-                ));
+                        if ($obj_tr->option_id) {
+                            $data->option_id = $obj_tr->option_id;
+                        }
+
+                        $data->comment = $obj_tr->comment;
+                        $data->saldo = $obj_tr->saldo;
+                        $data->newsletter_company = $obj_tr->newsletter_company;
+                        $data->allergies = $obj_tr->allergies;
+                        $data->preferences = $obj_tr->preferences;
+                        $data->status = $obj_tr->status;
+                        if ($data->save()) {
+                            $oUser = Sentinel::getUserRepository()->findById($userPayments->user_id);
+                            $oUser->saldo = 0;
+                            $oUser->save();
+
+                            DB::table('temp_reservations')->where('id', '=', $temp_transaction_id)->delete();
+
+                            $date = Carbon::create(
+                                            date('Y', strtotime($data->date)), date('m', strtotime($data->date)), date('d', strtotime($data->date)), 0, 0, 0
+                            );
+
+                            $calendarHelper = new CalendarHelper();
+                            $company = Company::where('id', $data->company_id)->where('no_show', '=', 0)->first();
+                            if ($company) {
+                                $calendar = $calendarHelper->displayCalendars(
+                                        1, 'Reservering bij ' . $company->name, 'Reservering voor ' . $company->name . ' op ' . $date->formatLocalized('%A %d %B %Y') . ' om ' . date('H:i', strtotime($data->time)) . ' met ' . $data->persons . ' ' . ($data->persons == 1 ? 'persoon' : 'personen'), ($company->address . ', ' . $company->zipcode . ', ' . $company->city), date('Y-m-d', strtotime($data->date)) . ' ' . date('H:i:s', strtotime($data->time))
+                                );
+
+                                Alert::success(
+                                        'Uw reservering voor ' . $company->name . ' op ' . $date->formatLocalized('%A %d %B %Y') . ' om ' . date('H:i', strtotime($data->time)) . ' met ' . $data->persons . ' ' . ($data->persons == 1 ? 'persoon' : 'personen') . ' wordt doorgegeven aan het restaurant, welke contact met u opneemt.<br /><br /> U heeft aangegeven &euro;' . $data->saldo . ' korting op de rekening te willen. Klopt dit niet? <a href=\'' . URL::to('account/reservations') . '\' target=\'_blank\'>Klik hier</a><br /><br /> ' . $calendar . '<br /> <span class=\'addthis_sharing_toolbox\'></span>', 'Let op, ' . $data->name . '!'
+                                )->html()->persistent('Sluiten');
+                                return Redirect::to('restaurant/' . $company->slug);
+                            }
+                        }
+                    }
+                } else {
+                    $oUser = Sentinel::getUserRepository()->findById($userPayments->user_id);
+                    $oUser->saldo += $userPayments['amount'];
+                    $oUser->save();
+
+                    $mailtemplate = new MailTemplate();
+                    $mailtemplate->sendMailSite(array(
+                        'email' => $oUser->email,
+                        'template_id' => 'saldo_charge',
+                        'replacements' => array(
+                            '%name%' => $oUser->name,
+                            '%email%' => $oUser->email,
+                            '%euro%' => $userPayments['amount']
+                        )
+                    ));
+                }
             }
 
-            if($request->has('voordeelpas')) {
+            if ($request->has('voordeelpas')) {
                 return Redirect::to('voordeelpas/buy/direct');
             } else {
                 Alert::success('U heeft succesvol uw saldo opgewaardeerd.')->persistent('Sluiten');
                 return Redirect::to('account/reservations/saldo');
             }
-
-        } elseif($payment->status == 'cancelled') {
+        } elseif ($payment->status == 'cancelled') {
             Alert::error(
-                'U heeft de transactie geannuleerd'
-            )
-                ->persistent('Sluiten')
+                            'U heeft de transactie geannuleerd'
+                    )
+                    ->persistent('Sluiten')
             ;
 
             return Redirect::to('payments/charge');
         } else {
             Alert::error(
-                'Er is een fout opgetreden, probeert u het alstublieft opnieuw'
-            )
-                ->persistent('Sluiten')
+                            'Er is een fout opgetreden, probeert u het alstublieft opnieuw'
+                    )
+                    ->persistent('Sluiten')
             ;
 
             return Redirect::to('payments/charge');
         }
     }
 
-    public function charge(Request $request)
-    {
-        if ($request->input('buy') == 'voordeelpas') {   
+    public function charge(Request $request) {
+        if ($request->input('buy') == 'voordeelpas') {
             $error = 'Uw saldo is te laag om een voordeelpas te kopen. Waardeer uw saldo op om verder te gaan met het aanschaffen van een voordeelpas.';
             $restAmount = (Sentinel::getUser()->saldo < '14.95' ? (14.95 - Sentinel::getUser()->saldo) : 14.95);
         }
@@ -240,29 +279,12 @@ class PaymentController extends Controller
         ));
     }
 
-    public function invoiceToPayment($invoicenumber) 
-    {
+    public function invoiceToPayment($invoicenumber) {
         $invoice = Invoice::select(
-            'invoices.id',
-            'invoices.invoice_number',
-            'invoices.start_date',
-            'invoices.products',
-            'invoices.type',
-            'invoices.debit_credit',
-            'invoices.total_persons as totalPersons',
-            'invoices.total_saldo as totalSaldo',
-            'companies.name as companyName',
-            'companies.kvk as companyKVK',
-            'companies.address as companyAddress',
-            'companies.city as companyCity',
-            'companies.email as companyEmail',
-            'companies.btw as companyBTW',
-            'companies.financial_iban as companyFinancialIban',
-            'companies.financial_iban_tnv as companyFinancialIbantnv',
-            'companies.zipcode as companyZipcode'
-        )
-            ->where('paid', '=', 0)
-            ->leftJoin('companies', 'companies.id', '=', 'invoices.company_id')
+                        'invoices.id', 'invoices.invoice_number', 'invoices.start_date', 'invoices.products', 'invoices.type', 'invoices.debit_credit', 'invoices.total_persons as totalPersons', 'invoices.total_saldo as totalSaldo', 'companies.name as companyName', 'companies.kvk as companyKVK', 'companies.address as companyAddress', 'companies.city as companyCity', 'companies.email as companyEmail', 'companies.btw as companyBTW', 'companies.financial_iban as companyFinancialIban', 'companies.financial_iban_tnv as companyFinancialIbantnv', 'companies.zipcode as companyZipcode'
+                )
+                ->where('paid', '=', 0)
+                ->leftJoin('companies', 'companies.id', '=', 'invoices.company_id')
         ;
 
         if (Sentinel::inRole('admin') == FALSE) {
@@ -286,10 +308,10 @@ class PaymentController extends Controller
             $totalPrice = 0;
 
             foreach ($productsArray as $product) {
-                if (isset($product->amount, $product->price, $product->tax)) { 
-                    $totalTax = $product->tax; 
-                    $totalPriceExTax += $product->amount * $product->price; 
-                    $totalPrice += $product->amount * $product->price * ($product->tax / 100 + 1); 
+                if (isset($product->amount, $product->price, $product->tax)) {
+                    $totalTax = $product->tax;
+                    $totalPriceExTax += $product->amount * $product->price;
+                    $totalPrice += $product->amount * $product->price * ($product->tax / 100 + 1);
                 }
             }
 
@@ -298,34 +320,17 @@ class PaymentController extends Controller
                 'invoice' => $invoice
             ));
         } else {
-            alert()->error('', 'Deze factuur met factuurnummer #'.$invoicenumber.' is al betaald of bestaat niet')->persistent('Sluiten');
+            alert()->error('', 'Deze factuur met factuurnummer #' . $invoicenumber . ' is al betaald of bestaat niet')->persistent('Sluiten');
             return Redirect::to('/');
         }
     }
 
-    public function directInvoiceToPayment(Request $request) 
-    {
+    public function directInvoiceToPayment(Request $request) {
         $invoice = Invoice::select(
-            'invoices.id',
-            'invoices.invoice_number',
-            'invoices.start_date',
-            'invoices.products',
-            'invoices.type',
-            'invoices.debit_credit',
-            'invoices.total_persons as totalPersons',
-            'invoices.total_saldo as totalSaldo',
-            'companies.name as companyName',
-            'companies.kvk as companyKVK',
-            'companies.address as companyAddress',
-            'companies.city as companyCity',
-            'companies.email as companyEmail',
-            'companies.btw as companyBTW',
-            'companies.financial_iban as companyFinancialIban',
-            'companies.financial_iban_tnv as companyFinancialIbantnv',
-            'companies.zipcode as companyZipcode'
-        )
-            ->where('paid', '=', 0)
-            ->leftJoin('companies', 'companies.id', '=', 'invoices.company_id')
+                        'invoices.id', 'invoices.invoice_number', 'invoices.start_date', 'invoices.products', 'invoices.type', 'invoices.debit_credit', 'invoices.total_persons as totalPersons', 'invoices.total_saldo as totalSaldo', 'companies.name as companyName', 'companies.kvk as companyKVK', 'companies.address as companyAddress', 'companies.city as companyCity', 'companies.email as companyEmail', 'companies.btw as companyBTW', 'companies.financial_iban as companyFinancialIban', 'companies.financial_iban_tnv as companyFinancialIbantnv', 'companies.zipcode as companyZipcode'
+                )
+                ->where('paid', '=', 0)
+                ->leftJoin('companies', 'companies.id', '=', 'invoices.company_id')
         ;
 
         if (Sentinel::inRole('admin') == FALSE) {
@@ -350,23 +355,22 @@ class PaymentController extends Controller
                     $totalPrice = 0;
 
                     foreach ($productsArray as $product) {
-                        if (isset($product->amount, $product->price, $product->tax)) { 
-                            $totalTax = $product->tax; 
-                            $totalPriceExTax += $product->amount * $product->price; 
-                            $totalPrice += $product->amount * $product->price * ($product->tax / 100 + 1); 
+                        if (isset($product->amount, $product->price, $product->tax)) {
+                            $totalTax = $product->tax;
+                            $totalPriceExTax += $product->amount * $product->price;
+                            $totalPrice += $product->amount * $product->price * ($product->tax / 100 + 1);
                         }
                     }
-                break;
+                    break;
 
                 case 'reservation':
                     $totalPrice = ($invoice->totalPersons * 1 * 1.21);
                     break;
-                
             }
 
             $payment = $this->mollie->payments->create(array(
                 'amount' => $totalPrice,
-                'description' => 'Factuurnummer: '.$invoice->invoice_number,
+                'description' => 'Factuurnummer: ' . $invoice->invoice_number,
                 'redirectUrl' => URL::to('payment/success/invoice')
             ));
 
@@ -375,7 +379,7 @@ class PaymentController extends Controller
             $oPayment->user_id = Sentinel::getUser()->id;
             $oPayment->status = $payment->status;
             $oPayment->amount = $totalPrice;
-            $oPayment->type = 'invoice_'.$invoice->invoice_number;
+            $oPayment->type = 'invoice_' . $invoice->invoice_number;
             $oPayment->payment_type = 'ideal';
             $oPayment->save();
 

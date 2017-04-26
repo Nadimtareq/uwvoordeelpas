@@ -28,7 +28,8 @@ class ReservationTwoRequest extends Request
         $validationFactory->extend(
             'saldo',
             function ($attribute, $value, $parameters) use($user) {
-            	return (Sentinel::check() ? MoneyHelper::getAmount($user->saldo) >= MoneyHelper::getAmount($value) : 1);
+//            	return (Sentinel::check() ? MoneyHelper::getAmount($user->saldo) >= MoneyHelper::getAmount($value) : 1);
+            return 1;
             },
             RequestFacade::has('user_id') ?
             'Deze gebruiker heeft het opgegeven saldo niet in bezit.' : 'U heeft het opgegeven spaartegoed niet in bezit.'
