@@ -58,6 +58,7 @@
         <?php echo Form::hidden('setTimeBack', 0); ?>
         <?php echo Form::hidden('reservations_options', $deal->id); ?>
         <?php echo Form::hidden('reservation_url', URL::to('restaurant/reservation/' . $company->slug)); ?>
+        <?php echo Form::hidden('saldo', $reservation_charge, array('min' => 0, 'max' => 500)); ?>
         <input type="hidden" name="deal_price" class="deal_price" id="deal_price" value="<?php echo $deal->price ?>">
         @if (isset($iframe))<br>
         @if ($userAuth == FALSE)
@@ -121,10 +122,7 @@
             </div>
 
             <div class="<?php echo ((isset($iframe) ? 'two' : 'three')); ?> column row"> 
-                @if($userAuth && !isset($iframe))
-                <?php echo Form::hidden('saldo', $reservation_charge, array('min' => 0, 'max' => 500)); ?>                
-                @endif
-
+                
                 <div class="column">
                     <div class="field">
                         <label>Voorkeuren</label>
@@ -223,13 +221,7 @@
             </div>	
         </div>
 
-        <div class="two fields">
-            @if($userAuth)
-
-            <?php echo Form::hidden('saldo', $reservation_charge, array('min' => 0, 'max' => 500)); ?>
-
-            @endif
-
+        <div class="two fields">            
             <div class="field">
                 <label>Voorkeuren</label>
                 <?php echo Form::select('preferences[]', ($userAuth ? array_combine(json_decode($company->preferences), array_map('ucfirst', json_decode($company->preferences))) : array()), ($user && $user->preferences != NULL ? json_decode($user->preferences) : ''), array('class' => 'multipleSelect', 'data-placeholder' => 'Voorkeuren', 'multiple' => 'multiple')); ?>

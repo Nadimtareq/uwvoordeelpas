@@ -58,7 +58,7 @@ class ReservationController extends Controller {
     public function reservationStepTwo(Request $request, $slug) {
         $time = date('H:i', strtotime($request->input('time')));
         $date = date('Y-m-d', strtotime($request->input('date')));
-
+        $deal = NULL;
         $company = Company::with('media')->select(
                         'id', 'slug', 'name', 'kitchens', 'days', 'discount', 'preferences', 'allergies', DB::raw('(SELECT count(id) FROM reservations WHERE user_id = ' . (Sentinel::check() ? Sentinel::getUser()->id : 'NULL') . ' AND company_id = companies.id AND newsletter_company = 1) as newsletter'), DB::raw('(SELECT comment FROM reservations WHERE user_id = ' . (Sentinel::check() ? Sentinel::getUser()->id : 'NULL') . ' AND company_id = companies.id ORDER BY created_at desc LIMIT 1) as lastComment')
                 )
@@ -87,11 +87,11 @@ class ReservationController extends Controller {
             } else {
                 $deal = ReservationOption::where('company_id', $company->id)->first();
             }
-            if (!$deal) {
-                alert()->error('', 'Het is niet mogelijk om op dit tijdstip te reserveren of er zijn geen plaatsen beschikbaar.')->html()->persistent('Sluiten');
+                if (!$deal) {
+                    alert()->error('', 'Het is niet mogelijk om op dit tijdstip te reserveren of er zijn geen plaatsen beschikbaar.')->html()->persistent('Sluiten');
 
-                return Redirect::to('/');
-            }
+                    return Redirect::to('/');
+                }
             if (isset($reservationTimes[$time])) {
                 return view('pages/reservation', [
                     'discountMessage' => Company::getDiscountMessage($company->days, $company->discount, $company->discount_comment),
@@ -139,11 +139,15 @@ class ReservationController extends Controller {
 
             if (isset($reservationTimes[$time])) {
                 // Create only a new user when the user is not logged in, if you use an other email address
-                $user = Sentinel::findByCredentials(array(
-                            'login' => Sentinel::check() && $request->input('email') != Sentinel::getUser()->email ? Sentinel::getUser()->email : $request->input('email')
-                ));
-
+                if (Sentinel::check()) {
+                    $user = Sentinel::getUser();
+                } else {
+                    $user = Sentinel::findByCredentials(array(
+                                'login' => $request->input('email')
+                    ));
+                }
                 $loginAfter = 0;
+                $deal_saldo = (float) MoneyHelper::getAmount($request->input('saldo'));
 
                 if (!$user) {
                     $loginAfter = 1;
@@ -159,17 +163,19 @@ class ReservationController extends Controller {
                     $user->name = $request->input('name');
                     $user->expire_code = str_random(64);
                     $user->source = app('request')->cookie('source');
+                    $user->saldo = 0;
+                    $enough_balance = false;
+                    $rest_amount = $deal_saldo;
                 } else {
-                    if ($request->has('saldo')) {
-                        $user_saldo = (float) MoneyHelper::getAmount($user->saldo);
-                        $deal_saldo = (float) MoneyHelper::getAmount($request->input('saldo'));
-                        if ($deal_saldo > $user_saldo) {
-                            $enough_balance = false;
-                            $rest_amount = $deal_saldo - $user_saldo;
-                        } else {
-                            $user->saldo = $user_saldo - $deal_saldo;
-                        }
+//                    if ($request->has('saldo')) {
+                    $user_saldo = (float) MoneyHelper::getAmount($user->saldo);
+                    if ($deal_saldo > $user_saldo) {
+                        $enough_balance = false;
+                        $rest_amount = $deal_saldo - $user_saldo;
+                    } else {
+                        $user->saldo = $user_saldo - $deal_saldo;
                     }
+//                    }
                 }
                 $allergies = json_decode($user->allergies, true);
                 $preferences = json_decode($user->preferences, true);
@@ -237,8 +243,8 @@ class ReservationController extends Controller {
                 $data->allergies = json_encode($request->input('allergies'));
                 $data->preferences = json_encode($request->input('preferences'));
                 $data->status = $request->input('iframe') == 1 ? ($reservationTimes[$time][$company->id]['isManual'] == 1 ? 'iframe-pending' : 'iframe') : ($reservationTimes[$time][$company->id]['isManual'] == 1 ? 'reserved-pending' : 'reserved');
-                $data->save();                
-                if (!$enough_balance && $rest_amount) {                    
+                $data->save();
+                if (!$enough_balance && $rest_amount) {
                     return view('pages/discount/extra-pay', array(
                         'amount' => $rest_amount,
                         'temp_reservation_id' => $data->id
@@ -263,7 +269,7 @@ class ReservationController extends Controller {
                 $mailtemplate = new MailTemplate();
 
                 // Send mail to company owner
-                 /*$mailtemplate->sendMail(array(
+                /* $mailtemplate->sendMail(array(
                   'email' => $company->email,
                   'reservation_id' => $data->id,
                   'template_id' => 'new-reservation-company',
@@ -299,11 +305,11 @@ class ReservationController extends Controller {
 
                 if ($reservationTimes[$time][$company->id]['isManual'] == 1) {
                     Alert::warning(
-                            'Uw reservering voor ' . $company->name . ' op ' . $date->formatLocalized('%A %d %B %Y') . ' om ' . date('H:i', strtotime($request->input('time'))) . ' met ' . $request->input('persons') . ' ' . ($request->input('persons') == 1 ? 'persoon' : 'personen') . ' wordt doorgegeven aan het restaurant, welke contact met u opneemt.<br /><br /> U heeft aangegeven &euro;' . $request->input('saldo') . ' korting op de rekening te willen. Klopt dit niet? <a href=\'' . URL::to('account/reservations') . '\' target=\'_blank\'>Klik hier</a><br /><br /> ' . $calendar . '<br /> <span class=\'addthis_sharing_toolbox\'></span>', 'Let op, ' . $request->input('name') . '!'
+                            'Uw reservering voor ' . $company->name . ' op ' . $date->formatLocalized('%A %d %B %Y') . ' om ' . date('H:i', strtotime($request->input('time'))) . ' met ' . $request->input('persons') . ' ' . ($request->input('persons') == 1 ? 'persoon' : 'personen') . ' wordt doorgegeven aan het restaurant, welke contact met u opneemt.<br /><br /> U heeft aangegeven &euro;' . $request->input('saldo') . ' korting op de rekening te willen. Klopt dit niet? <a href=\'' . URL::to('account/reservations') . '\' target=\'_blank\'>Klik hier</a><br /><br /> ' . $calendar . '<br /><br /> <span class=\'addthis_sharing_toolbox\'></span>', 'Let op, ' . $request->input('name') . '!'
                     )->html()->persistent('Sluiten');
 
                     // Send to client
-                    /*$mailtemplate->sendMail(array(
+                    /* $mailtemplate->sendMail(array(
                       'email' => $request->input('email'),
                       'reservation_id' => $data->id,
                       'template_id' => 'reservation-pending-client',
@@ -328,10 +334,10 @@ class ReservationController extends Controller {
                       )); */
                 } elseif ($request->has('iframe')) {
                     Alert::success(
-                            'Uw reservering voor ' . $company->name . ' op ' . $date->formatLocalized('%A %d %B %Y') . ' om ' . date('H:i', strtotime($request->input('time'))) . ' met ' . $request->input('persons') . ' ' . ($request->input('persons') == 1 ? 'persoon' : 'personen') . ' is succesvol geplaatst. <br /><br />' . $calendar . '<br /> <span class=\'addthis_sharing_toolbox\'></span>', 'Bedankt ' . $request->input('name') . '!'
+                            'Uw reservering voor ' . $company->name . ' op ' . $date->formatLocalized('%A %d %B %Y') . ' om ' . date('H:i', strtotime($request->input('time'))) . ' met ' . $request->input('persons') . ' ' . ($request->input('persons') == 1 ? 'persoon' : 'personen') . ' is succesvol geplaatst. <br /><br />' . $calendar . '<br /><br /> <span class=\'addthis_sharing_toolbox\'></span>', 'Bedankt ' . $request->input('name') . '!'
                     )->html()->persistent("Sluit");
                     // Send mail to user
-                    /*$mailtemplate->sendMail(array(
+                    /* $mailtemplate->sendMail(array(
                       'email' => $request->input('email'),
                       'reservation_id' => $data->id,
                       'template_id' => 'new-reservation-client',
@@ -360,7 +366,7 @@ class ReservationController extends Controller {
                     )->html()->persistent('Sluiten');
 
                     // Send mail to user
-                    /*$mailtemplate->sendMail(array(
+                    /* $mailtemplate->sendMail(array(
                       'email' => $request->input('email'),
                       'template_id' => 'new-reservation-client',
                       'company_id' => $company->id,
