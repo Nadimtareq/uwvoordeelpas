@@ -157,7 +157,7 @@ class PaymentController extends Controller {
     public function validatePayment(Request $request) {
         setlocale(LC_ALL, 'nl_NL', 'Dutch');
         $payment_user_id = $temp_transaction_id = 0;
-        $obj_tr = NULL;
+        $obj_tr = $deal = NULL;
         if (Sentinel::check()) {
             $payment_user_id = Sentinel::getUser()->id;
         }
@@ -194,7 +194,7 @@ class PaymentController extends Controller {
         $userPayments->status = $payment->status;
         $userPayments->save();
 
-        if ($payment->status == 'paid') {            
+        if ($payment->status == 'paid') {
             if (count($userPayments) >= 1) {
                 $oUser = Sentinel::getUserRepository()->findById($userPayments->user_id);
                 if ($obj_tr) {
@@ -219,7 +219,7 @@ class PaymentController extends Controller {
                     $data->allergies = $obj_tr->allergies;
                     $data->preferences = $obj_tr->preferences;
                     $data->status = $obj_tr->status;
-                    if ($data->save()) {                        
+                    if ($data->save()) {
                         $oUser->saldo = 0;
                         $oUser->save();
 
@@ -230,9 +230,11 @@ class PaymentController extends Controller {
                         );
 
                         $calendarHelper = new CalendarHelper();
-                        $deal = DB::table('reservations_options')->where('id', '=', $data->option_id)->first();
+                        if ($data->option_id) {
+                            $deal = DB::table('reservations_options')->where('id', '=', $data->option_id)->first();
+                        }
                         $company = Company::where('id', $data->company_id)->where('no_show', '=', 0)->first();
-                        if ($company && $deal) {
+                        if ($company) {
                             $calendar = $calendarHelper->displayCalendars(
                                     1, 'Reservering bij ' . $company->name, 'Reservering voor ' . $company->name . ' op ' . $carbon_date->formatLocalized('%A %d %B %Y') . ' om ' . date('H:i', strtotime($data->time)) . ' met ' . $data->persons . ' ' . ($data->persons == 1 ? 'persoon' : 'personen'), ($company->address . ', ' . $company->zipcode . ', ' . $company->city), date('Y-m-d', strtotime($data->date)) . ' ' . date('H:i:s', strtotime($data->time))
                             );
@@ -313,13 +315,20 @@ class PaymentController extends Controller {
                               )
                               )); */
 
-                            Alert::success(
-                                    'Uw reservering voor ' . $deal->name . ' bij ' . $company->name . ' op ' . $carbon_date->formatLocalized('%A %d %B %Y') . ' om ' . date('H:i', strtotime($data->time)) . ' met ' . $data->persons . ' ' . ($data->persons == 1 ? 'persoon' : 'personen') . ' wordt doorgegeven aan het restaurant, welke contact met u opneemt. <br /><br /> ' . $calendar . '<br /> <br /><span class=\'addthis_sharing_toolbox\'></span>', 'Bedankt ' . $oUser->name
-                            )->html()->persistent('Sluiten');
+                            if ($deal) {
+                                Alert::success(
+                                        'Uw reservering voor ' . $deal->name . ' bij ' . $company->name . ' op ' . $carbon_date->formatLocalized('%A %d %B %Y') . ' om ' . date('H:i', strtotime($data->time)) . ' met ' . $data->persons . ' ' . ($data->persons == 1 ? 'persoon' : 'personen') . ' wordt doorgegeven aan het restaurant, welke contact met u opneemt. <br /><br /> ' . $calendar . '<br /> <br /><span class=\'addthis_sharing_toolbox\'></span>', 'Bedankt ' . $oUser->name
+                                )->html()->persistent('Sluiten');
+                            }
+                            else{
+                                Alert::success(
+                                        'Uw reservering bij ' . $company->name . ' op ' . $carbon_date->formatLocalized('%A %d %B %Y') . ' om ' . date('H:i', strtotime($data->time)) . ' met ' . $data->persons . ' ' . ($data->persons == 1 ? 'persoon' : 'personen') . ' wordt doorgegeven aan het restaurant, welke contact met u opneemt.<br /><br /> U heeft aangegeven &euro;' . $data->saldo . ' korting op de rekening te willen. Klopt dit niet? <a href=\'' . URL::to('account/reservations') . '\' target=\'_blank\'>Klik hier</a><br /><br /> ' . $calendar . '<br /><br /> <span class=\'addthis_sharing_toolbox\'></span>', 'Bedankt ' . $oUser->name
+                                )->html()->persistent('Sluiten');
+                            }
                             return Redirect::to('restaurant/' . $company->slug);
                         }
                     }
-                } else {                    
+                } else {
                     $oUser->saldo += $userPayments['amount'];
                     $oUser->save();
 

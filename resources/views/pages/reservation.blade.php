@@ -9,7 +9,6 @@
     var user_authenticate = false;
 </script>
 
-<?php $reservation_charge = (float) ($deal->price * Request::get('persons')); ?>
 <?php if (($userAuth == TRUE) && isset($userInfo->saldo)): ?>
     <script type="text/javascript"> user_current_balance = "<?php echo $userInfo->saldo; ?>";
             user_authenticate = true;</script>
@@ -34,17 +33,19 @@
                 <img id="image" src="{{ url($mediaItems[0]->getUrl('175Thumb')) }}" class="img-responsive" alt="" />
                 @endif 
             </div>
-            <div class="col-md-6">
-                <h2>{{$deal->name}}</h2>
-                <p><?php echo html_entity_decode($deal->description); ?></p>
-            </div>
-            <div class="col-md-3 pull-right">
-                <div class="mdg_price">
-                    <span>
-                        &euro; {{ $deal->price }}
-                    </span>
+            <?php if ($deal): ?>
+                <div class="col-md-6">
+                    <h2>{{$deal->name}}</h2>
+                    <p><?php echo html_entity_decode($deal->description); ?></p>
                 </div>
-            </div>
+                <div class="col-md-3 pull-right">
+                    <div class="mdg_price">
+                        <span>
+                            &euro; {{ $deal->price }}
+                        </span>
+                    </div>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
     @if(isset($iframe))
@@ -56,12 +57,13 @@
         <?php echo Form::hidden('iframe', $iframe); ?>
         <?php echo Form::hidden('encode_url', 1); ?>
         <?php echo Form::hidden('setTimeBack', 0); ?>
-        <?php echo Form::hidden('reservations_options', $deal->id); ?>
+        <?php if ($deal): ?>
+            <?php echo Form::hidden('reservations_options', $deal->id); ?>       
+            <input type="hidden" name="deal_price" class="deal_price" id="deal_price" value="<?php echo $deal->price ?>">
+        <?php endif; ?>
         <?php echo Form::hidden('reservation_url', URL::to('restaurant/reservation/' . $company->slug)); ?>
-        <?php echo Form::hidden('saldo', $reservation_charge, array('min' => 0, 'max' => 500)); ?>
-        <input type="hidden" name="deal_price" class="deal_price" id="deal_price" value="<?php echo $deal->price ?>">
-        @if (isset($iframe))<br>
-        @if ($userAuth == FALSE)
+        @if(isset($iframe))<br>        
+        @if($userAuth == FALSE)
         <button data-type="iframe" class="ui blue fluid login button" data-redirect="{{ URL::full() }}">
             <i class="sign in icon"></i> Login met uw UWvoordeelpas account
         </button><br><br>
@@ -122,7 +124,20 @@
             </div>
 
             <div class="<?php echo ((isset($iframe) ? 'two' : 'three')); ?> column row"> 
-                
+
+                <?php if ($deal): ?>
+                    <?php
+                    $deal_reservation_charge = (float) ($deal->price * Request::get('persons'));
+                    echo Form::hidden('saldo', $deal_reservation_charge, array('min' => 0, 'max' => 500));
+                    ?>
+                <?php else: ?>
+                    <div class="column">
+                        <div class="field">
+                            <label>Spaartegoed {{ $userAuth ? '&euro;'.$user->saldo : '' }}</label>
+                            <?php echo Form::text('saldo', $userAuth ? $user->saldo : '', array('min' => 0, 'max' => 500)); ?>
+                        </div>	
+                    </div>
+                <?php endif; ?>
                 <div class="column">
                     <div class="field">
                         <label>Voorkeuren</label>
@@ -221,7 +236,20 @@
             </div>	
         </div>
 
-        <div class="two fields">            
+        <div class="<?php echo ($deal) ? 'two fields' : 'three fields'; ?>" >
+            <?php if ($deal): ?>
+                <?php
+                $deal_reservation_charge = (float) ($deal->price * Request::get('persons'));
+                echo Form::hidden('saldo', $deal_reservation_charge, array('min' => 0, 'max' => 500));
+                ?>
+            <?php else: ?>
+
+                <div class="field">
+                    <label>Spaartegoed {{ $userAuth ? '&euro;'.$user->saldo : '' }}</label>
+                    <?php echo Form::text('saldo', $userAuth ? $user->saldo : '', array('min' => 0, 'max' => 500)); ?>
+                </div>	
+
+            <?php endif; ?>
             <div class="field">
                 <label>Voorkeuren</label>
                 <?php echo Form::select('preferences[]', ($userAuth ? array_combine(json_decode($company->preferences), array_map('ucfirst', json_decode($company->preferences))) : array()), ($user && $user->preferences != NULL ? json_decode($user->preferences) : ''), array('class' => 'multipleSelect', 'data-placeholder' => 'Voorkeuren', 'multiple' => 'multiple')); ?>
@@ -284,7 +312,7 @@
                 <label>Ik ga akkoord met de <a href="{{ url('algemene-voorwaarden') }}" target="_blank">voorwaarden</a></label>
             </div>  
         </div>
-        @else
+        @else        
         <?php echo Form::hidden('av', 1); ?>
         @endif
         @else
@@ -298,23 +326,6 @@
         {{-- CODE FOR SUBMIT BUTTON AND FORM END --}}        
         <div id="normal_case">
             <button class="ui tiny button" type="submit"><i class="plus icon"></i> Bevestig</button>
-            <?php echo Form::close(); ?>
-        </div>
-        <div id="extra_pay_case" style="display:none;">
-            <?php echo Form::open(array('id' => 'formList', 'url' => 'payment/pay?buy=pay_extra_for_deal', 'method' => 'post', 'class' => 'ui form')) ?>
-            <input id="actionMan" type="hidden" name="action">
-
-            @if (isset($error) && trim($error) != '') 
-            <div class="ui red message">{{ $error }}</div>
-            @endif
-
-            <div class="fields">
-                <div class="four wide field">
-                    <input type="hidden" name="amount" class="amount" id="charge_amount" value="<?php echo (float) $deal->price * (int) Request::get('persons') ?>">
-                </div>
-            </div>
-
-            <button class="ui button" type="submit">Bevestig</button>
             <?php echo Form::close(); ?>
         </div>
         {{-- END CODE FOR SUBMIT BUTTON AND FORM END --}}
@@ -337,14 +348,14 @@
         $('#reservationForm').submit(function () {
             person = $('[name="persons"]').val();
             deal_price = $('#deal_price').val();
-            amout = parseFloat(deal_price) * parseInt(person);            
+            amout = parseFloat(deal_price) * parseInt(person);
             /*if ((user_authenticate) && (amout > user_current_balance)) {
-                $('#charge_amount').val();
-                var charge_balance = amout - user_current_balance;
-                $('#charge_amount').val(charge_balance);
-                $('#formList').submit();
-                return false;
-            }*/
+             $('#charge_amount').val();
+             var charge_balance = amout - user_current_balance;
+             $('#charge_amount').val(charge_balance);
+             $('#formList').submit();
+             return false;
+             }*/
             return true;
         });
     });

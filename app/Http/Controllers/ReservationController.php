@@ -55,7 +55,7 @@ class ReservationController extends Controller {
         return Redirect::to('restaurant/reservation/' . $slug . '?' . http_build_query($data));
     }
 
-    public function reservationStepTwo(Request $request, $slug) {
+    public function reservationStepTwo(Request $request, $slug) {   
         $time = date('H:i', strtotime($request->input('time')));
         $date = date('Y-m-d', strtotime($request->input('date')));
         $deal = NULL;
@@ -84,15 +84,14 @@ class ReservationController extends Controller {
             );
             if ($request->input('deal')) {
                 $deal = ReservationOption::where('id', $request->input('deal'))->first();
-            } else {
-                $deal = ReservationOption::where('company_id', $company->id)->first();
-            }
                 if (!$deal) {
                     alert()->error('', 'Het is niet mogelijk om op dit tijdstip te reserveren of er zijn geen plaatsen beschikbaar.')->html()->persistent('Sluiten');
 
                     return Redirect::to('/');
                 }
-            if (isset($reservationTimes[$time])) {
+            } 
+                
+            if (isset($reservationTimes[$time])) {                
                 return view('pages/reservation', [
                     'discountMessage' => Company::getDiscountMessage($company->days, $company->discount, $company->discount_comment),
                     'company' => $company,
@@ -115,7 +114,7 @@ class ReservationController extends Controller {
     }
 
     public function reservationAction(ReservationTwoRequest $request, $slug) {
-
+        
         setlocale(LC_ALL, 'nl_NL', 'Dutch');
         $this->validate($request, []);
         $enough_balance = true;
@@ -253,7 +252,7 @@ class ReservationController extends Controller {
                 $date = Carbon::create(
                                 date('Y', strtotime($request->input('date'))), date('m', strtotime($request->input('date'))), date('d', strtotime($request->input('date'))), 0, 0, 0
                 );
-
+                
                 $discount = json_decode($company->discount);
                 $discountDays = json_decode($company->days);
                 $daysArray = Config::get('preferences.days');
