@@ -194,9 +194,14 @@
         </div>
     </div>
 	
-	<!-- Load Javscript Section -->
+	<!-- Load Javscript Section -->	
+	<script  src="{{ asset('js/app.js?rand='.str_random(40)) }}"></script> 		
+	<!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjrbVJMJKWzCl8JZWV3_5Jy5P4CTITznU"></script>    -->
+    @if (!Request::has('iframe'))
+       <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjrbVJMJKWzCl8JZWV3_5Jy5P4CTITznU&callback=initMap"></script>
+    @endif
+	<script  src="//cdnjs.cloudflare.com/ajax/libs/gmaps.js/0.4.25/gmaps.min.js"></script>    
 	
-	<script  src="{{ asset('js/app.js?rand='.str_random(40)) }}"></script> 	
 	<script  src="//code.jquery.com/jquery-1.9.1.min.js"></script>	
 	<script  src="//code.jquery.com/ui/1.9.2/jquery-ui.min.js"></script>   
 	<script  src="{{ asset('js/jquery.flexslider.js') }}"></script>
@@ -209,11 +214,6 @@
     <script  src="{{ asset('js/materialize.min.js') }}"></script> 
 	<script  src="{{ asset('js/common.js') }}"></script>
 	<script  src="{{ asset('js/main.js') }}"></script>
-	
-	
-    @if (!Request::has('iframe'))
-       <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjrbVJMJKWzCl8JZWV3_5Jy5P4CTITznU&callback=initMap"></script> 
-    @endif
     
     @yield('scripts')
     @include('sweet::alert')

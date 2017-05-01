@@ -33,7 +33,7 @@ input, select, textarea, .ui.dropdown { border-radius: 0!important; }
 .card h4 { color: #fff!important; font-size: 24px!important; font-weight: 400!important; font-family: 'Open Sans', sans-serif!important; padding-left: 20px; position: absolute; bottom: 0; }
 /* On mouse-over, add a deeper shadow */
 .card:hover { opacity: 1; box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2); }
-#map { height: 290px; }
+#map { height: 290px !important; width:100% !important; }
 #signature { border: 1px solid #aaa; margin-top: 10px; margin-bottom: 15px; }
 #listItems { text-align: center; }
 #listItems .item { display: inline-block; width: 20%; text-align: left; }
