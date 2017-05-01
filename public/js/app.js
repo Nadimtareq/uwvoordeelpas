@@ -52429,13 +52429,13 @@ exports.colorLuminance = colorLuminance;
 
 var currentUrl = $(location).attr('href');
 var getUrl = window.location;
-
+/*
 if (document.location.hostname == 'localhost' || document.location.hostname == '127.0.0.1') {
 	var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1] + "/";
 } else {
 	var baseUrl = getUrl .protocol + "//" + getUrl.host + "/";
 }
-
+*/
 var openPrompt = function(params) { 
 	var buttons = {};
 	
@@ -52894,19 +52894,19 @@ $(document).ready(function() {
 	// Search modal
 
 	var content = $('#searchFull').html();
-	var contentInput = $('#searchFull #searchInput').clone();
+	//var contentInput = $('#searchFull #searchInput').clone();
 
 	$('.ui.modal .header').html('Zoeken');
 
 	$('.ui.modal .content').html(content);
+	
 	$('.search-full-open, #search-open').on('click', function() {
 		$('.ui.modal').modal('show');
 
 		$('.searchRedirectCategories2 select').change(function() {
 			switch($('.searchRedirectCategories2').dropdown('get value')[1]) {
 			    case 'restaurant':
-					textReplace = 'Waar wilt u gaan reserveren?';
-					
+					textReplace = 'Waar wilt u gaan reserveren?';					
 			        break;
 
 			    case 'saldo':
@@ -52917,11 +52917,7 @@ $(document).ready(function() {
 					textReplace = 'Wat wilt u ons vragen?';
 			        break;
 			}
-			
-			contentInput.find('input').attr('placeholder', textReplace);
-			$('.ui.modal .content #searchInput').html(contentInput);
-
-
+			$('.ui.modal  #searchInput .input').attr('placeholder',textReplace);
 		});
 	});
 
@@ -53328,7 +53324,8 @@ $(document).ready(function() {
 		}
 
         // check if plugin is loaded
-        if (jQuery().owlCarousel) {
+		
+        if (owlWrap.length > 0/*jQuery.owlCarousel*/) {
             owlWrap.each(function() {
             	var positionTop = $(this).parent().parent().position().top - 600;
 				

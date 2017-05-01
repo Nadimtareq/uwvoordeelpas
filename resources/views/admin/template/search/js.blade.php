@@ -1,5 +1,7 @@
-<script type="text/javascript">
+<script type="javascript">
+	
 	$(document).ready(function() {
+
 		$('#searchModal').on('click', function() {
 			$('#hideForm').show();
 

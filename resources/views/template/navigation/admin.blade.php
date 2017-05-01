@@ -1,48 +1,48 @@
  @if($userAdmin)
-    <div class="item"><h4>Administratiepaneel</h4></div>
+    <li class="fixed-row"><a class="item ">Administratiepaneel</a></li>
 
-    <div class="item"><h5><i class="right arrow tiny icon divider"></i> Statistieken</h5></div>
+    <li class="fixed-row"><a class="item"> Statistieken</a></li>
 
-    <a href="{{ url('admin/statistics/reservations') }}" class="item"><i class="bar chart icon"></i> Reserveringen</a>
-    <a href="{{ url('admin/statistics/search') }}" class="item"><i class="search icon"></i> Zoekwoorden</a>
+    <li><a href="{{ url('admin/statistics/reservations') }}" ><i class="material-icons">insert_chart</i> Reserveringen</a></li>
+    <li><a href="{{ url('admin/statistics/search') }}" ><i class="material-icons">search</i> Zoekwoorden</a></li>
 
-    <div class="item"><h5><i class="right arrow tiny icon divider"></i> Algemeen</h5></div>
-    <a href="{{ url('admin/translations') }}" class="item"><i class="flag icon"></i> Talen</a>
-    <a href="{{ url('admin/affiliates') }}" class="item"><i class="euro icon"></i> Affiliaties</a>
-    <a href="{{ url('admin/companies') }}" class="item"><i class="building icon"></i> Bedrijven</a>
-    <a href="{{ url('admin/companies/callcenter') }}" class="item"><i class="phone icon"></i> Bellijst</a>
-    <a href="{{ url('admin/users') }}" class="item"><i class="users icon"></i> Gebruikers</a>
-    <a href="{{ url('admin/bans') }}" class="item"><i class="ban icon"></i> Waarschuwingen</a>
-    <a href="{{ url('admin/roles') }}" class="item"><i class="lock icon"></i> Rollen</a>
-    <a href="{{ url('admin/barcodes') }}" class="item"><i class="barcode icon"></i> Barcodes</a>
-    <a href="{{ url('admin/services') }}" class="item"><i class="wrench icon"></i> Diensten</a>
-    <a href="{{ url('admin/preferences') }}" class="item"><i class="settings text outline icon"></i> Voorkeuren</a>
-    <a href="{{ url('admin/reviews') }}" class="item"><i class="thumbs up icon"></i> Recensies</a>
-    <a href="{{ url('admin/widgets') }}" class="item"><i class="block layout icon"></i> Widgets</a>
+    <li class="fixed-row"><a class="item "> Algemeen</a></li>
+    <li><a href="{{ url('admin/translations') }}" ><i class="material-icons">flag</i> Talen</a></li>
+    <li><a href="{{ url('admin/affiliates') }}" ><i class="material-icons">account_balance_wallet</i> Affiliaties</a></li>
+    <li><a href="{{ url('admin/companies') }}" ><i class="material-icons">store_mall_directory</i> Bedrijven</a></li>
+    <li><a href="{{ url('admin/companies/callcenter') }}" ><i class="material-icons">phone</i> Bellijst</a></li>
+    <li><a href="{{ url('admin/users') }}" ><i class="material-icons">supervisor_account</i> Gebruikers</a></li>
+    <li><a href="{{ url('admin/bans') }}" ><i class="material-icons">signal_cellular_no_sim</i> Waarschuwingen</a></li>
+    <li><a href="{{ url('admin/roles') }}" ><i class="material-icons">dvr</i> Rollen</a></li>
+    <li><a href="{{ url('admin/barcodes') }}" ><i class="material-icons">crop_landscape</i> Barcodes</a></li>
+    <li><a href="{{ url('admin/services') }}" ><i class="material-icons">room_service</i> Diensten</a></li>
+    <li><a href="{{ url('admin/preferences') }}" ><i class="material-icons">assignment_turned_in</i> Voorkeuren</a></li>
+    <li><a href="{{ url('admin/reviews') }}" ><i class="material-icons">plus_one</i> Recensies</a></li>
+    <li><a href="{{ url('admin/widgets') }}" ><i class="material-icons">pages</i> Widgets</a></li>
 
-    <div class="item"><h5><i class="right arrow tiny icon divider"></i> Reserveringen</h5></div>
-    <a href="{{ url('admin/reservations/clients') }}" class="item"><i class="food icon"></i> Bedrijven</a>
-    <a href="{{ url('admin/reservations/emails') }}" class="item"><i class="envelope icon"></i> E-mails</a>
-    <a href="{{ url('admin/reservations-options') }}" class="item"><i class="selected radio icon"></i> Aanbiedingen</a>
+    <li class="fixed-row"><a class="item "> Reserveringen</a></li>
+    <li><a href="{{ url('admin/reservations/clients') }}"><i class="material-icons">restaurant</i> Bedrijven</a></li>
+    <li><a href="{{ url('admin/reservations/emails') }}"><i class="material-icons">mail_outline</i> E-mails</a></li>
+    <li><a href="{{ url('admin/reservations-options') }}"><i class="material-icons">event_note</i> Aanbiedingen</a></li>
 
-    <div class="item"><h5><i class="right arrow tiny icon divider"></i> Financieel</h5></div>
+    <li class="fixed-row"><a class="item "> Financieel</a></li>
 
-    <a href="{{ url('admin/reservations/saldo') }}" class="item"><i class="calculator icon"></i> Financieel</a>
-    <a href="{{ url('admin/invoices') }}" class="item"><i class="file text outline icon"></i> Facturen</a>
-    <a href="{{ url('admin/incassos') }}" class="item"><i class="legal icon"></i> Incasso</a>
-    <a href="{{ url('admin/transactions') }}" class="item"><i class="money icon"></i> Transacties</a>
-    <a href="{{ url('admin/payments') }}" class="item"><i class="euro icon"></i> Betalingen</a>
+    <li><a href="{{ url('admin/reservations/saldo') }}" ><i class="material-icons">keyboard</i> Financieel</a></li>
+    <li><a href="{{ url('admin/invoices') }}" ><i class="material-icons">border_color</i> Facturen</a></li>
+    <li><a href="{{ url('admin/incassos') }}" ><i class="material-icons">event_note</i> Incasso</a></li>
+    <li><a href="{{ url('admin/transactions') }}" > <i class="material-icons">local_atm</i> Transacties</a></li>
+    <li><a href="{{ url('admin/payments') }}" ><i class="material-icons">attach_money</i> Betalingen</a></li>
 
-    <div class="item"><h5><i class="right arrow tiny icon divider"></i> Website</h5></div>
+    <li class="fixed-row"><a class="item "> Website</a></li>
 
-    <a href="{{ url('admin/settings') }}" class="item"><i class="settings icon"></i> Instellingen</a>
-    <a href="{{ url('admin/newsletter') }}" class="item"><i class="newspaper icon"></i> Nieuwsbrief</a>
-    <a href="{{ url('admin/appointments') }}" class="item"><i class="calendar icon"></i> Afspraken</a>
-    <a href="{{ url('admin/notifications') }}" class="item"><i class="announcement icon"></i> Notificaties</a>
-    <a href="{{ url('admin/notifications/groups') }}" class="item"><i class="announcement icon"></i> Notificatie groepn</a>
-    <a href="{{ url('admin/news') }}" class="item"><i class="newspaper icon"></i> Nieuwsberichten</a>
-    <a href="{{ url('admin/pages') }}" class="item"><i class="file outline icon"></i> Pagina's</a>
-    <a href="{{ url('admin/contents') }}" class="item"><i class="file text outline icon"></i> Tekstblokken</a>
-    <a href="{{ url('admin/faq') }}" class="item"><i class="question mark icon"></i> Veelgestelde vragen</a>
-    <a href="{{ url('admin/mailtemplates') }}" class="item"><i class="announcement icon"></i> Meldingen</a>
+    <li><a href="{{ url('admin/settings') }}" ><i class="material-icons">settings</i> Instellingen</a></li>
+    <li><a href="{{ url('admin/newsletter') }}" ><i class="material-icons">crop_landscape</i> Nieuwsbrief</a></li>
+    <li><a href="{{ url('admin/appointments') }}" ><i class="material-icons">crop_landscape</i> Afspraken</a></li>
+    <li><a href="{{ url('admin/notifications') }}" ><i class="material-icons">crop_landscape</i> Notificaties</a></li>
+    <li><a href="{{ url('admin/notifications/groups') }}" ><i class="material-icons">crop_landscape</i> Notificatie groepn</a></li>
+    <li><a href="{{ url('admin/news') }}" ><i class="material-icons">crop_landscape</i> Nieuwsberichten</a></li>
+    <li><a href="{{ url('admin/pages') }}" ><i class="material-icons">crop_landscape</i> Pagina's</a></li>
+    <li><a href="{{ url('admin/contents') }}" ><i class="material-icons">crop_landscape</i> Tekstblokken</a></li>
+    <li><a href="{{ url('admin/faq') }}" ><i class="material-icons">crop_landscape</i> Veelgestelde vragen</a></li>
+    <li><a href="{{ url('admin/mailtemplates') }}" ><i class="material-icons">crop_landscape</i> Meldingen</a></li>
 @endif

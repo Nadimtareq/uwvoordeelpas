@@ -17,7 +17,88 @@ class CompanyReservation extends Model
         60 => '1 hour'
     );
 
-    public function getTimeCarousel($reservationDate = NULL, $data, $persons, $reservationTimesArray, $tomorrowArray, $hasDate,$deal)
+    public function getTimeCarouselHTML($reservationDate = NULL, $data, $persons, $reservationTimesArray, $tomorrowArray, $hasDate,$deal)
+    {
+        $allTimesArray = static::getAllTimes();
+
+        // Today
+        foreach ($allTimesArray as $time) {
+            if (isset($reservationTimesArray[$time][$data->id])) {
+                $availableTimes[$data->id][$time] = 1;
+            }
+        }
+
+        // Tomorrow
+        foreach ($allTimesArray as $time) {
+            if (!isset($availableTimes[$data->id])) {
+                if (isset($tomorrowArray[$time][$data->id])) {
+                    $availableTimes[$data->id][$time] = 1;
+                    $tomorrow[$data->id][$time] = 1;
+                }
+            }
+        }
+
+        if (isset($tomorrow[$data->id])) {
+            $dateReservation = (isset($reservationDate) ? date('Ymd', strtotime($reservationDate.' +1 days')) : date('Ymd', strtotime('+1 days')));
+        } else {
+            $dateReservation = (isset($reservationDate) ? date('Ymd', strtotime($reservationDate)) : date('Ymd'));
+        }
+
+        if (trim($hasDate) != '' && $hasDate != date('Y-m-d') && $hasDate != date('Y-m-d', strtotime('+1 day'))) {
+            $timeCarousel = '<b>Op '.date('d-m-Y', strtotime($hasDate)).' beschikbaar voor '.$persons.' personen</b>';
+        } else {
+            $timeCarousel = '<b>'.($dateReservation == date('Ymd') ? 'Vandaag' : 'Morgen').' beschikbaar voor '.$persons.' personen </b>';
+        }
+
+        $timeCarousel .= '<div class="calendar">
+						  <div class="owl-wrapper">
+                            <div class="customNavigation">
+                                <a class="prev"><img src="'.asset('images/prev2.png').'" alt="prev2"></a>
+                            </div>
+
+                            <div class="owl-carousel-container">
+                                <div id="owl-example-'.$data->id.'" class="owl-carousel owl-theme">';
+
+        $i = 0;
+
+        foreach ($allTimesArray as $time) {
+            if (
+                isset($reservationTimesArray[$time][$data->id]) 
+                OR isset($tomorrow[$data->id]) 
+                && isset($tomorrowArray[$time][$data->id])
+            ) { 
+                $i++;
+
+                // Available
+                $reservationUrl = url('restaurant/reservation/'.$data->slug.'?date='.$dateReservation.'&time='.date('Hi', strtotime($time)).'&persons='.$persons.'&deal='.@$deal);
+
+                $timeCarousel .= '<div class="available-'.$i.' time-available" data-time="'.date('Hi', strtotime($time)).'">
+                                    <a href="'.$reservationUrl.'" data-redirect="'.$reservationUrl.'" data-type-redirect="1" class="ui fluid blueseal mini '.(Sentinel::check() == FALSE ? 'login' : '').' button guestClick">
+                                        '.$time.'
+                                    </a>
+                                  </div>';
+            } else {
+                 // Unavailable
+                $timeCarousel .= '<div class="unavailable" data-time="'.date('Hi', strtotime($time)).'"><span class="ui fluid mini disabled button">'.$time.'</span></div>';
+            }
+        }
+
+        $timeCarousel .= '</div>
+                            </div>
+                                <div class="customNavigation">
+                                    <a class="next"><img src="'.asset('images/next2.png').'" alt="next2"></a>
+                                </div>
+                            </div>
+						</div>';
+
+        if (isset($availableTimes[$data->id])) {
+            return $timeCarousel;
+        } else {
+            return '<div class="ui tiny red header"> <i class="clock icon"></i> Helaas, er zijn momenteel geen plaatsen beschikbaar.</div>';
+        }
+    }
+	
+	public function getTimeCarousel($reservationDate = NULL, $data, $persons, $reservationTimesArray, $tomorrowArray, $hasDate,$deal)
     {
         $allTimesArray = static::getAllTimes();
 

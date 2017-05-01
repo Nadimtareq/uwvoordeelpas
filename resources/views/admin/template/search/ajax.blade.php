@@ -1,4 +1,4 @@
-<script type="text/javascript">
+<script type="javascript">
 $(document).ready(function() {
     // Toggle sortable
     $('table th.active').click(function() {

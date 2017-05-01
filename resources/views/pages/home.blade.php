@@ -19,43 +19,142 @@
     @if ($userAuth == FALSE)
         <div class="clear"></div>
         {{--<h2  style="color: blue" class="home login header" data-type="login">"Meld je nu aan en spaar direct!"</h2>--}}
-
-        <div class="container">
-            {!! isset($contentBlock[48]) ? $contentBlock[48] : '' !!}
-
-            <div class="ui three column stackable grid">
-                @foreach ($cities as $city)
+		<div id="cities">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-12 tabs-content">
+				  {!! isset($contentBlock[48]) ? $contentBlock[48] : '' !!}
+	                @foreach ($cities as $city)
                     <?php $media = $city->getMedia(); ?>
-                    <div class="column">
-                        <div class="card">
-                            <a href="{{ url('search?regio='.$city->slug) }}">
-                                @if (isset($media[0]))
-                                    <img class="ui image" src="{{ url(''.$media[0]->getUrl('thumb')) }}" alt="{{ $city->name }}">
-                                @else
-                                    <img class="ui image" src="{{ url('images/placeholdimage.png') }}" alt="{{ $city->name }}">
-                                @endif
-                                
-                                <h4>{{ $city->name }}</h4>
-                            </a>
-                        </div>
-                    </div>
-                @endforeach
-            </div><br />
 
-            @if (count($cities) > 6)
-            <div class="ui three column centered grid">
-                <div class="column">
-                    <button id="loadMoreHome" class="ui fluid blue labeled icon button">
-                        <i class="arrow cicle outline left down icon"></i>
-                        Meer steden laden
-                    </button>
-                </div>
-            </div>
-            @endif
+							<div class="col-sm-4 col4">
+								<a href="{{ url('search?regio='.$city->slug) }}">
+									@if (isset($media[0]) && file_exists('favicon.ico'))
+										<img class="ui image" src="{{ url(''.$media[0]->getUrl('thumb')) }}" alt="{{ $city->name }}">
+									@else
+										<img class="ui image" src="{{ url('images/placeholdimage.png') }}" alt="{{ $city->name }}">
+									@endif
+									<p>{{ $city->name }}</p>
+								</a>
+							</div>
+					@endforeach
+					</div>
+					<div class="clear"></div>
+					
+					  @if (count($cities) > 6)
+						  <div id="loadMoreHome" class="more wr2" >
+								<a href="#" >MEER STEDEN BEKIJKEN</a>
+					      </div>
+					 @endif
+					
+				</div>
+			</div>			
+		</div>
+		
+		<section id="partners">
+					<div class="container">
+						<div class="row">
+							<div class="col-sm-12">
+								<h1>spaar NU order andere bij</h1>
+								<div class="col-md-2">
+									<div class="partner">										
+										<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p1.png" alt="p1"></a>
+									</div>
+								</div>
 
-            <div class="clear"></div>
-        </div>
+								<div class="col-md-2">
+									<div class="partner">
+										<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p2.png" alt="p2"></a>
+									</div>
+								</div>
+
+								<div class="col-md-2">
+									<div class="partner">
+										<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p3.png" alt="p3"></a>
+									</div>
+								</div>
+
+								<div class="col-md-2">
+									<div class="partner">
+										<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p4.png" alt="p4"></a>
+									</div>
+								</div>
+
+								<div class="col-md-2">
+									<div class="partner">
+										<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p5.png" alt="p5"></a>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<div class="partner">
+										<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p6.png" alt="p6"></a>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<div class="partner">
+										<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p7.png" alt="p7"></a>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<div class="partner">
+										<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p8.png" alt="p8"></a>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<div class="partner">
+										<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p9.png" alt="p9"></a>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<div class="partner">
+										<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p10.png" alt="p10"></a>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<div class="partner">
+										<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p11.png" alt="p11"></a>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<div class="partner">
+										<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p12.png" alt="p12"></a>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<div class="partner">
+										<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p13.png" alt="p13"></a>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<div class="partner">
+										<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p14.png" alt="p14"></a>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<div class="partner">
+										<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p15.png" alt="p15"></a>
+									</div>
+								</div><div class="col-md-2">
+								<div class="partner">
+									<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p16.png" alt="p16"></a>
+								</div>
+							</div><div class="col-md-2">
+							<div class="partner">
+								<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p17.png" alt="p17"></a>
+							</div>
+						</div><div class="col-md-2">
+						<div class="partner">
+							<a href="#"><span class="last">Bekijk alle 2.000+ winkels</span><span class="partner2 partner-last">Bekijk alle 2.000+ winkels</span></a>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</section>
+       
     @else
+		
     <div class="container">
         @if(count($arrayMerge) >= 1)
         <div class="ui grid container">
@@ -69,8 +168,8 @@
             <div class="right floated sixteen wide mobile two wide computer column">
                 <button id="homePrefrencesButton" class="ui display filter basic blue fluid tiny button">Aanpassen</button>
             </div>
-        </div>
-        @endif
+        </div>		
+		@endif
     </div>
 
     <div class="content">
@@ -242,6 +341,9 @@
         </div>
 
         <div class="clear"></div>
-    </div>
+    </div> 
     @endif
+	
+	
+	
 @stop
