@@ -2188,7 +2188,7 @@ header.nav li a:hover {
 }
 .map h3{color: #999999;margin: 0;font: 18px 'LatoBold';}
 .map span{color: #999999;font: 18px 'LatoRegular';display: block;margin: 2px 0 25px 0;}
-.map a{color: #3366cc;font: 18px 'LatoBold';display: block;margin-bottom: 50px;}
+.map a{color: #3366cc;font: 18px 'LatoBold';display: inline-block;margin-bottom: 10px;}
 .map a:hover{
     color: #000;
 }
@@ -2257,13 +2257,50 @@ header.nav li a:hover {
 .send:-moz-placeholder           {font: 14px 'LatoRegular';color:#000;}/* Firefox 18- */
 .send:-ms-input-placeholder      {font: 14px 'LatoRegular';color:#000;}
 
-.send span{
+.send span {
     font: 14px 'LatoBoldItalic';
     color: #cccccc;
     position: absolute;
     top: 9px;
     left: 31px;
 }
+.send_review div {
+	color: #cccccc;
+	display:block;
+	position:relative;
+}
+.send_review label{
+    background: #f3f4fb;
+    display: block;
+    padding: 2px 0px;
+    margin-bottom: 7px;
+    position: relative;
+}
+.send_review span 
+{	
+    font: 14px 'LatoBoldItalic';
+    color: #cccccc;
+    position: absolute;
+    top: 9px;
+    left: 31px;
+}
+.send_review textarea {
+	font: 14px 'LatoRegular';
+    resize: none;
+    height: auto;
+    border: none;
+    min-height: 102px;
+    padding: 35px 30px 0;
+    border-left: 4px solid rgba(0,0,0,0);
+}
+.send_review textarea:focus, .send input:focus
+ {
+    outline: none;
+    border-bottom: none !important;
+    box-shadow: none !important;
+    border-left: 4px solid #333399;
+}
+
 .send textarea{
     font: 14px 'LatoRegular';
     resize: none;
@@ -2272,8 +2309,10 @@ header.nav li a:hover {
     min-height: 102px;
     padding: 35px 30px 0;
     border-left: 4px solid rgba(0,0,0,0);
+	background-color:transparent;
 }
-.send textarea:focus, .send input:focus{
+.send textarea:focus, .send input:focus
+ {
     outline: none;
     border-bottom: none !important;
     box-shadow: none !important;
