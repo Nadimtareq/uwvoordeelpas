@@ -189,6 +189,8 @@ Route::group(array('middleware' => 'userInfo'), function() {
  */
 Route::group(array('middleware' => 'userInfo'), function() {
     Route::get('restaurant/reservation/{slug}', 'ReservationController@reservationStepTwo');
+    Route::get('future-deal/{slug}', 'RestaurantController@futureDeal');
+    Route::post('future-deal/{slug}', 'RestaurantController@processFutureDeal');
     Route::get('widget/calendar/restaurant/{slug}', 'RestaurantController@widgetCalendar');
 });
 
