@@ -134,7 +134,10 @@
 				@if($count_persons >= $deal->total_amount)
 					<a class="more"  href="javascript:void(0)">SOLD OUT</a>
 				@else
-					<a class="more"  href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}">NAAR DE DEAL</a>
+					<div class="d-inline-block">
+						<a class="more"  href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}">NAAR DE DEAL</a>&nbsp;
+						<a class="more"  href="{{ url('/') }}">KOOP DEAL</a>
+					</div>
 				@endif
 					
            </div>
