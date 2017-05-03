@@ -216,7 +216,92 @@ $(document).ready(function($){
 	}
 
 	$("#datepicker").datepicker().datepicker("setDate", new Date());
+	
+	
+	if( $('#datepicker-ajax').length )
+	{	
+		var currentDate = new Date();
+		var jsonParse = [];
+		var refresh_option = function( id, available) {
+			// Disable time field when there is no date available								
+			$(id+' option').each(function(key) {								
+				if (key <= available) $(this).removeAttr("disabled");
+								else  $(this).attr("disabled","disabled");	
+			});
+			
+			$(id).val("0");
+		}
 
+		$('#time-calendar').on('change',function() {
+			 var rules = $(this).data();
+			 console.log(rules,rules.availablePersons);
+			 if(rules)
+			   refresh_option('#persons-calendar',rules.availablePersons);
+		});
+		
+		$('#datepicker-ajax').datepicker({
+			onSelect: function (date) {
+				$.ajax({
+					method: 'GET',
+					url: baseUrl + 'ajax/available/time',
+					data: {
+						company: $('input[name="company_id"]').val(),
+						persons: $('input[name="persons"]').val(),
+						date: date
+					},
+					success: function (response) {
+						var jsonParse = JSON.parse(response); 
+						var jsonKeys = Object.keys(jsonParse);
+						
+						$("#time-calendar").empty();					
+						for(var time in jsonParse) {
+							var parse_local = jsonParse[time];
+							var key = Object.keys(parse_local)[0];						
+							
+							$("#time-calendar").append($('<option></option>').val(time).html(time)).data(parse_local[key]);
+						};
+					}
+				});
+				$(this).datepicker('setDate',date);
+				
+			},
+			beforeShowDay: function (date) {
+
+				if(jsonParse.dates && jsonParse.dates.length) {
+					return [true];	  
+				} else
+					return [false];
+			},
+			onChangeMonthYear : function(year,month,inst) {
+				$(".calendar-ajax > *").attr('disabled', true);
+				$(".calendar-ajax").css('opacity', '0.4');
+				
+				$.ajax({
+					url: baseUrl + 'ajax/available/reservation',
+					data: {
+						persons: $('input[name="persons"]').val(),
+						month: month ,
+						year: year,
+						company:  $('input[name="company_id"]').val()
+					},	
+					success: function(response) {
+						jsonParse = JSON.parse(response);
+						
+						refresh_option('#persons-calendar',jsonParse.availablePersons);
+										
+					},
+					complete: function(){
+						$(".calendar-ajax > *").removeAttr('disabled');;
+						$(".calendar-ajax").css('opacity', '');
+						
+						$('#datepicker-ajax').datepicker('refresh');
+					}
+				});
+			}
+		});
+		
+		$('#datepicker-ajax').datepicker("option","onChangeMonthYear")(currentDate.getFullYear(),currentDate.getMonth()+1,null);
+	}
 }(jQuery));
 
 

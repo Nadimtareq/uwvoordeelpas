@@ -1812,6 +1812,11 @@ header.nav li a:hover {
     border: 1px solid #333399;
     background: #333399;
 }
+.ui-state-active {
+  border:1px solid #fed22f !important;	
+  color:#eb8f00 !important;
+  font-weight: bold;
+}
 .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight{
     border: 1px solid #333399;
     background: #333399;
@@ -1932,10 +1937,10 @@ header.nav li a:hover {
     display: inline-block;
     width: 127px !important;
     background: #fff;
-    border: none;
+    border: none !important;
     height: auto;
     border-radius: 0px;
-    padding: 6px 0 6px 32px;
+    padding: 6px 0 6px 32px !important;
     color: #999999;
     font: 14px 'LatoRegular';
 }
@@ -2440,8 +2445,8 @@ header.nav li a:hover {
 .tabss .r_side{
     width: 16%;
     position: absolute;
-    top: -10px;
-    right: 24%;
+    /*top: -10px;
+    right: 24%;*/
 }
 .shop{
     padding-top: 118px;

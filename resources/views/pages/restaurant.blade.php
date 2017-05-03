@@ -1,6 +1,16 @@
+<?php
+$st = \Carbon\Carbon::create(date('Y'), 1, 1, 0, 0, 0);
+$dt = \Carbon\Carbon::create(date('Y') + 1, 12, 1, 0, 0, 0);
+$dates = array();
+										
+while ($st->lte($dt)) {  
+	$dates[] = $st->copy()->format('Y-m');
+	$st->addMonth();
+} 
+?>
+
 @extends('template.theme')
 
-{{--*/ $pageTitle = $company->name /*--}}
 
 @section('slider')
 @stop
@@ -31,30 +41,44 @@
 @inject('discountHelper', 'App\Helpers\DiscountHelper')
 	<div class="tabss">
 		<div class="container">
-			<div class="right_details">
-					<div id="datepicker" class="right_calendar hasDatepicker"><div class="ui-datepicker-inline ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" style="display: block;"><div class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all"><a class="ui-datepicker-prev ui-corner-all" data-handler="prev" data-event="click" title="Prev"><span class="ui-icon ui-icon-circle-triangle-w">Prev</span></a><a class="ui-datepicker-next ui-corner-all" data-handler="next" data-event="click" title="Next"><span class="ui-icon ui-icon-circle-triangle-e">Next</span></a><div class="ui-datepicker-title"><span class="ui-datepicker-month">April</span>&nbsp;<span class="ui-datepicker-year">2017</span></div></div><table class="ui-datepicker-calendar"><thead><tr><th class="ui-datepicker-week-end"><span title="Sunday">Su</span></th><th><span title="Monday">Mo</span></th><th><span title="Tuesday">Tu</span></th><th><span title="Wednesday">We</span></th><th><span title="Thursday">Th</span></th><th><span title="Friday">Fr</span></th><th class="ui-datepicker-week-end"><span title="Saturday">Sa</span></th></tr></thead><tbody><tr><td class=" ui-datepicker-week-end ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">1</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">2</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">3</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">4</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">5</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">6</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">7</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">8</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">9</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">10</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">11</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">12</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">13</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">14</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">15</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">16</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">17</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">18</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">19</a></td><td class="  ui-datepicker-current-day" data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default ui-state-active" href="#">20</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">21</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">22</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">23</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">24</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">25</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">26</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">27</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">28</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">29</a></td></tr><tr><td class=" ui-datepicker-week-end  ui-datepicker-today" data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default ui-state-highlight" href="#">30</a></td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-week-end ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td></tr></tbody></table></div></div>
+			<?php echo Form::open(['url' => 'restaurant/'.$company->slug, 'id' => 'reservationForm', 'class' => 'ui form']); ?>
+			<?php echo Form::hidden('date_hidden'); ?>
+			<?php echo Form::hidden('date', date('Y-m-d')); ?>
+			<?php echo Form::hidden('company_id', $company->id); ?>
+			<?php echo Form::hidden('year', date('Y')); ?>
+			<?php echo Form::hidden('month', date('m')); ?>
+			<input type="hidden" name="deal" value="{{ (@app('request')->input('deal'))?app('request')->input('deal'):'' }}">
+			<?php echo Form::hidden('reservation_url', URL::to('restaurant/reservation/'.$company->slug)); ?>
+			
+			<div class="right_details calendar-ajax">
+					<!-- <div id="datepicker" class="right_calendar hasDatepicker"><div class="ui-datepicker-inline ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" style="display: block;"><div class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all"><a class="ui-datepicker-prev ui-corner-all" data-handler="prev" data-event="click" title="Prev"><span class="ui-icon ui-icon-circle-triangle-w">Prev</span></a><a class="ui-datepicker-next ui-corner-all" data-handler="next" data-event="click" title="Next"><span class="ui-icon ui-icon-circle-triangle-e">Next</span></a><div class="ui-datepicker-title"><span class="ui-datepicker-month">April</span>&nbsp;<span class="ui-datepicker-year">2017</span></div></div><table class="ui-datepicker-calendar"><thead><tr><th class="ui-datepicker-week-end"><span title="Sunday">Su</span></th><th><span title="Monday">Mo</span></th><th><span title="Tuesday">Tu</span></th><th><span title="Wednesday">We</span></th><th><span title="Thursday">Th</span></th><th><span title="Friday">Fr</span></th><th class="ui-datepicker-week-end"><span title="Saturday">Sa</span></th></tr></thead><tbody><tr><td class=" ui-datepicker-week-end ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">1</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">2</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">3</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">4</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">5</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">6</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">7</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">8</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">9</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">10</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">11</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">12</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">13</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">14</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">15</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">16</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">17</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">18</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">19</a></td><td class="  ui-datepicker-current-day" data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default ui-state-active" href="#">20</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">21</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">22</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">23</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">24</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">25</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">26</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">27</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">28</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">29</a></td></tr><tr><td class=" ui-datepicker-week-end  ui-datepicker-today" data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default ui-state-highlight" href="#">30</a></td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-week-end ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td></tr></tbody></table></div></div>-->
+					<div id="datepicker-ajax" class="right_calendar"></div>
+					
 					<ul>
-						<li><img src="images/c1.png" alt="m3">
-							<select name="quantity" class="quantity2">
+						<li><img src="{{ asset('images/c1.png') }}" alt="m3">
+						    <input type="hidden" name="time" value="{{ count(array_keys($reservationTimesArray)) >= 1 ? array_keys($reservationTimesArray)[0] : '' }}">
+							<select id="time-calendar" name="quantity" class="quantity2">
 								<option value="0" disabled="disabled" selected="">11:00</option>
-								<option>08:00</option>
-								<option>08:15</option>
-								<option>08:30</option>
-								<option>08:45</option>
 							</select>
 						</li>
-						<li><img src="images/c2.png" alt="m4">
-							<select name="quantity" class="quantity2">
-								<option value="0" disabled="disabled" selected="">1 person</option>
-								<option>2</option>
-								<option>3</option>
-								<option>4</option>
-								<option>5</option>
+						<li><img src="{{ asset('images/c2.png') }}" alt="m4">
+						    <input type="hidden" name="persons" value="{{ ($userAuth && $userInfo->kids != 'null' && $userInfo->kids != NULL && $userInfo->kids != '[""]' ? $userInfo->kids : 1) }}">
+							<select id="persons-calendar"  name="quantity" class="quantity2">
+							    <option value="0">Personen</option>
+								@for ($i = 1; $i <= 10; $i++) 
+									<option value="{{ $i }}" data-value="{{ $i }}">{{ $i }} {{ $i == 1 ? 'persoon' : 'personen' }}</option>
+								@endfor
 							</select>
 						</li>
 					</ul>
-					<a href="#" class="more">Reserveer nu</a>
+					@if($user)
+						<a id="submitField" href="#" class="more">Reserveer nu</a>
+					@else
+						<a id="submitField" href="#" class="more login guestClick">Reserveer nu</a>
+					@endif
+					
 			</div>
+			<?php echo Form::close(); ?>
 				
 			<div class="main_gallery">
 					<div class="left_side">
@@ -95,14 +119,18 @@
 						<div class="bx-wrapper" style="max-width: 205px; margin: 0px auto;"><div class="bx-viewport" style="width: 100%; overflow: hidden; position: relative; height: 323px;"><ul id="bxslider-pager" style="width: auto; position: relative; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
 						@if($media != '[]')
 							@foreach ($media as $key => $mediaItem)
-							<li data-slideindex="{{ $key }}" data-slide-index="{{ $key }}" style="float: none; list-style: outside none none; position: relative; width: 187px; margin-bottom: 3px;">
-								<a href="#">
-							     <img src="{{ url($mediaItem->getUrl('175Thumb')) }}" alt="Alt">
-								 </a>
-							</li>											
+								@if(file_exists($mediaItem->getUrl()))
+								<li data-slideindex="{{ $key }}" data-slide-index="{{ $key }}" style="float: none; list-style: outside none none; position: relative; width: 187px; margin-bottom: 3px;">
+									<a href="#">
+									 <img src="{{ url($mediaItem->getUrl('175Thumb')) }}" alt="Alt">
+									 </a>
+								</li>
+								@else 
+									<li data-slideindex="0" style="width: 140px;height:78px"><a href="#"><img src="{{ asset('images/s.png')}} " alt="Alt"></a></li>
+								@endif	
 							@endforeach
 						@else 
-							<li data-slideindex="0" style="float: none; list-style: outside none none; position: relative; width: 187px; margin-bottom: 3px;"><a href="#"><img src="{{ asset('images/s_1.png')}} " alt="Alt"></a></li>
+							<li data-slideindex="0" style="width: 140px;height:78px"><a href="#"><img src="{{ asset('images/s.png')}} " alt="Alt"></a></li>
 						@endif
 						</ul></div><div class="bx-controls bx-has-controls-direction"><div class="bx-controls-direction"><a class="bx-prev disabled" href=""><span></span></a><a class="bx-next disabled" href=""><span></span></a></div></div></div>
 					</div>
@@ -253,7 +281,46 @@
 									 @endif
 								</span>
 								
-								<div class="maps">							
+								@if(trim($company->contact_email) != '' || trim($company->email) != '')
+							    <div class="send">
+								{{ Form::open(array('url' => 'contact/'.$company->slug, 'method' => 'post', 'class' => 'form')) }}
+										<label for="name">
+											<span>Naam</span>											
+											{{ Form::text('name', (Sentinel::check() ? Sentinel::getUser()->name : ''), [ 'id' => 'name']) }}
+										</label>
+																				
+
+										 <label for="email">
+											<span>E-mail</span>
+											{{ Form::text('email',  (Sentinel::check() ? Sentinel::getUser()->email : ''), ['id' =>'email']) }}
+										 </label>
+
+										<label for="subject">
+											<span>Onderwerp</span>
+											{{ Form::text('subject',null,['id' => 'subject' ]) }}
+										</label>
+
+										<label for="content">
+											<span>Bericht</span>
+											{{ Form::textarea('content',null, ['id' => 'content']) }}
+										</label>
+
+										<label class="two fields">
+											<!-- <div class="six wide field"> -->
+												{!! captcha_image_html('ContactCaptcha') !!}
+											<!-- </div> -->
+
+											<label>	
+												<span>Typ de beveiligingscode over:</span>
+												{{ Form::text('CaptchaCode', '', array('id' => 'CaptchaCode', 'placeholder' => 'beveiligingscode' )) }}
+											</label>
+										</label>
+
+										<button type="submit" class="ui small blue button">VERZENDEN</button>
+								{{ Form::close() }}
+								</div>
+								@endif
+								<!-- <div class="maps">							
 									<div id="map" 
 										data-kitchen="{{ is_array(json_decode($company->kitchens)) ? str_slug(json_decode($company->kitchens)[0]) : '' }}" 
 										data-url="{{ url('restaurant/'.$company->slug) }}" 
@@ -261,7 +328,7 @@
 										data-address="{{ $company->address }}" 
 										data-city="{{ $company->city }}" 
 										data-zipcode="{{ $company->zipcode }}"></div>
-								</div> 
+								</div>  -->
 							</div>
 						</div>
 						
@@ -309,43 +376,7 @@
 						<div id="t6" style="display: none;">
 							<div class="send">
 							
-								@if(trim($company->contact_email) != '' || trim($company->email) != '')
-								{{ Form::open(array('url' => 'contact/'.$company->slug, 'method' => 'post', 'class' => 'form')) }}
-										<label for="name">
-											<span>Naam</span>											
-											{{ Form::text('name', (Sentinel::check() ? Sentinel::getUser()->name : ''), [ 'id' => 'name']) }}
-										</label>
-																				
-
-										 <label for="email">
-											<span>E-mail</span>
-											{{ Form::text('email',  (Sentinel::check() ? Sentinel::getUser()->email : ''), ['id' =>'email']) }}
-										 </label>
-
-										<label for="subject">
-											<span>Onderwerp</span>
-											{{ Form::text('subject',null,['id' => 'subject' ]) }}
-										</label>
-
-										<label for="content">
-											<span>Bericht</span>
-											{{ Form::textarea('content',null, ['id' => 'content']) }}
-										</label>
-
-										<label class="two fields">
-											<!-- <div class="six wide field"> -->
-												{!! captcha_image_html('ContactCaptcha') !!}
-											<!-- </div> -->
-
-											<label>	
-												<span>Typ de beveiligingscode over:</span>
-												{{ Form::text('CaptchaCode', '', array('id' => 'CaptchaCode', 'placeholder' => 'beveiligingscode' )) }}
-											</label>
-										</label>
-
-										<button type="submit" class="ui small blue button">VERZENDEN</button>
-								{{ Form::close() }}
-								@endif
+								
 																
 							</div>
 						</div>
