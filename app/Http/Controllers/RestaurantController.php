@@ -395,34 +395,48 @@ class RestaurantController extends Controller {
             if ($request->isMethod('post')) {
                 if (Sentinel::check()) {
                     $user = Sentinel::getUser();
+                    $validator = Validator::make($request->all(), [
+                                'persons' => 'required|numeric',
+                                'av' => 'accepted'
+                                    ], [
+                                'persons.required' => 'Het aantal personen moet minimaal 1 persoon zijn',
+                                'persons.numeric' => 'Het aantal personen moet numeriek zijn.',
+                                'persons.min' => 'Het aantal personen moet minimaal 1 persoon zijn.',
+                    ]);
                 } else {
                     $validator = Validator::make($request->all(), [
+                                'persons' => 'required|numeric',
                                 'email' => 'required|email',
                                 'name' => 'required',
                                 'phone' => 'required|min:10',
+                                'av' => 'accepted'
                                     ], [
                                 'email.required' => 'U bent vergeten om een e-mailadres in te vullen.',
                                 'email.email' => 'Uw opgegeven e-mailadres is ongeldig.',
                                 'phone.required' => 'U bent vergeten om een telefoonnummer in te vullen.',
                                 'phone.min' => 'Uw telefoonnummer is te kort (minimaal 10 cijfers).',
                                 'name.required' => 'U bent vergeten om een naam in te vullen.',
+                                'persons.required' => 'Het aantal personen moet minimaal 1 persoon zijn',
+                                'persons.numeric' => 'Het aantal personen moet numeriek zijn.',
+                                'persons.min' => 'Het aantal personen moet minimaal 1 persoon zijn.',
+                                'av.accepted' => 'U bent vergeten om de Algemene Voorwaarden te accepteren.',
                     ]);
-                    if ($validator->fails()) {
-                        $errors = $validator->errors();
-                        $message_str = '';
-                        foreach ($errors->all() as $message) {
-                            $message_str .= $message;
-                            $message_str .= '<br />';
-                        }
-                        
-                        alert()->error($message_str,'error')->html()->persistent('Sluiten');
-                        return redirect('future-deal/'.$slug.'?deal='.$deal_id);
-                    }
                     if ($request->input('email')) {
                         $user = Sentinel::findByCredentials(array(
                                     'login' => $request->input('email')
                         ));
                     }
+                }
+                if ($validator->fails()) {
+                    $errors = $validator->errors();
+                    $message_str = '';
+                    foreach ($errors->all() as $message) {
+                        $message_str .= $message;
+                        $message_str .= '<br />';
+                    }
+                    $request->flash();
+                    alert()->error($message_str, '&nbsp;')->html()->persistent('Sluiten');
+                    return redirect('future-deal/' . $slug . '?deal=' . $deal_id);
                 }
 
                 $deal_saldo = (float) MoneyHelper::getAmount($request->input('saldo'));
@@ -449,7 +463,7 @@ class RestaurantController extends Controller {
                     $user->saldo = 0;
                     $enough_balance = false;
                     $rest_amount = $deal_saldo;
-                } 
+                }
                 $user->terms_active = 1;
                 $user->phone = $request->input('phone');
                 if ($request->input('newsletter') == 1) {
@@ -467,18 +481,17 @@ class RestaurantController extends Controller {
                 $future_deal->expired_at = date('Y-m-d', strtotime($current_date . ' + ' . $future_expire_days . ' days'));
                 if (!$enough_balance && $rest_amount) {
                     $future_deal->status = "pending";
-                }else{
+                } else {
                     $future_deal->status = "purchased";
                 }
                 $future_deal->save();
-                
-                if (!$enough_balance && $rest_amount) {                    
+
+                if (!$enough_balance && $rest_amount) {
                     return view('pages/discount/extra-pay', array(
                         'amount' => $rest_amount,
                         'future_deal_id' => $future_deal->id
                     ));
-                }
-                else{
+                } else {
                     $deal = ReservationOption::find($future_deal->deal_id);
                     Alert::success('U heeft succesvol 2x de deal: ' . $deal->name . ' gekocht voor een prijs van &euro;' . $future_deal->deal_price . ' <br /><br /> Klik hier als u direct een reservering wilt maken. <br /><br />' . '<span class=\'addthis_sharing_toolbox\'></span>', 'Bedankt ' . $user->name
                     )->html()->persistent('Sluiten');
@@ -486,7 +499,7 @@ class RestaurantController extends Controller {
                     return Redirect::to('restaurant/' . $company->slug);
                 }
             }
-            
+
             /* return view('pages/restaurant/future-deal', [
               'company' => $company,
               'deal' => $deal,

@@ -345,6 +345,10 @@ class PaymentController extends Controller {
                 } elseif ($future_deal) {
                     $future_deal->status = 'purchased';
                     $future_deal->save();
+                    if($future_deal->user_discount){
+                        $oUser->saldo = (float)$oUser->saldo - (float)$future_deal->user_discount;
+                        $oUser->save();
+                    }                    
                     if ($future_deal->deal_id) {
                         $deal = DB::table('reservations_options')->where('id', '=', $future_deal->deal_id)->first();
                     }

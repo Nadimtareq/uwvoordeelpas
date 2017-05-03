@@ -38,7 +38,7 @@
             <?php endif; ?>
         </div>
     </div>
-    <?php echo Form::open(array('id' => 'reservationForm', 'url' => url('future-deal/'.$company->slug.'?deal='.$deal->id), 'method' => 'post', 'class' => 'ui form')) ?>
+    <?php echo Form::open(array('id' => 'futureDealForm', 'url' => url('future-deal/'.$company->slug.'?deal='.$deal->id), 'method' => 'post', 'class' => 'ui form')) ?>
     <?php echo Form::hidden('saldo', $deal->price); ?>
     <div class="ui grid">
         <div class="two column row">
@@ -47,8 +47,7 @@
                     <label>Personen</label>
 
                     <div id="personsField" class="ui normal compact selection dropdown persons searchReservation">
-                        <input type="hidden" name="persons" value="<?php echo Request::get('persons'); ?>">
-
+                        <?php echo Form::hidden('persons', ((old('persons')) ? old('persons') : Request::get('persons'))); ?>
                         @if(!isset($iframe))
                         <i class="male icon"></i>
                         @endif
@@ -144,6 +143,11 @@
             $('[name="saldo"]').val(amout);
             $('[name="persons"]').val(person);
         });
+        curr_person = $('#futureDealForm').find('input[name="persons"]').val();
+        if(curr_person){
+            var default_amout = parseFloat(deal_price) * parseInt(curr_person);            
+            $('#deal_amount').html(default_amout.toFixed(2));
+        }        
     });
 </script>
 @endpush
