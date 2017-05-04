@@ -240,7 +240,12 @@ $(document).ready(function($){
 		});
 		
 		$('#datepicker-ajax').datepicker({
+			useCurrent:false,
 			onSelect: function (date) {
+				
+				$('input[name="date"]').val(date);
+				$('input[name="date_hidden"]').val(date);
+				
 				$.ajax({
 					method: 'GET',
 					url: baseUrl + 'ajax/available/time',
@@ -266,13 +271,26 @@ $(document).ready(function($){
 				
 			},
 			beforeShowDay: function (date) {
-
+				
 				if(jsonParse.dates && jsonParse.dates.length) {
-					return [true];	  
+					var dates_check= jsonParse.dates;
+					var found = [false];
+					dates_check.forEach(function (val,i,arr) {									
+									var val_date = Date.parse(val.date+" 00:00:00");
+									var select_date = new Date(val_date);
+									if(date.getTime() === select_date.getTime()) {
+										found=[true];
+									}
+							});
+					return found;	  
 				} else
 					return [false];
 			},
 			onChangeMonthYear : function(year,month,inst) {
+				
+				$('input[name="month"]').val(month);
+				$('input[name="year"]').val(year);
+
 				$(".calendar-ajax > *").attr('disabled', true);
 				$(".calendar-ajax").css('opacity', '0.4');
 				
@@ -299,8 +317,8 @@ $(document).ready(function($){
 				});
 			}
 		});
-		
 		$('#datepicker-ajax').datepicker("option","onChangeMonthYear")(currentDate.getFullYear(),currentDate.getMonth()+1,null);
+		
 	}
 }(jQuery));
 

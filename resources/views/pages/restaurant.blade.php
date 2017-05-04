@@ -58,7 +58,6 @@ while ($st->lte($dt)) {
 						<li><img src="{{ asset('images/c1.png') }}" alt="m3">
 						    <input type="hidden" name="time" value="{{ count(array_keys($reservationTimesArray)) >= 1 ? array_keys($reservationTimesArray)[0] : '' }}">
 							<select id="time-calendar" name="quantity" class="quantity2">
-								<option value="0" disabled="disabled" selected="">11:00</option>
 							</select>
 						</li>
 						<li><img src="{{ asset('images/c2.png') }}" alt="m4">
@@ -183,7 +182,7 @@ while ($st->lte($dt)) {
 							</div>
 							
 							<!-- Pagination -->
-							<div class="pages">
+							<!-- <div class="pages">
 								<a href="#" class="prev2">&lt;</a>
 								<ul>
 									<li><a href="#">1</a></li>
@@ -191,7 +190,7 @@ while ($st->lte($dt)) {
 									<li><a href="#">...</a></li>
 									<li><a href="#">8</a></li>
 								</ul>
-								<a href="#" class="next2">&gt;</a>
+								<a href="#" class="next2">&gt;</a> -->
 							</div>
 							@endforeach
 							@endif
@@ -375,9 +374,72 @@ while ($st->lte($dt)) {
 						<!-- Send -->
 						<div id="t6" style="display: none;">
 							<div class="send">
+							{{ Form::open(array('id' => 'reservationForm', 'url' => 'restaurant/reservation/'.$company->slug, 'method' => 'PUT', 'class' => 'form')) }}
+								{{ Form::hidden('group_reservation', 1) }}
+								{{ Form::hidden('setTimeBack', 0) }}
+								{{ Form::hidden('company_id', $company->id) }}
 							
-								
-																
+							{!! isset($contentBlock[59]) ? $contentBlock[59] : '' !!}
+
+							
+							<label for="date">
+								<span>Datum</span>
+								<div class="datepicker"></div>
+								{{ Form::text('date', '', array('class' => 'datepicker')) }}
+							</label>	
+
+							<label for="timeField-2">
+								<span>Tijd</span>
+								<ul>
+									<li><img src="{{ asset('images/c1.png') }}" alt="m3">
+										<input type="hidden" name="time" value="{{ count(array_keys($reservationTimesArray)) >= 1 ? array_keys($reservationTimesArray)[0] : '' }}">
+										<select id="time-calendar" name="quantity" class="quantity2">
+										</select>
+									</li>
+								</ul>
+								<!--
+								<div id="timeField-2" class="ui normal selection dropdown time timeRefresh">
+									<input id="timeInput" name="time" type="hidden">
+											
+									<i class="time icon"></i>
+									<div class="default text">Tijd</div>
+									<i class="dropdown icon"></i>
+
+									<div class="menu">
+										<div class="item" data-value="<?php echo date('H:i', strtotime(Request::get('time'))); ?>"><?php echo date('H:i', strtotime(Request::get('time'))); ?></div>
+									</div>
+								</div>-->
+							</label>
+
+							<label for="persons">
+								<span>Personen</span>
+								{{ Form::text('persons') }}
+							</label>	
+							
+							<label for="name">
+								<span>Naam</span>
+								{!! Form::text('name', (Sentinel::check() ? Sentinel::getUser()->name : '')) !!}
+							</label>
+
+							<label for="email">
+								<span>E-mail</span>
+								{!! Form::text('email',  (Sentinel::check() ? Sentinel::getUser()->email : '')) !!}
+							</label>
+
+							<label for="phone">
+								<span>Telefoon</span>
+								{!! Form::text('phone',  (Sentinel::check() ? Sentinel::getUser()->phone : '')) !!}
+							</label>
+
+
+							<label for="comment">
+								<span>Opmerking</span>
+								{!! Form::textarea('comment') !!}
+							</label>
+
+							<button type="submit" class="ui small blue button">Reserveren</button>
+						    {{ Form::close() }}
+
 							</div>
 						</div>
 						
