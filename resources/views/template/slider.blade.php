@@ -63,8 +63,8 @@
 	</section>
    
 
-
-	<section >
+   <!--- TO CHECK!!!! ON OLD SITE --->
+	<section  style="display:none">
 	  <div class="sliderImage" class="slider" style="background:#000;">
 		<div class="container">
 
