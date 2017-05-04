@@ -11,6 +11,7 @@ use App\Models\TempReservation;
 use App\Models\Company;
 use App\Models\CompanyReservation;
 use App\Helpers\CalendarHelper;
+use App\Models\FutureDeal;
 use Carbon\Carbon;
 use Cartalyst\Sentinel\Checkpoints\ThrottlingException;
 use Cartalyst\Sentinel\Checkpoints\NotActivatedException;
@@ -51,7 +52,7 @@ class PaymentController extends Controller {
         $this->validate($request, [
             'amount' => 'required'
         ]);
-
+        
         if ($request->amount <= 0.1) {
             alert()->error('', 'Het bedrag is te laag om verder te gaan')->persistent('Sluiten');
             return Redirect::to('payment/charge');
@@ -82,6 +83,13 @@ class PaymentController extends Controller {
                 $payment_user_id = $temp_reservation->user_id;
             }
             $redirection_url = URL::to('payment/success?trid=' . base64_encode($temp_reservation_id) . '&pay_extra_for_deal=1');
+        } elseif ($request->has('buy') && $request->input('buy') == 'future_deal' && $request->input('future_deal_id')) {
+            $future_deal_id = $request->input('future_deal_id');
+            $future_deal = DB::table('future_deals')->where('id', '=', $future_deal_id)->first();
+            if ($future_deal) {
+                $payment_user_id = $future_deal->user_id;
+            }
+            $redirection_url = URL::to('payment/success?future_deal_id=' . base64_encode($future_deal_id) . '&future_deal=1');
         }
         $payment = $this->mollie->payments->create(array(
             'amount' => $request->amount,
@@ -157,7 +165,7 @@ class PaymentController extends Controller {
     public function validatePayment(Request $request) {
         setlocale(LC_ALL, 'nl_NL', 'Dutch');
         $payment_user_id = $temp_transaction_id = 0;
-        $obj_tr = $deal = NULL;
+        $obj_tr = $deal = $future_deal = NULL;
         if (Sentinel::check()) {
             $payment_user_id = Sentinel::getUser()->id;
         }
@@ -166,6 +174,13 @@ class PaymentController extends Controller {
             $obj_tr = DB::table('temp_reservations')->where('id', '=', $temp_transaction_id)->first();
             if ($obj_tr) {
                 $payment_user_id = $obj_tr->user_id;
+            }
+        }
+        if ($request->has('future_deal') && $request->get('future_deal') == '1' && $request->get('future_deal_id')) {
+            $future_deal_id = base64_decode($request->get('future_deal_id'));
+            $future_deal = FutureDeal::find($future_deal_id);
+            if ($future_deal) {
+                $payment_user_id = $future_deal->user_id;
             }
         }
         $userPayments = Payment::where(
@@ -319,8 +334,7 @@ class PaymentController extends Controller {
                                 Alert::success(
                                         'Uw reservering voor ' . $deal->name . ' bij ' . $company->name . ' op ' . $carbon_date->formatLocalized('%A %d %B %Y') . ' om ' . date('H:i', strtotime($data->time)) . ' met ' . $data->persons . ' ' . ($data->persons == 1 ? 'persoon' : 'personen') . ' wordt doorgegeven aan het restaurant, welke contact met u opneemt. <br /><br /> ' . $calendar . '<br /> <br /><span class=\'addthis_sharing_toolbox\'></span>', 'Bedankt ' . $oUser->name
                                 )->html()->persistent('Sluiten');
-                            }
-                            else{
+                            } else {
                                 Alert::success(
                                         'Uw reservering bij ' . $company->name . ' op ' . $carbon_date->formatLocalized('%A %d %B %Y') . ' om ' . date('H:i', strtotime($data->time)) . ' met ' . $data->persons . ' ' . ($data->persons == 1 ? 'persoon' : 'personen') . ' wordt doorgegeven aan het restaurant, welke contact met u opneemt.<br /><br /> U heeft aangegeven &euro;' . $data->saldo . ' korting op de rekening te willen. Klopt dit niet? <a href=\'' . URL::to('account/reservations') . '\' target=\'_blank\'>Klik hier</a><br /><br /> ' . $calendar . '<br /><br /> <span class=\'addthis_sharing_toolbox\'></span>', 'Bedankt ' . $oUser->name
                                 )->html()->persistent('Sluiten');
@@ -328,6 +342,20 @@ class PaymentController extends Controller {
                             return Redirect::to('restaurant/' . $company->slug);
                         }
                     }
+                } elseif ($future_deal) {
+                    $future_deal->status = 'purchased';
+                    $future_deal->save();
+                    if($future_deal->user_discount){
+                        $oUser->saldo = (float)$oUser->saldo - (float)$future_deal->user_discount;
+                        $oUser->save();
+                    }                    
+                    if ($future_deal->deal_id) {
+                        $deal = DB::table('reservations_options')->where('id', '=', $future_deal->deal_id)->first();
+                    }
+                    Alert::success('U heeft succesvol 2x de deal: ' . $deal->name . ' gekocht voor een prijs van &euro;' . $future_deal->deal_price . ' <br /><br /> Klik hier als u direct een reservering wilt maken. <br /><br />' . '<span class=\'addthis_sharing_toolbox\'></span>', 'Bedankt ' . $oUser->name
+                    )->html()->persistent('Sluiten');
+                    $company = Company::find($deal->company_id);
+                    return Redirect::to('restaurant/' . $company->slug);
                 } else {
                     $oUser->saldo += $userPayments['amount'];
                     $oUser->save();
