@@ -309,7 +309,7 @@
 
         
 		function chromeInstallFunction() {
-			chrome.webstore.install('https://chrome.google.com/webstore/detail/kfnndmokhnlhhblfedaeebnonfjbihpo', function () {
+			    chrome.webstore.install('https://chrome.google.com/webstore/detail/kfnndmokhnlhhblfedaeebnonfjbihpo', function () {
 //                    alert('success');
 			}, function(error, errorCode) {
 //                    alert(errorCode + "-----------" + error);
