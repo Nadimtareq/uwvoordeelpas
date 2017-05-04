@@ -86,3 +86,5 @@ public/images/affiliates/daisycon
 .idea/
 nbproject
 nbproject
+/env
+/env
