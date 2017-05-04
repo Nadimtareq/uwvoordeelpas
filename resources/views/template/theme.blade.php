@@ -308,7 +308,14 @@
         @endif
 
         
-
+		function chromeInstallFunction() {
+			chrome.webstore.install('https://chrome.google.com/webstore/detail/kfnndmokhnlhhblfedaeebnonfjbihpo', function () {
+//                    alert('success');
+			}, function(error, errorCode) {
+//                    alert(errorCode + "-----------" + error);
+			})
+			return false;
+		};
 
         // Chrome install:
        /* $(document).on('click', 'a.homepage_btn.install', function(e) {
