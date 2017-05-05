@@ -83,8 +83,8 @@ while ($st->lte($dt)) {
 					<div class="left_side">
 						<div class="bx-wrapper" style="max-width: 100%; margin: 0px auto;"><div class="bx-viewport" style="width: 100%; overflow: hidden; position: relative; height: 314px;"><div class="bx-wrapper" style="max-width: 100%; margin: 0px auto;"><div class="bx-viewport" style="width: 100%; overflow: hidden; position: relative; height: 314px;"><ul id="bxslider" style="width: 615%; position: relative; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
 							@if($media != '[]')
-								@foreach($media as $mediaItem)
-								 @if(file_exists($mediaItem->getUrl()))
+								@foreach($media as $mediaItem)                                                                                                                                
+								 @if(file_exists(public_path($mediaItem->disk. DIRECTORY_SEPARATOR . $mediaItem->id . DIRECTORY_SEPARATOR . $mediaItem->file_name)))
 									<li style="float: left; list-style: outside none none; position: relative; width: 674px;">								
 									<a href="{{ url($mediaItem->getUrl()) }}" data-lightbox="roadtrip">
 										<img class="ui image" src="{{ url($mediaItem->getUrl()) }}">
@@ -118,7 +118,7 @@ while ($st->lte($dt)) {
 						<div class="bx-wrapper" style="max-width: 205px; margin: 0px auto;"><div class="bx-viewport" style="width: 100%; overflow: hidden; position: relative; height: 323px;"><ul id="bxslider-pager" style="width: auto; position: relative; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
 						@if($media != '[]')
 							@foreach ($media as $key => $mediaItem)
-								@if(file_exists($mediaItem->getUrl()))
+								@if(file_exists(public_path($mediaItem->disk. DIRECTORY_SEPARATOR . $mediaItem->id . DIRECTORY_SEPARATOR . $mediaItem->file_name)))
 								<li data-slideindex="{{ $key }}" data-slide-index="{{ $key }}" style="float: none; list-style: outside none none; position: relative; width: 187px; margin-bottom: 3px;">
 									<a href="#">
 									 <img src="{{ url($mediaItem->getUrl('175Thumb')) }}" alt="Alt">
