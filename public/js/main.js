@@ -215,10 +215,11 @@ $(document).ready(function($){
 		});
 	}
 
+	// Date Picker from jQuery
 	$("#datepicker").datepicker().datepicker("setDate", new Date());
 	
 	
-	if( $('#datepicker-ajax').length )
+	if( $('[datepicker-ajax]').length )
 	{	
 		var currentDate = new Date();
 		var jsonParse = [];
@@ -239,12 +240,18 @@ $(document).ready(function($){
 			   refresh_option('#persons-calendar',rules.availablePersons);
 		});
 		
-		$('#datepicker-ajax').datepicker({
+		$('[datepicker-ajax]').datepicker({
 			useCurrent:false,
-			onSelect: function (date) {
+			dateFormat:'dd MM yy',
+			onSelect: function (date, inst) {
+				var $this = $(this);
+				var lgroup_res = $this.data('group') | 0;
+				var ltimeselect = $this.data('timeselect');
+				var lpersons = $this.data('persons');
+				var dateISO = (new Date(date)).toISOString().substring(0, 10);
 				
-				$('input[name="date"]').val(date);
-				$('input[name="date_hidden"]').val(date);
+				$('input[name="date"]').val( dateISO );
+				$('input[name="date_hidden"]').val( dateISO );
 				
 				$.ajax({
 					method: 'GET',
@@ -252,18 +259,20 @@ $(document).ready(function($){
 					data: {
 						company: $('input[name="company_id"]').val(),
 						persons: $('input[name="persons"]').val(),
-						date: date
+						group_res: lgroup_res,
+						date: dateISO
 					},
 					success: function (response) {
 						var jsonParse = JSON.parse(response); 
 						var jsonKeys = Object.keys(jsonParse);
+						var select_calendar = $(ltimeselect); /*$("#time-calendar")*/;
 						
-						$("#time-calendar").empty();					
+						select_calendar.empty();					
 						for(var time in jsonParse) {
 							var parse_local = jsonParse[time];
 							var key = Object.keys(parse_local)[0];						
 							
-							$("#time-calendar").append($('<option></option>').val(time).html(time)).data(parse_local[key]);
+							select_calendar.append($('<option></option>').val(time).html(time)).data(parse_local[key]);
 						};
 					}
 				});
@@ -287,9 +296,14 @@ $(document).ready(function($){
 					return [false];
 			},
 			onChangeMonthYear : function(year,month,inst) {
+				var $this = $(this);
+				var lgroup_res = $this.data('group') | 0;
+				var ltimeselect = $this.data('timeselect');
+				var lpersons = $this.data('persons');
 				
 				$('input[name="month"]').val(month);
 				$('input[name="year"]').val(year);
+				$('input[name="monthDate"]').val(month+"-"+year);
 
 				$(".calendar-ajax > *").attr('disabled', true);
 				$(".calendar-ajax").css('opacity', '0.4');
@@ -305,19 +319,19 @@ $(document).ready(function($){
 					success: function(response) {
 						jsonParse = JSON.parse(response);
 						
-						refresh_option('#persons-calendar',jsonParse.availablePersons);
+						refresh_option(lpersons,jsonParse.availablePersons);
 										
 					},
 					complete: function(){
 						$(".calendar-ajax > *").removeAttr('disabled');;
 						$(".calendar-ajax").css('opacity', '');
-						
-						$('#datepicker-ajax').datepicker('refresh');
+						$this.datepicker('refresh');
 					}
 				});
 			}
 		});
-		$('#datepicker-ajax').datepicker("option","onChangeMonthYear")(currentDate.getFullYear(),currentDate.getMonth()+1,null);
+		
+		$('[datepicker-ajax]').datepicker("option","onChangeMonthYear")(currentDate.getFullYear(),currentDate.getMonth()+1,null);
 		
 	}
 }(jQuery));

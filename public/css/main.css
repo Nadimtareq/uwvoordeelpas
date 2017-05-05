@@ -1926,13 +1926,26 @@ header.nav li a:hover {
     margin-top: 13px;
     margin-left: 10px;
 }
-.right_details li img{
+.right_details li img
+{
     position: absolute;
     left: 11px;
     top: 5px;
     width: 17px;
     height: 19px;
 }
+.details {
+	 margin-left:30px;
+}
+.details li img 
+{
+    position: absolute;
+    left: 40px;
+    top: 5px;
+    width: 17px;
+    height: 19px;
+}
+
 .quantity2{
     display: inline-block;
     width: 127px !important;
@@ -2254,7 +2267,8 @@ header.nav li a:hover {
     border: none;
     outline: none;
     color: #333399;
-    padding: 18px 30px 0 30px;
+    padding: 18px 30px 0 30px !important;
+	height: 60px;
     border-left: 4px solid rgba(0,0,0,0);
 }
 .send::-webkit-input-placeholder {font: 14px 'LatoRegular';color:#000;}
