@@ -32,7 +32,7 @@
 									@if (isset($media[0]) && file_exists(url(''.$media[0]->getUrl('thumb'))))
 										<img class="ui image" src="{{ url(''.$media[0]->getUrl('thumb')) }}" alt="{{ $city->name }}">
 									@else
-										<img class="ui image" src="{{ url('images/placeholdimage.png') }}" alt="{{ $city->name }}">
+										<img class="ui image" src="{{ url('images/placeholdimage.png') }}" alt="{{ $city->name }}" data-url="{{ url(''.$media[0]->getUrl('thumb')) }}">
 									@endif
 									<p>{{ $city->name }}</p>
 								</a>
