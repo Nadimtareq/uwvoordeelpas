@@ -1936,6 +1936,9 @@ header.nav li a:hover {
 }
 .details {
 	 margin-left:30px;
+	 margin-top:30px;
+	 width:100%;
+	 margin-bottom:10px;
 }
 .details li img 
 {
@@ -2032,6 +2035,8 @@ header.nav li a:hover {
 .menu{
     border-bottom: 1px solid #ccccff;
     padding-bottom: 35px;
+	display: inline-block !important;
+	width:100%;		
 }
 .menu .left_m{
     float: left;
@@ -2459,8 +2464,8 @@ header.nav li a:hover {
 .tabss .r_side{
     width: 16%;
     position: absolute;
-    /*top: -10px;
-    right: 24%;*/
+    top: -10px;
+    /*right: 24%;*/
 }
 .shop{
     padding-top: 118px;
@@ -4014,7 +4019,7 @@ padding-top: 90px;
 }
 
 .fixed-row {
- background-color:dimgrey;	
+ background-color:black;	
 }
 
 .d-inline-block {

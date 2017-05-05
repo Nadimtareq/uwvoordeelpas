@@ -34,7 +34,7 @@ while ($st->lte($dt)) {
 			
 			<div class="right_details calendar-ajax">
 					<!-- <div id="datepicker" class="right_calendar hasDatepicker"><div class="ui-datepicker-inline ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" style="display: block;"><div class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all"><a class="ui-datepicker-prev ui-corner-all" data-handler="prev" data-event="click" title="Prev"><span class="ui-icon ui-icon-circle-triangle-w">Prev</span></a><a class="ui-datepicker-next ui-corner-all" data-handler="next" data-event="click" title="Next"><span class="ui-icon ui-icon-circle-triangle-e">Next</span></a><div class="ui-datepicker-title"><span class="ui-datepicker-month">April</span>&nbsp;<span class="ui-datepicker-year">2017</span></div></div><table class="ui-datepicker-calendar"><thead><tr><th class="ui-datepicker-week-end"><span title="Sunday">Su</span></th><th><span title="Monday">Mo</span></th><th><span title="Tuesday">Tu</span></th><th><span title="Wednesday">We</span></th><th><span title="Thursday">Th</span></th><th><span title="Friday">Fr</span></th><th class="ui-datepicker-week-end"><span title="Saturday">Sa</span></th></tr></thead><tbody><tr><td class=" ui-datepicker-week-end ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">1</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">2</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">3</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">4</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">5</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">6</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">7</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">8</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">9</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">10</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">11</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">12</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">13</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">14</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">15</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">16</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">17</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">18</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">19</a></td><td class="  ui-datepicker-current-day" data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default ui-state-active" href="#">20</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">21</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">22</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">23</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">24</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">25</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">26</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">27</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">28</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">29</a></td></tr><tr><td class=" ui-datepicker-week-end  ui-datepicker-today" data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default ui-state-highlight" href="#">30</a></td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-week-end ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td></tr></tbody></table></div></div>-->
-					<div class="right_calendar" datepicker-ajax data-timeselect="#time-calendar" data-persons="#persons-calendar" ></div>
+					<div class="right_calendar" data-lock=".calendar-ajax" datepicker-ajax data-timeselect="#time-calendar" data-persons="#persons-calendar" ></div>
 					
 					<ul>
 						<li><img src="{{ asset('images/c1.png') }}" alt="m3">
@@ -46,9 +46,11 @@ while ($st->lte($dt)) {
 						    <input type="hidden" name="persons" value="{{ ($userAuth && $userInfo->kids != 'null' && $userInfo->kids != NULL && $userInfo->kids != '[""]' ? $userInfo->kids : 1) }}"> 
 							<select id="persons-calendar"  name="cpersons" class="quantity2" >
 							    <option value="0">Personen</option>
-								@for ($i = 1; $i <= 10; $i++) 
+								<?php $person_list=[]; ?>
+								<?php for ($i = 1; $i <= 10; $i++) { ?>
 									<option value="{{ $i }}" data-value="{{ $i }}">{{ $i }} {{ $i == 1 ? 'persoon' : 'personen' }}</option>
-								@endfor
+								    <?php $person_list[$i] = $i." ".(($i == 1) ? 'persoon' : 'personen'); ?>
+								<?php } ?>
 							</select>
 						</li>
 					</ul>
@@ -155,7 +157,7 @@ while ($st->lte($dt)) {
 								</div>
 								<div class="right_m">
 									<span>&euro; {{ $deal->price_from }}<strong>&euro; {{ $deal->price }}</strong></span>
-									<b class="up">{!! $deal->description !!}</b>
+									<b class="up">{!! strip_tags( $deal->description ) !!}</b>
 									<!-- <b>Voorgerechten</b>
 									<p>This is Photoshop's versionn  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor.</p> -->
 								</div>
@@ -301,7 +303,7 @@ while ($st->lte($dt)) {
 								{{ Form::close() }}
 								</div>
 								@endif
-								<!-- <div class="maps">							
+								<div class="maps">							
 									<div id="map" 
 										data-kitchen="{{ is_array(json_decode($company->kitchens)) ? str_slug(json_decode($company->kitchens)[0]) : '' }}" 
 										data-url="{{ url('restaurant/'.$company->slug) }}" 
@@ -309,7 +311,7 @@ while ($st->lte($dt)) {
 										data-address="{{ $company->address }}" 
 										data-city="{{ $company->city }}" 
 										data-zipcode="{{ $company->zipcode }}"></div>
-								</div>  -->
+								</div> 
 							</div>
 						</div>
 						
@@ -368,35 +370,24 @@ while ($st->lte($dt)) {
 							
 							<label for="date">
 								<span>Datum</span>
-								{{ Form::text('date_input', '', array('datepicker-ajax','data-timeselect' => '#time-dropdown', 'data-group' => '1', 'data-persons' => '')) }}
+								{{ Form::text('date_input', '', array('datepicker-ajax','data-timeselect' => '#time-dropdown', 'data-group' => '1', 'data-persons' => '#persons-dropdown')) }}
 								
 							</label>	
 
 							<label for="time-dropdown">
-							   	<ul class="details">
-									<li>
-										<img src="{{ asset('images/c1.png') }}" alt="m3">
-										<select id="time-dropdown" name="time" class="quantity2">
-										</select>
-									</li>
-								</ul>
-								<!--
-								<div id="timeField-2" class="ui normal selection dropdown time timeRefresh">
-									<input id="timeInput" name="time" type="hidden">
-											
-									<i class="time icon"></i>
-									<div class="default text">Tijd</div>
-									<i class="dropdown icon"></i>
-
-									<div class="menu">
-										<div class="item" data-value="<?php echo date('H:i', strtotime(Request::get('time'))); ?>"><?php echo date('H:i', strtotime(Request::get('time'))); ?></div>
-									</div>
-								</div>-->
+							    <span>Tijm</span>
+							   	<div class="details">
+									{{ Form::select("time",[],Request::get('time'),[ 'class' => 'quantity2', 'id' => 'time-dropdown']) }}
+									<!-- <select id="time-dropdown" name="time" class="quantity2"></select>-->
+								</div>								
 							</label>
 
 							<label for="persons">
 								<span>Personen</span>
-								{{ Form::text('persons') }}
+								<div class="details">
+								{{ Form::select("persons",$person_list,1,[ 'class' => 'quantity2', 'id' => 'persons-dropdown']) }}
+								</div>
+								<!-- Form::text('persons') -->
 							</label>	
 							
 							<label for="name">

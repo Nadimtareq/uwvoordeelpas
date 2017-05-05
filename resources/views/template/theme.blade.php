@@ -115,38 +115,7 @@
         </div>
     </div>
     -->
-	
-    <div id="example1" class="fixMenu">
-        <a href="{{ url('/') }}" class="ui red icon big launch right attached fixed button">
-            <i class="home icon"></i>
-            <span class="text">Menu </span>
-        </a><br />
-
-        @if ($__env->yieldContent('fixedMenu'))
-             @yield('fixedMenu')
-        @else
-            <a href="{{ url('faq') }}" class="ui black icon big launch right attached fixed button">
-                <i class="question mark icon"></i>
-                <span class="text">Veelgestelde vragen</span>
-            </a><br />
-        @endif
-
-        <a href="{{ url('contact') }}" class="ui yellow icon big launch right attached fixed button">
-            <i class="envelope icon"></i>
-            <span class="text">Contact</span>
-        </a><br>
-
-        <a href="#" class="ui grey icon big launch right attached fixed button search-full-open">
-            <i class="search icon"></i>
-            <span class="text">Zoeken</span>
-        </a><br>
-
-        <a href="https://www.facebook.com/Uwvoordeelpas-321703168185624/?fref=ts" target="_blank" class="ui blue icon big launch right attached fixed button">
-            <i class="facebook icon"></i>
-            <span class="text">Facebook</span>
-        </a>
-    </div>
-
+    
    
    
     <!-- Main Content -->
@@ -198,15 +167,17 @@
 	<script  src="{{ asset('js/app.js?rand='.str_random(40)) }}"></script> 		
 	<!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjrbVJMJKWzCl8JZWV3_5Jy5P4CTITznU"></script>    -->
     @if (!Request::has('iframe'))
-       <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjrbVJMJKWzCl8JZWV3_5Jy5P4CTITznU&callback=initMap"></script>
+       <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjrbVJMJKWzCl8JZWV3_5Jy5P4CTITznU&callback=initMap"></script>
+	   <script  src="//cdnjs.cloudflare.com/ajax/libs/gmaps.js/0.4.25/gmaps.min.js"></script>    
     @endif
-	<script  src="//cdnjs.cloudflare.com/ajax/libs/gmaps.js/0.4.25/gmaps.min.js"></script>    
+	
 	
 	<script  src="{{ asset('js/jquery-1.9.1.min.js') }} "></script>	
 	<script  src="{{ asset('js/jquery-ui.min.js') }}"></script>   
 	<script  src="{{ asset('js/jquery.flexslider.js') }}"></script>
 	<script  src="{{ asset('js/jquery.bxslider.min.js') }}"></script>	
 	<script  src="{{ asset('js/jquery-ui-1.9.2.custom.min.js') }}"></script> 	
+	<script  src="{{ asset('js/i18n/datepicker-nl.js') }}"></script> 	
 	
 	<script  src="{{ asset('js/detectmobilebrowser.js') }}"></script>
 	<script  src="{{ asset('js/wow.min.js') }}"></script>

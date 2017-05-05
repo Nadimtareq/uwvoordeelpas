@@ -223,6 +223,7 @@ $(document).ready(function($){
 	{	
 		var currentDate = new Date();
 		var jsonParse = [];
+		
 		var refresh_option = function( id, available) {
 			// Disable time field when there is no date available								
 			$(id+' option').each(function(key) {								
@@ -235,20 +236,27 @@ $(document).ready(function($){
 
 		$('#time-calendar').on('change',function() {
 			 var rules = $(this).data();
-			 console.log(rules,rules.availablePersons);
 			 if(rules)
 			   refresh_option('#persons-calendar',rules.availablePersons);
 		});
 		
+		$('#time-dropdown').on('change',function() {
+			 var rules = $(this).data();
+			 if(rules)
+			   refresh_option('#persons-dropdown',rules.availablePersons);
+		});
+		
 		$('[datepicker-ajax]').datepicker({
-			useCurrent:false,
+			useCurrent:true,
+			firstDay: 1,
 			dateFormat:'dd MM yy',
 			onSelect: function (date, inst) {
 				var $this = $(this);
 				var lgroup_res = $this.data('group') | 0;
 				var ltimeselect = $this.data('timeselect');
 				var lpersons = $this.data('persons');
-				var dateISO = (new Date(date)).toISOString().substring(0, 10);
+				
+				var dateISO = ($this.datepicker('getDate').toISOString().substring(0, 10));
 				
 				$('input[name="date"]').val( dateISO );
 				$('input[name="date_hidden"]').val( dateISO );
@@ -263,13 +271,13 @@ $(document).ready(function($){
 						date: dateISO
 					},
 					success: function (response) {
-						var jsonParse = JSON.parse(response); 
-						var jsonKeys = Object.keys(jsonParse);
+						var jsonParselocal = JSON.parse(response); 
+						var jsonKeys = Object.keys(jsonParselocal);
 						var select_calendar = $(ltimeselect); /*$("#time-calendar")*/;
 						
 						select_calendar.empty();					
-						for(var time in jsonParse) {
-							var parse_local = jsonParse[time];
+						for(var time in jsonParselocal) {
+							var parse_local = jsonParselocal[time];
 							var key = Object.keys(parse_local)[0];						
 							
 							select_calendar.append($('<option></option>').val(time).html(time)).data(parse_local[key]);
@@ -280,9 +288,11 @@ $(document).ready(function($){
 				
 			},
 			beforeShowDay: function (date) {
-				
-				if(jsonParse.dates && jsonParse.dates.length) {
-					var dates_check= jsonParse.dates;
+				var $this = $(this);
+				var ltimeselect = $this.data('timeselect');
+				console.log(jsonParse[ltimeselect]);
+				if(jsonParse[ltimeselect] && jsonParse[ltimeselect].dates.length) {
+					var dates_check= jsonParse[ltimeselect].dates;
 					var found = [false];
 					dates_check.forEach(function (val,i,arr) {									
 									var val_date = Date.parse(val.date+" 00:00:00");
@@ -297,16 +307,19 @@ $(document).ready(function($){
 			},
 			onChangeMonthYear : function(year,month,inst) {
 				var $this = $(this);
-				var lgroup_res = $this.data('group') | 0;
+				var lgroup_res = $this.data('group');
 				var ltimeselect = $this.data('timeselect');
 				var lpersons = $this.data('persons');
+				var data_lock =$this.data('lock');
 				
 				$('input[name="month"]').val(month);
 				$('input[name="year"]').val(year);
 				$('input[name="monthDate"]').val(month+"-"+year);
 
-				$(".calendar-ajax > *").attr('disabled', true);
-				$(".calendar-ajax").css('opacity', '0.4');
+				if(data_lock) {
+					$(data_lock + " > *").attr('disabled', true);
+					$(data_lock).css('opacity', '0.4');
+				}
 				
 				$.ajax({
 					url: baseUrl + 'ajax/available/reservation',
@@ -317,21 +330,26 @@ $(document).ready(function($){
 						company:  $('input[name="company_id"]').val()
 					},	
 					success: function(response) {
-						jsonParse = JSON.parse(response);
+						jsonParse[ltimeselect] = JSON.parse(response);
 						
 						refresh_option(lpersons,jsonParse.availablePersons);
-										
+						$this.datepicker('refresh');	
 					},
 					complete: function(){
-						$(".calendar-ajax > *").removeAttr('disabled');;
-						$(".calendar-ajax").css('opacity', '');
+						if (data_lock) {
+							$(data_lock + " > *").removeAttr('disabled');;
+							$(data_lock).css('opacity', '');
+						}
 						$this.datepicker('refresh');
 					}
 				});
 			}
-		});
+		}).datepicker( $.datepicker.regional[ "nl" ] );
 		
-		$('[datepicker-ajax]').datepicker("option","onChangeMonthYear")(currentDate.getFullYear(),currentDate.getMonth()+1,null);
+		$('[datepicker-ajax]').each(function() {
+			$(this).datepicker("option","onChangeMonthYear")(currentDate.getFullYear(),currentDate.getMonth()+1,$(this));
+			$(this).datepicker("refresh");
+		});
 		
 	}
 }(jQuery));
