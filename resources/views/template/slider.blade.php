@@ -1,5 +1,5 @@
  @inject('affiliateHelper', 'App\Helpers\AffiliateHelper')
-
+ <?php @$browser = Session::get('browser'); ?>   
  <div id="sliderImage" class="slider{{ Request::is('admin/*') == TRUE ? ' admin' : '' }}" style="{{ Route::getCurrentRoute()->uri() == '/' && $userAuth == FALSE ? '' : 'background-color: #000000;' }}">
 
     @if (Route::getCurrentRoute()->uri() == '/' && $userAuth == FALSE)
@@ -14,15 +14,26 @@
 					<div class="col-sm-12">
 						<div class="home-inner">
 							<div class="center-align home-content">
+								
 								<h1 class="home-title">Activeer de spaarhulp en ontvang direct €5.- </h1>
 								<h2 class="home-subtitle">Spaar nu automatisch bij wel 2000+ webshops. <br>
 									Deze betalen u tot wel 10% dinertegoed bij iedere aankoop!</h2>
-									<button class="button_action">Ja ik wil ook sparen!</button>
+									
+									@if($userAuth && $userInfo->extension_downloaded == 0)
+										@if(strtolower($browser['name']) == 'firefox')               
+										<a  style="margin-top: 80px; display: inline-block;" class="homepage_btn install {{$browser['name']}}" 
+											href="/firefox.xpi" iconURL="/images/icons/android-icon-48x48.png">Ja! Ik wil gratis sparen!</a>
+										@endif
+										@if(strtolower($browser['name']) == 'chrome')
+										<a href="#" onclick="chromeInstallFunction();" id="install-button" style="margin-top: 80px; display: inline-block;" class="homepage_btn install {{$browser['name']}}">Ja! Ik wil gratis sparen!</a>
+										@endif
+									@endif					
 								</div>
 							</div>
 						</div>
-					</div>
 				</div>
+
+			</div>
 				<!-- .container end -->
 				<div class="section-call-to-area">
 					<div class="container">
@@ -53,9 +64,21 @@
 								</div>
 							</div>
 							<div class="col-sm-6">
+																
 								<h1>Activeer de spaarhulp en ontvang direct €5.- </h1>
 								<h4>Spaar nu automatisch bij wel 2000+ webshops. <br> Deze betalen u tot wel 10% dinertegoed bij iedere aankoop!</h4>
-								<button class="button_action button_action2">Ja ik wil ook sparen!</button>
+								
+								@if($userAuth && $userInfo->extension_downloaded == 0)														
+									@if($userAuth && $userInfo->extension_downloaded == 0)
+										@if(strtolower($browser['name']) == 'firefox')               
+											<a  style="margin-top: 80px; display: inline-block;" class="homepage_btn install {{$browser['name']}}" 
+												href="/firefox.xpi" iconURL="/images/icons/android-icon-48x48.png">Ja! Ik wil gratis sparen!</a>
+										@endif
+										@if(strtolower($browser['name']) == 'chrome')
+										<a href="#" onclick="chromeInstallFunction();" id="install-button" style="margin-top: 80px; display: inline-block;" class="homepage_btn install {{$browser['name']}}">Ja! Ik wil gratis sparen!</a>
+										@endif
+									@endif
+							     @endif																	
 							</div>
 					</div>
 				</div>
@@ -63,8 +86,8 @@
 	</section>
    
 
-
-	<section >
+   <!--- TO CHECK!!!! ON OLD SITE --->
+	<section  style="display:none">
 	  <div class="sliderImage" class="slider" style="background:#000;">
 		<div class="container">
 

@@ -29,7 +29,7 @@
 
 							<div class="col-sm-4 col4">
 								<a href="{{ url('search?regio='.$city->slug) }}">
-									@if (isset($media[0]) && file_exists('favicon.ico'))
+									@if (isset($media[0]) && file_exists(url(''.$media[0]->getUrl('thumb'))))
 										<img class="ui image" src="{{ url(''.$media[0]->getUrl('thumb')) }}" alt="{{ $city->name }}">
 									@else
 										<img class="ui image" src="{{ url('images/placeholdimage.png') }}" alt="{{ $city->name }}">

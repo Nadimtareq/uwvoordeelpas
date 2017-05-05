@@ -13,7 +13,7 @@
 
     <link rel="stylesheet" href="{{ asset('css/app.css?rand='.str_random(40)) }}"> 	
 	<link rel="stylesheet" href="{{ asset('css/normalize.css')}}">
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css">	
+	<link rel="stylesheet" href="{{ asset('css/jquery-ui.css')}}">	
 	<link rel="stylesheet" href="{{ asset('css/ui-lightness/jquery-ui-1.9.2.custom.min.css') }}">
 		
 	<link rel="stylesheet" href="{{ asset('css/materialize.min.css') }}" /> 
@@ -202,8 +202,8 @@
     @endif
 	<script  src="//cdnjs.cloudflare.com/ajax/libs/gmaps.js/0.4.25/gmaps.min.js"></script>    
 	
-	<script  src="//code.jquery.com/jquery-1.9.1.min.js"></script>	
-	<script  src="//code.jquery.com/ui/1.9.2/jquery-ui.min.js"></script>   
+	<script  src="{{ asset('js/jquery-1.9.1.min.js') }} "></script>	
+	<script  src="{{ asset('js/jquery-ui.min.js') }}"></script>   
 	<script  src="{{ asset('js/jquery.flexslider.js') }}"></script>
 	<script  src="{{ asset('js/jquery.bxslider.min.js') }}"></script>	
 	<script  src="{{ asset('js/jquery-ui-1.9.2.custom.min.js') }}"></script> 	
@@ -308,7 +308,14 @@
         @endif
 
         
-
+		function chromeInstallFunction() {
+			    chrome.webstore.install('https://chrome.google.com/webstore/detail/kfnndmokhnlhhblfedaeebnonfjbihpo', function () {
+//                    alert('success');
+			}, function(error, errorCode) {
+//                    alert(errorCode + "-----------" + error);
+			})
+			return false;
+		};
 
         // Chrome install:
        /* $(document).on('click', 'a.homepage_btn.install', function(e) {

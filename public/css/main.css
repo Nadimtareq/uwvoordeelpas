@@ -1467,7 +1467,7 @@ header.nav li a:hover {
     .side-nav2 a{
         position: relative;
         vertical-align: middle;
-        line-height: 1;
+        line-height: 20px !important;
         text-decoration: none;
         -webkit-tap-highlight-color: transparent;
         -webkit-box-flex: 0;
@@ -1479,14 +1479,14 @@ header.nav li a:hover {
         -ms-user-select: none;
         user-select: none;
         background: none;
-        padding: 0.92857143em 1.14285714em;
+        padding: 5px 15px;
         text-transform: none;
         color: rgba(0, 0, 0, 0.87);
         font-weight: normal;
         -webkit-transition: background 0.1s ease, box-shadow 0.1s ease, color 0.1s ease;
         transition: background 0.1s ease, box-shadow 0.1s ease, color 0.1s ease;
         color: rgba(255, 255, 255, 0.9) !important;
-        font-size: 17px;
+        font-size: 14px;
     }
     .side-nav2 a:hover{
         border: none !important;
@@ -1501,8 +1501,8 @@ header.nav li a:hover {
         background: none;
     }
     .side-nav2 .material-icons{
-        font-size: 22px !important;
-        margin-right: 30px;
+        font-size: 19px !important;
+        margin-right: 15px;
         height: auto;
     }
     .tabs-content .col4:nth-child(n+10){
@@ -1926,13 +1926,26 @@ header.nav li a:hover {
     margin-top: 13px;
     margin-left: 10px;
 }
-.right_details li img{
+.right_details li img
+{
     position: absolute;
     left: 11px;
     top: 5px;
     width: 17px;
     height: 19px;
 }
+.details {
+	 margin-left:30px;
+}
+.details li img 
+{
+    position: absolute;
+    left: 40px;
+    top: 5px;
+    width: 17px;
+    height: 19px;
+}
+
 .quantity2{
     display: inline-block;
     width: 127px !important;
@@ -2254,7 +2267,8 @@ header.nav li a:hover {
     border: none;
     outline: none;
     color: #333399;
-    padding: 18px 30px 0 30px;
+    padding: 18px 30px 0 30px !important;
+	height: 60px;
     border-left: 4px solid rgba(0,0,0,0);
 }
 .send::-webkit-input-placeholder {font: 14px 'LatoRegular';color:#000;}

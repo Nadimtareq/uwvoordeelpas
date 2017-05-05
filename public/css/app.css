@@ -13022,6 +13022,17 @@ html.ios, html.ios body { height: initial !important; }
 }
 }
 
+
+input[type=text], input[type=password], input[type=email], 
+input[type=url], input[type=date], input[type=tel], input[type=number], 
+input[type=search]
+{
+	-webkit-box-sizing:border-box !important;
+	box-sizing : border-box !important;
+}
+
+
+
 /* Out */
 
 @-webkit-keyframes horizontalFlipOut { 0% {
