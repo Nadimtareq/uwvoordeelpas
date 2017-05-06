@@ -2,10 +2,12 @@
 
 @inject('affiliate', 'App\Models\Affiliate')
 @inject('strHelper', 'App\Helpers\StrHelper')
+@inject('FileHelper', 'App\Helpers\FileHelper')
 
 {{--*/ $pageTitle = (isset($contentBlock[1]) ? strip_tags($contentBlock[1]) : '') /*--}}
 
 @section('content')
+
     <?php
     $breadcrumbArray1 = (Request::has('preference') ? Request::get('preference') :($userAuth && count($user->preferences) >= 1 && $user->preferences != 'null' && $user->preferences != null ? json_decode($user->preferences) : array()));
     $breadcrumbArray2 = (Request::has('kitchen') ? Request::get('kitchen') : ($userAuth && count($user->kitchens) >= 1 && $user->kitchens != 'null' && $user->kitchens != null ? json_decode($user->kitchens) : array()));
@@ -29,7 +31,7 @@
 
 							<div class="col-sm-4 col4">
 								<a href="{{ url('search?regio='.$city->slug) }}">
-									@if (isset($media[0]) && file_exists(url(''.$media[0]->getUrl('thumb'))))
+									@if (isset($media[0]) && $FileHelper::is_url_exist(url(''.$media[0]->getUrl('thumb'))))
 										<img class="ui image" src="{{ url(''.$media[0]->getUrl('thumb')) }}" alt="{{ $city->name }}">
 									@else
 										<img class="ui image" src="{{ url('images/placeholdimage.png') }}" alt="{{ $city->name }}" data-url="{{ url(''.$media[0]->getUrl('thumb')) }}">

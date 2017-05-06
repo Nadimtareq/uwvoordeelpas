@@ -11146,7 +11146,7 @@ to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
              Modal
 *******************************/
 
-.ui.modal { display: none; position: fixed; z-index: 1001; top: 50%; left: 50%; text-align: left; background: #ffffff; border: none; box-shadow: 1px 3px 3px 0px rgba(0, 0, 0, 0.2), 1px 3px 15px 2px rgba(0, 0, 0, 0.2); -webkit-transform-origin: 50% 25%; -ms-transform-origin: 50% 25%; transform-origin: 50% 25%; border-radius: 0.28571429rem; -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text; will-change: top, left, margin, transform, opacity; padding:0px;}
+.ui.modal { overflow-y:visible !important; display: none; position: fixed; z-index: 1001; top: 50%; left: 50%; text-align: left; background: #ffffff; border: none; box-shadow: 1px 3px 3px 0px rgba(0, 0, 0, 0.2), 1px 3px 15px 2px rgba(0, 0, 0, 0.2); -webkit-transform-origin: 50% 25%; -ms-transform-origin: 50% 25%; transform-origin: 50% 25%; border-radius: 0.28571429rem; -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text; will-change: top, left, margin, transform, opacity; padding:0px;}
 .ui.modal > :first-child:not(.icon), .ui.modal > .icon:first-child + * { border-top-left-radius: 0.28571429rem; border-top-right-radius: 0.28571429rem; }
 .ui.modal > :last-child { border-bottom-left-radius: 0.28571429rem; border-bottom-right-radius: 0.28571429rem; }
 /*******************************

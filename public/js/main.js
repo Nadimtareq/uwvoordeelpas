@@ -311,7 +311,7 @@ $(document).ready(function($){
 				var ltimeselect = $this.data('timeselect');
 				var lpersons = $this.data('persons');
 				var data_lock =$this.data('lock');
-				
+				console.log(data_lock, lpersons);
 				$('input[name="month"]').val(month);
 				$('input[name="year"]').val(year);
 				$('input[name="monthDate"]').val(month+"-"+year);
@@ -347,8 +347,12 @@ $(document).ready(function($){
 		}).datepicker( $.datepicker.regional[ "nl" ] );
 		
 		$('[datepicker-ajax]').each(function() {
-			$(this).datepicker("option","onChangeMonthYear")(currentDate.getFullYear(),currentDate.getMonth()+1,$(this));
-			$(this).datepicker("refresh");
+			$(this).datepicker("option","onChangeMonthYear")(currentDate.getFullYear(),currentDate.getMonth()+1,this);			
+			$(this).trigger('onChangeMonthYear');
+		});
+		
+		(function() {
+			$('#datepicker-calendar').datepicker("option","onChangeMonthYear")(currentDate.getFullYear(),currentDate.getMonth()+1,this);			
 		});
 		
 	}
