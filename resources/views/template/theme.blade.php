@@ -25,9 +25,9 @@
 	<link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
 	
 		
-	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<!--	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
 	<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
-	<link rel="stylesheet" href="//code.getmdl.io/1.2.1/material.indigo-pink.min.css"> 
+	<link rel="stylesheet" href="{{ asset('css/material.indigo-pink.min.css') }}"> 
 
 	
     <link rel="stylesheet" href="{{ captcha_layout_stylesheet_url() }}" >
@@ -190,7 +190,8 @@
     @include('sweet::alert')
     @include('admin.template.search.js')
     	
-	
+ <script type="javascript"> (function() { var css = document.createElement('link'); css.href = '//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css'; css.rel = 'stylesheet'; css.type = 'text/css'; document.getElementsByTagName('head')[0].appendChild(css); })(); </script>
+
  <script type="javascript">
 	function install (aEvent)
 	{
