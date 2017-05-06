@@ -219,149 +219,153 @@ $(document).ready(function($){
 	$("#datepicker").datepicker().datepicker("setDate", new Date());
 	
 	
-	if( $('[datepicker-ajax]').length )
+	if( $('[data-datepicker-ajax]').length > 0 )
 	{	
-		var currentDate = new Date();
-		var jsonParse = [];
-		
-		var refresh_option = function( id, available) {
-			// Disable time field when there is no date available								
-			$(id+' option').each(function(key) {								
-				if (key <= available) $(this).removeAttr("disabled");
-								else  $(this).attr("disabled","disabled");	
+			var currentDate = new Date();
+			var jsonParse = [];
+			
+			var refresh_option = function( id, available) {
+				// Disable time field when there is no date available								
+				$(id+' option').each(function(key) {								
+					if (key <= available) $(this).removeAttr("disabled");
+									else  $(this).attr("disabled","disabled");	
+				});
+				
+				$(id).val("0");
+			}
+
+			$('#time-calendar').on('change',function() {
+				 var rules = $(this).data();
+				 if(rules)
+				   refresh_option('#persons-calendar',rules.availablePersons);
 			});
 			
-			$(id).val("0");
-		}
-
-		$('#time-calendar').on('change',function() {
-			 var rules = $(this).data();
-			 if(rules)
-			   refresh_option('#persons-calendar',rules.availablePersons);
-		});
-		
-		$('#time-dropdown').on('change',function() {
-			 var rules = $(this).data();
-			 if(rules)
-			   refresh_option('#persons-dropdown',rules.availablePersons);
-		});
-		
-		$('[datepicker-ajax]').datepicker({
-			useCurrent:true,
-			firstDay: 1,
-			dateFormat:'dd MM yy',
-			onSelect: function (date, inst) {
-				var $this = $(this);
-				var lgroup_res = $this.data('group') | 0;
-				var ltimeselect = $this.data('timeselect');
-				var lpersons = $this.data('persons');
+			$('#time-dropdown').on('change',function() {
+				 var rules = $(this).data();
+				 if(rules)
+				   refresh_option('#persons-dropdown',rules.availablePersons);
+			});
+			
+			$('[data-datepicker-ajax]').each( function() {
 				
-				var dateISO = ($this.datepicker('getDate').toISOString().substring(0, 10));
-				
-				$('input[name="date"]').val( dateISO );
-				$('input[name="date_hidden"]').val( dateISO );
-				
-				$.ajax({
-					method: 'GET',
-					url: baseUrl + 'ajax/available/time',
-					data: {
-						company: $('input[name="company_id"]').val(),
-						persons: $('input[name="persons"]').val(),
-						group_res: lgroup_res,
-						date: dateISO
-					},
-					success: function (response) {
-						var jsonParselocal = JSON.parse(response); 
-						var jsonKeys = Object.keys(jsonParselocal);
-						var select_calendar = $(ltimeselect); /*$("#time-calendar")*/;
+				$(this).datepicker({
+					useCurrent:true,
+					firstDay: 1,
+					dateFormat:'dd MM yy',
+					onSelect: function (date, inst) {
+						var $this = $(this);
+						var lgroup_res = $this.data('group') | 0;
+						var ltimeselect = $this.data('timeselect');
+						var lpersons = $this.data('persons');
 						
-						select_calendar.empty();					
-						for(var time in jsonParselocal) {
-							var parse_local = jsonParselocal[time];
-							var key = Object.keys(parse_local)[0];						
-							
-							select_calendar.append($('<option></option>').val(time).html(time)).data(parse_local[key]);
-						};
-					}
-				});
-				$(this).datepicker('setDate',date);
-				
-			},
-			beforeShowDay: function (date) {
-				var $this = $(this);
-				var ltimeselect = $this.data('timeselect');
-				console.log(jsonParse[ltimeselect]);
-				if(jsonParse[ltimeselect] && jsonParse[ltimeselect].dates.length) {
-					var dates_check= jsonParse[ltimeselect].dates;
-					var found = [false];
-					dates_check.forEach(function (val,i,arr) {									
-									var val_date = Date.parse(val.date+" 00:00:00");
-									var select_date = new Date(val_date);
-									if(date.getTime() === select_date.getTime()) {
-										found=[true];
-									}
-							});
-					return found;	  
-				} else
-					return [false];
-			},
-			onChangeMonthYear : function(year,month,inst) {
-				var $this = $(this);
-				var lgroup_res = $this.data('group');
-				var ltimeselect = $this.data('timeselect');
-				var lpersons = $this.data('persons');
-				var data_lock =$this.data('lock');
-				console.log(data_lock, lpersons);
-				$('input[name="month"]').val(month);
-				$('input[name="year"]').val(year);
-				$('input[name="monthDate"]').val(month+"-"+year);
-
-				if(data_lock) {
-					$(data_lock + " > *").attr('disabled', true);
-					$(data_lock).css('opacity', '0.4');
-				}
-				
-				$.ajax({
-					url: baseUrl + 'ajax/available/reservation',
-					data: {
-						persons: $('input[name="persons"]').val(),
-						month: month ,
-						year: year,
-						company:  $('input[name="company_id"]').val()
-					},	
-					success: function(response) {
-						jsonParse[ltimeselect] = JSON.parse(response);
+						var dateISO = ($this.datepicker('getDate').toISOString().substring(0, 10));
 						
-						refresh_option(lpersons,jsonParse.availablePersons);
-						$this.datepicker('refresh');	
+						$('input[name="date"]').val( dateISO );
+						$('input[name="date_hidden"]').val( dateISO );
+						
+						$.ajax({
+							method: 'GET',
+							url: baseUrl + 'ajax/available/time',
+							data: {
+								company: $('input[name="company_id"]').val(),
+								persons: $('input[name="persons"]').val(),
+								group_res: lgroup_res,
+								date: dateISO
+							},
+							success: function (response) {
+								var jsonParselocal = JSON.parse(response); 
+								var jsonKeys = Object.keys(jsonParselocal);
+								var select_calendar = $(ltimeselect); /*$("#time-calendar")*/;
+								
+								select_calendar.empty();					
+								for(var time in jsonParselocal) {
+									var parse_local = jsonParselocal[time];
+									var key = Object.keys(parse_local)[0];						
+									
+									select_calendar.append($('<option></option>').val(time).html(time)).data(parse_local[key]);
+								};
+							}
+						});
+						$(this).datepicker('setDate',date);
+						
 					},
-					complete: function(){
-						if (data_lock) {
-							$(data_lock + " > *").removeAttr('disabled');;
-							$(data_lock).css('opacity', '');
+					beforeShowDay: function (date) {
+						var $this = $(this);
+						var ltimeselect = $this.data('timeselect');
+						
+						if(jsonParse[ltimeselect] && jsonParse[ltimeselect].dates.length) {
+							var dates_check= jsonParse[ltimeselect].dates;
+							var found = [false];
+							dates_check.forEach(function (val,i,arr) {									
+											var val_date = Date.parse(val.date+" 00:00:00");
+											var select_date = new Date(val_date);
+											if(date.getTime() === select_date.getTime()) {
+												found=[true];
+											}
+									});
+							return found;	  
+						} else
+							return [false];
+					},
+					onChangeMonthYear : function(year,month,inst) {
+						var $this = ($(inst).data('datepicker-ajax')) ? $(inst): $(this);
+						
+						var lgroup_res = $this.data('group');
+						var ltimeselect = $this.data('timeselect');
+						var lpersons = $this.data('persons');
+						var data_lock =$this.data('lock');
+						
+						$('input[name="month"]').val(month);
+						$('input[name="year"]').val(year);
+						$('input[name="monthDate"]').val(month+"-"+year);
+
+						if(data_lock) {
+							$(data_lock + " > *").attr('disabled', true);
+							$(data_lock).css('opacity', '0.4');
 						}
-						$this.datepicker('refresh');
+						
+						$.ajax({
+							url: baseUrl + 'ajax/available/reservation',
+							data: {
+								persons: $('input[name="persons"]').val(),
+								month: month ,
+								year: year,
+								company:  $('input[name="company_id"]').val()
+							},	
+							success: function(response) {
+								jsonParse[ltimeselect] = JSON.parse(response);
+								
+								refresh_option(lpersons,jsonParse.availablePersons);
+								$this.datepicker('refresh');	
+							},
+							complete: function(){
+								if (data_lock) {
+									$(data_lock + " > *").removeAttr('disabled');;
+									$(data_lock).css('opacity', '');
+								}
+								$this.datepicker('refresh');
+							}
+						});
 					}
-				});
-			}
-		}).datepicker( $.datepicker.regional[ "nl" ] );
-		
-		$('[datepicker-ajax]').each(function() {
-			$(this).datepicker("option","onChangeMonthYear")(currentDate.getFullYear(),currentDate.getMonth()+1,this);			
-			$(this).trigger('onChangeMonthYear');
-		});
-		
-		(function() {
-			$('#datepicker-calendar').datepicker("option","onChangeMonthYear")(currentDate.getFullYear(),currentDate.getMonth()+1,this);			
-		});
-		
+				}).datepicker( $.datepicker.regional[ "nl" ] );
+				
+			});
+			
+			$('[data-datepicker-ajax]').each(function() {
+				$(this).datepicker("option","onChangeMonthYear")(currentDate.getFullYear(),currentDate.getMonth()+1,$(this));
+			});
 	}
+	
+	
 }(jQuery));
 
 
 
 $(window).load(function($){
 	
+			
+
+
 	// section calling
 	$('.section-call-to-btn.call-to-home').waypoint({
 		handler: function(event, direction) {
