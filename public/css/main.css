@@ -2035,7 +2035,7 @@ header.nav li a:hover {
 .menu{
     border-bottom: 1px solid #ccccff;
     padding-bottom: 35px;
-	display: inline-block !important;
+	display: inline-block;
 	width:100%;		
 }
 .menu .left_m{
