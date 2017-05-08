@@ -4,16 +4,11 @@
 {{--*/ $metaDescription = $page->meta_description /*--}}
 
 @section('content')
-<div class="container">
-	<div class="ui breadcrumb">
-		<a href="{{ url('/') }}" class="section">Home</a>
-		<i class="right chevron icon divider"></i>
-
-		<span class="active section"><h1>{{ $page->title }}</h1></span>
+<div class="container ">
+	<div class="row">
+	 <div class="col-md-12 page-fixed">
+		{!! str_replace(array('\r\n','\n'), ' ', $page->content) !!}	
+	 </div>
 	</div>
-
-	<div class="ui divider"></div>
-
-	{!! $page->content !!}
 </div>
 @stop

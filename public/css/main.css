@@ -4026,3 +4026,31 @@ padding-top: 90px;
 	 display:inline-block;
 }
 
+.page-fixed {
+	padding-top:67px;
+	color:#363636;	
+	line-height:24px;
+	font-family: Roboto,Helvetica,Arial,sans-serif;
+	margin-bottom:55px;
+	font-weight:400;
+}
+
+.page-fixed p {
+	font-size:16px;
+}
+
+.page-fixed strong u {
+	color: #3f51b5; 
+	text-decoration:none;
+	font-size:45px;	
+	line-height:48px;
+	margin-bottom:24px;
+	
+}
+
+.page-fixed strong {
+	color: #898989; 
+	font-size:24px;
+	line-height:32px;
+	margin-top:24px;
+}

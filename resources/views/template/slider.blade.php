@@ -49,6 +49,7 @@
 	</section>
 	@endif
 	
+	@if (Route::getCurrentRoute()->uri() == '/')
 	<section id="activation">
 			<div class="container">
 				<div class="row">
@@ -84,7 +85,7 @@
 				</div>
 			</div>
 	</section>
-   
+    @endif
 
    <!--- TO CHECK!!!! ON OLD SITE --->
 	<section  style="display:none">

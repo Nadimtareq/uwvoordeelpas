@@ -52,7 +52,7 @@
 
 
 		
-<body <?php echo Route::getCurrentRoute()->uri() == '/' ? 'class="index"' : ''; ?> id="app">
+<body {{ (Route::getCurrentRoute()->uri() == '/') ? 'class="index"' : '' }} id="app">
 
     <div id="searchFull" style="display: none;">
         <?php echo Form::open(array('url' => 'search-redirect', 'class' => 'ui form', 'method' => 'post')) ?>
