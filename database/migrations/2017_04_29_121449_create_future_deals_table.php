@@ -17,6 +17,7 @@ class CreateFutureDealsTable extends Migration {
                 $table->integer('deal_id');
                 $table->integer('user_id');
                 $table->decimal('deal_price', 10, 2);
+                $table->integer('persons');
                 $table->decimal('user_discount', 10, 2);
                 $table->decimal('extra_pay', 10, 2);
                 $table->date('purchased_date');

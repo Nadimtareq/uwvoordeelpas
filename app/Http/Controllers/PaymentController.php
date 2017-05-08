@@ -352,7 +352,8 @@ class PaymentController extends Controller {
                     if ($future_deal->deal_id) {
                         $deal = DB::table('reservations_options')->where('id', '=', $future_deal->deal_id)->first();
                     }
-                    Alert::success('U heeft succesvol 2x de deal: ' . $deal->name . ' gekocht voor een prijs van &euro;' . $future_deal->deal_price . ' <br /><br /> Klik hier als u direct een reservering wilt maken. <br /><br />' . '<span class=\'addthis_sharing_toolbox\'></span>', 'Bedankt ' . $oUser->name
+                    $persons = $future_deal->persons;
+                    Alert::success('U heeft succesvol ' . $persons . 'x de deal: ' . $deal->name . ' gekocht voor een prijs van &euro;' . $future_deal->deal_price . ' <br /><br /> Klik hier als u direct een reservering wilt maken. <br /><br />' . '<span class=\'addthis_sharing_toolbox\'></span>', 'Bedankt ' . $oUser->name
                     )->html()->persistent('Sluiten');
                     $company = Company::find($deal->company_id);
                     return Redirect::to('restaurant/' . $company->slug);
