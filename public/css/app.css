@@ -535,7 +535,7 @@ footer .footer .bottom { margin-top: 0; }
 #restaurantPage .ui.breadcrumb { text-align: center; line-height: 30px; }
 }
  @media (max-width: 620px) {
-.slider { display: none; }
+/*.slider { display: none; }*/
 body.index .slider { display: block; }
 .content .companies .company .text { margin: 0 2% !important; width: 96%; }
 .owl-wrapper { width: 70%; }
