@@ -353,7 +353,8 @@ class PaymentController extends Controller {
                         $deal = DB::table('reservations_options')->where('id', '=', $future_deal->deal_id)->first();
                     }
                     $persons = $future_deal->persons;
-                    Alert::success('U heeft succesvol ' . $persons . 'x de deal: ' . $deal->name . ' gekocht voor een prijs van &euro;' . $future_deal->deal_price . ' <br /><br /> Klik hier als u direct een reservering wilt maken. <br /><br />' . '<span class=\'addthis_sharing_toolbox\'></span>', 'Bedankt ' . $oUser->name
+                    $link = '<a href = "'. URL::to('account/reservations') . '" target="_blank">Klik hier</a>';
+                    Alert::success('U heeft succesvol ' . $persons . 'x de deal: ' . $deal->name . ' gekocht voor een prijs van &euro;' . $future_deal->deal_price . ' <br /><br /> '.$link.' als u direct een reservering wilt maken. <br /><br />' . '<span class=\'addthis_sharing_toolbox\'></span>', 'Bedankt ' . $oUser->name
                     )->html()->persistent('Sluiten');
                     $company = Company::find($deal->company_id);
                     return Redirect::to('restaurant/' . $company->slug);

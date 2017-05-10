@@ -253,7 +253,8 @@ $(document).ready(function($){
 					firstDay: 1,
 					dateFormat:'dd MM yy',
 					onSelect: function (date, inst) {
-						var $this = $(this);
+						var $this = ($(inst).data('datepicker-ajax')) ? $(inst): $(this);
+
 						var lgroup_res = $this.data('group') | 0;
 						var ltimeselect = $this.data('timeselect');
 						var lpersons = $this.data('persons');
@@ -334,6 +335,13 @@ $(document).ready(function($){
 							},	
 							success: function(response) {
 								jsonParse[ltimeselect] = JSON.parse(response);
+								if(jsonParse[ltimeselect].dates[0])
+								{
+									var newDate = new Date(jsonParse[ltimeselect].dates[0].date+" 00:00:00");
+									$this.datepicker("setDate",newDate);
+									$this.datepicker("option","onSelect")(newDate, $this);
+								}								
+
 								
 								refresh_option(lpersons,jsonParse.availablePersons);
 								$this.datepicker('refresh');	
@@ -353,6 +361,7 @@ $(document).ready(function($){
 			
 			$('[data-datepicker-ajax]').each(function() {
 				$(this).datepicker("option","onChangeMonthYear")(currentDate.getFullYear(),currentDate.getMonth()+1,$(this));
+
 			});
 	}
 	
