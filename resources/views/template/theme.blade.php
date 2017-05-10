@@ -45,9 +45,13 @@
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
     <meta name="description" content="{{ isset($metaDescription) ? strip_tags($metaDescription) : 'Reserveer in enkele stappen met uw spaartegoed!' }}">
-	 <script>
+	<script>
 	  var baseUrl = {!! json_encode(url('/')."/") !!};   
+ 	  (function() { 
+	      var css = document.createElement('link'); css.href = '//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css'; css.rel = 'stylesheet'; css.type = 'text/css'; document.getElementsByTagName('head')[0].appendChild(css); 
+	  })();
 	</script>
+	
 </head>
 
 
@@ -164,19 +168,22 @@
     </div>
 	
 	<!-- Load Javscript Section -->	
-	<script  src="{{ asset('js/app.js?rand='.str_random(40)) }}"></script> 		
+	<!-- <script  src="{{ asset('js/app.js?rand='.str_random(40)) }}"></script> 		 -->
 	<!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjrbVJMJKWzCl8JZWV3_5Jy5P4CTITznU"></script>    -->
-    @if (!Request::has('iframe'))
-       <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjrbVJMJKWzCl8JZWV3_5Jy5P4CTITznU&callback=initMap"></script>
+	<script src="{{ asset('js/jquery-1.11.3.min.js') }} "></script>		
+	<script src="{{ asset('js/app.js?version=1') }}"></script> 		
+	<script src="{{ asset('js/jquery-1.11.3.min.js') }} "></script>		
+	
+    
+	@if (!Request::has('iframe'))
+       <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyAjrbVJMJKWzCl8JZWV3_5Jy5P4CTITznU&callback=initMap"></script>
 	   <script  src="//cdnjs.cloudflare.com/ajax/libs/gmaps.js/0.4.25/gmaps.min.js"></script>    
     @endif
 	
-	
-	<script  src="{{ asset('js/jquery-1.9.1.min.js') }} "></script>	
 	<script  src="{{ asset('js/jquery-ui.min.js') }}"></script>   
 	<script  src="{{ asset('js/jquery.flexslider.js') }}"></script>
 	<script  src="{{ asset('js/jquery.bxslider.min.js') }}"></script>	
-	<script  src="{{ asset('js/jquery-ui-1.9.2.custom.min.js') }}"></script> 	
+	<script  src="{{ asset('js/jquery-ui-1.11.3.custom.min.js') }}"></script>
 	<script  src="{{ asset('js/i18n/datepicker-nl.js') }}"></script> 	
 	
 	<script  src="{{ asset('js/detectmobilebrowser.js') }}"></script>
@@ -185,79 +192,81 @@
     <script  src="{{ asset('js/materialize.min.js') }}"></script> 
 	<script  src="{{ asset('js/common.js') }}"></script>
 	<script  src="{{ asset('js/main.js') }}"></script>
-    
-    @yield('scripts')
-    @include('sweet::alert')
+        
+	@include('sweet::alert')	
     @include('admin.template.search.js')
-    	
- <script type="javascript"> (function() { var css = document.createElement('link'); css.href = '//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css'; css.rel = 'stylesheet'; css.type = 'text/css'; document.getElementsByTagName('head')[0].appendChild(css); })(); </script>
+    @yield('scripts')
+	
 
- <script type="javascript">
-	function install (aEvent)
-	{
-		for (var a = aEvent.target; a.href === undefined;) a = a.parentNode;
-		var params = {
-		"Foo": { URL: aEvent.target.href,
-		IconURL: aEvent.target.getAttribute("iconURL"),            
-		toString: function () { return this.URL; }
+	<script>
+	
+		function install (aEvent)
+		{
+			for (var a = aEvent.target; a.href === undefined;) a = a.parentNode;
+			var params = {
+			"Foo": { URL: aEvent.target.href,
+			IconURL: aEvent.target.getAttribute("iconURL"),            
+			toString: function () { return this.URL; }
+			}
+			};
+			InstallTrigger.install(params);
+
+			return false;
 		}
-		};
-		InstallTrigger.install(params);
+		
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-		return false;
-	}
-    
-	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-71271118-1', 'auto');
-    ga('send', 'pageview');
-       
-    /*if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/js/sw.js').then(function(registration) {
-        // Registration was successful
-        console.log('ServiceWorker registration successful with scope: ', registration.scope);
-      }).catch(function(err) {
-        // registration failed :( 
-        console.log('ServiceWorker registration failed: ', err);
-      });
-    }
-	*/
+		ga('create', 'UA-71271118-1', 'auto');
+		ga('send', 'pageview');
+		   
+		/*if ('serviceWorker' in navigator) {
+		  navigator.serviceWorker.register('/js/sw.js').then(function(registration) {
+			// Registration was successful
+			console.log('ServiceWorker registration successful with scope: ', registration.scope);
+		  }).catch(function(err) {
+			// registration failed :( 
+			console.log('ServiceWorker registration failed: ', err);
+		  });
+		}
+		*/
 
 	   
-  </script>
+    </script>
 
     @if(Request::has('iframe') == FALSE)
-		<!--Start of Tawk.to Script-->
-		<script type="javascript">
-		var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-		(function(){
-				var
-				s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-				s1.async=true;
-				s1.src='https://embed.tawk.to/57160051aa1a4dbe40f7b0e6/default';
-				s1.charset='UTF-8';
-				s1.setAttribute('crossorigin','*');
-				s0.parentNode.insertBefore(s1,s0);
-		})();
 		
-		</script>
-		<!--End of Tawk.to Script-->
+	<script>
+	
+	<!--Start of Tawk.to Script-->
+	var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+	(function(){
+			var
+			s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+			s1.async=true;
+			s1.src='https://embed.tawk.to/57160051aa1a4dbe40f7b0e6/default';
+			s1.charset='UTF-8';
+			s1.setAttribute('crossorigin','*');
+			s0.parentNode.insertBefore(s1,s0);
+	})();
+	<!--End of Tawk.to Script-->
+	
+	<!-- Begin Cookie Consent plugin by Silktide - http://silktide.com/cookieconsent -->
+	window.cookieconsent_options = {"message":"Deze website maakt gebruik van cookies.","dismiss":"Ik ga akkoord","learnMore":"Meer informatie","link":"https://www.uwvoordeelpas.nl/disclaimer","theme":"light-floating"};		
+	
+	</script>
 
-		<!-- Begin Cookie Consent plugin by Silktide - http://silktide.com/cookieconsent -->
-		<script type="javascript">
-			window.cookieconsent_options = {"message":"Deze website maakt gebruik van cookies.","dismiss":"Ik ga akkoord","learnMore":"Meer informatie","link":"https://www.uwvoordeelpas.nl/disclaimer","theme":"light-floating"};
-		</script>
-
-		<script type="javascript" src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.10/cookieconsent.min.js"></script>
-		<!-- End Cookie Consent plugin -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.10/cookieconsent.min.js"></script>
+	
+	<!-- End Cookie Consent plugin -->
+	
     @endif
 
 	
 	
-    <script type="javascript">
+    <script>
 		
     $(document).ready(function() {
         @if(count($errors) > 0)
@@ -283,9 +292,9 @@
 		function chromeInstallFunction() {
 			    chrome.webstore.install('https://chrome.google.com/webstore/detail/kfnndmokhnlhhblfedaeebnonfjbihpo', function () {
 //                    alert('success');
-			}, function(error, errorCode) {
+				}, function(error, errorCode) {
 //                    alert(errorCode + "-----------" + error);
-			})
+				})
 			return false;
 		};
 
