@@ -4026,31 +4026,49 @@ padding-top: 90px;
 	 display:inline-block;
 }
 
+
 .page-fixed {
-	padding-top:67px;
+	padding-top:90px;
 	color:#363636;	
 	line-height:24px;
-	font-family: Roboto,Helvetica,Arial,sans-serif;
+	font-family: "Roboto",Helvetica,Arial,sans-serif;
 	margin-bottom:55px;
+	font-weight:400;
+	vertical-align: baseline;
+}
+
+.page-fixed h5 {
+	color:#363636;
+	font-size:24px;
 	font-weight:400;
 }
 
-.page-fixed p {
-	font-size:16px;
-}
-
-.page-fixed strong u {
-	color: #3f51b5; 
-	text-decoration:none;
-	font-size:45px;	
-	line-height:48px;
-	margin-bottom:24px;
-	
-}
-
-.page-fixed strong {
-	color: #898989; 
+.page-fixed h4 {
+	color:#898989 !important;
 	font-size:24px;
 	line-height:32px;
-	margin-top:24px;
+}
+
+.page-fixed h3 {
+	color: #3f51b5; 
+	text-decoration:none;
+	font-size:40px;	
+	line-height:40px;
+	margin-bottom:24px;	
+}
+
+.page-fixed a:hover {
+	color:#898989;
+}
+.page-fixed a {
+	color:#283593;
+}
+
+.page-fixed p {
+	color: #363636; 
+	font-size:16px;
+	font-weight:400;
+	line-height:24px;
+	letter-spacing:.04em;
+	margin:24px 0 16px;
 }
