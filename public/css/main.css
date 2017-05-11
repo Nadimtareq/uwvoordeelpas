@@ -1714,7 +1714,7 @@ header.nav li a:hover {
         margin-left: 4px;
     }
     .header .center-menu li:nth-child(2){
-        margin-left: 43px;
+        margin-left: 33px;
     }
     .header .center-menu li:last-child{
         margin-left: 4px;
@@ -4071,4 +4071,8 @@ padding-top: 90px;
 	line-height:24px;
 	letter-spacing:.04em;
 	margin:24px 0 16px;
+}
+
+.float-right {
+	float:right;
 }

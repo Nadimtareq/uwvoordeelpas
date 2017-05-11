@@ -60,11 +60,17 @@
 													  @for ($i = 1; $i <= 10; $i++)
 														<option  value="{{ $i }}" data-value="{{ $i }}">{{ $i }} {{ $i == 1 ? 'persoon' : 'personen' }}</option>
 													  @endfor
-												</select>
+												</select>												
 											</li>
-
 										</ul>
 										<button class="zoek" id ="searchDesktop" type="submit">zoek</button>
+										@if($userAuth)
+											<ul class="inline-menu side-nav">
+												<li data-content="Uitloggen"><a href="{{ url('logout') }}"><i class="sign out icon"></i>Signout</a></li>
+											</ul>
+										@endif 
+										
+										
 									</form>
 								</div>
 								 
