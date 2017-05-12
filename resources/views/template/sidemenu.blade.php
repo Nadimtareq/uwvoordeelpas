@@ -42,4 +42,8 @@
 			<li><a href="{{ url('hoe-werkt-het') }}"><i class="material-icons">description</i> Hoe werkt het?</a></li>
 			<li><a href="{{ url('algemene-voorwaarden') }}"><i class="material-icons">book</i> Voorwaarden</a></li>
 		@endif
+		
+		
 </ul>
+
+<a href="#" data-activates="slide-out" class="button-collapse2"><i class="material-icons material-icons2">menu</i></a>

@@ -46,9 +46,7 @@
 
 									</ul>
 
-									@include('template.sidemenu')
-									<a href="#" data-activates="slide-out" class="button-collapse2"><i class="material-icons material-icons2">menu</i></a>
-
+																	
 									<ul id="dropdown1" class="inline-menu submenu-ul dropdown-content">
 										 <li><a href="{{ url('setlang/nl?redirect='.Request::url()) }}" data-value="nl" class="item"><i class="nl flag"></i> NL</a></li>
                                          <li><a href="{{ url('setlang/en?redirect='.Request::url()) }}" data-value="en" class="item"><i class="gb flag"></i> EN</a></li>
@@ -56,7 +54,8 @@
                                          <li><a href="{{ url('setlang/de?redirect='.Request::url()) }}" data-value="de" class="item"><i class="de flag"></i> DE</a></li>
                                          <li><a href="{{ url('setlang/fr?redirect='.Request::url()) }}" data-value="fr" class="item"><i class="fr flag"></i> FR</a></li>
 									</ul>
-
+									
+									@include('template.sidemenu')
 								</div>
 							</nav>
 						</div>

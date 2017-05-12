@@ -70,6 +70,8 @@
 											</ul>
 										@endif 
 										
+										@include('template.sidemenu')
+										
 										
 									</form>
 								</div>
