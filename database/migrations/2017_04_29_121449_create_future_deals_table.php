@@ -18,11 +18,13 @@ class CreateFutureDealsTable extends Migration {
                 $table->integer('user_id');
                 $table->decimal('deal_price', 10, 2);
                 $table->integer('persons');
+                $table->integer('persons_reserved');
+                $table->integer('persons_remain');
                 $table->decimal('user_discount', 10, 2);
                 $table->decimal('extra_pay', 10, 2);
                 $table->date('purchased_date');
                 $table->date('expired_at');
-                $table->enum('status', ['pending', 'purchased', 'reserved']);
+                $table->enum('status', ['pending', 'purchased', 'partially_reserved', 'full_reserved']);
                 $table->timestamps();
             });
         }

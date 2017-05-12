@@ -18,7 +18,7 @@
                                     <h1 class="home-title">Activeer de spaarhulp en ontvang direct €5.- </h1>
                                     <h2 class="home-subtitle">Spaar nu automatisch bij wel 2000+ webshops. <br>
                                         Deze betalen u tot wel 10% dinertegoed bij iedere aankoop!</h2>
-                                    <button data-browser="{{$browser['name']}}" id="install-button" class="button_action">Ja ik wil ook sparen!</button>
+                                    <button data-browser="{{$browser['name']}}" class="install-button-ext button_action">Ja ik wil ook sparen!</button>
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -61,7 +61,7 @@
                         <h1>Activeer de spaarhulp en ontvang direct €5.- </h1>
                         <h4>Spaar nu automatisch bij wel 2000+ webshops. <br> Deze betalen u tot wel 10% dinertegoed bij iedere aankoop!</h4>
                         <br>
-                        <button id="install-button" data-browser="{{$browser['name']}}" class="button_action">Ja ik wil ook sparen!</button>
+                        <button data-browser="{{$browser['name']}}" class="install-button-ext button_action">Ja ik wil ook sparen!</button>
                     </div>
                 </div>
             </div>
@@ -371,7 +371,7 @@
 @push('inner_scripts')
 <script type="text/javascript">
     $(function () {
-        $('#install-button').click(function (e) {            
+        $('.install-button-ext').click(function (e) {                        
             $(".sweet-overlay").show().delay(4000).fadeOut();            
             var browser = $(this).attr('data-browser');
             if (browser == 'Firefox') {

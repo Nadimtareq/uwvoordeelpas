@@ -6,7 +6,7 @@
         <script>
 	  var baseUrl = {!! json_encode(url('/')."/") !!};             
 	</script>
-        <script type="text/javascript" src="{{ asset('js/app.js?rand='.str_random(40)) }}"></script>
+        <script type="text/javascript" src="{{ asset('js/jquery-1.11.3.min.js?rand='.str_random(40)) }}"></script>
 
         <!--[if lt IE 9]>
           <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>

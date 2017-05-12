@@ -470,11 +470,12 @@ class RestaurantController extends Controller {
                     $user->newsletter = 1;
                 }
                 $user->save();
-
+                
                 $future_deal = new FutureDeal();
                 $future_deal->deal_id = $deal_id;
                 $future_deal->user_id = $user->id;
                 $future_deal->persons = $request->input('persons');
+                $future_deal->persons_remain = $request->input('persons');
                 $future_deal->deal_price = $deal_saldo;
                 $future_deal->user_discount = $user_saldo;
                 $future_deal->extra_pay = $rest_amount;
@@ -486,8 +487,8 @@ class RestaurantController extends Controller {
                     $future_deal->status = "purchased";
                 }
                 $future_deal->save();
-
-                if (!$enough_balance && $rest_amount) {
+                
+                if (!$enough_balance && $rest_amount) {                    
                     return view('pages/discount/extra-pay', array(
                         'amount' => $rest_amount,
                         'future_deal_id' => $future_deal->id
