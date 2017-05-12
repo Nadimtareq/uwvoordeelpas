@@ -130,8 +130,10 @@
     <!-- Main Content -->
     <div class="pusher">
         @if (!Request::has('iframe'))
+			
 			@if(isset($search_header) && $search_header)
 				@include('template.header-search')
+				@include('template.slider')
 			@else
 			    @include('template.header')				
 	            <section>
