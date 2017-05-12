@@ -66,37 +66,56 @@ while ($st->lte($dt)) {
 				
 			<div class="main_gallery">
 					<div class="left_side">
-						<div class="bx-wrapper" style="max-width: 100%; margin: 0px auto;"><div class="bx-viewport" style="width: 100%; overflow: hidden; position: relative; height: 314px;"><div class="bx-wrapper" style="max-width: 100%; margin: 0px auto;"><div class="bx-viewport" style="width: 100%; overflow: hidden; position: relative; height: 314px;"><ul id="bxslider" style="width: 615%; position: relative; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
-							@if($media != '[]')
-								@foreach($media as $mediaItem)                                                                                                                                
-								 @if($FileHelper::is_url_exist(public_path($mediaItem->disk. DIRECTORY_SEPARATOR . $mediaItem->id . DIRECTORY_SEPARATOR . $mediaItem->file_name)))
-									<li style="float: left; list-style: outside none none; position: relative; width: 674px;">								
-									<a href="{{ url($mediaItem->getUrl()) }}" data-lightbox="roadtrip">
-										<img class="ui image" src="{{ url($mediaItem->getUrl()) }}">
-									</a>
-								 @else
-  								  <li style="float: left; list-style: outside none none; position: relative; width: 674px;">
-								    <img src="{{ asset('images/s.jpg') }}" alt="s">
-							       </li>
-								 @endif 
-								 
+						<div class="bx-wrapper" style="max-width: 100%; margin: 0px auto;">
+							<div class="bx-viewport" style="width: 100%; overflow: hidden; position: relative; height: 314px;">
+								<div class="bx-wrapper" style="max-width: 100%; margin: 0px auto;">
+									<div class="bx-viewport" style="width: 100%; overflow: hidden; position: relative; height: 314px;">
+										<ul id="bxslider" style="width: 615%; position: relative; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
+											@if($media != '[]')
+												@foreach($media as $mediaItem)                                                                                                                                
+												 @if($FileHelper::is_url_exist(public_path($mediaItem->disk. DIRECTORY_SEPARATOR . $mediaItem->id . DIRECTORY_SEPARATOR . $mediaItem->file_name)))
+													<li style="float: left; list-style: outside none none; position: relative; width: 674px;">								
+													<a href="{{ url($mediaItem->getUrl()) }}" data-lightbox="roadtrip">
+														<img class="ui image" src="{{ url($mediaItem->getUrl()) }}">
+													</a>
+												 @else
+												  <li style="float: left; list-style: outside none none; position: relative; width: 674px;">
+													<img src="{{ asset('images/s.jpg') }}" alt="s">
+												 @endif 
+												 
 
-								{!! $discountHelper->replaceKeys(
-										$company, 
-										$company->days, 
-										(isset($contentBlock[44]) ? $contentBlock[44] : ''),
-										'ribbon-wrapper thumb-discount-label'
-									) 
-								!!}
-								</li>
-								@endforeach
-							@else 
-								<li style="float: left; list-style: outside none none; position: relative; width: 674px;">
-								  <img src="{{ asset('images/s.jpg') }}" alt="s">
-							    </li>
-							@endif
+												{!! $discountHelper->replaceKeys(
+														$company, 
+														$company->days, 
+														(isset($contentBlock[44]) ? $contentBlock[44] : ''),
+														'ribbon-wrapper thumb-discount-label'
+													) 
+												!!}
+												</li>
+												@endforeach
+											@else 
+												<li style="float: left; list-style: outside none none; position: relative; width: 674px;">
+												  <img src="{{ asset('images/s.jpg') }}" alt="s">
+												</li>
+											@endif
 							
-						</ul></div><div class="bx-controls bx-has-controls-direction"><div class="bx-controls-direction"><a class="bx-prev disabled" href=""></a><a class="bx-next" href=""></a></div></div></div></div><div class="bx-controls bx-has-controls-direction"><div class="bx-controls-direction"><a class="bx-prev disabled" href=""></a><a class="bx-next" href=""></a></div></div></div>
+										</ul>
+									</div>
+									<div class="bx-controls bx-has-controls-direction">
+										<div class="bx-controls-direction">
+											<a class="bx-prev disabled" href=""></a>
+											<a class="bx-next" href=""></a>
+										</div>
+									</div>
+								 </div>
+							</div>
+							<div class="bx-controls bx-has-controls-direction">
+								<div class="bx-controls-direction">
+									<a class="bx-prev disabled" href=""></a>
+									<a class="bx-next" href=""></a>
+								</div>
+							</div>
+					   </div>
 					</div>
 					<!-- The thumbnails -->
 					<div class="r_side">
@@ -118,7 +137,7 @@ while ($st->lte($dt)) {
 						@endif
 						</ul></div><div class="bx-controls bx-has-controls-direction"><div class="bx-controls-direction"><a class="bx-prev disabled" href=""><span></span></a><a class="bx-next disabled" href=""><span></span></a></div></div></div>
 					</div>
-				</div>
+			</div>
 				
 				
 			<div class="tabs-all">
@@ -176,11 +195,10 @@ while ($st->lte($dt)) {
 									<li><a href="#">8</a></li>
 								</ul>
 								<a href="#" class="next2">&gt;</a> -->
-							</div>
 							@endforeach
 							@endif
-						</div>
-						
+						 </div>							
+					
 											
 						
 						<div id="t3" style="display: none;">
@@ -499,6 +517,10 @@ while ($st->lte($dt)) {
 		</div>
 	</div>
 	<div class="clear"></div>
-	<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5751e9a264890504"></script>
+	
 
+@stop
+
+@section('scripts')
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5751e9a264890504"></script>
 @stop
