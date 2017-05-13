@@ -209,6 +209,7 @@ Route::group(array('middleware' => array('auth', 'userInfo')), function () {
         Route::get('reservations', 'AccountController@reservations');
         Route::get('reservations/{companySlug}/user/{userId}', 'AccountController@reservationsByCompany');
         Route::get('reservations/saldo/{userId?}', 'AccountController@saldo');
+        Route::get('future-deals', 'AccountController@futuredeals');
 
         ## Post routes - Account ##
         Route::post('delete', 'AccountController@deleteAccount');

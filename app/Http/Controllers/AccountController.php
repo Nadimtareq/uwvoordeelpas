@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Alert;
@@ -16,6 +17,7 @@ use App\Models\Reservation;
 use App\Models\Guest;
 use App\Models\RoleUser;
 use App\Models\FavoriteCompany;
+use App\Models\FutureDeal;
 use App\Models\MailTemplate;
 use App\Models\Transaction;
 use App\User;
@@ -31,11 +33,9 @@ use DateTime;
 use Mail;
 use Redirect;
 
-class AccountController extends Controller 
-{
+class AccountController extends Controller {
 
-    public function __construct(Request $request)
-    {
+    public function __construct(Request $request) {
         setlocale(LC_ALL, 'nl_NL.ISO8859-1');
         setlocale(LC_TIME, 'nl_NL.ISO8859-1');
         setlocale(LC_TIME, 'Dutch');
@@ -49,13 +49,11 @@ class AccountController extends Controller
         unset($this->queryString['limit']);
     }
 
-    public function settings() 
-    {
+    public function settings() {
         return view('account/settings');
     }
 
-    public function settingsAction(AccountUpdateRequest $request) 
-    {
+    public function settingsAction(AccountUpdateRequest $request) {
         $this->validate($request, []);
 
         $user = Sentinel::getUser();
@@ -76,7 +74,7 @@ class AccountController extends Controller
         if ($request->input('email') != Sentinel::getUser()->email) {
             $code = str_random(10);
             $user->new_email = $request->input('email');
-            $user->new_email_code  = $code;
+            $user->new_email_code = $code;
 
             Mail::send('emails.reset-email', ['user' => $user, 'code' => $code], function($message) use ($user, $request) {
                 $message->to($request->input('email'))->subject('Nieuw e-mailadres');
@@ -84,73 +82,56 @@ class AccountController extends Controller
 
             $request->session()->flash('success_email_message', 'Er is een mail gestuurd naar uw nieuwe e-mailadres om uw e-mailadres te activeren.');
         }
-                
+
         if ($request->has('password')) {
             Sentinel::update($user, array('password' => $request->input('password')));
         }
-                        
+
         $user->save();
-        
+
         Alert::success('Uw gegevens zijn succesvol gewijzigd.')->persistent('Sluiten');
 
         return Redirect::to('account');
     }
 
-    public function barcodes() 
-    {
+    public function barcodes() {
         $data = Barcode::select(
-            'barcodes.id',
-            'barcodes_users.user_id',
-            'barcodes.expire_date',
-            'barcodes.code',
-            'barcodes_users.is_active',
-            'barcodes_users.created_at as activatedOn',
-            'barcodes.created_at',
-            'users.name',
-            'users.phone',
-            'users.email',
-            'companies.name as companyName'
-        )
-            ->leftJoin('barcodes_users', 'barcodes.id', '=', 'barcodes_users.barcode_id')
-            ->leftJoin('users', 'barcodes_users.user_id', '=', 'users.id')
-            ->leftJoin('companies', 'companies.id', '=', 'barcodes.company_id')
-            ->where('barcodes_users.user_id', Sentinel::getUser()->id)
-            ->get()
+                        'barcodes.id', 'barcodes_users.user_id', 'barcodes.expire_date', 'barcodes.code', 'barcodes_users.is_active', 'barcodes_users.created_at as activatedOn', 'barcodes.created_at', 'users.name', 'users.phone', 'users.email', 'companies.name as companyName'
+                )
+                ->leftJoin('barcodes_users', 'barcodes.id', '=', 'barcodes_users.barcode_id')
+                ->leftJoin('users', 'barcodes_users.user_id', '=', 'users.id')
+                ->leftJoin('companies', 'companies.id', '=', 'barcodes.company_id')
+                ->where('barcodes_users.user_id', Sentinel::getUser()->id)
+                ->get()
         ;
 
-        return view('account/barcodes', [         
-        	'data' => $data
-        ]);
-    }
-
-    public function reviews() 
-    {
-        $data = Review::select(
-            'reviews.*',
-            'companies.name as companySlug',
-            'companies.name as companyName'
-        )
-            ->where('reviews.user_id', Sentinel::getUser()->id)
-            ->leftJoin('companies', 'companies.id', '=', 'reviews.company_id')
-            ->get()
-        ;
-
-        return view('account/reviews', [         
+        return view('account/barcodes', [
             'data' => $data
         ]);
     }
 
-    public function reviewsUpdate($id) 
-    {
+    public function reviews() {
         $data = Review::select(
-            'reviews.*',
-            'companies.name as companySlug',
-            'companies.name as companyName'
-        )
-            ->where('reviews.user_id', Sentinel::getUser()->id)
-            ->where('reviews.id', $id)
-            ->leftJoin('companies', 'companies.id', '=', 'reviews.company_id')
-            ->first()
+                        'reviews.*', 'companies.name as companySlug', 'companies.name as companyName'
+                )
+                ->where('reviews.user_id', Sentinel::getUser()->id)
+                ->leftJoin('companies', 'companies.id', '=', 'reviews.company_id')
+                ->get()
+        ;
+
+        return view('account/reviews', [
+            'data' => $data
+        ]);
+    }
+
+    public function reviewsUpdate($id) {
+        $data = Review::select(
+                        'reviews.*', 'companies.name as companySlug', 'companies.name as companyName'
+                )
+                ->where('reviews.user_id', Sentinel::getUser()->id)
+                ->where('reviews.id', $id)
+                ->leftJoin('companies', 'companies.id', '=', 'reviews.company_id')
+                ->first()
         ;
 
         if ($data->is_approved == 1) {
@@ -159,7 +140,7 @@ class AccountController extends Controller
         }
 
         if (count($data) == 1) {
-            return view('account/reviews/update', [         
+            return view('account/reviews/update', [
                 'data' => $data
             ]);
         } else {
@@ -167,19 +148,16 @@ class AccountController extends Controller
         }
     }
 
-    public function reviewsUpdateAction(ReviewRequest $request, $id) 
-    {
+    public function reviewsUpdateAction(ReviewRequest $request, $id) {
         $this->validate($request, []);
 
         $data = Review::select(
-            'reviews.*',
-            'companies.slug as companySlug',
-            'companies.name as companyName'
-        )
-            ->leftJoin('companies', 'companies.id', '=', 'reviews.company_id')
-            ->where('reviews.user_id', Sentinel::getUser()->id)
-            ->where('reviews.id', $id)
-            ->first()
+                        'reviews.*', 'companies.slug as companySlug', 'companies.name as companyName'
+                )
+                ->leftJoin('companies', 'companies.id', '=', 'reviews.company_id')
+                ->where('reviews.user_id', Sentinel::getUser()->id)
+                ->where('reviews.id', $id)
+                ->first()
         ;
 
         if ($data->is_approved == 1) {
@@ -193,37 +171,30 @@ class AccountController extends Controller
             $data->service = $request->input('service');
             $data->decor = $request->input('decor');
             $data->save();
-            
-            Alert::success('Uw recensie is succesvol gewijzigd')->persistent('Sluiten');
-                
-            return Redirect::to('restaurant/'.$data->companySlug.'#reviews');
 
+            Alert::success('Uw recensie is succesvol gewijzigd')->persistent('Sluiten');
+
+            return Redirect::to('restaurant/' . $data->companySlug . '#reviews');
         } else {
             App::abort(404);
         }
     }
 
-    public function reviewsDeleteAction(Request $request) 
-    {
-       foreach($request->get('id') as $key => $value) {
+    public function reviewsDeleteAction(Request $request) {
+        foreach ($request->get('id') as $key => $value) {
             $delete = Review::where('user_id', Sentinel::getUser()->id)->find($value);
             $delete->delete();
-       }
+        }
 
-       return Redirect::to('account/reviews');
+        return Redirect::to('account/reviews');
     }
 
-    public function reservationsByCompany($companySlug, $userId, Request $request) 
-    {
+    public function reservationsByCompany($companySlug, $userId, Request $request) {
         $companyOwner = Company::isCompanyUserBySlug($companySlug, Sentinel::getUser()->id);
-       
+
         if ($companyOwner['is_owner'] == TRUE || Sentinel::inRole('admin')) {
-        	$data = Reservation::select(
-                    'companies.name as company', 
-                    'companies.slug', 
-                    'companies.discount', 
-                    'reservations.*',
-                    DB::raw('(
+            $data = Reservation::select(
+                            'companies.name as company', 'companies.slug', 'companies.discount', 'reservations.*', DB::raw('(
                         SELECT
                             count(barcodes_users.id)
                         FROM
@@ -234,14 +205,14 @@ class AccountController extends Controller
                         AND
                             (barcodes.expire_date is null
                         AND 
-                            date(date_add(barcodes_users.created_at, interval 1 year)) >= "'.date('Y-m-d').'"
+                            date(date_add(barcodes_users.created_at, interval 1 year)) >= "' . date('Y-m-d') . '"
                         OR
-                            barcodes.expire_date >= "'.date('Y-m-d').'")
+                            barcodes.expire_date >= "' . date('Y-m-d') . '")
                     ) as barcode')
-                )
-                ->leftJoin('companies', 'reservations.company_id', '=', 'companies.id')
-                ->where('companies.slug', $companySlug)
-                ->where('reservations.user_id', $userId)
+                    )
+                    ->leftJoin('companies', 'reservations.company_id', '=', 'companies.id')
+                    ->where('companies.slug', $companySlug)
+                    ->where('reservations.user_id', $userId)
             ;
 
             if ($request->has('sort') && $request->has('order')) {
@@ -254,150 +225,121 @@ class AccountController extends Controller
 
             $data = $data->paginate(15);
 
-            return view('account/reservations', [         
+            return view('account/reservations', [
                 'reservationDate' => $data,
                 'paginationQueryString' => $request->query()
             ]);
-
         } else {
             User::getRoleErrorPopup();
             return Redirect::to('/');
         }
     }
 
-    public function saldo(Request $request, $userId = null) 
-    {
+    public function saldo(Request $request, $userId = null) {
         $payments = Payment::select(
-            DB::raw('"" AS restaurant_is_paid'),
-            'users.name AS userName',
-            'payments.created_at as date',
-            'payments.created_at as time',
-            'payments.status AS name',
-            'payments.amount AS amount',
-            'payments.status AS status',
-            DB::raw('IF(payments.type = "voordeelpas", "Voordeelpas gekocht", "Opwaardering") as type'),
-            DB::raw('"UwVoordeelpas" as company'),
-            DB::raw('date(date_add(payments.created_at, interval 90 day)) as expired_date')
-        )
-            ->leftJoin('users', 'users.id', '=', 'payments.user_id')
-            ->whereIn('payments.type', array('mollie', 'voordeelpas'))
-            ->where('payments.user_id', Sentinel::inRole('admin') && $userId != null ? $userId : Sentinel::getUser()->id)
+                        DB::raw('"" AS restaurant_is_paid'), 'users.name AS userName', 'payments.created_at as date', 'payments.created_at as time', 'payments.status AS name', 'payments.amount AS amount', 'payments.status AS status', DB::raw('IF(payments.type = "voordeelpas", "Voordeelpas gekocht", "Opwaardering") as type'), DB::raw('"UwVoordeelpas" as company'), DB::raw('date(date_add(payments.created_at, interval 90 day)) as expired_date')
+                )
+                ->leftJoin('users', 'users.id', '=', 'payments.user_id')
+                ->whereIn('payments.type', array('mollie', 'voordeelpas'))
+                ->where('payments.user_id', Sentinel::inRole('admin') && $userId != null ? $userId : Sentinel::getUser()->id)
         ;
 
-         if ($request->has('month') && $request->has('year')) {
+        if ($request->has('month') && $request->has('year')) {
             $payments = $payments
-                ->whereMonth('payments.created_at', '=', $request->input('month'))
-                ->whereYear('payments.created_at', '=', $request->input('year'))
+                    ->whereMonth('payments.created_at', '=', $request->input('month'))
+                    ->whereYear('payments.created_at', '=', $request->input('year'))
             ;
         }
 
         if ($request->has('sort') && $request->has('order') && $request->input('type') == 'payments') {
             $payments = $payments->orderBy($request->input('sort'), $request->input('order'));
-             session(['sort' => $request->input('sort'), 'order' => $request->input('order')]);
+            session(['sort' => $request->input('sort'), 'order' => $request->input('order')]);
         } else {
             $payments = $payments->orderBy('payments.created_at', 'desc');
         }
 
         $transactions = Transaction::select(
-            DB::raw('"" AS restaurant_is_paid'),
-            'users.name AS userName',
-            'transactions.created_at as date',
-            'transactions.created_at as time',
-            'transactions.program_id AS name',
-            'transactions.amount AS amount',
-            'transactions.status AS status',
-            DB::raw('"Transactie" as type'),
-            DB::raw('IF(transactions.external_id = "uwvoordeelpas", "uwvoordeelpas", "affiliates.name") as company'),
-            DB::raw('date(date_add(transactions.created_at, interval 90 day)) as expired_date')
-        )
-            ->leftJoin('affiliates', 'transactions.program_id', '=', 'affiliates.program_id')
-            ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
-            ->groupBy('transactions.id')    
-            ->where('transactions.user_id', Sentinel::inRole('admin') && $userId != null ? $userId : Sentinel::getUser()->id)
+                        DB::raw('"" AS restaurant_is_paid'), 'users.name AS userName', 'transactions.created_at as date', 'transactions.created_at as time', 'transactions.program_id AS name', 'transactions.amount AS amount', 'transactions.status AS status', DB::raw('"Transactie" as type'), DB::raw('IF(transactions.external_id = "uwvoordeelpas", "uwvoordeelpas", "affiliates.name") as company'), DB::raw('date(date_add(transactions.created_at, interval 90 day)) as expired_date')
+                )
+                ->leftJoin('affiliates', 'transactions.program_id', '=', 'affiliates.program_id')
+                ->leftJoin('users', 'users.id', '=', 'transactions.user_id')
+                ->groupBy('transactions.id')
+                ->where('transactions.user_id', Sentinel::inRole('admin') && $userId != null ? $userId : Sentinel::getUser()->id)
         ;
 
         if ($request->has('month') && $request->has('year')) {
             $transactions = $transactions
-                ->whereMonth('transactions.created_at', '=', $request->input('month'))
-                ->whereYear('transactions.created_at', '=', $request->input('year'))
+                    ->whereMonth('transactions.created_at', '=', $request->input('month'))
+                    ->whereYear('transactions.created_at', '=', $request->input('year'))
             ;
         }
 
         if ($request->has('sort') && $request->has('order') && $request->input('type') == 'transactions') {
             $transactions = $transactions->orderBy($request->input('sort'), $request->input('order'));
-             session(['sort' => $request->input('sort'), 'order' => $request->input('order')]);
+            session(['sort' => $request->input('sort'), 'order' => $request->input('order')]);
         } else {
             $transactions = $transactions->orderBy('transactions.created_at', 'desc');
         }
 
         $items = Reservation::select(
-            'reservations.restaurant_is_paid AS restaurant_is_paid',
-            'users.name AS userName',
-            'reservations.created_at as date',
-            'reservations.time as time',
-            'companies.name AS name',
-            'reservations.saldo AS amount',
-            DB::raw('"" AS status'),
-            DB::raw('"Reservering" as type'),
-            DB::raw('companies.name as company'),
-            DB::raw('date(date_add(reservations.created_at, interval 90 day)) as expired_date')
-        )
-            ->leftJoin('companies', 'reservations.company_id', '=', 'companies.id')
-            ->leftJoin('users', 'reservations.user_id', '=', 'users.id')
-            ->where('reservations.user_id', Sentinel::inRole('admin') && $userId != null ? $userId : Sentinel::getUser()->id)
-            ->unionALL($payments)
-            ->unionALL($transactions)
+                        'reservations.restaurant_is_paid AS restaurant_is_paid', 'users.name AS userName', 'reservations.created_at as date', 'reservations.time as time', 'companies.name AS name', 'reservations.saldo AS amount', DB::raw('"" AS status'), DB::raw('"Reservering" as type'), DB::raw('companies.name as company'), DB::raw('date(date_add(reservations.created_at, interval 90 day)) as expired_date')
+                )
+                ->leftJoin('companies', 'reservations.company_id', '=', 'companies.id')
+                ->leftJoin('users', 'reservations.user_id', '=', 'users.id')
+                ->where('reservations.user_id', Sentinel::inRole('admin') && $userId != null ? $userId : Sentinel::getUser()->id)
+                ->unionALL($payments)
+                ->unionALL($transactions)
         ;
 
         if ($request->has('month') && $request->has('year')) {
             $items = $items
-                ->whereMonth('reservations.created_at', '=', $request->input('month'))
-                ->whereYear('reservations.created_at', '=', $request->input('year'))
+                    ->whereMonth('reservations.created_at', '=', $request->input('month'))
+                    ->whereYear('reservations.created_at', '=', $request->input('year'))
             ;
         }
 
         if ($request->has('sort') && $request->has('order')) {
             $items = $items->orderBy($request->input('sort'), $request->input('order'));
-             session(['sort' => $request->input('sort'), 'order' => $request->input('order')]);
+            session(['sort' => $request->input('sort'), 'order' => $request->input('order')]);
         } else {
             $items = $items->orderBy('date', 'desc');
         }
 
         if ($request->input('type') == 'reservations') {
-             $items = $items
-                ->get()
-                ->toArray()
+            $items = $items
+                    ->get()
+                    ->toArray()
             ;
         }
 
         if ($request->input('type') == 'payments') {
-             $items = $payments
-                ->get()
-                ->toArray()
+            $items = $payments
+                    ->get()
+                    ->toArray()
             ;
         }
 
         if ($request->input('type') == 'transactions') {
-             $items = $transactions
-                ->get()
-                ->toArray()
+            $items = $transactions
+                    ->get()
+                    ->toArray()
             ;
         }
-       
+
         if (!$request->has('type')) {
-             $items = $items
-                ->get()
-                ->toArray()
+            $items = $items
+                    ->get()
+                    ->toArray()
             ;
         }
 
         $monthsYears = CompanyReservation::select(
-            DB::raw('month(date) as months, year(date) as years')
-        )
-            ->groupBy('years', 'months')
-            ->orderBy('months', 'asc')
-            ->get()
-            ->toArray()
+                        DB::raw('month(date) as months, year(date) as years')
+                )
+                ->groupBy('years', 'months')
+                ->orderBy('months', 'asc')
+                ->get()
+                ->toArray()
         ;
 
         $monthConvert = Config::get('preferences.months');
@@ -406,7 +348,7 @@ class AccountController extends Controller
         $years = array();
         $monthConvert = Config::get('preferences.months');
 
-        foreach($monthsYears as $key => $monthYear) {
+        foreach ($monthsYears as $key => $monthYear) {
             $month[$monthYear['months']] = $monthConvert[$monthYear['months']];
             $years[$monthYear['years']] = $monthYear['years'];
         }
@@ -415,7 +357,7 @@ class AccountController extends Controller
         $pagination = new LengthAwarePaginator($slice, count($items), $request->input('limit', 15));
         $pagination->setPath(URL::to('/account/reservations/saldo'));
 
-        return view('account/saldo', [  
+        return view('account/saldo', [
             'data' => $pagination,
             'limit' => $request->input('limit', 15),
             'queryString' => $this->queryString,
@@ -425,38 +367,37 @@ class AccountController extends Controller
             'monthsYears' => $monthsYears,
         ]);
     }
-    public function barcodeAction(BarcodeRequest $request) 
-    {
-    	$user = Sentinel::getUser();
-    	$this->validate($request, []);
 
-		if(Sentinel::inRole('barcode_user') == FALSE) {
-			$role = Sentinel::findRoleByName('Barcode');
-			$role->users()->attach($user);
-		}
+    public function barcodeAction(BarcodeRequest $request) {
+        $user = Sentinel::getUser();
+        $this->validate($request, []);
 
-		$barcodeInfo = Barcode::where('code', $request->input('code'))
-            ->where('is_active', 1)
-            ->first()
+        if (Sentinel::inRole('barcode_user') == FALSE) {
+            $role = Sentinel::findRoleByName('Barcode');
+            $role->users()->attach($user);
+        }
+
+        $barcodeInfo = Barcode::where('code', $request->input('code'))
+                ->where('is_active', 1)
+                ->first()
         ;
-	   
-       if (count($barcodeInfo) == 1) {
+
+        if (count($barcodeInfo) == 1) {
             $barcode = new BarcodeUser;
-            $barcode->barcode_id  = $barcodeInfo->id;
+            $barcode->barcode_id = $barcodeInfo->id;
             $barcode->user_id = Sentinel::getUser()->id;
             $barcode->code = $request->input('code');
             $barcode->company_id = $barcodeInfo->company_id;
             $barcode->is_active = 1;
             $barcode->save();
-		
-            $request->session()->flash('success_message', 'Uw opgegeven barcode is succesvol ingevoerd.');
-		}
 
-		return Redirect::to('account/barcodes');
+            $request->session()->flash('success_message', 'Uw opgegeven barcode is succesvol ingevoerd.');
+        }
+
+        return Redirect::to('account/barcodes');
     }
 
-    public function deleteAccount() 
-    {
+    public function deleteAccount() {
         $user = Sentinel::getUser();
 
         Reservation::where('user_id', $user->id)->delete();
@@ -472,26 +413,19 @@ class AccountController extends Controller
         return Redirect::to('/');
     }
 
-    public function reservations(Request $request) 
-    {
+    public function reservations(Request $request) {
         $data = Reservation::select(
-            DB::raw(
-                'DATE_SUB(CONCAT(reservations.date, " ", reservations.time), INTERVAL company_reservations.cancel_before_time MINUTE) as cancelBeforeTime'
-            ),
-            DB::raw(
-                'DATE_SUB(CONCAT(reservations.date, " ", reservations.time), INTERVAL company_reservations.update_before_time MINUTE) as updateBeforeTime'
-            ),
-            'companies.name as company', 
-            'companies.slug', 
-            'company_reservations.cancel_before_time',
-            'reservations_options.name as dealname',    
-            'reservations.*'
-        )
-            ->leftJoin('companies', 'reservations.company_id', '=', 'companies.id')
-            ->leftJoin('company_reservations', 'company_reservations.id', '=', 'reservations.reservation_id')
-            ->leftJoin('reservations_options', 'reservations.option_id', '=', 'reservations_options.id')
-            ->groupBy('reservations.id')
-            ->where('reservations.user_id', Sentinel::getUser()->id)
+                        DB::raw(
+                                'DATE_SUB(CONCAT(reservations.date, " ", reservations.time), INTERVAL company_reservations.cancel_before_time MINUTE) as cancelBeforeTime'
+                        ), DB::raw(
+                                'DATE_SUB(CONCAT(reservations.date, " ", reservations.time), INTERVAL company_reservations.update_before_time MINUTE) as updateBeforeTime'
+                        ), 'companies.name as company', 'companies.slug', 'company_reservations.cancel_before_time', 'reservations_options.name as dealname', 'reservations.*'
+                )
+                ->leftJoin('companies', 'reservations.company_id', '=', 'companies.id')
+                ->leftJoin('company_reservations', 'company_reservations.id', '=', 'reservations.reservation_id')
+                ->leftJoin('reservations_options', 'reservations.option_id', '=', 'reservations_options.id')
+                ->groupBy('reservations.id')
+                ->where('reservations.user_id', Sentinel::getUser()->id)
         ;
 
         if ($request->has('sort') && $request->has('order')) {
@@ -504,44 +438,29 @@ class AccountController extends Controller
 
         $data = $data->paginate(15);
 
-        return view('account/reservations', [         
+        return view('account/reservations', [
             'reservationDate' => $data,
             'paginationQueryString' => $request->query()
         ]);
     }
 
-	public function reservationsAction(Request $request) 
-    {
-    	$past = 0;
+    public function reservationsAction(Request $request) {
+        $past = 0;
 
         $reservations = Reservation::select(
-            DB::raw('DATE_SUB(CONCAT(reservations.date, " ", reservations.time), INTERVAL company_reservations.cancel_before_time MINUTE) as cancelBeforeTime'),
-            'companies.id as companyId', 
-            'companies.name as companyName', 
-            'companies.email as companyEmail', 
-            'companies.contact_name as companyCName', 
-            'company_reservations.cancel_before_time', 
-            'reservations.status',
-            'reservations.is_cancelled',
-            'reservations.id as resId', 
-            'reservations.name', 
-            'reservations.email', 
-            'reservations.date', 
-            'reservations.saldo', 
-            'reservations.time'
-        )
-            ->leftJoin('companies', 'reservations.company_id', '=', 'companies.id')
-            ->leftJoin('company_reservations', 'company_reservations.id', '=', 'reservations.reservation_id')
-            ->where('reservations.user_id', Sentinel::getUser()->id)
-            ->whereIn('reservations.id', $request->get('id'))
-            ->get()
+                        DB::raw('DATE_SUB(CONCAT(reservations.date, " ", reservations.time), INTERVAL company_reservations.cancel_before_time MINUTE) as cancelBeforeTime'), 'companies.id as companyId', 'companies.name as companyName', 'companies.email as companyEmail', 'companies.contact_name as companyCName', 'company_reservations.cancel_before_time', 'reservations.status', 'reservations.is_cancelled', 'reservations.id as resId', 'reservations.name', 'reservations.email', 'reservations.date', 'reservations.saldo', 'reservations.time'
+                )
+                ->leftJoin('companies', 'reservations.company_id', '=', 'companies.id')
+                ->leftJoin('company_reservations', 'company_reservations.id', '=', 'reservations.reservation_id')
+                ->where('reservations.user_id', Sentinel::getUser()->id)
+                ->whereIn('reservations.id', $request->get('id'))
+                ->get()
         ;
 
         if ($request->has('id')) {
             foreach ($reservations as $reservation) {
                 if (
-                    new DateTime() < new DateTime($reservation->date.''.$reservation->time)
-                    && new DateTime() < new DateTime($reservation->cancelBeforeTime)
+                        new DateTime() < new DateTime($reservation->date . '' . $reservation->time) && new DateTime() < new DateTime($reservation->cancelBeforeTime)
                 ) {
                     Reservation::cancel($reservation);
                 } else {
@@ -550,11 +469,41 @@ class AccountController extends Controller
             }
         }
 
-	   	if ($past >= 1) {
+        if ($past >= 1) {
             alert()->error('', 'Een van de opgegeven data kunt u niet meer annuleren.')->persistent('Sluiten');
-	   	}
-       	    
+        }
+
         return Redirect::to('account/reservations');
     }
-    
+
+    public function futuredeals(Request $request) {
+        $data = array();
+        $user = (Sentinel::check()) ? Sentinel::getUser() : NULL;
+        if ($user) {
+
+            $data = DB::table('future_deals')->select(
+                            'future_deals.id as future_deal_id', 'future_deals.deal_price as future_deal_price', 'future_deals.persons as total_persons', 'future_deals.persons_remain as remain_persons', 'future_deals.expired_at as expired_at'
+                    )                    
+                    ->addSelect('companies.id as company_id', 'companies.name as company_name', 'companies.slug as company_slug', 'companies.description as company_disc', 'companies.city')
+                    ->addSelect('reservations_options.name as deal_name')
+                    ->addSelect('media.id as media_id','media.file_name','media.disk','media.name as media_name')
+                    ->leftJoin('reservations_options', 'future_deals.deal_id', '=', 'reservations_options.id')
+                    ->leftJoin('companies', 'reservations_options.company_id', '=', 'companies.id')
+                    ->leftJoin('media', function ($join) {
+                        $join->on('companies.id', '=', 'media.model_id')
+                        ->where('media.model_type', '=', 'App\Models\Company')
+                        ->where('media.collection_name', '=', 'default');
+                    })
+                    ->where('future_deals.user_id', $user->id)
+                    ->groupby('future_deals.id')
+                    ->get()
+            ;
+        }  
+//        print_r($data);
+//        exit;
+        return view('account/future-deal', [
+            'futureDeals' => $data,
+        ]);
+    }
+
 }
