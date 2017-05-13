@@ -224,11 +224,11 @@
 		  <div class="container">
 			<div class="col-sm-12 col-ms1">
 				<div class="col-sm-3 col5">
-				
+
 					@if (count($companies) >= 1)
 
 						@include('company-list') 
-
+						
 						<div class="ui vertically divided grid container">
 							<div class="row mobile only">
 								<div id="optionTwo" class="fourteen wide mobile seven wide tablet seven wide computer computer column">
@@ -246,7 +246,7 @@
 										@endforeach
 										</div>
 									@else
-									Er zijn geen nieuwsberichten gevonden
+									{!! "Er zijn geen nieuwsberichten gevonden" !!}
 									@endif
 								</div>
 
@@ -268,29 +268,30 @@
 										@endforeach
 									</div>
 									@else
-										Er zijn nog geen kortingscodes
+									{!! "Er zijn nog geen kortingscodes" !!}
 									@endif
 								</div>
 							</div>
 						</div>						
 
-
+						{!! $companies->appends($paginationQueryString)->render() !!}
+						
 						<div id="limitSelect" class="ui basic segment">
 							<div class="ui normal floating float-right icon selection dropdown">
 								<i class="dropdown right floated icon"></i>
 								<div class="text">{{ $limit }} resultaten</div>
 							 
 								<div class="menu">
-									<a class="item" href="{{ url('search?'.http_build_query(array_add($queryString, 'limit', '15'))) }}">15</a>
-									<a class="item" href="{{ url('search?'.http_build_query(array_add($queryString, 'limit', '30'))) }}">30</a>
-									<a class="item" href="{{ url('search?'.http_build_query(array_add($queryString, 'limit', '45'))) }}">45</a>
+									<a class="item" href="{{ url('/?'.http_build_query(array_add($queryString, 'limit', '15'))) }}">15</a>
+									<a class="item" href="{{ url('/?'.http_build_query(array_add($queryString, 'limit', '30'))) }}">30</a>
+									<a class="item" href="{{ url('/?'.http_build_query(array_add($queryString, 'limit', '45'))) }}">45</a>
 								</div>
 							</div>
 						</div>						 
-						{!! $companies->appends($paginationQueryString)->render() !!}
+						
 						
 					@else
-						Er zijn geen restaurants gevonden met uw selectiecreteria.
+					{!! "Er zijn geen restaurants gevonden met uw selectiecreteria." !!}
 					@endif
 				</div>
 			</div>		 

@@ -485,7 +485,7 @@ header.nav li a:hover {
 }
 
 .static-menu {
-    margin-left: 50px;
+    margin-left: 50px !important;
 }
 .static-menu li:hover {
     background-color: transparent;
@@ -760,7 +760,7 @@ header.nav li a:hover {
 }
 
 #footer h3{
-    font-size: 18px;
+    font-size: 120%;
     margin: 20px 0 4px 0;
 }
 #footer ul li a {
@@ -778,14 +778,28 @@ header.nav li a:hover {
     max-width: 1170px;
     width: 90%;
 }
+@media only screen and (min-width: 0px) {
+	nav a.button-collapse {
+		float:left !important;
+		position:relative !important;
+		height:auto !important;
+		line-height: initial !important;
+	}
+	
+	nav .nav-wrapper i {
+		line-height:inherit;
+		height:auto !important;
+	}
+
+}
 
 @media only screen and (min-width: 768px){
-  .container {
-    width: 750px;
-}
-.container2 {
-    width: 750px;
-}
+	.container {
+		width: 750px;
+	}
+	.container2 {
+		width: 750px;
+	}
 }
 @media only screen and (min-width: 992px){
   .container {
@@ -1451,7 +1465,7 @@ header.nav li a:hover {
         height: 2px;
         background: #fff;
         position: absolute;
-        top: 34%;
+        top: 30%;
         left: 0;
     }
     .home-title{
@@ -1462,7 +1476,7 @@ header.nav li a:hover {
         float: right;
         right: -39px;
         position: absolute;
-        top: 16px;
+        top: 25px;
         z-index: 99;
         display: block;
     }
@@ -1685,7 +1699,7 @@ header.nav li a:hover {
         background: #333399 !important;
     }
     .header .right-no{
-        float: none !important;
+        float: left !important;
         position: relative;
     }
     .header .right-no li{
@@ -1716,13 +1730,13 @@ header.nav li a:hover {
         float: none !important;
     }
     .header .center-menu li{
-        margin-left: 4px;
+        /*margin-left: 4px;*/
     }
     .header .center-menu li:nth-child(2){
-        margin-left: 33px;
+       /* margin-left: 33px;*/
     }
     .header .center-menu li:last-child{
-        margin-left: 4px;
+       /* margin-left: 4px;*/
     }
     .header .center-menu li a{
         padding: 16px 0;
@@ -3084,10 +3098,11 @@ header.nav li a:hover {
 }
 a.button-collapse2{
     right: -2px;
+	/*right: 3%;*/
 }
 
 .header .right-no li{
-    margin-left: 100px;
+    /*margin-left: 100px;*/
     margin-top: 3px;
 }
 .header .center-menu li a:hover{
@@ -3275,15 +3290,12 @@ a.button-collapse2{
 }
 .text{
     position: absolute;
-    top: -11px;
+    /*top: -11px;*/
     left: 0px;
     display: block;
     width: 411px;
     margin: 0 auto;
     right: 0;
-}
-nav a.button-collapse{
-    top: 8px !important;
 }
 .col-footer .line{
     display: none;
@@ -3295,8 +3307,8 @@ nav a.button-collapse{
     margin-right: 60px;
 }
 a.button-collapse2{
-    right: 28px;
-    top: 20px;
+    right: 20px;
+    top: 25px;
 }
 
 .header .right-no li{
@@ -3546,6 +3558,8 @@ a.button-collapse2{
 }
 nav a.button-collapse{
     top: 8px !important;
+	float:left !important;
+	position: relative !important;
 }
 .text span.start{
     font: 18px 'LatoBold';
@@ -3583,12 +3597,12 @@ ul.side-nav2{
 }
 
 .header .right-no li{
-    margin-left: 27px;
-    margin-top: -1px;
-    width: 70%;
+    /*margin-left: 35px;*/
+ /*   margin-top: -1px;*/
+    width: 65%;
 }
 .header .sk:before{
-    top: 24px;
+    top: 20px;
 }
 .header .zoek{
     margin: 17px auto;
@@ -4080,4 +4094,8 @@ padding-top: 90px;
 
 .float-right {
 	float:right;
+}
+
+.input-field {
+	margin-top:20px;
 }

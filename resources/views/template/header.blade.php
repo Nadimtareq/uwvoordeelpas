@@ -11,7 +11,6 @@
 									
 									<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
 									<ul class="right static-menu">
-
 										<li>
 											<a class="dropdown-button blog-submenu-init" id="language" href="#!" data-activates="dropdown1">
 												<img src="{{ asset('images/flag.png') }}" alt="flag"> NL <i class="fa fa-angle-down" aria-hidden="true"></i>
@@ -35,25 +34,27 @@
 										</li><!-- mini profile end-->
 
 										 @if($userAuth)
-											<li ><a href="{{ url('account/reservations/saldo') }}" class="">Uw saldo: &euro; {{$userInfo->saldo }} </a></li>
+											<li><a href="{{ url('account/reservations/saldo') }}" class="">Uw saldo: &euro; {{$userInfo->saldo }} </a></li>
 											<li data-content="Uitloggen"><a href="{{ url('logout') }}"><i class="sign out icon"></i>Signout</a></li>
 										@else
 											<li><a id="registerButton" class="register button item" href="#">Aanmelden</a></li>
 											<li><a class="login button" data-type="login" href="#" >Inloggen</a></li>
 										@endif 
-										<li><a href="#" class="question">Help <div class="question2"><img src="{{ asset('images/question.png') }}" alt="question"></div> <i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+										<li>
+										  <a href="#" class="question">Help <div class="question2"><img src="{{ asset('images/question.png') }}" alt="question"></div> <i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
 										</li>
-
+										<li>
+											<ul id="dropdown1" class="inline-menu submenu-ul dropdown-content">
+												 <li><a href="{{ url('setlang/nl?redirect='.Request::url()) }}" data-value="nl" class="item"><i class="nl flag"></i> NL</a></li>
+												 <li><a href="{{ url('setlang/en?redirect='.Request::url()) }}" data-value="en" class="item"><i class="gb flag"></i> EN</a></li>
+												 <li><a href="{{ url('setlang/be?redirect='.Request::url()) }}" data-value="be" class="item"><i class="be flag"></i> BE</a></li>
+												 <li><a href="{{ url('setlang/de?redirect='.Request::url()) }}" data-value="de" class="item"><i class="de flag"></i> DE</a></li>
+												 <li><a href="{{ url('setlang/fr?redirect='.Request::url()) }}" data-value="fr" class="item"><i class="fr flag"></i> FR</a></li>
+											</ul>
+										</li>
 									</ul>
 
 																	
-									<ul id="dropdown1" class="inline-menu submenu-ul dropdown-content">
-										 <li><a href="{{ url('setlang/nl?redirect='.Request::url()) }}" data-value="nl" class="item"><i class="nl flag"></i> NL</a></li>
-                                         <li><a href="{{ url('setlang/en?redirect='.Request::url()) }}" data-value="en" class="item"><i class="gb flag"></i> EN</a></li>
-                                         <li><a href="{{ url('setlang/be?redirect='.Request::url()) }}" data-value="be" class="item"><i class="be flag"></i> BE</a></li>
-                                         <li><a href="{{ url('setlang/de?redirect='.Request::url()) }}" data-value="de" class="item"><i class="de flag"></i> DE</a></li>
-                                         <li><a href="{{ url('setlang/fr?redirect='.Request::url()) }}" data-value="fr" class="item"><i class="fr flag"></i> FR</a></li>
-									</ul>
 									
 									@include('template.sidemenu')
 								</div>

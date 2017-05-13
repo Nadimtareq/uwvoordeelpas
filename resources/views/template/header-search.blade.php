@@ -6,10 +6,11 @@
 							<nav class="primary-nav">
 								<div class="clearfix nav-wrapper">
 								 <form action="<?php echo url('search'); ?>" method="GET" class="form">
-									<a href="{{ url('/')}}" class="left brand-logo menu-smooth-scroll" data-section="#home"><img src="{{asset('images/logo.png')}}" alt="">
+									<a href="{{ url('/')}}" class="left brand-logo menu-smooth-scroll" data-section="#home">
+									   <img src="{{asset('images/logo.png')}}" alt="">
 									</a>
-									<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
-									<ul class="right static-menu right-no">
+										<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+										<ul class="right static-menu right-no">
 										  <li class="search-form-li sk">										  
 										    <div class="input-field">
 											  <label class="label-icon" for="search"><i class="mdi-action-search sss"></i></label>											
@@ -65,9 +66,9 @@
 										</ul>
 										<button class="zoek" id ="searchDesktop" type="submit">zoek</button>
 										@if($userAuth)
-											<ul class="inline-menu side-nav">
+										<!--	<ul class="inline-menu side-nav">
 												<li data-content="Uitloggen"><a href="{{ url('logout') }}"><i class="sign out icon"></i>Signout</a></li>
-											</ul>
+											</ul>  -->
 										@endif 
 										
 										@include('template.sidemenu')

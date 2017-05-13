@@ -1,3 +1,5 @@
+<a href="#" data-activates="slide-out" class="button-collapse2"><i class="material-icons material-icons2">menu</i></a>
+
 <ul id="slide-out" class="side-nav2 right-aligned" style="overflow:auto" >
 		<li><a href="{{ url('news') }}"><i class="material-icons">assignment</i> Nieuws</a></li>
 		<li><a href="{{ url('tegoed-sparen') }}"><i class="material-icons">monetization_on</i> Tegoed sparen</a></li>
@@ -46,4 +48,3 @@
 		
 </ul>
 
-<a href="#" data-activates="slide-out" class="button-collapse2"><i class="material-icons material-icons2">menu</i></a>

@@ -90,13 +90,14 @@ TOC :
         float: left;
         left: 0;
         position: absolute;
-        top: 16px;
-        z-index: 99;
+        top: 10px;
+        z-index: 999;
         display: block;
     }
 
     ul.side-nav {
         z-index: 999;
+		background-color:gray;
     }
 
     .side-nav li:first-child, .side-nav li {
