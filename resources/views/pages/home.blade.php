@@ -45,9 +45,10 @@
 					<div class="clear"></div>
 					
 					  @if (count($cities) > 6)
-						  <div id="loadMoreHome" class="more wr2" >
-								<a href="#" >MEER STEDEN BEKIJKEN</a>
-					      </div>
+						  <button id="loadMoreHome" class="more wr2" >
+								<i class="arrow cicle outline left down icon"></i>
+								MEER STEDEN BEKIJKEN
+					      </button>
 					 @endif
 					
 				</div>
@@ -157,6 +158,24 @@
 	</section>
        
     @else
+		
+	<div class="container">
+        @if(count($arrayMerge) >= 1)
+        <div class="ui grid container blueseal-text">
+            <div class="left floated sixteen wide mobile ten wide computer column">
+                U zoekt nu op &nbsp;
+                @foreach($arrayMerge as $item)
+                    <div class="ui label">{{ urldecode(ucfirst($item)) }}</div>
+                @endforeach
+            </div>
+
+            <div class="right floated sixteen wide mobile two wide computer column">
+                <button id="homePrefrencesButton" class="ui display filter basic blue fluid tiny button">Aanpassen</button>
+            </div>
+        </div>
+        @endif
+    </div>
+	
 	<div class="{!! (Route::getCurrentRoute()->uri() !== '/') ? 'side_menus' : '' !!}">
     <?php echo Form::open(array('url' => 'preferences?type=home', 'method' => 'post', 'class' => 'ui form')); ?>
 
@@ -189,27 +208,27 @@
 				<div class="jsearch col-md-2 col-xs-2">
 				{{  Form::select('kitchen[]', 
 								(isset($preference[2]) ? $preference[2] : array()),  
-								(Request::has('kitchen') ? Request::get('kitchen') : ''),  
+								(Request::has('kitchen') ? Request::get('kitchen') : ($user && $user->kitchens != NULL ? json_decode($user->kitchens) : '')), 
 								array('class' => 'multipleSelect', 'data-placeholder' => 'Keuken', 'multiple' => 'multiple')) }}
 				</div>
 				<div class="jsearch col-md-2 col-xs-2">
 				{{ Form::select('price[]', 
                                         (isset($preference[4]) ? $preference[4] : array()),  
-                                        (Request::has('price') ? Request::get('price') : ''), 
+                                        (Request::has('price') ? Request::get('price') : ($user && $user->price != NULL ? json_decode($user->price) : '')), 
                                         array('class' => 'multipleSelect', 'data-placeholder' => 'Soort', 'multiple' => 'multiple')) }}
 				</div>
 				<div class="jsearch col-md-2 col-xs-2">
 				 {{ Form::select('discount[]', 
                                         (isset($preference[5]) ? $preference[5] : array()),  
-                                        (Request::has('discount') ? Request::get('discount') : ''),  
+                                        (Request::has('discount') ? Request::get('discount') : ($user && $user->discount != NULL ? json_decode($user->discount) : '')), 
                                         array('class' => 'multipleSelect', 'data-placeholder' => 'Korting', 'multiple' => 'multiple')) }}
 										
 				</div>
 				<div class="jsearch col-md-2 col-xs-2">
 				{{ Form::select('allergies[]', 
-                                                (isset($preference[3]) ? $preference[3] : array()),  
-                                                (Request::has('allergies') ? Request::get('allergies') : ''), 
-                                                array('class' => 'multipleSelect', 'data-placeholder' => 'Allergieen',  'multiple' => 'multiple')) }}
+										(isset($preference[3]) ? $preference[3] : array()),  
+										(Request::has('allergies') ? Request::get('allergies') : ($user && $user->allergies != NULL ? json_decode($user->allergies) : '')), 
+										array('class' => 'multipleSelect', 'data-placeholder' => 'Allergieen',  'multiple' => 'multiple')) }}
 				</div>
 				<div class="jsearch col-md-2 col-xs-2">
 				  <input type="submit" class="ui bluelink fluid filter button" value="Filteren" />
