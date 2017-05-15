@@ -127,12 +127,12 @@ TOC :
         width: 40px;
     }
 
-    .mobile-profile{
+    /*.mobile-profile{
         background: url('../images/home-bg.jpg') no-repeat scroll center center / cover ;
         display: block;
         min-height: 160px;
         position: relative;
-    }
+    }*/
 
     .profile-inner {
         background: none repeat scroll 0 0 rgba(60, 70, 80, 0.7);
@@ -145,15 +145,15 @@ TOC :
     }
 
     .pp-container {
-        display: block;
+        display: inline-block;
         margin: 5px 0;
         width: 305px;
     }
 
     .pp-container img {
-        border-radius: 50%;
+        /*border-radius: 50%;*/
         width: 100%;
-        display: block;
+        display: inline-block;
     }
 
     .mobile-profile h3 {

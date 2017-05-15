@@ -6,17 +6,25 @@
 							<nav class="primary-nav">
 								<div class="clearfix nav-wrapper">
 								 <form action="<?php echo url('search'); ?>" method="GET" class="form">
+									
 									<a href="{{ url('/')}}" class="left brand-logo menu-smooth-scroll" data-section="#home">
 									   <img src="{{asset('images/logo.png')}}" alt="">
 									</a>
-										<a href="#" data-activates="mobile-demo" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
-										<ul class="right static-menu right-no">
+									
+									 <div class="mobile-profile pp-container">
+										<a href="{{ url('/')}}">
+											<img src="{{ asset('images/logo.png') }}" alt="">
+										 </a>
+									 </div>
+									
+										<!-- <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="mdi-navigation-menu"></i></a>-->
+										<!-- <ul class="right static-menu right-no">
 										  <li class="search-form-li sk">										  
 										    <div class="input-field">
 											  <label class="label-icon" for="search"><i class="mdi-action-search sss"></i></label>											
 											  <input id="search" name="q" type="search" value="{{ Request::segment(1) == 'search' ? Request::get('q') : '' }}" placeholder="{{ trans('app.keyword') }}" >
 											</div>
-											<!-- <a id="initSearchIcon" class="search_"><i class="mdi-action-search sss"></i>
+											  DELETED  <a id="initSearchIcon" class="search_"><i class="mdi-action-search sss"></i>
 												Proin gravida nibh elit ... </a>
 												<div class="search-form-wrap hide">
 													<form action="#" class="">
@@ -24,21 +32,28 @@
 														<button type="submit"><i class="mdi-action-search"></i>
 														</button>
 													</form>
-												</div> -->
+												</div> 
 											</li>
-										</ul>
+										</ul> -->
 
 										<ul class="inline-menu side-nav center-menu" id="mobile-demo">
 
 											<!-- Mini Profile // only visible in Tab and Mobile -->
-											<li class="mobile-profile">
+											<!-- <li class="mobile-profile">
 												<div class="profile-inner">
 													<div class="pp-container">
 														<img src="images/logo.png" alt="">
 													</div>
 												</div>
-											</li><!-- mini profile end-->
+											</li> --> <!-- mini profile end-->
 
+											<li class="search-form-li sk">										  
+												<div class="input-field">
+													<label class="label-icon" for="search"><i class="mdi-actio2n-search sss"></i></label>											
+													<input id="search" name="q" type="search" value="{{ Request::segment(1) == 'search' ? Request::get('q') : '' }}" placeholder="{{ trans('app.keyword') }}" >
+												</div>
+											</li>
+											
 											<li>
 												<label for="datepicker">
 													<img src="{{asset('images/m2.png') }}" alt="m2">
@@ -63,8 +78,11 @@
 													  @endfor
 												</select>												
 											</li>
+											<li>
+											    <button class="zoek" id ="searchDesktop" type="submit">zoek</button>
+											</li>
 										</ul>
-										<button class="zoek" id ="searchDesktop" type="submit">zoek</button>
+										
 										@if($userAuth)
 										<!--	<ul class="inline-menu side-nav">
 												<li data-content="Uitloggen"><a href="{{ url('logout') }}"><i class="sign out icon"></i>Signout</a></li>
