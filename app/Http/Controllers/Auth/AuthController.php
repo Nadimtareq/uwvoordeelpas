@@ -393,7 +393,12 @@ class AuthController extends Controller
         );
 
         if (in_array($provider, $providers)) {
-            $request->session()->flash('redirectTo',  $request->input('redirect'));
+            if($request->input('redirect')){
+                $request->session()->flash('redirectTo',  $request->input('redirect'));
+            }
+            else{
+                $request->session()->flash('redirectTo',  '/');
+            }
             
             return Socialite::driver($provider)->redirect();
         } else {
