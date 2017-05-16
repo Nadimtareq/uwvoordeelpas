@@ -216,6 +216,8 @@ Route::group(array('middleware' => array('auth', 'userInfo')), function () {
         Route::post('/', 'AccountController@settingsAction');
         Route::post('barcodes', 'AccountController@barcodeAction');
         Route::post('reservations', 'AccountController@reservationsAction');
+        Route::get('reserve-futuredeal/{deal_id}', 'AccountController@reserveFutureDeal');
+        Route::post('reserve-futuredeal/{deal_id}', 'AccountController@processReserveFutureDeal');
         
         Route::post('reviews', 'AccountController@reviewsDeleteAction');        
         Route::post('reviews/edit/{id}', 'AccountController@reviewsUpdateAction');

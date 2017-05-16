@@ -477,6 +477,7 @@ class RestaurantController extends Controller {
                 $future_deal->persons = $request->input('persons');
                 $future_deal->persons_remain = $request->input('persons');
                 $future_deal->deal_price = $deal_saldo;
+                $future_deal->deal_base_price = $deal->price;
                 $future_deal->user_discount = $user_saldo;
                 $future_deal->extra_pay = $rest_amount;
                 $future_deal->purchased_date = $current_date;

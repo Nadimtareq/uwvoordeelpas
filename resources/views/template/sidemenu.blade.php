@@ -28,6 +28,7 @@
 			<li><a href="{{ url('account') }}" ><i class="material-icons">euro_symbol</i> Mijn gegevens</a></li>
 			<li><a href="{{ url('account/reviews') }}" ><i class="material-icons">thumb_up</i> Mijn recensies</a></li>
 			<li><a href="{{ url('account/reservations') }}" ><i class="material-icons">local_dining</i> Mijn reserveringen</a></li>
+                        <li><a href="{{ url('account/future-deals') }}" ><i class="material-icons">reorder</i> Mijn vouchers</a></li>
 			<li><a href="{{ url('account/barcodes') }}" ><i class="material-icons">reorder</i> Mijn voordeelpas</a></li>
 			<li><a href="{{ url('account/favorite/companies') }}" ><i class="material-icons">favorite_border</i> Mijn favoriete restaurants</a></li>
 			<li><a href="{{ url('logout') }}" ><i class="material-icons">touch_app</i> Uitloggen</a></li>

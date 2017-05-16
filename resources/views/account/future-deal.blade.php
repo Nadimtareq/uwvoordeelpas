@@ -36,8 +36,10 @@
                         <span class="stars"><img src="{{ asset('images/stars.png') }}" alt="stars">5.00</span>                        
                         <p>{{ $futureDeal->company_disc }}</p>
                         <div><b>Beschikbar voor {{$futureDeal->remain_persons}} personen</b></div>
-                        <br />
-                        <a href="#" class="more">Reserveer nu</a>
+                        <br />                        
+                        @if(($futureDeal->expired_at >= date('Y-m-d')) && ($futureDeal->remain_persons > 0))
+                            <a href="{{url('account/reserve-futuredeal/'.$futureDeal->future_deal_id)}}" class="more">Reserveer nu</a>
+                        @endif    
                     </div>
                 </li>
                 @endforeach

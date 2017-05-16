@@ -20,8 +20,10 @@ use App\Models\FavoriteCompany;
 use App\Models\FutureDeal;
 use App\Models\MailTemplate;
 use App\Models\Transaction;
+use App\Models\ReservationOption;
 use App\User;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\FutureDealReserve;
 use Config;
 use Sentinel;
 use Illuminate\Support\Facades\Response;
@@ -483,10 +485,10 @@ class AccountController extends Controller {
 
             $data = DB::table('future_deals')->select(
                             'future_deals.id as future_deal_id', 'future_deals.deal_price as future_deal_price', 'future_deals.persons as total_persons', 'future_deals.persons_remain as remain_persons', 'future_deals.expired_at as expired_at'
-                    )                    
+                    )
                     ->addSelect('companies.id as company_id', 'companies.name as company_name', 'companies.slug as company_slug', 'companies.description as company_disc', 'companies.city')
                     ->addSelect('reservations_options.name as deal_name')
-                    ->addSelect('media.id as media_id','media.file_name','media.disk','media.name as media_name')
+                    ->addSelect('media.id as media_id', 'media.file_name', 'media.disk', 'media.name as media_name')
                     ->leftJoin('reservations_options', 'future_deals.deal_id', '=', 'reservations_options.id')
                     ->leftJoin('companies', 'reservations_options.company_id', '=', 'companies.id')
                     ->leftJoin('media', function ($join) {
@@ -498,12 +500,88 @@ class AccountController extends Controller {
                     ->groupby('future_deals.id')
                     ->get()
             ;
-        }  
+        }
 //        print_r($data);
 //        exit;
         return view('account/future-deal', [
             'futureDeals' => $data,
         ]);
+    }
+
+    public function reserveFutureDeal(Request $request, $deal_id) {
+        $data = array();
+        $user = (Sentinel::check()) ? Sentinel::getUser() : NULL;
+        if ($user) {
+            $futureDeal = FutureDeal::where('id', $deal_id)->where('user_id', $user->id)->first();
+            if ($futureDeal) {
+                $deal = ReservationOption::find($futureDeal->deal_id);
+                $company = Company::find($deal->company_id);
+                return view('account/reserve-future-deal', [
+                    'company' => $company,
+                    'user' => $user,
+                    'futureDeal' => $futureDeal
+                ]);
+            } else {
+                App::abort(404);
+            }
+        }
+    }
+
+    public function processReserveFutureDeal(FutureDealReserve $request, $deal_id) {
+        setlocale(LC_ALL, 'nl_NL', 'Dutch');
+        $this->validate($request, []);
+        $input_persons = $request->input('persons');
+        $time = date('H:i', strtotime($request->input('time')));
+        $date = date('Y-m-d', strtotime($request->input('date')));
+        $user = (Sentinel::check()) ? Sentinel::getUser() : NULL;
+        $futureDeal = FutureDeal::where('id', $deal_id)->where('user_id', $user->id)->where('expired_at', '>=', date('Y-m-d'))->first();
+        if ($futureDeal) {
+            $deal = ReservationOption::find($futureDeal->deal_id);
+            $company = Company::find($deal->company_id);
+            if ($input_persons <= $futureDeal->persons_remain) {
+                $reservationTimes = CompanyReservation::getReservationTimesArray(
+                                array(
+                                    'company_id' => array($company->id),
+                                    'date' => $date,
+                                    'selectPersons' => $input_persons,
+                                    'groupReservations' => ($request->has('group_reservation') ? 1 : NULL)
+                                )
+                );
+                if (isset($reservationTimes[$time])) {
+                    $data = new Reservation;
+                    $data->date = date('Y-m-d', strtotime($request->input('date')));
+                    $data->time = date('H:i', strtotime($request->input('time'))) . ':00';
+                    $data->persons = $request->input('persons');
+                    $data->company_id = $company->id;
+                    $data->user_id = $user->id;
+                    $data->reservation_id = $reservationTimes[$time][$company->id]['reservationId'];
+                    $data->name = $request->input('name');
+                    $data->email = $request->input('email');
+                    $data->phone = $request->input('phone');
+                    $data->option_id = $deal->id;
+                    $data->comment = $request->input('comment');
+                    $data->saldo = (float) ($futureDeal->deal_base_price * $input_persons);
+                    $data->allergies = json_encode($request->input('allergies'));
+                    $data->preferences = json_encode($request->input('preferences'));
+                    $data->status = 'reserved';
+                    $data->save();
+
+                    $total_reserved_persons = (int) ($futureDeal->persons_reserved + $input_persons);
+                    $total_remain_persons = (int) ($futureDeal->persons - $total_reserved_persons);
+                    $futureDeal->persons_reserved = $total_reserved_persons;
+                    $futureDeal->persons_remain = $total_remain_persons;
+                    if ($total_remain_persons == 0) {
+                        $futureDeal->status = 'partially_reserved';
+                    } else {
+                        $futureDeal->status = 'full_reserved';
+                    }
+                    $futureDeal->save();
+                    return Redirect::to('account/reservations');
+                }
+            }
+        } else {
+            App::abort(404);
+        }
     }
 
 }

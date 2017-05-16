@@ -25,7 +25,7 @@
             </div>
             <?php if ($deal): ?>
                 <div class="col-md-6">
-                    <h2>{{$deal->name}}</h2>
+                    <h4 style="color: black;">{{$deal->name}}</h4>
                     <p><?php echo html_entity_decode($deal->description); ?></p>
                 </div>
                 <div class="col-md-3 pull-right">
