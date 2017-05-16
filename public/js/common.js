@@ -3,12 +3,12 @@
 // callback after ready the document
 $(document).ready(function($){
 
-	$('.search-form-li').on('click',function(e){
+	/*$('.search-form-li').on('click',function(e){
 		e.stopPropagation();
 		$('.search-form-li').find('#initSearchIcon').addClass('hide');
 		$('.search-form-wrap').removeClass('hide').find('input.search').focus();
 		$('.side-nav').addClass('hide');
-	});
+	});*/
 
 	$(window).on('click',function(){
 		jQuery('.search-form-li').find('#initSearchIcon').removeClass('hide');

@@ -45,6 +45,8 @@
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
     <meta name="description" content="{{ isset($metaDescription) ? strip_tags($metaDescription) : 'Reserveer in enkele stappen met uw spaartegoed!' }}">
+	<meta http-equiv="Cache-control" content="max-age=2592000, public">
+	
 	<script>
 	  var baseUrl = {!! json_encode(url('/')."/") !!};   
  	  (function() { 
