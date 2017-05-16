@@ -27,7 +27,7 @@
 		
 <!--	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
 	<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
-	<link rel="stylesheet" href="{{ asset('css/material.indigo-pink.min.css') }}"> 
+	<link rel="stylesheet" href="{{ asset('css/material.indigo-pink.min.css') }}">  
 
 	
     <link rel="stylesheet" href="{{ captcha_layout_stylesheet_url() }}" >

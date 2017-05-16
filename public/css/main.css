@@ -339,12 +339,12 @@ body {
 
 
 .title {
-    font-size: 48px;
+/*    font-size: 48px;
     line-height: 1.1;
     font-weight: 700;
     color: #333;
     text-transform: uppercase;
-    margin-bottom: 35px;
+    margin-bottom: 35px;*/
 }
 
 .regular-text {
@@ -747,9 +747,9 @@ header.nav li a:hover {
 }
 
 .footer{
-   background: -webkit-linear-gradient(bottom, rgba(51,51,153,0.25), rgba(51,102,204,0.25)) !important;
+   /*background: -webkit-linear-gradient(bottom, rgba(51,51,153,0.25), rgba(51,102,204,0.25)) !important;
    background: -o-linear-gradient(bottom, rgba(51,51,153,0.25), rgba(51,102,204,0.25)) !important;
-   background: linear-gradient(bottom, rgba(51,51,153,0.25), rgba(51,102,204,0.25)) !important;
+   background: linear-gradient(bottom, rgba(51,51,153,0.25), rgba(51,102,204,0.25)) !important;*/
 }
 #footer {
    background: -webkit-linear-gradient(bottom, #2c3ea0, #3350b9);
@@ -824,8 +824,10 @@ header.nav li a:hover {
 }
 
 .row .col {
-    padding-right: 15px;
-    padding-left: 15px;
+    /*padding-right: 15px;
+    padding-left: 15px;*/
+	padding-right: 0px;
+    padding-left: 0px;
 }
 
 

@@ -2,7 +2,7 @@
 
 @inject('discountHelper', 'App\Helpers\DiscountHelper')
 @inject('companyReservation', 'App\Models\companyReservation')
-
+@inject('FileHelper', 'App\Helpers\FileHelper')
 
  <ul>
 

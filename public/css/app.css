@@ -279,8 +279,8 @@ section .content { width: 1000px; margin: 10px auto; }
 /* Footer */
 .footerWrap { margin-top: 30px; position: relative; left: 0; right: 0; bottom: 0; }
 footer .ui.accordion .title .dropdown.icon, .ui.accordion .accordion .title .dropdown.icon { display: none; }
-footer .footer { background: #5e80b2; width: 100%; padding-top: 20px; }
-footer .footer .col { width: 250px; float: left; padding-bottom: 20px; }
+footer .footer { /*background: #5e80b2; */ width: 100%; padding-top: 20px; }
+footer .footer .col { /*width: 250px; */float: left; padding-bottom: 20px; }
 footer .footer .col h4 { font-weight: 600; font-size: 14px; color: #d0d6dd; }
 footer .footer .col ul { list-style: none; margin: 0; padding: 0; text-align: left; }
 footer .footer .col ul li a { font-size: 12px; color: #d0d6dd; text-decoration: none; }
@@ -499,7 +499,7 @@ form.search .ui.search.button { margin: 0; width: 100%; padding: 0; padding-top:
 form.search .ui.search.button .dropdown.icon, .content .right .orange.section .form-container .dropdown.icon { float: right; margin-right: 20px; }
 footer .footer a { padding-bottom: 10px!important; display: block; }
 footer .footer .col h4 { margin: 0; }
-footer .footer .col { float: none; margin: 0 auto; }
+footer .footer .col { /*float: none; margin: 0 auto; width:250px;*/ padding-left:5%; padding-right:5%; }
 footer .footer .col ul li a { font-size: 14px; }
 footer .footer .bottom ul li { float: none; text-align: center; padding-right: 0; line-height: 20px; font-size: 14px; }
 footer .footer .bottom ul li a { font-size: 15px; }
@@ -2784,7 +2784,7 @@ to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
       Basic
 ---------------*/
 
-.ui.divider:not(.vertical):not(.horizontal) { border-top: 1px solid rgba(34, 36, 38, 0.15); border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+.ui.divider:not(.vertical):not(.horizontal) { border-top: 1px solid rgba(34, 36, 38, 0.15); border-bottom: 1px solid rgba(255, 255, 255, 0.1); background-color:transparent; }
 /*--------------
     Coupling
 ---------------*/
