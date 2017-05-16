@@ -16,6 +16,7 @@
 
         <span class="active section"><h1>Reserveren bij {{ $company->name }}</h1></span>
     </div>    
+    <div class="clear">&nbsp;</div>
     <div class="ui grid">
         <div class="row"> 
             <div class="col-md-3">
@@ -25,8 +26,8 @@
             </div>
             <?php if ($deal): ?>
                 <div class="col-md-6">
-                    <h4 style="color: black;">{{$deal->name}}</h4>
-                    <p><?php echo html_entity_decode($deal->description); ?></p>
+                    <h4 style="color: #333399;">{{$deal->name}}</h4>
+                    <div style="color:#999999;"><?php echo html_entity_decode($deal->description); ?></div>
                 </div>
                 <div class="col-md-3 pull-right">
                     <div class="mdg_price">
@@ -38,11 +39,12 @@
             <?php endif; ?>
         </div>
     </div>
+    <div class="clear">&nbsp;</div>
     <?php echo Form::open(array('id' => 'futureDealForm', 'url' => url('future-deal/'.$company->slug.'?deal='.$deal->id), 'method' => 'post', 'class' => 'ui form')) ?>
     <?php echo Form::hidden('saldo', $deal->price); ?>
     <div class="ui grid">
-        <div class="two column row">
-            <div class="five wide column"> 
+        <div class="three column row">
+            <div class="column"  style="position: relative; left: -14px;"> 
                 <div class="field">
                     <label>Personen</label>
 
@@ -67,13 +69,16 @@
                 </div>
             </div>
             @if ($userAuth == FALSE)
-            <div class="five wide column"> 
+            <div class="column" style="position: relative; left: -14px;"> 
                 <div class="field">                    
                     <label>Nieuwsbrief</label>
                     <?php echo Form::select('city[]', (isset($regio) && !empty($regio)) ? $regio : [], '', array('class' => 'regionSelect', 'multiple' => 'multiple', 'data-placeholder' => 'Maak uw keuze')); ?>
                 </div>
             </div>
+            @else
+            <div class="column"> &nbsp;</div>
             @endif
+            <div class="column"> &nbsp;</div>
         </div>
         @if ($userAuth == FALSE)
         <div class="three column row"> 
@@ -107,8 +112,7 @@
                     </div>
                 </div>
             </div>
-            @endif
-            <div class="clearfix">&nbsp;</div>
+            @endif            
             <div class="column">
                 <div class="field">
                     <div class="ui checkbox">
