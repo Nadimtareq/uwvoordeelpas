@@ -57,7 +57,7 @@
 											<li>
 												<label for="datepicker">
 													<img src="{{asset('images/m2.png') }}" alt="m2">
-													<input id="datepicker" placeholder="Datum" name="date" class="datepicker1 quantity h2asDatepicker" type="text">
+													<input id="datepicker" placeholder="Datum" name="date" class="datepicker1 quantity" type="text">
 												</label>
 											</li>
 											<li><img src="images/m3.png" alt="m3">

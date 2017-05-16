@@ -1768,7 +1768,7 @@ p:last-child { margin-bottom: 0em; }
 --------------------*/
 
 a { color: #4183c4; text-decoration: none; }
-a:hover { color: #1e70bf; text-decoration: none; }
+a:hover { color: #1e70bf ; text-decoration: none; }
 
 /*******************************
           Highlighting
@@ -14805,3 +14805,6 @@ button.btn-success.pull-right span i { color: #fff; font-size: 15px; }
     width: 100%; }
 .mdg-price-c { display: inline; }
 .mdg-price-c span { position: relative; font-weight: bold;  }
+
+a #registerButton3  { color: #4183c4 !important; text-decoration: none; }
+a#registerButton3:hover { color: #1e70bf !important; text-decoration: none; }

@@ -217,6 +217,7 @@ $(document).ready(function($){
 
 	// Date Picker from jQuery
 	$("#datepicker").datepicker().datepicker("setDate", new Date());
+	$("#datepicker").datepicker("option","minDate", "0");
 	
 	
 	if( $('[data-datepicker-ajax]').length > 0 )
