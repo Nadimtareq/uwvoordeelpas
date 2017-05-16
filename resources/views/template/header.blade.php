@@ -40,7 +40,7 @@
 
 										 @if($userAuth)
 											<li><a href="{{ url('account/reservations/saldo') }}" class="">Uw saldo: &euro; {{$userInfo->saldo }} </a></li>
-											<li data-content="Uitloggen"><a href="{{ url('logout') }}"><i class="sign out icon"></i>Signout</a></li>
+											<li data-content="Uitloggen"><a href="{{ url('logout') }}"><i class="sign out icon"></i>Uitloggen</a></li>
 										@else
 											<li><a id="registerButton" class="register button item" href="#">Aanmelden</a></li>
 											<li><a class="login button" data-type="login" href="#" >Inloggen</a></li>
