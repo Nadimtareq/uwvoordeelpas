@@ -1816,6 +1816,10 @@ header.nav li a:hover {
     padding: 21px 0;
     width: 60px;
 }
+.quantity-expand {
+	width:95px;
+}
+
 .quantity:focus{
     outline: none;
 }
@@ -3649,7 +3653,7 @@ ul.side-nav2{
     margin: 15px 6px 10px 5px;
 }
 .col5 .text3 .more{
-    top: 5px;
+    margin-top: 5px;
 }
 .col5 .ob{
     float: none;

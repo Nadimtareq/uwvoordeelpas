@@ -62,19 +62,36 @@
 											</li>
 											<li><img src="images/m3.png" alt="m3">
 												<select name="sltime" class="quantity">
-												   <!-- <option value="0" disabled="disabled" >Tijd</option>-->
+													@php
+														// Check time
+														if (Request::segment(1) == 'search' && Request::has('sltime')) 
+															$current_time=date('H:i', strtotime(Request::get('sltime')));
+														else	
+															$current_time = (isset($disabled[0])) ? $disabled[0] : '';
+														
+														$datetime = new DateTime();												
+													@endphp
+											   <!-- <option value="0" disabled="disabled" >Tijd</option>-->
 												   @foreach ($getTimes as $time)
-														@if ($time >= '00:00' && $time >= '08:00')
-														<option value="{{ $time }}" data-value="{{ $time }}" data-dd="0">{{ $time }}</option>
-														@endif
+														@php  
+															$timed = date_create_from_format('H:i',$time);
+															var_dump($timed);
+														@endphp
+														@if ($time >= '00:00' && $time >= '08:00' && $timed->getTimestamp() >= $datetime->getTimestamp())
+															<option value="{{ $time }}" data-value="{{ $time }}" data-dd="0" {!! ($current_time == $time) ? "selected" : "" !!}>{{ $time }}</option>												
+														@endif													
 													@endforeach
 												</select>
 											</li>
 											<li><img src="images/m4.png" alt="m4">
-												<select name="persons" class="quantity">
+											@php  
+											   $current_p = ((Request::get('persons') != '') ? Request::get('persons') : (($userAuth && $userInfo->kids != 'null' && $userInfo->kids != NULL && $userInfo->kids != '[""]') ? $userInfo->kids : 2))
+											@endphp
+											
+												<select name="persons" class="quantity quantity-expand">
 													<!-- <option value="0" disabled="disabled">Pers</option> -->
 													  @for ($i = 1; $i <= 10; $i++)
-														<option  value="{{ $i }}" data-value="{{ $i }}">{{ $i }} {{ $i == 1 ? 'persoon' : 'personen' }}</option>
+														<option  value="{{ $i }}" data-value="{{ $i }}" {{ ($i == $current_p ) ? "selected" : "" }}>{{ $i }} {{ $i == 1 ? 'persoon' : 'personen' }}</option>
 													  @endfor
 												</select>												
 											</li>
