@@ -476,8 +476,8 @@ header.nav li a:hover {
     position: relative;
 }
 .question2{
-    display: block;
-    position: absolute;
+    display: inline-block;
+    /*position: absolute;*/
     right: -19px;
     top: 20px;
     width: 17px;
@@ -1224,7 +1224,7 @@ header.nav li a:hover {
     margin-top: 30px;
     text-align: center;
     padding: 23px 0;
-    color: #f26b26;
+    color: #283593; /*#f26b26*/
 }
 .partner-last{
     color: #056bab;
@@ -3655,7 +3655,7 @@ ul.side-nav2{
     margin: 15px 6px 10px 5px;
 }
 .col5 .text3 .more{
-    margin-top: 5px;
+    margin-top: 10px;
 }
 .col5 .ob{
     float: none;

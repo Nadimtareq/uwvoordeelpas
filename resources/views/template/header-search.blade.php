@@ -74,8 +74,7 @@
 											   <!-- <option value="0" disabled="disabled" >Tijd</option>-->
 												   @foreach ($getTimes as $time)
 														@php  
-															$timed = date_create_from_format('H:i',$time);
-															var_dump($timed);
+															$timed = date_create_from_format('H:i',$time);															
 														@endphp
 														@if ($time >= '00:00' && $time >= '08:00' && $timed->getTimestamp() >= $datetime->getTimestamp())
 															<option value="{{ $time }}" data-value="{{ $time }}" data-dd="0" {!! ($current_time == $time) ? "selected" : "" !!}>{{ $time }}</option>												

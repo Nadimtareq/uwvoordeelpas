@@ -55,108 +55,125 @@
 			</div>			
 		</div>
 		
-		<section id="partners">
-					<div class="container">
-						<div class="row">
-							<div class="col-sm-12">
+			@if(count($affiliates) >= 1)
+			<section id="partners">
+			
+						<div class="container">
+							<div class="row">
+								<div class="col-sm-12">
 								<h1>spaar NU order andere bij</h1>
-								<div class="col-md-2">
-									<div class="partner">										
-										<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p1.png" alt="p1"></a>
+								@foreach ($affiliates as $data)
+								<?php $media = $data->getMedia(); ?>
+									<div class="col-md-2">
+										<div class="partner">	
+										   <a href="{{ url('tegoed-sparen/company/'.$data->slug) }}">
+												<span class="partner2">{{ $data->name }}</span>
+												@if (isset($media[0]) && $FileHelper::is_url_exist(url(''.$media[0]->getUrl())))
+													<img src="{{ url(''.$media[0]->getUrl()) }}" alt="p1">													
+												@else
+													<img src="{{ url('images/placeholdimage.png') }}" alt="p1">
+												@endif
+												<!-- <img src="./images/p1.png" alt="p1">-->
+										   </a>										
+											<!-- <a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p1.png" alt="p1"></a> -->
+										</div>
 									</div>
-								</div>
+								@endforeach
+	<!--
+									<div class="col-md-2">
+										<div class="partner">
+											<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p2.png" alt="p2"></a>
+										</div>
+									</div>
 
-								<div class="col-md-2">
-									<div class="partner">
-										<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p2.png" alt="p2"></a>
+									<div class="col-md-2">
+										<div class="partner">
+											<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p3.png" alt="p3"></a>
+										</div>
 									</div>
-								</div>
 
-								<div class="col-md-2">
-									<div class="partner">
-										<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p3.png" alt="p3"></a>
+									<div class="col-md-2">
+										<div class="partner">
+											<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p4.png" alt="p4"></a>
+										</div>
 									</div>
-								</div>
 
-								<div class="col-md-2">
-									<div class="partner">
-										<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p4.png" alt="p4"></a>
+									<div class="col-md-2">
+										<div class="partner">
+											<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p5.png" alt="p5"></a>
+										</div>
 									</div>
-								</div>
-
-								<div class="col-md-2">
-									<div class="partner">
-										<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p5.png" alt="p5"></a>
+									<div class="col-md-2">
+										<div class="partner">
+											<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p6.png" alt="p6"></a>
+										</div>
 									</div>
-								</div>
-								<div class="col-md-2">
-									<div class="partner">
-										<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p6.png" alt="p6"></a>
+									<div class="col-md-2">
+										<div class="partner">
+											<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p7.png" alt="p7"></a>
+										</div>
 									</div>
-								</div>
-								<div class="col-md-2">
-									<div class="partner">
-										<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p7.png" alt="p7"></a>
+									<div class="col-md-2">
+										<div class="partner">
+											<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p8.png" alt="p8"></a>
+										</div>
 									</div>
-								</div>
-								<div class="col-md-2">
-									<div class="partner">
-										<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p8.png" alt="p8"></a>
+									<div class="col-md-2">
+										<div class="partner">
+											<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p9.png" alt="p9"></a>
+										</div>
 									</div>
-								</div>
-								<div class="col-md-2">
-									<div class="partner">
-										<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p9.png" alt="p9"></a>
+									<div class="col-md-2">
+										<div class="partner">
+											<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p10.png" alt="p10"></a>
+										</div>
 									</div>
-								</div>
-								<div class="col-md-2">
-									<div class="partner">
-										<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p10.png" alt="p10"></a>
+									<div class="col-md-2">
+										<div class="partner">
+											<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p11.png" alt="p11"></a>
+										</div>
 									</div>
-								</div>
-								<div class="col-md-2">
-									<div class="partner">
-										<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p11.png" alt="p11"></a>
+									<div class="col-md-2">
+										<div class="partner">
+											<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p12.png" alt="p12"></a>
+										</div>
 									</div>
-								</div>
-								<div class="col-md-2">
-									<div class="partner">
-										<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p12.png" alt="p12"></a>
+									<div class="col-md-2">
+										<div class="partner">
+											<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p13.png" alt="p13"></a>
+										</div>
 									</div>
-								</div>
-								<div class="col-md-2">
-									<div class="partner">
-										<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p13.png" alt="p13"></a>
+									<div class="col-md-2">
+										<div class="partner">
+											<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p14.png" alt="p14"></a>
+										</div>
 									</div>
-								</div>
-								<div class="col-md-2">
+									<div class="col-md-2">
+										<div class="partner">
+											<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p15.png" alt="p15"></a>
+										</div>
+									</div><div class="col-md-2">
 									<div class="partner">
-										<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p14.png" alt="p14"></a>
+										<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p16.png" alt="p16"></a>
 									</div>
-								</div>
-								<div class="col-md-2">
+									</div>
+									<div class="col-md-2">
+										<div class="partner">
+										<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p17.png" alt="p17"></a>
+										</div>
+									</div>
+									<div class="col-md-2">
 									<div class="partner">
-										<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p15.png" alt="p15"></a>
+										<a href="#"><span class="last">Bekijk alle 2.000+ winkels</span><span class="partner2 partner-last">Bekijk alle 2.000+ winkels</span></a>
 									</div>
-								</div><div class="col-md-2">
-								<div class="partner">
-									<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p16.png" alt="p16"></a>
-								</div>
-							</div><div class="col-md-2">
-							<div class="partner">
-								<a href="#"><span class="partner2">Max. 2 ippies per euro</span><img src="./images/p17.png" alt="p17"></a>
-							</div>
-						</div><div class="col-md-2">
-						<div class="partner">
-							<a href="#"><span class="last">Bekijk alle 2.000+ winkels</span><span class="partner2 partner-last">Bekijk alle 2.000+ winkels</span></a>
-						</div>
+									</div>
+							-->
 					</div>
-
 				</div>
 			</div>
-		</div>
-	</section>
-       
+		</section>
+		@endif
+	
     @else
 		
 	<div class="container">

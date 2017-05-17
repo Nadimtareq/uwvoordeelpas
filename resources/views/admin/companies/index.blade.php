@@ -26,7 +26,7 @@
                  <div class="ui grid">
                     <div class="three column row">
                         <div class="column">
-                            <div class="ui normal icon search selection fluid dropdown">
+                            <div class="ui normal search selection fluid dropdown item">
                                 <input type="hidden" name="companiesId" value="{{ Request::input('regio') }}">
                                 <i class="filter icon"></i>
                               

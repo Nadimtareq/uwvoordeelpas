@@ -10982,7 +10982,7 @@ to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
 ---------------*/
 
 .ui.floating.dropdown .menu { left: 0; right: auto; box-shadow: 0px 2px 4px 0px rgba(34, 36, 38, 0.12), 0px 2px 10px 0px rgba(34, 36, 38, 0.08) !important; border-radius: 0.28571429rem !important; }
-.ui.floating.dropdown > .menu { margin-top: 0.5em !important; border-radius: 0.28571429rem !important; }
+.ui.floating.dropdown > .menu {/* margin-top: 0.5em !important; */border-radius: 0.28571429rem !important; }
 /*--------------
      Pointing
 ---------------*/
@@ -12525,7 +12525,7 @@ html.ios, html.ios body { height: initial !important; }
 .hidden.transition { display: none; visibility: hidden; }
 /* Visible */
 
-.visible.transition { display: block !important; visibility: visible !important;/*  backface-visibility: @backfaceVisibility;
+.visible.transition { display: block !important; visibility: visible !important; color:black; /*  backface-visibility: @backfaceVisibility;
   transform: @use3DAcceleration;*/ }
 /* Disabled */
 
