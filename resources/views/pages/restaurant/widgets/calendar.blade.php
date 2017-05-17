@@ -104,8 +104,9 @@
 
 	<script type="text/javascript">
 		var activateAjax = 'restaurant';
+                var baseUrl = {!! json_encode(url('/')."/") !!};   
 	</script>
-
+    <script type="text/javascript" src="{{ asset('js/jquery-1.11.3.min.js?rand='.str_random(40)) }}"></script> 
     <script type="text/javascript" src="{{ asset('js/app.js?rand='.str_random(40)) }}"></script>
 </body>
 </html>
