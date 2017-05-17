@@ -93,7 +93,16 @@ class UsersController extends Controller
                     break;
             }
         }
-
+        if ($request->has('has_saving')) {
+            switch ($request->input('has_saving')) {
+                case '0':
+                    $data = $data->where('users.extension_downloaded', '=', 0);
+                    break;
+                case '1':
+                    $data = $data->where('users.extension_downloaded', '=', 1);
+                    break;                
+            }
+        }
         if ($request->has('sort') && $request->has('order')) {
             $data = $data->orderBy('users.'.$request->input('sort'), $request->input('order'));
             session(['sort' => $request->input('sort'), 'order' => $request->input('order')]);
@@ -128,6 +137,7 @@ class UsersController extends Controller
         
         $queryString = $request->query();
         unset($queryString['source']);
+        unset($queryString['has_saving']);
         unset($queryString['limit']);
 
         return view('admin/'.$this->slugController.'/index', [
