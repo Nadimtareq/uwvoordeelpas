@@ -1467,6 +1467,7 @@ header.nav li a:hover {
         position: relative;
         left: -1px;
         bottom: 1px;
+		line-height: 56px !important;
     }
     .col-footer .line{
         width: 100%;
@@ -1486,7 +1487,7 @@ header.nav li a:hover {
         position: absolute;*/
 		position: relative;
 		margin-right:19px;
-        top: 25px;
+        /*top: 25px;*/
         z-index: 99;
         display: inline-block;
     }
@@ -1765,13 +1766,13 @@ header.nav li a:hover {
         font: 24px 'LatoRegular';
         display: inline-block;
         vertical-align: top;
-        padding: 19px 38px;
+        padding: 15px 35px;
         margin: 0 0 0 -2px;
 		background-color:transparent;
 		border:none;
     }
     .header .zoek:hover{
-       background: #3366cc;
+       background: #3366cc !important;
    }
    .side_menus{
     padding-top: 67px;
@@ -3571,7 +3572,7 @@ a.button-collapse2{
     right: 0;
 }
 nav a.button-collapse{
-    top: 8px !important;
+    /*top: 8px !important;*/
 	float:left !important;
 	position: relative !important;
 }
