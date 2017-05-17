@@ -762,6 +762,7 @@ header.nav li a:hover {
 #footer h3{
     font-size: 120%;
     margin: 20px 0 4px 0;
+	line-height:inherit;
 }
 #footer ul li a {
     color: white;
