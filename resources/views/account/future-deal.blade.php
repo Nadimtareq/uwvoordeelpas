@@ -36,12 +36,17 @@
                         <span class="stars"><img src="{{ asset('images/stars.png') }}" alt="stars">5.00</span>                        
                         <p>{{ $futureDeal->company_disc }}</p>
                         <div>
-                            <b>
+                            <b style="max-width: 250px;">
                                 @if($futureDeal->remain_persons > 0)
                                     Beschikbaar voor {{$futureDeal->remain_persons}} personen
                                 @else
                                     Alles is verzilverd
                                 @endif    
+                            </b>
+                        </div>
+                        <div>
+                            <b style="max-width: 250px;">
+                                vervaldatum: {{ Carbon\Carbon::parse($futureDeal->expired_at)->formatLocalized('%d %B %Y') }}
                             </b>
                         </div>
                         <br />                        
