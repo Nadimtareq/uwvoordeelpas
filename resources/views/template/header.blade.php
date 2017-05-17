@@ -4,39 +4,25 @@
 					<div class="col-sm-12">
 						<div class="nav-inner">
 							<nav class="primary-nav">
+								@include('template.sidemenu')
+								
 								<div class="clearfix nav-wrapper">
 								
+									<a href="{{ url('/')}}" class="brand-logo img-responsive"><img src="{{ asset('images/logo.png') }}" alt=""></a>																	
+									<!--
 									<a href="{{ url('/') }}" class="left brand-logo menu-smooth-scroll pp-container" data-section="#home">
 										<img src="{{ url('images/logo.png') }}">
 									</a>
 									
 									<div class="mobile-profile pp-container">
 										<img src="{{ asset('images/logo.png') }}" alt="">
-									</div>
+									</div> -->
 									
 									 <!-- <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="mdi-navigation-menu"></i></a>-->
-								<!--	<ul class="right static-menu">
-										<li>
-											<a class="dropdown-button blog-submenu-init" id="language" href="#!" data-activates="dropdown1">
-												<img src="{{ asset('images/flag.png') }}" alt="flag"> NL <i class="fa fa-angle-down" aria-hidden="true"></i>
-											</a>
-										</li>
-										<li>
-											<a id="#" class="item search-full-open"><i class="mdi-action-search"></i> </a>											
-										</li>
-									
-									</ul> -->
+								
 
 									<ul class="inline-menu side-nav" id="mobile-demo">
-
-										<!-- Mini Profile // only visible in Tab and Mobile -->
-										<!-- <li class="mobile-profile">
-											<div class="profile-inner">
-												<div class="pp-container">
-													<img src="{{ asset('images/logo.png') }}" alt="">
-												</div>
-											</div> 
-										</li> -->
+										
 
 										 @if($userAuth)
 											<li><a href="{{ url('account/reservations/saldo') }}" class="">Uw saldo: &euro; {{$userInfo->saldo }} </a></li>
@@ -65,9 +51,6 @@
 										</li>
 									</ul>
 
-																	
-									
-									@include('template.sidemenu')
 								</div>
 							</nav>
 						</div>

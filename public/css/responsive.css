@@ -70,13 +70,15 @@ TOC :
     }
 
     .primary-nav .brand-logo {
-        left: 75px;
+       /* left: 75px;
         max-width: 300px;
-        position: absolute;
+        position: absolute;*/
+		position:relative;
+		display:inline;
     }
 
     .primary-nav .brand-logo {
-        display: none;
+        /*display: none;*/
     }
 
 
@@ -86,7 +88,7 @@ TOC :
 
 
     nav a.button-collapse {
-        color: #727272;
+        color: white;
         float: left;
         left: 0;
         position: absolute;
@@ -97,11 +99,12 @@ TOC :
 
     ul.side-nav {
         z-index: 999;
-		background-color:gray;
+		background-color:#339;
     }
 
     .side-nav li:first-child, .side-nav li {
         margin-left: 0;
+		background-color: transparent !important;
     }
 
     nav ul li {

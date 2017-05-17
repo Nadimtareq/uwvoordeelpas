@@ -12,22 +12,21 @@
     <link rel="shortcut icon" type="image/png" sizes="16x16" href="{{ asset('images/icons/favicon-16x16.png') }}">
 
     <link rel="stylesheet" href="{{ asset('css/app.css?rand='.str_random(40)) }}"> 	
-	<link rel="stylesheet" href="{{ asset('css/normalize.css')}}">
+	<link rel="stylesheet" href="{{ asset('css/normalize.css')}}"> 
 	<link rel="stylesheet" href="{{ asset('css/jquery-ui.css')}}">	
-	<link rel="stylesheet" href="{{ asset('css/ui-lightness/jquery-ui-1.9.2.custom.min.css') }}">
-		
-	<link rel="stylesheet" href="{{ asset('css/materialize.min.css') }}" /> 
+	<link rel="stylesheet" href="{{ asset('css/ui-lightness/jquery-ui-1.9.2.custom.min.css') }}">		
+	<link rel="stylesheet" href="{{ asset('css/materialize.min.css') }}" />  
 
 	<link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}" />
 	<link rel="stylesheet" href="{{ asset('css/animate.min.css') }}" />
 	<link rel="stylesheet" href="{{ asset('css/main.css') }}">	
 	<link rel="stylesheet" href="{{ asset('css/flexslider.css') }}">
-	<link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/responsive.css') }}"> 
 	
 		
 <!--	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
 	<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
-	<link rel="stylesheet" href="{{ asset('css/material.indigo-pink.min.css') }}">  
+	<link rel="stylesheet" href="{{ asset('css/material.indigo-pink.min.css') }}"> 
 
 	
     <link rel="stylesheet" href="{{ captcha_layout_stylesheet_url() }}" >
@@ -116,17 +115,7 @@
 			</svg>
 		</div>    
 	</div>
-	
-	<!--
-    <div id="pageLoader">
-        <div class="content">
-            <div class="ui active inverted dimmer">
-                <div class="ui text loader">Laden..</div>
-            </div>
-        </div>
-    </div>
-    -->
-    
+		    
    
    
     <!-- Main Content -->
@@ -184,7 +173,7 @@
 	<script src="{{ asset('js/jquery-1.11.3.min.js') }} "></script>		
 	
     
-	@if (!Request::has('iframe'))
+	@if (!Request::has('iframe') )
        <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyAjrbVJMJKWzCl8JZWV3_5Jy5P4CTITznU&callback=initMap"></script>
 	   <script  src="//cdnjs.cloudflare.com/ajax/libs/gmaps.js/0.4.25/gmaps.min.js"></script>    
     @endif

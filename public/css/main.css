@@ -425,6 +425,7 @@ header.nav li a:hover {
 
 .primary-nav .brand-logo {
     position: static;
+	/*position:absolute;*/
     font-size: inherit;
 }
 
@@ -783,8 +784,8 @@ header.nav li a:hover {
 	nav a.button-collapse {
 		float:left !important;
 		position:relative !important;
-		height:auto !important;
-		line-height: initial !important;
+		/*height:auto !important;*/
+		line-height: inherit !important;
 	}
 	
 	nav .nav-wrapper i {
@@ -1209,12 +1210,13 @@ header.nav li a:hover {
     border-radius: 5px;
     margin-top: 30px;
 }
+/*
 .partner:hover .partner2{
     display: block !important;
 }
 .partner:hover img, .partner:hover .last{
     display: none;
-}
+}*/
 .partner2{
     display: none !important;
     width: 100%;
@@ -1480,11 +1482,13 @@ header.nav li a:hover {
     a.button-collapse2 {
         color: #fff;
         float: right;
-        right: -39px;
-        position: absolute;
+        /*right: -39px;
+        position: absolute;*/
+		position: relative;
+		margin-right:19px;
         top: 25px;
         z-index: 99;
-        display: block;
+        display: inline-block;
     }
 
     .side-nav2 a{
@@ -1727,7 +1731,7 @@ header.nav li a:hover {
         display: block;
         background: url(../images/m1.png) no-repeat center;
         position: absolute;
-        left: -34px;
+        left: -1px;
         top: 16px;
         width: 29px;
         height: 29px;
@@ -3031,10 +3035,10 @@ header.nav li a:hover {
     }
 }
 @media(min-width: 640px) and (max-width: 800px){
-    .datepicker1, .quantity{
+    /*.datepicker1, .quantity{
         color: #000;
         background: none;
-    }
+    }*/
     .datepicker1::-webkit-input-placeholder {color:#000;}
     .datepicker1::-moz-placeholder          {color:#000;}/* Firefox 19+ */
     .datepicker1:-moz-placeholder           {color:#000;}/* Firefox 18- */
@@ -3231,10 +3235,10 @@ a.button-collapse2{
 }
 }
 @media(min-width: 480px) and (max-width: 639px){
-    .datepicker1, .quantity{
+    /*.datepicker1, .quantity{
         color: #000;
         background: none;
-    }
+    }*/
     .datepicker1::-webkit-input-placeholder {color:#000;}
     .datepicker1::-moz-placeholder          {color:#000;}/* Firefox 19+ */
     .datepicker1:-moz-placeholder           {color:#000;}/* Firefox 18- */
@@ -3316,10 +3320,10 @@ a.button-collapse2{
 .static-menu{
     margin-right: 60px;
 }
-a.button-collapse2{
+/*a.button-collapse2{
     right: 20px;
     top: 25px;
-}
+}*/
 
 .header .right-no li{
     margin-left: 41px;
@@ -3598,10 +3602,11 @@ nav a.button-collapse{
 .static-menu{
     margin-right: 60px;
 }
-a.button-collapse2{
+/*a.button-collapse2{
     right: 28px;
     top: 20px;
-}
+}*/
+
 ul.side-nav2{
     width: 230px;
 }

@@ -1,13 +1,15 @@
 <header id="navigation" class="root-sec white nav header">
-			<div class="container">
+			 <div class="container">
 				<div class="row">
 					<div class="col-sm-12">
-						<div class="nav-inner">
+					
+						<div class="nav-inner nav-extended">
 							<nav class="primary-nav">
-								<div class="clearfix nav-wrapper">
+								<div class="nav-wrapper">
 								 <form action="<?php echo url('search'); ?>" method="GET" class="form">
+								 	@include('template.sidemenu')
 									
-									<a href="{{ url('/')}}" class="left brand-logo menu-smooth-scroll" data-section="#home">
+									<!-- <a href="{{ url('/')}}" class="left brand-logo menu-smooth-scroll" data-section="#home">
 									   <img src="{{asset('images/logo.png')}}" alt="">
 									</a>
 									
@@ -15,37 +17,11 @@
 										<a href="{{ url('/')}}">
 											<img src="{{ asset('images/logo.png') }}" alt="">
 										 </a>
-									 </div>
-									
-										<!-- <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="mdi-navigation-menu"></i></a>-->
-										<!-- <ul class="right static-menu right-no">
-										  <li class="search-form-li sk">										  
-										    <div class="input-field">
-											  <label class="label-icon" for="search"><i class="mdi-action-search sss"></i></label>											
-											  <input id="search" name="q" type="search" value="{{ Request::segment(1) == 'search' ? Request::get('q') : '' }}" placeholder="{{ trans('app.keyword') }}" >
-											</div>
-											  DELETED  <a id="initSearchIcon" class="search_"><i class="mdi-action-search sss"></i>
-												Proin gravida nibh elit ... </a>
-												<div class="search-form-wrap hide">
-													<form action="#" class="">
-														<input class="search" type="search">
-														<button type="submit"><i class="mdi-action-search"></i>
-														</button>
-													</form>
-												</div> 
-											</li>
-										</ul> -->
-
-										<ul class="inline-menu side-nav center-menu" id="mobile-demo">
-
-											<!-- Mini Profile // only visible in Tab and Mobile -->
-											<!-- <li class="mobile-profile">
-												<div class="profile-inner">
-													<div class="pp-container">
-														<img src="images/logo.png" alt="">
-													</div>
-												</div>
-											</li> --> <!-- mini profile end-->
+									 </div> -->
+										<a href="{{ url('/')}}" class="brand-logo img-responsive"><img src="{{ asset('images/logo.png') }}" alt=""></a>																	
+									    <a href="#" data-activates="mobile-top" class="button-collapse"> <i class="material-icons material-icons2">menu</i></a>
+									 
+										<ul class="right side-nav" id="mobile-top"> <!-- center-menu- inline-menu -->
 
 											<li class="search-form-li sk">										  
 												<div class="input-field">
@@ -60,7 +36,8 @@
 													<input id="datepicker" placeholder="Datum" name="date" class="datepicker1 quantity" type="text">
 												</label>
 											</li>
-											<li><img src="images/m3.png" alt="m3">
+											<li>
+												<img src="images/m3.png" alt="m3">
 												<select name="sltime" class="quantity">
 													@php
 														// Check time
@@ -71,7 +48,7 @@
 														
 														$datetime = new DateTime();												
 													@endphp
-											   <!-- <option value="0" disabled="disabled" >Tijd</option>-->
+											  
 												   @foreach ($getTimes as $time)
 														@php  
 															$timed = date_create_from_format('H:i',$time);															
@@ -82,10 +59,11 @@
 													@endforeach
 												</select>
 											</li>
-											<li><img src="images/m4.png" alt="m4">
-											@php  
-											   $current_p = ((Request::get('persons') != '') ? Request::get('persons') : (($userAuth && $userInfo->kids != 'null' && $userInfo->kids != NULL && $userInfo->kids != '[""]') ? $userInfo->kids : 2))
-											@endphp
+											<li>
+												<img src="images/m4.png" alt="m4">
+												@php  
+												   $current_p = ((Request::get('persons') != '') ? Request::get('persons') : (($userAuth && $userInfo->kids != 'null' && $userInfo->kids != NULL && $userInfo->kids != '[""]') ? $userInfo->kids : 2))
+												@endphp
 											
 												<select name="persons" class="quantity quantity-expand">
 													<!-- <option value="0" disabled="disabled">Pers</option> -->
@@ -105,16 +83,20 @@
 											</ul>  -->
 										@endif 
 										
-										@include('template.sidemenu')
+									
 										
 										
 									</form>
 								</div>
-								 
 							   </nav>
-							</div>
+						</div>
+						<!-- menu end -->
+						
 						</div>
 					</div>
-				</div>
-				<!-- .container end -->
-			</header>
+				</div> 
+				<!-- .container end -->				
+
+</header>
+	
+	    

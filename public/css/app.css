@@ -339,7 +339,7 @@ footer .ui.inverted.accordion .content { display: block; }
 .sliderRight #bx-pager { margin: 0; }
 .sliderRight #bx-pager a { width: 33.3%; float: left; }
 #menuRestaurant { display: none; }
-#searchDesktop { display: none; }
+/*#searchDesktop { display: none; }*/
 .ui.unstackable.table { overflow: scroll; display: block; }
 #account_reservations thead { display: none; }
 #topMenu { display: none; }
