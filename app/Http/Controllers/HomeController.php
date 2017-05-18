@@ -348,11 +348,12 @@ class HomeController extends Controller
         $companies = $companies->paginate($request->input('limit', 15));
         
         foreach($companies as $company) {
-            foreach($company->ReservationOptions()->get() as $deal) {
-                $companyIds[] = $company->id;
-            }
+            if($company->ReservationOptions()){
+                foreach($company->ReservationOptions()->get() as $deal) {
+                    $companyIds[] = $company->id;
+                }
+            }            
         }
-
         $reservationDate = date('Y-m-d');
         $tomorrowDate = date('Y-m-d', strtotime('+1 days'));
         
