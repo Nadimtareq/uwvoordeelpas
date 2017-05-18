@@ -26,7 +26,7 @@
             <div class="ob" >
                     @if (isset($media[0]) && $FileHelper::is_url_exist(url($media[0]->getUrl('175Thumb'))) )
                         <a href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}" title="{{ $data->name }}" >
-                            <img src="{{ url($media[0]->getUrl('175Thumb')) }}" alt="{{ $data->name }}"  />
+                            <img src="{{ url($media[0]->getUrl('175Thumb')) }}" alt="{{ $data->name }}" class="thumbnails"  />
                         </a>
                     @else
                         <a href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}" title="{{ $data->name }}" data-url="{{ url($media[0]->getUrl('175Thumb')) }}">

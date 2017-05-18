@@ -342,9 +342,9 @@ $(document).ready(function($){
 									$this.datepicker("setDate",newDate);
 									$this.datepicker("option","onSelect")(newDate, $this);
 								}								
-
+console.log(lpersons,jsonParse[ltimeselect]);
 								
-								refresh_option(lpersons,jsonParse.availablePersons);
+								refresh_option(lpersons,jsonParse[ltimeselect].availablePersons);
 								$this.datepicker('refresh');	
 							},
 							complete: function(){

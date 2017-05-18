@@ -513,7 +513,7 @@ footer .footer .bottom { margin-top: 0; }
 #optionTwo .inline.fields { display: block; }
 /*.text .owl-wrapper{ width: 100%; display: inline-block;}*/
 .text .owl-wrapper .owl-carousel-container { width: 100%; display: inline-block; }
-.owl-wrapper { float: left; width: 70%; }
+.owl-wrapper { float: left; /*width: 70%; */}
 .mdg-price-a { float: left; width: 30%; }
 }
  @media (min-width: 900px) {
