@@ -23,14 +23,14 @@
              data-zipcode="{{ $data->zipcode }}">
 			 
 		
-            <div class="ob" >
-                    @if (isset($media[0]) && $FileHelper::is_url_exist(url($media[0]->getUrl('175Thumb'))) )
-                        <a href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}" title="{{ $data->name }}" >
-                            <img src="{{ url($media[0]->getUrl('175Thumb')) }}" alt="{{ $data->name }}" class="thumbnails"  />
+            <div class="ob" >                                        
+                    @if (isset($media[0]) && isset($media[0]->file_name) && file_exists(public_path($media[0]->disk. DIRECTORY_SEPARATOR . $media[0]->id . DIRECTORY_SEPARATOR . $media[0]->file_name)) )                    
+                        <a href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}" title="{{ $data->name }}" >                            
+                            <img width="420" src="{{ url('media/'.$media[0]->id.'/'.$media[0]->file_name) }}" alt="{{ $data->name }}"  class="thumbnails" />
                         </a>
                     @else
-                        <a href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}" title="{{ $data->name }}" data-url="{{ url($media[0]->getUrl('175Thumb')) }}">
-                            <img src="{{ url('images/placeholdimagerest.png') }}" alt="{{ $data->name }}" class="thumbnails"  />
+                        <a href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}" title="{{ $data->name }}" data-url="">
+                            <img width="420" height="280" src="{{ url('images/placeholdimagerest.png') }}" alt="{{ $data->name }}" class="thumbnails"  />
                         </a>
                     @endif
 
@@ -64,7 +64,7 @@
                         @endif -->
              </div>
 			 
-            <div class="text3">
+            <div class="text3" style="min-height: 280px;">
                 <strong>
 				   <a href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}" title="{{ $data->name }}">{{ $deal->name }}</a>
 				</strong>
