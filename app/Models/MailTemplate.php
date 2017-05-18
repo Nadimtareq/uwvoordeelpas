@@ -81,6 +81,7 @@ class MailTemplate extends Model
 
     public static function createMailTemplates($companyIds) 
     {
+        $companyIds = (is_array($companyIds)) ? $companyIds : array($companyIds);        
         $mailTemplates = Config::get('preferences.mail_templates');
         $mailTemplatesContentBlock = Config::get('preferences.mail_templates_contentBlocks');
         $contentBlock = Content::getMailTemplate();
