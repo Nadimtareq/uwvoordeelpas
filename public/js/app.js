@@ -54663,7 +54663,7 @@ notification = {
 }
 
  if (typeof activateAjax !== 'undefined') {
-	if (activateAjax == 'reservation' || activateAjaxTwo !== 'undefined' && activateAjaxTwo == 'reservation-groups') {
+	if (activateAjax == 'reservation' || (typeof activateAjaxTwo !== 'undefined' && activateAjaxTwo == 'reservation-groups')) {
 		var $reservationDateInput = $('.reservationDatepicker').pickadate({
 			min: new Date(),
 			formatSubmit: 'yyyy-m-d',
