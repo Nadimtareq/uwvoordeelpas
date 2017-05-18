@@ -1281,14 +1281,14 @@ header.nav li a:hover {
     left: 0px;
     right: 0;
     display: block;
-    width: 411px;
+/*    width: 411px;*/
     margin: 0 auto;
 }
 .text span.start{
-    font: 28px 'LatoBold';
+    font: 200% 'LatoBold'; /*28px */
     display: block;
     text-align: center;
-    margin-top: 27px;
+    margin-top: 15px;
     letter-spacing: 0.6px;
 }
 .text strong.bax{
@@ -1304,7 +1304,7 @@ header.nav li a:hover {
     transform: rotate(-7deg);
 }
 .text strong.number{
-    font: 91px 'LatoBold';
+    font: 190% 'LatoBold'; /*91px*/
     text-align: center;
     display: inline-block;
     margin-top: -18px;
@@ -3030,7 +3030,7 @@ header.nav li a:hover {
 
 @media(min-width: 1180px){
     .text{
-        left: -110px;
+        /*left: -110px;*/
     }
     .shop .goods .right-content ul.box li a:hover .wrap b{
         padding: 15% 2%;
@@ -4126,4 +4126,10 @@ padding-top: 90px;
 {
 	min-width:462px;
 	min-height:280px;
+}
+
+.laptop {
+	width:80%;
+	margin-left:10%;
+	margin-right:10%;
 }
