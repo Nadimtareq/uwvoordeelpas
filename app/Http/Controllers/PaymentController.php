@@ -279,7 +279,7 @@ class PaymentController extends Controller {
                             $allergies = json_decode($data->allergies);
                             $preferences = json_decode($data->preferences);
 
-                            /* $mailtemplate = new MailTemplate();
+                             $mailtemplate = new MailTemplate();
                               $mailtemplate->sendMail(array(
                               'email' => $company->email,
                               'reservation_id' => $data->id,
@@ -328,7 +328,7 @@ class PaymentController extends Controller {
                               '%allergies%' => ($allergies === null) ? '' : implode(",", $allergies),
                               '%preferences%' => ($preferences === null) ? '' : implode(",", $preferences),
                               )
-                              )); */
+                              )); 
 
                             if ($deal) {
                                 Alert::success(
