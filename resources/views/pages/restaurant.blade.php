@@ -39,13 +39,13 @@ while ($st->lte($dt)) {
 					
 					<ul>
 						<li><img src="{{ asset('images/c1.png') }}" alt="m3">
-						    <input type="hidden" name="time" value="{{ count(array_keys($reservationTimesArray)) >= 1 ? array_keys($reservationTimesArray)[0] : '' }}">
-							<select id="time-calendar" name="ctime" class="quantity2" >
+						    <input type="hidden" name="ctime" value="{{ count(array_keys($reservationTimesArray)) >= 1 ? array_keys($reservationTimesArray)[0] : '' }}">
+							<select id="time-calendar" name="time" class="quantity2" >
 							</select>
 						</li>
 						<li><img src="{{ asset('images/c2.png') }}" alt="m4">
-						    <input type="hidden" name="persons" value="{{ ($userAuth && $userInfo->kids != 'null' && $userInfo->kids != NULL && $userInfo->kids != '[""]' ? $userInfo->kids : 1) }}"> 
-							<select id="persons-calendar"  name="cpersons" class="quantity2" >
+						    <input type="hidden" name="cpersons" value="{{ ($userAuth && $userInfo->kids != 'null' && $userInfo->kids != NULL && $userInfo->kids != '[""]' ? $userInfo->kids : 1) }}"> 
+							<select id="persons-calendar"  name="persons" class="quantity2" >
 							    <option value="0">Personen</option>
 								<?php $person_list=[]; ?>
 								<?php for ($i = 1; $i <= 10; $i++) { ?>
@@ -56,9 +56,9 @@ while ($st->lte($dt)) {
 						</li>
 					</ul>
 					@if($user)
-						<a id="submitField" href="#" class="more">Reserveer nu</a>
+						<button  id="submitField"  class="more">Reserveer nu</button>
 					@else
-						<a id="submitField" href="#" class="more login guestClick">Reserveer nu</a>
+						<button id="submitField"  class="more login guestClick">Reserveer nu</button>
 					@endif
 					
 			</div>
@@ -517,7 +517,9 @@ while ($st->lte($dt)) {
 		</div>
 	</div>
 	<div class="clear"></div>
-	
+	<script>
+		var activateAjax = 'restaurant';
+	</script>
 
 @stop
 

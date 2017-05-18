@@ -335,6 +335,8 @@
 </div>
 <div class="clear"></div>
 @stop
+
+
 @push('inner_scripts')
 <script type="text/javascript">
     $(function () {

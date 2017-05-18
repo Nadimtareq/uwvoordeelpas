@@ -237,6 +237,9 @@ $(document).ready(function($){
 
 			$('#time-calendar').on('change',function() {
 				 var rules = $(this).data();
+				 
+				 $('input[name=time]').val($(this).val());
+				 
 				 if(rules)
 				   refresh_option('#persons-calendar',rules.availablePersons);
 			});
@@ -344,7 +347,7 @@ $(document).ready(function($){
 								}								
 
 								
-								refresh_option(lpersons,jsonParse.availablePersons);
+								refresh_option(lpersons,jsonParse[ltimeselect].availablePersons);
 								$this.datepicker('refresh');	
 							},
 							complete: function(){
