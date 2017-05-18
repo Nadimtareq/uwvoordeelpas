@@ -138,7 +138,7 @@
 			
         @endif
 
-        <section class="content">
+        <section class="content space-header">
              @yield('content')
         </section>
 
