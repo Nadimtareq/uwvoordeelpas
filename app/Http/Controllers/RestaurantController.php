@@ -470,7 +470,9 @@ class RestaurantController extends Controller {
                     $user->newsletter = 1;
                 }
                 $user->save();
-                
+                if (Sentinel::check() == FALSE) {                    
+                    Sentinel::login($user);
+                }
                 $future_deal = new FutureDeal();
                 $future_deal->deal_id = $deal_id;
                 $future_deal->user_id = $user->id;

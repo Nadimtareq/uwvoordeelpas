@@ -15,6 +15,7 @@ use App\Models\SearchHistory;
 use App\Models\Preference;
 use App\Models\AffiliateCategory;
 use App\Models\CompanyReservation;
+use App\Models\MailTemplate;
 use App\Models\Barcode;
 use App\Models\News;
 use App\Helpers\SmsHelper;
@@ -347,11 +348,12 @@ class HomeController extends Controller
         $companies = $companies->paginate($request->input('limit', 15));
         
         foreach($companies as $company) {
-            foreach($company->ReservationOptions()->get() as $deal) {
-                $companyIds[] = $company->id;
-            }
+            if($company->ReservationOptions()){
+                foreach($company->ReservationOptions()->get() as $deal) {
+                    $companyIds[] = $company->id;
+                }
+            }            
         }
-
         $reservationDate = date('Y-m-d');
         $tomorrowDate = date('Y-m-d', strtotime('+1 days'));
         
@@ -929,6 +931,31 @@ class HomeController extends Controller
 
     public function testPage(Request $request)
     {
+        $mailtemplate = new MailTemplate();
+		$mailtemplate->sendMail(array(
+                  'email' => 'bhalodia.sandip@gmail.com',
+                  'reservation_id' => 56,
+                  'template_id' => 'new-reservation-company',
+                  'company_id' => 157,
+                  'manual' => 0,
+                  'replacements' => array(
+                  '%name%' => 'Kanjji Bhagat',
+                  '%cname%' => 'Virlo hansraj',
+                  '%saldo%' => 50,
+                  '%phone%' => '951077784',
+                  '%email%' => 'kanji.hardayal@gmail.com',
+                  '%date%' => date('d-m-Y', strtotime('2017-10-24')),
+                  '%time%' => date('H:i', strtotime('11:00')),
+                  '%persons%' => 8,
+                  '%comment%' => 'Kai comment nathi karvi',
+                  '%discount%' => '',
+                  '%discount_comment%' =>  '',
+                  '%days%' => '',
+                  '%allergies%' => '',
+                  '%preferences%' => '',
+                  )
+                  ));
+	 exit('success');
         return view('pages/test', array(
         ));
     }

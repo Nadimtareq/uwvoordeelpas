@@ -46,7 +46,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="col-sm-6 col2">
-                        <img src="{{ asset('images/laptop.png') }}" alt="laptop">
+                        <img src="{{ asset('images/laptop.png') }}" alt="laptop" class="laptop">
                         <div class="text">
                             <span class="start">Start nu en otvang!</span>
                             <strong class="bax">€

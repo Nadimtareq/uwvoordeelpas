@@ -345,7 +345,6 @@ $(document).ready(function($){
 									$this.datepicker("setDate",newDate);
 									$this.datepicker("option","onSelect")(newDate, $this);
 								}								
-
 								
 								refresh_option(lpersons,jsonParse[ltimeselect].availablePersons);
 								$this.datepicker('refresh');	

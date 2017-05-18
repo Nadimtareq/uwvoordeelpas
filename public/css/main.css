@@ -1281,14 +1281,14 @@ header.nav li a:hover {
     left: 0px;
     right: 0;
     display: block;
-    width: 411px;
+/*    width: 411px;*/
     margin: 0 auto;
 }
 .text span.start{
-    font: 28px 'LatoBold';
+    font: 200% 'LatoBold'; /*28px */
     display: block;
     text-align: center;
-    margin-top: 27px;
+    margin-top: 15px;
     letter-spacing: 0.6px;
 }
 .text strong.bax{
@@ -1304,7 +1304,7 @@ header.nav li a:hover {
     transform: rotate(-7deg);
 }
 .text strong.number{
-    font: 91px 'LatoBold';
+    font: 190% 'LatoBold'; /*91px*/
     text-align: center;
     display: inline-block;
     margin-top: -18px;
@@ -1466,7 +1466,8 @@ header.nav li a:hover {
         font-size: 28px !important;
         position: relative;
         left: -1px;
-        bottom: 1px;
+        /*bottom: 1px;*/
+		line-height: 56px !important;
     }
     .col-footer .line{
         width: 100%;
@@ -1486,7 +1487,7 @@ header.nav li a:hover {
         position: absolute;*/
 		position: relative;
 		margin-right:19px;
-        top: 25px;
+        /*top: 25px;*/
         z-index: 99;
         display: inline-block;
     }
@@ -1575,6 +1576,7 @@ header.nav li a:hover {
         background: #fff;
         padding: 13px 0 25px 0px;
         margin-bottom: 36px;
+		padding-left:470px;
 
     }
     .col5 .text3 strong, 
@@ -1765,13 +1767,13 @@ header.nav li a:hover {
         font: 24px 'LatoRegular';
         display: inline-block;
         vertical-align: top;
-        padding: 19px 38px;
+        padding: 15px 35px;
         margin: 0 0 0 -2px;
 		background-color:transparent;
 		border:none;
     }
     .header .zoek:hover{
-       background: #3366cc;
+       background: #3366cc !important;
    }
    .side_menus{
     padding-top: 67px;
@@ -3030,7 +3032,7 @@ header.nav li a:hover {
 
 @media(min-width: 1180px){
     .text{
-        left: -110px;
+        /*left: -110px;*/
     }
     .shop .goods .right-content ul.box li a:hover .wrap b{
         padding: 15% 2%;
@@ -3573,7 +3575,7 @@ a.button-collapse2{
     right: 0;
 }
 nav a.button-collapse{
-    top: 8px !important;
+    /*top: 8px !important;*/
 	float:left !important;
 	position: relative !important;
 }
@@ -4120,4 +4122,16 @@ padding-top: 90px;
 
 .blueseal-text {
   color:#333399;	
+}
+
+.thumbnails
+{
+	min-width:462px;
+	min-height:280px;
+}
+
+.laptop {
+	width:80%;
+	margin-left:10%;
+	margin-right:10%;
 }

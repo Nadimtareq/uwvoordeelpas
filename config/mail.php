@@ -15,7 +15,8 @@ return [
     |
     */
 
-    'driver' => env('MAIL_DRIVER', 'mailgun'),
+    //'driver' => env('MAIL_DRIVER', 'mailgun'),
+    'driver' => env('MAIL_DRIVER', 'smtp'),
 
     /*
     |--------------------------------------------------------------------------
@@ -28,8 +29,9 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
-
+    //'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+    'host' => env('MAIL_HOST', 'mail.uwvoordeelpas.nl'),
+    
     /*
     |--------------------------------------------------------------------------
     | SMTP Host Port
@@ -41,8 +43,9 @@ return [
     |
     */
 
-    'port' => env('MAIL_PORT', 587),
-
+    //'port' => env('MAIL_PORT', 587),
+    'port' => env('MAIL_PORT', 25),
+    
     /*
     |--------------------------------------------------------------------------
     | Global "From" Address
@@ -54,7 +57,8 @@ return [
     |
     */
 
-    'from' => ['address' => 'martijn@uwvoordeelpas.nl', 'name' => 'UWvoordeelpas.nl'],
+    //'from' => ['address' => 'martijn@uwvoordeelpas.nl', 'name' => 'UWvoordeelpas.nl'],
+    'from' => ['address' => 'noreply@uwvoordeelpas.nl', 'name' => 'UWvoordeelpas.nl'],
 
     /*
     |--------------------------------------------------------------------------
@@ -67,7 +71,8 @@ return [
     |
     */
 
-    'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+    //'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+    'encryption' => '',
 
     /*
     |--------------------------------------------------------------------------
@@ -80,7 +85,9 @@ return [
     |
     */
 
-    'username' => env('postmaster@mail.uwvoordeelpas.nl'),
+    //'username' => env('postmaster@mail.uwvoordeelpas.nl'),
+    //'username' => env('MAIL_USERNAME'),
+    'username' => 'noreply@uwvoordeelpas.nl',
 
     /*
     |--------------------------------------------------------------------------
@@ -93,7 +100,9 @@ return [
     |
     */
 
-    'password' => env('46aadf4ed277abbd3fe6cd68786705be'),
+    //'password' => env('46aadf4ed277abbd3fe6cd68786705be'),
+    'password' => 'ZVC6WRKF',
+    //'password' => env('MAIL_PASSWORD'),
 
     /*
     |--------------------------------------------------------------------------
