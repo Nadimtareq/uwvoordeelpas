@@ -721,6 +721,9 @@ Route::group(['prefix' => 'api'], function () {
 
 Route::get('/development12345', 'DevelopmentController@index');
 
+Route::get('/dev/viewdata', 'DevelopmentController@viewdata');
+Route::post('/dev/rundata', 'DevelopmentController@rundata');
+
 
 
 
