@@ -12,63 +12,31 @@
     <div class="blue column">
         <div class="container">
             <div class="ui grid">
-                <div class="five wide computer four wide tablet sixteen wide mobile column">
-                    <form id="affiliateSearchForm" action="<?php echo url('tegoed-sparen/search'); ?>"  method="GET" class="ui form">
-                        <div id="affiliateSearch-2" class="ui search">
-                            <div class="ui icon fluid input">
-                                <input class="prompt" type="text" name="q" placeholder="Zoek uw webshop...">
-                                <i class="search icon"></i>
-                            </div>
-
-                            <div class="results"></div>
-                        </div>
-                    </form>
-                </div>
-
-                <div id="or" class="middle aligned one wide computer one wide tablet sixteen wide mobile column">
-                    <strong>OF</strong>
-                </div>
-
-                <div class="ten wide computer ten wide tablet sixteen wide mobile column">
-                    <form action="<?php echo url('tegoed-sparen/search'); ?>" method="GET" class="ui form">
-                        <div class="three fields">
-                            <div class="field">
-                                <div class="ui normal fluid search selection dropdown category-search">
-                                    <input type="hidden" name="category" value="{{ Request::has('category') ? Request::get('category') : (Request::segment(2) == 'category' ? Request::segment(4) : '') }}">
-
-                                    <i class="dropdown icon"></i>
-                                    <span class="text">Categorie</span>
-
-                                    <div class="menu">
-                                        @foreach($categories as $category)
-                                        @if ($category['countCategoryPrograms'] > 0)
-                                        <div class="item" data-id="{{ $category['id'] }}" data-value="{{ $category['slug'] }}">
-                                            {{ $category['name'] }}
-                                        </div>
-                                        @endif
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="field">
-                                <div class="ui normal fluid selection {{ !Request::has('subcategory') ? 'disabled'  : '' }} dropdown subcategory-search">
-                                    <input type="hidden" name="subcategory" value="{{ Request::has('subcategory') ? Request::get('subcategory')  : '' }}">
-
-                                    <i class="dropdown icon"></i>
-                                    <span class="text">Subcategorie</span>
-
-                                    <div class="menu">
-                                    </div>
-                                </div>         
-                            </div>
-
-                            <div class="field">
-                                <button class="ui orange icon no-radius fluid button"><i class="search icon"></i></button>            
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                <div class="form">
+					<div class="container container2">
+						<form>
+							<label for="search">
+								<input type="text" name='search' id='search' placeholder="Voorkeuren" />
+							</label>
+							<span>OF</span>
+							<select name='category' class='category'>
+								<option value='0' disabled="disabled" selected>Category</option>
+								<option>1</option>
+								<option>2</option>
+								<option>3</option>
+								<option>4</option>
+							</select>
+							<select name='subcategory' class='subcategory'>
+								<option value='0' disabled="disabled" selected>Subcategory</option>
+								<option>1</option>
+								<option>2</option>
+								<option>3</option>
+								<option>4</option>
+							</select>
+							<input type="submit" value='FIND' />
+						</form>
+					</div>
+				</div>
             </div>
         </div>
 
