@@ -3969,23 +3969,33 @@ padding-top: 90px;
 }
 
 .extension-install-fade .text {
+	background: rgba(0, 0, 0, 0) url("../images/arr_w.png") no-repeat scroll 130px 0;
 	position: fixed;
-	left: 50%;
+	left: 35%;
 	top: 230px;
 	margin-left: 10px;
-	width: 500px;
+	width: 510px;
 	padding-top: 50px;
 }
 
-.extension-install-fade .text.chrome {
+.extension-install-fade .text.Chrome {
+        background: rgba(0, 0, 0, 0) url("../images/arr_w.png") no-repeat scroll 130px 0;
 	position: fixed;
-	left: 50%;
+	left: 35%;
 	top: 230px;
 	margin-left: 10px;
-	width: 500px;
+	width: 510px;
 	padding-top: 50px;
 }
-
+.extension-install-fade .text.Firefox {
+        background: rgba(0, 0, 0, 0) url(../images/arr_w2.png) no-repeat scroll 310px 0;
+	position: fixed;
+	left: 0;
+	top: 130px;
+	margin-left: 10px;
+	width: 910px;
+	padding-left: 400px;
+}
 .slider {
 	 height: auto !important;
 }

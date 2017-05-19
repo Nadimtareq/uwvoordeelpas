@@ -1,6 +1,13 @@
 @inject('affiliateHelper', 'App\Helpers\AffiliateHelper')
 <?php @$browser = Session::get('browser'); ?>   
-
+<div class="extension-install-overlay" style="display: none;">
+    <div class="extension-install-fade">
+        <div class="text {{$browser['name']}}">
+            <h3>Klik hier!</h3>
+            <p>Gebruik alle fantastische functionaliteiten van de uwvoordeelpas.nl Spaarhulp!</p>            
+        </div>
+    </div>
+</div>
 <div id="sliderImage" class="slider{{ Request::is('admin/*') == TRUE ? ' admin' : '' }}" >
 
 	
@@ -158,7 +165,7 @@
 <script type="text/javascript">
     $(function () {
         $('.install-button-ext').click(function (e) {                        
-            $(".sweet-overlay").show().delay(4000).fadeOut();            
+            $(".extension-install-overlay").show().delay(4000).fadeOut("slow");            
             var browser = $(this).attr('data-browser');
             if (browser == 'Firefox') {
                 window.location = baseUrl + 'firefox.xpi';
