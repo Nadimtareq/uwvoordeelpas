@@ -117,20 +117,67 @@ img { border: 0; }
 .pagination li.active span { display: block; font-size: 14px; border-radius: 0; color: #FFF; padding: 10px; background: #1678c2; box-shadow: inset 0 -2px rgba(0, 0, 0, 0.05); }
 .pagination li.disabled { display: none; }
 .ui.grid > .blue.row, .ui.grid > .blue.column, .ui.grid > .row > .blue.column { background-color: #1e70bf !important; }
-.ui.grid .form { background: #c5cae9; width: 100%; }
+.ui.grid .form{ background: #c5cae9; width: 100%; }
 .ui.grid .form form { margin: 0 auto; }
 .ui.grid .form label:before { content: ''; display: block; width: 29px; height: 29px; background: url(../images/search.png) no-repeat center; position: absolute; left: 11px; top: 9px; }
-.ui.grid .form label { display: inline-block; margin: 0 35px 0 -1px; background: #b0b7e1; padding: 0 0px 0 53px; position: relative;
-.ui.grid .form input { font: 14px Tahoma; color: #333399; border-bottom: none; margin: 0; padding: 15px 0px; outline: none; height: auto; }
-.ui.grid .form ::-webkit-input-placeholder { font: 14px Tahoma; color:#333399; }
-.ui.grid .form ::-moz-placeholder          { font: 14px Tahoma; color:#333399; }/* Firefox 19+ */
-.ui.grid .form :-moz-placeholder           { font: 14px Tahoma; color:#333399; }/* Firefox 18- */
-.ui.grid .form :-ms-input-placeholder      { font: 14px Tahoma; color:#333399; }
-.ui.grid .form select { font: 14px Tahoma; color: #333399; display: inline-block; width: 23%; background: #b0b7e1; border: none; border-radius: 0px; padding: 14px 10px; margin-left: 20px; outline: none; height: auto; }
-.ui.grid .form input:focus, .shop .form select:focus { outline: none; box-shadow: 0 0 0 rgba(0,0,0,0); }
-.ui.grid .form input[type='submit']{ color: #fff; text-transform: uppercase; background: #7581ca; border: none; padding: 14px 55px; margin-left: 13px; font-size: 16px; }
-.ui.grid .form input[type='submit']:hover{ background: #333399; }
-.ui.grid .form span { text-transform: uppercase; color: #fff; background: #c5cae9; font: 14px 'LatoRegular'; display: inline-block; margin-right: 15px; }
+.ui.grid .form label{
+    display: inline-block;
+    margin: 0 35px 0 -1px;
+    background: #b0b7e1;
+    padding: 0 0px 0 53px;
+    position: relative;
+}
+.ui.grid .form input{
+    font: 14px Tahoma;
+    color: #333399;
+    border-bottom: none;
+    margin: 0;
+    padding: 15px 0px;
+    outline: none;
+    height: auto;
+}
+.ui.grid .form ::-webkit-input-placeholder {font: 14px Tahoma; color:#333399;}
+.ui.grid .form ::-moz-placeholder          {font: 14px Tahoma; color:#333399;}/* Firefox 19+ */
+.ui.grid .form :-moz-placeholder           {font: 14px Tahoma; color:#333399;}/* Firefox 18- */
+.ui.grid .form :-ms-input-placeholder      {font: 14px Tahoma; color:#333399;}
+
+.ui.grid .form select{
+    font: 14px Tahoma;
+    color: #333399;
+    display: inline-block;
+    width: 23%;
+    background: #b0b7e1;
+    border: none;
+    border-radius: 0px;
+    padding: 14px 10px;
+    margin-left: 20px;
+    outline: none;
+    height: auto;
+}
+.ui.grid .form input:focus, .shop .form select:focus{
+    outline: none;
+    box-shadow: 0 0 0 rgba(0,0,0,0);
+}
+.ui.grid .form input[type='submit']{
+    color: #fff;
+    text-transform: uppercase;
+    background: #7581ca;
+    border: none;
+    padding: 14px 55px;
+    margin-left: 13px;
+    font-size: 16px;
+}
+.ui.grid .form input[type='submit']:hover{
+    background: #333399;
+}
+.ui.grid .form span{
+    text-transform: uppercase;
+    color: #fff;
+    background: #c5cae9;
+    font: 14px 'LatoRegular';
+    display: inline-block;
+    margin-right: 15px;
+}
 .bx-viewport { height: 340px!important; }
 .bx-wrapper .bx-viewport { background: none!important; }
 .bx-wrapper { margin: 10px; }
