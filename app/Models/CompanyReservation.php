@@ -94,7 +94,7 @@ class CompanyReservation extends Model
         if (isset($availableTimes[$data->id])) {
             return $timeCarousel;
         } else {
-            return '<div class="ui tiny red header"> <i class="clock icon"></i> Helaas, er zijn momenteel geen plaatsen beschikbaar.</div>';
+            return '<div class="ui tiny red"> <i class="clock icon"></i> Helaas, er zijn momenteel geen plaatsen beschikbaar.</div>';
         }
     }
 	

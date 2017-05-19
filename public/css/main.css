@@ -339,6 +339,7 @@ body {
 
 
 .title {
+	white-space: nowrap;
 /*    font-size: 48px;
     line-height: 1.1;
     font-weight: 700;
@@ -768,7 +769,7 @@ header.nav li a:hover {
 #footer ul li a {
     color: white;
     font-size: 14px;
-    margin: 20px 0 0 0;
+    /*margin: 20px 0 0 0;*/
 }
 #footer ul li a:hover {
     color: #7986cb;
