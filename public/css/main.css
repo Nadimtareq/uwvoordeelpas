@@ -339,6 +339,7 @@ body {
 
 
 .title {
+	white-space: nowrap;
 /*    font-size: 48px;
     line-height: 1.1;
     font-weight: 700;
@@ -768,7 +769,7 @@ header.nav li a:hover {
 #footer ul li a {
     color: white;
     font-size: 14px;
-    margin: 20px 0 0 0;
+    /*margin: 20px 0 0 0;*/
 }
 #footer ul li a:hover {
     color: #7986cb;
@@ -1776,7 +1777,7 @@ header.nav li a:hover {
        background: #3366cc !important;
    }
    .side_menus{
-    padding-top: 67px;
+    padding-top: 1px;
     background: #f2f2f2;
 }
 .side_menus .static-menu li{
@@ -1866,7 +1867,7 @@ header.nav li a:hover {
     background: #333399 !important;
 }
 .tabss{
-    padding-top: 100px;
+/*    padding-top: 100px;*/
     padding-bottom: 100px;
 }
 .tabss .left_side{
@@ -1998,8 +1999,10 @@ header.nav li a:hover {
 .quantity2:focus{
     outline: none;
 }
-.right_details a.more{
+.right_details a.more,
+.right_details button.more{
     font: 14px 'LatoRegular';
+	font-family:'Open Sans', sans-serif!important;
     color: #fff;
     margin-top: 11px;
     border-radius: 5px;
@@ -4075,7 +4078,7 @@ padding-top: 90px;
 
 
 .page-fixed {
-	padding-top:90px;
+	/*padding-top:90px;*/
 	color:#363636;	
 	line-height:24px;
 	font-family: "Roboto",Helvetica,Arial,sans-serif;
@@ -4142,4 +4145,9 @@ padding-top: 90px;
 	width:80%;
 	margin-left:10%;
 	margin-right:10%;
+}
+
+.space-header {
+	padding-top:60px;
+	padding-bottom:50px;
 }
