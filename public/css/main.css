@@ -3991,13 +3991,13 @@ padding-top: 90px;
 	padding-top: 50px;
 }
 .extension-install-fade .text.Firefox {
-        background: rgba(0, 0, 0, 0) url(../images/arr_w2.png) no-repeat scroll 310px 0;
+        background: rgba(0, 0, 0, 0) url(../images/arr_w2.png) no-repeat scroll 100px 0;
 	position: fixed;
 	left: 0;
 	top: 130px;
 	margin-left: 10px;
-	width: 910px;
-	padding-left: 400px;
+	width: 675px;
+	padding-left: 170px;
 }
 .slider {
 	 height: auto !important;
