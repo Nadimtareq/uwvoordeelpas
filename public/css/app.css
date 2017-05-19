@@ -14733,7 +14733,7 @@ body.stop-scrolling { height: 100%; overflow: hidden; }
 }
 /*********** Shakuntla - 11.04.2017 ***************/
 .mdg .ui.breadcrumb { border-bottom: 1px solid #dadada; float: left; margin-bottom: 15px; padding-bottom: 7px; width: 100%; }
-.mdg .ui.grid { float: left; margin: 0 !important; padding: 0; width: 100%; }
+.mdg .ui.grid { float: left; margin: 0 !important; padding: 0; width: 100%;  color:#4183c4;}
 .mdg-box { float: left; margin: 0; padding: 0; width: 100%; }
 .col-md-1 { float: left; width: 8.33333333%; }
 .col-md-2 { float: left; width: 16.66666667%; }

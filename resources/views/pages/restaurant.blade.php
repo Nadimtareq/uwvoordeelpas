@@ -72,8 +72,8 @@ while ($st->lte($dt)) {
 									<div class="bx-viewport" style="width: 100%; overflow: hidden; position: relative; height: 314px;">
 										<ul id="bxslider" style="width: 615%; position: relative; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
 											@if($media != '[]')
-												@foreach($media as $mediaItem)                                                                                                                                
-												 @if($FileHelper::is_url_exist(public_path($mediaItem->disk. DIRECTORY_SEPARATOR . $mediaItem->id . DIRECTORY_SEPARATOR . $mediaItem->file_name)))
+												@foreach($media as $mediaItem)                                                                                                                    
+												 @if(file_exists(public_path($mediaItem->disk. DIRECTORY_SEPARATOR . $mediaItem->id . DIRECTORY_SEPARATOR . $mediaItem->file_name)))
 													<li style="float: left; list-style: outside none none; position: relative; width: 674px;">								
 													<a href="{{ url($mediaItem->getUrl()) }}" data-lightbox="roadtrip">
 														<img class="ui image" src="{{ url($mediaItem->getUrl()) }}">
