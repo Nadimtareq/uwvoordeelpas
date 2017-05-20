@@ -81,7 +81,7 @@ class HomeController extends Controller
         )
             ->where('no_show', 0)
             ->orderBy('id', 'asc')
-            ->limit(5)
+            ->limit(18)
             ->get()
         ;
     }
