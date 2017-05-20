@@ -898,6 +898,7 @@ header.nav li a:hover {
 
 @media only screen and (min-width: 35em) {
     /* Style adjustments for viewports that meet the condition */
+	
 }
 
 @media print {
@@ -4029,6 +4030,13 @@ padding-top: 90px;
 }
 
 @media (max-width: 550px){
+	
+	.primary-nav .brand-logo img {	 
+	  max-width:65%;
+	  height: auto !important;
+	  margin: 10px 0px 0;
+	}
+
 	#topmenu_saldo{
 	   display: none;
 	}
