@@ -791,8 +791,9 @@ header.nav li a:hover {
 	
 	nav .nav-wrapper i {
 		line-height:inherit;
-		height:auto !important;
+		height:auto !important;		
 	}
+
 
 }
 
@@ -803,6 +804,7 @@ header.nav li a:hover {
 	.container2 {
 		width: 750px;
 	}
+	
 }
 @media only screen and (min-width: 992px){
   .container {
@@ -4150,4 +4152,8 @@ padding-top: 90px;
 .space-header {
 	padding-top:60px;
 	padding-bottom:50px;
+}
+
+.wnwrap{
+ white-space:nowrap;
 }
