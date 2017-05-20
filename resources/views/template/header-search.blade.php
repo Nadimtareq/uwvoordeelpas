@@ -3,10 +3,9 @@
 				<div class="row">
 					<div class="col-sm-12">
 					
-						<div class="nav-inner nav-extended">
+						<div class="nav-inner">
 							<nav class="primary-nav">
-							  <div class="navbar-fixed">
-								<div class="nav-wrapper">
+								<div class="clearfix nav-wrapper">
 								 <form action="<?php echo url('search'); ?>" method="GET" class="form">
 								 	@include('template.sidemenu')
 									
@@ -19,7 +18,9 @@
 											<img src="{{ asset('images/logo.png') }}" alt="">
 										 </a>
 									 </div> -->
-										<a href="{{ url('/')}}" class="brand-logo"><img src="{{ asset('images/logo.png') }}" alt="" class="responsive-img"></a>																	
+										<a href="{{ url('/')}}" class="brand-logo">
+										  <img src="{{ asset('images/logo.png') }}" alt="" class="responsive-img">
+										 </a>																	
 									   <!-- <a href="#" data-activates="mobile-top" class="button-collapse"> <i class="material-icons material-icons2">menu</i></a> -->
 									 
 										<ul class="right side-nav" id="mobile-top"> <!-- center-menu- inline-menu -->
@@ -88,7 +89,6 @@
 										
 										
 									</form>
-								</div>
 								</div>
 							   </nav>
 						</div>

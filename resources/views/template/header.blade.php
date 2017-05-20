@@ -6,7 +6,7 @@
 							<nav class="primary-nav">
 								@include('template.sidemenu')
 								
-								<div class="clearfix nav-wrapper wnwrap">
+								<div class="clearfix nav-wrapper">
 								
 									<a href="{{ url('/')}}" class="brand-logo">
 										<!--<div style="background-image=url({{ asset('images/logo.png') }})" class="responsive-img">-->
