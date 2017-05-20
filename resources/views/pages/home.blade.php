@@ -30,7 +30,7 @@
 	                @foreach ($cities as $city)
                     <?php $media = $city->getMedia(); ?>
 
-							<div class="col-sm-4 col4">
+							<div class="col-sm-4 col-xs-12 col4">
 								<a href="{{ url('search?regio='.$city->slug) }}">
 									@if (isset($media[0]) && $FileHelper::is_url_exist(url(''.$media[0]->getUrl('thumb'))))
 										<img class="ui image" src="{{ url(''.$media[0]->getUrl('thumb')) }}" alt="{{ $city->name }}">
@@ -60,11 +60,11 @@
 			
 						<div class="container">
 							<div class="row">
-								<div class="col-sm-12">
+								<div class="col-sm-12 col-xs-12">
 								<h1>spaar NU order andere bij</h1>
 								@foreach ($affiliates as $data)
 								<?php $media = $data->getMedia(); ?>
-									<div class="col-md-2">
+									<div class="col-md-2 col-sm-4 col-xs-12">
 										<div class="partner">	
 										   <a href="{{ url('tegoed-sparen/company/'.$data->slug) }}">
 												<span class="partner2">{{ $data->name }}</span>

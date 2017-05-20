@@ -4031,7 +4031,11 @@ padding-top: 90px;
 }
 
 @media (max-width: 550px){
-	
+    .tabs-content .col4 {
+		width: inherit !important;
+		margin: 0px 0px;;
+
+	}
 	.owl-carousel-container{
 		max-width:200px;
 	}
