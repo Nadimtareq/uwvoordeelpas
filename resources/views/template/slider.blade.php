@@ -1,4 +1,5 @@
 @inject('affiliateHelper', 'App\Helpers\AffiliateHelper')
+
 <?php @$browser = Session::get('browser'); ?>   
 <div class="extension-install-overlay" style="display: none;">
     <div class="extension-install-fade">
@@ -120,7 +121,6 @@
 
 
     @if((Route::getCurrentRoute()->uri() == '/' && $userAuth == true) OR (Route::getCurrentRoute()->uri() == '/' && $userAuth && $userInfo->extension_downloaded == 0))
-
     <!--
 <div class="homepage_block_container">
     <div class="homepage_block_1">
@@ -128,37 +128,38 @@
                     <img style=" width: auto; height: 315px;" src="{{ url('images/landingpage_notebook.jpeg') }}">
             </a>
     </div>
-    @if($userAuth && $userInfo->extension_downloaded == 0)
+    if($userAuth && $userInfo->extension_downloaded == 0)
     <div class="homepage_block_2">
 
             <h3 style="color: #808080; margin: 48px 29px 0px 0px; font-size: 1.9em; text-align: center;"><em>"Wilt u na 1 klik automatisch tot<br> wel 10% sparen bij 2000+ webshops?"</em></h3>
-    <?php @$browser = Session::get('browser'); ?>                
-            @if(strtolower($browser['name']) == 'chrome')
+             
+            if(strtolower($browser['name']) == 'chrome')
             <script type="text/javascript">
                     function chromeInstallFunction() {
                             chrome.webstore.install('https://chrome.google.com/webstore/detail/kfnndmokhnlhhblfedaeebnonfjbihpo', function () {
-//                    alert('success');
+                    alert('success');
                             }, function(error, errorCode) {
-//                    alert(errorCode + "-----------" + error);
+                    alert(errorCode + "-----------" + error);
                             })
                             return false;
                     };
             </script>
-            @endif 
-            @if(strtolower($browser['name']) == 'firefox')               
+            endif 
+            if(strtolower($browser['name']) == 'firefox')               
             <a  style="margin-top: 80px; display: inline-block;" class="homepage_btn install {{$browser['name']}}" 
                     href="/firefox.xpi" iconURL="/images/icons/android-icon-48x48.png">Ja! Ik wil gratis sparen!</a>
-            @endif
-            @if(strtolower($browser['name']) == 'chrome')
+            endif
+            if(strtolower($browser['name']) == 'chrome')
             <a href="#" onclick="chromeInstallFunction();" id="install-button" style="margin-top: 80px; display: inline-block;" class="homepage_btn install {{$browser['name']}}">Ja! Ik wil gratis sparen!</a>
-            @endif
+    endif
 
-    </div> -->
+    </div> 
+	-->
     @endif
     <span style="clear: both;"></span>
 </div>
 
-@endif
+
 
 
 @push('inner_scripts')
