@@ -29,39 +29,39 @@
 		
 		<div class="content">
 			 <div class="static-menu row">
-				<div class="jsearch col-md-2 col-xs-2" >
+				<div class="jsearch col-md-2 col-sm-2 col-xs-6" >
 				 {{ Form::select('preference[]', 
 								(isset($preference[1]) ? $preference[1] : array()),  
 								(Request::has('preference') ? Request::get('preference') : ''), 
 								array('class' => 'multipleSelect', 'data-placeholder' => 'Voorkeuren', 'multiple' => 'multiple')) }}
 		
 				</div>
-				<div class="jsearch col-md-2 col-xs-2">
+				<div class="jsearch col-md-2 col-sm-2 col-xs-6">
 				{{  Form::select('kitchen[]', 
 								(isset($preference[2]) ? $preference[2] : array()),  
 								(Request::has('kitchen') ? Request::get('kitchen') : ''),  
 								array('class' => 'multipleSelect', 'data-placeholder' => 'Keuken', 'multiple' => 'multiple')) }}
 				</div>
-				<div class="jsearch col-md-2 col-xs-2">
+				<div class="jsearch col-md-2 col-sm-2 col-xs-6">
 				{{ Form::select('price[]', 
                                         (isset($preference[4]) ? $preference[4] : array()),  
                                         (Request::has('price') ? Request::get('price') : ''), 
                                         array('class' => 'multipleSelect', 'data-placeholder' => 'Soort', 'multiple' => 'multiple')) }}
 				</div>
-				<div class="jsearch col-md-2 col-xs-2">
+				<div class="jsearch col-md-2 col-sm-2 col-xs-6">
 				 {{ Form::select('discount[]', 
                                         (isset($preference[5]) ? $preference[5] : array()),  
                                         (Request::has('discount') ? Request::get('discount') : ''),  
                                         array('class' => 'multipleSelect', 'data-placeholder' => 'Korting', 'multiple' => 'multiple')) }}
 										
 				</div>
-				<div class="jsearch col-md-2 col-xs-2">
+				<div class="jsearch col-md-2 col-sm-2 col-xs-6">
 				{{ Form::select('allergies[]', 
                                                 (isset($preference[3]) ? $preference[3] : array()),  
                                                 (Request::has('allergies') ? Request::get('allergies') : ''), 
                                                 array('class' => 'multipleSelect', 'data-placeholder' => 'Allergieen',  'multiple' => 'multiple')) }}
 				</div>
-				<div class="jsearch col-md-2 col-xs-2">
+				<div class="jsearch col-md-2 col-sm-2 col-xs-12">
 				  <input type="submit" class="ui bluelink fluid filter button" value="Filteren" />
 				</div>
 			</div>
