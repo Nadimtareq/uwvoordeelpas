@@ -4054,7 +4054,7 @@ padding-top: 90px;
 	.thumbnails{
 		 min-width:0px !important;
 		 min-height:0px !important;
-		 max-width:100% !important;
+		 max-width:90% !important;
 		 margin: auto !important;
 	}
 	
