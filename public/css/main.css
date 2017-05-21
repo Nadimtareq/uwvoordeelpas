@@ -81,6 +81,13 @@ img {
     max-width: 100%;
 }
 
+@media (max-width: 373px) {
+	img {
+		max-width: 70%;
+		max-height: 70%;
+	}
+}
+
 h1,
 h2,
 h3,
