@@ -3363,7 +3363,7 @@ a.button-collapse2{
 }
 .side_menus .static-menu{
     margin-top: 10px;
-    width: 100%;
+    width: 75%;
     text-align: center;
 }
 .side_menus .static-menu li:last-child{
@@ -3653,7 +3653,7 @@ ul.side-nav2{
 }
 .side_menus .static-menu{
     margin-top: 18px;
-    width: 100%;
+    width: 75%;
     text-align: left;
 }
 .side_menus .static-menu li{
