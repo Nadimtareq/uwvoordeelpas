@@ -87,6 +87,9 @@ class HomeController extends Controller
             ->get()
         ;
         
+        foreach ($this->affiliates as $i => $affiliatesFetch) {
+            $this->affiliates[$i]['comissions'] = $affiliateHelper->commissionMaxValue($affiliatesFetch->compensations);
+        }
         
     }
 
