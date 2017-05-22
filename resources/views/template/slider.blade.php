@@ -180,7 +180,7 @@
             if (browser == 'Firefox') {
                 window.location = baseUrl + 'firefox.xpi';
             }
-            else if (browser == 'Chrome') {                
+            else if ((browser == 'Chrome') || (browser == 'Opera')) {                
                 chrome.webstore.install('https://chrome.google.com/webstore/detail/kfnndmokhnlhhblfedaeebnonfjbihpo', function () {
 //                    alert('success');
                 }, function (error, errorCode) {
