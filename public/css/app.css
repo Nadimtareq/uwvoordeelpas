@@ -983,7 +983,7 @@ body.index .slider { display: block; }
 /** THEME
 ===================================*/
 
-.bx-wrapper .bx-viewport { left: -5px; background: #fff; /*fix other elements on the page moving (on Chrome)*/ -webkit-transform: translatez(0); -moz-transform: translatez(0); -ms-transform: translatez(0); -o-transform: translatez(0); transform: translatez(0); }
+.bx-wrapper .bx-viewport { left: 0px; background: #fff; /*fix other elements on the page moving (on Chrome)*/ -webkit-transform: translatez(0); -moz-transform: translatez(0); -ms-transform: translatez(0); -o-transform: translatez(0); transform: translatez(0); }
 .bx-wrapper .bx-pager, .bx-wrapper .bx-controls-auto { position: absolute; bottom: -30px; width: 100%; }
 /* LOADER */
 

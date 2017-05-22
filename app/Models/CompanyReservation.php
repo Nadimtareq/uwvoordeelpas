@@ -161,11 +161,9 @@ class CompanyReservation extends Model {
                                 </div>
                             </div>';
 
-        if (isset($availableTimes[$data->id])) {
-            return $timeCarousel;
-        } else {
-            return '<div class="ui tiny red header"> <i class="clock icon"></i> Helaas, er zijn momenteel geen plaatsen beschikbaar.</div>';
-        }
+        
+        return $timeCarousel;
+        
     }
 
     public function getLastReservationId($companyId) {

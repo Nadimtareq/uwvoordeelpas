@@ -81,6 +81,13 @@ img {
     max-width: 100%;
 }
 
+@media (max-width: 373px) {
+	img {
+		max-width: 70%;
+		max-height: 70%;
+	}
+}
+
 h1,
 h2,
 h3,
@@ -107,7 +114,7 @@ p {
 body {
     font-family: 'Lato', sans-serif;
     font-size: 16px;
-    color: #fff;
+    color: #000000;
     font-weight: 400;
     background-color: #fafafa;
 }
@@ -1216,13 +1223,13 @@ header.nav li a:hover {
     border-radius: 5px;
     margin-top: 30px;
 }
-/*
+
 .partner:hover .partner2{
     display: block !important;
 }
 .partner:hover img, .partner:hover .last{
     display: none;
-}*/
+}
 .partner2{
     display: none !important;
     width: 100%;
@@ -3356,7 +3363,7 @@ a.button-collapse2{
 }
 .side_menus .static-menu{
     margin-top: 10px;
-    width: 100%;
+    width: 75%;
     text-align: center;
 }
 .side_menus .static-menu li:last-child{
@@ -3646,7 +3653,7 @@ ul.side-nav2{
 }
 .side_menus .static-menu{
     margin-top: 18px;
-    width: 100%;
+    width: 75%;
     text-align: left;
 }
 .side_menus .static-menu li{
@@ -3708,7 +3715,7 @@ ul.side-nav2{
     right: 0;
 }
 .tabss .left_side{
-    width: 83%;
+    width: 100%;
 }
 .tabs-all .tabs-link li{
     margin-bottom: 10px;
@@ -4047,7 +4054,7 @@ padding-top: 90px;
 	.thumbnails{
 		 min-width:0px !important;
 		 min-height:0px !important;
-		 max-width:100% !important;
+		 max-width:90% !important;
 		 margin: auto !important;
 	}
 	
@@ -4055,6 +4062,7 @@ padding-top: 90px;
 	  max-width:65%;
 	  height: auto !important;
 	  margin: 10px 0px 0;
+	  float: left;
 	}
 
 	#topmenu_saldo{
