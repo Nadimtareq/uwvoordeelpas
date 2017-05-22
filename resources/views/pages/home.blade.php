@@ -63,13 +63,12 @@ $arrayMerge = array_filter(array_merge($breadcrumbArray1, $breadcrumbArray2, $br
             <div class="col-sm-12 col-xs-12">
                 <h1>spaar NU order andere bij</h1>
                 @foreach ($affiliates as $data)
-                <?php $media = $data->getMedia(); ?>
                 <div class="col-md-2 col-sm-4 col-xs-12">
                     <div class="partner">	
-                        <a href="{{ url('tegoed-sparen/search?q='.$media[0]->name) }}">
-                            <span class="partner2">{{ $media[0]->name }}</span>
+                        <a href="{{ url('tegoed-sparen/company/'.$data['name']) }}">
+                            <span class="partner2">{{ $data['commissions'] }}</span>
                             @if (isset($media[0]) && $FileHelper::is_url_exist(url(''.$media[0]->getUrl())))
-                            <img src="{{ url(''.$media[0]->getUrl()) }}" alt="p1">													
+                            <img src="{{ asset('images/affiliates/'.$data['affiliate_network'].'/'.$data['program_id'].'.'.$data['image_extension']) }}" alt="p1">													
                             @else
                             <img src="{{ url('images/placeholdimage.png') }}" alt="p1">
                             @endif												
