@@ -22,6 +22,83 @@ while ($st->lte($dt)) {
 @inject('discountHelper', 'App\Helpers\DiscountHelper')
 	<div class="tabss">
 		<div class="container">
+			
+				
+			<div class="main_gallery">
+					<div class="left_side">
+						<div class="bx-wrapper" style="max-width: 100%; margin: 0px auto;">
+							<div class="bx-viewport" style="width: 100%; overflow: hidden; position: relative; height: 314px;">
+								<div class="bx-wrapper" style="max-width: 100%; margin: 0px auto;">
+									<div class="bx-viewport" style="width: 100%; overflow: hidden; position: relative; height: 314px;">
+										<ul id="bxslider" style="width: 615%; position: relative; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
+											@if($media != '[]')
+												@foreach($media as $mediaItem)                                                                                                                    
+												 @if(file_exists(public_path($mediaItem->disk. DIRECTORY_SEPARATOR . $mediaItem->id . DIRECTORY_SEPARATOR . $mediaItem->file_name)))
+													<li style="float: left; list-style: outside none none; position: relative; width: 674px;">								
+													<a href="{{ url($mediaItem->getUrl()) }}" data-lightbox="roadtrip">
+														<img class="ui image materialboxed" src="{{ url($mediaItem->getUrl()) }}">
+													</a>
+												 @else
+												  <li style="float: left; list-style: outside none none; position: relative; width: 674px;">
+													<img src="{{ asset('images/s.jpg') }}" alt="s" class="materialboxed">
+												 @endif 
+												 
+
+												{!! $discountHelper->replaceKeys(
+														$company, 
+														$company->days, 
+														(isset($contentBlock[44]) ? $contentBlock[44] : ''),
+														'ribbon-wrapper thumb-discount-label'
+													) 
+												!!}
+												</li>
+												@endforeach
+											@else 
+												<li style="float: left; list-style: outside none none; position: relative; width: 674px;">
+												  <img src="{{ asset('images/s.jpg') }}" alt="s">
+												</li>
+											@endif
+							
+										</ul>
+									</div>
+									<div class="bx-controls bx-has-controls-direction">
+										<div class="bx-controls-direction">
+											<a class="bx-prev disabled" href=""></a>
+											<a class="bx-next" href=""></a>
+										</div>
+									</div>
+								 </div>
+							</div>
+							<div class="bx-controls bx-has-controls-direction">
+								<div class="bx-controls-direction">
+									<a class="bx-prev disabled" href=""></a>
+									<a class="bx-next" href=""></a>
+								</div>
+							</div>
+					   </div>
+					</div>
+					<!-- The thumbnails -->
+					<!-- <div class="r_side">
+						<div class="bx-wrapper" style="max-width: 205px; margin: 0px auto;"><div class="bx-viewport" style="width: 100%; overflow: hidden; position: relative; height: 323px;"><ul id="bxslider-pager" style="width: auto; position: relative; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
+						@if($media != '[]')
+							@foreach ($media as $key => $mediaItem)                                                                                                                
+								@if($FileHelper::is_url_exist(public_path($mediaItem->disk. DIRECTORY_SEPARATOR . $mediaItem->id . DIRECTORY_SEPARATOR . 'conversions' . DIRECTORY_SEPARATOR . "175Thumb.jpg")))
+								<li data-slideindex="{{ $key }}" data-slide-index="{{ $key }}" style="float: none; list-style: outside none none; position: relative; width: 187px; margin-bottom: 3px;">
+									<a href="#">
+									 <img src="{{ url($mediaItem->getUrl('175Thumb')) }}" alt="Alt">
+									 </a>
+								</li>
+								@else 
+									<li data-slideindex="0" style="width: 140px;height:78px"><a href="#"><img src="{{ asset('images/s.png')}} " alt="Alt"></a></li>
+								@endif	
+							@endforeach
+						@else 
+							<li data-slideindex="0" style="width: 140px;height:78px"><a href="#"><img src="{{ asset('images/s.png')}} " alt="Alt"></a></li>
+						@endif
+						</ul></div><div class="bx-controls bx-has-controls-direction"><div class="bx-controls-direction"><a class="bx-prev disabled" href=""><span></span></a><a class="bx-next disabled" href=""><span></span></a></div></div></div>
+					</div> -->
+			</div>
+			
 			{!! Form::open(['url' => 'restaurant/'.$company->slug, 'id' => 'reservationForm', 'class' => 'ui form']) !!}
 			{{ Form::hidden('date_hidden') }}
 			{{ Form::hidden('date', date('Y-m-d')) }}
@@ -63,82 +140,7 @@ while ($st->lte($dt)) {
 					
 			</div>
 			{!! Form::close() !!}
-				
-			<div class="main_gallery">
-					<div class="left_side">
-						<div class="bx-wrapper" style="max-width: 100%; margin: 0px auto;">
-							<div class="bx-viewport" style="width: 100%; overflow: hidden; position: relative; height: 314px;">
-								<div class="bx-wrapper" style="max-width: 100%; margin: 0px auto;">
-									<div class="bx-viewport" style="width: 100%; overflow: hidden; position: relative; height: 314px;">
-										<ul id="bxslider" style="width: 615%; position: relative; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
-											@if($media != '[]')
-												@foreach($media as $mediaItem)                                                                                                                    
-												 @if(file_exists(public_path($mediaItem->disk. DIRECTORY_SEPARATOR . $mediaItem->id . DIRECTORY_SEPARATOR . $mediaItem->file_name)))
-													<li style="float: left; list-style: outside none none; position: relative; width: 674px;">								
-													<a href="{{ url($mediaItem->getUrl()) }}" data-lightbox="roadtrip">
-														<img class="ui image" src="{{ url($mediaItem->getUrl()) }}">
-													</a>
-												 @else
-												  <li style="float: left; list-style: outside none none; position: relative; width: 674px;">
-													<img src="{{ asset('images/s.jpg') }}" alt="s">
-												 @endif 
-												 
-
-												{!! $discountHelper->replaceKeys(
-														$company, 
-														$company->days, 
-														(isset($contentBlock[44]) ? $contentBlock[44] : ''),
-														'ribbon-wrapper thumb-discount-label'
-													) 
-												!!}
-												</li>
-												@endforeach
-											@else 
-												<li style="float: left; list-style: outside none none; position: relative; width: 674px;">
-												  <img src="{{ asset('images/s.jpg') }}" alt="s">
-												</li>
-											@endif
-							
-										</ul>
-									</div>
-									<div class="bx-controls bx-has-controls-direction">
-										<div class="bx-controls-direction">
-											<a class="bx-prev disabled" href=""></a>
-											<a class="bx-next" href=""></a>
-										</div>
-									</div>
-								 </div>
-							</div>
-							<div class="bx-controls bx-has-controls-direction">
-								<div class="bx-controls-direction">
-									<a class="bx-prev disabled" href=""></a>
-									<a class="bx-next" href=""></a>
-								</div>
-							</div>
-					   </div>
-					</div>
-					<!-- The thumbnails -->
-					<div class="r_side">
-						<div class="bx-wrapper" style="max-width: 205px; margin: 0px auto;"><div class="bx-viewport" style="width: 100%; overflow: hidden; position: relative; height: 323px;"><ul id="bxslider-pager" style="width: auto; position: relative; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
-						@if($media != '[]')
-							@foreach ($media as $key => $mediaItem)                                                                                                                
-								@if($FileHelper::is_url_exist(public_path($mediaItem->disk. DIRECTORY_SEPARATOR . $mediaItem->id . DIRECTORY_SEPARATOR . 'conversions' . DIRECTORY_SEPARATOR . "175Thumb.jpg")))
-								<li data-slideindex="{{ $key }}" data-slide-index="{{ $key }}" style="float: none; list-style: outside none none; position: relative; width: 187px; margin-bottom: 3px;">
-									<a href="#">
-									 <img src="{{ url($mediaItem->getUrl('175Thumb')) }}" alt="Alt">
-									 </a>
-								</li>
-								@else 
-									<li data-slideindex="0" style="width: 140px;height:78px"><a href="#"><img src="{{ asset('images/s.png')}} " alt="Alt"></a></li>
-								@endif	
-							@endforeach
-						@else 
-							<li data-slideindex="0" style="width: 140px;height:78px"><a href="#"><img src="{{ asset('images/s.png')}} " alt="Alt"></a></li>
-						@endif
-						</ul></div><div class="bx-controls bx-has-controls-direction"><div class="bx-controls-direction"><a class="bx-prev disabled" href=""><span></span></a><a class="bx-next disabled" href=""><span></span></a></div></div></div>
-					</div>
-			</div>
-				
+			
 				
 			<div class="tabs-all">
 					<ul class="tabs-link">

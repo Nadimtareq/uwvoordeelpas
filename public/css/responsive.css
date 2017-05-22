@@ -74,7 +74,7 @@ TOC :
         max-width: 300px;
         position: absolute;*/
 		position:relative;
-		display:inline;
+		display:block;
     }
 
     .primary-nav .brand-logo {

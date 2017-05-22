@@ -8,7 +8,10 @@
 								
 								<div class="clearfix nav-wrapper">
 								
-									<a href="{{ url('/')}}" class="brand-logo img-responsive"><img src="{{ asset('images/logo.png') }}" alt=""></a>																	
+									<a href="{{ url('/')}}" class="brand-logo">
+										<!--<div style="background-image=url({{ asset('images/logo.png') }})" class="responsive-img">-->
+										<img src="{{ asset('images/logo.png') }}" alt="" class="responsive-img">
+									</a>
 									<!--
 									<a href="{{ url('/') }}" class="left brand-logo menu-smooth-scroll pp-container" data-section="#home">
 										<img src="{{ url('images/logo.png') }}">

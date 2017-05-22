@@ -3,10 +3,10 @@
 				<div class="row">
 					<div class="col-sm-12">
 					
-						<div class="nav-inner nav-extended">
+						<div class="nav-inner">
 							<nav class="primary-nav">
-								<div class="nav-wrapper">
-								 <form action="<?php echo url('search'); ?>" method="GET" class="form">
+								<div class="clearfix nav-wrapper">
+								 
 								 	@include('template.sidemenu')
 									
 									<!-- <a href="{{ url('/')}}" class="left brand-logo menu-smooth-scroll" data-section="#home">
@@ -18,11 +18,15 @@
 											<img src="{{ asset('images/logo.png') }}" alt="">
 										 </a>
 									 </div> -->
-										<a href="{{ url('/')}}" class="brand-logo img-responsive"><img src="{{ asset('images/logo.png') }}" alt=""></a>																	
-									    <a href="#" data-activates="mobile-top" class="button-collapse"> <i class="material-icons material-icons2">menu</i></a>
+									    <a href="#" data-activates="mobile-top" class="button-collapse"> <i class="material-icons material-icons2">menu</i></a> 										
+										<div class="brand-logo">
+											 <a href="{{ url('/')}}" >
+												<img src="{{ asset('images/logo.png') }}" alt="" class="responsive-img">
+											 </a>																	
+										 </div>
 									 
 										<ul class="right side-nav" id="mobile-top"> <!-- center-menu- inline-menu -->
-
+											<form action="<?php echo url('search'); ?>" method="GET" class="form">
 											<li class="search-form-li sk">										  
 												<div class="input-field">
 													<label class="label-icon" for="search"><i class="mdi-actio2n-search sss"></i></label>											
@@ -75,19 +79,10 @@
 											<li>
 											    <button class="zoek" id ="searchDesktop" type="submit">zoek</button>
 											</li>
+								
+										</form>
 										</ul>
-										
-										@if($userAuth)
-										<!--	<ul class="inline-menu side-nav">
-												<li data-content="Uitloggen"><a href="{{ url('logout') }}"><i class="sign out icon"></i>Signout</a></li>
-											</ul>  -->
-										@endif 
-										
-									
-										
-										
-									</form>
-								</div>
+									</div>
 							   </nav>
 						</div>
 						<!-- menu end -->
