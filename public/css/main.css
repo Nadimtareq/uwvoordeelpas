@@ -1898,6 +1898,8 @@ header.nav li a:hover {
     padding: 17px;
     z-index: 11;
     position: relative;
+	display:inline-block;
+	
 }
 #bxslider-pager li{
     margin-bottom: -1px !important;
