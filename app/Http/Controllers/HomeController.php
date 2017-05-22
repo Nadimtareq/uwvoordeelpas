@@ -14,6 +14,7 @@ use App\Models\FaqCategory;
 use App\Models\SearchHistory;
 use App\Models\Preference;
 use App\Models\AffiliateCategory;
+use App\Helpers\AffiliateHelper;
 use App\Models\CompanyReservation;
 use App\Models\MailTemplate;
 use App\Models\Barcode;
@@ -40,6 +41,7 @@ class HomeController extends Controller
         
        $browser = new BrowerHelper(); 
        Session::set('browser',$browser->detect()->getInfo());
+       $affiliateHelper = new AffiliateHelper();
       
         $this->user = Sentinel::getUser();
         
@@ -76,14 +78,16 @@ class HomeController extends Controller
         ;
 
         # Affiliates 
-        $this->affiliates = Affiliate::with(
-            'media'
+        $this->affiliates = Affiliate::select(
+            '*'
         )
             ->where('no_show', 0)
-            ->orderBy('id', 'asc')
+            ->orderBy('clicks', 'desc')
             ->limit(18)
             ->get()
         ;
+        
+        
     }
 
     public function deals(Request $request)
