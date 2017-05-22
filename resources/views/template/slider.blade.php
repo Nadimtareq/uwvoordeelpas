@@ -190,7 +190,7 @@
             }
             e.preventDefault();
         });
-        if(is_download_ext == '1'){
+        if((is_download_ext == '1') && ($('.install-button-ext').length > 0)) {
             $('.install-button-ext').trigger("click");
         }
     });
