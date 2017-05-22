@@ -1751,7 +1751,7 @@ opacity: 1; }
 /* mouse grab icon */
 .grabbing { cursor: url(grabbing.png) 8 8, move; }
 /* fix */
-.owl-carousel .owl-wrapper, .owl-carousel .owl-item { -webkit-backface-visibility: hidden; -moz-backface-visibility: hidden; -ms-backface-visibility: hidden; -webkit-transform: translate3d(0, 0, 0) !important; -moz-transform: translate3d(0, 0, 0) !important; -ms-transform: translate3d(0, 0, 0); }
+.owl-carousel .owl-wrapper, .owl-carousel .owl-item { -webkit-backface-visibility: hidden; -moz-backface-visibility: hidden; -ms-backface-visibility: hidden; -webkit-transform: translate3d(0, 0, 0) ; -moz-transform: translate3d(0, 0, 0); -ms-transform: translate3d(0, 0, 0); }
 .owl-wrapper .customNavigation { float: left; width: 14px; }
 /*! jQuery-Impromptu - v6.2.1 - 2015-05-10
 * http://trentrichardson.com/Impromptu
