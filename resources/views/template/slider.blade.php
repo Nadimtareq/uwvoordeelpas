@@ -13,19 +13,23 @@
 
 	
     @if (Route::getCurrentRoute()->uri() == '/')
-
+    
     <section id="home" class="scroll-section root-sec grey lighten-5 home-wrap">
         <div class="sec-overlay">
             <div class="container">
-                <div class="row">
+                <div class="row">                    
                     <div class="col-sm-12">
-                        <div class="home-inner">
-                            <div class="center-align home-content">								
+                        <div class="home-inner">                            
+                            <div class="center-align home-content">								                                                                
                                 <?php if (($userAuth == FALSE) OR ( $userAuth && $userInfo->extension_downloaded == 0)):?>
                                     <h1 class="home-title">Activeer de spaarhulp en ontvang direct €5.- </h1>
                                     <h2 class="home-subtitle">Spaar nu automatisch bij wel 2000+ webshops. <br>
                                         Deze betalen u tot wel 10% dinertegoed bij iedere aankoop!</h2>
-                                    <button data-browser="{{$browser['name']}}" class="install-button-ext button_action">Ja ik wil ook sparen!</button>
+                                    <?php if($userAuth == FALSE):?>
+                                        <button data-browser="{{$browser['name']}}" class="login button_action" data-redirect="{{ URL::full('/').'?extension_download_btn=1' }}">Ja ik wil ook sparen!</button>
+                                    <?php elseif($userAuth && $userInfo->extension_downloaded == 0):?>
+                                        <button data-browser="{{$browser['name']}}" class="install-button-ext button_action">Ja ik wil ook sparen!</button>
+                                    <?php endif; ?>    
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -68,7 +72,11 @@
                         <h1>Activeer de spaarhulp en ontvang direct €5.- </h1>
                         <h4>Spaar nu automatisch bij wel 2000+ webshops. <br> Deze betalen u tot wel 10% dinertegoed bij iedere aankoop!</h4>
                         <br>
-                        <button data-browser="{{$browser['name']}}" class="install-button-ext button_action">Ja ik wil ook sparen!</button>
+                        <?php if($userAuth == FALSE):?>
+                            <button data-browser="{{$browser['name']}}" class="login button_action" data-redirect="{{ URL::full('/').'?extension_download_btn=1' }}">Ja ik wil ook sparen!</button>
+                        <?php elseif($userAuth && $userInfo->extension_downloaded == 0):?>
+                            <button data-browser="{{$browser['name']}}" class="install-button-ext button_action">Ja ik wil ook sparen!</button>
+                        <?php endif;?>
                     </div>
                 </div>
             </div>
@@ -164,9 +172,10 @@
 
 @push('inner_scripts')
 <script type="text/javascript">
+    var is_download_ext = "<?php echo (app('request')->has('extension_download_btn') && (app('request')->get('extension_download_btn')=='1')) ? '1' : '0' ;?>";    
     $(function () {
         $('.install-button-ext').click(function (e) {                        
-            $(".extension-install-overlay").show().delay(4000).fadeOut("slow");            
+            $(".extension-install-overlay").show().delay(6000).fadeOut("slow");            
             var browser = $(this).attr('data-browser');
             if (browser == 'Firefox') {
                 window.location = baseUrl + 'firefox.xpi';
@@ -181,6 +190,9 @@
             }
             e.preventDefault();
         });
+        if(is_download_ext == '1'){
+            $('.install-button-ext').trigger("click");
+        }
     });
 </script>
 @endpush
