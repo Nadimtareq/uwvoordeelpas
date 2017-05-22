@@ -66,7 +66,7 @@ $arrayMerge = array_filter(array_merge($breadcrumbArray1, $breadcrumbArray2, $br
                 <?php $media = $data->getMedia(); ?>
                 <div class="col-md-2 col-sm-4 col-xs-12">
                     <div class="partner">	
-                        <a href="{{ url('tegoed-sparen/company/'.$data->slug) }}">
+                        <a href="{{ url('tegoed-sparen/search?q='.$media[0]->name) }}">
                             <span class="partner2">{{ $media[0]->name }}</span>
                             @if (isset($media[0]) && $FileHelper::is_url_exist(url(''.$media[0]->getUrl())))
                             <img src="{{ url(''.$media[0]->getUrl()) }}" alt="p1">													
