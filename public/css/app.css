@@ -110,12 +110,12 @@ img { border: 0; }
 .timeLabels .bx-controls.bx-has-controls-direction { display: none; }
 .timeLabels { width: 320px; height: 40px; }
 .timeLabels .open.times li a { padding-left: 0; padding-right: 0; }
-/*.pagination { margin: 0; margin-bottom: 60px; padding: 0; list-style: none; }
+.pagination { margin: 0; margin-bottom: 60px; padding: 0; list-style: none; }
 .pagination li { float: left; display: block; font-size: 14px; margin-right: 10px; border-radius: 3px; }
 .pagination li a { display: block; font-size: 14px; border-radius: 3px; background-color: #EEE; padding: 10px; box-shadow: inset 0 -2px rgba(0, 0, 0, 0.05); }
 .pagination li a:hover { background-color: #ddd; display: block; cursor: pointer; border-radius: 0; color: #444; }
 .pagination li.active span { display: block; font-size: 14px; border-radius: 0; color: #FFF; padding: 10px; background: #1678c2; box-shadow: inset 0 -2px rgba(0, 0, 0, 0.05); }
-.pagination li.disabled { display: none; }*/
+.pagination li.disabled { display: none; }
 .ui.grid > .blue.row, .ui.grid > .blue.column, .ui.grid > .row > .blue.column { background-color: #1e70bf !important; }
 .ui.grid .form{ width: 100%; }
 .ui.grid .form form { margin: 0 auto; }
@@ -3947,8 +3947,8 @@ i.inverted.icon { color: #FFFFFF; }
 
 
 /* Red */
-i.red.icon { color: #DB2828 !important; }
-i.inverted.red.icon { color: #FF695E !important; }
+i.red.icon { color: #DB2828 !important; background: none; }
+i.inverted.red.icon { color: #FF695E !important; background: none; }
 i.inverted.bordered.red.icon, i.inverted.circular.red.icon { background-color: #DB2828 !important; color: #FFFFFF !important; }
 /* Orange */
 i.orange.icon { color: #F2711C !important; }
@@ -3963,8 +3963,8 @@ i.olive.icon { color: #B5CC18 !important; }
 i.inverted.olive.icon { color: #D9E778 !important; }
 i.inverted.bordered.olive.icon, i.inverted.circular.olive.icon { background-color: #B5CC18 !important; color: #FFFFFF !important; }
 /* Green */
-i.green.icon { color: #21BA45 !important; }
-i.inverted.green.icon { color: #2ECC40 !important; }
+i.green.icon { color: #21BA45 !important; background: none; }
+i.inverted.green.icon { color: #2ECC40 !important; background: none; }
 i.inverted.bordered.green.icon, i.inverted.circular.green.icon { background-color: #21BA45 !important; color: #FFFFFF !important; }
 /* Teal */
 i.teal.icon { color: #00B5AD !important; }
