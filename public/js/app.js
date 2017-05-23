@@ -53355,12 +53355,16 @@ $(document).ready(function() {
             		 	if (wrapper.hasClass('active')) {
 				            carousel.owlCarousel({
 			                    items: 5,
+								loop:true,
 			                    lazyLoad : true,
 			                    navigation : false,
 			                    stopOnHover : true,
 			                    autoPlay : false,
 			                    responsiveBaseWidth: window,
-			                    itemsMobile: [479,5]
+								itemsDesktop : [1199,5],
+								itemsDesktopSmall : [980,4],
+								itemsTablet: [768,3],
+			                    itemsMobile: [479,3]
 				            });
 
 				            if (currentUrl.indexOf('sltime') >= 0 && $('#time-' + index).hasClass('firstTime') == false) {

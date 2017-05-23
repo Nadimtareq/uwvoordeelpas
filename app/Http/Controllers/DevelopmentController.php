@@ -51,4 +51,9 @@ class DevelopmentController extends Controller
 		return view('admin.testdata', ['sql' => $this->result]);
 		
 	}
+	
+	public function phpinfo() {
+		 phpinfo();
+		 dd();
+	}
 }

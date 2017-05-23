@@ -3,7 +3,7 @@
 			<div class="row">
 				<div class="col-sm-12 col-footer footer">
 					
-					<div class="col-sm-3 col">
+					<div class="col-sm-3  col-xs-12 col">
 						{!! isset($contentBlock[4]) ? $contentBlock[4] : '' !!}
 						@if(isset($pageLinks[1]))
 						<ul class="ui inverted">
@@ -21,7 +21,7 @@
 						<div class="clear"></div>
 					</div>
 					
-					<div class="col-sm-3 col">
+					<div class="col-sm-3 col-xs-12  col">
 					    {!! isset($contentBlock[5]) ? $contentBlock[5] : '' !!}
 					    @if(isset($pageLinks[2]))
 						<ul class="ui inverted">
@@ -39,7 +39,7 @@
 						<div class="clear"></div>
 					</div>
 					
-					<div class="col-sm-3 col ">
+					<div class="col-sm-3 col-xs-12  col ">
 						{!! isset($contentBlock[6]) ? $contentBlock[6] : '' !!}
 						@if(isset($pageLinks[3]))
 						<ul class="ui inverted">
@@ -58,7 +58,7 @@
 						<div class="clear"></div>
 					</div>
 					
-					<div class="col-sm-3 col">
+					<div class="col-sm-3  col-xs-12  col">
 						{!! isset($contentBlock[7]) ? $contentBlock[7] : '' !!}
 						@if(isset($pageLinks[4]))
 						<ul class="ui inverted">
