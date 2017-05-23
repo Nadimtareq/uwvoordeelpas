@@ -5,7 +5,7 @@
     <div class="extension-install-fade">
         <div class="text {{$browser['name']}}">
             <h3>Klik hier!</h3>
-            <p>Gebruik alle fantastische functionaliteiten van de uwvoordeelpas.nl Spaarhulp!</p>            
+            <p style="text-align: left;">Gebruik alle fantastische functionaliteiten van de uwvoordeelpas.nl Spaarhulp!</p>            
         </div>
     </div>
 </div>
@@ -30,7 +30,7 @@ $compatible_browser_array = array('Chrome','Firefox', 'Opera');
                                         Deze betalen u tot wel 10% dinertegoed bij iedere aankoop!</h2>
                                     <?php if(in_array($browser['name'], $compatible_browser_array)):?>
                                         <?php if ($userAuth == FALSE): ?>
-                                            <button data-browser="{{$browser['name']}}" class="login button_action" data-redirect="{{ URL::full('/').'?extension_download_btn=1' }}">Ja ik wil ook sparen!</button>
+                                            <button data-browser="{{$browser['name']}}" class="login button_action" data-type="login" data-redirect="{{ URL::full('/').'?extension_download_btn=1' }}">Ja ik wil ook sparen!</button>
                                         <?php elseif ($userAuth && $userInfo->extension_downloaded == 0): ?>
                                             <button data-browser="{{$browser['name']}}" id="header_extension_button" class="install-button-ext button_action">Ja ik wil ook sparen!</button>
                                         <?php endif; ?>    
@@ -81,7 +81,7 @@ $compatible_browser_array = array('Chrome','Firefox', 'Opera');
                         <br>
                         <?php if(in_array($browser['name'], $compatible_browser_array)):?>
                             <?php if ($userAuth == FALSE): ?>
-                                <button data-browser="{{$browser['name']}}" class="login button_action" data-redirect="{{ URL::full('/').'?extension_download_btn=1' }}">Ja ik wil ook sparen!</button>
+                                <button data-browser="{{$browser['name']}}" class="login button_action" data-type="login" data-redirect="{{ URL::full('/').'?extension_download_btn=1' }}">Ja ik wil ook sparen!</button>
                             <?php elseif ($userAuth && $userInfo->extension_downloaded == 0): ?>
                                 <button data-browser="{{$browser['name']}}" id="section_extension_button" class="install-button-ext button_action">Ja ik wil ook sparen!</button>
                             <?php endif; ?>

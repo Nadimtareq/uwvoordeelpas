@@ -3988,23 +3988,12 @@ padding-top: 90px;
 }
 
 .extension-install-fade .text {
-	background: rgba(0, 0, 0, 0) url("../images/arr_w.png") no-repeat scroll 130px 0;
-	position: fixed;
-	left: 35%;
-	top: 230px;
-	margin-left: 10px;
-	width: 510px;
-	padding-top: 50px;
-}
-
-.extension-install-fade .text.Chrome {
-        background: rgba(0, 0, 0, 0) url("../images/arr_w.png") no-repeat scroll 130px 0;
-	position: fixed;
-	left: 35%;
-	top: 230px;
-	margin-left: 10px;
-	width: 510px;
-	padding-top: 50px;
+    background: rgba(0, 0, 0, 0) url("../images/arr_w.png") no-repeat scroll 130px 0;
+    left: 12%;
+    position: fixed;
+    top: 35%;
+    width: 40%;
+    padding-top: 40px;
 }
 .extension-install-fade .text.Firefox {
         background: rgba(0, 0, 0, 0) url(../images/arr_w2.png) no-repeat scroll 100px 0;

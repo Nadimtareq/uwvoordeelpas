@@ -461,3 +461,20 @@ TOC :
         max-width: 250px;
     }
 }
+@media only screen and (max-width: 359px) {
+.extension-install-fade .text {
+    background: rgba(0, 0, 0, 0) url("../images/arr_w.png") no-repeat scroll 130px 0;
+    left: 20%;
+    position: fixed;
+    top: 29%;
+    width: 70%;
+}
+.extension-install-fade .text.Firefox {        
+    background: rgba(0, 0, 0, 0) url("../images/arr_w2.png") no-repeat scroll 35px 0;
+    left: 0;
+    padding-left: 35%;
+    position: fixed;
+    top: 30%;
+    width: 95%;
+}
+}
