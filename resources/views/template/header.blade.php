@@ -1,4 +1,7 @@
- <header id="navigation" class="root-sec white nav {{ ( Route::getCurrentRoute()->uri() != '/' || $userAuth == TRUE )  ? 'header2' : '' }} ">
+ @php
+   $isGrey = ( Route::getCurrentRoute()->uri() != '/')
+ @endphp
+ <header id="navigation" class="root-sec white nav {{ (($isGrey) ) ? 'header_grey' : '' }} "> <!--   -->
 			<div class="container">
 				<div class="row">
 					<div class="col-sm-12">
@@ -10,7 +13,7 @@
 								
 									<a href="{{ url('/')}}" class="brand-logo">
 										<!--<div style="background-image=url({{ asset('images/logo.png') }})" class="responsive-img">-->
-										<img src="{{ asset('images/logo.png') }}" alt="" class="responsive-img">
+										<img src="{{ (($isGrey) ) ? asset('images/logo_grey.png') : asset('images/logo.png') }}" alt="" class="responsive-img">
 									</a>
 									<!--
 									<a href="{{ url('/') }}" class="left brand-logo menu-smooth-scroll pp-container" data-section="#home">

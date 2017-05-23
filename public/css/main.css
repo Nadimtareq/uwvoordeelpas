@@ -442,6 +442,7 @@ header.nav li a:hover {
   max-width:80%;
   height: auto !important;
   margin: 10px 0px 0;
+  float:left;
 }
 
 .mobile-profile{
@@ -4196,4 +4197,11 @@ padding-top: 90px;
 
 .wnwrap{
  white-space:nowrap;
+}
+
+.header_grey .side-nav li a,
+.header_grey  a.button-collapse2 {
+	
+	color:darkgray !important;
+		
 }
