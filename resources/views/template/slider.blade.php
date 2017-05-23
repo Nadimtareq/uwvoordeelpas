@@ -9,27 +9,34 @@
         </div>
     </div>
 </div>
+<?php 
+$compatible_browser_array = array('Chrome','Firefox', 'Opera');
+?>
 <div id="sliderImage" class="slider{{ Request::is('admin/*') == TRUE ? ' admin' : '' }}" >
 
-	
+
     @if (Route::getCurrentRoute()->uri() == '/')
-    
+
     <section id="home" class="scroll-section root-sec grey lighten-5 home-wrap">
         <div class="sec-overlay">
             <div class="container">
                 <div class="row">                    
                     <div class="col-sm-12">
                         <div class="home-inner">                            
-                            <div class="center-align home-content">								                                                                
-                                <?php if (($userAuth == FALSE) OR ( $userAuth && $userInfo->extension_downloaded == 0)):?>
+                            <div class="center-align home-content">								                                                                                         
+                                <?php if (($userAuth == FALSE) OR ( $userAuth && $userInfo->extension_downloaded == 0)): ?>
                                     <h1 class="home-title">Activeer de spaarhulp en ontvang direct €5.- </h1>
                                     <h2 class="home-subtitle">Spaar nu automatisch bij wel 2000+ webshops. <br>
                                         Deze betalen u tot wel 10% dinertegoed bij iedere aankoop!</h2>
-                                    <?php if($userAuth == FALSE):?>
-                                        <button data-browser="{{$browser['name']}}" class="login button_action" data-redirect="{{ URL::full('/').'?extension_download_btn=1' }}">Ja ik wil ook sparen!</button>
-                                    <?php elseif($userAuth && $userInfo->extension_downloaded == 0):?>
-                                        <button data-browser="{{$browser['name']}}" class="install-button-ext button_action">Ja ik wil ook sparen!</button>
-                                    <?php endif; ?>    
+                                    <?php if(in_array($browser['name'], $compatible_browser_array)):?>
+                                        <?php if ($userAuth == FALSE): ?>
+                                            <button data-browser="{{$browser['name']}}" class="login button_action" data-redirect="{{ URL::full('/').'?extension_download_btn=1' }}">Ja ik wil ook sparen!</button>
+                                        <?php elseif ($userAuth && $userInfo->extension_downloaded == 0): ?>
+                                            <button data-browser="{{$browser['name']}}" id="header_extension_button" class="install-button-ext button_action">Ja ik wil ook sparen!</button>
+                                        <?php endif; ?>    
+                                    <?php else:?>
+                                            <button data-browser="{{$browser['name']}}" class="incompatible_browser_ext button_action">Ja ik wil ook sparen!</button>
+                                    <?php endif; ?>        
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -72,11 +79,16 @@
                         <h1>Activeer de spaarhulp en ontvang direct €5.- </h1>
                         <h4>Spaar nu automatisch bij wel 2000+ webshops. <br> Deze betalen u tot wel 10% dinertegoed bij iedere aankoop!</h4>
                         <br>
-                        <?php if($userAuth == FALSE):?>
-                            <button data-browser="{{$browser['name']}}" class="login button_action" data-redirect="{{ URL::full('/').'?extension_download_btn=1' }}">Ja ik wil ook sparen!</button>
-                        <?php elseif($userAuth && $userInfo->extension_downloaded == 0):?>
-                            <button data-browser="{{$browser['name']}}" class="install-button-ext button_action">Ja ik wil ook sparen!</button>
+                        <?php if(in_array($browser['name'], $compatible_browser_array)):?>
+                            <?php if ($userAuth == FALSE): ?>
+                                <button data-browser="{{$browser['name']}}" class="login button_action" data-redirect="{{ URL::full('/').'?extension_download_btn=1' }}">Ja ik wil ook sparen!</button>
+                            <?php elseif ($userAuth && $userInfo->extension_downloaded == 0): ?>
+                                <button data-browser="{{$browser['name']}}" id="section_extension_button" class="install-button-ext button_action">Ja ik wil ook sparen!</button>
+                            <?php endif; ?>
+                        <?php else:?>
+                            <button data-browser="{{$browser['name']}}" class="incompatible_browser_ext button_action">Ja ik wil ook sparen!</button>
                         <?php endif;?>
+                        
                     </div>
                 </div>
             </div>
@@ -84,8 +96,8 @@
     </section>
     @endif
 
- 
- 
+
+
     @if (Route::getCurrentRoute()->uri() == '/' && $userAuth == FALSE)
     <section id="how_it_works">
         <div class="container">
@@ -162,7 +174,7 @@
     endif
 
     </div> 
-	-->
+    -->
     @endif
     <span style="clear: both;"></span>
 </div>
@@ -172,27 +184,33 @@
 
 @push('inner_scripts')
 <script type="text/javascript">
-    var is_download_ext = "<?php echo (app('request')->has('extension_download_btn') && (app('request')->get('extension_download_btn')=='1')) ? '1' : '0' ;?>";    
-    $(function () {
-        $('.install-button-ext').click(function (e) {                        
-            $(".extension-install-overlay").show().delay(6000).fadeOut("slow");            
+    var is_download_ext = "<?php echo (app('request')->has('extension_download_btn') && (app('request')->get('extension_download_btn') == '1')) ? '1' : '0'; ?>";
+    $(function () {        
+        $('.install-button-ext').click(function (e) {
             var browser = $(this).attr('data-browser');
             if (browser == 'Firefox') {
+                $(".extension-install-overlay").show().delay(6000).fadeOut("slow");
                 window.location = baseUrl + 'firefox.xpi';
             }
-            else if ((browser == 'Chrome') || (browser == 'Opera')) {                
+            else if ((browser == 'Chrome') || (browser == 'Opera')) {
+                $(".extension-install-overlay").show().delay(6000).fadeOut("slow");
                 chrome.webstore.install('https://chrome.google.com/webstore/detail/kfnndmokhnlhhblfedaeebnonfjbihpo', function () {
 //                    alert('success');
                 }, function (error, errorCode) {
 //                    alert(errorCode + "-----------" + error);
                 });
-                
+            }
+            else {               
+                sweetAlert(" ", "Sorry momenteel ondersteunen we alleen de browsers: Chrome, Firefox en Opera.");
             }
             e.preventDefault();
         });
-        if((is_download_ext == '1') && ($('.install-button-ext').length > 0)) {
-            $('.install-button-ext').trigger("click");
+        if ((is_download_ext == '1') && ($('#section_extension_button').length > 0)) {
+            $('#section_extension_button').trigger("click");
         }
+        $('.incompatible_browser_ext').click(function(){
+            sweetAlert(" ", "Sorry momenteel ondersteunen we alleen de browsers: Chrome, Firefox en Opera.");
+        });
     });
 </script>
 @endpush
