@@ -179,6 +179,15 @@ img { border: 0; }
     margin-right: 15px;
     min-height: 32px;
 }
+.ui.grid .form span.of{
+    text-transform: uppercase;
+    color: #fff;
+    background: #c5cae9;
+    font: 14px 'LatoRegular';
+    display: inline-block;
+    margin-right: 15px;
+    min-height: 32px;
+}
 .ui.grid .left-sidebar{
     float: left;
     width: 31%;
@@ -7783,7 +7792,7 @@ to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
 .ui.grid > .teal.row, .ui.grid > .teal.column, .ui.grid > .row > .teal.column { background-color: #00b5ad !important; color: #ffffff; }
 /* Blue */
 
-.ui.grid > .blue.row, .ui.grid > .blue.column, .ui.grid > .row > .blue.column { background-color: rgb(94, 128, 178) !important; color: #ffffff; }
+.ui.grid > .blue.row, .ui.grid > .blue.column, .ui.grid > .row > .blue.column { background-color: #c5cae9 !important; color: #ffffff; }
 /* Violet */
 
 .ui.grid > .violet.row, .ui.grid > .violet.column, .ui.grid > .row > .violet.column { background-color: #6435c9 !important; color: #ffffff; }

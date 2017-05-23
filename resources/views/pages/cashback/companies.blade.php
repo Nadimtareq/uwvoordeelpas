@@ -21,7 +21,7 @@
                                 </label>
                                 <div class="results"></div>
                             </div>
-                            <span>OF</span>
+                            <span class="of">OF</span>
                             <select name='category' class='category'>
                                 <option value='0' disabled="disabled" selected>Category</option>
                                 @foreach($categories as $category)
