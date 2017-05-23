@@ -571,9 +571,9 @@ class AccountController extends Controller {
                     $futureDeal->persons_reserved = $total_reserved_persons;
                     $futureDeal->persons_remain = $total_remain_persons;
                     if ($total_remain_persons == 0) {
-                        $futureDeal->status = 'partially_reserved';
+                        $futureDeal->status = 'full_reserved';                        
                     } else {
-                        $futureDeal->status = 'full_reserved';
+                        $futureDeal->status = 'partially_reserved';
                     }
                     $futureDeal->save();
                     return Redirect::to('account/reservations');

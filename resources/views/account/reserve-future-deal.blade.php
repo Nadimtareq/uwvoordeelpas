@@ -1,11 +1,12 @@
 @extends('template.theme')
 @section('content')
 <script type="text/javascript">
-    var activateAjax = 'reservation';    
+    var activateAjax = 'reservation';
 </script>
 <div class="container mdg">
     <div class="clear" style="height: 80px;">&nbsp;</div>
     <?php echo Form::open(array('id' => 'reservationForm', 'url' => URL::full(), 'method' => 'post', 'class' => 'ui form')) ?>
+    <?php echo Form::hidden('date_hidden', date('Y-m-d')); ?>
     <?php echo Form::hidden('company_id', $company->id); ?>    
     @if (count($errors) > 0)
     <div class="alert alert-danger">
@@ -65,33 +66,33 @@
             </div>
         </div>
         <?php /*
-        <div class="two column row">
-            <div class="column">
-                <div class="field">
-                    <label>Voorkeuren</label>
-                    <?php
-                    echo Form::select(
-                            'preferences[]', array_combine(
-                                    json_decode($company->preferences), array_map('ucfirst', json_decode($company->preferences))
-                            ), ($user && $user->preferences != NULL ? json_decode($user->preferences) : ''), array(
-                        'class' => 'ui normal dropdown',
-                        'data-placeholder' => 'Voorkeuren',
-                        'multiple' => 'multiple'
-                            )
-                    );
-                    ?>
+          <div class="two column row">
+          <div class="column">
+          <div class="field">
+          <label>Voorkeuren</label>
+          <?php
+          echo Form::select(
+          'preferences[]', array_combine(
+          json_decode($company->preferences), array_map('ucfirst', json_decode($company->preferences))
+          ), ($user && $user->preferences != NULL ? json_decode($user->preferences) : ''), array(
+          'class' => 'ui normal dropdown',
+          'data-placeholder' => 'Voorkeuren',
+          'multiple' => 'multiple'
+          )
+          );
+          ?>
 
-                </div>
-            </div>
+          </div>
+          </div>
 
-            <div class="column">
-                <div class="field">
-                    <label>Allergie&euml;n</label>
-                    <?php echo Form::select('allergies[]', array_combine(json_decode($company->allergies), array_map('ucfirst', json_decode($company->allergies))), ($user && $user->allergies != NULL ? json_decode($user->allergies) : ''), array('class' => 'ui normal dropdown', 'data-placeholder' => 'Allergieen', 'multiple' => 'multiple')); ?>
-                </div>	
-            </div>	
+          <div class="column">
+          <div class="field">
+          <label>Allergie&euml;n</label>
+          <?php echo Form::select('allergies[]', array_combine(json_decode($company->allergies), array_map('ucfirst', json_decode($company->allergies))), ($user && $user->allergies != NULL ? json_decode($user->allergies) : ''), array('class' => 'ui normal dropdown', 'data-placeholder' => 'Allergieen', 'multiple' => 'multiple')); ?>
+          </div>
+          </div>
 
-        </div> */?>
+          </div> */ ?>
         <div class="three column row"> 
             <div class="six wide column">
                 <div class="field">
@@ -136,7 +137,7 @@
 @stop
 @push('inner_scripts')
 <script type="text/javascript">
-    
+
 
 </script>
 @endpush
