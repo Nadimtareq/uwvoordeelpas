@@ -94,7 +94,7 @@
   color: #EF5350 !important; }
 
 .red {
-  background-color: #F44336 !important; }
+  background-color: #F44336; }
 
 .red-text {
   color: #F44336 !important; }
@@ -850,7 +850,7 @@
   color: #66BB6A !important; }
 
 .green {
-  background-color: #4CAF50 !important; }
+  background-color: #4CAF50; }
 
 .green-text {
   color: #4CAF50 !important; }
