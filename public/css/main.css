@@ -1723,7 +1723,7 @@ header.nav li a:hover {
         background: #3366cc;
     }
     .header{
-        background: #333399 !important;
+        /*background: #333399 !important;*/
     }
     .header .right-no{
         float: left !important;

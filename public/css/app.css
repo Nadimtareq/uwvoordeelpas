@@ -10553,7 +10553,7 @@ Floated Menu / Item
      Active
 ---------------*/
 
-.ui.accordion .active.content, .ui.accordion .accordion .active.content { display: block; }
+.ui.accordion .active.content, .ui.accordion .accordion .active.content { display: block; width: 100%;}
 /*******************************
            Variations
 *******************************/
