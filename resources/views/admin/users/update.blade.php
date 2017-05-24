@@ -59,7 +59,7 @@
 				<?php echo Form::text('saldo', $data->saldo) ?>
 			</div>
 		</div>
-
+                <div class="clear">&nbsp;</div>
 		<h4 class="ui dividing header">Voorkeuren</h4>
 
 		<div class="field">
@@ -74,7 +74,7 @@
 			echo Form::select('city[]', $city, json_decode($data->city), array('multiple' => true, 'class' => 'ui normal fluid search dropdown')); 
 			?>
 		</div>
-
+                <div class="clear">&nbsp;</div>
 		<div class="two fields">
 			<div class="field">
 				<label>Voorkeuren</label>

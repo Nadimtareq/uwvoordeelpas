@@ -154,7 +154,7 @@
 					    Kies een gebruiker uit die eigenaar is van dit bedrijf.<br><br>
 						 
 						<div id="companiesOwnersSearch" class="ui search">
-	                        <div class="ui icon fluid input">
+	                        <div class="ui icon fluid input" style="width: 450%">
 	                            <input class="prompt" type="text" value="<?php echo (isset($owner) ? $owner->name : ''); ?>" placeholder="Typ een naam in..">
 	                             <i class="search icon"></i>
 	                        </div>
@@ -170,7 +170,7 @@
 					    Kies een gebruiker uit die de bediening is van dit bedrijf.<br /><br />
 						 
 						<div id="companiesWaitersSearch" class="ui search">
-	                        <div class="ui icon fluid input">
+	                        <div class="ui icon fluid input" style="width: 450%">
 	                            <input class="prompt" type="text" value="<?php echo (isset($waiter) ? $waiter->name : ''); ?>" placeholder="Typ een naam in..">
 	                             <i class="search icon"></i>
 	                        </div>
@@ -186,7 +186,7 @@
 				    Kies een gebruiker uit die de beller is van dit bedrijf.<br /><br />
 					 
 					<div id="companiesCallerSearch" class="ui search">
-                        <div class="ui icon fluid input">
+                        <div class="ui icon fluid input" style="width: 450%">
                             <input class="prompt" type="text" value="<?php echo (isset($caller) ? $caller->name : ''); ?>" placeholder="Typ een naam in..">
                              <i class="search icon"></i>
                         </div>
