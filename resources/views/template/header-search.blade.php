@@ -37,7 +37,7 @@
 											<li>
 												<label for="datepicker">
 													<img src="{{asset('images/m2.png') }}" alt="m2">
-													<input id="datepicker" placeholder="Datum" name="date" class="datepicker1 quantity" data-time="#sltime" type="text">
+													<input id="datepicker" placeholder="Datum" name="date" class="datepicker1 quantity" data-filter-todate="yes" data-time="#sltime" type="text" {{ (Request::has('date')) ?  'value='.Request::has('date') : '' }}>
 												</label>
 											</li>
 											<li>
@@ -52,13 +52,14 @@
 														
 														$datetime = new DateTime();												
 													@endphp
-											  
+												   
+												   
 												   @foreach ($getTimes as $time)
 														@php  
 															$timed = date_create_from_format('H:i',$time);															
 														@endphp
 														@if ($time >= '00:00' && $time >= '08:00' && $timed->getTimestamp() >= $datetime->getTimestamp())
-															<option value="{{ $time }}" data-value="{{ $time }}" data-dd="0" {!! ($current_time == $time) ? "selected" : "" !!}>{{ $time }}</option>
+															<option value="{{ $time }}" data-value="{{ $time }}" data-dd="0" >{{ $time }}</option>
 														@else 
 															<option value="{{ $time }}" data-value="{{ $time }}" data-dd="0" style="display:none">{{ $time }}</option>
 														@endif													

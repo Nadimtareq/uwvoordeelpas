@@ -221,6 +221,40 @@ $(document).ready(function ($) {
     $("#datepicker").datepicker().datepicker("setDate", new Date());
     $("#datepicker").datepicker("option", "minDate", "0");
 
+	if($('[data-filter-todate]').length > 0 )
+	{
+		$('[data-filter-todate]').datepicker( 'option' , 'onSelect', function(date,inst) {
+			var $this = ($(inst).data('filter-todate')) ? $(inst) : $(this);
+
+			var idtime = $this.data('time');
+			var objtime = $(idtime);
+			var selectedDate = $this.datepicker('getDate');
+			var currdate= new Date();
+			var first = false;
+
+
+			objtime.find('option').each(function(key, value) {
+					$(this).show();
+					$(this).removeAttr('selected');
+					// check if the date is in the past
+					var d = Date.parse(selectedDate.getFullYear() + '-' + (selectedDate.getMonth() +1)  + '-' + selectedDate.getDate() +' '+ $(this).data('value')+':00');
+					var day = new Date(d);
+
+					if (day  < currdate) {
+						$(this).hide();
+					} else if(first == false){
+						$(this).attr('selected','selected');
+						first= true;
+					}
+			});
+			
+		});
+		
+		$('[data-filter-todate]').each( function() {
+			$(this).datepicker("option", "onSelect")('',$(this));
+		});
+		
+	}
 
     if ($('[data-datepicker-ajax]').length > 0)
     {
