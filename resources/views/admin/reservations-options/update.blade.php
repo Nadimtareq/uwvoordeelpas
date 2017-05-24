@@ -29,6 +29,8 @@
             </div>
             @endif
 
+            <br /> <br />
+
             <div class="two fields">
                 <div class="field">
                     <label>Datum van</label>
