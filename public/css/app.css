@@ -1067,7 +1067,7 @@ body.index .slider { display: block; }
  * clicks within the picker don’t reach the holder.
  */
 /*.picker__frame { padding: 1px; }*/
-.picker__frame { padding: 1px; bottom:auto !important; left:auto !important; right:auto !important; position:static !important;}
+.picker__frame { padding: 1px; bottom:auto !important; left:auto !important; right:auto !important; position:static !important; max-height: 300px;}
 
 .picker__wrap { margin: -1px; }
 /**
@@ -1178,7 +1178,7 @@ body.index .slider { display: block; }
  * The list of times.
  */
 /*.picker__list { list-style: none; padding: 0.75em 0 4.2em; margin: 0; }*/
-.picker__list { list-style: none; padding: 0.75em 0 4.2em !important; margin: 0 !important; }
+.picker__list { list-style: none; padding: 0em 0 1em !important; margin: 0 !important; }
 /**
  * The times on the clock.
  */
@@ -7290,7 +7290,7 @@ to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
 
 /* Split fields */
 
-.ui.form .fields { display: -webkit-box; display: -webkit-flex; display: -ms-flexbox; display: flex; -webkit-box-orient: horizontal; -webkit-box-direction: normal; -webkit-flex-direction: row; -ms-flex-direction: row; flex-direction: row; }
+.ui.form .fields { display: -webkit-box; display: -webkit-flex; display: -ms-flexbox; display: flex; -webkit-box-orient: horizontal; -webkit-box-direction: normal; -webkit-flex-direction: row; -ms-flex-direction: row; flex-direction: row;  clear:both;}
 .ui.form .fields > .field { -webkit-box-flex: 0; -webkit-flex: 0 1 auto; -ms-flex: 0 1 auto; flex: 0 1 auto; padding-left: 0.5em; padding-right: 0.5em; }
 .ui.form .fields > .field:first-child { border-left: none; box-shadow: none; }
 /* Other Combinations */
