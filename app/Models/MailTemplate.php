@@ -251,14 +251,15 @@ class MailTemplate extends Model
             } else {
                 $temporaryAuth = new TemporaryAuth();
                 $temporaryAuth2 = new TemporaryAuth();
-
-                $authLinkEdit = $temporaryAuth->createCode($user->id, 'account#preferences'.$extraParamaters);
-
-                if (isset($options['invoice_url'])) {
-                    $authLinkCancel = $temporaryAuth2->createCode($user->id, $options['invoice_url']);
-                } else {
-                    $authLinkCancel = $temporaryAuth2->createCode($user->id, 'tegoed-sparen'.$extraParamaters);
-                }
+                                
+                if($user){
+                    $authLinkEdit = $temporaryAuth->createCode($user->id, 'account#preferences'.$extraParamaters);
+                    if (isset($options['invoice_url'])) {
+                        $authLinkCancel = $temporaryAuth2->createCode($user->id, $options['invoice_url']);
+                    } else {
+                        $authLinkCancel = $temporaryAuth2->createCode($user->id, 'tegoed-sparen'.$extraParamaters);
+                    }
+                }                
             }
 
             if (isset($options['replacements'])) { 
