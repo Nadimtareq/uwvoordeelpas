@@ -87,8 +87,12 @@ class CompanyReservation extends Model {
                                 </div>
                             </div>
 						</div>';
-
-        return $timeCarousel;
+		
+		if (isset($availableTimes[$data->id])) {
+            return $timeCarousel;
+        } else {
+            return '<div class="ui tiny text-danger"> <i class="clock icon"></i> Helaas, er zijn momenteel geen plaatsen beschikbaar.</div>';
+        }
     }
 
     public function getTimeCarousel($reservationDate = NULL, $data, $persons, $reservationTimesArray, $tomorrowArray, $hasDate, $deal) {

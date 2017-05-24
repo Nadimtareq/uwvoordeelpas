@@ -37,12 +37,12 @@
 											<li>
 												<label for="datepicker">
 													<img src="{{asset('images/m2.png') }}" alt="m2">
-													<input id="datepicker" placeholder="Datum" name="date" class="datepicker1 quantity" type="text">
+													<input id="datepicker" placeholder="Datum" name="date" class="datepicker1 quantity" data-time="#sltime" type="text">
 												</label>
 											</li>
 											<li>
 												<img src="images/m3.png" alt="m3">
-												<select name="sltime" class="quantity">
+												<select id="sltime" name="sltime" class="quantity">
 													@php
 														// Check time
 														if (Request::segment(1) == 'search' && Request::has('sltime')) 
@@ -58,7 +58,9 @@
 															$timed = date_create_from_format('H:i',$time);															
 														@endphp
 														@if ($time >= '00:00' && $time >= '08:00' && $timed->getTimestamp() >= $datetime->getTimestamp())
-															<option value="{{ $time }}" data-value="{{ $time }}" data-dd="0" {!! ($current_time == $time) ? "selected" : "" !!}>{{ $time }}</option>												
+															<option value="{{ $time }}" data-value="{{ $time }}" data-dd="0" {!! ($current_time == $time) ? "selected" : "" !!}>{{ $time }}</option>
+														@else 
+															<option value="{{ $time }}" data-value="{{ $time }}" data-dd="0" style="display:none">{{ $time }}</option>
 														@endif													
 													@endforeach
 												</select>

@@ -45,9 +45,12 @@
     <meta name="theme-color" content="#ffffff">
     <meta name="description" content="{{ isset($metaDescription) ? strip_tags($metaDescription) : 'Reserveer in enkele stappen met uw spaartegoed!' }}">
 	<meta http-equiv="Cache-control" content="max-age=2592000, public">
-	
+		
 	<script>
 	  var baseUrl = {!! json_encode(url('/')."/") !!};   
+	  
+	  // Script to load fonts async 
+
  	  (function() { 
 	      var css = document.createElement('link'); css.href = '//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css'; css.rel = 'stylesheet'; css.type = 'text/css'; document.getElementsByTagName('head')[0].appendChild(css); 
 	  })();
@@ -174,7 +177,7 @@
 	
     
 	@if (!Request::has('iframe') )
-       <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyAjrbVJMJKWzCl8JZWV3_5Jy5P4CTITznU&callback=initMap"></script>
+       <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyAjrbVJMJKWzCl8JZWV3_5Jy5P4CTITznU&callback=initMap&force=lite" ></script>
 	   <script  src="//cdnjs.cloudflare.com/ajax/libs/gmaps.js/0.4.25/gmaps.min.js"></script>    
     @endif
 	
@@ -195,7 +198,15 @@
     @include('admin.template.search.js')
     @yield('scripts')
 	
-
+	<!-- Google Analytics -->
+	<script>
+		window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+		ga('create', 'UA-71271118-1', 'auto');
+		ga('send', 'pageview');
+	</script>
+	<script async src='https://www.google-analytics.com/analytics.js'></script>
+	<!-- End Google Analytics -->
+	
 	<script>
 	
 		function install (aEvent)
@@ -212,7 +223,7 @@
 			return false;
 		}
 		
-		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		/*(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 			})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
@@ -220,7 +231,7 @@
 		ga('create', 'UA-71271118-1', 'auto');
 		ga('send', 'pageview');
 		   
-		/*if ('serviceWorker' in navigator) {
+		if ('serviceWorker' in navigator) {
 		  navigator.serviceWorker.register('/js/sw.js').then(function(registration) {
 			// Registration was successful
 			console.log('ServiceWorker registration successful with scope: ', registration.scope);
