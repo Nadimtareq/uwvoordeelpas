@@ -143,8 +143,8 @@ while ($st->lte($dt)) {
 				
 			<div class="tabs-all">
 					<ul class="tabs-link">
-						<li><a href="#t1" class="active">Over ons</a></li>
-						<li><a href="#t2" class="">Menu</a></li>
+						<li><a href="#t1" class="">Over ons</a></li>
+						<li><a href="#t2" class="active">Menu</a></li>
 						<li><a href="#t3" class="">Details</a></li>
 						<li><a href="#t4" class="">Contact</a></li>
 						<li><a href="#t5" class="">Nieuws</a></li>

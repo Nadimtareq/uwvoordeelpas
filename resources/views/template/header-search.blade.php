@@ -29,8 +29,10 @@
 											<form action="<?php echo url('search'); ?>" method="GET" class="form">
 											<li class="search-form-li sk">										  
 												<div class="input-field">
+												   <div id="usersCompaniesSearch2" class="search form focus">
 													<label class="label-icon" for="search"><i class="mdi-actio2n-search sss"></i></label>											
-													<input id="search" name="q" type="search" value="{{ Request::segment(1) == 'search' ? Request::get('q') : '' }}" placeholder="{{ trans('app.keyword') }}" >
+													<input id="search" name="q" type="search" value="{{ Request::segment(1) == 'search' ? Request::get('q') : '' }}" placeholder="{{ trans('app.keyword') }}" class="prompt" autocomplete="off" >
+												  </div>
 												</div>
 											</li>
 											

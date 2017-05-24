@@ -220,6 +220,7 @@ $(document).ready(function ($) {
     // Date Picker from jQuery
     $("#datepicker").datepicker().datepicker("setDate", new Date());
     $("#datepicker").datepicker("option", "minDate", "0");
+	$("#datepicker").datepicker("option", "dateFormat", "yy-mm-dd ");
 
 	if($('[data-filter-todate]').length > 0 )
 	{
