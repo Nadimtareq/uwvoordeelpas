@@ -4194,3 +4194,11 @@ padding-top: 90px;
 	color:darkgray !important;
 		
 }
+
+[type="checkbox"]:checked + label:before {
+	left:0px;
+	top:0px;
+	width: 18px;
+	height: 18px;
+	transform:none !important;
+}
