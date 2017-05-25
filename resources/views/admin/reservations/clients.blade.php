@@ -15,38 +15,13 @@
 
 <div class="content">
     <div class="ui breadcrumb">
-        <a href="#" class="sidebar open">Menu</a>
+        <a href="#" data-activates="slide-out" class="sidebar open">Menu</a>
         <i class="right chevron icon divider"></i>
 
-        <a href="{{ url('admin/reservations'.(isset($companyParam) && $userCompany == TRUE ? '/clients/'.$company : '/clients')) }}" class="section">
-            <div class="ui normal scrolling bread pointing dropdown item">
-                <div class="text">Reserveringen</div>
-
-                <div class="menu">
-                    @if($userCompanies)
-                         @include('template/navigation/company')
-                    @endif
-
-                    @include('template/navigation/admin')
-                </div>
-            </div>
+        <a href="{{ url('admin/reservations'.(isset($companyParam) && $userCompany == TRUE ? '/clients/'.$company : '/clients')) }}" class="section">Reserveringen
         </a>
 
         <i class="right chevron icon divider"></i>
-
-        <a href="{{ url('admin/reservations'.(isset($companyParam) && $userCompany == TRUE ? '/clients/'.$company : '')) }}" class="section">
-            {{ (isset($companyInfo->name) ? $companyInfo->name : '') }}
-        </a>
-
-        <i class="right chevron icon divider"></i>
-
-        @if(Request::has('status'))
-            <div class="section">No Shows</div>
-            <i class="right chevron icon divider"></i>
-        @else
-            <div class="section">Gereserveerd</div>
-            <i class="right chevron icon divider"></i>
-        @endif
 
         @if(trim($date) != '')
         <div class="active section">{{ date('d-m-Y', strtotime($date)) }}</div>
