@@ -299,7 +299,8 @@ $(document).ready(function ($) {
                     var ltimeselect = $this.data('timeselect');
                     var lpersons = $('select[name="persons"]').val(); /*$this.data('persons') */
 
-                    var dateISO = ($this.datepicker('getDate').toISOString().substring(0, 10));
+					var ldate = $this.datepicker('getDate');
+                    var dateISO = (ldate.toLocaleDateString());
 
                     $('input[name="date"]').val(dateISO);
                     $('input[name="date_hidden"]').val(dateISO);
