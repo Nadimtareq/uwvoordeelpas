@@ -11,6 +11,7 @@ use App\Models\Company;
     </td>
     <td>{{ $data->slug }}</td>
     <td>{{ $data->name }}</td>
+    <td>{{ $data->type }}</td>
     <td><a href="{{ url('admin/'.$slugController.'/update/'.$data->id) }}" class="ui label"><i class="pencil icon"></i> Bewerk</a></td>
 </tr>
 @endforeach

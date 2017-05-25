@@ -45,6 +45,7 @@
     				</th>
                     <th data-slug="slug">Slug</th>
                     <th data-slug="name">Naam</th>
+                    <th data-slug="name">Sort</th>
                     <th></th>
             	</tr>
             </thead>
