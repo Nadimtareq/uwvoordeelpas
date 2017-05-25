@@ -44,11 +44,16 @@
 					<label>Naam</label>
 					<?php echo Form::text('name', $data->name); ?>
 				</div>
+				
+				<div class="field">
+                	<label>Type</label>
+                	<?php echo Form::select('type', array('mail' => 'Mail', 'website' => 'Website'), $data->type) ?>
+            	</div>
 
 				<div class="field">
 		            <label>Categorie</label>
 		            <?php echo Form::select('category', Config::get('preferences.content_blocks'), $data->category); ?>
-		        </div>      
+		        </div>
 
 				<div class="field">
 					<label>Inhoud</label>

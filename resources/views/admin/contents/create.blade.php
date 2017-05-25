@@ -39,9 +39,14 @@ tinymce.init({
             </div>      
 
             <div class="field">
+                <label>Type</label>
+                <?php echo Form::select('type', array('mail' => 'Mail', 'website' => 'Website')) ?>
+            </div>
+
+            <div class="field">
                 <label>Categorie</label>
                 <?php echo Form::select('category', Config::get('preferences.content_blocks')) ?>
-            </div>      
+            </div>  
 
             <div class="field">
                 <label>Inhoud</label>
