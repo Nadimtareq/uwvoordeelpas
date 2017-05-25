@@ -107,7 +107,7 @@ class Pay extends Command
 
     public function handle()
     {
-        $commandName = 'handle';
+        $commandName = 'payment_update';
 
         if (Setting::get('cronjobs.'.$commandName) == NULL) {
             echo 'This command is not working right now. Please activate this command.';
