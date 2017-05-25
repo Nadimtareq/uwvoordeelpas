@@ -664,7 +664,7 @@ $(window).load(function ($) {
         jQuery(tabId).show();
         return false;
     });
-    jQuery('.tabs-link a').eq(0).click();
+    jQuery('.tabs-link a').eq(1).click();
 
     jQuery('.r a').click(function () {
 
