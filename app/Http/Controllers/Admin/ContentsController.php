@@ -99,6 +99,7 @@ class ContentsController extends Controller
         $data->name        = $request->input('name');
         $data->content     = $request->input('content');
         $data->category    = $request->input('category');
+        $data->type        = $request->input('type');
         $data->save();
         
         Alert::success('Dit tekstblok is succesvol aangemaakt.')->persistent('Sluiten');   
@@ -116,6 +117,7 @@ class ContentsController extends Controller
         $data->name        = $request->input('name');
         $data->content     = $request->input('content');
         $data->category    = $request->input('category');
+        $data->type        = $request->input('type');
         $data->save();
 
         Alert::success('Dit tekstblok is succesvol aangepast.')->persistent('Sluiten');   

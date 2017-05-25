@@ -170,6 +170,7 @@ class ReservationsOptionsController extends Controller
         $data = new ReservationOption();
         $data->name = $request->input('name');
         $data->description = $request->input('content');
+        $data->short_description = $request->input('short_content');
         $data->total_amount = $request->input('total_amount');
         $data->price_from = $request->input('price_from');
         $data->price = $request->input('price');
@@ -198,6 +199,7 @@ class ReservationsOptionsController extends Controller
             'reservations_options.date_to',
             'reservations_options.date_from',
             'reservations_options.description',
+            'reservations_options.short_description',
             'reservations_options.name',
             'companies.slug'
         )
@@ -239,6 +241,7 @@ class ReservationsOptionsController extends Controller
             'reservations_options.date_to',
             'reservations_options.date_from',
             'reservations_options.description',
+            'reservations_options.short_description',
             'reservations_options.name',
             'companies.slug'
         )
@@ -263,6 +266,7 @@ class ReservationsOptionsController extends Controller
 
             $data->name = $request->input('name');
             $data->description = $request->input('content');
+            $data->short_description = $request->input('short_content');
             $data->total_amount = $request->input('total_amount');
             $data->price_from = $request->input('price_from');
             $data->price = $request->input('price');

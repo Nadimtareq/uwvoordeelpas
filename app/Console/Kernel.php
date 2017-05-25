@@ -187,7 +187,7 @@ class Kernel extends ConsoleKernel
 
         $schedule
             ->command('expired:transaction')
-            ->everyMinute()
+            ->daily()
         ;
 
         $schedule
