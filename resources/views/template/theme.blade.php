@@ -7,9 +7,9 @@
 <head>
     <title>{{ isset($pageTitle) ? $pageTitle : 'Reserveer in enkele stappen met uw spaartegoed!' }} - UwVoordeelpas</title>
 
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/icons/apple-icon-180x180.png') }}">
-    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('images/icons/android-icon-192x192.png') }}">
-    <link rel="shortcut icon" type="image/png" sizes="16x16" href="{{ asset('images/icons/favicon-16x16.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/icons/favicon64.png') }}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('images/icons/favicon64.png') }}">
+    <link rel="shortcut icon" type="image/png" sizes="16x16" href="{{ asset('images/icons/favicon16.png') }}">
 
     <link rel="stylesheet" href="{{ asset('css/app.css?rand='.str_random(40)) }}"> 	
 	<link rel="stylesheet" href="{{ asset('css/normalize.css')}}"> 
@@ -34,7 +34,7 @@
      <!--<script src="{{ asset('js/jsBarcode/dist/JsBarcode.all.js') }}"></script>-->
     @yield('styles')
 
-    <link rel="shortcut icon" sizes="144x144" href="launcher-icon-3x.png"> 
+    <!-- <link rel="shortcut icon" sizes="144x144" href="launcher-icon-3x.png"> -->
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/kfnndmokhnlhhblfedaeebnonfjbihpo">
     <meta name="robots" content="nofollow" />
