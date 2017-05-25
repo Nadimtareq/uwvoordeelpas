@@ -1,8 +1,5 @@
 <?php
 use App\Models\MailTemplate;
-
-Route::get('/phpinfo', 'DevelopmentController@phpinfo');
-
 /**
  * General
  */

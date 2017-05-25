@@ -15,6 +15,7 @@ use Request;
 use Lang;
 use anlutro\cURL\cURL;
 use Setting;
+use Illuminate\Support\Facades\File;
 
 class Daisycon extends Command
 {
@@ -113,38 +114,43 @@ class Daisycon extends Command
 
             $curl = new cURL;
 
-            $this->feedCategories = $curl->newRequest(
-                'GET', 'https://services.daisycon.com/categories?page=1&per_page=100'
-            )
+            $this->feedCategories = $curl->newRequest('GET', 'https://services.daisycon.com/categories?page=1&per_page=100')
                 ->setUser(Setting::get('settings.daisycon_name'))
                 ->setPass(Setting::get('settings.daisycon_pw'))
                 ->setOption(CURLOPT_CAINFO, base_path('cacert.pem'))
-                ->send()
-            ;
+                ->send();
 
-            for ($i = 1; $i < 5; $i++) { 
+            $totalFeedCommissions = 0;
+            for ($i = 1; $i < 5; $i++) {
+            	$totalFeedCommissions = ($i * 1000);
                 $this->feedCommissions[] = $curl->newRequest(
-                    'GET', 'https://services.daisycon.com/publishers/370506/media/246340/commissions?page='.$i.'&per_page=1000'
-                )
+                    'GET', 'https://services.daisycon.com/publishers/370506/media/246340/commissions?page='.$i.'&per_page=1000')
                     ->setUser(Setting::get('settings.daisycon_name'))
                     ->setPass(Setting::get('settings.daisycon_pw'))
                     ->setOption(CURLOPT_CAINFO, base_path('cacert.pem'))
-                    ->send()
-                ;
+                    ->send();
+                $totalClientFeedCommissions = $this->feedCommissions[0]->headers['x-total-count'];
+                if($totalFeedCommissions >= $totalClientFeedCommissions) {
+                	break;
+                }
             }
-
+            
+			$totalPrograms = 0;
             for ($i = 1; $i < 5; $i++) { 
-
+            	$totalPrograms = ($i * 1000);
+            	
                 $this->client[] = $curl->newRequest(
                     'GET', 'https://services.daisycon.com/publishers/370506/programs?page='.$i.'&locale_id=1&per_page=1000&type=affiliatemarketing&fields='.$this->fieldsPrograms
                 )
                     ->setUser(Setting::get('settings.daisycon_name'))
                     ->setPass(Setting::get('settings.daisycon_pw'))
                     ->setOption(CURLOPT_CAINFO, base_path('cacert.pem'))
-                    ->send()
-                ;        
+                    ->send();
+                $totalClientPrograms = $this->client[0]->headers['x-total-count'];
+                if($totalPrograms >= $totalClientPrograms) {
+                	break;
+                }
             }
-
             return $this->client;
         } catch (SoapFault $fault) {
             echo $fault->faultstring;
@@ -161,7 +167,6 @@ class Daisycon extends Command
             if (count($campaigns) >= 1) {
                 foreach ($campaigns as $campaign) {
                     $commission = $this->getCommission($campaign->id);
-                    
                     if (
                         $campaign->cashback == 'true'
                         OR $campaign->cashback == 'partial'
@@ -191,6 +196,11 @@ class Daisycon extends Command
                                 );
 
                                 try {
+                                	
+                                	if(!File::isDirectory(public_path('images/affiliates/'.$this->affiliate_network))) {
+                                		File::makeDirectory(public_path('images/affiliates/'.$this->affiliate_network), 0775, true);
+                                	}
+                                	
                                     ImageManagerStatic::make(
                                         'http:'.$campaign->logo
                                     )
@@ -306,33 +316,56 @@ class Daisycon extends Command
 
     public function getCommission($campaignId)
     {
-        foreach ($this->feedCommissions as $feed) {
-            $commissionsFeed = json_decode($feed->body);
+//         foreach ($this->feedCommissions as $feed) {
+//             $commissionsFeed = json_decode($feed->body);
         
-            if (count($commissionsFeed) > 0) {
-                foreach ($commissionsFeed as $commission) {
-                    foreach ($commission->compensations as $key => $compensations) {
-                        if ($commission->program_id == $campaignId) {
-                            if ($compensations->amount > 0) {
-                                $commissions[] = array(
-                                    'name' => $compensations->name,
-                                    'unit' => '&euro;',
-                                    'value' => $compensations->amount
-                                );
-                            }
+//             if (count($commissionsFeed) > 0) {
+//                 foreach ($commissionsFeed as $commission) {
+//                     foreach ($commission->compensations as $key => $compensations) {
+//                         if ($commission->program_id == $campaignId) {
+//                             if ($compensations->amount > 0) {
+//                                 $commissions[] = array(
+//                                     'name' => $compensations->name,
+//                                     'unit' => '&euro;',
+//                                     'value' => $compensations->amount
+//                                 );
+//                             }
 
-                            if ($compensations->percentage > 0) {
-                                $commissions[] = array(
-                                    'name' => $compensations->name,
-                                    'unit' => '%',
-                                    'value' => $compensations->percentage
-                                );
-                            }
-                        }
-                    }
-                }
-            }
-        }
+//                             if ($compensations->percentage > 0) {
+//                                 $commissions[] = array(
+//                                     'name' => $compensations->name,
+//                                     'unit' => '%',
+//                                     'value' => $compensations->percentage
+//                                 );
+//                             }
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+        
+        
+    	$commission = $this->programFeedCommissions[$campaignId];
+    	if(isset($commission)) {
+    		foreach ($commission->compensations as $key => $compensations) {
+    			if ($compensations->amount > 0) {
+					$commissions [] = array (
+							'name' => $compensations->name,
+							'unit' => '&euro;',
+							'value' => $compensations->amount 
+					);
+				}
+    		
+    			if ($compensations->percentage > 0) {
+					$commissions [] = array (
+							'name' => $compensations->name,
+							'unit' => '%',
+							'value' => $compensations->percentage 
+					);
+				}
+    		}
+    	}
+      
 
         return isset($commissions) ? json_encode($commissions): null;
     }
@@ -421,14 +454,23 @@ class Daisycon extends Command
                 ->where('affiliate_network', 'daisycon')
                 ->get()
             ;
-
+            
             foreach ($affiliates as $key => $affiliate) {
-                if (is_array(json_decode($affiliate->compensations))) {
-                    foreach (json_decode($affiliate->compensations) as $key => $commission) {
-                        $affiliateCommissionArray[$affiliate->program_id][$key.'-'.str_slug($commission->name).'-'.$commission->value] = array(
-                            'name' => $commission->name,
-                            'unit' => (isset($commissionArray[$affiliate->program_id][$key.'-'.str_slug($commission->name).'-'.$commission->value]) ? $commissionArray[$affiliate->program_id][$key.'-'.str_slug($commission->name).'-'.$commission->value]['unit'] : $commission->unit),
-                            'value' => $commission->value
+            	
+            	$affiliate_compensations = json_decode($affiliate->compensations, true);
+            	
+                if (is_array($affiliate_compensations)) {
+                    foreach ($affiliate_compensations as $key => $commission) {
+//                         $affiliateCommissionArray[$affiliate->program_id][$key.'-'.str_slug($commission->name).'-'.$commission->value] = array(
+//                             'name' => $commission->name,
+//                             'unit' => (isset($commissionArray[$affiliate->program_id][$key.'-'.str_slug($commission->name).'-'.$commission->value]) ? $commissionArray[$affiliate->program_id][$key.'-'.str_slug($commission->name).'-'.$commission->value]['unit'] : $commission->unit),
+//                             'value' => $commission->value
+//                         );
+                        
+                        $affiliateCommissionArray[$affiliate->program_id][$key.'-'.str_slug($commission['name']).'-'.$commission['value']] = array(
+                        		'name' => $commission['name'],
+                        		'unit' => (isset($commissionArray[$affiliate->program_id][$key.'-'.str_slug($commission['name']).'-'.$commission['value']]) ? $commissionArray[$affiliate->program_id][$key.'-'.str_slug($commission['name']).'-'.$commission['value']]['unit'] : $commission['unit']),
+                        		'value' => $commission['value']
                         );
 
                         $this->line('Updating affliate #'.$affiliate->program_id.' - '.$affiliate->name);
@@ -457,14 +499,18 @@ class Daisycon extends Command
     {
         $curl = new cURL;
 
+        $totalSubscriptions = 0;
         for ($i = 1; $i < 5; $i++) { 
+        	$totalSubscriptions = ($i * 1000);
+        	
             $inactives = $curl
                 ->newRequest('GET', 'https://services.daisycon.com/publishers/370506/media/246340/subscriptions?page='.$i.'&per_page=1000')
                 ->setUser(getenv('DAISYCON_EMAIL'))
                 ->setPass(getenv('DAISYCON_PASS'))
                 ->setOption(CURLOPT_CAINFO, base_path('cacert.pem'))
-                ->send()
-            ;
+                ->send() ;
+            
+            $totalClientSubscriptions = $inactives->headers['x-total-count'];
 
              if (trim($inactives->body) != '') {
                 foreach (json_decode($inactives) as $inactive) {
@@ -474,6 +520,10 @@ class Daisycon extends Command
                         }
                     }
                 }
+            }
+            
+            if($totalSubscriptions >= $totalClientSubscriptions) {
+            	break;
             }
         }
    
@@ -494,6 +544,61 @@ class Daisycon extends Command
                 $affiliates = AffiliateCategory::whereIn('affiliate_id', $affiliateIds)->delete();
             }
         }
+    }
+    
+    public function setProgramFeedCommissions() {
+    	$this->programFeedCommissions = array();
+    	foreach ($this->feedCommissions as $feed) {
+    		$commissionsFeed = json_decode($feed->body);
+    	
+    		if (count($commissionsFeed) > 0) {
+    			foreach ($commissionsFeed as $commission) {
+    				$this->programFeedCommissions[$commission->program_id] = $commission;
+    			}
+    		}
+    	}
+    }
+    
+    function addClicks() {
+    	$programsClickAndViews = $this->getProgramsClickAndViews();
+    	$affiliates = Affiliate::where('affiliate_network', $this->affiliate_network)->get();
+    	foreach ($affiliates as $affiliate) {
+    		if(isset($programsClickAndViews[$affiliate->program_id])) {
+    			$affiliate->api_clicks = $programsClickAndViews[$affiliate->program_id];
+    			$affiliate->save();
+    		}
+    	}
+    }
+    
+    public function getProgramsClickAndViews() {
+    	$programClicks = array();
+    	
+    	$curl = new cURL;
+    	
+    	$totalClicks = 0;
+    	for ($i = 1; $i < 5; $i++) {
+    		$totalClicks = ($i * 1000);
+    		$startDate = date('Y-m-d', strtotime('-1 week'));
+    		$endDate = date("Y-m-d", time());
+    		$clicksData = $curl->newRequest(
+    				'GET', 'https://services.daisycon.com/publishers/370506/clicks?page='.$i.'&per_page=1000&start='.$startDate.'&end='.$endDate.'&media_id=246340')
+    				->setUser(Setting::get('settings.daisycon_name'))
+    				->setPass(Setting::get('settings.daisycon_pw'))
+    				->setOption(CURLOPT_CAINFO, base_path('cacert.pem'))
+    				->send();
+    		$totalClientClicks = $clicksData->headers['x-total-count'];
+    		if (trim($clicksData->body) != '') {
+    			foreach (json_decode($clicksData->body) as $click) {
+    				$programClicks[$click->program_id] = $click->raw;
+    			}
+    		}
+    		
+    		if($totalClicks >= $totalClientClicks) {
+    			break;
+    		}
+    	}
+    	
+    	return $programClicks;
     }
 
     /**
@@ -516,12 +621,14 @@ class Daisycon extends Command
                         // Start cronjob
                         $this->line(' Start '.$this->signature);
                         Setting::set('cronjobs.active.'.$commandName, 1);
-                        Setting::save();
+//                         Setting::save();
 
-                        // Processing
+                        $this->setProgramFeedCommissions();
+//                         // Processing
                         $this->updateCampaigns();  // Update Campaigns
                         $this->removeCampaigns(); // Remove Campaigns
                         $this->addCampaigns(); // Add Campaigns
+                        $this->addClicks();
 
                         // End cronjob
                         $this->line('Finished '.$this->signature);

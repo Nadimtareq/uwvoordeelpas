@@ -15,6 +15,7 @@ use SoapClient;
 use SoapFault;
 use Request;
 use Setting;
+use Illuminate\Support\Facades\File;
 
 class Tradetracker extends Command
 {
@@ -144,7 +145,7 @@ class Tradetracker extends Command
         );
 
         $programs = array();
-
+        
         foreach ($campaigns as $campaign) {    
             if (
                 isset($campaign->info->policyCashbackStatus, $campaign->info->deeplinkingSupported) 
@@ -153,7 +154,7 @@ class Tradetracker extends Command
                 && !in_array($campaign->ID, array_flatten($this->affiliates)) 
                 && $this->affiliateHelper->domainRestriction($campaign->URL) == 1
             ) {
-
+            	
                 $this->lastId++;
 
                 $trackingDuration = $this->getTrackingDays($campaign);
@@ -276,20 +277,23 @@ class Tradetracker extends Command
                 }
 
                 // This category contains words of a category that already exists
-                if (!in_array($parentResult['name'], $flattenCategories)  && count($duplicatedCategories) >= 1) {
-                    foreach ($duplicatedCategories as $duplicatedCategoriesKey => $duplicatedCategoriesName) {
-                        foreach ($duplicatedCategoriesName as $duplicatedCategoryKey => $duplicatedCategoryName) {
-                            if(isset($this->temporaryParents[str_slug($duplicatedCategoryName)])) {
-                                $this->temporaryParents[str_slug($duplicatedCategoriesKey)][] = $this->temporaryParents[str_slug($duplicatedCategoryName)];
-                            }
-                        }
-                    }
-                }
+//                 if (!in_array($parentResult['name'], $flattenCategories)  && count($duplicatedCategories) >= 1) {
+//                     foreach ($duplicatedCategories as $duplicatedCategoriesKey => $duplicatedCategoriesName) {
+//                         foreach ($duplicatedCategoriesName as $duplicatedCategoryKey => $duplicatedCategoryName) {
+//                             if(isset($this->temporaryParents[str_slug($duplicatedCategoryName)])) {
+//                                 $this->temporaryParents[str_slug($duplicatedCategoriesKey)][] = $this->temporaryParents[str_slug($duplicatedCategoryName)];
+//                             }
+//                         }
+//                     }
+//                 }
             }
 
             // - Children -
             foreach ($this->parentsChilds as $parentSlug => $parrentChildsItems) {  
                 $parentKey = str_slug($this->parentsArray[$parentSlug]['name']);
+                if(!isset($this->temporaryParents[$parentKey])) {
+                	continue;
+                }
                 $temporaryParentKey = $this->temporaryParents[$parentKey];
 
                 $subcategoriesQuery = Category::select('id', 'name');
@@ -390,8 +394,9 @@ class Tradetracker extends Command
 
         foreach ($campaigns as $key => $campaign) {
             if (in_array($campaign->ID, array_flatten($this->affiliates))) {
-                if (is_array(json_decode($this->getCommission($campaign->ID)))) {
-                    foreach (json_decode($this->getCommission($campaign->ID)) as $key => $commission) {
+            	$commission_data = json_decode($this->getCommission($campaign->ID));
+                if (is_array($commission_data)) {
+                    foreach ($commission_data as $key => $commission) {
                         $commissionArray[$campaign->ID][$key.'-'.str_slug($commission->name).'-'.$commission->value] = array(
                             'name' => $commission->name,
                             'unit' => $commission->unit,
@@ -408,16 +413,29 @@ class Tradetracker extends Command
         ;
 
         foreach ($affiliates as $key => $affiliate) {
-            if (is_array(json_decode($affiliate->compensations))) {
-                foreach (json_decode($affiliate->compensations) as $key => $commission) {
-                    $affiliateCommissionArray[$affiliate->program_id][$key.'-'.str_slug($commission->name).'-'.$commission->value] = array(
-                        'name' => $commission->name,
-                        'unit' => (isset($commissionArray[$affiliate->program_id][$key.'-'.str_slug($commission->name).'-'.$commission->value]) ? $commissionArray[$affiliate->program_id][$key.'-'.str_slug($commission->name).'-'.$commission->value]['unit'] : $commission->unit),
-                        'value' => $commission->value
-                    );
+        	
+        	$affiliate_compensations = json_decode($affiliate->compensations, true);
+        	
+            if (is_array($affiliate_compensations)) {
+            	foreach ($affiliate_compensations as $key => $commission) {
+            		$affiliateCommissionArray[$affiliate->program_id][$key.'-'.str_slug($commission['name']).'-'.$commission['value']] = array(
+            				'name' => $commission['name'],
+            				'unit' => (isset($commissionArray[$affiliate->program_id][$key.'-'.str_slug($commission['name']).'-'.$commission['value']]) ? $commissionArray[$affiliate->program_id][$key.'-'.str_slug($commission['name']).'-'.$commission['value']]['unit'] : $commission['unit']),
+            				'value' => $commission['value']
+            		);
+            	
+            		$this->line('Updating affliate #'.$affiliate->program_id.' - '.$affiliate->name);
+            	}
+            	
+//                 foreach (json_decode($affiliate->compensations) as $key => $commission) {
+//                     $affiliateCommissionArray[$affiliate->program_id][$key.'-'.str_slug($commission->name).'-'.$commission->value] = array(
+//                         'name' => $commission->name,
+//                         'unit' => (isset($commissionArray[$affiliate->program_id][$key.'-'.str_slug($commission->name).'-'.$commission->value]) ? $commissionArray[$affiliate->program_id][$key.'-'.str_slug($commission->name).'-'.$commission->value]['unit'] : $commission->unit),
+//                         'value' => $commission->value
+//                     );
 
-                    $this->line('Updating affliate #'.$affiliate->program_id.' - '.$affiliate->name);
-                }
+//                     $this->line('Updating affliate #'.$affiliate->program_id.' - '.$affiliate->name);
+//                 }
 
                 foreach ($commissionArray as $programId => $commissions) {
                     foreach ($commissions as $commisionKey => $commission) {
@@ -497,21 +515,25 @@ class Tradetracker extends Command
             $categoryId = $campaign['programInfo']->category->ID;
 
             if (isset($this->parentsArray[$categoryId])) {
-                $connectParentKey = $this->temporaryParents[$this->parentsArray[$categoryId]['slug']];
-
-                if (is_array($connectParentKey)) {
-                    foreach ($connectParentKey as $connectParentId) {
-                        $insertAffiliateCategory[] = array(
-                            'affiliate_id' => $campaign['affiliateId'],
-                            'category_id' => $connectParentId
-                        );
-                    }
-                } else {
-                    $insertAffiliateCategory[] = array(
-                        'affiliate_id' => $campaign['affiliateId'],
-                        'category_id' => $connectParentKey
-                    );
-                }
+            	
+            	if(isset($this->temporaryParents[$this->parentsArray[$categoryId]['slug']])) {
+            		$connectParentKey = $this->temporaryParents[$this->parentsArray[$categoryId]['slug']];
+            		
+            		if (is_array($connectParentKey)) {
+            			foreach ($connectParentKey as $connectParentId) {
+            				$insertAffiliateCategory[] = array(
+            						'affiliate_id' => $campaign['affiliateId'],
+            						'category_id' => $connectParentId
+            				);
+            			}
+            		} else {
+            			$insertAffiliateCategory[] = array(
+            					'affiliate_id' => $campaign['affiliateId'],
+            					'category_id' => $connectParentKey
+            			);
+            		}
+            	}
+                
             }
 
             if (isset($campaign['programInfo']->subCategories)) {
@@ -527,6 +549,9 @@ class Tradetracker extends Command
 
             // Add an image
             try {
+            	if(!File::isDirectory(public_path('images/affiliates/'.$campaign['programNetwork']))) {
+            		File::makeDirectory(public_path('images/affiliates/'.$campaign['programNetwork']), 0775, true);
+            	}
                 ImageManagerStatic::make($campaign['programImage'])->save(public_path('images/affiliates/'.$campaign['programNetwork']).'/'. $campaign['programId'].'.jpg');
             } catch (NotReadableException $e) {
             }
@@ -541,6 +566,28 @@ class Tradetracker extends Command
         if (isset($insertAffiliateCategory)) {
             AffiliateCategory::insert($insertAffiliateCategory);
         }
+    }
+    
+    function addClicks() {
+    	$programsClickAndViews = $this->getProgramsClickAndViews();
+    	$affiliates = Affiliate::where('affiliate_network', $this->affiliate_network)->get();
+    	foreach ($affiliates as $affiliate) {
+    		if(isset($programsClickAndViews[$affiliate->program_id])) {
+    			$affiliate->api_clicks = $programsClickAndViews[$affiliate->program_id];
+    			$affiliate->save();
+    		}
+    	}
+    }
+    
+    public function getProgramsClickAndViews() {
+    	$programClicks = array();
+    	$data = $this->checkConnection()->getReportCampaign(232507);
+    	if (!empty($data)) {
+    		foreach ($data as $click) {
+    			$programClicks[$click->campaign->ID] = $click->reportData->overallClickCount;
+    		}
+    	}
+    	return $programClicks;
     }
 
     /**
@@ -569,6 +616,7 @@ class Tradetracker extends Command
                         $this->updateCampaigns();  // Update Campaigns
                         $this->removeCampaigns(); // Remove Campaigns
                         $this->addCampaigns(); // Add Campaigns
+                        $this->addClicks();
 
                         // End cronjob
                         $this->line('Finished '.$this->signature);

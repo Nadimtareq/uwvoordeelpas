@@ -18,6 +18,7 @@ use Lang;
 use Zanox\ApiClient;
 use Zanox\Api\Constants;
 use Setting;
+use Illuminate\Support\Facades\File;
 
 class Zanox extends Command
 {
@@ -63,6 +64,13 @@ class Zanox extends Command
      * @var array
      */
     protected $commissions = array();
+    
+    /**
+     * @var array
+     */
+    protected $totalPrograms = array();
+    
+    
 
     /**
      * Create a new command instance.
@@ -128,13 +136,16 @@ class Zanox extends Command
 
     public function getCampaigns($number)
     {
-        $campaigns = $this->checkConnection()->getProgramApplications($this->adspaceId, null, 'confirmed', $number, 50);
-
+        $campaigns = $this->checkConnection()->getProgramApplications($this->adspaceId, null, 'confirmed', $number,50);
+        $this->totalPrograms = $campaigns->total;
         if (isset($campaigns->programApplicationItems->programApplicationItem)) {
             $campaigns = $campaigns->programApplicationItems->programApplicationItem;
             
             $programs = array();
-            foreach ($campaigns as $campaign) {    
+            foreach ($campaigns as $campaign) { 
+            	if(in_array($campaign->program->id, array_flatten($this->affiliates)) ) {
+            		continue;
+            	}   
                 $getProgram = $this->client->getProgram($campaign->program->id);
                 
                 if (
@@ -277,6 +288,12 @@ class Zanox extends Command
         $categories = $this->generateCategories();
         
         for ($i = 0; $i < 10; $i++) { 
+        	
+        	$total_record = ($i * 50);
+        	if($total_record > $this->totalPrograms) {
+        		break;
+        	}
+        	
             $campaigns = $this->getCampaigns($i);  // Get all accepted programs
                         
             if ($campaigns != null) {
@@ -319,6 +336,9 @@ class Zanox extends Command
 
                     // Add an image
                     try {
+                    	if(!File::isDirectory(public_path('images/affiliates/'.$campaign['programNetwork']))) {
+                    		File::makeDirectory(public_path('images/affiliates/'.$campaign['programNetwork']), 0775, true);
+                    	}
                         ImageManagerStatic::make($campaign['programImage'])
                             ->save(public_path('images/affiliates/'.$campaign['programNetwork']).'/'. $campaign['programId'].'.jpg');
                     } catch (NotReadableException $e) {
@@ -350,8 +370,11 @@ class Zanox extends Command
         if (isset($programs)) {
             foreach ($programs as $key => $campaign) {
                 if ($campaign['programId'] != NULL) {
-                    if (is_array(json_decode($this->getCommission($campaign['programId'])))) {
-                        foreach (json_decode($this->getCommission($campaign['programId'])) as $key => $commission) {
+                	
+                	$commission_data = json_decode($this->getCommission($campaign['programId']));
+                	
+                    if (is_array($commission_data)) {
+                        foreach ($commission_data as $key => $commission) {
                             $commissionArray[$campaign['programId']][$key.'-'.str_slug($commission->name).'-'.$commission->value] = array(
                                 'name' => $commission->name,
                                 'unit' => $commission->unit,
@@ -372,12 +395,21 @@ class Zanox extends Command
                 ;
 
                 foreach ($affiliates as $key => $affiliate) {
-                    if (is_array(json_decode($affiliate->compensations))) {
-                        foreach (json_decode($affiliate->compensations) as $key => $commission) {
-                            $affiliateCommissionArray[$affiliate->program_id][$key.'-'.str_slug($commission->name).'-'.$commission->value] = array(
-                                'name' => $commission->name,
-                                'unit' => (isset($commissionArray[$affiliate->program_id][$key.'-'.str_slug($commission->name).'-'.$commission->value]) ? $commissionArray[$affiliate->program_id][$key.'-'.str_slug($commission->name).'-'.$commission->value]['unit'] : $commission->unit),
-                                'value' => $commission->value
+                	
+                	$affiliate_compensations = json_decode($affiliate->compensations, true);
+                	
+                    if (is_array($affiliate_compensations)) {
+                        foreach ($affiliate_compensations as $key => $commission) {
+//                             $affiliateCommissionArray[$affiliate->program_id][$key.'-'.str_slug($commission->name).'-'.$commission->value] = array(
+//                                 'name' => $commission->name,
+//                                 'unit' => (isset($commissionArray[$affiliate->program_id][$key.'-'.str_slug($commission->name).'-'.$commission->value]) ? $commissionArray[$affiliate->program_id][$key.'-'.str_slug($commission->name).'-'.$commission->value]['unit'] : $commission->unit),
+//                                 'value' => $commission->value
+//                             );
+                            
+                            $affiliateCommissionArray [$affiliate->program_id] [$key . '-' . str_slug ( $commission['name'] ) . '-' . $commission['value']] = array (
+                            		'name' => $commission['name'],
+                            		'unit' => (isset ( $commissionArray [$affiliate->program_id] [$key . '-' . str_slug ( $commission['name'] ) . '-' . $commission['value']] ) ? $commissionArray [$affiliate->program_id] [$key . '-' . str_slug ( $commission['name'] ) . '-' . $commission['value']] ['unit'] : $commission['unit']),
+                            		'value' => $commission['value']
                             );
 
                             $this->line('Updating affliate #'.$affiliate->program_id.' - '.$affiliate->name);
@@ -402,6 +434,88 @@ class Zanox extends Command
             }
         }
     }
+    
+	public function removeCampaigns() {
+		$removeProgramIds = array();
+		
+		$existedAffiliates = $this->affiliatesExists;
+		
+		foreach ($existedAffiliates as $existedAffiliate) {
+            $programsArray[] = $existedAffiliate->program_id;
+        }
+        
+        $activeProgramsIds = $this->getActiveProgramIds();
+        
+        if(!empty($activeProgramsIds)) {
+        	foreach ($programsArray as $key => $programID) {
+        		if (!in_array($programID, $activeProgramsIds)) {
+        			$removeProgramIds[] = $programID;
+        		}
+        	}
+        }
+        if (!empty($removeProgramIds)) {
+        	$affiliates = Affiliate::whereIn('program_id', $removeProgramIds)
+        	->where('affiliate_network', $this->affiliate_network)
+        	->update(array('no_show' => 1));
+        }
+	}
+	
+	
+	public function getActiveProgramIds() {
+		$programs = array();
+		$total_record = 0;
+		for ($i = 0; $i < 10; $i++) {
+			$total_record = ($i * 50);
+			if($total_record < $this->totalPrograms) {
+				$campaigns = $this->checkConnection()->getProgramApplications($this->adspaceId, null, 'confirmed', $i, 50);
+				$this->totalPrograms = $campaigns->total;
+				if (isset($campaigns->programApplicationItems->programApplicationItem)) {
+					$campaignsItem = $campaigns->programApplicationItems->programApplicationItem;
+					foreach ($campaignsItem as $campaign) {
+// 						if($campaign->program->active == "true") {
+							$programs[] = $campaign->program->id;
+// 						}
+						
+					}
+				}
+			}
+		}
+		
+		return $programs;
+	}
+	
+	public function addClicks() {
+		$programsClickAndViews = $this->getProgramsClickAndViews();
+		$existedAffiliates = $this->affiliatesExists;
+		foreach ($existedAffiliates as $existedAffiliate) {
+			if(isset($programsClickAndViews[$existedAffiliate->program_id])) {
+				$program_data = $programsClickAndViews[$existedAffiliate->program_id];
+					if(isset($program_data['views'])) {
+						$existedAffiliate->api_views = $program_data['views'];
+					}
+					if(isset($program_data['clicks'])) {
+						$existedAffiliate->api_clicks = $program_data['clicks'];
+					}
+					$existedAffiliate->save();
+			}
+		}
+	}
+	
+	public function getProgramsClickAndViews() {
+		$data = array();
+		$report = $this->checkConnection()->getReportBasic(date('Y-m-d', strtotime('-1 week')),date("Y-m-d", time()),null,null,null,null,null,$this->adspaceId,null,"program");
+		if (isset($report->reportItems->reportItem)) {
+			foreach($report->reportItems->reportItem as $k => $programReport) {
+				if($programReport->total->viewCount > 0 ) {
+					$data[$programReport->program->id]['views'] = $programReport->total->viewCount;
+				}
+				if($programReport->total->clickCount > 0 ) {
+					$data[$programReport->program->id]['clicks'] = $programReport->total->clickCount;
+				}
+			}
+		}
+		return $data;
+	}
 
     /**
      * Execute the console command.
@@ -429,6 +543,7 @@ class Zanox extends Command
                         $this->updateCampaigns();  // Update Campaigns
                         $this->removeCampaigns(); // Remove Campaigns
                         $this->addCampaigns(); // Add Campaigns
+                        $this->addClicks();
 
                         // End cronjob
                         $this->line('Finished '.$this->signature);
