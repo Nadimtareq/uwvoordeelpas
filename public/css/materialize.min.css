@@ -5039,6 +5039,7 @@ nav {
       float: left; }
   nav .input-field input {
     height: 100%;
+    max-width: 220px;
     font-size: 1.2rem;
     border: none;
     padding-left: 2rem;
