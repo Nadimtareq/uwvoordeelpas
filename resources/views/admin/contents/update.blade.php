@@ -1,6 +1,6 @@
 @extends('template.theme')
-
 @section('scripts')
+@include('admin.template.editor')
 	<script type="text/javascript" src="{{ URL::asset('public/js/tinymce/tinymce.min.js') }}"></script>
 	<script>
 	tinymce.init({
@@ -52,31 +52,30 @@
 
 				<div class="field">
 					<label>Inhoud</label>
-					<?php echo Form::textarea('content', $data->content);?>
+					<?php echo Form::textarea('content', $data->content, ['class' => 'editor']); ?>
 				</div>	
 			</div>	
 
 			<div class="five wide column">
 				<h4 class="ui header">Commando's</h4>
 				<div class="ui styled accordion">
-				  	<div class="active title">
-				    	<i class="dropdown icon"></i>
-				    	%discount%
-				  	</div>
+					<div class="active title">
+                    	<i class="dropdown icon"></i>
+                    	%discount%
+	                </div>
 
-				  	<div class="active content">
-				  		Geef de kortingspercentage weer
-				  	</div>
+	                <div class="active content">
+	                    Geef de kortingspercentage weer
+	                </div>
 
-				  	<div class="title">
-				    	<i class="dropdown icon"></i>
-				    	%days%
-				  	</div>
+	                <div class="title">
+	                    <i class="dropdown icon"></i>
+	                    %days%
+	                </div>
 
-				  	<div class="content">
-				  		Geef de kortingsdagen weer
-				  	</div>
-
+	                <div class="content">
+	                    Geef de kortingsdagen weer
+	                </div>
 
 	                <div class="title">
 	                    <i class="dropdown icon"></i>
@@ -85,6 +84,160 @@
 
 	                <div class="content">
 	                    Geef de kortings opmerkingen weer
+	                </div>
+
+
+	                <div class="title">
+	                    <i class="dropdown icon"></i>
+	                    %randomPassword%
+	                </div>
+
+	                <div class="content">
+	                    Geeft een uniek wachtwoord (werkt niet overal)
+	                </div>
+
+	                <div class="title">
+	                    <i class="dropdown icon"></i>
+	                    %invoicenumber%
+	                </div>
+
+	                <div class="content">
+	                    Geeft factuurnummer van klant weer (werkt niet overal)
+	                </div>
+
+	                <div class="title">
+	                    <i class="dropdown icon"></i>
+	                    %name%
+	                </div>
+
+	                <div class="content">
+	                    Geeft naam van klant weer
+	                </div>
+
+	                <div class="title">
+	                    <i class="dropdown icon"></i>
+	                    %cname%
+	                </div>
+
+	                <div class="content">
+	                    Geef de kortings opmerkingen weer
+	                </div>
+
+	                <div class="title">
+	                    <i class="dropdown icon"></i>
+	                    %email%
+	                </div>
+
+	                <div class="content">
+	                    Geeft e-mail adres van klant weer
+	                </div>
+
+	                <div class="title">
+	                    <i class="dropdown icon"></i>
+	                    %phone%
+	                </div>
+
+	                <div class="content">
+	                    Geeft telefoonnummer van klant weer 
+	                </div>
+
+	                <div class="title">
+	                    <i class="dropdown icon"></i>
+	                    %date%
+	                </div>
+
+	                <div class="content">
+	                    Geeft datum van reservering weer (Werkt alleen bij reserving templates)
+	                </div>
+
+	                <div class="title">
+	                    <i class="dropdown icon"></i>
+	                    %time%
+	                </div>
+
+	                <div class="content">
+	                    Geeft tijd van reservering weer (Werkt alleen bij reserving templates)
+	                </div>
+
+	                <div class="title">
+	                    <i class="dropdown icon"></i>
+	                    %persons%
+	                </div>
+
+	                <div class="content">
+	                    Geeft aantal personen van reservering weer (Werkt alleen bij reserving templates)
+	                </div>
+
+	                <div class="title">
+	                    <i class="dropdown icon"></i>
+	                    %comment%
+	                </div>
+
+	                <div class="content">
+	                    Geeft opmerking van reservering van een klant weer (Werkt alleen bij reserving templates)
+	                </div>
+
+	                <div class="title">
+	                    <i class="dropdown icon"></i>
+	                    %saldo%
+	                </div>
+
+	                <div class="content">
+	                    Geeft saldo van klant weer
+	                </div>
+
+	                <div class="title">
+	                    <i class="dropdown icon"></i>
+	                    %preferences%
+	                </div>
+
+	                <div class="content">
+	                    Geeft voorkeuren van klant weer
+	                </div>
+
+	                <div class="title">
+	                    <i class="dropdown icon"></i>
+	                    %allergies%
+	                </div>
+
+	                <div class="content">
+	                    Geeft allergieën van klant weer
+	                </div>
+
+	                <div class="title">
+	                    <i class="dropdown icon"></i>
+	                    %url%
+	                </div>
+
+	                <div class="content">
+	                    Geeft link naar pagina weer
+	                </div>
+
+	                <div class="title">
+	                    <i class="dropdown icon"></i>
+	                    %euro%
+	                </div>
+
+	                <div class="content">
+	                    Geeft een bedrag weer
+	                </div>
+
+	                <div class="title">
+	                    <i class="dropdown icon"></i>
+	                    %webshop%
+	                </div>
+
+	                <div class="content">
+	                    Geeft webshop naam weer
+	                </div>
+
+	                <div class="title">
+	                    <i class="dropdown icon"></i>
+	                    %days%
+	                </div>
+
+	                <div class="content">
+	                    Geeft kortings dagen weer
 	                </div>
 				</div>
 			</div>

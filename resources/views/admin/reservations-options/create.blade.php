@@ -25,10 +25,12 @@
 			@if ($userAdmin)
 			<div class="field">
 				<label>Bedrijf</label>
-				<?php echo Form::select('company_id', $companies, ($slug != NULL ? $company['id'] : NULL), array('class' => 'ui normal search dropdown')); ?>
+				<?php echo Form::select('company_id', $companies, ($slug != NULL ? $company['id'] : NULL), array('class' => 'ui normal search dropdown'));?>
 			</div>
 			@endif
 
+			<br /> <br />
+			
 			<div class="two fields">
 				<div class="field">
 					<label>Datum van</label>
@@ -122,7 +124,7 @@
 
 			<div class="field">
 				<label>Omschrijving</label>
-				<?php echo Form::textarea('content'); ?>
+				<?php echo Form::textarea('content', null, ['class' => 'editor']); ?>
 			</div>
 
 			<button class="ui button" type="submit"><i class="plus icon"></i> Aanmaken</button>

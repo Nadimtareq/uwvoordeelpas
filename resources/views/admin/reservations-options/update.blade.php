@@ -20,7 +20,7 @@
             <div class="field">
                 <label>Naam</label>
                 <?php echo Form::text('name', $data->name); ?>
-            </div>	
+            </div>  
 
             @if ($userAdmin)
             <div class="field">
@@ -28,6 +28,8 @@
                 <?php echo Form::select('company_id', $companies, $data->company_id, array('class' => 'ui normal search dropdown')); ?>
             </div>
             @endif
+
+            <br /> <br />
 
             <div class="two fields">
                 <div class="field">
@@ -45,7 +47,7 @@
                         ?>
                         <i class="calendar icon"></i>
                     </div>
-                </div>	
+                </div>  
 
                 <div class="field">
                     <label>Datum tot</label>
@@ -62,8 +64,8 @@
                         ?>
                         <i class="calendar icon"></i>
                     </div>
-                </div>	
-            </div>	
+                </div>  
+            </div>  
 
             <div class="two fields">
                 <div class="field">
@@ -80,7 +82,7 @@
                         ?>
                         <i class="clock icon"></i>
                     </div>
-                </div>	
+                </div>  
 
                 <div class="field">
                     <label>Tijd tot</label>
@@ -96,8 +98,8 @@
                         ?>
                         <i class="clock icon"></i>
                     </div>
-                </div>	
-            </div>	
+                </div>  
+            </div>  
             <div class="two fields">
             <div class="field">
                 <label>Aantal beschikbaar</label>
