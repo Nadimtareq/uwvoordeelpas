@@ -297,7 +297,7 @@ $(document).ready(function ($) {
 
                     var lgroup_res = $this.data('group') | 0;
                     var ltimeselect = $this.data('timeselect');
-                    var lpersons = $this.data('persons');
+                    var lpersons = $('select[name="persons"]').val(); /*$this.data('persons') */
 
                     var dateISO = ($this.datepicker('getDate').toISOString().substring(0, 10));
 
@@ -309,7 +309,7 @@ $(document).ready(function ($) {
                         url: baseUrl + 'ajax/available/time',
                         data: {
                             company: $('input[name="company_id"]').val(),
-                            persons: $('input[name="persons"]').val(),
+                            persons: lpersons,
                             group_res: lgroup_res,
                             date: dateISO
                         },
@@ -355,7 +355,7 @@ $(document).ready(function ($) {
 
                     var lgroup_res = $this.data('group');
                     var ltimeselect = $this.data('timeselect');
-                    var lpersons = $this.data('persons');
+                    var lpersons = $('select[name="persons"]').val() /*$this.data('persons')*/;
                     var data_lock = $this.data('lock');
 
                     $('input[name="month"]').val(month);
@@ -370,7 +370,7 @@ $(document).ready(function ($) {
                     $.ajax({
                         url: baseUrl + 'ajax/available/reservation',
                         data: {
-                            persons: $('input[name="persons"]').val(),
+                            persons: lpersons,
                             month: month,
                             year: year,
                             company: $('input[name="company_id"]').val()
