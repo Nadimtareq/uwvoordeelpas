@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use App\Models\Content;
@@ -11,11 +12,9 @@ use Setting;
 use Sentinel;
 use URL;
 
-class MailTemplate extends Model
-{
-    
-    protected $table = 'mail_templates';
+class MailTemplate extends Model {
 
+    protected $table = 'mail_templates';
     protected $commands = array(
         '/%name%/i',
         '/%cname%/i',
@@ -38,7 +37,6 @@ class MailTemplate extends Model
         '/%randomPassword%/i',
         '/%randompassword%/i'
     );
-
     protected $alternative = array(
         '/%name/i' => '%name%',
         '/name%/i' => '%name%',
@@ -68,8 +66,7 @@ class MailTemplate extends Model
         '/perso%/i' => '%persons%',
     );
 
-    public static function replaceWrongCommands($text)
-    {
+    public static function replaceWrongCommands($text) {
         $model = new MailTemplate;
 
         foreach ($model->alternative as $key => $value) {
@@ -79,9 +76,8 @@ class MailTemplate extends Model
         return $text;
     }
 
-    public static function createMailTemplates($companyIds) 
-    {
-        $companyIds = (is_array($companyIds)) ? $companyIds : array($companyIds);        
+    public static function createMailTemplates($companyIds) {
+        $companyIds = (is_array($companyIds)) ? $companyIds : array($companyIds);
         $mailTemplates = Config::get('preferences.mail_templates');
         $mailTemplatesContentBlock = Config::get('preferences.mail_templates_contentBlocks');
         $contentBlock = Content::getMailTemplate();
@@ -96,8 +92,8 @@ class MailTemplate extends Model
                         'company_id' => $company,
                         'created_at' => date('Y-m-d H:i:s'),
                         'category' => $mailId,
-                        'subject' => (isset($contentBlock[$mailTemplatesContentBlock[$i]]) ?  $contentBlock[$mailTemplatesContentBlock[$i]]['title'] : ''),
-                        'content' => (isset($contentBlock[$mailTemplatesContentBlock[$i]]) ?  $contentBlock[$mailTemplatesContentBlock[$i]]['content'] : ''),
+                        'subject' => (isset($contentBlock[$mailTemplatesContentBlock[$i]]) ? $contentBlock[$mailTemplatesContentBlock[$i]]['title'] : ''),
+                        'content' => (isset($contentBlock[$mailTemplatesContentBlock[$i]]) ? $contentBlock[$mailTemplatesContentBlock[$i]]['content'] : ''),
                     );
                 }
             }
@@ -106,11 +102,10 @@ class MailTemplate extends Model
         }
     }
 
-    public static function getTemplate($category, $company_id = null) 
-    {
+    public static function getTemplate($category, $company_id = null) {
         $blocks = static::where('mail_templates.category', '=', $category)
-            ->leftJoin('companies', 'mail_templates.company_id', '=', 'companies.id')
-            ->where('mail_templates.is_active', 0)
+                ->leftJoin('companies', 'mail_templates.company_id', '=', 'companies.id')
+                ->where('mail_templates.is_active', 0)
         ;
 
         if ($company_id != null) {
@@ -122,7 +117,7 @@ class MailTemplate extends Model
         if ($blocks->count() >= 1) {
             foreach ($blocks as $block) {
                 $template = array(
-                    'content' => $block->content, 
+                    'content' => $block->content,
                     'subject' => $block->subject,
                     'info' => array(
                         'slug' => $block->slug,
@@ -140,22 +135,20 @@ class MailTemplate extends Model
         }
     }
 
-    public function viewMail($options)
-    {
+    public function viewMail($options) {
         extract(array_merge(
-            array(
-            ),
-            $options
+                        array(
+                        ), $options
         ));
-        
+
         $mailTemplate = MailTemplate::getTemplate($options['template_id'], $options['company_id']);
-        
+
         if (isset($options['reservation_id'])) {
             $reservation = Reservation::find($options['reservation_id']);
         }
 
         $user = Sentinel::findByCredentials(array(
-            'login' => $options['email'] 
+                    'login' => $options['email']
         ));
 
         if (isset($mailTemplate)) {
@@ -166,11 +159,11 @@ class MailTemplate extends Model
                 $temporaryAuth4 = new TemporaryAuth();
 
                 if ($user) {
-                    $authLinkLike = 'auth/set/'.$temporaryAuth3->createCode($user->id, 'landingpage/'.$mailTemplate['info']['slug']);
-                    $authLinkReview = 'auth/set/'.$temporaryAuth4->createCode($user->id, 'restaurant/'.$mailTemplate['info']['slug'].'#reviews');
+                    $authLinkLike = 'auth/set/' . $temporaryAuth3->createCode($user->id, 'landingpage/' . $mailTemplate['info']['slug']);
+                    $authLinkReview = 'auth/set/' . $temporaryAuth4->createCode($user->id, 'restaurant/' . $mailTemplate['info']['slug'] . '#reviews');
                 } else {
-                    $authLinkLike = 'landingpage/'.$mailTemplate['info']['slug'];
-                    $authLinkReview = 'restaurant/'.$mailTemplate['info']['slug'].'#reviews';
+                    $authLinkLike = 'landingpage/' . $mailTemplate['info']['slug'];
+                    $authLinkReview = 'restaurant/' . $mailTemplate['info']['slug'] . '#reviews';
                 }
             } else {
                 $temporaryAuth = new TemporaryAuth();
@@ -185,10 +178,10 @@ class MailTemplate extends Model
                 }
             }
 
-            if (isset($options['replacements'])) { 
+            if (isset($options['replacements'])) {
                 foreach ($options['replacements'] as $key => $value) {
-                    $mailTemplate['content'] = preg_replace('/'.$key.'/i', $value, $mailTemplate['content']);
-                    $mailTemplate['subject'] = preg_replace('/'.$key.'/i', $value, $mailTemplate['subject']);
+                    $mailTemplate['content'] = preg_replace('/' . $key . '/i', $value, $mailTemplate['content']);
+                    $mailTemplate['subject'] = preg_replace('/' . $key . '/i', $value, $mailTemplate['subject']);
                 }
             } else {
                 $content = $mailTemplate['content'];
@@ -213,27 +206,25 @@ class MailTemplate extends Model
         }
     }
 
-    public function sendMail($options)
-    {
+    public function sendMail($options) {
         extract(array_merge(
-            array(
-            ),
-            $options
+                        array(
+                        ), $options
         ));
-        
+
         $mailTemplate = MailTemplate::getTemplate($options['template_id'], $options['company_id']);
-        
+
         if (isset($options['reservation_id'])) {
             $reservation = Reservation::find($options['reservation_id']);
         }
 
         $user = Sentinel::findByCredentials(array(
-            'login' => $options['email'] 
+                    'login' => $options['email']
         ));
 
         if (isset($mailTemplate)) {
             // Sources
-            $extraParamaters = '?utm_source='.$options['template_id'].'&utm_campaign=uwvoordeelpas&utm_medium=email&utm_content=restaurant_'.$mailTemplate['info']['slug'];
+            $extraParamaters = '?utm_source=' . $options['template_id'] . '&utm_campaign=uwvoordeelpas&utm_medium=email&utm_content=restaurant_' . $mailTemplate['info']['slug'];
 
             // Create auth code for login
             if ($options['template_id'] == 'reminder-review-client' OR $options['template_id'] == 'reminder-reservation-client') {
@@ -242,29 +233,30 @@ class MailTemplate extends Model
                 $temporaryAuth4 = new TemporaryAuth();
 
                 if ($user) {
-                    $authLinkLike = 'auth/set/'.$temporaryAuth3->createCode($user->id, 'landingpage/'.$mailTemplate['info']['slug'].$extraParamaters);
-                    $authLinkReview = 'auth/set/'.$temporaryAuth4->createCode($user->id, 'restaurant/'.$mailTemplate['info']['slug'].'#reviews'.$extraParamaters);
+                    $authLinkLike = 'auth/set/' . $temporaryAuth3->createCode($user->id, 'landingpage/' . $mailTemplate['info']['slug'] . $extraParamaters);
+                    $authLinkReview = 'auth/set/' . $temporaryAuth4->createCode($user->id, 'restaurant/' . $mailTemplate['info']['slug'] . '#reviews' . $extraParamaters);
                 } else {
-                    $authLinkLike = 'landingpage/'.$mailTemplate['info']['slug'].$extraParamaters;
-                    $authLinkReview = 'restaurant/'.$mailTemplate['info']['slug'].'#reviews'.$extraParamaters;
+                    $authLinkLike = 'landingpage/' . $mailTemplate['info']['slug'] . $extraParamaters;
+                    $authLinkReview = 'restaurant/' . $mailTemplate['info']['slug'] . '#reviews' . $extraParamaters;
                 }
             } else {
                 $temporaryAuth = new TemporaryAuth();
                 $temporaryAuth2 = new TemporaryAuth();
+                if ($user) {
+                    $authLinkEdit = $temporaryAuth->createCode($user->id, 'account#preferences' . $extraParamaters);
 
-                $authLinkEdit = $temporaryAuth->createCode($user->id, 'account#preferences'.$extraParamaters);
-
-                if (isset($options['invoice_url'])) {
-                    $authLinkCancel = $temporaryAuth2->createCode($user->id, $options['invoice_url']);
-                } else {
-                    $authLinkCancel = $temporaryAuth2->createCode($user->id, 'tegoed-sparen'.$extraParamaters);
+                    if (isset($options['invoice_url'])) {
+                        $authLinkCancel = $temporaryAuth2->createCode($user->id, $options['invoice_url']);
+                    } else {
+                        $authLinkCancel = $temporaryAuth2->createCode($user->id, 'tegoed-sparen' . $extraParamaters);
+                    }
                 }
             }
 
-            if (isset($options['replacements'])) { 
+            if (isset($options['replacements'])) {
                 foreach ($options['replacements'] as $key => $value) {
-                    $mailTemplate['content'] = preg_replace('/'.$key.'/i', $value, $mailTemplate['content']);
-                    $mailTemplate['subject'] = preg_replace('/'.$key.'/i', $value, $mailTemplate['subject']);
+                    $mailTemplate['content'] = preg_replace('/' . $key . '/i', $value, $mailTemplate['content']);
+                    $mailTemplate['subject'] = preg_replace('/' . $key . '/i', $value, $mailTemplate['subject']);
                 }
             } else {
                 $content = $mailTemplate['content'];
@@ -289,42 +281,37 @@ class MailTemplate extends Model
             if (trim($options['email']) != '' && isset($options['email'])) {
                 try {
                     Mail::send(
-                        'emails.mailtemplate', 
-                        $data, 
-                        function ($message) use($options, $mailTemplate) {
-                            if (isset($options['attach'])) {
-                                $message
-                                    ->attachData(
-                                        $options['attach']['data'], 
-                                        $options['attach']['name']
-                                    )
-                                ;
-
-                            }
-
+                            'emails.mailtemplate', $data, function ($message) use($options, $mailTemplate) {
+                        if (isset($options['attach'])) {
                             $message
-                                ->to($options['email'])
-                                ->subject($mailTemplate['subject'])
+                                    ->attachData(
+                                            $options['attach']['data'], $options['attach']['name']
+                                    )
                             ;
                         }
+
+                        $message
+                                ->to($options['email'])
+                                ->subject($mailTemplate['subject'])
+                        ;
+                    }
                     );
                 } catch (\Swift_RfcComplianceException $e) {
+                    
                 }
             }
         }
     }
 
-    public function sendMailSite($options)
-    {
+    public function sendMailSite($options) {
         extract(array_merge(
-            array(
-                'noreply@uwvoordeelpas.nl'
-            ),
-            $options
+                        array(
+            'noreply@uwvoordeelpas.nl'
+                        ), $options
         ));
-            
-        $allSettings = Setting::all(); 
-    
+
+        $allSettings = Setting::all();
+
         $mailTemplate = array(
             'welcome' => array(
                 'subject' => isset($allSettings['welcome_mail_title']) ? $allSettings['welcome_mail_title'] : '',
@@ -381,17 +368,17 @@ class MailTemplate extends Model
         );
 
         if (isset($mailTemplate[$options['template_id']])) {
-            $extraParamaters = '?utm_source='.$options['template_id'].'&utm_campaign=uwvoordeelpas&utm_medium=email&utm_content=uwvoordeelpas';
+            $extraParamaters = '?utm_source=' . $options['template_id'] . '&utm_campaign=uwvoordeelpas&utm_medium=email&utm_content=uwvoordeelpas';
 
-            if (isset($options['replacements'])) { 
+            if (isset($options['replacements'])) {
                 foreach ($options['replacements'] as $key => $value) {
-                    $mailTemplate[$options['template_id']]['content'] = preg_replace('/'.$key.'/i', $value, $mailTemplate[$options['template_id']]['content']);
-                    $mailTemplate[$options['template_id']]['subject'] = preg_replace('/'.$key.'/i', $value, $mailTemplate[$options['template_id']]['subject']);
-                }   
+                    $mailTemplate[$options['template_id']]['content'] = preg_replace('/' . $key . '/i', $value, $mailTemplate[$options['template_id']]['content']);
+                    $mailTemplate[$options['template_id']]['subject'] = preg_replace('/' . $key . '/i', $value, $mailTemplate[$options['template_id']]['subject']);
+                }
             }
 
             $user = Sentinel::findByCredentials(array(
-                'login' => $options['email'] 
+                        'login' => $options['email']
             ));
 
             $temporaryAuth = new TemporaryAuth();
@@ -413,40 +400,35 @@ class MailTemplate extends Model
 
                 try {
                     Mail::send(
-                        'emails.mailtemplate', 
-                        $data, 
-                        function ($message) use($options, $mailTemplate) {
-                            if (isset($options['attach'])) {
-                                $message
-                                    ->attachData(
-                                        $options['attach']['data'], 
-                                        $options['attach']['name']
-                                    )
-                                ;
-
-                            }
-
+                            'emails.mailtemplate', $data, function ($message) use($options, $mailTemplate) {
+                        if (isset($options['attach'])) {
                             $message
-                                ->to($options['email'])
-                                ->subject($mailTemplate[$options['template_id']]['subject'])
+                                    ->attachData(
+                                            $options['attach']['data'], $options['attach']['name']
+                                    )
                             ;
                         }
+
+                        $message
+                                ->to($options['email'])
+                                ->subject($mailTemplate[$options['template_id']]['subject'])
+                        ;
+                    }
                     );
                 } catch (\Swift_RfcComplianceException $e) {
+                    
                 }
             }
         }
     }
 
-    public function sendRawMail($options)
-    {
+    public function sendRawMail($options) {
         extract(array_merge(
-            array(
-            ),
-            $options
+                        array(
+                        ), $options
         ));
-            
-        $allSettings = Setting::all(); 
+
+        $allSettings = Setting::all();
 
         if (isset($options['company_id'])) {
             $company = Company::find($options['company_id']);
@@ -468,17 +450,17 @@ class MailTemplate extends Model
         if (trim($options['email']) != '' && isset($options['email'])) {
             try {
                 Mail::send(
-                    'emails.newsletter', 
-                    $data, 
-                    function ($message) use($options) {
-                        $message
+                        'emails.newsletter', $data, function ($message) use($options) {
+                    $message
                             ->to($options['email'])
                             ->subject($options['subject'])
-                        ;
-                    }
+                    ;
+                }
                 );
             } catch (\Swift_RfcComplianceException $e) {
+                
             }
         }
     }
+
 }

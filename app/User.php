@@ -24,7 +24,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     public static function getRoleErrorPopup() 
     {
-        alert()->error('Helaas', 'U heeft niet de bevoegde rechten om deze pagina te bezoeken')->persistent('Sluiten');
+        alert()->error('', 'U heeft niet de bevoegde rechten om deze pagina te bezoeken')->persistent('Sluiten');
     }
 
     public function companies()
