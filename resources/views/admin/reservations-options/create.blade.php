@@ -123,7 +123,12 @@
 			</div>
 
 			<div class="field">
-				<label>Omschrijving</label>
+				<label>Uitgebreide omschrijving</label>
+				<?php echo Form::textarea('short_content', null, ['class' => 'editor']); ?>
+			</div>
+
+			<div class="field">
+				<label>Korte omschrijving</label>
 				<?php echo Form::textarea('content', null, ['class' => 'editor']); ?>
 			</div>
 
