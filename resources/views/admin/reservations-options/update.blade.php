@@ -101,30 +101,30 @@
                 </div>  
             </div>  
             <div class="two fields">
-            <div class="field">
-                <label>Aantal beschikbaar</label>
-                <?php echo Form::number('total_amount', $data->total_amount, array('min' => 1)); ?>
-            </div>
+                <div class="field">
+                    <label>Aantal beschikbaar</label>
+                    <?php echo Form::number('total_amount', $data->total_amount, array('min' => 1)); ?>
+                </div>
 
-            <div class="field">
-                <label>Prijs van</label>
-                <?php echo Form::text('price_from', $data->price_from); ?>
-            </div>
+                <div class="field">
+                    <label>Prijs van</label>
+                    <?php echo Form::text('price_from', $data->price_from); ?>
+                </div>
 
-            <div class="field">
-                <label>Prijs</label>
-                <?php echo Form::text('price', $data->price); ?>
-            </div>
-            </div>
-
-            <div class="field">
-                <label>Uitgebreide omschrijving</label>
-                <?php echo Form::textarea('short_content', $data->short_description, ['class' => 'editor']); ?>
+                <div class="field">
+                    <label>Dealprijs</label>
+                    <?php echo Form::text('price', $data->price); ?>
+                </div>
             </div>
 
             <div class="field">
                 <label>Korte omschrijving</label>
                 <?php echo Form::textarea('content', $data->description, ['class' => 'editor']); ?>
+            </div>
+
+            <div class="field">
+                <label>Uitgebreide omschrijving</label>
+                <?php echo Form::textarea('short_content', $data->short_description, ['class' => 'editor']); ?>
             </div>
 
             <button class="ui button" type="submit"><i class="pencil icon"></i> Wijzigen</button>

@@ -107,29 +107,31 @@
 				</div>	
 			</div>	
 
-			<div class="field">
-				<label>Aantal beschikbaar</label>
-				<?php echo Form::number('total_amount', 1, array('min' => 1)); ?>
-			</div>
+			<div class="two fields">
+				<div class="field">
+					<label>Aantal beschikbaar</label>
+					<?php echo Form::number('total_amount', 1, array('min' => 1)); ?>
+				</div>
 
-			<div class="field">
-				<label>Prijs van</label>
-                <?php echo Form::text('price_from'); ?>
-			</div>
+				<div class="field">
+					<label>Prijs van</label>
+	                <?php echo Form::text('price_from'); ?>
+				</div>
 
-			<div class="field">
-				<label>Prijs</label>
-                <?php echo Form::text('price'); ?>
-			</div>
-
-			<div class="field">
-				<label>Uitgebreide omschrijving</label>
-				<?php echo Form::textarea('short_content', null, ['class' => 'editor']); ?>
+				<div class="field">
+					<label>Dealprijs</label>
+	                <?php echo Form::text('price'); ?>
+				</div>
 			</div>
 
 			<div class="field">
 				<label>Korte omschrijving</label>
 				<?php echo Form::textarea('content', null, ['class' => 'editor']); ?>
+			</div>
+
+			<div class="field">
+				<label>Uitgebreide omschrijving</label>
+				<?php echo Form::textarea('short_content', null, ['class' => 'editor']); ?>
 			</div>
 
 			<button class="ui button" type="submit"><i class="plus icon"></i> Aanmaken</button>
