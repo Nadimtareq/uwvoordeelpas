@@ -15,6 +15,7 @@ use SoapClient;
 use SoapFault;
 use Request;
 use Setting;
+use Illuminate\Support\Facades\File;
 
 class Affilinet extends Command
 {
@@ -103,80 +104,113 @@ class Affilinet extends Command
         $this->lastId = count($this->lastAffiliates) >= 1 ? $this->lastAffiliates->last()->id : 0;
     }
 
-    public function checkConnection() 
-    {
-        $options =  array(
-            'compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP,
-            'stream_context'=> stream_context_create(
-                array(
-                    'ssl' => array(
-                        'verify_peer' => false,
-                        'verify_peer_name' => false, 
-                        'allow_self_signed' => true 
-                     )
-                )
-            )
-        );
+//     public function checkConnection() 
+//     {
+//         $options =  array(
+//             'compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP,
+//             'stream_context'=> stream_context_create(
+//                 array(
+//                     'ssl' => array(
+//                         'verify_peer' => false,
+//                         'verify_peer_name' => false, 
+//                         'allow_self_signed' => true 
+//                      )
+//                 )
+//             )
+//         );
 
-        try {
-            ini_set('soap.wsdl_cache_enabled', 0);
-            set_time_limit(0);
+//         try {
+//             ini_set('soap.wsdl_cache_enabled', 0);
+//             set_time_limit(0);
 
-            $this->login = new \SoapClient('https://api.affili.net/V2.0/Logon.svc?wsdl', $options);
-            $this->token = $this->login->Logon(array(
-                'Username' => Setting::get('settings.affilinet_name'),
-                'Password' => Setting::get('settings.affilinet_pw'),
-                'WebServiceType' => 'Publisher'
-            ));
+//             $this->login = new \SoapClient('https://api.affili.net/V2.0/Logon.svc?wsdl', $options);
+//             $this->token = $this->login->Logon(array(
+//                 'Username' => Setting::get('settings.affilinet_name'),
+//                 'Password' => Setting::get('settings.affilinet_pw'),
+//                 'WebServiceType' => 'Publisher'
+//             ));
 
-            $this->client = new \SoapClient('https://api.affili.net/V2.0/PublisherProgram.svc?wsdl', $options);
+//             $this->client = new \SoapClient('https://api.affili.net/V2.0/PublisherProgram.svc?wsdl', $options);
 
-            return $this->client;
-        } catch (SoapFault $fault) {
-            echo $fault->faultstring;
-        }
+//             return $this->client;
+//         } catch (SoapFault $fault) {
+//             echo $fault->faultstring;
+//         }
+//     }
+    
+    public function checkConnection() {
+    	try {
+    		ini_set('soap.wsdl_cache_enabled', 0);
+    		set_time_limit(0);
+	    	 
+	    	$soapLogon = new \SoapClient("https://api.affili.net/V2.0/Logon.svc?wsdl");
+	    	$this->token = $soapLogon->Logon(array(
+	    			'Username'  => env("AFFILINET_SITE_ID"),
+    				'Password'  => env("AFFILINET_PUBLISHER_PASS"),
+    				'WebServiceType' => 'Publisher'
+	    	));
+	    	$this->client = new \SoapClient("https://api.affili.net/V2.0/PublisherProgram.svc?wsdl");
+	
+	    	return $this->client;
+    	} catch (SoapFault $fault) {
+    		echo $fault->faultstring;
+    	}
     }
 
     public function getCampaigns()
     {
-        $campaigns = $this->checkConnection()->GetPrograms(array(
-            'CredentialToken' => $this->token,
-            'DisplaySettings' => array(
-                'PageSize' => 100,
-                'CurrentPage' => 1
-            ),
-            'GetProgramsQuery' => array(
-                'PartnershipStatus' => array('Active')
-            )
-        ));
-
-        $campaigns = $campaigns->ProgramCollection->Program;
-
+    	$pageSize = 100;
+    	$campaigns_data[] = $this->getPrograms(100, 1);
+    	$toalRecord = $campaigns_data[0]['TotalResults'];
+    	$interval = ceil($toalRecord/$pageSize);
+    	
+    	for($i=2; $i<=$interval; $i++) {
+    		$campaigns_data[] = $this->getPrograms($pageSize, $i);
+    	}
+//         $campaigns = $this->checkConnection()->GetPrograms(array(
+//             'CredentialToken' => $this->token,
+//             'DisplaySettings' => array(
+//                 'PageSize' => 100,
+//                 'CurrentPage' => 1
+//             ),
+//             'GetProgramsQuery' => array(
+//                 'PartnershipStatus' => array('Active')
+//             )
+//         ));
+        
         $programs = array();
-
-        foreach ($campaigns as $campaign) {    
-            if (
-                !in_array($campaign->ProgramTitle, array_flatten($this->lastAffiliates)) 
-                && !in_array($campaign->ProgramId, array_flatten($this->affiliates)) 
-                && $this->affiliateHelper->domainRestriction($campaign->ProgramURL) == 1
-            ) {
-                $this->lastId++;
-               
-                $programs[] = array(
-                    'affiliateId' => $this->lastId,
-                    'affiliateCreated' => date('now'),
-                    'programId' => $campaign->ProgramId,
-                    'programUrl' => $campaign->ProgramURL,
-                    'programSlug' => str_slug($campaign->ProgramTitle),
-                    'programName' => $campaign->ProgramTitle,
-                    'programTrackingLink' => 'http://zijn.samenresultaat.nl/click.asp?ref=#USERID&site='.$campaign->ProgramId.'&type=text',
-                    'programTrackingDuration' => $campaign->CookieLifetime.' dagen',
-                    'programNetwork' => $this->affiliate_network,
-                    'programCommissions' => $this->getCommission($campaign->ProgramId),
-                    'programInfo' => $campaign->ProgramCategoryIds->int,
-                    'programImage' => $campaign->LogoURL
-                );
-            }
+        
+        if(!empty($campaigns_data)) {
+        	foreach ($campaigns_data as $campaignsV) {
+        		$campaigns = $campaignsV['programs'];
+        		if(isset($campaigns->ProgramCollection->Program) && !empty($campaigns->ProgramCollection->Program)) {
+        			$campaigns = $campaigns->ProgramCollection->Program;
+        			foreach ($campaigns as $campaign) {
+        				if (
+        						!in_array($campaign->ProgramTitle, array_flatten($this->lastAffiliates))
+        						&& !in_array($campaign->ProgramId, array_flatten($this->affiliates))
+        						&& $this->affiliateHelper->domainRestriction($campaign->ProgramURL) == 1
+        				) {
+        					$this->lastId++;
+        		
+        					$programs[] = array(
+        							'affiliateId' => $this->lastId,
+        							'affiliateCreated' => date('now'),
+        							'programId' => $campaign->ProgramId,
+        							'programUrl' => $campaign->ProgramURL,
+        							'programSlug' => str_slug($campaign->ProgramTitle),
+        							'programName' => $campaign->ProgramTitle,
+        							'programTrackingLink' => 'http://zijn.samenresultaat.nl/click.asp?ref=#USERID&site='.$campaign->ProgramId.'&type=text',
+        							'programTrackingDuration' => $campaign->CookieLifetime.' dagen',
+        							'programNetwork' => $this->affiliate_network,
+        							'programCommissions' => $this->getCommission($campaign->ProgramId),
+        							'programInfo' => $campaign->ProgramCategoryIds->int,
+        							'programImage' => $campaign->LogoURL
+        					);
+        				}
+        			}
+        		}
+        	}
         }
 
         $categories = $this->generateCategories();
@@ -236,6 +270,11 @@ class Affilinet extends Command
 
             // Add an image
             try {
+            	
+            	if(!File::isDirectory(public_path('images/affiliates/'.$campaign['programNetwork']))) {
+            		File::makeDirectory(public_path('images/affiliates/'.$campaign['programNetwork']), 0775, true);
+            	}
+            	
                 ImageManagerStatic::make($campaign['programImage'])->save(public_path('images/affiliates/'.$campaign['programNetwork']).'/'. $campaign['programId'].'.jpg');
             } catch (NotReadableException $e) {
             }
@@ -254,37 +293,51 @@ class Affilinet extends Command
 
     public function updateCampaigns()
     {
-        $campaigns = $this->checkConnection()->GetPrograms(array(
-            'CredentialToken' => $this->token,
-            'DisplaySettings' => array(
-                'PageSize' => 100,
-                'CurrentPage' => 1
-            ),
-            'GetProgramsQuery' => array(
-                'PartnershipStatus' => array('Active')
-            )
-        ));
+    	
+    	$pageSize = 100;
+    	$campaigns_data[] = $this->getPrograms(100, 1);
+    	$toalRecord = $campaigns_data[0]['TotalResults'];
+    	$interval = ceil($toalRecord/$pageSize);
+    	 
+    	for($i=2; $i<=$interval; $i++) {
+    		$campaigns_data[] = $this->getPrograms($pageSize, $i);
+    	}
 
-        $campaigns = $campaigns->ProgramCollection->Program;
-        $programs = array();
+    	$update_data = array();
+    	$update_ids;
+    	if(!empty($campaigns_data)) {
+    		foreach ($campaigns_data as $campaignsV) {
+    			$campaigns = $campaignsV['programs'];
+    			if(isset($campaigns->ProgramCollection->Program) && !empty($campaigns->ProgramCollection->Program)) {
+    				$campaigns = $campaigns->ProgramCollection->Program;
+    				foreach ($campaigns as $campaign) {
+    					if (in_array($campaign->ProgramId, array_flatten($this->affiliates))) {
+    						$this->lastId++;
+    						$update_ids[] = $campaign->ProgramId;
+    						$update_data[$campaign->ProgramId] = 'http://zijn.samenresultaat.nl/click.asp?ref=#SITEID#&site='.$campaign->ProgramId.'&type=b1&bnb=1&subid=#SUB_ID#';
+    					}
+    				}
+    			}
+    		}
+    	}
+    	
+    	if(!empty($update_data) && !empty($update_ids)) {
+    		$affiliates = Affiliate::whereIn('program_id', $update_ids)
+    		->where('affiliate_network', $this->affiliate_network)->get();
+    		
+    		if(!empty($affiliates)) {
+    			foreach ($affiliates as $key => $affiliate) {
+    				if(isset($update_data[$affiliate->program_id])) {
+    					$affiliate->tracking_link = $update_data[$affiliate->program_id];
+    					$affiliate->save();
+    						
+    					$this->line('Updating program id #'.$affiliate->program_id);
+    				}
+    			}
+    		} 
+    	}
 
-        foreach ($campaigns as $campaign) {
-            if (in_array($campaign->ProgramId, array_flatten($this->affiliates))) {
-                $this->lastId++;
-               
-                $programUpdate = Affiliate::where('program_id', $campaign->ProgramId)
-                    ->where('affiliate_network', $this->affiliate_network)
-                    ->first()
-                ;
-
-                $programUpdate->tracking_link = 'http://zijn.samenresultaat.nl/click.asp?ref=#SITEID#&site='.$campaign->ProgramId.'&type=b1&bnb=1&subid=#SUB_ID#';
-                $programUpdate->save();
-
-                $this->line('Updating program id #'.$campaign->ProgramId);
-            }
-        }
-
-        return $programs;
+        return true;
     }
 
     public function generateCategories() 
@@ -423,7 +476,7 @@ class Affilinet extends Command
     {
         $campaignCommision = $this->client->GetProgramRates(array(
             'CredentialToken' => $this->token,
-            'PublisherId' => 763801,
+            'PublisherId' => env("AFFILINET_SITE_ID"),
             'ProgramId' => $campaignId
         ));
                         
@@ -457,6 +510,86 @@ class Affilinet extends Command
 
         return isset($commissions) ? json_encode($commissions) : '';
     }
+    
+    public function getPrograms($pagesize, $page) {
+    	$programs = $this->checkConnection()->GetPrograms(array(
+    			'CredentialToken' => $this->token,
+    			'DisplaySettings' => array(
+    					'PageSize' => $pagesize,
+    					'CurrentPage' => $page
+    			),
+    			'GetProgramsQuery' => array(
+    					'PartnershipStatus' => array('Active')
+    			)
+    	));
+    	
+    	return array('programs' => $programs, 'TotalResults' => $programs->TotalResults);
+    }
+    
+    public function addClicks() {
+    	$programsClickAndViews = $this->getProgramsClickAndViews();
+    	$existedAffiliates = Affiliate::where('affiliate_network', $this->affiliate_network)->get();;
+    	foreach ($existedAffiliates as $existedAffiliate) {
+    		if(isset($programsClickAndViews[$existedAffiliate->program_id])) {
+    			$program_data = $programsClickAndViews[$existedAffiliate->program_id];
+    			if(isset($program_data['views'])) {
+    				$existedAffiliate->api_views = $program_data['views'];
+    			}
+    			if(isset($program_data['clicks'])) {
+    				$existedAffiliate->api_clicks = $program_data['clicks'];
+    			}
+    			$existedAffiliate->save();
+    		}
+    	}
+    }
+    
+    public function getProgramsClickAndViews() {
+    	
+    	ini_set('soap.wsdl_cache_enabled', 0);
+    	set_time_limit(0);
+    	 
+    	$soapLogon = new \SoapClient("https://api.affili.net/V2.0/Logon.svc?wsdl");
+    	$token = $soapLogon->Logon(array(
+    			'Username'  => env("AFFILINET_SITE_ID"),
+    			'Password'  => env("AFFILINET_PUBLISHER_PASS"),
+    			'WebServiceType' => 'Publisher'
+    	));
+    	
+    	$startDate = strtotime("-2 months");
+    	$endDate = strtotime("2017-05-27");
+    	$programIds = $this->affiliates;
+    	
+    	$params = array(
+    			'StartDate' => $startDate,
+    			'EndDate' => $endDate,
+    			'ProgramStatus' => 'Active',
+    			'ProgramIds' => $programIds,
+    			'SubId' => '',
+    			'ProgramTypes' => 'All',
+    			'ValuationType' => 'DateOfRegistration'
+    	);
+    	
+    	$soapRequest = new \SoapClient('https://api.affili.net/V2.0/PublisherStatistics.svc?wsdl');
+    	
+    	$report_data = $soapRequest->GetProgramStatistics(array(
+      		'CredentialToken' => $token,
+      		'GetProgramStatisticsRequestMessage' => $params
+		));
+    	
+    	$data = array();
+    	if(isset($report_data->ProgramStatisticsRecords->CombinedProgramStatistics->StatisticsRecords) && !empty($report_data->ProgramStatisticsRecords->CombinedProgramStatistics->StatisticsRecords)) {
+    		$click_data = $report_data->ProgramStatisticsRecords->CombinedProgramStatistics->StatisticsRecords;
+    		foreach($click_data as $programReport) {
+    			if($programReport->Clicks > 0 ) {
+    				$data[$programReport->ProgramId]['views'] = $programReport->Clicks;
+    			}
+    			if($programReport->Views > 0 ) {
+    				$data[$programReport->ProgramId]['clicks'] = $programReport->Clicks;
+    			}
+    		}
+    	}
+    	return $data;
+    }
 
     /**
      * Execute the console command.
@@ -474,15 +607,18 @@ class Affilinet extends Command
 
             try {
                 if ($getClient) {
+                	Setting::set('cronjobs.active.'.$commandName, 0);
+                	Setting::save();
                     if (Setting::get('cronjobs.active.'.$commandName) == NULL OR Setting::get('cronjobs.active.'.$commandName) == 0) {
                         // Start cronjob
                         $this->line(' Start '.$this->signature);
                         Setting::set('cronjobs.active.'.$commandName, 1);
-                        Setting::save();
+//                         Setting::save();
 
                         // Processing
                         $this->updateCampaigns(); // Update Campagins
                         $this->addCampaigns(); // Add Campagins
+// 						   $this->addClicks();
 
                         // End cronjob
                         $this->line('Finished '.$this->signature);
@@ -496,7 +632,8 @@ class Affilinet extends Command
                     $this->line('This task is not available, because there is no connection.');
                 }
             } catch (Exception $e) {
-                $this->line('Er is een fout opgetreden. '.$this->signature);
+            	$this->line($e->getMessage() . $e->getLine());
+//                 $this->line('Er is een fout opgetreden. '.$this->signature);
                
                 Mail::raw('Er is een fout opgetreden:<br /><br /> '.$e, function ($message) {
                     $message->to(getenv('DEVELOPER_EMAIL'))->subject('Fout opgetreden: '.$this->signature);

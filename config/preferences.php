@@ -277,6 +277,7 @@ return [
   'disapproved' => 'rejected',
   'rejected' => 'rejected',
   'declined' => 'rejected',
+  'cancelled' => 'rejected',
   'approved' => 'accepted',
   'accepted' => 'accepted',
   'confirmed' => 'accepted',

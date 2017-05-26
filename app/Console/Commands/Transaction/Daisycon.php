@@ -134,7 +134,8 @@ class Daisycon extends Command
 
                 // Processing
                 try {
-                    $this->sendReminder(); 
+//                     $this->sendReminder();
+                    $this->addTransactions();
                 } catch (Exception $e) {
                     $this->line('Er is een fout opgetreden. '.$this->signature);
                    
