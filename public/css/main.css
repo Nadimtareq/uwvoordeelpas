@@ -445,31 +445,6 @@ header.nav li a:hover {
   margin: 10px 0px 0;
   float:left;
 }
-/* Change to all sizes at black */
-ul.side-nav .mobile-center {
-	 text-align:center;
-}
-
-ul.side-nav,
-ul.side-nav .quantity	{
-	z-index: 999;
-	background-color:#1b1c1d;
-	
-}
-ul.side-nav li {
-	border-bottom: 1px solid #2a2b2c;
-}
-
-ul.side-nav .input-field input {
-	max-width: initial;
-		
-}
-.header ul.side-nav .zoek {
-	background-color:black;	
-	
-}
-
-/* Finish - size at black */
 	
 .mobile-profile{
     display: none;
