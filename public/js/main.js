@@ -677,7 +677,7 @@ $(window).load(function ($) {
     });
     jQuery('.r a').eq(0).click();
 
-    jQuery('.up > .more').hide();
+    /*jQuery('.up > .more').show();
     jQuery('.tabs-content a').click(function () {
         jQuery('.up > .more').show();
         var tabId = jQuery(this).attr('href');
@@ -687,7 +687,7 @@ $(window).load(function ($) {
         jQuery('.up > .start').hide();
         jQuery(tabId).show();
         return false;
-    });
+    });*/
 // jQuery('.tabs-content a').eq(0).click();
 
 }(jQuery));
