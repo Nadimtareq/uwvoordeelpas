@@ -20,6 +20,7 @@ class Affilinet extends Command
      *
      * @var string
      */   
+    protected $signature = 'affilinet:transaction';
 
     /**
      * The console command description.
