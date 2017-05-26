@@ -407,51 +407,54 @@ class Tradetracker extends Command
             }
         }
 
-        $affiliates = Affiliate::whereIn('program_id', array_keys($commissionArray))
-            ->where('affiliate_network', 'tradetracker')
-            ->get()
-        ;
-
-        foreach ($affiliates as $key => $affiliate) {
+        if(!empty($commissionArray)) {
+        	$affiliates = Affiliate::whereIn('program_id', array_keys($commissionArray))
+        	->where('affiliate_network', 'tradetracker')
+        	->get();
         	
-        	$affiliate_compensations = json_decode($affiliate->compensations, true);
-        	
-            if (is_array($affiliate_compensations)) {
-            	foreach ($affiliate_compensations as $key => $commission) {
-            		$affiliateCommissionArray[$affiliate->program_id][$key.'-'.str_slug($commission['name']).'-'.$commission['value']] = array(
-            				'name' => $commission['name'],
-            				'unit' => (isset($commissionArray[$affiliate->program_id][$key.'-'.str_slug($commission['name']).'-'.$commission['value']]) ? $commissionArray[$affiliate->program_id][$key.'-'.str_slug($commission['name']).'-'.$commission['value']]['unit'] : $commission['unit']),
-            				'value' => $commission['value']
-            		);
-            	
-            		$this->line('Updating affliate #'.$affiliate->program_id.' - '.$affiliate->name);
-            	}
-            	
-//                 foreach (json_decode($affiliate->compensations) as $key => $commission) {
-//                     $affiliateCommissionArray[$affiliate->program_id][$key.'-'.str_slug($commission->name).'-'.$commission->value] = array(
-//                         'name' => $commission->name,
-//                         'unit' => (isset($commissionArray[$affiliate->program_id][$key.'-'.str_slug($commission->name).'-'.$commission->value]) ? $commissionArray[$affiliate->program_id][$key.'-'.str_slug($commission->name).'-'.$commission->value]['unit'] : $commission->unit),
-//                         'value' => $commission->value
-//                     );
-
-//                     $this->line('Updating affliate #'.$affiliate->program_id.' - '.$affiliate->name);
-//                 }
-
-                foreach ($commissionArray as $programId => $commissions) {
-                    foreach ($commissions as $commisionKey => $commission) {
-                        $affiliateCommissionArray[$programId][$commisionKey] = array(
-                            'name' => $commission['name'],
-                            'unit' => (isset($commissionArray[$affiliate->program_id][$commisionKey.'-'.str_slug($commission['name']).'-'.$commission['value']]) ? $commissionArray[$affiliate->program_id][$commisionKey.'-'.str_slug($commission['name']).'-'.$commission['value']]['unit'] : $commission['unit']),
-                            'value' => $commission['value']
-                        );
-                    }
-                }
-            }
-
-            if (isset($affiliateCommissionArray[$affiliate->program_id])) {
-                $affiliate->compensations = json_encode(array_values($affiliateCommissionArray[$affiliate->program_id]));
-                $affiliate->save();
-            }
+        	if(!empty($affiliates)) {
+        		foreach ($affiliates as $key => $affiliate) {
+        			 
+        			$affiliate_compensations = json_decode($affiliate->compensations, true);
+        			 
+        			if (is_array($affiliate_compensations)) {
+        				foreach ($affiliate_compensations as $key => $commission) {
+        					$affiliateCommissionArray[$affiliate->program_id][$key.'-'.str_slug($commission['name']).'-'.$commission['value']] = array(
+        							'name' => $commission['name'],
+        							'unit' => (isset($commissionArray[$affiliate->program_id][$key.'-'.str_slug($commission['name']).'-'.$commission['value']]) ? $commissionArray[$affiliate->program_id][$key.'-'.str_slug($commission['name']).'-'.$commission['value']]['unit'] : $commission['unit']),
+        							'value' => $commission['value']
+        					);
+        					 
+        					$this->line('Updating affliate #'.$affiliate->program_id.' - '.$affiliate->name);
+        				}
+        		
+        				//                 foreach (json_decode($affiliate->compensations) as $key => $commission) {
+        				//                     $affiliateCommissionArray[$affiliate->program_id][$key.'-'.str_slug($commission->name).'-'.$commission->value] = array(
+        				//                         'name' => $commission->name,
+        				//                         'unit' => (isset($commissionArray[$affiliate->program_id][$key.'-'.str_slug($commission->name).'-'.$commission->value]) ? $commissionArray[$affiliate->program_id][$key.'-'.str_slug($commission->name).'-'.$commission->value]['unit'] : $commission->unit),
+        				//                         'value' => $commission->value
+        				//                     );
+        				 
+        				//                     $this->line('Updating affliate #'.$affiliate->program_id.' - '.$affiliate->name);
+        				//                 }
+        				 
+        				foreach ($commissionArray as $programId => $commissions) {
+        					foreach ($commissions as $commisionKey => $commission) {
+        						$affiliateCommissionArray[$programId][$commisionKey] = array(
+        								'name' => $commission['name'],
+        								'unit' => (isset($commissionArray[$affiliate->program_id][$commisionKey.'-'.str_slug($commission['name']).'-'.$commission['value']]) ? $commissionArray[$affiliate->program_id][$commisionKey.'-'.str_slug($commission['name']).'-'.$commission['value']]['unit'] : $commission['unit']),
+        								'value' => $commission['value']
+        						);
+        					}
+        				}
+        			}
+        			 
+        			if (isset($affiliateCommissionArray[$affiliate->program_id])) {
+        				$affiliate->compensations = json_encode(array_values($affiliateCommissionArray[$affiliate->program_id]));
+        				$affiliate->save();
+        			}
+        		}
+        	}
         }
     }
 
@@ -475,10 +478,12 @@ class Tradetracker extends Command
             )
         );
 
-        foreach ($activePrograms as $key => $campaign) {
-            if (in_array($campaign->ID, $programsArray)) {
-                $activeCampaigns[] = $campaign->ID;
-            }
+        if(!empty($programsArray)) {
+        	foreach ($activePrograms as $key => $campaign) {
+        		if (in_array($campaign->ID, $programsArray)) {
+        			$activeCampaigns[] = $campaign->ID;
+        		}
+        	}
         }
        
         if (isset($activeCampaigns)) {
@@ -613,8 +618,8 @@ class Tradetracker extends Command
                         Setting::save();
 
                         // Processing
-                        $this->updateCampaigns();  // Update Campaigns
                         $this->removeCampaigns(); // Remove Campaigns
+                        $this->updateCampaigns();  // Update Campaigns
                         $this->addCampaigns(); // Add Campaigns
                         $this->addClicks();
 
@@ -630,7 +635,8 @@ class Tradetracker extends Command
                     $this->line('This task is not available, because there is no connection.');
                 }
             } catch (Exception $e) {
-                $this->line('Er is een fout opgetreden. '.$this->signature);
+            	$this->line($e->getMessage() . $e->getLine());
+//                 $this->line('Er is een fout opgetreden. '.$this->signature);
                
                 Mail::raw('Er is een fout opgetreden:<br /><br /> '.$e, function ($message) {
                     $message->to(getenv('DEVELOPER_EMAIL'))->subject('Fout opgetreden: '.$this->signature);

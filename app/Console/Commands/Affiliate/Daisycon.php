@@ -642,7 +642,8 @@ class Daisycon extends Command
                     $this->line('This task is not available, because there is no connection.');
                 }
             } catch (Exception $e) {
-                $this->line('Er is een fout opgetreden. '.$this->signature);
+            	$this->line($e->getMessage() . $e->getLine());
+//                 $this->line('Er is een fout opgetreden. '.$this->signature);
                
                 Mail::raw('Er is een fout opgetreden:<br /><br /> '.$e, function ($message) {
                     $message->to(getenv('DEVELOPER_EMAIL'))->subject('Fout opgetreden: '.$this->signature);
