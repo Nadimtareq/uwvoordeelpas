@@ -58,10 +58,11 @@ TOC :
 	
 	ul.side-nav .input-field input {
 		max-width: initial;
+		color:white;
 		
 	}
 	.header ul.side-nav .zoek {
-		background-color:black;	
+		background-color:black;			
 		
 	}
 	

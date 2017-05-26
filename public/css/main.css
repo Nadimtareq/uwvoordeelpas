@@ -3515,7 +3515,7 @@ a.button-collapse2{
 }
 @media(min-width: 320px) and (max-width: 479px){
     .datepicker1, .quantity{
-        color: #000;
+        color: white/*#000*/;
         background: none;
     }
     .datepicker1::-webkit-input-placeholder {color:#000;}
@@ -3641,10 +3641,11 @@ ul.side-nav2{
 .header .sk:before{
     top: 20px;
 }
+/*
 .header .zoek{
     margin: 17px auto;
     padding: 10px 8px;
-}
+}*/
 .header .center-menu li a:hover{
     border: none;
 }
