@@ -20,7 +20,6 @@ class Affilinet extends Command
      *
      * @var string
      */   
-    protected $signature = 'affilinet:transaction';
 
     /**
      * The console command description.
@@ -51,7 +50,6 @@ class Affilinet extends Command
     {
     	$status = Config::get('preferences.transactionStatus');
     	$transactions = $this->getTransactions();
-    	dd($transactions);
     	if(!empty($transactions->TransactionCollection->Transaction)) {
     		foreach ($transactions->TransactionCollection->Transaction as $transaction) {
     			if (!in_array($transaction->TransactionId, array_flatten($this->transaction))) {
