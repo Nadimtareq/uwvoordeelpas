@@ -2680,6 +2680,20 @@ header.nav li a:hover {
     margin-bottom: 2px;
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eaeaea',GradientType=0 );
 }
+.shop .goods .left-sidebar .ac-container a.firstitem{
+    font: 14px 'LatoRegular';
+    background: #f6f6f6;
+    display: block;
+    border-left: 4px solid rgba(0,0,0,0);
+    padding: 10px 10px;
+    position: relative;
+    z-index: 20;
+    display: block;
+    cursor: pointer;
+    margin-bottom: 2px;
+    color: #777;
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eaeaea',GradientType=0 );
+}
 .shop .goods .left-sidebar .ac-container label:hover{
     color: #333399;
     border-left: 4px solid #333399;
@@ -2698,7 +2712,7 @@ header.nav li a:hover {
     height: 24px;
     right: 13px;
     top: 7px;
-    background: transparent url(images/arrow_down.png) no-repeat center center;
+    background: transparent url(../images/arrow_down.png) no-repeat center center;
 }
 .shop .goods .left-sidebar .ac-container input:checked + label{
     border-left: 4px solid #333399;
@@ -2711,13 +2725,13 @@ header.nav li a:hover {
     height: 24px;
     right: 13px;
     top: 7px;
-    background: transparent url(images/arrow_down2.png) no-repeat center center;
+    background: transparent url(../images/arrow_down2.png) no-repeat center center;
 }
 .shop .goods .left-sidebar .ac-container input:checked + label:after{
-    background-image: url(images/arrow_up.png);
+    background-image: url(../images/arrow_up.png);
 }
 .shop .goods .left-sidebar .ac-container input:checked + label:hover:after{
-    background-image: url(images/arrow_up.png);
+    background-image: url(../images/arrow_up.png);
 }
 .shop .goods .left-sidebar .ac-container input{
     display: none;
@@ -2750,7 +2764,7 @@ header.nav li a:hover {
     -ms-transition: height 0.5s ease-in-out, box-shadow 0.1s linear;
     transition: height 0.5s ease-in-out, box-shadow 0.1s linear;
 }
-.shop .goods .left-sidebar .ac-container a{
+.shop .goods .left-sidebar .ac-container a.subitem{
 
     display: block;
     
@@ -2963,7 +2977,7 @@ header.nav li a:hover {
     margin-top: 10px;
 }
 .shop .up .more{
-
+    
 }
 .shop .up .more h2{
     margin: 0;

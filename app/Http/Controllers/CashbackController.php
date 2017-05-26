@@ -153,11 +153,11 @@ class CashbackController extends Controller
         $affiliates = new LengthAwarePaginator(
             array_slice(
                 $affiliatesArray, 
-                $request->input('limit', 15) * ($request->input('page', 1) - 1), 
-                $request->input('limit', 15)
+                $request->input('limit', 16) * ($request->input('page', 1) - 1), 
+                $request->input('limit', 16)
             ),
             count($affiliatesArray), 
-            $request->input('limit', 15)
+            $request->input('limit', 16)
         );
         
         $affiliates->setPath(URL::to('tegoed-sparen'));
@@ -166,7 +166,7 @@ class CashbackController extends Controller
             'affiliates' => $affiliates,
             'categories' => $this->categoriesArray,
             'queryString' => $this->queryString,
-            'limit' => $request->input('limit', 15),
+            'limit' => $request->input('limit', 16),
             'paginationQueryString' => $request->query()
         ]);
     }
@@ -234,11 +234,11 @@ class CashbackController extends Controller
             $affiliates = new LengthAwarePaginator(
                 array_slice(
                     $affiliatesArray, 
-                    $request->input('limit', 15) * ($request->input('page', 1) - 1), 
-                    $request->input('limit', 15)
+                    $request->input('limit', 16) * ($request->input('page', 1) - 1), 
+                    $request->input('limit', 16)
                 ),
                 count($affiliatesArray), 
-                $request->input('limit', 15)
+                $request->input('limit', 16)
             );
             
             $affiliates->setPath(URL::to('tegoed-sparen/category/'.$id.'/'.$slug));
@@ -253,7 +253,7 @@ class CashbackController extends Controller
                 'categories' => $this->categoriesArray,
                 'currentCategory' => ($category->subcategory_id == 0 ? $category->id : $category->subcategory_id),
                 'queryString' => $this->queryString,
-                'limit' => $request->input('limit', 15),
+                'limit' => $request->input('limit', 16),
                 'paginationQueryString' => $request->query()
             ]);
         } else {
@@ -338,11 +338,11 @@ class CashbackController extends Controller
             $affiliates = new LengthAwarePaginator(
                 array_slice(
                     $affiliatesArray, 
-                    $request->input('limit', 15) * ($request->input('page', 1) - 1), 
-                    $request->input('limit', 15)
+                    $request->input('limit', 16) * ($request->input('page', 1) - 1), 
+                    $request->input('limit', 16)
                 ),
                 count($affiliatesArray), 
-                $request->input('limit', 15)
+                $request->input('limit', 16)
             );
             
             $affiliates->setPath(URL::to('tegoed-sparen/company/'.$slug));
@@ -364,7 +364,7 @@ class CashbackController extends Controller
                 'affiliates' => $affiliates,
                 'categories' => $this->categoriesArray,
                 'queryString' => $this->queryString,
-                'limit' => $request->input('limit', 15),
+                'limit' => $request->input('limit', 16),
                 'paginationQueryString' => $request->query()
             ]);
         } else {
@@ -451,11 +451,11 @@ class CashbackController extends Controller
         $affiliates = new LengthAwarePaginator(
             array_slice(
                 $affiliatesArray, 
-                $request->input('limit', 15) * ($request->input('page', 1) - 1), 
-                $request->input('limit', 15)
+                $request->input('limit', 16) * ($request->input('page', 1) - 1), 
+                $request->input('limit', 16)
             ),
             count($affiliatesArray), 
-            $request->input('limit', 15)
+            $request->input('limit', 16)
         );
         
         $affiliates->setPath(URL::to('tegoed-sparen/search'));
@@ -464,7 +464,7 @@ class CashbackController extends Controller
             'affiliates' => $affiliates,
             'categories' => $this->categoriesArray,
             'queryString' => $this->queryString,
-            'limit' => $request->input('limit', 15),
+            'limit' => $request->input('limit', 16),
             'paginationQueryString' => $request->query()
         ]);
     }

@@ -80,13 +80,13 @@ input, select, textarea, .ui.dropdown { border-radius: 0!important; }
 img { border: 0; }
 .clear { clear: both; }
 .container { width: 1000px; margin: 0 auto; }
-.container .up{ overflow: visible; height: auto; }
-.container .up .start { margin-bottom: 55px; }
-.container .up .start h2{ font: 24px 'LatoRegular'; color: #000; text-align: center; margin: 0; }
-.container .up .start ul.list{ margin-top: 43px;margin-left: -32px; }
-.container .up ul.list li{ display: inline-block; vertical-align: top; width: 29%; margin-left: 29px; }
-.container .up .start ul.list li p{ font: 14px 'LatoRegular'; color: #cccccc; padding: 20px 0 0px 60px; padding-top: 20px; line-height: 19px; }
-.container .up .start ul.list li .wrap{ overflow: hidden; display: block; border-radius: 50%; float: right; width: 111px; height: 111px; }
+.shop { padding-top: 118px; padding-bottom: 75px; }
+.shop .up{ overflow: visible; height: auto; }
+.shop .up .start h2{ font: 24px 'LatoRegular'; color: #000; text-align: center; margin: 0; }
+.shop .up .start ul.list{ margin-top: 43px;margin-left: -32px; }
+.shop .up ul.list li{ display: inline-block; vertical-align: top; width: 29%; margin-left: 29px; }
+.shop .up .start ul.list li p{ font: 14px 'LatoRegular'; color: #cccccc; padding: 20px 0 0px 60px; padding-top: 20px; line-height: 19px; }
+.shop .up .start ul.list li .wrap{ overflow: hidden; display: block; border-radius: 50%; float: right; width: 111px; height: 111px; }
 .ui.breadcrumb .text { font-size: 14px; }
 .ui.breadcrumb.computer { padding: 20px; }
 /* UI */
@@ -117,77 +117,6 @@ img { border: 0; }
 .pagination li.active span { display: block; font-size: 14px; border-radius: 0; color: #FFF; padding: 10px; background: #1678c2; box-shadow: inset 0 -2px rgba(0, 0, 0, 0.05); }
 .pagination li.disabled { display: none; }
 .ui.grid > .blue.row, .ui.grid > .blue.column, .ui.grid > .row > .blue.column { background-color: #1e70bf !important; }
-.ui.grid .form{ width: 100%; }
-.ui.grid .form form { margin: 0 auto; }
-.ui.grid .form label:before { content: ''; display: block; width: 29px; height: 29px; background: url(../images/search.png) no-repeat center; position: absolute; left: 11px; top: 9px; }
-.ui.grid .form label{
-    display: inline-block;
-    margin: 0 35px 0 -1px;
-    background: #b0b7e1;
-    padding: 0 0px 0 53px;
-    position: relative;
-}
-.ui.grid .form input{
-    font: 14px Tahoma;
-    color: #333399;
-    border-bottom: none;
-    margin: 0;
-    padding: 15px 0px;
-    outline: none;
-    height: auto;
-}
-.ui.grid .form ::-webkit-input-placeholder {font: 14px Tahoma; color:#333399;}
-.ui.grid .form ::-moz-placeholder          {font: 14px Tahoma; color:#333399;}/* Firefox 19+ */
-.ui.grid .form :-moz-placeholder           {font: 14px Tahoma; color:#333399;}/* Firefox 18- */
-.ui.grid .form :-ms-input-placeholder      {font: 14px Tahoma; color:#333399;}
-
-.ui.grid .form select{
-    font: 14px Tahoma;
-    color: #333399;
-    display: inline-block;
-    width: 23%;
-    background: #b0b7e1;
-    border: none;
-    border-radius: 0px;
-    padding: 14px 10px;
-    margin-left: 20px;
-    outline: none;
-    height: auto;
-}
-.ui.grid .form input:focus, .shop .form select:focus{
-    outline: none;
-    box-shadow: 0 0 0 rgba(0,0,0,0);
-}
-.ui.grid .form input[type='submit']{
-    color: #fff;
-    text-transform: uppercase;
-    background: #7581ca;
-    border: none;
-    padding: 14px 55px;
-    margin-left: 13px;
-    font-size: 16px;
-}
-.ui.grid .form input[type='submit']:hover{
-    background: #333399;
-}
-.ui.grid .form span{
-    text-transform: uppercase;
-    color: #fff;
-    background: #e0e1e2;
-    font: 14px 'LatoRegular';
-    display: inline-block;
-    margin-right: 15px;
-    min-height: 32px;
-}
-.ui.grid .form span.of{
-    text-transform: uppercase;
-    color: #fff;
-    background: #c5cae9;
-    font: 14px 'LatoRegular';
-    display: inline-block;
-    margin-right: 15px;
-    min-height: 32px;
-}
 .ui.grid .left-sidebar{
     float: left;
     width: 31%;
@@ -513,87 +442,6 @@ img { border: 0; }
     font: 18px 'LatoLight';
 }
 
-.ui.grid .more{
-    padding-top: 40px;
-    padding-bottom: 50px;
-}
-.ui.grid .more h2{
-    margin: 0;
-    font: 24px 'LatoRegular';
-    color: #000;
-    text-align: left;
-    margin-bottom: 10px;
-}
-
-.ui.grid .more .wrap{
-
-    display: inline-block;
-
-    vertical-align: top;
-
-    margin-right: 18px;
-}
-.ui.grid .more strong{
-    font: 14px 'LatoRegular';
-    color: #000;
-}
-.ui.grid .more span{
-   color: #283593;
-   font: 18px 'LatoRegular';
-   display: block;
-   position: relative;
-   margin: 7px 0 9px 39px;
-}
-.ui.grid .more span:before{
-    content: '';
-    display: block;
-    background: url(../images/many.png) no-repeat center;
-    position: absolute;
-    left: -38px;
-    top: 4px;
-    width: 28px;
-    height: 17px;
-}
-.ui.grid .more i{
-    font: 14px 'LatoLight';
-    color: #939393;
-}
-.ui.grid .more a{
-    font: 14px 'LatoLight';
-    color: #fff;
-    display: block;
-    background: #7986cb;
-    margin-top: 31px;
-    width: 140px;
-    text-align: center;
-    padding: 8px 0;
-}
-.ui.grid .more a:hover{
-    background: #333399;
-}
-.ui.grid .more .t2{
-    overflow: hidden;
-    display: inline-block;
-    vertical-align: top;
-    width: 300px;
-}
-.ui.grid .more .t{
-    display: inline-block;
-    overflow: hidden;
-    margin-left: 76px;
-    vertical-align: top;
-}
-.ui.grid .more .t h2{
-    font: 14px 'LatoRegular';
-    color: #000;
-    margin-bottom: 20px;
-}
-.ui.grid .more .t p{
-    font: 14px 'LatoLight';
-    color: #939393;
-    max-width: 480px;
-    line-height: 18px;
-}
 
 
 
@@ -950,7 +798,36 @@ footer .footer .col { display: block!important; }
 .ui.grey.no-radius.fluid.button.no-responsive { display: none; }
 .two.ui.buttons.responsive { display: block; }
 .search.two { display: none; }
-.container { width: 100%; margin: 0; }
+.container {
+    position: relative;
+}
+.container {
+    padding: 0 0px;
+    margin: 0 auto;
+    max-width: 1170px;
+    width: 90%;
+}
+
+@media only screen and (min-width: 768px){
+  .container {
+    width: 750px;
+}
+.container2 {
+    width: 750px;
+}
+}
+@media only screen and (min-width: 992px){
+  .container {
+    width: 940px;
+}
+.container2 {
+    width: 940px;
+}
+}
+@media only screen and (min-width: 1200px){
+  .container {
+    width: 1170px;
+}
 .header { padding-bottom: 0; }
 .header .right form.search.form { float: none; margin-left: 20px; }
 .header .right form.search.form .search.icon { margin-top: 4px; float: right; }
