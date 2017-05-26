@@ -299,7 +299,8 @@ $(document).ready(function ($) {
                     var ltimeselect = $this.data('timeselect');
                     var lpersons = $('select[name="persons"]').val(); /*$this.data('persons') */
 
-                    var dateISO = ($this.datepicker('getDate').toISOString().substring(0, 10));
+					var ldate = $this.datepicker('getDate');
+                    var dateISO = (ldate.toLocaleDateString());
 
                     $('input[name="date"]').val(dateISO);
                     $('input[name="date_hidden"]').val(dateISO);
@@ -663,7 +664,7 @@ $(window).load(function ($) {
         jQuery(tabId).show();
         return false;
     });
-    jQuery('.tabs-link a').eq(0).click();
+    jQuery('.tabs-link a').eq(1).click();
 
     jQuery('.r a').click(function () {
 

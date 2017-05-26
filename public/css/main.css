@@ -1749,7 +1749,7 @@ header.nav li a:hover {
         display: block;
         background: url(../images/m1.png) no-repeat center;
         position: absolute;
-        left: -1px;
+        /*left: 0px;*/
         top: 16px;
         width: 29px;
         height: 29px;

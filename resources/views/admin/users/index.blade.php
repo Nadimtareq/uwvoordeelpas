@@ -24,7 +24,7 @@
                     <div class="ui grid">
                         <div class="three column row">
                             <div class="sixteen wide mobile four wide computer column">
-                                <div class="ui normal icon search selection fluid dropdown">
+                                <div class="ui normal  search selection fluid dropdown"> <!-- icon class deleted-->
                                     <input type="hidden" name="companiesId">
                                     <i class="filter icon"></i>
 
