@@ -65,6 +65,9 @@ TOC :
 		background-color:black;			
 		
 	}
+	.header .sk:before {
+		 top: auto;
+	}
 	
 	/* Finish - size at black */
 	
