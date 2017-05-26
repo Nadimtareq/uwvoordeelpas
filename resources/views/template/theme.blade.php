@@ -193,10 +193,11 @@
     <script  src="{{ asset('js/materialize.min.js') }}"></script> 
 	<script  src="{{ asset('js/common.js') }}"></script>
 	<script  src="{{ asset('js/main.js') }}"></script>
-        
+    
+	@yield('scripts')
 	@include('sweet::alert')	
     @include('admin.template.search.js')
-    @yield('scripts')
+    
 	
 	<!-- Google Analytics -->
 	<script>

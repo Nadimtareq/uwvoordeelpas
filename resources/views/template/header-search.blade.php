@@ -81,7 +81,7 @@
 													  @endfor
 												</select>												
 											</li>
-											<li>
+											<li class="mobile-center">
 											    <button class="zoek" id ="searchDesktop" type="submit">zoek</button>
 											</li>
 								
