@@ -96,18 +96,26 @@ TOC :
         z-index: 999;
         display: block;
     }
-
+	ul.side-nav .mobile-center {
+		 text-align:center;
+	}
+	
     ul.side-nav,
 	ul.side-nav .quantity	{
         z-index: 999;
-		background-color:black;
+		background-color:#1b1c1d;
+		
     }
+	ul.side-nav li {
+		border-bottom: 1px solid #2a2b2c;
+	}
+	
 	ul.side-nav .input-field input {
 		max-width: initial;
 			
 	}
 	.header ul.side-nav .zoek {
-		background-color:#339;	
+		background-color:black;	
 		
 	}
 
