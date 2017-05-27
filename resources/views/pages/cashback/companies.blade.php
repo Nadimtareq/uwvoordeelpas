@@ -11,12 +11,12 @@
 
 <div class="form">
     <div class="container container2">
-        <form action="<?php echo url('tegoed-sparen/search'); ?>" method="GET">
+        <form action="<?php echo url('tegoed-sparen/search'); ?>" method="GET" id="affiliateSearch-2" class="ui search">
             <!--<div id="affiliateSearch-2" class="ui search">-->
-            <label for="search">
-                <input type="text" name="search" id="search" placeholder="Voorkeuren" />
-            </label>
-            <!--<div class="results"></div>-->
+                <label for="search">
+                    <input type="text" name="q" class="prompt" placeholder="Zoek webshop" />
+                </label>
+                <div class="results"></div>
             <!--</div>-->
             <span class="of">OF</span>
             <select name='category' class='category'>
