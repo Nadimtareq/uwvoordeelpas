@@ -2561,11 +2561,10 @@ header.nav li a:hover {
 }
 .shop .form{
     background: #c5cae9;
-    margin-top: 55px;
 }
 .shop .form form{
 
-    /* width: 82%; */
+     width: 100%;
     
     margin: 0 auto;
 }
@@ -2654,7 +2653,7 @@ header.nav li a:hover {
     Results
 ---------------*/
 
-.search > .results { display: block; position: absolute; top: 100%; left: 0%; -webkit-transform-origin: center top; -ms-transform-origin: center top; transform-origin: center top; background: #ffffff; margin-top: 0.5em; width: 18em; border-radius: 0.28571429rem; box-shadow: 0px 2px 4px 0px rgba(34, 36, 38, 0.12), 0px 2px 10px 0px rgba(34, 36, 38, 0.08); border: 1px solid #d4d4d5; z-index: 998; }
+.search > .results { display: none; position: absolute; top: 100%; left: 0%; -webkit-transform-origin: center top; -ms-transform-origin: center top; transform-origin: center top; background: #ffffff; margin-top: 0.5em; width: 18em; border-radius: 0.28571429rem; box-shadow: 0px 2px 4px 0px rgba(34, 36, 38, 0.12), 0px 2px 10px 0px rgba(34, 36, 38, 0.08); border: 1px solid #d4d4d5; z-index: 998; }
 .search > .results > :first-child { border-radius: 0.28571429rem 0.28571429rem 0em 0em; }
 .search > .results > :last-child { border-radius: 0em 0em 0.28571429rem 0.28571429rem; }
 /*--------------

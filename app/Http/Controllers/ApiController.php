@@ -48,7 +48,7 @@ class ApiController extends Controller {
 
 
         $affiliate = Affiliate::where('no_show', 0)
-                ->whereIn('affiliates.link', $match_links_array)
+                ->whereIn('affiliates.domain', $match_links_array)
                 ->first();
 
         if (count($affiliate) == 1) {
