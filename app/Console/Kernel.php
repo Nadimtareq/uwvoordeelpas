@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
         Commands\Affiliate\Remove::class,
         Commands\Affiliate\Tradetracker::class,
         Commands\Affiliate\Zanox::class,
-//    	Commands\Affiliate\Tradedoubler::class,
+   	    Commands\Affiliate\Tradedoubler::class,
         Commands\Appointment\Reminder::class,
         Commands\Barcode\Expired::class,
         Commands\Guest\Couverts::class,
