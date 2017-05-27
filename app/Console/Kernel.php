@@ -30,6 +30,7 @@ class Kernel extends ConsoleKernel
         Commands\Invoice\Mollie::class,
         Commands\Other\EetNu::class,
         Commands\Other\Sitemap::class,
+        Commands\Other\AffTargetLink::class,
         Commands\Payment\Validate::class,
         Commands\Reservation\Pay::class,
         Commands\Reservation\Reminder::class,
