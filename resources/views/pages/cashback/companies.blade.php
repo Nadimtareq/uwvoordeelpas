@@ -30,7 +30,7 @@
             <select name='subcategory' class='subcategory'>
                 <option value='0' disabled="disabled" selected>Subcategory</option>
             </select>
-            <input type="submit" value='FIND' />
+            <input type="submit" value='ZOEK' />
         </form>
     </div>
 </div>
