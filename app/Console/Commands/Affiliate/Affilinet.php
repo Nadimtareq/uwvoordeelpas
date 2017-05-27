@@ -556,14 +556,13 @@ class Affilinet extends Command
     	));
     	
     	$startDate = strtotime("-2 months");
-    	$endDate = strtotime("2017-05-27");
+    	$endDate = time();
     	$programIds = $this->affiliates;
     	
     	$params = array(
     			'StartDate' => $startDate,
     			'EndDate' => $endDate,
     			'ProgramStatus' => 'Active',
-    			'ProgramIds' => $programIds,
     			'SubId' => '',
     			'ProgramTypes' => 'All',
     			'ValuationType' => 'DateOfRegistration'
@@ -577,16 +576,19 @@ class Affilinet extends Command
 		));
     	
     	$data = array();
-    	if(isset($report_data->ProgramStatisticsRecords->CombinedProgramStatistics->StatisticsRecords) && !empty($report_data->ProgramStatisticsRecords->CombinedProgramStatistics->StatisticsRecords)) {
-    		$click_data = $report_data->ProgramStatisticsRecords->CombinedProgramStatistics->StatisticsRecords;
-    		foreach($click_data as $programReport) {
-    			if($programReport->Clicks > 0 ) {
-    				$data[$programReport->ProgramId]['views'] = $programReport->Clicks;
-    			}
-    			if($programReport->Views > 0 ) {
-    				$data[$programReport->ProgramId]['clicks'] = $programReport->Clicks;
+    	if(isset($report_data->ProgramStatisticsRecords->PayPerSaleLeadStatistics->StatisticsRecords) && !empty($report_data->ProgramStatisticsRecords->PayPerSaleLeadStatistics->StatisticsRecords)) {
+    		$click_data = $report_data->ProgramStatisticsRecords->PayPerSaleLeadStatistics->StatisticsRecords;
+    		if(isset($click_data->ProgramStatisticsRecord)) {
+    			foreach($click_data->ProgramStatisticsRecord as $programReport) {
+    				if($programReport->Clicks > 0 ) {
+    					$data[$programReport->ProgramId]['clicks'] = $programReport->Clicks;
+    				}
+    				if($programReport->Views > 0 ) {
+    					$data[$programReport->ProgramId]['views'] = $programReport->Views;
+    				}
     			}
     		}
+    		
     	}
     	return $data;
     }
@@ -618,7 +620,7 @@ class Affilinet extends Command
                         // Processing
                         $this->updateCampaigns(); // Update Campagins
                         $this->addCampaigns(); // Add Campagins
-// 						   $this->addClicks();
+						$this->addClicks();
 
                         // End cronjob
                         $this->line('Finished '.$this->signature);

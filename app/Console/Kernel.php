@@ -16,6 +16,7 @@ class Kernel extends ConsoleKernel
         Commands\Affiliate\Remove::class,
         Commands\Affiliate\Tradetracker::class,
         Commands\Affiliate\Zanox::class,
+    	Commands\Affiliate\Tradedoubler::class,
         Commands\Appointment\Reminder::class,
         Commands\Barcode\Expired::class,
         Commands\Guest\Couverts::class,
@@ -51,27 +52,27 @@ class Kernel extends ConsoleKernel
         // Affiliate
         $schedule
             ->command('daisycon:affiliate')
-            ->hourly()
+            ->daily()
         ;
 
         $schedule
             ->command('tradetracker:affiliate')
-            ->hourly()
+            ->daily()
         ;
 
         $schedule
             ->command('affilinet:affiliate')
-            ->hourly()
+            ->daily()
         ;
 
         $schedule
             ->command('zanox:affiliate')
-            ->hourly()
+            ->daily()
         ;
 
         $schedule
             ->command('dulicates:affiliate')
-            ->hourly()
+            ->daily()
         ;
 
         // Barcode
@@ -163,27 +164,27 @@ class Kernel extends ConsoleKernel
         // Transaction
         $schedule
             ->command('daisycon:transaction')
-            ->everyMinute()
+            ->everyFiveMinutes()
         ;
 
         $schedule
             ->command('tradetracker:transaction')
-            ->everyMinute()
+            ->everyFiveMinutes()
         ;
 
         $schedule
             ->command('tradedoubler:transaction')
-            ->everyMinute()
+            ->everyFiveMinutes()
         ;
 
         $schedule
             ->command('affilinet:transaction')
-            ->everyMinute()
+            ->everyFiveMinutes()
         ;
 
         $schedule
             ->command('zanox:transaction')
-            ->everyMinute()
+            ->everyFiveMinutes()
         ;
 
         $schedule

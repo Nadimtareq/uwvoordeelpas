@@ -50,7 +50,7 @@ class Tradetracker extends Command
     {
    ini_set('soap.wsdl_cache_enabled', 0);
 
-        $network = new \Oara\Network\Publisher\Tradetracker();
+        $network = new \Oara\Network\Publisher\TradeTracker();
         $credentialsNeeded = $network->getNeededCredentials();
 
         $credentials = array(
