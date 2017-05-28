@@ -44,8 +44,24 @@
 					</div>
                 </div>
             </div>
-
-       	</div>
+			<div class="column">
+				{{Form::select('preferences', $preferences, Request::input('preferences'), ['class' => 'ui normal icon search selection fluid dropdown'])}}
+			</div>
+			<div class="column">
+				{{Form::select('sustainability', $sustainability, Request::input('sustainability'), ['class' => 'ui normal icon search selection fluid dropdown'])}}
+			</div>
+			<div class="column">
+				{{Form::select('kitchens', $kitchens, Request::input('kitchens'), ['class' => 'ui normal icon search selection fluid dropdown'])}}
+			</div>
+		</div>
+		<div class="four column row">
+			<div class="column">
+				{{Form::select('allergies', $allergies, Request::input('allergies'), ['class' => 'ui normal icon search selection fluid dropdown'])}}
+			</div>
+			<div class="column">
+				{{Form::select('discount', $discount, Request::input('discount'), ['class' => 'ui normal icon search selection fluid dropdown'])}}
+			</div>
+		</div>
     </div>
 
 	<span class="ui red label">Rood: Geen nieuwsbrief ontvangen</span>

@@ -9,6 +9,7 @@ use App\Models\MailTemplate;
 use App\Models\NewsletterGuest;
 use App\Models\Newsletter;
 use App\Models\Guest;
+use App\Models\Preference;
 use Sentinel;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Response;
@@ -17,6 +18,7 @@ use Redirect;
 use Carbon;
 use DB;
 use URL;
+use Mail;
 
 class NewsletterController extends Controller 
 {
@@ -184,6 +186,11 @@ class NewsletterController extends Controller
 
             $queryString = $request->query();
             unset($queryString['limit']);
+            $preferences = ['' => 'Voorkeuren'] + Preference::where('category_id', 1)->pluck('name', 'id')->toArray();
+            $sustainability = ['' => 'Duurzaamheid'] + Preference::where('category_id', 8)->pluck('name', 'id')->toArray();
+            $kitchens = ['' => 'Keuken'] + Preference::where('category_id', 2)->pluck('name', 'id')->toArray();
+            $allergies = ['' => 'Allergie&euml;n'] + Preference::where('category_id', 3)->pluck('name', 'id')->toArray();
+            $discount = ['' => 'Korting'] + Preference::where('category_id', 5)->pluck('name', 'id')->toArray();
 
             return view('admin/'.$this->slugController.'/guests', [
                 'guests' => $guests,
@@ -191,6 +198,11 @@ class NewsletterController extends Controller
                 'paginationQueryString' => $request->query(),
                 'slugController' => $this->slugController,
                 'section' => $this->section, 
+                'preferences' => $preferences,
+                'sustainability' => $sustainability,
+                'kitchens' => $kitchens,
+                'allergies' => $allergies,
+                'discount' => $discount,
                 'currentPage' => 'Gasten: '.$newsletter->subject
             ]);
         } else {
