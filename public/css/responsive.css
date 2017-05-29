@@ -22,7 +22,10 @@ TOC :
         margin-left: 15px;
     }
 }
-
+select.option-white-bg option {
+    background-color: white;
+    color: #339;
+}
 
 /* Screens Resolution : 1024px
 -------------------------------------------------------------------------- */
@@ -152,8 +155,7 @@ TOC :
 
     .side-nav li i {
         display: inline-block;
-        font-size: 15px;
-        line-height: 60px;
+        font-size: 19px !important;
         width: 40px;
     }
 

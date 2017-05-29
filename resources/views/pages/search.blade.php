@@ -29,6 +29,14 @@
 		
 		<div class="content">
 			 <div class="static-menu row">
+			 	<div class="jsearch col-md-2 col-sm-2 col-xs-6">
+			 	
+				{{ Form::select('discount[]', 
+				    (isset($preference[9]) ? $preference[9] : array()),  
+				    (Request::has('city') ? Request::get('city') : ''),  
+				    array('class' => 'multipleSelect', 'data-placeholder' => 'Stad', 'multiple' => 'multiple')) }}
+					
+				</div>
 				<div class="jsearch col-md-2 col-sm-2 col-xs-6" >
 				 {{ Form::select('preference[]', 
 								(isset($preference[1]) ? $preference[1] : array()),  
@@ -48,13 +56,13 @@
                                         (Request::has('price') ? Request::get('price') : ''), 
                                         array('class' => 'multipleSelect', 'data-placeholder' => 'Soort', 'multiple' => 'multiple')) }}
 				</div>
-				<div class="jsearch col-md-2 col-sm-2 col-xs-6">
+				<!--<div class="jsearch col-md-2 col-sm-2 col-xs-6">
 				 {{ Form::select('discount[]', 
                                         (isset($preference[5]) ? $preference[5] : array()),  
                                         (Request::has('discount') ? Request::get('discount') : ''),  
                                         array('class' => 'multipleSelect', 'data-placeholder' => 'Korting', 'multiple' => 'multiple')) }}
 										
-				</div>
+				</div>-->
 				<div class="jsearch col-md-2 col-sm-2 col-xs-6">
 				{{ Form::select('allergies[]', 
                                                 (isset($preference[3]) ? $preference[3] : array()),  

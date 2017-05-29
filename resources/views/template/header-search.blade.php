@@ -27,24 +27,26 @@
 									 
 										<ul class="right side-nav" id="mobile-top"> <!-- center-menu- inline-menu -->
 											<form action="<?php echo url('search'); ?>" method="GET" class="form">
-											<li class="search-form-li sk">										  
+											<li>										  
 												<div class="input-field">
-												   <div id="usersCompaniesSearch2" class="search form focus">
-													<label class="label-icon" for="search"><i class="mdi-actio2n-search sss"></i></label>											
+												<div id="usersCompaniesSearch2" class="search form focus">
+													<label class="label-icon" for="search" style="color:#ffffff;"><i class="material-icons">pin_drop</i></label>											
 													<input id="search" name="q" type="search" value="{{ Request::segment(1) == 'search' ? Request::get('q') : '' }}" placeholder="{{ trans('app.keyword') }}" class="prompt" autocomplete="off" >
 												  </div>
 												</div>
 											</li>
 											
 											<li>
-												<label for="datepicker">
-													<img src="{{asset('images/m2.png') }}" alt="m2">
+												<label for="datepicker" style="color:#ffffff;">
+													<!--<img src="{{asset('images/m2.png') }}" alt="m2">-->
+													<i class="material-icons">date_range</i>
 													<input id="datepicker" placeholder="Datum" name="date" class="datepicker1 quantity" data-filter-todate="yes" data-time="#sltime" type="text" {{ (Request::has('date')) ?  'value='.Request::has('date') : '' }}>
 												</label>
 											</li>
 											<li>
-												<img src="images/m3.png" alt="m3">
-												<select id="sltime" name="sltime" class="quantity">
+												<!--<img src="images/m3.png" alt="m3">-->
+												<i class="material-icons">watch_later</i>
+												<select id="sltime" name="sltime" class="quantity option-white-bg">
 													@php
 														// Check time
 														if (Request::segment(1) == 'search' && Request::has('sltime')) 
@@ -61,20 +63,21 @@
 															$timed = date_create_from_format('H:i',$time);															
 														@endphp
 														@if ($time >= '00:00' && $time >= '08:00' && $timed->getTimestamp() >= $datetime->getTimestamp())
-															<option value="{{ $time }}" data-value="{{ $time }}" data-dd="0" >{{ $time }}</option>
+															<option value="{{ $time }}" data-value="{{ $time }}" data-dd="0"  >{{ $time }}</option>
 														@else 
-															<option value="{{ $time }}" data-value="{{ $time }}" data-dd="0" style="display:none">{{ $time }}</option>
+															<option value="{{ $time }}" data-value="{{ $time }}" data-dd="0"  style="display:none">{{ $time }}</option>
 														@endif													
 													@endforeach
 												</select>
 											</li>
 											<li>
-												<img src="images/m4.png" alt="m4">
+												<!--<img src="images/m4.png" alt="m4">-->
+												<i class="material-icons">person</i>
 												@php  
 												   $current_p = ((Request::get('persons') != '') ? Request::get('persons') : (($userAuth && $userInfo->kids != 'null' && $userInfo->kids != NULL && $userInfo->kids != '[""]') ? $userInfo->kids : 2))
 												@endphp
 											
-												<select name="persons" class="quantity quantity-expand">
+												<select name="persons" class="quantity quantity-expand option-white-bg">
 													<!-- <option value="0" disabled="disabled">Pers</option> -->
 													  @for ($i = 1; $i <= 10; $i++)
 														<option  value="{{ $i }}" data-value="{{ $i }}" {{ ($i == $current_p ) ? "selected" : "" }}>{{ $i }} {{ $i == 1 ? 'persoon' : 'personen' }}</option>
