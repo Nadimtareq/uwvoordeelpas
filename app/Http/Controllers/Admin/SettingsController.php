@@ -43,8 +43,11 @@ class SettingsController extends Controller
             $citiesArray[str_slug($city)] = $city;
         }
 
+        $citiesData = App\Models\Preference::where('category_id', 9)->get();
+
         return view('admin/'.$this->slugController.'/index', [
             'cities' => $citiesArray,
+            'citiesData' => $citiesData,
             'kitchens' => $kitchens,
             'slugController' => $this->slugController,
             'section' => $this->section,

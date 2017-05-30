@@ -11,6 +11,7 @@
 		<a class="item" data-tab="discount">Afbeeldingen</a>
 		<a class="item" data-tab="eetnu">EetNU</a>
 		<a class="item" data-tab="invoices">Opstartkosten</a>
+		<a class="item" data-tab="newsletter">Newsletter</a>
 	</div>
 
 	<div class="ui bottom active attached tab segment" data-tab="website">
@@ -23,7 +24,7 @@
 		<div class="field">
 			<label>Bronnen (Elke nieuwe bron op een nieuwe regel)</label>
 			<?php echo Form::textarea('source', isset($websiteSettings['source']) ? $websiteSettings['source'] : ''); ?>
-		</div>	
+		</div>
 
 		<button class="ui tiny button" type="submit"><i class="plus icon"></i> Opslaan</button>
 		<?php echo Form::close() ?>
@@ -35,8 +36,8 @@
 
 		<div class="field">
 			<div class="ui slider checkbox">
-					<input 
-					type="checkbox" 
+					<input
+					type="checkbox"
 					name="callcenter_reminder_status"
 					{{ isset($apiSettings['callcenter_reminder_status']) ? 'checked="checked"' : '' }}>
 				<label>Herinnering sturen na 48 uur</label>
@@ -66,7 +67,7 @@
 			    <?php echo Form::text('affilinet_pw', isset($apiSettings['affilinet_pw']) ? $apiSettings['affilinet_pw'] : ''); ?>
 			</div>
 		</div>
-		
+
 	   	<h4>Daisycon</h4>
 
 		<div class="fields">
@@ -85,7 +86,7 @@
 			    <?php echo Form::text('daisycon_pw', isset($apiSettings['daisycon_pw']) ? $apiSettings['daisycon_pw'] : ''); ?>
 			</div>
 		</div>
-		
+
 	   	<h4>Tradetracker</h4>
 
 		<div class="fields">
@@ -104,7 +105,7 @@
 			    <?php echo Form::text('tradetracker_pw', isset($apiSettings['tradetracker_pw']) ? $apiSettings['tradetracker_pw'] : ''); ?>
 			</div>
 		</div>
-		
+
 	   	<h4>Tradedoubler (transacties)</h4>
 
 		<div class="fields">
@@ -161,15 +162,15 @@
 		<?php echo Form::close() ?>
 	</div>
 
-	<div class="ui bottom attached tab segment" data-tab="cronjobs">   	
+	<div class="ui bottom attached tab segment" data-tab="cronjobs">
 		<?php echo Form::open(array('url' => 'admin/settings/cronjobs', 'method' => 'post', 'class' => 'ui form')) ?>
    		<h4>Affiliaties</h4>
-		
+
 		<div class="two fields">
 			<div class="field">
 			   	<div class="ui slider checkbox">
-				  	<input 
-					  	type="checkbox" 
+				  	<input
+					  	type="checkbox"
 				  		name="affilinet_affiliate"
 				  		{{ isset($cronjobSettings['affilinet_affiliate']) ? 'checked="checked"' : '' }}>
 				  	<label>Voeg nieuwe programma's toe van Affilinet.</label>
@@ -178,8 +179,8 @@
 
 			<div class="field">
 			   	<div class="ui slider checkbox">
-				  	<input 
-				  		type="checkbox" 
+				  	<input
+				  		type="checkbox"
 				  		name="tradetracker_affiliate"
 				  		{{ isset($cronjobSettings['tradetracker_affiliate']) ? 'checked="checked"' : '' }}>
 				  	<label>Voeg nieuwe programma's toe van Tradetracker.</label>
@@ -190,8 +191,8 @@
 		<div class="two fields">
 			<div class="field">
 			   	<div class="ui slider checkbox">
-					<input 
-				  		type="checkbox" 
+					<input
+				  		type="checkbox"
 				  		name="zanox_affiliate"
 				  		{{ isset($cronjobSettings['zanox_affiliate']) ? 'checked="checked"' : '' }}>
 				  	<label>Voeg nieuwe programma's toe van Zanox.</label>
@@ -200,8 +201,8 @@
 
 			<div class="field">
 			   	<div class="ui slider checkbox">
-					<input 
-				  		type="checkbox" 
+					<input
+				  		type="checkbox"
 				  		name="daisycon_affiliate"
 				  		{{ isset($cronjobSettings['daisycon_affiliate']) ? 'checked="checked"' : '' }}>
 				  	<label>Voeg nieuwe programma's toe van Daisycon.</label>
@@ -213,8 +214,8 @@
 		<div class="two fields">
 			<div class="field">
 			   	<div class="ui slider checkbox">
-				  	<input 
-					  	type="checkbox" 
+				  	<input
+					  	type="checkbox"
 				  		name="affilinet_transaction"
 				  		{{ isset($cronjobSettings['affilinet_transaction']) ? 'checked="checked"' : '' }}>
 				  	<label>Voeg transacties toe van Affilinet.</label>
@@ -223,8 +224,8 @@
 
 			<div class="field">
 			   	<div class="ui slider checkbox">
-				  	<input 
-				  		type="checkbox" 
+				  	<input
+				  		type="checkbox"
 				  		name="tradetracker_transaction"
 				  		{{ isset($cronjobSettings['tradetracker_transaction']) ? 'checked="checked"' : '' }}>
 				  	<label>Voeg transacties toe van Tradetracker.</label>
@@ -235,8 +236,8 @@
 		<div class="two fields">
 			<div class="field">
 			   	<div class="ui slider checkbox">
-					<input 
-				  		type="checkbox" 
+					<input
+				  		type="checkbox"
 				  		name="zanox_transaction"
 				  		{{ isset($cronjobSettings['zanox_transaction']) ? 'checked="checked"' : '' }}>
 				  	<label>Voeg transacties toe van Zanox.</label>
@@ -245,8 +246,8 @@
 
 			<div class="field">
 			   	<div class="ui slider checkbox">
-					<input 
-				  		type="checkbox" 
+					<input
+				  		type="checkbox"
 				  		name="daisycon_transaction"
 				  		{{ isset($cronjobSettings['daisycon_transaction']) ? 'checked="checked"' : '' }}>
 				  	<label>Voeg transacties toe van Daisycon.</label>
@@ -257,8 +258,8 @@
 		<div class="two fields">
 			<div class="field">
 			   	<div class="ui slider checkbox">
-					<input 
-				  		type="checkbox" 
+					<input
+				  		type="checkbox"
 				  		name="tradedoubler_transaction"
 				  		{{ isset($cronjobSettings['tradedoubler_transaction']) ? 'checked="checked"' : '' }}>
 				  	<label>Voeg transacties toe van TradeDoubler.</label>
@@ -269,8 +270,8 @@
 		<div class="two fields">
 			<div class="field">
 			   	<div class="ui slider checkbox">
-					<input 
-				  		type="checkbox" 
+					<input
+				  		type="checkbox"
 				  		name="que_transaction"
 				  		{{ isset($cronjobSettings['que_transaction']) ? 'checked="checked"' : '' }}>
 				  	<label>Keurt alle transacties (geaccepteerd, afgekeurd of geweigerd)</label>
@@ -279,8 +280,8 @@
 
 			<div class="field">
 			   	<div class="ui slider checkbox">
-					<input 
-				  		type="checkbox" 
+					<input
+				  		type="checkbox"
 				  		name="expired_transaction"
 				  		{{ isset($cronjobSettings['expired_transaction']) ? 'checked="checked"' : '' }}>
 				  	<label>Laat transacties verlopen op de 90e dag</label>
@@ -293,8 +294,8 @@
 		<div class="two fields">
 			<div class="field">
 			   	<div class="ui slider checkbox">
-					<input 
-				  		type="checkbox" 
+					<input
+				  		type="checkbox"
 				  		name="mollie_invoice"
 				  		{{ isset($cronjobSettings['mollie_invoice']) ? 'checked="checked"' : '' }}>
 				  	<label>Stuur alle eigenaren een bericht wanneer hun geincasseerde factuur is mislukt. (incasso)</label>
@@ -305,8 +306,8 @@
 		<div class="two fields">
 			<div class="field">
 			   	<div class="ui slider checkbox">
-					<input 
-				  		type="checkbox" 
+					<input
+				  		type="checkbox"
 				  		name="product_invoice"
 				  		{{ isset($cronjobSettings['product_invoice']) ? 'checked="checked"' : '' }}>
 				  	<label>Stuur facturen naar klanten (Producten)</label>
@@ -315,8 +316,8 @@
 
 			<div class="field">
 			   	<div class="ui slider checkbox">
-					<input 
-				  		type="checkbox" 
+					<input
+				  		type="checkbox"
 				  		name="reservation_invoice"
 				  		{{ isset($cronjobSettings['reservation_invoice']) ? 'checked="checked"' : '' }}>
 				  	<label>Stuur facturen naar klanten (Reservering)</label>
@@ -327,8 +328,8 @@
 		<div class="two fields">
 			<div class="field">
 			   	<div class="ui slider checkbox">
-					<input 
-				  		type="checkbox" 
+					<input
+				  		type="checkbox"
 				  		name="debit_invoice"
 				  		{{ isset($cronjobSettings['debit_invoice']) ? 'checked="checked"' : '' }}>
 				  	<label>Maak XML aan voor incasso</label>
@@ -337,8 +338,8 @@
 
 			<div class="field">
 			   	<div class="ui slider checkbox">
-					<input 
-				  		type="checkbox" 
+					<input
+				  		type="checkbox"
 				  		name="reminder_invoice"
 				  		{{ isset($cronjobSettings['reminder_invoice']) ? 'checked="checked"' : '' }}>
 				  	<label>Stuur betaal herinnering</label>
@@ -350,8 +351,8 @@
 		<div class="two fields">
 			<div class="field">
 			   	<div class="ui slider checkbox">
-					<input 
-				  		type="checkbox" 
+					<input
+				  		type="checkbox"
 				  		name="thirdparty_mail"
 				  		{{ isset($cronjobSettings['thirdparty_mail']) ? 'checked="checked"' : '' }}>
 				  	<label>Stuur een mail naar alle klanten van Couverts, SeatMe en EetNU <span class="ui red small header color">nieuw</span></label>
@@ -361,8 +362,8 @@
 		<div class="two fields">
 			<div class="field">
 			   	<div class="ui slider checkbox">
-					<input 
-				  		type="checkbox" 
+					<input
+				  		type="checkbox"
 				  		name="reminder_reservation"
 				  		{{ isset($cronjobSettings['reminder_reservation']) ? 'checked="checked"' : '' }}>
 				  	<label>Stuur klanten een herinnering voor reservering.</label>
@@ -371,8 +372,8 @@
 
 			<div class="field">
 			   	<div class="ui slider checkbox">
-					<input 
-				  		type="checkbox" 
+					<input
+				  		type="checkbox"
 				  		name="reminder_review"
 				  		{{ isset($cronjobSettings['reminder_review']) ? 'checked="checked"' : '' }}>
 				  	<label>Stuur klanten een herinnering om een recensie te plaatsen.</label>
@@ -383,8 +384,8 @@
 		<div class="two fields">
 			<div class="field">
 			   	<div class="ui slider checkbox">
-					<input 
-				  		type="checkbox" 
+					<input
+				  		type="checkbox"
 				  		name="today_reservation"
 				  		{{ isset($cronjobSettings['today_reservation']) ? 'checked="checked"' : '' }}>
 				  	<label>Stuur de admin reserveringen na sluitingstijd van vandaag</label>
@@ -393,8 +394,8 @@
 
 			<div class="field">
 			   	<div class="ui slider checkbox">
-					<input 
-				  		type="checkbox" 
+					<input
+				  		type="checkbox"
 				  		name="pay_reservation"
 				  		{{ isset($cronjobSettings['pay_reservation']) ? 'checked="checked"' : '' }}>
 				  	<label>Zet reserveringen als betaald na reservering datum/tijd</label>
@@ -406,8 +407,8 @@
 		<div class="two fields">
 			<div class="field">
 			   	<div class="ui slider checkbox">
-					<input 
-				  		type="checkbox" 
+					<input
+				  		type="checkbox"
 				  		name="wifi_guest"
 				  		{{ isset($cronjobSettings['wifi_guest']) ? 'checked="checked"' : '' }}>
 				  	<label>Voeg gasten toe via wifi hotspot</label>
@@ -416,8 +417,8 @@
 
 			<div class="field">
 			   	<div class="ui slider checkbox">
-					<input 
-				  		type="checkbox" 
+					<input
+				  		type="checkbox"
 				  		name="sitemap_other"
 				  		{{ isset($cronjobSettings['sitemap_other']) ? 'checked="checked"' : '' }}>
 				  	<label>Maak een sitemap aan</label>
@@ -428,8 +429,8 @@
 		<div class="two fields">
 			<div class="field">
 			   	<div class="ui slider checkbox">
-					<input 
-				  		type="checkbox" 
+					<input
+				  		type="checkbox"
 				  		name="expired_barcode"
 				  		{{ isset($cronjobSettings['expired_barcode']) ? 'checked="checked"' : '' }}>
 				  	<label>Verwijder verlopen barcodes na een jaar</label>
@@ -438,8 +439,8 @@
 
 			<div class="field">
 			   	<div class="ui slider checkbox">
-					<input 
-				  		type="checkbox" 
+					<input
+				  		type="checkbox"
 				  		name="validate_payment"
 				  		{{ isset($cronjobSettings['validate_payment']) ? 'checked="checked"' : '' }}>
 				  	<label>Keur mollie betalingen</label>
@@ -450,8 +451,8 @@
 		<div class="two fields">
 			<div class="field">
 			   	<div class="ui slider checkbox">
-					<input 
-				  		type="checkbox" 
+					<input
+				  		type="checkbox"
 				  		name="call_list"
 				  		{{ isset($cronjobSettings['call_list']) ? 'checked="checked"' : '' }}>
 				  	<label>Voeg bedrijven toe aan bellijst <span class="ui red small header color">nieuw</span></label>
@@ -547,7 +548,7 @@
 			    <?php echo Form::text('discount_new3', isset($discountSettings['discount_new3']) ? $discountSettings['discount_new3'] : ''); ?>
 			</div>
 		</div>
-		
+
 		<div class="fields">
 			<div class="twelve wide field">
 			    <label>Breedte</label>
@@ -576,7 +577,7 @@
 		</div>
 
 		<h4>Opwaarderen</h4>
-		
+
 		<div class="fields">
 			<div class="four wide field">
 			   	<label>Afbeelding</label>
@@ -622,9 +623,9 @@
 		<h4>Keuken</h4>
 		<div class="two fields">
 			<div class="field">
-			   	<?php 
+			   	<?php
 			   	echo Form::select(
-			   		'kitchens[]', 
+			   		'kitchens[]',
 			   		$kitchens,
 					(isset($kitchensSettings['kitchens']) && $kitchensSettings['kitchens'] != 'null' ? json_decode($kitchensSettings['kitchens']) : ''),
 					array('multiple' => true, 'class' => 'multipleSelect')
@@ -637,9 +638,9 @@
 		Welke steden zijn <strong>NIET</strong> toegestaan? Alle steden die zijn geselecteerd worden niet meegenomen.<br /><br />
 		<div class="two fields">
 			<div class="field">
-			   	<?php 
+			   	<?php
 			   	echo Form::select(
-			   		'cities[]', 
+			   		'cities[]',
 			   		$cities,
 					(isset($kitchensSettings['cities']) && $kitchensSettings['cities'] != 'null' ? json_decode($kitchensSettings['cities']) : ''),
 					array('multiple' => true, 'class' => 'multipleSelect')
@@ -657,8 +658,8 @@
 		<?php echo Form::open(array('url' => 'admin/settings/invoices', 'method' => 'post', 'class' => 'ui form')) ?>
 			<div class="field">
 			   	<div class="ui slider checkbox">
-				  	<input 
-					  	type="checkbox" 
+				  	<input
+					  	type="checkbox"
 				  		name="services_noshow"
 				  		{{ isset($invoicesSettings['services_noshow']) ? 'checked="checked"' : '' }}>
 				  	<label>Geen opstartkosten</label>
@@ -675,34 +676,66 @@
 				<label>Perodiek</label>
 				Eenmalig
 			</div>
-		</div>	
+		</div>
 
 		<div class="two fields">
 			<div class="field">
 				<label>Prijs</label>
 				<?php echo Form::number('price', isset($invoicesSettings['services_price']) ? $invoicesSettings['services_price'] : ''); ?>
-			</div>	
+			</div>
 
 			<div class="field">
 				<label>BTW</label>
 				<?php echo Form::number('tax', isset($invoicesSettings['services_tax']) ? $invoicesSettings['services_tax'] : ''); ?>
-			</div>	
-		</div>	
+			</div>
+		</div>
 
 		<button class="ui tiny button" type="submit"><i class="plus icon"></i> Opslaan</button>
 		<?php echo Form::close() ?>
 	</div>
-	
-	       <div class="ui bottom attached tab segment" data-tab="nieuwsbrief">
+
+	<div class="ui bottom attached tab segment" data-tab="nieuwsbrief">
 		<?php echo Form::open(array('url' => 'admin/settings/newsletter', 'method' => 'post', 'class' => 'ui form')) ?>
-		           <div class="field"> 
+		           <div class="field">
 Stuur nieuwsbrief  <input type="text" name="emailto"><br></div>
 <input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
-<div class="field"> 
+<div class="field">
 				<button class="ui tiny button" type="submit"><i class="plus icon"></i> Stuur nieuwsbrief</button>
 		</div>
 		<?php echo Form::close() ?>
 		</div>
-	
+    <div class="ui bottom attached tab segment" data-tab="newsletter">
+        <table id="tableClients" class="ui sortable very basic collapsing celled unstackable table"
+               style="width: 100%;">
+            <thead>
+            <tr>
+                <th class="three wide" data-slug="name">Naam</th>
+                <th data-slug="category_id">Date time</th>
+                <th data-slug="category_id">Status</th>
+            </tr>
+            </thead>
+            <tbody class="list search">
+            @if(count($citiesData) >= 1)
+                @foreach($citiesData as $data)
+                    <tr>
+                        <td>{{ $data->name }}</td>
+                        <td><div class="col-lg-6 col-md-6 col-xs-6">{{Form::select('date_jobs', array('' => 'Not selected', '2' => 'Monday', '3' => 'Tuesday','4' => 'Wednesday','5' => 'Thursday','6' => 'Friday','7' => 'Saturday','8' => 'Sunday'), null, ['class' => 'ui normal icon search selection fluid dropdown'])}}</div>
+                        </td>
+                        <td>
+                            <div class="col-lg-6 col-md-6 col-xs-6">{{Form::select('date_jobs', array('' => 'Not selected', '0' => 'OFF', '1' => 'ON'), null, ['class' => 'ui normal icon search selection fluid dropdown'])}}</div>
+                        </td>
+                    </tr>
+                @endforeach
+            @else
+                <tr>
+                    <td colspan="2">
+                        <div class="ui error message">Er is geen data gevonden.</div>
+                    </td>
+                </tr>
+            @endif
+            </tbody>
+        </table>
+    </div>
+
 </div>
 @stop

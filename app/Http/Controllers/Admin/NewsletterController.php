@@ -211,6 +211,65 @@ class NewsletterController extends Controller
         }
     }
 
+    public function ajaxGuests(Request $request)
+    {
+        $newsletter = Newsletter::find($request->input('id'));
+        if ($newsletter) {
+            $guestsArray = array();
+
+            if (trim($newsletter->companies_ids) != '') {
+                $guestsQuery = NewsletterGuest::select(
+                    'newsletters_guests.newsletter_id as newsletterId',
+                    'newsletters_guests.no_show as newsletterNoShow',
+                    'newsletters_guests.user_id',
+                    'companies.id as companyId',
+                    'companies.name as companyName',
+                    'users.name',
+                    'users.email',
+                    'users.gender',
+                    'users.birthday_at'
+                )
+                    ->leftJoin('users', 'newsletters_guests.user_id', '=', 'users.id')
+                    ->leftJoin('companies', 'companies.id', '=', 'newsletters_guests.company_id')
+                    ->where('newsletters_guests.newsletter_id', $request->input('id'))
+                    ->whereNotNull('users.email')
+                    ->whereNotNull('users.name');
+
+                if ($request->has('gender')) {
+                    $guestsQuery = $guestsQuery->where('users.gender', $request->input('gender'));
+                }
+
+                $guestsQuery = $guestsQuery->get();
+
+                foreach ($guestsQuery as $guestsFetch) {
+                    if ($guestsFetch->birthday_at != NULL && $guestsFetch->birthday_at != '0000-00-00') {
+                        $bdayDate = Carbon\Carbon::createFromDate(
+                            date('Y', strtotime($guestsFetch->birthday_at)),
+                            date('m', strtotime($guestsFetch->birthday_at)),
+                            date('d', strtotime($guestsFetch->birthday_at))
+                        );
+                    }
+
+                    $guestsArray[] = array(
+                        'id' => $guestsFetch->user_id,
+                        'name' => $guestsFetch->name,
+                        'gender' => $guestsFetch->gender,
+                        'no_show' => $guestsFetch->newsletterNoShow,
+                        'email' => $guestsFetch->email,
+                        'newsletterId' => $guestsFetch->newsletterId,
+                        'companyId' => $guestsFetch->companyId,
+                        'companyName' => $guestsFetch->companyName,
+                        'age' => isset($bdayDate) ? $bdayDate->age : ''
+                    );
+                }
+            }
+            return $guestsArray;
+        } else {
+            alert()->error('', 'De opgegeven nieuwsbrief bestaat niet.')->persistent('Sluiten');
+            return Redirect::to('admin/newsletter');
+        }
+    }
+
     public function example(Request $request)
     {
         $newsletter = Newsletter::find($request->input('id'));

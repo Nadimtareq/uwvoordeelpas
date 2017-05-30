@@ -311,6 +311,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', '
         Route::get('/', 'Admin\NewsletterController@index');
         Route::get('guests', 'Admin\NewsletterController@guests');
         Route::get('example', 'Admin\NewsletterController@example');
+        Route::get('ajax_guests', 'Admin\NewsletterController@ajaxGuests');
 
         Route::post('/', 'Admin\NewsletterController@indexAction');
         Route::post('guests', 'Admin\NewsletterController@guestsAction');
