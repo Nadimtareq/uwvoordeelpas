@@ -11,24 +11,24 @@
     <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('images/icons/favicon64.png') }}">
     <link rel="shortcut icon" type="image/png" sizes="16x16" href="{{ asset('images/icons/favicon16.png') }}">
 
-    <link rel="stylesheet" href="{{ asset('css/app.css?rand='.str_random(40)) }}"> 	
-	<link rel="stylesheet" href="{{ asset('css/normalize.css')}}"> 
-	<link rel="stylesheet" href="{{ asset('css/jquery-ui.css')}}">	
-	<link rel="stylesheet" href="{{ asset('css/ui-lightness/jquery-ui-1.9.2.custom.min.css') }}">		
-	<link rel="stylesheet" href="{{ asset('css/materialize.min.css') }}" />  
+    <link rel="stylesheet" href="{{ asset('css/app.css?rand='.str_random(40)) }}">
+	<link rel="stylesheet" href="{{ asset('css/normalize.css')}}">
+	<link rel="stylesheet" href="{{ asset('css/jquery-ui.css')}}">
+	<link rel="stylesheet" href="{{ asset('css/ui-lightness/jquery-ui-1.9.2.custom.min.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/materialize.min.css') }}" />
 
 	<link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}" />
 	<link rel="stylesheet" href="{{ asset('css/animate.min.css') }}" />
-	<link rel="stylesheet" href="{{ asset('css/main.css') }}">	
+	<link rel="stylesheet" href="{{ asset('css/main.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/flexslider.css') }}">
-	<link rel="stylesheet" href="{{ asset('css/responsive.css') }}"> 
-	
-		
+	<link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
+
+
 <!--	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
 	<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
-	<link rel="stylesheet" href="{{ asset('css/material.indigo-pink.min.css') }}"> 
+	<link rel="stylesheet" href="{{ asset('css/material.indigo-pink.min.css') }}">
 
-	
+
     <link rel="stylesheet" href="{{ captcha_layout_stylesheet_url() }}" >
     <!-- <link rel="manifest" href="{{ asset('manifest.json') }}" > -->
      <!--<script src="{{ asset('js/jsBarcode/dist/JsBarcode.all.js') }}"></script>-->
@@ -45,32 +45,32 @@
     <meta name="theme-color" content="#ffffff">
     <meta name="description" content="{{ isset($metaDescription) ? strip_tags($metaDescription) : 'Reserveer in enkele stappen met uw spaartegoed!' }}">
 	<meta http-equiv="Cache-control" content="max-age=2592000, public">
-		
-	<script>
-	  var baseUrl = {!! json_encode(url('/')."/") !!};   
-	  
-	  // Script to load fonts async 
 
- 	  (function() { 
-	      var css = document.createElement('link'); css.href = '//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css'; css.rel = 'stylesheet'; css.type = 'text/css'; document.getElementsByTagName('head')[0].appendChild(css); 
+	<script>
+	  var baseUrl = {!! json_encode(url('/')."/") !!};
+
+	  // Script to load fonts async
+
+ 	  (function() {
+	      var css = document.createElement('link'); css.href = '//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css'; css.rel = 'stylesheet'; css.type = 'text/css'; document.getElementsByTagName('head')[0].appendChild(css);
 	  })();
-	  
+
 	  window.onerror = function(message, url){
 			console.log(message);
 			return true;
 	   }  // IGNORE ALL ERROR JAVASCRIPT!
 	</script>
-	
+
 </head>
 
 
-		
+
 <body {{ (Route::getCurrentRoute()->uri() == '/') ? 'class="index"' : '' }} id="app">
 
     <div id="searchFull" style="display: none;">
         <?php echo Form::open(array('url' => 'search-redirect', 'class' => 'ui form', 'method' => 'post')) ?>
         <div class="fields">
-		
+
             <div id="searchInput" class="eleven wide field">
                 <div id="affiliateSearch-4" class="ui search form">
                     <div class="ui small icon input">
@@ -86,11 +86,11 @@
 			{{ Form::select(
                         'page',
                         array(
-                            'restaurant' => 'Restaurants', 
-                            'saldo' => 'Tegoed sparen', 
+                            'restaurant' => 'Restaurants',
+                            'saldo' => 'Tegoed sparen',
                             'faq' => 'Veelgestelde vragen'
-                        ), 
-                        'saldo', 
+                        ),
+                        'saldo',
                         array('class' => 'ui normal dropdown searchRedirectCategories2')) }}
             </div>
 
@@ -110,26 +110,26 @@
         </div>
     </div>
 
-	<!-- Preloader --> 
+	<!-- Preloader -->
 	<div id="preloader">
 		<div class="loader">
 			<svg class="circle-loader" height="50" width="50">
 				<circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="6" stroke-miterlimit="10" />
 			</svg>
-		</div>    
+		</div>
 	</div>
-		    
-   
-   
+
+
+
     <!-- Main Content -->
     <div class="pusher">
         @if (!Request::has('iframe'))
-			
+
 			@if(isset($search_header) && $search_header)
 				@include('template.header-search')
 				@include('template.slider')
 			@else
-			    @include('template.header')				
+			    @include('template.header')
 	            <section>
 					@if (isset($__env->getSections()['slider']))
 						@yield('slider')
@@ -138,7 +138,7 @@
 					@endif
 				</section>
 			@endif
-			
+
         @endif
 
         <section class="content space-header">
@@ -167,38 +167,38 @@
             </div>
         </div>
     </div>
-	
-	<!-- Load Javscript Section -->	
+
+	<!-- Load Javscript Section -->
 	<!-- <script  src="{{ asset('js/app.js?rand='.str_random(40)) }}"></script> 		 -->
 	<!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjrbVJMJKWzCl8JZWV3_5Jy5P4CTITznU"></script>    -->
-	<script src="{{ asset('js/jquery-1.11.3.min.js') }} "></script>		
-	<script src="{{ asset('js/app.js?version=1') }}"></script> 		
-	<script src="{{ asset('js/jquery-1.11.3.min.js') }} "></script>		
-	
-    
+	<script src="{{ asset('js/jquery-1.11.3.min.js') }} "></script>
+	<script src="{{ asset('js/app.js?version=1') }}"></script>
+	<script src="{{ asset('js/jquery-1.11.3.min.js') }} "></script>
+
+
 	@if (!Request::has('iframe') )
        <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyAjrbVJMJKWzCl8JZWV3_5Jy5P4CTITznU&callback=initMap&force=lite" ></script>
-	   <script  src="//cdnjs.cloudflare.com/ajax/libs/gmaps.js/0.4.25/gmaps.min.js"></script>    
+	   <script  src="//cdnjs.cloudflare.com/ajax/libs/gmaps.js/0.4.25/gmaps.min.js"></script>
     @endif
-	
-	<script  src="{{ asset('js/jquery-ui.min.js') }}"></script>   
+
+	<script  src="{{ asset('js/jquery-ui.min.js') }}"></script>
 	<script  src="{{ asset('js/jquery.flexslider.js') }}"></script>
-	<script  src="{{ asset('js/jquery.bxslider.min.js') }}"></script>	
+	<script  src="{{ asset('js/jquery.bxslider.min.js') }}"></script>
 	<script  src="{{ asset('js/jquery-ui-1.11.3.custom.min.js') }}"></script>
-	<script  src="{{ asset('js/i18n/datepicker-nl.js') }}"></script> 	
-	
+	<script  src="{{ asset('js/i18n/datepicker-nl.js') }}"></script>
+
 	<script  src="{{ asset('js/detectmobilebrowser.js') }}"></script>
 	<script  src="{{ asset('js/wow.min.js') }}"></script>
 	<script  src="{{ asset('js/waypoints.js') }}"></script>
-    <script  src="{{ asset('js/materialize.min.js') }}"></script> 
+    <script  src="{{ asset('js/materialize.min.js') }}"></script>
 	<script  src="{{ asset('js/common.js') }}"></script>
 	<script  src="{{ asset('js/main.js') }}"></script>
-    
+
 	@yield('scripts')
-	@include('sweet::alert')	
+	@include('sweet::alert')
     @include('admin.template.search.js')
-    
-	
+
+
 	<!-- Google Analytics -->
 	<script>
 		window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
@@ -207,15 +207,15 @@
 	</script>
 	<script async src='https://www.google-analytics.com/analytics.js'></script>
 	<!-- End Google Analytics -->
-	
+
 	<script>
-	
+
 		function install (aEvent)
 		{
 			for (var a = aEvent.target; a.href === undefined;) a = a.parentNode;
 			var params = {
 			"Foo": { URL: aEvent.target.href,
-			IconURL: aEvent.target.getAttribute("iconURL"),            
+			IconURL: aEvent.target.getAttribute("iconURL"),
 			toString: function () { return this.URL; }
 			}
 			};
@@ -223,7 +223,7 @@
 
 			return false;
 		}
-		
+
 		/*(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -231,25 +231,25 @@
 
 		ga('create', 'UA-71271118-1', 'auto');
 		ga('send', 'pageview');
-		   
+
 		if ('serviceWorker' in navigator) {
 		  navigator.serviceWorker.register('/js/sw.js').then(function(registration) {
 			// Registration was successful
 			console.log('ServiceWorker registration successful with scope: ', registration.scope);
 		  }).catch(function(err) {
-			// registration failed :( 
+			// registration failed :(
 			console.log('ServiceWorker registration failed: ', err);
 		  });
 		}
 		*/
 
-	   
+
     </script>
 
     @if(Request::has('iframe') == FALSE)
-		
+
 	<script>
-	
+
 	<!--Start of Tawk.to Script-->
 	var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
 	(function(){
@@ -262,26 +262,26 @@
 			s0.parentNode.insertBefore(s1,s0);
 	})();
 	<!--End of Tawk.to Script-->
-	
+
 	<!-- Begin Cookie Consent plugin by Silktide - http://silktide.com/cookieconsent -->
-	window.cookieconsent_options = {"message":"Deze website maakt gebruik van cookies.","dismiss":"Ik ga akkoord","learnMore":"Meer informatie","link":"https://www.uwvoordeelpas.nl/disclaimer","theme":"light-floating"};		
-	
+	window.cookieconsent_options = {"message":"Deze website maakt gebruik van cookies.","dismiss":"Ik ga akkoord","learnMore":"Meer informatie","link":"https://www.uwvoordeelpas.nl/disclaimer","theme":"light-floating"};
+
 	</script>
 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.10/cookieconsent.min.js"></script>
-	
+
 	<!-- End Cookie Consent plugin -->
-	
+
     @endif
 
-	
-	
+
+
     <script>
-		
+
     $(document).ready(function() {
         @if(count($errors) > 0)
             var errorMessage = [];
-            <?php 
+            <?php
             foreach ($errors->all() as $error) {
             ?>
                 errorMessage.push('<li><?php echo $error; ?></li>');
@@ -289,16 +289,16 @@
             }
             ?>
 
-            swal({ 
-                title: "Oeps, er ging iets fout!", 
-                html: true, 
-                text: '<ul>' + errorMessage.join(' ') + '</ul>', 
-                type: "error", 
-                confirmButtonText: "OK" 
+            swal({
+                title: "Oeps, er ging iets fout!",
+                html: true,
+                text: '<ul>' + errorMessage.join(' ') + '</ul>',
+                type: "error",
+                confirmButtonText: "OK"
             });
         @endif
 
-        
+
 		function chromeInstallFunction() {
 			    chrome.webstore.install('https://chrome.google.com/webstore/detail/kfnndmokhnlhhblfedaeebnonfjbihpo', function () {
 //                    alert('success');
@@ -348,7 +348,7 @@
             $('body').removeClass('extension-install-overlay');
             clearTimeout(overlay_timer);
         };
-*/     
+*/
 
       $('#info').addClass('original').clone().insertAfter('#info').addClass('cloned').css('position','fixed').css('top','0').css('margin-top','0').css('z-index','500').removeClass('original').hide();
 
@@ -358,15 +358,15 @@
 	function stickIt() {
 
 	  var orgElementPos = $('.original').offset();
-	  orgElementTop = orgElementPos.top;               
+	  orgElementTop = orgElementPos.top;
 
 	  if ($(window).scrollTop() >= (orgElementTop)) {
 		// scrolled past the original position; now only show the cloned, sticky element.
 
-		// Cloned element should always have same left position and width as original element.     
+		// Cloned element should always have same left position and width as original element.
 		orgElement = $('.original');
 		coordsOrgElement = orgElement.offset();
-		leftOrgElement = coordsOrgElement.left;  
+		leftOrgElement = coordsOrgElement.left;
 		widthOrgElement = orgElement.css('width');
 		$('.cloned').css('left',leftOrgElement+'px').css('top',0).css('width',widthOrgElement).show();
 		$('.original').css('visibility','hidden');
@@ -375,11 +375,11 @@
 		$('.cloned').hide();
 		$('.original').css('visibility','visible');
 	  }
-	} 
-	   
+	}
+
     });
     </script>
-	
+
      @stack('inner_scripts')
 </body>
 </html>

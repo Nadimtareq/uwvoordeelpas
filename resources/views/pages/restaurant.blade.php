@@ -32,16 +32,17 @@ while ($st->lte($dt)) {
 									<div class="bx-viewport" style="width: 100%; overflow: hidden; position: relative; height: 314px;">
 										<ul id="bxslider" style="width: 615%; position: relative; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
 											@if($media != '[]')
+
 												@foreach($media as $mediaItem)                                                                                                                    
 												 @if(file_exists(public_path($mediaItem->disk. DIRECTORY_SEPARATOR . $mediaItem->id . DIRECTORY_SEPARATOR . $mediaItem->file_name)))
-													<li style="float: left; list-style: outside none none; position: relative; width: 674px;">								
+													<li style="float: left; list-style: outside none none; position: relative; width: 674px;">
 													<a href="{{ url($mediaItem->getUrl()) }}" data-lightbox="roadtrip">
 														<img class="ui image materialboxed" src="{{ url($mediaItem->getUrl()) }}">
 													</a>
 												 @else
 												  <li style="float: left; list-style: outside none none; position: relative; width: 674px;">
 													<img src="{{ asset('images/s.jpg') }}" alt="s" class="materialboxed">
-												 @endif 
+												 @endif
 												 
 
 												{!! $discountHelper->replaceKeys(
@@ -55,7 +56,7 @@ while ($st->lte($dt)) {
 												@endforeach
 											@else 
 												<li style="float: left; list-style: outside none none; position: relative; width: 674px;">
-												  <img src="{{ asset('images/s.jpg') }}" alt="s">
+												  <img src="{{ asset('images/s1.jpg') }}" alt="s">
 												</li>
 											@endif
 							
@@ -362,7 +363,7 @@ while ($st->lte($dt)) {
 								<!--<div class="pages">
 									<a href="#" class="prev2">&lt;</a>
 									<ul>
-										<li><a href="#">1</a></li>
+								<li><a href="#">1</a></li>
 										<li><a href="#" class="active">2</a></li>
 										<li><a href="#">...</a></li>
 										<li><a href="#">8</a></li>
@@ -394,7 +395,7 @@ while ($st->lte($dt)) {
 								
 							</label>	
 
-							<label for="time-dropdown">
+							bel for="time-dropdown">
 							    <span>Tijm</span>
 							   	<div class="details">
 									{{ Form::select("time",[],Request::get('time'),[ 'class' => 'quantity2', 'id' => 'time-dropdown']) }}
@@ -426,8 +427,8 @@ while ($st->lte($dt)) {
 							</label>
 
 
-							<label for="comment">
-								<span>Opmerking</span>
+							label for="comment">
+							<span>Opmerking</span>
 								{!! Form::textarea('comment') !!}
 							</label>
 
@@ -526,4 +527,5 @@ while ($st->lte($dt)) {
 
 @section('scripts')
   <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5751e9a264890504"></script>
+
 @stop
