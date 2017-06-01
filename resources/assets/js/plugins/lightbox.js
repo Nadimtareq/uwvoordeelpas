@@ -186,6 +186,7 @@
 
     this.$lightbox.find('.lb-loader, .lb-close').on('click', function() {
          $("#materialbox-overlay").css('display','none');
+         alert("light");
       self.end();
       return false;
     });
