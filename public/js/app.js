@@ -15150,6 +15150,7 @@ d,c,h,i,k=0,m=0,n="",n=[];do d=a.charCodeAt(k++),c=a.charCodeAt(k++),h=a.charCod
 
 
     this.$lightbox.find('.lb-loader, .lb-close').on('click', function() {
+        $("#materialbox-overlay").css('display','none');
       self.end();
       return false;
     });
