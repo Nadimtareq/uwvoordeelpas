@@ -119,7 +119,7 @@ class HomeController extends Controller
         ]);
     }
 
-    public function index(Request $request) 
+    public function index(Request $request)
     {
         $deals = App\Models\ReservationOption::all();
 

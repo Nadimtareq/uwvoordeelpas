@@ -135,7 +135,7 @@
 					<a class="more"  href="javascript:void(0)">SOLD OUT</a>
 				@else
 					<div class="d-inline-block">
-						<a class="more"  href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}">NAAR DE DEAL</a>&nbsp;
+						<a class="more"  href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}">MEER INFO</a>&nbsp;
 						<a class="more"  href="{{ url('future-deal/'.$data->slug).'?deal='.$deal->id }}">KOOP DEAL</a>
 					</div>
 				@endif

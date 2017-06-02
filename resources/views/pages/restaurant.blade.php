@@ -2,11 +2,11 @@
 $st = \Carbon\Carbon::create(date('Y'), 1, 1, 0, 0, 0);
 $dt = \Carbon\Carbon::create(date('Y') + 1, 12, 1, 0, 0, 0);
 $dates = array();
-										
-while ($st->lte($dt)) {  
+
+while ($st->lte($dt)) {
 	$dates[] = $st->copy()->format('Y-m');
 	$st->addMonth();
-} 
+}
 ?>
 
 @extends('template.theme')
@@ -22,8 +22,8 @@ while ($st->lte($dt)) {
 @inject('discountHelper', 'App\Helpers\DiscountHelper')
 	<div class="tabss">
 		<div class="container">
-			
-				
+
+
 			<div class="main_gallery">
 					<div class="left_side">
 						<div class="bx-wrapper" style="max-width: 100%; margin: 0px auto;">
@@ -33,7 +33,7 @@ while ($st->lte($dt)) {
 										<ul id="bxslider" style="width: 615%; position: relative; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
 											@if($media != '[]')
 
-												@foreach($media as $mediaItem)                                                                                                                    
+												@foreach($media as $mediaItem)
 												 @if(file_exists(public_path($mediaItem->disk. DIRECTORY_SEPARATOR . $mediaItem->id . DIRECTORY_SEPARATOR . $mediaItem->file_name)))
 													<li style="float: left; list-style: outside none none; position: relative; width: 674px;">
 													<a href="{{ url($mediaItem->getUrl()) }}" data-lightbox="roadtrip">
@@ -43,23 +43,23 @@ while ($st->lte($dt)) {
 												  <li style="float: left; list-style: outside none none; position: relative; width: 674px;">
 													<img src="{{ asset('images/s.jpg') }}" alt="s" class="">
 												 @endif
-												 
+
 
 												{!! $discountHelper->replaceKeys(
-														$company, 
-														$company->days, 
+														$company,
+														$company->days,
 														(isset($contentBlock[44]) ? $contentBlock[44] : ''),
 														'ribbon-wrapper thumb-discount-label'
-													) 
+													)
 												!!}
 												</li>
 												@endforeach
-											@else 
+											@else
 												<li style="float: left; list-style: outside none none; position: relative; width: 674px;">
 												  <img src="{{ asset('images/s1.jpg') }}" alt="s">
 												</li>
 											@endif
-							
+
 										</ul>
 									</div>
 									<div class="bx-controls bx-has-controls-direction">
@@ -82,23 +82,23 @@ while ($st->lte($dt)) {
 					<!-- <div class="r_side">
 						<div class="bx-wrapper" style="max-width: 205px; margin: 0px auto;"><div class="bx-viewport" style="width: 100%; overflow: hidden; position: relative; height: 323px;"><ul id="bxslider-pager" style="width: auto; position: relative; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
 						@if($media != '[]')
-							@foreach ($media as $key => $mediaItem)                                                                                                                
+							@foreach ($media as $key => $mediaItem)
 								@if($FileHelper::is_url_exist(public_path($mediaItem->disk. DIRECTORY_SEPARATOR . $mediaItem->id . DIRECTORY_SEPARATOR . 'conversions' . DIRECTORY_SEPARATOR . "175Thumb.jpg")))
 								<li data-slideindex="{{ $key }}" data-slide-index="{{ $key }}" style="float: none; list-style: outside none none; position: relative; width: 187px; margin-bottom: 3px;">
 									<a href="#">
 									 <img src="{{ url($mediaItem->getUrl('175Thumb')) }}" alt="Alt">
 									 </a>
 								</li>
-								@else 
+								@else
 									<li data-slideindex="0" style="width: 140px;height:78px"><a href="#"><img src="{{ asset('images/s.png')}} " alt="Alt"></a></li>
-								@endif	
+								@endif
 							@endforeach
-						@else 
+						@else
 							<li data-slideindex="0" style="width: 140px;height:78px"><a href="#"><img src="{{ asset('images/s.png')}} " alt="Alt"></a></li>
 						@endif
 						</ul></div><div class="bx-controls bx-has-controls-direction"><div class="bx-controls-direction"><a class="bx-prev disabled" href=""><span></span></a><a class="bx-next disabled" href=""><span></span></a></div></div></div>
 					</div> -->
-			
+
 				<div class="right_details calendar-ajax">
 					{!! Form::open(['url' => 'restaurant/'.$company->slug, 'id' => 'reservationForm', 'class' => 'ui form']) !!}
 					{{ Form::hidden('date_hidden') }}
@@ -108,13 +108,13 @@ while ($st->lte($dt)) {
 					{{ Form::hidden('month', date('m')) }}
 					{{ Form::hidden('monthDate', date('m-Y')) }}
 					{{ Form::hidden('reservation_url', URL::to('restaurant/reservation/'.$company->slug)) }}
-					<input type="hidden" name="deal" value="{{ (@app('request')->input('deal'))?app('request')->input('deal'):'' }}">			
+					<input type="hidden" name="deal" value="{{ (@app('request')->input('deal'))?app('request')->input('deal'):'' }}">
 
-					
-					
+
+
 							<!-- <div id="datepicker" class="right_calendar hasDatepicker"><div class="ui-datepicker-inline ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all" style="display: block;"><div class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all"><a class="ui-datepicker-prev ui-corner-all" data-handler="prev" data-event="click" title="Prev"><span class="ui-icon ui-icon-circle-triangle-w">Prev</span></a><a class="ui-datepicker-next ui-corner-all" data-handler="next" data-event="click" title="Next"><span class="ui-icon ui-icon-circle-triangle-e">Next</span></a><div class="ui-datepicker-title"><span class="ui-datepicker-month">April</span>&nbsp;<span class="ui-datepicker-year">2017</span></div></div><table class="ui-datepicker-calendar"><thead><tr><th class="ui-datepicker-week-end"><span title="Sunday">Su</span></th><th><span title="Monday">Mo</span></th><th><span title="Tuesday">Tu</span></th><th><span title="Wednesday">We</span></th><th><span title="Thursday">Th</span></th><th><span title="Friday">Fr</span></th><th class="ui-datepicker-week-end"><span title="Saturday">Sa</span></th></tr></thead><tbody><tr><td class=" ui-datepicker-week-end ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">1</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">2</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">3</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">4</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">5</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">6</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">7</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">8</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">9</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">10</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">11</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">12</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">13</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">14</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">15</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">16</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">17</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">18</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">19</a></td><td class="  ui-datepicker-current-day" data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default ui-state-active" href="#">20</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">21</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">22</a></td></tr><tr><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">23</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">24</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">25</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">26</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">27</a></td><td class=" " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">28</a></td><td class=" ui-datepicker-week-end " data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default" href="#">29</a></td></tr><tr><td class=" ui-datepicker-week-end  ui-datepicker-today" data-handler="selectDay" data-event="click" data-month="3" data-year="2017"><a class="ui-state-default ui-state-highlight" href="#">30</a></td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td><td class=" ui-datepicker-week-end ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">&nbsp;</td></tr></tbody></table></div></div>-->
 							<div id="datepicker-calendar" class="right_calendar datepicker-calendar" data-lock=".calendar-ajax" data-datepicker-ajax="true" data-timeselect="#time-calendar" data-persons="#persons-calendar" ></div>
-							
+
 							<ul>
 								<li><img src="{{ asset('images/c1.png') }}" alt="m3">
 									<input type="hidden" name="ctime" value="{{ count(array_keys($reservationTimesArray)) >= 1 ? array_keys($reservationTimesArray)[0] : '' }}">
@@ -122,7 +122,7 @@ while ($st->lte($dt)) {
 									</select>
 								</li>
 								<li><img src="{{ asset('images/c2.png') }}" alt="m4">
-									<input type="hidden" name="cpersons" value="{{ ($userAuth && $userInfo->kids != 'null' && $userInfo->kids != NULL && $userInfo->kids != '[""]' ? $userInfo->kids : 1) }}"> 
+									<input type="hidden" name="cpersons" value="{{ ($userAuth && $userInfo->kids != 'null' && $userInfo->kids != NULL && $userInfo->kids != '[""]' ? $userInfo->kids : 1) }}">
 									<select id="persons-calendar"  name="persons" class="quantity2" >
 										<option value="0">Personen</option>
 										<?php $person_list=[]; ?>
@@ -138,10 +138,10 @@ while ($st->lte($dt)) {
 							@else
 								<button id="submitField"  class="more login guestClick">Reserveer nu</button>
 							@endif
-						{!! Form::close() !!}		
-				</div>			
+						{!! Form::close() !!}
+				</div>
 			</div>
-				
+
 			<div class="tabs-all">
 					<ul class="tabs-link">
 						<li><a href="#t1" class="">Over ons</a></li>
@@ -153,7 +153,7 @@ while ($st->lte($dt)) {
 						<li><a href="#t7" class="">Reviews</a></li>
 					</ul>
 					<div class="tabs-content">
-					
+
 						<div id="t1" style="display: block;">
 							<div class="text3">
 								<strong>{!! $company->name !!}</strong>
@@ -162,12 +162,12 @@ while ($st->lte($dt)) {
 								<p>	{!! $company->about_us !!}</p>
 							</div>
 						</div>
-						
+
 						<div id="t2" style="display: none;">
-						
+
 							@if(isset($deals) && count($deals))
 							@foreach($deals as $deal)
-						    <!-- Menu -->							
+						    <!-- Menu -->
 							<div class="menu">
 								<div class="left_m">
 									<h2>{{ $deal->name }}</h2>
@@ -185,8 +185,10 @@ while ($st->lte($dt)) {
 								</div>
 								<!-- <div class="end">* This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. </div>
 								<div class="end2">Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh </div> -->
+								<a class="more"  href="{{ url('future-deal/'.$company->slug).'?deal='.$deal->id }}">KOOP DEAL</a>
+
 							</div>
-							
+
 							<!-- Pagination -->
 							<!-- <div class="pages">
 								<a href="#" class="prev2">&lt;</a>
@@ -199,13 +201,13 @@ while ($st->lte($dt)) {
 								<a href="#" class="next2">&gt;</a> -->
 							@endforeach
 							@endif
-						 </div>							
-					
-											
-						
+						 </div>
+
+
+
 						<div id="t3" style="display: none;">
 							<div class="info">
-							
+
 								@if ($company->preferences != NULL && $company->preferences != NULL && $company->preferences != '[""]')
 									<span>Voorkeuren</span>
 									<strong>
@@ -255,7 +257,7 @@ while ($st->lte($dt)) {
 										@endif -->
 									@endforeach
 									</strong>
-									
+
 									<span>Kortingsdagen</span>
 									<strong>
 									<?php $dayNames = Config::get('preferences.days'); ?>
@@ -263,36 +265,36 @@ while ($st->lte($dt)) {
 										<?php $i = 0; ?>
 										@foreach (json_decode($company->days) as $id => $days)
 										<?php $i++; ?>
-											{{ $dayNames[$days] }} 
+											{{ $dayNames[$days] }}
 											<?php echo ($i < count(json_decode($company->days)) ? '-' : ''); ?>
 										@endforeach
 									@endif
 									</strong>
 								@endif
-								
+
 							</div>
 							<a href="#" class="more">Een Tafel Reserveren</a>
 						</div>
-						
-						
+
+
 						<div id="t4" style="display: none;">
 							<div class="map">
 								<h3>{!! $company->zipcode !!}  {!! $company->city !!}</h3>
 								 <span>{!! $company->address !!}<br /></span>
-								 <span><a href="tel:{!! $company->phone !!}" target="_blank">{!! $company->phone !!} </a> 
-									 @if($company->website) 
+								 <span><a href="tel:{!! $company->phone !!}" target="_blank">{!! $company->phone !!} </a>
+									 @if($company->website)
 										 <a href="http://{!! $company->website !!}" target="_blank">{!! " | ".$company->website !!} </a>
 									 @endif
 								</span>
-								
+
 								@if(trim($company->contact_email) != '' || trim($company->email) != '')
 							    <div class="send">
 								{{ Form::open(array('url' => 'contact/'.$company->slug, 'method' => 'post', 'class' => 'form')) }}
 										<label for="name">
-											<span>Naam</span>											
+											<span>Naam</span>
 											{{ Form::text('name', (Sentinel::check() ? Sentinel::getUser()->name : ''), [ 'id' => 'name']) }}
 										</label>
-																				
+
 
 										 <label for="email">
 											<span>E-mail</span>
@@ -314,7 +316,7 @@ while ($st->lte($dt)) {
 												{!! captcha_image_html('ContactCaptcha') !!}
 											<!-- </div> -->
 
-											<label>	
+											<label>
 												<span>Typ de beveiligingscode over:</span>
 												{{ Form::text('CaptchaCode', '', array('id' => 'CaptchaCode', 'placeholder' => 'beveiligingscode' )) }}
 											</label>
@@ -324,20 +326,20 @@ while ($st->lte($dt)) {
 								{{ Form::close() }}
 								</div>
 								@endif
-								<div class="maps">							
-									<div id="map" 
-										data-kitchen="{{ is_array(json_decode($company->kitchens)) ? str_slug(json_decode($company->kitchens)[0]) : '' }}" 
-										data-url="{{ url('restaurant/'.$company->slug) }}" 
-										data-name="{{ $company->name }}" 
-										data-address="{{ $company->address }}" 
-										data-city="{{ $company->city }}" 
+								<div class="maps">
+									<div id="map"
+										data-kitchen="{{ is_array(json_decode($company->kitchens)) ? str_slug(json_decode($company->kitchens)[0]) : '' }}"
+										data-url="{{ url('restaurant/'.$company->slug) }}"
+										data-name="{{ $company->name }}"
+										data-address="{{ $company->address }}"
+										data-city="{{ $company->city }}"
 										data-zipcode="{{ $company->zipcode }}"></div>
-								</div> 
+								</div>
 							</div>
 						</div>
-						
+
 						 <!-- News -->
-						<div id="t5" style="display: none;">							
+						<div id="t5" style="display: none;">
 						   @if($news->count() >= 1)
 								@foreach($news as $article)
 								<?php $newsMedia = $article->getMedia(); ?>
@@ -359,7 +361,7 @@ while ($st->lte($dt)) {
 								</div>
 								<!-- Pages -->
 								{!! $news->appends($paginationQueryString)->render() !!}
-								
+
 								<!--<div class="pages">
 									<a href="#" class="prev2">&lt;</a>
 									<ul>
@@ -375,7 +377,7 @@ while ($st->lte($dt)) {
 								<span>Er zijn geen nieuwsberichten gevonden.</span>
 							 @endif
 						</div>
-						
+
 						<!-- Send -->
 						<div id="t6" style="display: none;">
 							<div class="send">
@@ -385,22 +387,22 @@ while ($st->lte($dt)) {
 								{{ Form::hidden('setTimeBack', 0) }}
 								{!! Form::hidden('company_id', $company->id) !!}
 								{{ Form::hidden('date') }}
-							
+
 								{!! isset($contentBlock[59]) ? $contentBlock[59] : '' !!}
 
-							
+
 							<label for="date">
 								<span>Datum</span>
 								{{ Form::text('date_input', '', array('data-datepicker-ajax' => 'true','data-timeselect' => '#time-dropdown', 'data-group' => '1', 'data-persons' => '#persons-dropdown','id' => 'datepicker-dropdown')) }}
-								
-							</label>	
+
+							</label>
 
 							bel for="time-dropdown">
 							    <span>Tijm</span>
 							   	<div class="details">
 									{{ Form::select("time",[],Request::get('time'),[ 'class' => 'quantity2', 'id' => 'time-dropdown']) }}
 									<!-- <select id="time-dropdown" name="time" class="quantity2"></select>-->
-								</div>								
+								</div>
 							</label>
 
 							<label for="persons">
@@ -409,8 +411,8 @@ while ($st->lte($dt)) {
 								{{ Form::select("persons",$person_list,1,[ 'class' => 'quantity2', 'id' => 'persons-dropdown']) }}
 								</div>
 								<!-- Form::text('persons') -->
-							</label>	
-							
+							</label>
+
 							<label for="name">
 								<span>Naam</span>
 								{!! Form::text('name', (Sentinel::check() ? Sentinel::getUser()->name : '')) !!}
@@ -437,7 +439,7 @@ while ($st->lte($dt)) {
 
 							</div>
 						</div>
-						
+
 					<!-- Reviews -->
 					<div id="t7" style="display: none;">
 							@if(count($reviews) >= 1)
@@ -456,7 +458,7 @@ while ($st->lte($dt)) {
 											<div class="score">
 												Eten <div class="ui star tiny orange rating no-rating" data-rating="{{ $review->food }}"></div><br />
 												Service <div class="ui star tiny orange rating no-rating" data-rating="{{ $review->service }}"></div><br />
-												decor <div class="ui star tiny orange rating no-rating" data-rating="{{ $review->decor }}"></div> 
+												decor <div class="ui star tiny orange rating no-rating" data-rating="{{ $review->decor }}"></div>
 											</div>
 										</div>
 									</div>
@@ -470,7 +472,7 @@ while ($st->lte($dt)) {
 							<div class="send_review">
 							 @if($user)
 								{{ Form::open(array('url' => 'restaurant/reviews/'.$company->slug, 'method' => 'post','id' => 'reviews', 'class' => 'form')) }}
-								
+
 								{{ Form::hidden('food', 1) }}
 								{{ Form::hidden('service', 1) }}
 								{{ Form::hidden('decor', 1) }}
@@ -491,13 +493,13 @@ while ($st->lte($dt)) {
 										Decor
 										<i id="decor" class="ui star rating" data-rating="1"></i>
 									</div>
-								</div>				
-								
+								</div>
+
 								<label for="idcontent">
 									<span>Recensie</span>
 									{{ Form::textarea('content',NULL,['id' => 'idcontent']) }}
 								</label>
-								
+
 
 								<button type="submit" class="ui small blue button">VERZENDEN</button>
 
@@ -512,12 +514,29 @@ while ($st->lte($dt)) {
 								</a><br />
 							@endif
 							</div>
-							
+
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+<style>
+	 .more {
+		background: #333399 none repeat scroll 0 0;
+		border-radius: 5px;
+		box-shadow: 3px 4px 5px 0 rgba(0, 0, 0, 0.15);
+		color: #fff;
+		display: inline-block;
+		font: 18px "LatoRegular";
+		margin-top: 5px;
+		padding: 11px 31px;
+		position: relative;
+		text-align: center;
+		text-transform: uppercase;
+		top: -10px;
+	}
+</style>
+
 	<div class="clear"></div>
 	<script>
 		var activateAjax = 'restaurant';

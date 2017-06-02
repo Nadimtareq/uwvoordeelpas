@@ -3154,6 +3154,10 @@ header.nav li a:hover {
         color: #000;
         background: none;
     }*/
+    .left_side .bx-wrapper img{
+        width: 100%;
+        height: 314px;
+    }
     .datepicker1::-webkit-input-placeholder {color:#000;}
     .datepicker1::-moz-placeholder          {color:#000;}/* Firefox 19+ */
     .datepicker1:-moz-placeholder           {color:#000;}/* Firefox 18- */
@@ -3354,6 +3358,7 @@ a.button-collapse2{
         color: #000;
         background: none;
     }*/
+
     .datepicker1::-webkit-input-placeholder {color:#000;}
     .datepicker1::-moz-placeholder          {color:#000;}/* Firefox 19+ */
     .datepicker1:-moz-placeholder           {color:#000;}/* Firefox 18- */
@@ -4292,4 +4297,21 @@ padding-top: 90px;
 
 .text-red {
 	color:red !important;
+}
+
+@media(min-width: 320px) and (max-width: 800px){
+    .left_side .bx-wrapper img{
+        width: 100%;
+
+    }
+    .bx-viewport{
+        height: 210px !important;
+    }
+    .more{
+        float:none !important;
+    }
+    .menu{
+        text-align: center;
+    }
+
 }

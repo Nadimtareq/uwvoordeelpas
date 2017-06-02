@@ -6746,7 +6746,7 @@ function closeBrowser() {
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * THIS SOFTWARE AND DOCUMENTATION IS PROVIDED "AS IS," AND COPYRIGHT
  * HOLDERS MAKE NO REPRESENTATIONS OR WARRANTIES, EXPRESS OR IMPLIED,
  * INCLUDING BUT NOT LIMITED TO, WARRANTIES OF MERCHANTABILITY OR
@@ -6755,12 +6755,12 @@ function closeBrowser() {
  * COPYRIGHTS, TRADEMARKS OR OTHER RIGHTS.COPYRIGHT HOLDERS WILL NOT
  * BE LIABLE FOR ANY DIRECT, INDIRECT, SPECIAL OR CONSEQUENTIAL
  * DAMAGES ARISING OUT OF ANY USE OF THE SOFTWARE OR DOCUMENTATION.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://gnu.org/licenses/>.
- 
+
  Documentation available at http://cookiecuttr.com
- 
+
  */
 (function ($) {
     $.cookieCuttr = function (options) {
@@ -6783,13 +6783,13 @@ function closeBrowser() {
             cookieDeclineButtonText: "DECLINE COOKIES",
             cookieResetButtonText: "RESET COOKIES FOR THIS WEBSITE",
             cookieWhatAreLinkText: "What are cookies?",
-            cookieNotificationLocationBottom: false, // top or bottom - they are your only options, so true for bottom, false for top            
+            cookieNotificationLocationBottom: false, // top or bottom - they are your only options, so true for bottom, false for top
             cookiePolicyPage: false,
             cookiePolicyPageMessage: 'Please read the information below and then choose from the following options',
             cookieDiscreetLink: false,
             cookieDiscreetReset: false,
             cookieDiscreetLinkText: "Cookies?",
-            cookieDiscreetPosition: "topleft", //options: topleft, topright, bottomleft, bottomright         
+            cookieDiscreetPosition: "topleft", //options: topleft, topright, bottomleft, bottomright
             cookieNoMessage: false, // change to true hide message from all pages apart from your policy page
             cookieDomain: ""
         };
@@ -7040,7 +7040,7 @@ function closeBrowser() {
  */
 !function(t){"function"==typeof define&&define.amd?define(["jquery"],t):t("object"==typeof exports?require("jquery"):jQuery)}(function(t){"use strict";function i(t){return"number"==typeof t&&!isNaN(t)}function e(t){return"undefined"==typeof t}function s(t,e){var s=[];return i(e)&&s.push(e),s.slice.apply(t,s)}function a(t,i){var e=s(arguments,2);return function(){return t.apply(i,e.concat(s(arguments)))}}function o(t){var i=t.match(/^(https?:)\/\/([^\:\/\?#]+):?(\d*)/i);return i&&(i[1]!==C.protocol||i[2]!==C.hostname||i[3]!==C.port)}function h(t){var i="timestamp="+(new Date).getTime();return t+(t.indexOf("?")===-1?"?":"&")+i}function n(t){return t?' crossOrigin="'+t+'"':""}function r(t,i){var e;return t.naturalWidth&&!mt?i(t.naturalWidth,t.naturalHeight):(e=document.createElement("img"),e.onload=function(){i(this.width,this.height)},void(e.src=t.src))}function p(t){var e=[],s=t.rotate,a=t.scaleX,o=t.scaleY;return i(s)&&0!==s&&e.push("rotate("+s+"deg)"),i(a)&&1!==a&&e.push("scaleX("+a+")"),i(o)&&1!==o&&e.push("scaleY("+o+")"),e.length?e.join(" "):"none"}function c(t,i){var e,s,a=Ct(t.degree)%180,o=(a>90?180-a:a)*Math.PI/180,h=bt(o),n=Bt(o),r=t.width,p=t.height,c=t.aspectRatio;return i?(e=r/(n+h/c),s=e/c):(e=r*n+p*h,s=r*h+p*n),{width:e,height:s}}function l(e,s){var a,o,h,n=t("<canvas>")[0],r=n.getContext("2d"),p=0,l=0,d=s.naturalWidth,g=s.naturalHeight,u=s.rotate,f=s.scaleX,m=s.scaleY,v=i(f)&&i(m)&&(1!==f||1!==m),w=i(u)&&0!==u,x=w||v,C=d*Ct(f||1),b=g*Ct(m||1);return v&&(a=C/2,o=b/2),w&&(h=c({width:C,height:b,degree:u}),C=h.width,b=h.height,a=C/2,o=b/2),n.width=C,n.height=b,x&&(p=-d/2,l=-g/2,r.save(),r.translate(a,o)),w&&r.rotate(u*Math.PI/180),v&&r.scale(f,m),r.drawImage(e,$t(p),$t(l),$t(d),$t(g)),x&&r.restore(),n}function d(i){var e=i.length,s=0,a=0;return e&&(t.each(i,function(t,i){s+=i.pageX,a+=i.pageY}),s/=e,a/=e),{pageX:s,pageY:a}}function g(t,i,e){var s,a="";for(s=i,e+=i;s<e;s++)a+=Lt(t.getUint8(s));return a}function u(t){var i,e,s,a,o,h,n,r,p,c,l=new D(t),d=l.byteLength;if(255===l.getUint8(0)&&216===l.getUint8(1))for(p=2;p<d;){if(255===l.getUint8(p)&&225===l.getUint8(p+1)){n=p;break}p++}if(n&&(e=n+4,s=n+10,"Exif"===g(l,e,4)&&(h=l.getUint16(s),o=18761===h,(o||19789===h)&&42===l.getUint16(s+2,o)&&(a=l.getUint32(s+4,o),a>=8&&(r=s+a)))),r)for(d=l.getUint16(r,o),c=0;c<d;c++)if(p=r+12*c+2,274===l.getUint16(p,o)){p+=8,i=l.getUint16(p,o),mt&&l.setUint16(p,1,o);break}return i}function f(t){var i,e=t.replace(G,""),s=atob(e),a=s.length,o=new B(a),h=new y(o);for(i=0;i<a;i++)h[i]=s.charCodeAt(i);return o}function m(t){var i,e=new y(t),s=e.length,a="";for(i=0;i<s;i++)a+=Lt(e[i]);return"data:image/jpeg;base64,"+$(a)}function v(i,e){this.$element=t(i),this.options=t.extend({},v.DEFAULTS,t.isPlainObject(e)&&e),this.isLoaded=!1,this.isBuilt=!1,this.isCompleted=!1,this.isRotated=!1,this.isCropped=!1,this.isDisabled=!1,this.isReplaced=!1,this.isLimited=!1,this.wheeling=!1,this.isImg=!1,this.originalUrl="",this.canvas=null,this.cropBox=null,this.init()}var w=t(window),x=t(document),C=window.location,b=window.navigator,B=window.ArrayBuffer,y=window.Uint8Array,D=window.DataView,$=window.btoa,L="cropper",X="cropper-modal",Y="cropper-hide",T="cropper-hidden",k="cropper-invisible",M="cropper-move",W="cropper-crop",H="cropper-disabled",R="cropper-bg",z="mousedown touchstart pointerdown MSPointerDown",O="mousemove touchmove pointermove MSPointerMove",P="mouseup touchend touchcancel pointerup pointercancel MSPointerUp MSPointerCancel",E="wheel mousewheel DOMMouseScroll",U="dblclick",I="load."+L,F="error."+L,j="resize."+L,A="build."+L,S="built."+L,N="cropstart."+L,_="cropmove."+L,q="cropend."+L,K="crop."+L,Z="zoom."+L,Q=/^(e|w|s|n|se|sw|ne|nw|all|crop|move|zoom)$/,V=/^data:/,G=/^data:([^;]+);base64,/,J=/^data:image\/jpeg.*;base64,/,tt="preview",it="action",et="e",st="w",at="s",ot="n",ht="se",nt="sw",rt="ne",pt="nw",ct="all",lt="crop",dt="move",gt="zoom",ut="none",ft=t.isFunction(t("<canvas>")[0].getContext),mt=b&&/(Macintosh|iPhone|iPod|iPad).*AppleWebKit/i.test(b.userAgent),vt=Number,wt=Math.min,xt=Math.max,Ct=Math.abs,bt=Math.sin,Bt=Math.cos,yt=Math.sqrt,Dt=Math.round,$t=Math.floor,Lt=String.fromCharCode;v.prototype={constructor:v,init:function(){var t,i=this.$element;if(i.is("img")){if(this.isImg=!0,this.originalUrl=t=i.attr("src"),!t)return;t=i.prop("src")}else i.is("canvas")&&ft&&(t=i[0].toDataURL());this.load(t)},trigger:function(i,e){var s=t.Event(i,e);return this.$element.trigger(s),s},load:function(i){var e,s,a=this.options,n=this.$element;if(i&&(n.one(A,a.build),!this.trigger(A).isDefaultPrevented())){if(this.url=i,this.image={},!a.checkOrientation||!B)return this.clone();if(e=t.proxy(this.read,this),V.test(i))return J.test(i)?e(f(i)):this.clone();s=new XMLHttpRequest,s.onerror=s.onabort=t.proxy(function(){this.clone()},this),s.onload=function(){e(this.response)},a.checkCrossOrigin&&o(i)&&n.prop("crossOrigin")&&(i=h(i)),s.open("get",i),s.responseType="arraybuffer",s.send()}},read:function(t){var i=this.options,e=u(t),s=this.image,a=0,o=1,h=1;if(e>1)switch(this.url=m(t),e){case 2:o=-1;break;case 3:a=-180;break;case 4:h=-1;break;case 5:a=90,h=-1;break;case 6:a=90;break;case 7:a=90,o=-1;break;case 8:a=-90}i.rotatable&&(s.rotate=a),i.scalable&&(s.scaleX=o,s.scaleY=h),this.clone()},clone:function(){var i,e,s=this.options,a=this.$element,r=this.url,p="";s.checkCrossOrigin&&o(r)&&(p=a.prop("crossOrigin"),p?i=r:(p="anonymous",i=h(r))),this.crossOrigin=p,this.crossOriginUrl=i,this.$clone=e=t("<img"+n(p)+' src="'+(i||r)+'">'),this.isImg?a[0].complete?this.start():a.one(I,t.proxy(this.start,this)):e.one(I,t.proxy(this.start,this)).one(F,t.proxy(this.stop,this)).addClass(Y).insertAfter(a)},start:function(){var i=this.$element,e=this.$clone;this.isImg||(e.off(F,this.stop),i=e),r(i[0],t.proxy(function(i,e){t.extend(this.image,{naturalWidth:i,naturalHeight:e,aspectRatio:i/e}),this.isLoaded=!0,this.build()},this))},stop:function(){this.$clone.remove(),this.$clone=null},build:function(){var i,e,s,a=this.options,o=this.$element,h=this.$clone;this.isLoaded&&(this.isBuilt&&this.unbuild(),this.$container=o.parent(),this.$cropper=i=t(v.TEMPLATE),this.$canvas=i.find(".cropper-canvas").append(h),this.$dragBox=i.find(".cropper-drag-box"),this.$cropBox=e=i.find(".cropper-crop-box"),this.$viewBox=i.find(".cropper-view-box"),this.$face=s=e.find(".cropper-face"),o.addClass(T).after(i),this.isImg||h.removeClass(Y),this.initPreview(),this.bind(),a.aspectRatio=xt(0,a.aspectRatio)||NaN,a.viewMode=xt(0,wt(3,Dt(a.viewMode)))||0,a.autoCrop?(this.isCropped=!0,a.modal&&this.$dragBox.addClass(X)):e.addClass(T),a.guides||e.find(".cropper-dashed").addClass(T),a.center||e.find(".cropper-center").addClass(T),a.cropBoxMovable&&s.addClass(M).data(it,ct),a.highlight||s.addClass(k),a.background&&i.addClass(R),a.cropBoxResizable||e.find(".cropper-line, .cropper-point").addClass(T),this.setDragMode(a.dragMode),this.render(),this.isBuilt=!0,this.setData(a.data),o.one(S,a.built),setTimeout(t.proxy(function(){this.trigger(S),this.trigger(K,this.getData()),this.isCompleted=!0},this),0))},unbuild:function(){this.isBuilt&&(this.isBuilt=!1,this.isCompleted=!1,this.initialImage=null,this.initialCanvas=null,this.initialCropBox=null,this.container=null,this.canvas=null,this.cropBox=null,this.unbind(),this.resetPreview(),this.$preview=null,this.$viewBox=null,this.$cropBox=null,this.$dragBox=null,this.$canvas=null,this.$container=null,this.$cropper.remove(),this.$cropper=null)},render:function(){this.initContainer(),this.initCanvas(),this.initCropBox(),this.renderCanvas(),this.isCropped&&this.renderCropBox()},initContainer:function(){var t=this.options,i=this.$element,e=this.$container,s=this.$cropper;s.addClass(T),i.removeClass(T),s.css(this.container={width:xt(e.width(),vt(t.minContainerWidth)||200),height:xt(e.height(),vt(t.minContainerHeight)||100)}),i.addClass(T),s.removeClass(T)},initCanvas:function(){var i,e=this.options.viewMode,s=this.container,a=s.width,o=s.height,h=this.image,n=h.naturalWidth,r=h.naturalHeight,p=90===Ct(h.rotate),c=p?r:n,l=p?n:r,d=c/l,g=a,u=o;o*d>a?3===e?g=o*d:u=a/d:3===e?u=a/d:g=o*d,i={naturalWidth:c,naturalHeight:l,aspectRatio:d,width:g,height:u},i.oldLeft=i.left=(a-g)/2,i.oldTop=i.top=(o-u)/2,this.canvas=i,this.isLimited=1===e||2===e,this.limitCanvas(!0,!0),this.initialImage=t.extend({},h),this.initialCanvas=t.extend({},i)},limitCanvas:function(t,i){var e,s,a,o,h=this.options,n=h.viewMode,r=this.container,p=r.width,c=r.height,l=this.canvas,d=l.aspectRatio,g=this.cropBox,u=this.isCropped&&g;t&&(e=vt(h.minCanvasWidth)||0,s=vt(h.minCanvasHeight)||0,n&&(n>1?(e=xt(e,p),s=xt(s,c),3===n&&(s*d>e?e=s*d:s=e/d)):e?e=xt(e,u?g.width:0):s?s=xt(s,u?g.height:0):u&&(e=g.width,s=g.height,s*d>e?e=s*d:s=e/d)),e&&s?s*d>e?s=e/d:e=s*d:e?s=e/d:s&&(e=s*d),l.minWidth=e,l.minHeight=s,l.maxWidth=1/0,l.maxHeight=1/0),i&&(n?(a=p-l.width,o=c-l.height,l.minLeft=wt(0,a),l.minTop=wt(0,o),l.maxLeft=xt(0,a),l.maxTop=xt(0,o),u&&this.isLimited&&(l.minLeft=wt(g.left,g.left+g.width-l.width),l.minTop=wt(g.top,g.top+g.height-l.height),l.maxLeft=g.left,l.maxTop=g.top,2===n&&(l.width>=p&&(l.minLeft=wt(0,a),l.maxLeft=xt(0,a)),l.height>=c&&(l.minTop=wt(0,o),l.maxTop=xt(0,o))))):(l.minLeft=-l.width,l.minTop=-l.height,l.maxLeft=p,l.maxTop=c))},renderCanvas:function(t){var i,e,s=this.canvas,a=this.image,o=a.rotate,h=a.naturalWidth,n=a.naturalHeight;this.isRotated&&(this.isRotated=!1,e=c({width:a.width,height:a.height,degree:o}),i=e.width/e.height,i!==s.aspectRatio&&(s.left-=(e.width-s.width)/2,s.top-=(e.height-s.height)/2,s.width=e.width,s.height=e.height,s.aspectRatio=i,s.naturalWidth=h,s.naturalHeight=n,o%180&&(e=c({width:h,height:n,degree:o}),s.naturalWidth=e.width,s.naturalHeight=e.height),this.limitCanvas(!0,!1))),(s.width>s.maxWidth||s.width<s.minWidth)&&(s.left=s.oldLeft),(s.height>s.maxHeight||s.height<s.minHeight)&&(s.top=s.oldTop),s.width=wt(xt(s.width,s.minWidth),s.maxWidth),s.height=wt(xt(s.height,s.minHeight),s.maxHeight),this.limitCanvas(!1,!0),s.oldLeft=s.left=wt(xt(s.left,s.minLeft),s.maxLeft),s.oldTop=s.top=wt(xt(s.top,s.minTop),s.maxTop),this.$canvas.css({width:s.width,height:s.height,left:s.left,top:s.top}),this.renderImage(),this.isCropped&&this.isLimited&&this.limitCropBox(!0,!0),t&&this.output()},renderImage:function(i){var e,s=this.canvas,a=this.image;a.rotate&&(e=c({width:s.width,height:s.height,degree:a.rotate,aspectRatio:a.aspectRatio},!0)),t.extend(a,e?{width:e.width,height:e.height,left:(s.width-e.width)/2,top:(s.height-e.height)/2}:{width:s.width,height:s.height,left:0,top:0}),this.$clone.css({width:a.width,height:a.height,marginLeft:a.left,marginTop:a.top,transform:p(a)}),i&&this.output()},initCropBox:function(){var i=this.options,e=this.canvas,s=i.aspectRatio,a=vt(i.autoCropArea)||.8,o={width:e.width,height:e.height};s&&(e.height*s>e.width?o.height=o.width/s:o.width=o.height*s),this.cropBox=o,this.limitCropBox(!0,!0),o.width=wt(xt(o.width,o.minWidth),o.maxWidth),o.height=wt(xt(o.height,o.minHeight),o.maxHeight),o.width=xt(o.minWidth,o.width*a),o.height=xt(o.minHeight,o.height*a),o.oldLeft=o.left=e.left+(e.width-o.width)/2,o.oldTop=o.top=e.top+(e.height-o.height)/2,this.initialCropBox=t.extend({},o)},limitCropBox:function(t,i){var e,s,a,o,h=this.options,n=h.aspectRatio,r=this.container,p=r.width,c=r.height,l=this.canvas,d=this.cropBox,g=this.isLimited;t&&(e=vt(h.minCropBoxWidth)||0,s=vt(h.minCropBoxHeight)||0,e=wt(e,p),s=wt(s,c),a=wt(p,g?l.width:p),o=wt(c,g?l.height:c),n&&(e&&s?s*n>e?s=e/n:e=s*n:e?s=e/n:s&&(e=s*n),o*n>a?o=a/n:a=o*n),d.minWidth=wt(e,a),d.minHeight=wt(s,o),d.maxWidth=a,d.maxHeight=o),i&&(g?(d.minLeft=xt(0,l.left),d.minTop=xt(0,l.top),d.maxLeft=wt(p,l.left+l.width)-d.width,d.maxTop=wt(c,l.top+l.height)-d.height):(d.minLeft=0,d.minTop=0,d.maxLeft=p-d.width,d.maxTop=c-d.height))},renderCropBox:function(){var t=this.options,i=this.container,e=i.width,s=i.height,a=this.cropBox;(a.width>a.maxWidth||a.width<a.minWidth)&&(a.left=a.oldLeft),(a.height>a.maxHeight||a.height<a.minHeight)&&(a.top=a.oldTop),a.width=wt(xt(a.width,a.minWidth),a.maxWidth),a.height=wt(xt(a.height,a.minHeight),a.maxHeight),this.limitCropBox(!1,!0),a.oldLeft=a.left=wt(xt(a.left,a.minLeft),a.maxLeft),a.oldTop=a.top=wt(xt(a.top,a.minTop),a.maxTop),t.movable&&t.cropBoxMovable&&this.$face.data(it,a.width===e&&a.height===s?dt:ct),this.$cropBox.css({width:a.width,height:a.height,left:a.left,top:a.top}),this.isCropped&&this.isLimited&&this.limitCanvas(!0,!0),this.isDisabled||this.output()},output:function(){this.preview(),this.isCompleted&&this.trigger(K,this.getData())},initPreview:function(){var i,e=n(this.crossOrigin),s=e?this.crossOriginUrl:this.url;this.$preview=t(this.options.preview),this.$clone2=i=t("<img"+e+' src="'+s+'">'),this.$viewBox.html(i),this.$preview.each(function(){var i=t(this);i.data(tt,{width:i.width(),height:i.height(),html:i.html()}),i.html("<img"+e+' src="'+s+'" style="display:block;width:100%;height:auto;min-width:0!important;min-height:0!important;max-width:none!important;max-height:none!important;image-orientation:0deg!important;">')})},resetPreview:function(){this.$preview.each(function(){var i=t(this),e=i.data(tt);i.css({width:e.width,height:e.height}).html(e.html).removeData(tt)})},preview:function(){var i=this.image,e=this.canvas,s=this.cropBox,a=s.width,o=s.height,h=i.width,n=i.height,r=s.left-e.left-i.left,c=s.top-e.top-i.top;this.isCropped&&!this.isDisabled&&(this.$clone2.css({width:h,height:n,marginLeft:-r,marginTop:-c,transform:p(i)}),this.$preview.each(function(){var e=t(this),s=e.data(tt),l=s.width,d=s.height,g=l,u=d,f=1;a&&(f=l/a,u=o*f),o&&u>d&&(f=d/o,g=a*f,u=d),e.css({width:g,height:u}).find("img").css({width:h*f,height:n*f,marginLeft:-r*f,marginTop:-c*f,transform:p(i)})}))},bind:function(){var i=this.options,e=this.$element,s=this.$cropper;t.isFunction(i.cropstart)&&e.on(N,i.cropstart),t.isFunction(i.cropmove)&&e.on(_,i.cropmove),t.isFunction(i.cropend)&&e.on(q,i.cropend),t.isFunction(i.crop)&&e.on(K,i.crop),t.isFunction(i.zoom)&&e.on(Z,i.zoom),s.on(z,t.proxy(this.cropStart,this)),i.zoomable&&i.zoomOnWheel&&s.on(E,t.proxy(this.wheel,this)),i.toggleDragModeOnDblclick&&s.on(U,t.proxy(this.dblclick,this)),x.on(O,this._cropMove=a(this.cropMove,this)).on(P,this._cropEnd=a(this.cropEnd,this)),i.responsive&&w.on(j,this._resize=a(this.resize,this))},unbind:function(){var i=this.options,e=this.$element,s=this.$cropper;t.isFunction(i.cropstart)&&e.off(N,i.cropstart),t.isFunction(i.cropmove)&&e.off(_,i.cropmove),t.isFunction(i.cropend)&&e.off(q,i.cropend),t.isFunction(i.crop)&&e.off(K,i.crop),t.isFunction(i.zoom)&&e.off(Z,i.zoom),s.off(z,this.cropStart),i.zoomable&&i.zoomOnWheel&&s.off(E,this.wheel),i.toggleDragModeOnDblclick&&s.off(U,this.dblclick),x.off(O,this._cropMove).off(P,this._cropEnd),i.responsive&&w.off(j,this._resize)},resize:function(){var i,e,s,a=this.options.restore,o=this.$container,h=this.container;!this.isDisabled&&h&&(s=o.width()/h.width,1===s&&o.height()===h.height||(a&&(i=this.getCanvasData(),e=this.getCropBoxData()),this.render(),a&&(this.setCanvasData(t.each(i,function(t,e){i[t]=e*s})),this.setCropBoxData(t.each(e,function(t,i){e[t]=i*s})))))},dblclick:function(){this.isDisabled||(this.$dragBox.hasClass(W)?this.setDragMode(dt):this.setDragMode(lt))},wheel:function(i){var e=i.originalEvent||i,s=vt(this.options.wheelZoomRatio)||.1,a=1;this.isDisabled||(i.preventDefault(),this.wheeling||(this.wheeling=!0,setTimeout(t.proxy(function(){this.wheeling=!1},this),50),e.deltaY?a=e.deltaY>0?1:-1:e.wheelDelta?a=-e.wheelDelta/120:e.detail&&(a=e.detail>0?1:-1),this.zoom(-a*s,i)))},cropStart:function(i){var e,s,a=this.options,o=i.originalEvent,h=o&&o.touches,n=i;if(!this.isDisabled){if(h){if(e=h.length,e>1){if(!a.zoomable||!a.zoomOnTouch||2!==e)return;n=h[1],this.startX2=n.pageX,this.startY2=n.pageY,s=gt}n=h[0]}if(s=s||t(n.target).data(it),Q.test(s)){if(this.trigger(N,{originalEvent:o,action:s}).isDefaultPrevented())return;i.preventDefault(),this.action=s,this.cropping=!1,this.startX=n.pageX||o&&o.pageX,this.startY=n.pageY||o&&o.pageY,s===lt&&(this.cropping=!0,this.$dragBox.addClass(X))}}},cropMove:function(t){var i,e=this.options,s=t.originalEvent,a=s&&s.touches,o=t,h=this.action;if(!this.isDisabled){if(a){if(i=a.length,i>1){if(!e.zoomable||!e.zoomOnTouch||2!==i)return;o=a[1],this.endX2=o.pageX,this.endY2=o.pageY}o=a[0]}if(h){if(this.trigger(_,{originalEvent:s,action:h}).isDefaultPrevented())return;t.preventDefault(),this.endX=o.pageX||s&&s.pageX,this.endY=o.pageY||s&&s.pageY,this.change(o.shiftKey,h===gt?t:null)}}},cropEnd:function(t){var i=t.originalEvent,e=this.action;this.isDisabled||e&&(t.preventDefault(),this.cropping&&(this.cropping=!1,this.$dragBox.toggleClass(X,this.isCropped&&this.options.modal)),this.action="",this.trigger(q,{originalEvent:i,action:e}))},change:function(t,i){var e,s,a=this.options,o=a.aspectRatio,h=this.action,n=this.container,r=this.canvas,p=this.cropBox,c=p.width,l=p.height,d=p.left,g=p.top,u=d+c,f=g+l,m=0,v=0,w=n.width,x=n.height,C=!0;switch(!o&&t&&(o=c&&l?c/l:1),this.isLimited&&(m=p.minLeft,v=p.minTop,w=m+wt(n.width,r.left+r.width),x=v+wt(n.height,r.top+r.height)),s={x:this.endX-this.startX,y:this.endY-this.startY},o&&(s.X=s.y*o,s.Y=s.x/o),h){case ct:d+=s.x,g+=s.y;break;case et:if(s.x>=0&&(u>=w||o&&(g<=v||f>=x))){C=!1;break}c+=s.x,o&&(l=c/o,g-=s.Y/2),c<0&&(h=st,c=0);break;case ot:if(s.y<=0&&(g<=v||o&&(d<=m||u>=w))){C=!1;break}l-=s.y,g+=s.y,o&&(c=l*o,d+=s.X/2),l<0&&(h=at,l=0);break;case st:if(s.x<=0&&(d<=m||o&&(g<=v||f>=x))){C=!1;break}c-=s.x,d+=s.x,o&&(l=c/o,g+=s.Y/2),c<0&&(h=et,c=0);break;case at:if(s.y>=0&&(f>=x||o&&(d<=m||u>=w))){C=!1;break}l+=s.y,o&&(c=l*o,d-=s.X/2),l<0&&(h=ot,l=0);break;case rt:if(o){if(s.y<=0&&(g<=v||u>=w)){C=!1;break}l-=s.y,g+=s.y,c=l*o}else s.x>=0?u<w?c+=s.x:s.y<=0&&g<=v&&(C=!1):c+=s.x,s.y<=0?g>v&&(l-=s.y,g+=s.y):(l-=s.y,g+=s.y);c<0&&l<0?(h=nt,l=0,c=0):c<0?(h=pt,c=0):l<0&&(h=ht,l=0);break;case pt:if(o){if(s.y<=0&&(g<=v||d<=m)){C=!1;break}l-=s.y,g+=s.y,c=l*o,d+=s.X}else s.x<=0?d>m?(c-=s.x,d+=s.x):s.y<=0&&g<=v&&(C=!1):(c-=s.x,d+=s.x),s.y<=0?g>v&&(l-=s.y,g+=s.y):(l-=s.y,g+=s.y);c<0&&l<0?(h=ht,l=0,c=0):c<0?(h=rt,c=0):l<0&&(h=nt,l=0);break;case nt:if(o){if(s.x<=0&&(d<=m||f>=x)){C=!1;break}c-=s.x,d+=s.x,l=c/o}else s.x<=0?d>m?(c-=s.x,d+=s.x):s.y>=0&&f>=x&&(C=!1):(c-=s.x,d+=s.x),s.y>=0?f<x&&(l+=s.y):l+=s.y;c<0&&l<0?(h=rt,l=0,c=0):c<0?(h=ht,c=0):l<0&&(h=pt,l=0);break;case ht:if(o){if(s.x>=0&&(u>=w||f>=x)){C=!1;break}c+=s.x,l=c/o}else s.x>=0?u<w?c+=s.x:s.y>=0&&f>=x&&(C=!1):c+=s.x,s.y>=0?f<x&&(l+=s.y):l+=s.y;c<0&&l<0?(h=pt,l=0,c=0):c<0?(h=nt,c=0):l<0&&(h=rt,l=0);break;case dt:this.move(s.x,s.y),C=!1;break;case gt:this.zoom(function(t,i,e,s){var a=yt(t*t+i*i),o=yt(e*e+s*s);return(o-a)/a}(Ct(this.startX-this.startX2),Ct(this.startY-this.startY2),Ct(this.endX-this.endX2),Ct(this.endY-this.endY2)),i),this.startX2=this.endX2,this.startY2=this.endY2,C=!1;break;case lt:if(!s.x||!s.y){C=!1;break}e=this.$cropper.offset(),d=this.startX-e.left,g=this.startY-e.top,c=p.minWidth,l=p.minHeight,s.x>0?h=s.y>0?ht:rt:s.x<0&&(d-=c,h=s.y>0?nt:pt),s.y<0&&(g-=l),this.isCropped||(this.$cropBox.removeClass(T),this.isCropped=!0,this.isLimited&&this.limitCropBox(!0,!0))}C&&(p.width=c,p.height=l,p.left=d,p.top=g,this.action=h,this.renderCropBox()),this.startX=this.endX,this.startY=this.endY},crop:function(){this.isBuilt&&!this.isDisabled&&(this.isCropped||(this.isCropped=!0,this.limitCropBox(!0,!0),this.options.modal&&this.$dragBox.addClass(X),this.$cropBox.removeClass(T)),this.setCropBoxData(this.initialCropBox))},reset:function(){this.isBuilt&&!this.isDisabled&&(this.image=t.extend({},this.initialImage),this.canvas=t.extend({},this.initialCanvas),this.cropBox=t.extend({},this.initialCropBox),this.renderCanvas(),this.isCropped&&this.renderCropBox())},clear:function(){this.isCropped&&!this.isDisabled&&(t.extend(this.cropBox,{left:0,top:0,width:0,height:0}),this.isCropped=!1,this.renderCropBox(),this.limitCanvas(!0,!0),this.renderCanvas(),this.$dragBox.removeClass(X),this.$cropBox.addClass(T))},replace:function(t,i){!this.isDisabled&&t&&(this.isImg&&this.$element.attr("src",t),i?(this.url=t,this.$clone.attr("src",t),this.isBuilt&&this.$preview.find("img").add(this.$clone2).attr("src",t)):(this.isImg&&(this.isReplaced=!0),this.options.data=null,this.load(t)))},enable:function(){this.isBuilt&&(this.isDisabled=!1,this.$cropper.removeClass(H))},disable:function(){this.isBuilt&&(this.isDisabled=!0,this.$cropper.addClass(H))},destroy:function(){var t=this.$element;this.isLoaded?(this.isImg&&this.isReplaced&&t.attr("src",this.originalUrl),this.unbuild(),t.removeClass(T)):this.isImg?t.off(I,this.start):this.$clone&&this.$clone.remove(),t.removeData(L)},move:function(t,i){var s=this.canvas;this.moveTo(e(t)?t:s.left+vt(t),e(i)?i:s.top+vt(i))},moveTo:function(t,s){var a=this.canvas,o=!1;e(s)&&(s=t),t=vt(t),s=vt(s),this.isBuilt&&!this.isDisabled&&this.options.movable&&(i(t)&&(a.left=t,o=!0),i(s)&&(a.top=s,o=!0),o&&this.renderCanvas(!0))},zoom:function(t,i){var e=this.canvas;t=vt(t),t=t<0?1/(1-t):1+t,this.zoomTo(e.width*t/e.naturalWidth,i)},zoomTo:function(t,i){var e,s,a,o,h,n=this.options,r=this.canvas,p=r.width,c=r.height,l=r.naturalWidth,g=r.naturalHeight;if(t=vt(t),t>=0&&this.isBuilt&&!this.isDisabled&&n.zoomable){if(s=l*t,a=g*t,i&&(e=i.originalEvent),this.trigger(Z,{originalEvent:e,oldRatio:p/l,ratio:s/l}).isDefaultPrevented())return;e?(o=this.$cropper.offset(),h=e.touches?d(e.touches):{pageX:i.pageX||e.pageX||0,pageY:i.pageY||e.pageY||0},r.left-=(s-p)*((h.pageX-o.left-r.left)/p),r.top-=(a-c)*((h.pageY-o.top-r.top)/c)):(r.left-=(s-p)/2,r.top-=(a-c)/2),r.width=s,r.height=a,this.renderCanvas(!0)}},rotate:function(t){this.rotateTo((this.image.rotate||0)+vt(t))},rotateTo:function(t){t=vt(t),i(t)&&this.isBuilt&&!this.isDisabled&&this.options.rotatable&&(this.image.rotate=t%360,this.isRotated=!0,this.renderCanvas(!0))},scale:function(t,s){var a=this.image,o=!1;e(s)&&(s=t),t=vt(t),s=vt(s),this.isBuilt&&!this.isDisabled&&this.options.scalable&&(i(t)&&(a.scaleX=t,o=!0),i(s)&&(a.scaleY=s,o=!0),o&&this.renderImage(!0))},scaleX:function(t){var e=this.image.scaleY;this.scale(t,i(e)?e:1)},scaleY:function(t){var e=this.image.scaleX;this.scale(i(e)?e:1,t)},getData:function(i){var e,s,a=this.options,o=this.image,h=this.canvas,n=this.cropBox;return this.isBuilt&&this.isCropped?(s={x:n.left-h.left,y:n.top-h.top,width:n.width,height:n.height},e=o.width/o.naturalWidth,t.each(s,function(t,a){a/=e,s[t]=i?Dt(a):a})):s={x:0,y:0,width:0,height:0},a.rotatable&&(s.rotate=o.rotate||0),a.scalable&&(s.scaleX=o.scaleX||1,s.scaleY=o.scaleY||1),s},setData:function(e){var s,a,o,h=this.options,n=this.image,r=this.canvas,p={};t.isFunction(e)&&(e=e.call(this.element)),this.isBuilt&&!this.isDisabled&&t.isPlainObject(e)&&(h.rotatable&&i(e.rotate)&&e.rotate!==n.rotate&&(n.rotate=e.rotate,this.isRotated=s=!0),h.scalable&&(i(e.scaleX)&&e.scaleX!==n.scaleX&&(n.scaleX=e.scaleX,a=!0),i(e.scaleY)&&e.scaleY!==n.scaleY&&(n.scaleY=e.scaleY,a=!0)),s?this.renderCanvas():a&&this.renderImage(),o=n.width/n.naturalWidth,i(e.x)&&(p.left=e.x*o+r.left),i(e.y)&&(p.top=e.y*o+r.top),i(e.width)&&(p.width=e.width*o),i(e.height)&&(p.height=e.height*o),this.setCropBoxData(p))},getContainerData:function(){return this.isBuilt?this.container:{}},getImageData:function(){return this.isLoaded?this.image:{}},getCanvasData:function(){var i=this.canvas,e={};return this.isBuilt&&t.each(["left","top","width","height","naturalWidth","naturalHeight"],function(t,s){e[s]=i[s]}),e},setCanvasData:function(e){var s=this.canvas,a=s.aspectRatio;t.isFunction(e)&&(e=e.call(this.$element)),this.isBuilt&&!this.isDisabled&&t.isPlainObject(e)&&(i(e.left)&&(s.left=e.left),i(e.top)&&(s.top=e.top),i(e.width)?(s.width=e.width,s.height=e.width/a):i(e.height)&&(s.height=e.height,s.width=e.height*a),this.renderCanvas(!0))},getCropBoxData:function(){var t,i=this.cropBox;return this.isBuilt&&this.isCropped&&(t={left:i.left,top:i.top,width:i.width,height:i.height}),t||{}},setCropBoxData:function(e){var s,a,o=this.cropBox,h=this.options.aspectRatio;t.isFunction(e)&&(e=e.call(this.$element)),this.isBuilt&&this.isCropped&&!this.isDisabled&&t.isPlainObject(e)&&(i(e.left)&&(o.left=e.left),i(e.top)&&(o.top=e.top),i(e.width)&&(s=!0,o.width=e.width),i(e.height)&&(a=!0,o.height=e.height),h&&(s?o.height=o.width/h:a&&(o.width=o.height*h)),this.renderCropBox())},getCroppedCanvas:function(i){var e,s,a,o,h,n,r,p,c,d,g;if(this.isBuilt&&ft)return this.isCropped?(t.isPlainObject(i)||(i={}),g=this.getData(),e=g.width,s=g.height,p=e/s,t.isPlainObject(i)&&(h=i.width,n=i.height,h?(n=h/p,r=h/e):n&&(h=n*p,r=n/s)),a=$t(h||e),o=$t(n||s),c=t("<canvas>")[0],c.width=a,c.height=o,d=c.getContext("2d"),i.fillColor&&(d.fillStyle=i.fillColor,d.fillRect(0,0,a,o)),d.drawImage.apply(d,function(){var t,i,a,o,h,n,p=l(this.$clone[0],this.image),c=p.width,d=p.height,u=this.canvas,f=[p],m=g.x+u.naturalWidth*(Ct(g.scaleX||1)-1)/2,v=g.y+u.naturalHeight*(Ct(g.scaleY||1)-1)/2;return m<=-e||m>c?m=t=a=h=0:m<=0?(a=-m,m=0,t=h=wt(c,e+m)):m<=c&&(a=0,t=h=wt(e,c-m)),t<=0||v<=-s||v>d?v=i=o=n=0:v<=0?(o=-v,v=0,i=n=wt(d,s+v)):v<=d&&(o=0,i=n=wt(s,d-v)),f.push($t(m),$t(v),$t(t),$t(i)),r&&(a*=r,o*=r,h*=r,n*=r),h>0&&n>0&&f.push($t(a),$t(o),$t(h),$t(n)),f}.call(this)),c):l(this.$clone[0],this.image)},setAspectRatio:function(t){var i=this.options;this.isDisabled||e(t)||(i.aspectRatio=xt(0,t)||NaN,this.isBuilt&&(this.initCropBox(),this.isCropped&&this.renderCropBox()))},setDragMode:function(t){var i,e,s=this.options;this.isLoaded&&!this.isDisabled&&(i=t===lt,e=s.movable&&t===dt,t=i||e?t:ut,this.$dragBox.data(it,t).toggleClass(W,i).toggleClass(M,e),s.cropBoxMovable||this.$face.data(it,t).toggleClass(W,i).toggleClass(M,e))}},v.DEFAULTS={viewMode:0,dragMode:"crop",aspectRatio:NaN,data:null,preview:"",responsive:!0,restore:!0,checkCrossOrigin:!0,checkOrientation:!0,modal:!0,guides:!0,center:!0,highlight:!0,background:!0,autoCrop:!0,autoCropArea:.8,movable:!0,rotatable:!0,scalable:!0,zoomable:!0,zoomOnTouch:!0,zoomOnWheel:!0,wheelZoomRatio:.1,cropBoxMovable:!0,cropBoxResizable:!0,toggleDragModeOnDblclick:!0,minCanvasWidth:0,minCanvasHeight:0,minCropBoxWidth:0,minCropBoxHeight:0,minContainerWidth:200,minContainerHeight:100,build:null,built:null,cropstart:null,cropmove:null,cropend:null,crop:null,zoom:null},v.setDefaults=function(i){t.extend(v.DEFAULTS,i)},v.TEMPLATE='<div class="cropper-container"><div class="cropper-wrap-box"><div class="cropper-canvas"></div></div><div class="cropper-drag-box"></div><div class="cropper-crop-box"><span class="cropper-view-box"></span><span class="cropper-dashed dashed-h"></span><span class="cropper-dashed dashed-v"></span><span class="cropper-center"></span><span class="cropper-face"></span><span class="cropper-line line-e" data-action="e"></span><span class="cropper-line line-n" data-action="n"></span><span class="cropper-line line-w" data-action="w"></span><span class="cropper-line line-s" data-action="s"></span><span class="cropper-point point-e" data-action="e"></span><span class="cropper-point point-n" data-action="n"></span><span class="cropper-point point-w" data-action="w"></span><span class="cropper-point point-s" data-action="s"></span><span class="cropper-point point-ne" data-action="ne"></span><span class="cropper-point point-nw" data-action="nw"></span><span class="cropper-point point-sw" data-action="sw"></span><span class="cropper-point point-se" data-action="se"></span></div></div>',v.other=t.fn.cropper,t.fn.cropper=function(i){var a,o=s(arguments,1);return this.each(function(){var e,s,h=t(this),n=h.data(L);if(!n){if(/destroy/.test(i))return;e=t.extend({},h.data(),t.isPlainObject(i)&&i),h.data(L,n=new v(this,e))}"string"==typeof i&&t.isFunction(s=n[i])&&(a=s.apply(n,o))}),e(a)?this:a},t.fn.cropper.Constructor=v,t.fn.cropper.setDefaults=v.setDefaults,t.fn.cropper.noConflict=function(){return t.fn.cropper=v.other,this}});
 
-/*! X-editable - v1.5.1 
+/*! X-editable - v1.5.1
 * In-place editing with Twitter Bootstrap, jQuery UI or pure jQuery
 * http://github.com/vitalets/x-editable
 * Copyright (c) 2013 Vitaliy Potapov; Licensed MIT */
@@ -7055,7 +7055,7 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
 **/
 (function ($) {
     "use strict";
-    
+
     var EditableForm = function (div, options) {
         this.options = $.extend({}, $.fn.editableform.defaults, options);
         this.$div = $(div); //div, containing form. Not form tag. Not editable-element.
@@ -7070,16 +7070,16 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
         initInput: function() {  //called once
             //take input from options (as it is created in editable-element)
             this.input = this.options.input;
-            
+
             //set initial value
-            //todo: may be add check: typeof str === 'string' ? 
-            this.value = this.input.str2value(this.options.value); 
-            
+            //todo: may be add check: typeof str === 'string' ?
+            this.value = this.input.str2value(this.options.value);
+
             //prerender: get input.$input
             this.input.prerender();
         },
         initTemplate: function() {
-            this.$form = $($.fn.editableform.template); 
+            this.$form = $($.fn.editableform.template);
         },
         initButtons: function() {
             var $btn = this.$form.find('.editable-buttons');
@@ -7092,12 +7092,12 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
         Renders editableform
 
         @method render
-        **/        
+        **/
         render: function() {
             //init loader
-            this.$loading = $($.fn.editableform.loading);        
+            this.$loading = $($.fn.editableform.loading);
             this.$div.empty().append(this.$loading);
-            
+
             //init form template and buttons
             this.initTemplate();
             if(this.options.showbuttons) {
@@ -7107,39 +7107,39 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
             }
 
             //show loading state
-            this.showLoading();            
-            
-            //flag showing is form now saving value to server. 
+            this.showLoading();
+
+            //flag showing is form now saving value to server.
             //It is needed to wait when closing form.
             this.isSaving = false;
-            
-            /**        
+
+            /**
             Fired when rendering starts
-            @event rendering 
+            @event rendering
             @param {Object} event event object
-            **/            
+            **/
             this.$div.triggerHandler('rendering');
-            
+
             //init input
             this.initInput();
-            
+
             //append input to form
-            this.$form.find('div.editable-input').append(this.input.$tpl);            
-            
+            this.$form.find('div.editable-input').append(this.input.$tpl);
+
             //append form to container
             this.$div.append(this.$form);
-            
+
             //render input
             $.when(this.input.render())
             .then($.proxy(function () {
                 //setup input to submit automatically when no buttons shown
                 if(!this.options.showbuttons) {
-                    this.input.autosubmit(); 
+                    this.input.autosubmit();
                 }
-                 
+
                 //attach 'cancel' handler
                 this.$form.find('.editable-cancel').click($.proxy(this.cancel, this));
-                
+
                 if(this.input.error) {
                     this.error(this.input.error);
                     this.$form.find('.editable-submit').attr('disabled', true);
@@ -7156,27 +7156,27 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
                     this.$form.submit($.proxy(this.submit, this));
                 }
 
-                /**        
+                /**
                 Fired when form is rendered
                 @event rendered
                 @param {Object} event event object
-                **/            
-                this.$div.triggerHandler('rendered');                
+                **/
+                this.$div.triggerHandler('rendered');
 
                 this.showForm();
-                
+
                 //call postrender method to perform actions required visibility of form
                 if(this.input.postrender) {
                     this.input.postrender();
-                }                
+                }
             }, this));
         },
-        cancel: function() {   
-            /**        
+        cancel: function() {
+            /**
             Fired when form was cancelled by user
-            @event cancel 
+            @event cancel
             @param {Object} event event object
-            **/              
+            **/
             this.$div.triggerHandler('cancel');
         },
         showLoading: function() {
@@ -7184,7 +7184,7 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
             if(this.$form) {
                 //set loading size equal to form
                 w = this.$form.outerWidth();
-                h = this.$form.outerHeight(); 
+                h = this.$form.outerHeight();
                 if(w) {
                     this.$loading.width(w);
                 }
@@ -7199,20 +7199,20 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
                     this.$loading.width(w);
                 }
             }
-            this.$loading.show(); 
+            this.$loading.show();
         },
 
         showForm: function(activate) {
             this.$loading.hide();
             this.$form.show();
             if(activate !== false) {
-                this.input.activate(); 
+                this.input.activate();
             }
-            /**        
+            /**
             Fired when form is shown
-            @event show 
+            @event show
             @param {Object} event event object
-            **/                    
+            **/
             this.$div.triggerHandler('show');
         },
 
@@ -7223,7 +7223,7 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
 
             if(msg === false) {
                 $group.removeClass($.fn.editableform.errorGroupClass);
-                $block.removeClass($.fn.editableform.errorBlockClass).empty().hide(); 
+                $block.removeClass($.fn.editableform.errorBlockClass).empty().hide();
             } else {
                 //convert newline to <br> for more pretty error display
                 if(msg) {
@@ -7241,9 +7241,9 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
         submit: function(e) {
             e.stopPropagation();
             e.preventDefault();
-            
+
             //get new value from input
-            var newValue = this.input.input2value(); 
+            var newValue = this.input.input2value();
 
             //validation: if validate returns string or truthy value - means error
             //if returns object like {newValue: '...'} => submitted value is reassigned to it
@@ -7260,26 +7260,26 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
                 this.error(error);
                 this.showForm();
                 return;
-            } 
-            
+            }
+
             //if value not changed --> trigger 'nochange' event and return
             /*jslint eqeq: true*/
             if (!this.options.savenochange && this.input.value2str(newValue) == this.input.value2str(this.value)) {
-            /*jslint eqeq: false*/                
-                /**        
+            /*jslint eqeq: false*/
+                /**
                 Fired when value not changed but form is submitted. Requires savenochange = false.
-                @event nochange 
+                @event nochange
                 @param {Object} event event object
-                **/                    
-                this.$div.triggerHandler('nochange');            
+                **/
+                this.$div.triggerHandler('nochange');
                 return;
-            } 
+            }
 
             //convert value for submitting to server
             var submitValue = this.input.value2submit(newValue);
-            
+
             this.isSaving = true;
-            
+
             //sending data to server
             $.when(this.save(submitValue))
             .done($.proxy(function(response) {
@@ -7295,7 +7295,7 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
                     return;
                 }
 
-                //if success callback returns string -->  keep form open, show error and activate input               
+                //if success callback returns string -->  keep form open, show error and activate input
                 if(typeof res === 'string') {
                     this.error(res);
                     this.showForm();
@@ -7309,11 +7309,11 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
                 }
 
                 //clear error message
-                this.error(false);   
+                this.error(false);
                 this.value = newValue;
-                /**        
+                /**
                 Fired when form is submitted
-                @event save 
+                @event save
                 @param {Object} event event object
                 @param {Object} params additional params
                 @param {mixed} params.newValue raw new value
@@ -7343,14 +7343,14 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
         },
 
         save: function(submitValue) {
-            //try parse composite pk defined as json string in data-pk 
-            this.options.pk = $.fn.editableutils.tryParseJson(this.options.pk, true); 
-            
+            //try parse composite pk defined as json string in data-pk
+            this.options.pk = $.fn.editableutils.tryParseJson(this.options.pk, true);
+
             var pk = (typeof this.options.pk === 'function') ? this.options.pk.call(this.options.scope) : this.options.pk,
             /*
               send on server in following cases:
               1. url is function
-              2. url is string AND (pk defined OR send option = always) 
+              2. url is string AND (pk defined OR send option = always)
             */
             send = !!(typeof this.options.url === 'function' || (this.options.url && ((this.options.send === 'always') || (this.options.send === 'auto' && pk !== null && pk !== undefined)))),
             params;
@@ -7362,21 +7362,21 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
                 params = {
                     name: this.options.name || '',
                     value: submitValue,
-                    pk: pk 
+                    pk: pk
                 };
 
                 //additional params
                 if(typeof this.options.params === 'function') {
-                    params = this.options.params.call(this.options.scope, params);  
+                    params = this.options.params.call(this.options.scope, params);
                 } else {
                     //try parse json in single quotes (from data-params attribute)
-                    this.options.params = $.fn.editableutils.tryParseJson(this.options.params, true);   
+                    this.options.params = $.fn.editableutils.tryParseJson(this.options.params, true);
                     $.extend(params, this.options.params);
                 }
 
                 if(typeof this.options.url === 'function') { //user's function
                     return this.options.url.call(this.options.scope, params);
-                } else {  
+                } else {
                     //send ajax to server and return deferred object
                     return $.ajax($.extend({
                         url     : this.options.url,
@@ -7385,7 +7385,7 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
                     }, this.options.ajaxOptions));
                 }
             }
-        }, 
+        },
 
         validate: function (value) {
             if (value === undefined) {
@@ -7400,11 +7400,11 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
             if(key in this.options) {
                 this.options[key] = value;
             }
-            
+
             if(key === 'value') {
                 this.setValue(value);
             }
-            
+
             //do not pass option to input as it is passed in editable-element
         },
 
@@ -7414,12 +7414,12 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
             } else {
                 this.value = value;
             }
-            
+
             //if form is visible, update input
             if(this.$form && this.$form.is(':visible')) {
                 this.input.value2input(this.value);
-            }            
-        }               
+            }
+        }
     };
 
     /*
@@ -7436,26 +7436,26 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
     });
 
     //to display form you should call 'render' method
-    $form.editableform('render');     
+    $form.editableform('render');
     */
     $.fn.editableform = function (option) {
         var args = arguments;
         return this.each(function () {
-            var $this = $(this), 
-            data = $this.data('editableform'), 
-            options = typeof option === 'object' && option; 
+            var $this = $(this),
+            data = $this.data('editableform'),
+            options = typeof option === 'object' && option;
             if (!data) {
                 $this.data('editableform', (data = new EditableForm(this, options)));
             }
 
-            if (typeof option === 'string') { //call method 
+            if (typeof option === 'string') { //call method
                 data[option].apply(data, Array.prototype.slice.call(args, 1));
-            } 
+            }
         });
     };
 
     //keep link to constructor to allow inheritance
-    $.fn.editableform.Constructor = EditableForm;    
+    $.fn.editableform.Constructor = EditableForm;
 
     //defaults
     $.fn.editableform.defaults = {
@@ -7464,16 +7464,16 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
         /**
         Type of input. Can be <code>text|textarea|select|date|checklist</code>
 
-        @property type 
+        @property type
         @type string
         @default 'text'
         **/
         type: 'text',
         /**
-        Url for submit, e.g. <code>'/post'</code>  
+        Url for submit, e.g. <code>'/post'</code>
         If function - it will be called instead of ajax. Function should return deferred object to run fail/done callbacks.
 
-        @property url 
+        @property url
         @type string|function
         @default null
         @example
@@ -7484,18 +7484,18 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
             } else {
                 //async saving data in js model
                 someModel.asyncSaveMethod({
-                   ..., 
+                   ...,
                    success: function(){
                       d.resolve();
                    }
-                }); 
+                });
                 return d.promise();
             }
-        } 
-        **/        
+        }
+        **/
         url:null,
         /**
-        Additional params for submit. If defined as <code>object</code> - it is **appended** to original ajax data (pk, name and value).  
+        Additional params for submit. If defined as <code>object</code> - it is **appended** to original ajax data (pk, name and value).
         If defined as <code>function</code> - returned object **overwrites** original ajax data.
         @example
         params: function(params) {
@@ -7504,61 +7504,61 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
             return params;
         }
 
-        @property params 
+        @property params
         @type object|function
         @default null
-        **/          
+        **/
         params:null,
         /**
         Name of field. Will be submitted on server. Can be taken from <code>id</code> attribute
 
-        @property name 
+        @property name
         @type string
         @default null
-        **/         
+        **/
         name: null,
         /**
         Primary key of editable object (e.g. record id in database). For composite keys use object, e.g. <code>{id: 1, lang: 'en'}</code>.
         Can be calculated dynamically via function.
 
-        @property pk 
+        @property pk
         @type string|object|function
         @default null
-        **/         
+        **/
         pk: null,
         /**
         Initial value. If not defined - will be taken from element's content.
         For __select__ type should be defined (as it is ID of shown text).
 
-        @property value 
+        @property value
         @type string|object
         @default null
-        **/        
+        **/
         value: null,
         /**
         Value that will be displayed in input if original field value is empty (`null|undefined|''`).
 
-        @property defaultValue 
+        @property defaultValue
         @type string|object
         @default null
         @since 1.4.6
-        **/        
+        **/
         defaultValue: null,
         /**
         Strategy for sending data on server. Can be `auto|always|never`.
         When 'auto' data will be sent on server **only if pk and url defined**, otherwise new value will be stored locally.
 
-        @property send 
+        @property send
         @type string
         @default 'auto'
-        **/          
-        send: 'auto', 
+        **/
+        send: 'auto',
         /**
         Function for client-side validation. If returns string - means validation not passed and string showed as error.
-        Since 1.5.1 you can modify submitted value by returning object from `validate`: 
+        Since 1.5.1 you can modify submitted value by returning object from `validate`:
         `{newValue: '...'}` or `{newValue: '...', msg: '...'}`
 
-        @property validate 
+        @property validate
         @type function
         @default null
         @example
@@ -7567,31 +7567,31 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
                 return 'This field is required';
             }
         }
-        **/         
+        **/
         validate: null,
         /**
-        Success callback. Called when value successfully sent on server and **response status = 200**.  
+        Success callback. Called when value successfully sent on server and **response status = 200**.
         Usefull to work with json response. For example, if your backend response can be <code>{success: true}</code>
-        or <code>{success: false, msg: "server error"}</code> you can check it inside this callback.  
-        If it returns **string** - means error occured and string is shown as error message.  
-        If it returns **object like** <code>{newValue: &lt;something&gt;}</code> - it overwrites value, submitted by user.  
+        or <code>{success: false, msg: "server error"}</code> you can check it inside this callback.
+        If it returns **string** - means error occured and string is shown as error message.
+        If it returns **object like** <code>{newValue: &lt;something&gt;}</code> - it overwrites value, submitted by user.
         Otherwise newValue simply rendered into element.
-        
-        @property success 
+
+        @property success
         @type function
         @default null
         @example
         success: function(response, newValue) {
             if(!response.success) return response.msg;
         }
-        **/          
+        **/
         success: null,
         /**
-        Error callback. Called when request failed (response status != 200).  
+        Error callback. Called when request failed (response status != 200).
         Usefull when you want to parse error response and display a custom message.
         Must return **string** - the message to be displayed in the error block.
-                
-        @property error 
+
+        @property error
         @type function
         @default null
         @since 1.4.4
@@ -7603,64 +7603,64 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
                 return response.responseText;
             }
         }
-        **/          
+        **/
         error: null,
         /**
         Additional options for submit ajax request.
         List of values: http://api.jquery.com/jQuery.ajax
-        
-        @property ajaxOptions 
+
+        @property ajaxOptions
         @type object
         @default null
-        @since 1.1.1        
-        @example 
+        @since 1.1.1
+        @example
         ajaxOptions: {
             type: 'put',
             dataType: 'json'
-        }        
-        **/        
+        }
+        **/
         ajaxOptions: null,
         /**
-        Where to show buttons: left(true)|bottom|false  
+        Where to show buttons: left(true)|bottom|false
         Form without buttons is auto-submitted.
 
-        @property showbuttons 
+        @property showbuttons
         @type boolean|string
         @default true
         @since 1.1.1
-        **/         
+        **/
         showbuttons: true,
         /**
-        Scope for callback methods (success, validate).  
-        If <code>null</code> means editableform instance itself. 
+        Scope for callback methods (success, validate).
+        If <code>null</code> means editableform instance itself.
 
-        @property scope 
+        @property scope
         @type DOMElement|object
         @default null
         @since 1.2.0
         @private
-        **/            
+        **/
         scope: null,
         /**
         Whether to save or cancel value when it was not changed but form was submitted
 
-        @property savenochange 
+        @property savenochange
         @type boolean
         @default false
         @since 1.2.0
         **/
         savenochange: false
-    };   
+    };
 
     /*
     Note: following params could redefined in engine: bootstrap or jqueryui:
     Classes 'control-group' and 'editable-error-block' must always present!
-    */      
+    */
     $.fn.editableform.template = '<form class="form-inline editableform">'+
-    '<div class="control-group">' + 
+    '<div class="control-group">' +
     '<div><div class="editable-input"></div><div class="editable-buttons"></div></div>'+
-    '<div class="editable-error-block"></div>' + 
-    '</div>' + 
+    '<div class="editable-error-block"></div>' +
+    '</div>' +
     '</form>';
 
     //loading div
@@ -7668,14 +7668,14 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
 
     //buttons
     $.fn.editableform.buttons = '<button type="submit" class="editable-submit">ok</button>'+
-    '<button type="button" class="editable-cancel">cancel</button>';      
+    '<button type="button" class="editable-cancel">cancel</button>';
 
     //error class attached to control-group
-    $.fn.editableform.errorGroupClass = null;  
+    $.fn.editableform.errorGroupClass = null;
 
     //error class attached to editable-error-block
     $.fn.editableform.errorBlockClass = 'editable-error';
-    
+
     //engine
     $.fn.editableform.engine = 'jquery';
 }(window.jQuery));
@@ -7685,12 +7685,12 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
 */
 (function ($) {
     "use strict";
-    
+
     //utils
     $.fn.editableutils = {
         /**
         * classic JS inheritance function
-        */  
+        */
         inherit: function (Child, Parent) {
             var F = function() { };
             F.prototype = Parent.prototype;
@@ -7702,7 +7702,7 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
         /**
         * set caret position in input
         * see http://stackoverflow.com/questions/499126/jquery-set-cursor-position-in-text-area
-        */        
+        */
         setCursorPosition: function(elem, pos) {
             if (elem.setSelectionRange) {
                 elem.setSelectionRange(pos, pos);
@@ -7790,7 +7790,7 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
         */
         objectKeys: function(o) {
             if (Object.keys) {
-                return Object.keys(o);  
+                return Object.keys(o);
             } else {
                 if (o !== Object(o)) {
                     throw new TypeError('Object.keys called on a non-object');
@@ -7805,14 +7805,14 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
             }
 
         },
-        
+
        /**
         method to escape html.
        **/
        escape: function(str) {
            return $('<div>').text(str).html();
        },
-       
+
        /*
         returns array items from sourceData having value property equal or inArray of 'value'
        */
@@ -7820,14 +7820,14 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
            if(!sourceData || value === null) {
                return [];
            }
-           
+
            if (typeof(valueProp) !== "function") {
                var idKey = valueProp || 'value';
                valueProp = function (e) { return e[idKey]; };
            }
-                      
+
            var isValArray = $.isArray(value),
-           result = [], 
+           result = [],
            that = this;
 
            $.each(sourceData, function(i, o) {
@@ -7837,23 +7837,23 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
                    /*jslint eqeq: true*/
                    if(isValArray) {
                        if($.grep(value, function(v){  return v == (o && typeof o === 'object' ? valueProp(o) : o); }).length) {
-                           result.push(o); 
+                           result.push(o);
                        }
                    } else {
                        var itemValue = (o && (typeof o === 'object')) ? valueProp(o) : o;
                        if(value == itemValue) {
-                           result.push(o); 
+                           result.push(o);
                        }
                    }
                    /*jslint eqeq: false*/
                }
            });
-           
+
            return result;
        },
-       
+
        /*
-       Returns input by options: type, mode. 
+       Returns input by options: type, mode.
        */
        createInput: function(options) {
            var TypeConstructor, typeOptions, input,
@@ -7877,17 +7877,17 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
                        type = 'dateui';
                    }
                }
-               
+
                //if type still `date` and not exist in types, replace with `combodate` that is base input
                if(type === 'date' && !$.fn.editabletypes.date) {
                    type = 'combodate';
-               } 
+               }
            }
-           
+
            //`datetime` should be datetimefield in 'inline' mode
            if(type === 'datetime' && options.mode === 'inline') {
-             type = 'datetimefield';  
-           }           
+             type = 'datetimefield';
+           }
 
            //change wysihtml5 to textarea for jquery UI and plain versions
            if(type === 'wysihtml5' && !$.fn.editabletypes[type]) {
@@ -7902,32 +7902,32 @@ Editableform is linked with one of input types, e.g. 'text', 'select' etc.
                return input;
            } else {
                $.error('Unknown type: '+ type);
-               return false; 
-           }  
+               return false;
+           }
        },
-       
+
        //see http://stackoverflow.com/questions/7264899/detect-css-transitions-using-javascript-and-without-modernizr
        supportsTransitions: function () {
            var b = document.body || document.documentElement,
                s = b.style,
                p = 'transition',
                v = ['Moz', 'Webkit', 'Khtml', 'O', 'ms'];
-               
+
            if(typeof s[p] === 'string') {
-               return true; 
+               return true;
            }
 
            // Tests for vendor specific prop
            p = p.charAt(0).toUpperCase() + p.substr(1);
            for(var i=0; i<v.length; i++) {
-               if(typeof s[v[i] + p] === 'string') { 
-                   return true; 
+               if(typeof s[v[i] + p] === 'string') {
+                   return true;
                }
            }
            return false;
-       }            
-       
-    };      
+       }
+
+    };
 }(window.jQuery));
 
 /**
@@ -7945,10 +7945,10 @@ Applied as jQuery method.
     var Popup = function (element, options) {
         this.init(element, options);
     };
-    
+
     var Inline = function (element, options) {
         this.init(element, options);
-    };    
+    };
 
     //methods
     Popup.prototype = {
@@ -7957,48 +7957,48 @@ Applied as jQuery method.
         innerCss: null, //tbd in child class
         containerClass: 'editable-container editable-popup', //css class applied to container element
         defaults: {}, //container itself defaults
-        
+
         init: function(element, options) {
             this.$element = $(element);
             //since 1.4.1 container do not use data-* directly as they already merged into options.
-            this.options = $.extend({}, $.fn.editableContainer.defaults, options);         
+            this.options = $.extend({}, $.fn.editableContainer.defaults, options);
             this.splitOptions();
-            
+
             //set scope of form callbacks to element
-            this.formOptions.scope = this.$element[0]; 
-            
+            this.formOptions.scope = this.$element[0];
+
             this.initContainer();
-            
+
             //flag to hide container, when saving value will finish
             this.delayedHide = false;
 
             //bind 'destroyed' listener to destroy container when element is removed from dom
             this.$element.on('destroyed', $.proxy(function(){
                 this.destroy();
-            }, this)); 
-            
+            }, this));
+
             //attach document handler to close containers on click / escape
             if(!$(document).data('editable-handlers-attached')) {
                 //close all on escape
                 $(document).on('keyup.editable', function (e) {
                     if (e.which === 27) {
                         $('.editable-open').editableContainer('hide');
-                        //todo: return focus on element 
+                        //todo: return focus on element
                     }
                 });
 
-                //close containers when click outside 
+                //close containers when click outside
                 //(mousedown could be better than click, it closes everything also on drag drop)
                 $(document).on('click.editable', function(e) {
                     var $target = $(e.target), i,
-                        exclude_classes = ['.editable-container', 
-                                           '.ui-datepicker-header', 
+                        exclude_classes = ['.editable-container',
+                                           '.ui-datepicker-header',
                                            '.datepicker', //in inline mode datepicker is rendered into body
-                                           '.modal-backdrop', 
-                                           '.bootstrap-wysihtml5-insert-image-modal', 
+                                           '.modal-backdrop',
+                                           '.bootstrap-wysihtml5-insert-image-modal',
                                            '.bootstrap-wysihtml5-insert-link-modal'
                                            ];
-                    
+
                     //check if element is detached. It occurs when clicking in bootstrap datepicker
                     if (!$.contains(document.documentElement, e.target)) {
                       return;
@@ -8008,47 +8008,47 @@ Applied as jQuery method.
                     //we need to filter it via construction below. See https://github.com/vitalets/x-editable/issues/199
                     //Possibly related to http://stackoverflow.com/questions/10119793/why-does-firefox-react-differently-from-webkit-and-ie-to-click-event-on-selec
                     if($target.is(document)) {
-                       return; 
+                       return;
                     }
-                    
+
                     //if click inside one of exclude classes --> no nothing
                     for(i=0; i<exclude_classes.length; i++) {
                          if($target.is(exclude_classes[i]) || $target.parents(exclude_classes[i]).length) {
                              return;
                          }
                     }
-                      
+
                     //close all open containers (except one - target)
                     Popup.prototype.closeOthers(e.target);
                 });
-                
+
                 $(document).data('editable-handlers-attached', true);
-            }                        
+            }
         },
 
         //split options on containerOptions and formOptions
         splitOptions: function() {
             this.containerOptions = {};
             this.formOptions = {};
-            
+
             if(!$.fn[this.containerName]) {
-                throw new Error(this.containerName + ' not found. Have you included corresponding js file?');   
+                throw new Error(this.containerName + ' not found. Have you included corresponding js file?');
             }
-            
+
             //keys defined in container defaults go to container, others go to form
             for(var k in this.options) {
               if(k in this.defaults) {
                  this.containerOptions[k] = this.options[k];
               } else {
                  this.formOptions[k] = this.options[k];
-              } 
+              }
             }
         },
-        
+
         /*
         Returns jquery object of container
         @method tip()
-        */         
+        */
         tip: function() {
             return this.container() ? this.container().$tip : null;
         },
@@ -8067,11 +8067,11 @@ Applied as jQuery method.
             return container;
         },
 
-        /* call native method of underlying container, e.g. this.$element.popover('method') */ 
+        /* call native method of underlying container, e.g. this.$element.popover('method') */
         call: function() {
-            this.$element[this.containerName].apply(this.$element, arguments); 
-        },        
-        
+            this.$element[this.containerName].apply(this.$element, arguments);
+        },
+
         initContainer: function(){
             this.call(this.containerOptions);
         },
@@ -8081,7 +8081,7 @@ Applied as jQuery method.
             .editableform(this.formOptions)
             .on({
                 save: $.proxy(this.save, this), //click on submit button (value changed)
-                nochange: $.proxy(function(){ this.hide('nochange'); }, this), //click on submit button (value NOT changed)                
+                nochange: $.proxy(function(){ this.hide('nochange'); }, this), //click on submit button (value NOT changed)
                 cancel: $.proxy(function(){ this.hide('cancel'); }, this), //click on calcel button
                 show: $.proxy(function() {
                     if(this.delayedHide) {
@@ -8092,71 +8092,71 @@ Applied as jQuery method.
                     }
                 }, this), //re-position container every time form is shown (occurs each time after loading state)
                 rendering: $.proxy(this.setPosition, this), //this allows to place container correctly when loading shown
-                resize: $.proxy(this.setPosition, this), //this allows to re-position container when form size is changed 
+                resize: $.proxy(this.setPosition, this), //this allows to re-position container when form size is changed
                 rendered: $.proxy(function(){
-                    /**        
-                    Fired when container is shown and form is rendered (for select will wait for loading dropdown options).  
+                    /**
+                    Fired when container is shown and form is rendered (for select will wait for loading dropdown options).
                     **Note:** Bootstrap popover has own `shown` event that now cannot be separated from x-editable's one.
-                    The workaround is to check `arguments.length` that is always `2` for x-editable.                     
-                    
-                    @event shown 
+                    The workaround is to check `arguments.length` that is always `2` for x-editable.
+
+                    @event shown
                     @param {Object} event event object
                     @example
                     $('#username').on('shown', function(e, editable) {
                         editable.input.$input.val('overwriting value of input..');
-                    });                     
-                    **/                      
+                    });
+                    **/
                     /*
-                     TODO: added second param mainly to distinguish from bootstrap's shown event. It's a hotfix that will be solved in future versions via namespaced events.  
+                     TODO: added second param mainly to distinguish from bootstrap's shown event. It's a hotfix that will be solved in future versions via namespaced events.
                     */
-                    this.$element.triggerHandler('shown', $(this.options.scope).data('editable')); 
-                }, this) 
+                    this.$element.triggerHandler('shown', $(this.options.scope).data('editable'));
+                }, this)
             })
             .editableform('render');
-        },        
+        },
 
         /**
         Shows container with form
         @method show()
         @param {boolean} closeAll Whether to close all other editable containers when showing this one. Default true.
         **/
-        /* Note: poshytip owerwrites this method totally! */          
+        /* Note: poshytip owerwrites this method totally! */
         show: function (closeAll) {
             this.$element.addClass('editable-open');
             if(closeAll !== false) {
                 //close all open containers (except this)
-                this.closeOthers(this.$element[0]);  
+                this.closeOthers(this.$element[0]);
             }
-            
+
             //show container itself
             this.innerShow();
             this.tip().addClass(this.containerClass);
 
             /*
-            Currently, form is re-rendered on every show. 
+            Currently, form is re-rendered on every show.
             The main reason is that we dont know, what will container do with content when closed:
             remove(), detach() or just hide() - it depends on container.
-            
-            Detaching form itself before hide and re-insert before show is good solution, 
-            but visually it looks ugly --> container changes size before hide.  
-            */             
-            
-            //if form already exist - delete previous data 
+
+            Detaching form itself before hide and re-insert before show is good solution,
+            but visually it looks ugly --> container changes size before hide.
+            */
+
+            //if form already exist - delete previous data
             if(this.$form) {
                 //todo: destroy prev data!
                 //this.$form.destroy();
             }
 
             this.$form = $('<div>');
-            
+
             //insert form into container body
             if(this.tip().is(this.innerCss)) {
                 //for inline container
-                this.tip().append(this.$form); 
+                this.tip().append(this.$form);
             } else {
                 this.tip().find(this.innerCss).append(this.$form);
-            } 
-            
+            }
+
             //render form
             this.renderForm();
         },
@@ -8165,29 +8165,29 @@ Applied as jQuery method.
         Hides container with form
         @method hide()
         @param {string} reason Reason caused hiding. Can be <code>save|cancel|onblur|nochange|undefined (=manual)</code>
-        **/         
-        hide: function(reason) {  
+        **/
+        hide: function(reason) {
             if(!this.tip() || !this.tip().is(':visible') || !this.$element.hasClass('editable-open')) {
                 return;
             }
-            
+
             //if form is saving value, schedule hide
             if(this.$form.data('editableform').isSaving) {
                 this.delayedHide = {reason: reason};
-                return;    
+                return;
             } else {
                 this.delayedHide = false;
             }
 
-            this.$element.removeClass('editable-open');   
+            this.$element.removeClass('editable-open');
             this.innerHide();
 
             /**
-            Fired when container was hidden. It occurs on both save or cancel.  
+            Fired when container was hidden. It occurs on both save or cancel.
             **Note:** Bootstrap popover has own `hidden` event that now cannot be separated from x-editable's one.
-            The workaround is to check `arguments.length` that is always `2` for x-editable. 
+            The workaround is to check `arguments.length` that is always `2` for x-editable.
 
-            @event hidden 
+            @event hidden
             @param {object} event event object
             @param {string} reason Reason caused hiding. Can be <code>save|cancel|onblur|nochange|manual</code>
             @example
@@ -8195,48 +8195,48 @@ Applied as jQuery method.
                 if(reason === 'save' || reason === 'cancel') {
                     //auto-open next editable
                     $(this).closest('tr').next().find('.editable').editable('show');
-                } 
+                }
             });
             **/
-            this.$element.triggerHandler('hidden', reason || 'manual');   
+            this.$element.triggerHandler('hidden', reason || 'manual');
         },
 
         /* internal show method. To be overwritten in child classes */
         innerShow: function () {
-             
-        },        
+
+        },
 
         /* internal hide method. To be overwritten in child classes */
         innerHide: function () {
 
         },
-        
+
         /**
         Toggles container visibility (show / hide)
         @method toggle()
         @param {boolean} closeAll Whether to close all other editable containers when showing this one. Default true.
-        **/          
+        **/
         toggle: function(closeAll) {
             if(this.container() && this.tip() && this.tip().is(':visible')) {
                 this.hide();
             } else {
                 this.show(closeAll);
-            } 
+            }
         },
 
         /*
         Updates the position of container when content changed.
         @method setPosition()
-        */       
+        */
         setPosition: function() {
             //tbd in child class
         },
 
         save: function(e, params) {
-            /**        
+            /**
             Fired when new value was submitted. You can use <code>$(this).data('editableContainer')</code> inside handler to access to editableContainer instance
-            
-            @event save 
+
+            @event save
             @param {Object} event event object
             @param {Object} params additional params
             @param {mixed} params.newValue submitted value
@@ -8248,36 +8248,36 @@ Applied as jQuery method.
                 if(params.response && params.response.success) {
                     alert('value: ' + params.newValue + ' with pk: ' + pk + ' saved!');
                 } else {
-                    alert('error!'); 
-                } 
+                    alert('error!');
+                }
             });
-            **/             
+            **/
             this.$element.triggerHandler('save', params);
-            
+
             //hide must be after trigger, as saving value may require methods of plugin, applied to input
             this.hide('save');
         },
 
         /**
         Sets new option
-        
+
         @method option(key, value)
-        @param {string} key 
-        @param {mixed} value 
-        **/         
+        @param {string} key
+        @param {mixed} value
+        **/
         option: function(key, value) {
             this.options[key] = value;
             if(key in this.containerOptions) {
                 this.containerOptions[key] = value;
-                this.setContainerOption(key, value); 
+                this.setContainerOption(key, value);
             } else {
                 this.formOptions[key] = value;
                 if(this.$form) {
-                    this.$form.editableform('option', key, value);  
+                    this.$form.editableform('option', key, value);
                 }
             }
         },
-        
+
         setContainerOption: function(key, value) {
             this.call('option', key, value);
         },
@@ -8285,21 +8285,21 @@ Applied as jQuery method.
         /**
         Destroys the container instance
         @method destroy()
-        **/        
+        **/
         destroy: function() {
             this.hide();
             this.innerDestroy();
             this.$element.off('destroyed');
             this.$element.removeData('editableContainer');
         },
-        
+
         /* to be overwritten in child classes */
         innerDestroy: function() {
-            
-        }, 
-        
+
+        },
+
         /*
-        Closes other containers except one related to passed element. 
+        Closes other containers except one related to passed element.
         Other containers can be cancelled or submitted (depends on onblur option)
         */
         closeOthers: function(element) {
@@ -8309,14 +8309,14 @@ Applied as jQuery method.
                     return;
                 }
 
-                //otherwise cancel or submit all open containers 
+                //otherwise cancel or submit all open containers
                 var $el = $(el),
                 ec = $el.data('editableContainer');
 
                 if(!ec) {
-                    return;  
+                    return;
                 }
-                
+
                 if(ec.options.onblur === 'cancel') {
                     $el.data('editableContainer').hide('onblur');
                 } else if(ec.options.onblur === 'submit') {
@@ -8325,22 +8325,22 @@ Applied as jQuery method.
             });
 
         },
-        
+
         /**
         Activates input of visible container (e.g. set focus)
         @method activate()
-        **/         
+        **/
         activate: function() {
             if(this.tip && this.tip().is(':visible') && this.$form) {
-               this.$form.data('editableform').input.activate(); 
+               this.$form.data('editableform').input.activate();
             }
-        } 
+        }
 
     };
 
     /**
     jQuery method to initialize editableContainer.
-    
+
     @method $().editableContainer(options)
     @params {Object} options
     @example
@@ -8350,25 +8350,25 @@ Applied as jQuery method.
         pk: 1,
         value: 'hello'
     });
-    **/  
+    **/
     $.fn.editableContainer = function (option) {
         var args = arguments;
         return this.each(function () {
             var $this = $(this),
-            dataKey = 'editableContainer', 
+            dataKey = 'editableContainer',
             data = $this.data(dataKey),
             options = typeof option === 'object' && option,
-            Constructor = (options.mode === 'inline') ? Inline : Popup;             
+            Constructor = (options.mode === 'inline') ? Inline : Popup;
 
             if (!data) {
                 $this.data(dataKey, (data = new Constructor(this, options)));
             }
 
-            if (typeof option === 'string') { //call method 
+            if (typeof option === 'string') { //call method
                 data[option].apply(data, Array.prototype.slice.call(args, 1));
-            }            
+            }
         });
-    };     
+    };
 
     //store constructors
     $.fn.editableContainer.Popup = Popup;
@@ -8379,60 +8379,60 @@ Applied as jQuery method.
         /**
         Initial value of form input
 
-        @property value 
+        @property value
         @type mixed
         @default null
         @private
-        **/        
+        **/
         value: null,
         /**
         Placement of container relative to element. Can be <code>top|right|bottom|left</code>. Not used for inline container.
 
-        @property placement 
+        @property placement
         @type string
         @default 'top'
-        **/        
+        **/
         placement: 'top',
         /**
         Whether to hide container on save/cancel.
 
-        @property autohide 
+        @property autohide
         @type boolean
         @default true
-        @private 
-        **/        
+        @private
+        **/
         autohide: true,
         /**
-        Action when user clicks outside the container. Can be <code>cancel|submit|ignore</code>.  
-        Setting <code>ignore</code> allows to have several containers open. 
+        Action when user clicks outside the container. Can be <code>cancel|submit|ignore</code>.
+        Setting <code>ignore</code> allows to have several containers open.
 
-        @property onblur 
+        @property onblur
         @type string
         @default 'cancel'
         @since 1.1.1
-        **/        
+        **/
         onblur: 'cancel',
-        
+
         /**
         Animation speed (inline mode only)
-        @property anim 
+        @property anim
         @type string
         @default false
-        **/        
+        **/
         anim: false,
-        
+
         /**
-        Mode of editable, can be `popup` or `inline` 
-        
-        @property mode 
-        @type string         
+        Mode of editable, can be `popup` or `inline`
+
+        @property mode
+        @type string
         @default 'popup'
-        @since 1.4.0        
-        **/        
-        mode: 'popup'        
+        @since 1.4.0
+        **/
+        mode: 'popup'
     };
 
-    /* 
+    /*
     * workaround to have 'destroyed' event to destroy popover when element is destroyed
     * see http://stackoverflow.com/questions/2200494/jquery-trigger-event-when-an-element-is-removed-from-the-dom
     */
@@ -8442,61 +8442,61 @@ Applied as jQuery method.
                 o.handler();
             }
         }
-    };    
+    };
 
 }(window.jQuery));
 
 /**
-* Editable Inline 
+* Editable Inline
 * ---------------------
 */
 (function ($) {
     "use strict";
-    
+
     //copy prototype from EditableContainer
     //extend methods
     $.extend($.fn.editableContainer.Inline.prototype, $.fn.editableContainer.Popup.prototype, {
         containerName: 'editableform',
         innerCss: '.editable-inline',
         containerClass: 'editable-container editable-inline', //css class applied to container element
-                 
+
         initContainer: function(){
             //container is <span> element
             this.$tip = $('<span></span>');
-            
+
             //convert anim to miliseconds (int)
             if(!this.options.anim) {
                 this.options.anim = 0;
-            }         
+            }
         },
-        
+
         splitOptions: function() {
             //all options are passed to form
             this.containerOptions = {};
             this.formOptions = this.options;
         },
-        
+
         tip: function() {
-           return this.$tip; 
+           return this.$tip;
         },
-        
+
         innerShow: function () {
             this.$element.hide();
             this.tip().insertAfter(this.$element).show();
-        }, 
-        
+        },
+
         innerHide: function () {
             this.$tip.hide(this.options.anim, $.proxy(function() {
                 this.$element.show();
                 this.innerDestroy();
-            }, this)); 
+            }, this));
         },
-        
+
         innerDestroy: function() {
             if(this.tip()) {
                 this.tip().empty().remove();
             }
-        } 
+        }
     });
 
 }(window.jQuery));
@@ -8511,14 +8511,14 @@ Makes editable any HTML element on the page. Applied as jQuery method.
 
     var Editable = function (element, options) {
         this.$element = $(element);
-        //data-* has more priority over js options: because dynamically created elements may change data-* 
-        this.options = $.extend({}, $.fn.editable.defaults, options, $.fn.editableutils.getConfigData(this.$element));  
+        //data-* has more priority over js options: because dynamically created elements may change data-*
+        this.options = $.extend({}, $.fn.editable.defaults, options, $.fn.editableutils.getConfigData(this.$element));
         if(this.options.selector) {
             this.initLive();
         } else {
             this.init();
         }
-        
+
         //check for transition support
         if(this.options.highlight && !$.fn.editableutils.supportsTransitions()) {
             this.options.highlight = false;
@@ -8526,21 +8526,21 @@ Makes editable any HTML element on the page. Applied as jQuery method.
     };
 
     Editable.prototype = {
-        constructor: Editable, 
+        constructor: Editable,
         init: function () {
-            var isValueByText = false, 
+            var isValueByText = false,
                 doAutotext, finalize;
 
             //name
             this.options.name = this.options.name || this.$element.attr('id');
-             
+
             //create input of specified type. Input needed already here to convert value for initial display (e.g. show text by id for select)
             //also we set scope option to have access to element inside input specific callbacks (e. g. source as function)
-            this.options.scope = this.$element[0]; 
+            this.options.scope = this.$element[0];
             this.input = $.fn.editableutils.createInput(this.options);
             if(!this.input) {
-                return; 
-            }            
+                return;
+            }
 
             //set value from settings or by element's text
             if (this.options.value === undefined || this.options.value === null) {
@@ -8549,25 +8549,25 @@ Makes editable any HTML element on the page. Applied as jQuery method.
             } else {
                 /*
                   value can be string when received from 'data-value' attribute
-                  for complext objects value can be set as json string in data-value attribute, 
+                  for complext objects value can be set as json string in data-value attribute,
                   e.g. data-value="{city: 'Moscow', street: 'Lenina'}"
                 */
-                this.options.value = $.fn.editableutils.tryParseJson(this.options.value, true); 
+                this.options.value = $.fn.editableutils.tryParseJson(this.options.value, true);
                 if(typeof this.options.value === 'string') {
                     this.value = this.input.str2value(this.options.value);
                 } else {
                     this.value = this.options.value;
                 }
             }
-            
+
             //add 'editable' class to every editable element
             this.$element.addClass('editable');
-            
+
             //specifically for "textarea" add class .editable-pre-wrapped to keep linebreaks
             if(this.input.type === 'textarea') {
                 this.$element.addClass('editable-pre-wrapped');
             }
-            
+
             //attach handler activating editable. In disabled mode it just prevent default action (useful for links)
             if(this.options.toggle !== 'manual') {
                 this.$element.addClass('editable-click');
@@ -8576,10 +8576,10 @@ Makes editable any HTML element on the page. Applied as jQuery method.
                     if(!this.options.disabled) {
                         e.preventDefault();
                     }
-                    
+
                     //stop propagation not required because in document click handler it checks event target
                     //e.stopPropagation();
-                    
+
                     if(this.options.toggle === 'mouseenter') {
                         //for hover only show container
                         this.show();
@@ -8592,13 +8592,13 @@ Makes editable any HTML element on the page. Applied as jQuery method.
             } else {
                 this.$element.attr('tabindex', -1); //do not stop focus on element when toggled manually
             }
-            
+
             //if display is function it's far more convinient to have autotext = always to render correctly on init
             //see https://github.com/vitalets/x-editable-yii/issues/34
             if(typeof this.options.display === 'function') {
                 this.options.autotext = 'always';
             }
-            
+
             //check conditions for autotext:
             switch(this.options.autotext) {
               case 'always':
@@ -8617,13 +8617,13 @@ Makes editable any HTML element on the page. Applied as jQuery method.
                 if(this.options.disabled) {
                     this.disable();
                 } else {
-                    this.enable(); 
+                    this.enable();
                 }
-               /**        
-               Fired when element was initialized by `$().editable()` method. 
-               Please note that you should setup `init` handler **before** applying `editable`. 
-                              
-               @event init 
+               /**
+               Fired when element was initialized by `$().editable()` method.
+               Please note that you should setup `init` handler **before** applying `editable`.
+
+               @event init
                @param {Object} event event object
                @param {Object} editable editable instance (as here it cannot accessed via data('editable'))
                @since 1.2.0
@@ -8632,142 +8632,142 @@ Makes editable any HTML element on the page. Applied as jQuery method.
                    alert('initialized ' + editable.options.name);
                });
                $('#username').editable();
-               **/                  
+               **/
                 this.$element.triggerHandler('init', this);
             }, this));
         },
 
         /*
-         Initializes parent element for live editables 
+         Initializes parent element for live editables
         */
         initLive: function() {
-           //store selector 
+           //store selector
            var selector = this.options.selector;
            //modify options for child elements
-           this.options.selector = false; 
+           this.options.selector = false;
            this.options.autotext = 'never';
            //listen toggle events
            this.$element.on(this.options.toggle + '.editable', selector, $.proxy(function(e){
                var $target = $(e.target);
                if(!$target.data('editable')) {
                    //if delegated element initially empty, we need to clear it's text (that was manually set to `empty` by user)
-                   //see https://github.com/vitalets/x-editable/issues/137 
+                   //see https://github.com/vitalets/x-editable/issues/137
                    if($target.hasClass(this.options.emptyclass)) {
                       $target.empty();
                    }
                    $target.editable(this.options).trigger(e);
                }
-           }, this)); 
+           }, this));
         },
-        
+
         /*
         Renders value into element's text.
         Can call custom display method from options.
         Can return deferred object.
         @method render()
         @param {mixed} response server response (if exist) to pass into display function
-        */          
+        */
         render: function(response) {
             //do not display anything
             if(this.options.display === false) {
                 return;
             }
-            
+
             //if input has `value2htmlFinal` method, we pass callback in third param to be called when source is loaded
             if(this.input.value2htmlFinal) {
-                return this.input.value2html(this.value, this.$element[0], this.options.display, response); 
-            //if display method defined --> use it    
+                return this.input.value2html(this.value, this.$element[0], this.options.display, response);
+            //if display method defined --> use it
             } else if(typeof this.options.display === 'function') {
                 return this.options.display.call(this.$element[0], this.value, response);
-            //else use input's original value2html() method    
+            //else use input's original value2html() method
             } else {
-                return this.input.value2html(this.value, this.$element[0]); 
+                return this.input.value2html(this.value, this.$element[0]);
             }
         },
-        
+
         /**
         Enables editable
         @method enable()
-        **/          
+        **/
         enable: function() {
             this.options.disabled = false;
             this.$element.removeClass('editable-disabled');
             this.handleEmpty(this.isEmpty);
             if(this.options.toggle !== 'manual') {
-                if(this.$element.attr('tabindex') === '-1') {    
-                    this.$element.removeAttr('tabindex');                                
+                if(this.$element.attr('tabindex') === '-1') {
+                    this.$element.removeAttr('tabindex');
                 }
             }
         },
-        
+
         /**
         Disables editable
         @method disable()
-        **/         
+        **/
         disable: function() {
-            this.options.disabled = true; 
-            this.hide();           
+            this.options.disabled = true;
+            this.hide();
             this.$element.addClass('editable-disabled');
             this.handleEmpty(this.isEmpty);
             //do not stop focus on this element
-            this.$element.attr('tabindex', -1);                
+            this.$element.attr('tabindex', -1);
         },
-        
+
         /**
         Toggles enabled / disabled state of editable element
         @method toggleDisabled()
-        **/         
+        **/
         toggleDisabled: function() {
             if(this.options.disabled) {
                 this.enable();
-            } else { 
-                this.disable(); 
+            } else {
+                this.disable();
             }
-        },  
-        
+        },
+
         /**
         Sets new option
-        
+
         @method option(key, value)
         @param {string|object} key option name or object with several options
         @param {mixed} value option new value
         @example
         $('.editable').editable('option', 'pk', 2);
-        **/          
+        **/
         option: function(key, value) {
             //set option(s) by object
             if(key && typeof key === 'object') {
                $.each(key, $.proxy(function(k, v){
-                  this.option($.trim(k), v); 
-               }, this)); 
+                  this.option($.trim(k), v);
+               }, this));
                return;
             }
 
-            //set option by string             
-            this.options[key] = value;                          
-            
+            //set option by string
+            this.options[key] = value;
+
             //disabled
             if(key === 'disabled') {
                return value ? this.disable() : this.enable();
-            } 
-            
+            }
+
             //value
             if(key === 'value') {
                 this.setValue(value);
             }
-            
-            //transfer new option to container! 
+
+            //transfer new option to container!
             if(this.container) {
-                this.container.option(key, value);  
+                this.container.option(key, value);
             }
-             
+
             //pass option to input directly (as it points to the same in form)
             if(this.input.option) {
                 this.input.option(key, value);
             }
-            
-        },              
-        
+
+        },
+
         /*
         * set emptytext if element is empty
         */
@@ -8777,24 +8777,24 @@ Makes editable any HTML element on the page. Applied as jQuery method.
                 return;
             }
 
-            /* 
+            /*
             isEmpty may be set directly as param of method.
-            It is required when we enable/disable field and can't rely on content 
+            It is required when we enable/disable field and can't rely on content
             as node content is text: "Empty" that is not empty %)
             */
-            if(isEmpty !== undefined) { 
+            if(isEmpty !== undefined) {
                 this.isEmpty = isEmpty;
             } else {
                 //detect empty
                 //for some inputs we need more smart check
                 //e.g. wysihtml5 may have <br>, <p></p>, <img>
                 if(typeof(this.input.isEmpty) === 'function') {
-                    this.isEmpty = this.input.isEmpty(this.$element);                    
+                    this.isEmpty = this.input.isEmpty(this.$element);
                 } else {
                     this.isEmpty = $.trim(this.$element.html()) === '';
                 }
-            }           
-            
+            }
+
             //emptytext shown only for enabled
             if(!this.options.disabled) {
                 if (this.isEmpty) {
@@ -8814,18 +8814,18 @@ Makes editable any HTML element on the page. Applied as jQuery method.
                     }
                 }
             }
-        },        
-        
+        },
+
         /**
         Shows container with form
         @method show()
         @param {boolean} closeAll Whether to close all other editable containers when showing this one. Default true.
-        **/  
+        **/
         show: function (closeAll) {
             if(this.options.disabled) {
                 return;
             }
-            
+
             //init editableContainer: popover, tooltip, inline, etc..
             if(!this.container) {
                 var containerOptions = $.extend({}, this.options, {
@@ -8833,32 +8833,32 @@ Makes editable any HTML element on the page. Applied as jQuery method.
                     input: this.input //pass input to form (as it is already created)
                 });
                 this.$element.editableContainer(containerOptions);
-                //listen `save` event 
+                //listen `save` event
                 this.$element.on("save.internal", $.proxy(this.save, this));
-                this.container = this.$element.data('editableContainer'); 
+                this.container = this.$element.data('editableContainer');
             } else if(this.container.tip().is(':visible')) {
                 return;
-            }      
-            
+            }
+
             //show container
             this.container.show(closeAll);
         },
-        
+
         /**
         Hides container with form
         @method hide()
-        **/       
-        hide: function () {   
-            if(this.container) {  
+        **/
+        hide: function () {
+            if(this.container) {
                 this.container.hide();
             }
         },
-        
+
         /**
         Toggles container visibility (show / hide)
         @method toggle()
         @param {boolean} closeAll Whether to close all other editable containers when showing this one. Default true.
-        **/  
+        **/
         toggle: function(closeAll) {
             if(this.container && this.container.tip().is(':visible')) {
                 this.hide();
@@ -8866,58 +8866,58 @@ Makes editable any HTML element on the page. Applied as jQuery method.
                 this.show(closeAll);
             }
         },
-        
+
         /*
         * called when form was submitted
-        */          
+        */
         save: function(e, params) {
             //mark element with unsaved class if needed
             if(this.options.unsavedclass) {
                 /*
                  Add unsaved css to element if:
-                  - url is not user's function 
+                  - url is not user's function
                   - value was not sent to server
                   - params.response === undefined, that means data was not sent
-                  - value changed 
+                  - value changed
                 */
                 var sent = false;
                 sent = sent || typeof this.options.url === 'function';
-                sent = sent || this.options.display === false; 
-                sent = sent || params.response !== undefined; 
-                sent = sent || (this.options.savenochange && this.input.value2str(this.value) !== this.input.value2str(params.newValue)); 
-                
+                sent = sent || this.options.display === false;
+                sent = sent || params.response !== undefined;
+                sent = sent || (this.options.savenochange && this.input.value2str(this.value) !== this.input.value2str(params.newValue));
+
                 if(sent) {
-                    this.$element.removeClass(this.options.unsavedclass); 
+                    this.$element.removeClass(this.options.unsavedclass);
                 } else {
-                    this.$element.addClass(this.options.unsavedclass);                    
+                    this.$element.addClass(this.options.unsavedclass);
                 }
             }
-            
+
             //highlight when saving
             if(this.options.highlight) {
                 var $e = this.$element,
                     bgColor = $e.css('background-color');
-                    
+
                 $e.css('background-color', this.options.highlight);
                 setTimeout(function(){
                     if(bgColor === 'transparent') {
-                        bgColor = ''; 
+                        bgColor = '';
                     }
                     $e.css('background-color', bgColor);
                     $e.addClass('editable-bg-transition');
                     setTimeout(function(){
-                       $e.removeClass('editable-bg-transition');  
+                       $e.removeClass('editable-bg-transition');
                     }, 1700);
                 }, 10);
             }
-            
+
             //set new value
             this.setValue(params.newValue, false, params.response);
-            
-            /**        
+
+            /**
             Fired when new value was submitted. You can use <code>$(this).data('editable')</code> to access to editable instance
-            
-            @event save 
+
+            @event save
             @param {Object} event event object
             @param {Object} params additional params
             @param {mixed} params.newValue submitted value
@@ -8927,7 +8927,7 @@ Makes editable any HTML element on the page. Applied as jQuery method.
                 alert('Saved value: ' + params.newValue);
             });
             **/
-            //event itself is triggered by editableContainer. Description here is only for documentation              
+            //event itself is triggered by editableContainer. Description here is only for documentation
         },
 
         validate: function () {
@@ -8935,13 +8935,13 @@ Makes editable any HTML element on the page. Applied as jQuery method.
                 return this.options.validate.call(this, this.value);
             }
         },
-        
+
         /**
         Sets new value of editable
         @method setValue(value, convertStr)
-        @param {mixed} value new value 
+        @param {mixed} value new value
         @param {boolean} convertStr whether to convert value from string to internal format
-        **/         
+        **/
         setValue: function(value, convertStr, response) {
             if(convertStr) {
                 this.value = this.input.str2value(value);
@@ -8956,40 +8956,40 @@ Makes editable any HTML element on the page. Applied as jQuery method.
                 this.handleEmpty();
             }, this));
         },
-        
+
         /**
         Activates input of visible container (e.g. set focus)
         @method activate()
-        **/         
+        **/
         activate: function() {
             if(this.container) {
-               this.container.activate(); 
+               this.container.activate();
             }
         },
-        
+
         /**
         Removes editable feature from element
         @method destroy()
-        **/        
+        **/
         destroy: function() {
             this.disable();
-            
+
             if(this.container) {
-               this.container.destroy(); 
+               this.container.destroy();
             }
-            
+
             this.input.destroy();
 
             if(this.options.toggle !== 'manual') {
                 this.$element.removeClass('editable-click');
                 this.$element.off(this.options.toggle + '.editable');
-            } 
-            
+            }
+
             this.$element.off("save.internal");
-            
+
             this.$element.removeClass('editable editable-open editable-disabled');
             this.$element.removeData('editable');
-        }        
+        }
     };
 
     /* EDITABLE PLUGIN DEFINITION
@@ -8997,7 +8997,7 @@ Makes editable any HTML element on the page. Applied as jQuery method.
 
     /**
     jQuery method to initialize editable element.
-    
+
     @method $().editable(options)
     @params {Object} options
     @example
@@ -9013,7 +9013,7 @@ Makes editable any HTML element on the page. Applied as jQuery method.
         switch (option) {
             /**
             Runs client-side validation for all matched editables
-            
+
             @method validate()
             @returns {Object} validation errors map
             @example
@@ -9034,11 +9034,11 @@ Makes editable any HTML element on the page. Applied as jQuery method.
             return result;
 
             /**
-            Returns current values of editable elements.   
-            Note that it returns an **object** with name-value pairs, not a value itself. It allows to get data from several elements.    
+            Returns current values of editable elements.
+            Note that it returns an **object** with name-value pairs, not a value itself. It allows to get data from several elements.
             If value of some editable is `null` or `undefined` it is excluded from result object.
-            When param `isSingle` is set to **true** - it is supposed you have single element and will return value of editable instead of object.   
-             
+            When param `isSingle` is set to **true** - it is supposed you have single element and will return value of editable instead of object.
+
             @method getValue()
             @param {bool} isSingle whether to return just value of single element
             @returns {Object} object of element names and values
@@ -9051,7 +9051,7 @@ Makes editable any HTML element on the page. Applied as jQuery method.
             }
             //isSingle = true
             $('#username').editable('getValue', true);
-            //result "superuser" 
+            //result "superuser"
             **/
             case 'getValue':
                 if(arguments.length === 2 && arguments[1] === true) { //isSingle = true
@@ -9067,18 +9067,18 @@ Makes editable any HTML element on the page. Applied as jQuery method.
             return result;
 
             /**
-            This method collects values from several editable elements and submit them all to server.   
-            Internally it runs client-side validation for all fields and submits only in case of success.  
-            See <a href="#newrecord">creating new records</a> for details.  
+            This method collects values from several editable elements and submit them all to server.
+            Internally it runs client-side validation for all fields and submits only in case of success.
+            See <a href="#newrecord">creating new records</a> for details.
             Since 1.5.1 `submit` can be applied to single element to send data programmatically. In that case
-            `url`, `success` and `error` is taken from initial options and you can just call `$('#username').editable('submit')`. 
-            
+            `url`, `success` and `error` is taken from initial options and you can just call `$('#username').editable('submit')`.
+
             @method submit(options)
-            @param {object} options 
-            @param {object} options.url url to submit data 
+            @param {object} options
+            @param {object} options.url url to submit data
             @param {object} options.data additional data to submit
             @param {object} options.ajaxOptions additional ajax options
-            @param {function} options.error(obj) error handler 
+            @param {function} options.error(obj) error handler
             @param {function} options.success(obj,config) success handler
             @returns {Object} jQuery object
             **/
@@ -9090,7 +9090,7 @@ Makes editable any HTML element on the page. Applied as jQuery method.
                 // validation ok
                 if($.isEmptyObject(errors)) {
                     var ajaxOptions = {};
-                                                      
+
                     // for single element use url, success etc from options
                     if($elems.length === 1) {
                         var editable = $elems.data('editable');
@@ -9098,61 +9098,61 @@ Makes editable any HTML element on the page. Applied as jQuery method.
                         var params = {
                             name: editable.options.name || '',
                             value: editable.input.value2submit(editable.value),
-                            pk: (typeof editable.options.pk === 'function') ? 
-                                editable.options.pk.call(editable.options.scope) : 
-                                editable.options.pk 
+                            pk: (typeof editable.options.pk === 'function') ?
+                                editable.options.pk.call(editable.options.scope) :
+                                editable.options.pk
                         };
 
                         //additional params
                         if(typeof editable.options.params === 'function') {
-                            params = editable.options.params.call(editable.options.scope, params);  
+                            params = editable.options.params.call(editable.options.scope, params);
                         } else {
                             //try parse json in single quotes (from data-params attribute)
-                            editable.options.params = $.fn.editableutils.tryParseJson(editable.options.params, true);   
+                            editable.options.params = $.fn.editableutils.tryParseJson(editable.options.params, true);
                             $.extend(params, editable.options.params);
                         }
 
                         ajaxOptions = {
                             url: editable.options.url,
                             data: params,
-                            type: 'POST'  
+                            type: 'POST'
                         };
-                        
-                        // use success / error from options 
+
+                        // use success / error from options
                         config.success = config.success || editable.options.success;
                         config.error = config.error || editable.options.error;
-                        
+
                     // multiple elements
                     } else {
-                        var values = this.editable('getValue'); 
-                        
+                        var values = this.editable('getValue');
+
                         ajaxOptions = {
                             url: config.url,
-                            data: values, 
+                            data: values,
                             type: 'POST'
-                        };                        
-                    }                    
+                        };
+                    }
 
                     // ajax success callabck (response 200 OK)
                     ajaxOptions.success = typeof config.success === 'function' ? function(response) {
                             config.success.call($elems, response, config);
                         } : $.noop;
-                                  
+
                     // ajax error callabck
                     ajaxOptions.error = typeof config.error === 'function' ? function() {
                              config.error.apply($elems, arguments);
                         } : $.noop;
-                       
-                    // extend ajaxOptions    
-                    if(config.ajaxOptions) { 
+
+                    // extend ajaxOptions
+                    if(config.ajaxOptions) {
                         $.extend(ajaxOptions, config.ajaxOptions);
                     }
-                    
-                    // extra data 
+
+                    // extra data
                     if(config.data) {
                         $.extend(ajaxOptions.data, config.data);
-                    }                     
-                    
+                    }
+
                     // perform ajax request
                     $.ajax(ajaxOptions);
                 } else { //client-side validation error
@@ -9165,85 +9165,85 @@ Makes editable any HTML element on the page. Applied as jQuery method.
 
         //return jquery object
         return this.each(function () {
-            var $this = $(this), 
-                data = $this.data(datakey), 
+            var $this = $(this),
+                data = $this.data(datakey),
                 options = typeof option === 'object' && option;
 
             //for delegated targets do not store `editable` object for element
             //it's allows several different selectors.
-            //see: https://github.com/vitalets/x-editable/issues/312    
+            //see: https://github.com/vitalets/x-editable/issues/312
             if(options && options.selector) {
                 data = new Editable(this, options);
-                return; 
-            }    
-            
+                return;
+            }
+
             if (!data) {
                 $this.data(datakey, (data = new Editable(this, options)));
             }
 
-            if (typeof option === 'string') { //call method 
+            if (typeof option === 'string') { //call method
                 data[option].apply(data, Array.prototype.slice.call(args, 1));
-            } 
+            }
         });
-    };    
-            
+    };
+
 
     $.fn.editable.defaults = {
         /**
         Type of input. Can be <code>text|textarea|select|date|checklist</code> and more
 
-        @property type 
+        @property type
         @type string
         @default 'text'
         **/
-        type: 'text',        
+        type: 'text',
         /**
         Sets disabled state of editable
 
-        @property disabled 
+        @property disabled
         @type boolean
         @default false
-        **/         
+        **/
         disabled: false,
         /**
-        How to toggle editable. Can be <code>click|dblclick|mouseenter|manual</code>.   
-        When set to <code>manual</code> you should manually call <code>show/hide</code> methods of editable.    
-        **Note**: if you call <code>show</code> or <code>toggle</code> inside **click** handler of some DOM element, 
+        How to toggle editable. Can be <code>click|dblclick|mouseenter|manual</code>.
+        When set to <code>manual</code> you should manually call <code>show/hide</code> methods of editable.
+        **Note**: if you call <code>show</code> or <code>toggle</code> inside **click** handler of some DOM element,
         you need to apply <code>e.stopPropagation()</code> because containers are being closed on any click on document.
-        
+
         @example
         $('#edit-button').click(function(e) {
             e.stopPropagation();
             $('#username').editable('toggle');
         });
 
-        @property toggle 
+        @property toggle
         @type string
         @default 'click'
-        **/          
+        **/
         toggle: 'click',
         /**
         Text shown when element is empty.
 
-        @property emptytext 
+        @property emptytext
         @type string
         @default 'Empty'
-        **/         
+        **/
         emptytext: 'Empty',
         /**
         Allows to automatically set element's text based on it's value. Can be <code>auto|always|never</code>. Useful for select and date.
-        For example, if dropdown list is <code>{1: 'a', 2: 'b'}</code> and element's value set to <code>1</code>, it's html will be automatically set to <code>'a'</code>.  
-        <code>auto</code> - text will be automatically set only if element is empty.  
+        For example, if dropdown list is <code>{1: 'a', 2: 'b'}</code> and element's value set to <code>1</code>, it's html will be automatically set to <code>'a'</code>.
+        <code>auto</code> - text will be automatically set only if element is empty.
         <code>always|never</code> - always(never) try to set element's text.
 
-        @property autotext 
+        @property autotext
         @type string
         @default 'auto'
-        **/          
-        autotext: 'auto', 
+        **/
+        autotext: 'auto',
         /**
-        Initial value of input. If not set, taken from element's text.  
-        Note, that if element's text is empty - text is automatically generated from value and can be customized (see `autotext` option).  
+        Initial value of input. If not set, taken from element's text.
+        Note, that if element's text is empty - text is automatically generated from value and can be customized (see `autotext` option).
         For example, to display currency sign:
         @example
         <a id="price" data-type="text" data-value="100"></a>
@@ -9252,34 +9252,34 @@ Makes editable any HTML element on the page. Applied as jQuery method.
             ...
             display: function(value) {
               $(this).text(value + '$');
-            } 
-        }) 
+            }
+        })
         </script>
-                
-        @property value 
+
+        @property value
         @type mixed
         @default element's text
         **/
         value: null,
         /**
-        Callback to perform custom displaying of value in element's text.  
-        If `null`, default input's display used.  
-        If `false`, no displaying methods will be called, element's text will never change.  
-        Runs under element's scope.  
-        _**Parameters:**_  
-        
+        Callback to perform custom displaying of value in element's text.
+        If `null`, default input's display used.
+        If `false`, no displaying methods will be called, element's text will never change.
+        Runs under element's scope.
+        _**Parameters:**_
+
         * `value` current value to be displayed
         * `response` server response (if display called after ajax submit), since 1.4.0
-         
-        For _inputs with source_ (select, checklist) parameters are different:  
-          
+
+        For _inputs with source_ (select, checklist) parameters are different:
+
         * `value` current value to be displayed
-        * `sourceData` array of items for current input (e.g. dropdown items) 
+        * `sourceData` array of items for current input (e.g. dropdown items)
         * `response` server response (if display called after ajax submit), since 1.4.0
-                  
+
         To get currently selected items use `$.fn.editableutils.itemsByValue(value, sourceData)`.
-        
-        @property display 
+
+        @property display
         @type function|boolean
         @default null
         @since 1.2.0
@@ -9288,46 +9288,46 @@ Makes editable any HTML element on the page. Applied as jQuery method.
            //display checklist as comma-separated values
            var html = [],
                checked = $.fn.editableutils.itemsByValue(value, sourceData);
-               
+
            if(checked.length) {
                $.each(checked, function(i, v) { html.push($.fn.editableutils.escape(v.text)); });
                $(this).html(html.join(', '));
            } else {
-               $(this).empty(); 
+               $(this).empty();
            }
         }
-        **/          
+        **/
         display: null,
         /**
         Css class applied when editable text is empty.
 
-        @property emptyclass 
+        @property emptyclass
         @type string
-        @since 1.4.1        
+        @since 1.4.1
         @default editable-empty
-        **/        
+        **/
         emptyclass: 'editable-empty',
         /**
-        Css class applied when value was stored but not sent to server (`pk` is empty or `send = 'never'`).  
-        You may set it to `null` if you work with editables locally and submit them together.  
+        Css class applied when value was stored but not sent to server (`pk` is empty or `send = 'never'`).
+        You may set it to `null` if you work with editables locally and submit them together.
 
-        @property unsavedclass 
+        @property unsavedclass
         @type string
-        @since 1.4.1        
+        @since 1.4.1
         @default editable-unsaved
-        **/        
+        **/
         unsavedclass: 'editable-unsaved',
         /**
-        If selector is provided, editable will be delegated to the specified targets.  
-        Usefull for dynamically generated DOM elements.  
-        **Please note**, that delegated targets can't be initialized with `emptytext` and `autotext` options, 
-        as they actually become editable only after first click.  
-        You should manually set class `editable-click` to these elements.  
+        If selector is provided, editable will be delegated to the specified targets.
+        Usefull for dynamically generated DOM elements.
+        **Please note**, that delegated targets can't be initialized with `emptytext` and `autotext` options,
+        as they actually become editable only after first click.
+        You should manually set class `editable-click` to these elements.
         Also, if element originally empty you should add class `editable-empty`, set `data-value=""` and write emptytext into element:
 
-        @property selector 
+        @property selector
         @type string
-        @since 1.4.1        
+        @since 1.4.1
         @default null
         @example
         <div id="user">
@@ -9335,8 +9335,8 @@ Makes editable any HTML element on the page. Applied as jQuery method.
           <a href="#" data-name="username" data-type="text" class="editable-click editable-empty" data-value="" title="Username">Empty</a>
           <!-- non-empty -->
           <a href="#" data-name="group" data-type="select" data-source="/groups" data-value="1" class="editable-click" title="Group">Operator</a>
-        </div>     
-        
+        </div>
+
         <script>
         $('#user').editable({
             selector: 'a',
@@ -9344,19 +9344,19 @@ Makes editable any HTML element on the page. Applied as jQuery method.
             pk: 1
         });
         </script>
-        **/         
+        **/
         selector: null,
         /**
         Color used to highlight element after update. Implemented via CSS3 transition, works in modern browsers.
-        
-        @property highlight 
+
+        @property highlight
         @type string|boolean
-        @since 1.4.5        
-        @default #FFFF80 
+        @since 1.4.5
+        @default #FFFF80
         **/
         highlight: '#FFFF80'
     };
-    
+
 }(window.jQuery));
 
 /**
@@ -9378,7 +9378,7 @@ To create your own input you can inherit from this class.
        /**
         Initializes input
 
-        @method init() 
+        @method init()
         **/
        init: function(type, options, defaults) {
            this.type = type;
@@ -9389,12 +9389,12 @@ To create your own input you can inherit from this class.
        this method called before render to init $tpl that is inserted in DOM
        */
        prerender: function() {
-           this.$tpl = $(this.options.tpl); //whole tpl as jquery object    
+           this.$tpl = $(this.options.tpl); //whole tpl as jquery object
            this.$input = this.$tpl;         //control itself, can be changed in render method
            this.$clear = null;              //clear button
-           this.error = null;               //error message, if input cannot be rendered           
+           this.error = null;               //error message, if input cannot be rendered
        },
-       
+
        /**
         Renders input from tpl. Can return jQuery deferred object.
         Can be overwritten in child objects
@@ -9403,10 +9403,10 @@ To create your own input you can inherit from this class.
        **/
        render: function() {
 
-       }, 
+       },
 
        /**
-        Sets element's html by value. 
+        Sets element's html by value.
 
         @method value2html(value, element)
         @param {mixed} value
@@ -9430,13 +9430,13 @@ To create your own input you can inherit from this class.
        /**
         Converts value to string (for internal compare). For submitting to server used value2submit().
 
-        @method value2str(value) 
+        @method value2str(value)
         @param {mixed} value
         @returns {string}
        **/
        value2str: function(value) {
            return value;
-       }, 
+       },
 
        /**
         Converts string received from server into value. Usually from `data-value` attribute.
@@ -9447,12 +9447,12 @@ To create your own input you can inherit from this class.
        **/
        str2value: function(str) {
            return str;
-       }, 
-       
+       },
+
        /**
         Converts value for submitting to server. Result can be string or object.
 
-        @method value2submit(value) 
+        @method value2submit(value)
         @param {mixed} value
         @returns {mixed}
        **/
@@ -9463,7 +9463,7 @@ To create your own input you can inherit from this class.
        /**
         Sets value of input.
 
-        @method value2input(value) 
+        @method value2input(value)
         @param {mixed} value
        **/
        value2input: function(value) {
@@ -9473,16 +9473,16 @@ To create your own input you can inherit from this class.
        /**
         Returns value of input. Value can be object (e.g. datepicker)
 
-        @method input2value() 
+        @method input2value()
        **/
-       input2value: function() { 
+       input2value: function() {
            return this.$input.val();
-       }, 
+       },
 
        /**
         Activates input. For text it sets focus.
 
-        @method activate() 
+        @method activate()
        **/
        activate: function() {
            if(this.$input.is(':visible')) {
@@ -9493,8 +9493,8 @@ To create your own input you can inherit from this class.
        /**
         Creates input.
 
-        @method clear() 
-       **/        
+        @method clear()
+       **/
        clear: function() {
            this.$input.val(null);
        },
@@ -9505,79 +9505,79 @@ To create your own input you can inherit from this class.
        escape: function(str) {
            return $('<div>').text(str).html();
        },
-       
+
        /**
         attach handler to automatically submit form when value changed (useful when buttons not shown)
        **/
        autosubmit: function() {
-        
+
        },
-       
+
        /**
-       Additional actions when destroying element 
+       Additional actions when destroying element
        **/
        destroy: function() {
        },
 
        // -------- helper functions --------
-       setClass: function() {          
+       setClass: function() {
            if(this.options.inputclass) {
-               this.$input.addClass(this.options.inputclass); 
-           } 
+               this.$input.addClass(this.options.inputclass);
+           }
        },
 
        setAttr: function(attr) {
            if (this.options[attr] !== undefined && this.options[attr] !== null) {
                this.$input.attr(attr, this.options[attr]);
-           } 
+           }
        },
-       
+
        option: function(key, value) {
             this.options[key] = value;
        }
-       
+
     };
-        
-    AbstractInput.defaults = {  
+
+    AbstractInput.defaults = {
         /**
         HTML template of input. Normally you should not change it.
 
-        @property tpl 
+        @property tpl
         @type string
         @default ''
-        **/   
+        **/
         tpl: '',
         /**
         CSS class automatically applied to input
-        
-        @property inputclass 
+
+        @property inputclass
         @type string
         @default null
-        **/         
+        **/
         inputclass: null,
-        
+
         /**
-        If `true` - html will be escaped in content of element via $.text() method.  
-        If `false` - html will not be escaped, $.html() used.  
+        If `true` - html will be escaped in content of element via $.text() method.
+        If `false` - html will not be escaped, $.html() used.
         When you use own `display` function, this option obviosly has no effect.
-        
-        @property escape 
+
+        @property escape
         @type boolean
         @since 1.5.0
         @default true
-        **/         
+        **/
         escape: true,
-                
+
         //scope for external methods (e.g. source defined as function)
         //for internal use only
         scope: null,
-        
+
         //need to re-declare showbuttons here to get it's value from common config (passed only options existing in defaults)
-        showbuttons: true 
+        showbuttons: true
     };
-    
+
     $.extend($.fn.editabletypes, {abstractinput: AbstractInput});
-        
+
 }(window.jQuery));
 
 /**
@@ -9588,9 +9588,9 @@ List - abstract class for inputs that have source option loaded from js array or
 **/
 (function ($) {
     "use strict";
-    
+
     var List = function (options) {
-       
+
     };
 
     $.fn.editableutils.inherit(List, $.fn.editabletypes.abstractinput);
@@ -9614,28 +9614,28 @@ List - abstract class for inputs that have source option loaded from js array or
         html2value: function (html) {
             return null; //can't set value by text
         },
-        
+
         value2html: function (value, element, display, response) {
             var deferred = $.Deferred(),
                 success = function () {
                     if(typeof display === 'function') {
                         //custom display method
-                        display.call(element, value, this.sourceData, response); 
+                        display.call(element, value, this.sourceData, response);
                     } else {
                         this.value2htmlFinal(value, element);
                     }
                     deferred.resolve();
                };
-            
+
             //for null value just call success without loading source
             if(value === null) {
-               success.call(this);   
+               success.call(this);
             } else {
                this.onSourceReady(success, function () { deferred.resolve(); });
             }
 
             return deferred.promise();
-        },  
+        },
 
         // ------------- additional functions ------------
 
@@ -9648,12 +9648,12 @@ List - abstract class for inputs that have source option loaded from js array or
                 //note: if function returns the same source as URL - sourceData will be taken from cahce and no extra request performed
             } else {
                 source = this.options.source;
-            }            
-            
+            }
+
             //if allready loaded just call success
             if(this.options.sourceCache && $.isArray(this.sourceData)) {
                 success.call(this);
-                return; 
+                return;
             }
 
             //try parse json in single quotes (for double quotes jquery does automatically)
@@ -9698,7 +9698,7 @@ List - abstract class for inputs that have source option loaded from js array or
                         cache.err_callbacks = [];
                     }
                 }
-                
+
                 //ajaxOptions for source. Can be overwritten bt options.sourceOptions
                 var ajaxOptions = $.extend({
                     url: source,
@@ -9715,7 +9715,7 @@ List - abstract class for inputs that have source option loaded from js array or
                                 //store result in cache
                                 cache.sourceData = this.sourceData;
                                 //run success callbacks for other fields waiting for this source
-                                $.each(cache.callbacks, function () { this.call(); }); 
+                                $.each(cache.callbacks, function () { this.call(); });
                             }
                             this.doPrepend();
                             success.call(this);
@@ -9723,7 +9723,7 @@ List - abstract class for inputs that have source option loaded from js array or
                             error.call(this);
                             if(cache) {
                                 //run error callbacks for other fields waiting for this source
-                                $.each(cache.err_callbacks, function () { this.call(); }); 
+                                $.each(cache.err_callbacks, function () { this.call(); });
                             }
                         }
                     }, this),
@@ -9732,20 +9732,20 @@ List - abstract class for inputs that have source option loaded from js array or
                         if(cache) {
                              cache.loading = false;
                              //run error callbacks for other fields
-                             $.each(cache.err_callbacks, function () { this.call(); }); 
+                             $.each(cache.err_callbacks, function () { this.call(); });
                         }
                     }, this)
                 }, this.options.sourceOptions);
-                
+
                 //loading sourceData from server
                 $.ajax(ajaxOptions);
-                
+
             } else { //options as json/array
                 this.sourceData = this.makeArray(source);
-                    
+
                 if($.isArray(this.sourceData)) {
                     this.doPrepend();
-                    success.call(this);   
+                    success.call(this);
                 } else {
                     error.call(this);
                 }
@@ -9754,23 +9754,23 @@ List - abstract class for inputs that have source option loaded from js array or
 
         doPrepend: function () {
             if(this.options.prepend === null || this.options.prepend === undefined) {
-                return;  
+                return;
             }
-            
+
             if(!$.isArray(this.prependData)) {
                 //run prepend if it is function (once)
                 if ($.isFunction(this.options.prepend)) {
                     this.options.prepend = this.options.prepend.call(this.options.scope);
                 }
-              
+
                 //try parse json in single quotes
                 this.options.prepend = $.fn.editableutils.tryParseJson(this.options.prepend, true);
-                
+
                 //convert prepend from string to object
                 if (typeof this.options.prepend === 'string') {
                     this.options.prepend = {'': this.options.prepend};
                 }
-                
+
                 this.prependData = this.makeArray(this.options.prepend);
             }
 
@@ -9785,13 +9785,13 @@ List - abstract class for inputs that have source option loaded from js array or
         renderList: function() {
             // this method should be overwritten in child class
         },
-       
+
          /*
          set element's html by value
         */
         value2htmlFinal: function(value, element) {
             // this method should be overwritten in child class
-        },        
+        },
 
         /**
         * convert data to array suitable for sourceData, e.g. [{value: 1, text: 'abc'}, {...}]
@@ -9799,13 +9799,13 @@ List - abstract class for inputs that have source option loaded from js array or
         makeArray: function(data) {
             var count, obj, result = [], item, iterateItem;
             if(!data || typeof data === 'string') {
-                return null; 
+                return null;
             }
 
             if($.isArray(data)) { //array
-                /* 
+                /*
                    function to iterate inside item of array if item is object.
-                   Caclulates count of keys in item and store in obj. 
+                   Caclulates count of keys in item and store in obj.
                 */
                 iterateItem = function (k, v) {
                     obj = {value: k, text: v};
@@ -9813,36 +9813,36 @@ List - abstract class for inputs that have source option loaded from js array or
                         return false;// exit from `each` if item has more than one key.
                     }
                 };
-            
+
                 for(var i = 0; i < data.length; i++) {
-                    item = data[i]; 
+                    item = data[i];
                     if(typeof item === 'object') {
                         count = 0; //count of keys inside item
                         $.each(item, iterateItem);
                         //case: [{val1: 'text1'}, {val2: 'text2} ...]
-                        if(count === 1) { 
-                            result.push(obj); 
+                        if(count === 1) {
+                            result.push(obj);
                             //case: [{value: 1, text: 'text1'}, {value: 2, text: 'text2'}, ...]
                         } else if(count > 1) {
                             //removed check of existance: item.hasOwnProperty('value') && item.hasOwnProperty('text')
                             if(item.children) {
-                                item.children = this.makeArray(item.children);   
+                                item.children = this.makeArray(item.children);
                             }
                             result.push(item);
                         }
                     } else {
                         //case: ['text1', 'text2' ...]
-                        result.push({value: item, text: item}); 
+                        result.push({value: item, text: item});
                     }
                 }
             } else {  //case: {val1: 'text1', val2: 'text2, ...}
                 $.each(data, function (k, v) {
                     result.push({value: k, text: v});
-                });  
+                });
             }
             return result;
         },
-        
+
         option: function(key, value) {
             this.options[key] = value;
             if(key === 'source') {
@@ -9850,69 +9850,69 @@ List - abstract class for inputs that have source option loaded from js array or
             }
             if(key === 'prepend') {
                 this.prependData = null;
-            }            
-        }        
+            }
+        }
 
-    });      
+    });
 
     List.defaults = $.extend({}, $.fn.editabletypes.abstractinput.defaults, {
         /**
-        Source data for list.  
-        If **array** - it should be in format: `[{value: 1, text: "text1"}, {value: 2, text: "text2"}, ...]`  
+        Source data for list.
+        If **array** - it should be in format: `[{value: 1, text: "text1"}, {value: 2, text: "text2"}, ...]`
         For compability, object format is also supported: `{"1": "text1", "2": "text2" ...}` but it does not guarantee elements order.
-        
-        If **string** - considered ajax url to load items. In that case results will be cached for fields with the same source and name. See also `sourceCache` option.
-          
-        If **function**, it should return data in format above (since 1.4.0).
-        
-        Since 1.4.1 key `children` supported to render OPTGROUP (for **select** input only).  
-        `[{text: "group1", children: [{value: 1, text: "text1"}, {value: 2, text: "text2"}]}, ...]` 
 
-		
-        @property source 
+        If **string** - considered ajax url to load items. In that case results will be cached for fields with the same source and name. See also `sourceCache` option.
+
+        If **function**, it should return data in format above (since 1.4.0).
+
+        Since 1.4.1 key `children` supported to render OPTGROUP (for **select** input only).
+        `[{text: "group1", children: [{value: 1, text: "text1"}, {value: 2, text: "text2"}]}, ...]`
+
+
+        @property source
         @type string | array | object | function
         @default null
-        **/         
-        source: null, 
+        **/
+        source: null,
         /**
         Data automatically prepended to the beginning of dropdown list.
-        
-        @property prepend 
+
+        @property prepend
         @type string | array | object | function
         @default false
-        **/         
+        **/
         prepend: false,
         /**
         Error message when list cannot be loaded (e.g. ajax error)
-        
-        @property sourceError 
+
+        @property sourceError
         @type string
         @default Error when loading list
-        **/          
+        **/
         sourceError: 'Error when loading list',
         /**
-        if <code>true</code> and source is **string url** - results will be cached for fields with the same source.    
+        if <code>true</code> and source is **string url** - results will be cached for fields with the same source.
         Usefull for editable column in grid to prevent extra requests.
-        
-        @property sourceCache 
+
+        @property sourceCache
         @type boolean
         @default true
         @since 1.2.0
-        **/        
+        **/
         sourceCache: true,
         /**
         Additional ajax options to be used in $.ajax() when loading list from server.
         Useful to send extra parameters (`data` key) or change request method (`type` key).
-        
-        @property sourceOptions 
+
+        @property sourceOptions
         @type object|function
         @default null
         @since 1.5.0
-        **/        
+        **/
         sourceOptions: null
     });
 
-    $.fn.editabletypes.list = List;      
+    $.fn.editabletypes.list = List;
 
 }(window.jQuery));
 
@@ -9935,7 +9935,7 @@ $(function(){
 **/
 (function ($) {
     "use strict";
-    
+
     var Text = function (options) {
         this.init('text', options, Text.defaults);
     };
@@ -9948,7 +9948,7 @@ $(function(){
            this.setClass();
            this.setAttr('placeholder');
         },
-        
+
         activate: function() {
             if(this.$input.is(':visible')) {
                 this.$input.focus();
@@ -9958,7 +9958,7 @@ $(function(){
                 }
             }
         },
-        
+
         //render clear button
         renderClear:  function() {
            if (this.options.clear) {
@@ -9969,21 +9969,21 @@ $(function(){
                               //arrows, enter, tab, etc
                               if(~$.inArray(e.keyCode, [40,38,9,13,27])) {
                                 return;
-                              }                            
+                              }
 
                               clearTimeout(this.t);
                               var that = this;
                               this.t = setTimeout(function() {
                                 that.toggleClear(e);
                               }, 100);
-                              
+
                           }, this))
                           .parent().css('position', 'relative');
-                          
-               this.$clear.click($.proxy(this.clear, this));                       
-           }            
+
+               this.$clear.click($.proxy(this.clear, this));
+           }
         },
-        
+
         postrender: function() {
             /*
             //now `clear` is positioned via css
@@ -9992,57 +9992,57 @@ $(function(){
 //                var h = this.$input.outerHeight(true) || 20,
                 var h = this.$clear.parent().height(),
                     delta = (h - this.$clear.height()) / 2;
-                    
+
                 //this.$clear.css({bottom: delta, right: delta});
             }
-            */ 
+            */
         },
-        
+
         //show / hide clear button
         toggleClear: function(e) {
             if(!this.$clear) {
                 return;
             }
-            
+
             var len = this.$input.val().length,
                 visible = this.$clear.is(':visible');
-                 
+
             if(len && !visible) {
                 this.$clear.show();
-            } 
-            
+            }
+
             if(!len && visible) {
                 this.$clear.hide();
-            } 
+            }
         },
-        
+
         clear: function() {
            this.$clear.hide();
            this.$input.val('').focus();
-        }          
+        }
     });
 
     Text.defaults = $.extend({}, $.fn.editabletypes.abstractinput.defaults, {
         /**
-        @property tpl 
+        @property tpl
         @default <input type="text">
-        **/         
+        **/
         tpl: '<input type="text">',
         /**
         Placeholder attribute of input. Shown when input is empty.
 
-        @property placeholder 
+        @property placeholder
         @type string
         @default null
-        **/             
+        **/
         placeholder: null,
-        
+
         /**
-        Whether to show `clear` button 
-        
-        @property clear 
+        Whether to show `clear` button
+
+        @property clear
         @type boolean
-        @default true        
+        @default true
         **/
         clear: true
     });
@@ -10071,7 +10071,7 @@ $(function(){
 **/
 (function ($) {
     "use strict";
-    
+
     var Textarea = function (options) {
         this.init('textarea', options, Textarea.defaults);
     };
@@ -10082,8 +10082,8 @@ $(function(){
         render: function () {
             this.setClass();
             this.setAttr('placeholder');
-            this.setAttr('rows');                        
-            
+            this.setAttr('rows');
+
             //ctrl + enter
             this.$input.keydown(function (e) {
                 if (e.ctrlKey && e.which === 13) {
@@ -10091,9 +10091,9 @@ $(function(){
                 }
             });
         },
-        
+
        //using `white-space: pre-wrap` solves \n  <--> BR conversion very elegant!
-       /* 
+       /*
        value2html: function(value, element) {
             var html = '', lines;
             if(value) {
@@ -10105,7 +10105,7 @@ $(function(){
             }
             $(element).html(html);
         },
-       
+
         html2value: function(html) {
             if(!html) {
                 return '';
@@ -10155,8 +10155,8 @@ $(function(){
         @property rows
         @type integer
         @default 7
-        **/        
-        rows: 7        
+        **/
+        rows: 7
     });
 
     $.fn.editabletypes.textarea = Textarea;
@@ -10174,7 +10174,7 @@ Select (dropdown)
 <script>
 $(function(){
     $('#status').editable({
-        value: 2,    
+        value: 2,
         source: [
               {value: 1, text: 'Active'},
               {value: 2, text: 'Blocked'},
@@ -10186,7 +10186,7 @@ $(function(){
 **/
 (function ($) {
     "use strict";
-    
+
     var Select = function (options) {
         this.init('select', options, Select.defaults);
     };
@@ -10204,64 +10204,64 @@ $(function(){
                         attr = {};
                         if(data[i].children) {
                             attr.label = data[i].text;
-                            $el.append(fillItems($('<optgroup>', attr), data[i].children)); 
+                            $el.append(fillItems($('<optgroup>', attr), data[i].children));
                         } else {
                             attr.value = data[i].value;
                             if(data[i].disabled) {
                                 attr.disabled = true;
                             }
-                            $el.append($('<option>', attr).text(data[i].text)); 
+                            $el.append($('<option>', attr).text(data[i].text));
                         }
                     }
                 }
                 return $el;
-            };        
+            };
 
             fillItems(this.$input, this.sourceData);
-            
+
             this.setClass();
-            
+
             //enter submit
             this.$input.on('keydown.editable', function (e) {
                 if (e.which === 13) {
                     $(this).closest('form').submit();
                 }
-            });            
+            });
         },
-       
+
         value2htmlFinal: function(value, element) {
-            var text = '', 
+            var text = '',
                 items = $.fn.editableutils.itemsByValue(value, this.sourceData);
-                
+
             if(items.length) {
                 text = items[0].text;
             }
-            
+
             //$(element).text(text);
             $.fn.editabletypes.abstractinput.prototype.value2html.call(this, text, element);
         },
-        
+
         autosubmit: function() {
             this.$input.off('keydown.editable').on('change.editable', function(){
                 $(this).closest('form').submit();
             });
         }
-    });      
+    });
 
     Select.defaults = $.extend({}, $.fn.editabletypes.list.defaults, {
         /**
-        @property tpl 
+        @property tpl
         @default <select></select>
-        **/         
+        **/
         tpl:'<select></select>'
     });
 
-    $.fn.editabletypes.select = Select;      
+    $.fn.editabletypes.select = Select;
 
 }(window.jQuery));
 
 /**
-List of checkboxes. 
+List of checkboxes.
 Internally value stored as javascript array of values.
 
 @class checklist
@@ -10272,7 +10272,7 @@ Internally value stored as javascript array of values.
 <script>
 $(function(){
     $('#options').editable({
-        value: [2, 3],    
+        value: [2, 3],
         source: [
               {value: 1, text: 'option1'},
               {value: 2, text: 'option2'},
@@ -10284,7 +10284,7 @@ $(function(){
 **/
 (function ($) {
     "use strict";
-    
+
     var Checklist = function (options) {
         this.init('checklist', options, Checklist.defaults);
     };
@@ -10294,9 +10294,9 @@ $(function(){
     $.extend(Checklist.prototype, {
         renderList: function() {
             var $label, $div;
-            
+
             this.$tpl.empty();
-            
+
             if(!$.isArray(this.sourceData)) {
                 return;
             }
@@ -10304,21 +10304,21 @@ $(function(){
             for(var i=0; i<this.sourceData.length; i++) {
                 $label = $('<label>').append($('<input>', {
                                            type: 'checkbox',
-                                           value: this.sourceData[i].value 
+                                           value: this.sourceData[i].value
                                      }))
                                      .append($('<span>').text(' '+this.sourceData[i].text));
-                
+
                 $('<div>').append($label).appendTo(this.$tpl);
             }
-            
+
             this.$input = this.$tpl.find('input[type="checkbox"]');
             this.setClass();
         },
-       
+
        value2str: function(value) {
            return $.isArray(value) ? value.sort().join($.trim(this.options.separator)) : '';
-       },  
-       
+       },
+
        //parse separated string
         str2value: function(str) {
            var reg, value = null;
@@ -10326,13 +10326,13 @@ $(function(){
                reg = new RegExp('\\s*'+$.trim(this.options.separator)+'\\s*');
                value = str.split(reg);
            } else if($.isArray(str)) {
-               value = str; 
+               value = str;
            } else {
                value = [str];
            }
            return value;
-        },       
-       
+        },
+
        //set checked on required checkboxes
        value2input: function(value) {
             this.$input.prop('checked', false);
@@ -10343,43 +10343,43 @@ $(function(){
                    $.each(value, function(j, val){
                        /*jslint eqeq: true*/
                        if($el.val() == val) {
-                       /*jslint eqeq: false*/                           
+                       /*jslint eqeq: false*/
                            $el.prop('checked', true);
                        }
                    });
-               }); 
-            }  
-        },  
-        
-       input2value: function() { 
+               });
+            }
+        },
+
+       input2value: function() {
            var checked = [];
            this.$input.filter(':checked').each(function(i, el) {
                checked.push($(el).val());
            });
            return checked;
-       },            
-          
+       },
+
        //collect text of checked boxes
         value2htmlFinal: function(value, element) {
            var html = [],
                checked = $.fn.editableutils.itemsByValue(value, this.sourceData),
                escape = this.options.escape;
-               
+
            if(checked.length) {
                $.each(checked, function(i, v) {
-                   var text = escape ? $.fn.editableutils.escape(v.text) : v.text; 
-                   html.push(text); 
+                   var text = escape ? $.fn.editableutils.escape(v.text) : v.text;
+                   html.push(text);
                });
                $(element).html(html.join('<br>'));
            } else {
-               $(element).empty(); 
+               $(element).empty();
            }
         },
-        
+
        activate: function() {
            this.$input.first().focus();
        },
-       
+
        autosubmit: function() {
            this.$input.on('keydown', function(e){
                if (e.which === 13) {
@@ -10387,33 +10387,33 @@ $(function(){
                }
            });
        }
-    });      
+    });
 
     Checklist.defaults = $.extend({}, $.fn.editabletypes.list.defaults, {
         /**
-        @property tpl 
+        @property tpl
         @default <div></div>
-        **/         
+        **/
         tpl:'<div class="editable-checklist"></div>',
-        
+
         /**
-        @property inputclass 
+        @property inputclass
         @type string
         @default null
-        **/         
-        inputclass: null,        
-        
+        **/
+        inputclass: null,
+
         /**
         Separator of values when reading from `data-value` attribute
 
-        @property separator 
+        @property separator
         @type string
         @default ','
-        **/         
+        **/
         separator: ','
     });
 
-    $.fn.editabletypes.checklist = Checklist;      
+    $.fn.editabletypes.checklist = Checklist;
 
 }(window.jQuery));
 
@@ -10429,12 +10429,12 @@ Following types are supported:
 * range
 * time
 
-Learn more about html5 inputs:  
-http://www.w3.org/wiki/HTML5_form_additions  
-To check browser compatibility please see:  
+Learn more about html5 inputs:
+http://www.w3.org/wiki/HTML5_form_additions
+To check browser compatibility please see:
 https://developer.mozilla.org/en-US/docs/HTML/Element/Input
-            
-@class html5types 
+
+@class html5types
 @extends text
 @final
 @since 1.3.0
@@ -10451,16 +10451,16 @@ $(function(){
 **/
 
 /**
-@property tpl 
+@property tpl
 @default depends on type
-**/ 
+**/
 
 /*
 Password
 */
 (function ($) {
     "use strict";
-    
+
     var Password = function (options) {
         this.init('password', options, Password.defaults);
     };
@@ -10471,14 +10471,14 @@ Password
            if(value) {
                $(element).text('[hidden]');
            } else {
-               $(element).empty(); 
+               $(element).empty();
            }
        },
        //as password not displayed, should not set value by html
        html2value: function(html) {
            return null;
-       }       
-    });    
+       }
+    });
     Password.defaults = $.extend({}, $.fn.editabletypes.text.defaults, {
         tpl: '<input type="password">'
     });
@@ -10491,7 +10491,7 @@ Email
 */
 (function ($) {
     "use strict";
-    
+
     var Email = function (options) {
         this.init('email', options, Email.defaults);
     };
@@ -10508,7 +10508,7 @@ Url
 */
 (function ($) {
     "use strict";
-    
+
     var Url = function (options) {
         this.init('url', options, Url.defaults);
     };
@@ -10525,7 +10525,7 @@ Tel
 */
 (function ($) {
     "use strict";
-    
+
     var Tel = function (options) {
         this.init('tel', options, Tel.defaults);
     };
@@ -10542,7 +10542,7 @@ Number
 */
 (function ($) {
     "use strict";
-    
+
     var NumberInput = function (options) {
         this.init('number', options, NumberInput.defaults);
     };
@@ -10562,13 +10562,13 @@ Number
                 //can position clear button only here, when form is shown and height can be calculated
                 var h = this.$input.outerHeight(true) || 20,
                     delta = (h - this.$clear.height()) / 2;
-                
-                //add 12px to offset right for up/down arrows    
+
+                //add 12px to offset right for up/down arrows
                 this.$clear.css({top: delta, right: delta + 16});
                 */
-            } 
-        }        
-    });     
+            }
+        }
+    });
     NumberInput.defaults = $.extend({}, $.fn.editabletypes.text.defaults, {
         tpl: '<input type="number">',
         inputclass: 'input-mini',
@@ -10585,7 +10585,7 @@ Range (inherit from number)
 */
 (function ($) {
     "use strict";
-    
+
     var Range = function (options) {
         this.init('range', options, Range.defaults);
     };
@@ -10593,19 +10593,19 @@ Range (inherit from number)
     $.extend(Range.prototype, {
         render: function () {
             this.$input = this.$tpl.filter('input');
-            
+
             this.setClass();
             this.setAttr('min');
             this.setAttr('max');
-            this.setAttr('step');           
-            
+            this.setAttr('step');
+
             this.$input.on('input', function(){
-                $(this).siblings('output').text($(this).val()); 
-            });  
+                $(this).siblings('output').text($(this).val());
+            });
         },
         activate: function() {
             this.$input.focus();
-        }         
+        }
     });
     Range.defaults = $.extend({}, $.fn.editabletypes.number.defaults, {
         tpl: '<input type="range"><output style="width: 30px; display: inline-block"></output>',
@@ -10628,7 +10628,7 @@ Time
     $.extend(Time.prototype, {
         render: function() {
            this.setClass();
-        }        
+        }
     });
     Time.defaults = $.extend({}, $.fn.editabletypes.abstractinput.defaults, {
         tpl: '<input type="time">'
@@ -10637,24 +10637,24 @@ Time
 }(window.jQuery));
 
 /**
-Select2 input. Based on amazing work of Igor Vaynberg https://github.com/ivaynberg/select2.  
-Please see [original select2 docs](http://ivaynberg.github.com/select2) for detailed description and options.  
- 
-You should manually download and include select2 distributive:  
+Select2 input. Based on amazing work of Igor Vaynberg https://github.com/ivaynberg/select2.
+Please see [original select2 docs](http://ivaynberg.github.com/select2) for detailed description and options.
 
-    <link href="select2/select2.css" rel="stylesheet" type="text/css"></link>  
-    <script src="select2/select2.js"></script>  
-    
-To make it **bootstrap-styled** you can use css from [here](https://github.com/t0m/select2-bootstrap-css): 
+You should manually download and include select2 distributive:
 
-    <link href="select2-bootstrap.css" rel="stylesheet" type="text/css"></link>    
-    
-**Note:** currently `autotext` feature does not work for select2 with `ajax` remote source.    
-You need initially put both `data-value` and element's text youself:    
+    <link href="select2/select2.css" rel="stylesheet" type="text/css"></link>
+    <script src="select2/select2.js"></script>
+
+To make it **bootstrap-styled** you can use css from [here](https://github.com/t0m/select2-bootstrap-css):
+
+    <link href="select2-bootstrap.css" rel="stylesheet" type="text/css"></link>
+
+**Note:** currently `autotext` feature does not work for select2 with `ajax` remote source.
+You need initially put both `data-value` and element's text youself:
 
     <a href="#" data-type="select2" data-value="1">Text1</a>
-    
-    
+
+
 @class select2
 @extends abstractinput
 @since 1.4.1
@@ -10711,34 +10711,34 @@ $(function(){
                 return $.get('/getCountryById', { query: element.val() }, function (data) {
                     callback(data);
                 });
-            } 
-        }  
+            }
+        }
     });
 });
 </script>
 **/
 (function ($) {
     "use strict";
-    
+
     var Constructor = function (options) {
         this.init('select2', options, Constructor.defaults);
 
         options.select2 = options.select2 || {};
 
         this.sourceData = null;
-        
+
         //placeholder
         if(options.placeholder) {
             options.select2.placeholder = options.placeholder;
         }
-       
+
         //if not `tags` mode, use source
         if(!options.select2.tags && options.source) {
             var source = options.source;
             //if source is function, call it (once!)
             if ($.isFunction(options.source)) {
                 source = options.source.call(options.scope);
-            }               
+            }
 
             if (typeof source === 'string') {
                 options.select2.ajax = options.select2.ajax || {};
@@ -10755,7 +10755,7 @@ $(function(){
                 this.sourceData = this.convertSource(source);
                 options.select2.data = this.sourceData;
             }
-        } 
+        }
 
         //overriding objects in config (as by default jQuery extend() is not recursive)
         this.options.select2 = $.extend({}, Constructor.defaults.select2, options.select2);
@@ -10785,7 +10785,7 @@ $(function(){
         render: function() {
             this.setClass();
 
-            //can not apply select2 here as it calls initSelection 
+            //can not apply select2 here as it calls initSelection
             //over input that does not have correct value yet.
             //apply select2 only in value2input
             //this.$input.select2(this.options.select2);
@@ -10811,12 +10811,12 @@ $(function(){
                that = this;
 
            if(this.options.select2.tags) { //in tags mode just assign value
-              data = value; 
+              data = value;
               //data = $.fn.editableutils.itemsByValue(value, this.options.select2.tags, this.idFunc);
            } else if(this.sourceData) {
-              data = $.fn.editableutils.itemsByValue(value, this.sourceData, this.idFunc); 
+              data = $.fn.editableutils.itemsByValue(value, this.sourceData, this.idFunc);
            } else {
-              //can not get list of possible values 
+              //can not get list of possible values
               //(e.g. autotext for select2 with ajax source)
            }
 
@@ -10834,7 +10834,7 @@ $(function(){
            text = $.isArray(text) ? text.join(this.options.viewseparator) : text;
 
            //$(element).text(text);
-           Constructor.superclass.value2html.call(this, text, element); 
+           Constructor.superclass.value2html.call(this, text, element);
        },
 
        html2value: function(html) {
@@ -10852,14 +10852,14 @@ $(function(){
                this.$input.val(value);
                this.$input.select2(this.options.select2);
            } else {
-               //second argument needed to separate initial change from user's click (for autosubmit)   
-               this.$input.val(value).trigger('change', true); 
+               //second argument needed to separate initial change from user's click (for autosubmit)
+               this.$input.val(value).trigger('change', true);
 
                //Uncaught Error: cannot call val() if initSelection() is not defined
                //this.$input.select2('val', value);
            }
 
-           // if defined remote source AND no multiple mode AND no user's initSelection provided --> 
+           // if defined remote source AND no multiple mode AND no user's initSelection provided -->
            // we should somehow get text for provided id.
            // The solution is to use element's text as text for that id (exclude empty)
            if(this.isRemote && !this.isMultiple && !this.options.select2.initSelection) {
@@ -10873,13 +10873,13 @@ $(function(){
                    var $el = $(this.options.scope);
                    if (!$el.data('editable').isEmpty) {
                        var data = {id: value, text: $el.text()};
-                       this.$input.select2('data', data); 
+                       this.$input.select2('data', data);
                    }
                }
            }
        },
-       
-       input2value: function() { 
+
+       input2value: function() {
            return this.$input.select2('val');
        },
 
@@ -10930,25 +10930,25 @@ $(function(){
             }
             return source;
         },
-        
+
         destroy: function() {
             if(this.$input.data('select2')) {
                 this.$input.select2('destroy');
             }
         }
-        
+
     });
 
     Constructor.defaults = $.extend({}, $.fn.editabletypes.abstractinput.defaults, {
         /**
-        @property tpl 
+        @property tpl
         @default <input type="hidden">
         **/
         tpl:'<input type="hidden">',
         /**
         Configuration of select2. [Full list of options](http://ivaynberg.github.com/select2).
 
-        @property select2 
+        @property select2
         @type object
         @default null
         **/
@@ -10956,7 +10956,7 @@ $(function(){
         /**
         Placeholder attribute of select
 
-        @property placeholder 
+        @property placeholder
         @type string
         @default null
         **/
@@ -10966,17 +10966,17 @@ $(function(){
         Please note, that format is different from simple `select` input: use 'id' instead of 'value'.
         E.g. `[{id: 1, text: "text1"}, {id: 2, text: "text2"}, ...]`.
 
-        @property source 
+        @property source
         @type array|string|function
-        @default null        
+        @default null
         **/
         source: null,
         /**
         Separator used to display tags.
 
-        @property viewseparator 
+        @property viewseparator
         @type string
-        @default ', '        
+        @default ', '
         **/
         viewseparator: ', '
     });
@@ -10990,18 +10990,18 @@ $(function(){
 * Dropdown date and time picker.
 * Converts text input into dropdowns to pick day, month, year, hour, minute and second.
 * Uses momentjs as datetime library http://momentjs.com.
-* For i18n include corresponding file from https://github.com/timrwood/moment/tree/master/lang 
+* For i18n include corresponding file from https://github.com/timrwood/moment/tree/master/lang
 *
 * Confusion at noon and midnight - see http://en.wikipedia.org/wiki/12-hour_clock#Confusion_at_noon_and_midnight
-* In combodate: 
+* In combodate:
 * 12:00 pm --> 12:00 (24-h format, midday)
 * 12:00 am --> 00:00 (24-h format, midnight, start of day)
-* 
+*
 * Differs from momentjs parse rules:
 * 00:00 pm, 12:00 pm --> 12:00 (24-h format, day not change)
 * 00:00 am, 12:00 am --> 00:00 (24-h format, day not change)
-* 
-* 
+*
+*
 * Author: Vitaliy Potapov
 * Project page: http://github.com/vitalets/combodate
 * Copyright (c) 2012 Vitaliy Potapov. Released under MIT License.
@@ -11015,28 +11015,28 @@ $(function(){
             return;
         }
         this.options = $.extend({}, $.fn.combodate.defaults, options, this.$element.data());
-        this.init();  
+        this.init();
      };
 
     Combodate.prototype = {
-        constructor: Combodate, 
+        constructor: Combodate,
         init: function () {
             this.map = {
                 //key   regexp    moment.method
-                day:    ['D',    'date'], 
-                month:  ['M',    'month'], 
-                year:   ['Y',    'year'], 
+                day:    ['D',    'date'],
+                month:  ['M',    'month'],
+                year:   ['Y',    'year'],
                 hour:   ['[Hh]', 'hours'],
-                minute: ['m',    'minutes'], 
+                minute: ['m',    'minutes'],
                 second: ['s',    'seconds'],
-                ampm:   ['[Aa]', ''] 
+                ampm:   ['[Aa]', '']
             };
-            
+
             this.$widget = $('<span class="combodate"></span>').html(this.getTemplate());
-                      
+
             this.initCombos();
-            
-            //update original input on change 
+
+            //update original input on change
             this.$widget.on('change', 'select', $.proxy(function(e) {
                 this.$element.val(this.getValue()).change();
                 // update days count if month or year changes
@@ -11046,28 +11046,28 @@ $(function(){
                     }
                 }
             }, this));
-            
+
             this.$widget.find('select').css('width', 'auto');
-                                       
-            // hide original input and insert widget                                       
+
+            // hide original input and insert widget
             this.$element.hide().after(this.$widget);
-            
+
             // set initial value
             this.setValue(this.$element.val() || this.options.value);
         },
-        
+
         /*
-         Replace tokens in template with <select> elements 
-        */         
+         Replace tokens in template with <select> elements
+        */
         getTemplate: function() {
             var tpl = this.options.template;
 
             //first pass
             $.each(this.map, function(k, v) {
-                v = v[0]; 
+                v = v[0];
                 var r = new RegExp(v+'+'),
                     token = v.length > 1 ? v.substring(1, 2) : v;
-                    
+
                 tpl = tpl.replace(r, '{'+token+'}');
             });
 
@@ -11078,16 +11078,16 @@ $(function(){
             $.each(this.map, function(k, v) {
                 v = v[0];
                 var token = v.length > 1 ? v.substring(1, 2) : v;
-                    
+
                 tpl = tpl.replace('{'+token+'}', '<select class="'+k+'"></select>');
-            });   
+            });
 
             return tpl;
         },
-        
+
         /*
-         Initialize combos that presents in template 
-        */        
+         Initialize combos that presents in template
+        */
         initCombos: function() {
             for (var k in this.map) {
                 var $c = this.$widget.find('.'+k);
@@ -11099,8 +11099,8 @@ $(function(){
         },
 
         /*
-         Fill combo with items 
-        */        
+         Fill combo with items
+        */
         fillCombo: function(k) {
             var $combo = this['$'+k];
             if (!$combo) {
@@ -11108,7 +11108,7 @@ $(function(){
             }
 
             // define method name to fill items, e.g `fillDays`
-            var f = 'fill' + k.charAt(0).toUpperCase() + k.slice(1); 
+            var f = 'fill' + k.charAt(0).toUpperCase() + k.slice(1);
             var items = this[f]();
             var value = $combo.val();
 
@@ -11121,24 +11121,24 @@ $(function(){
         },
 
         /*
-         Initialize items of combos. Handles `firstItem` option 
+         Initialize items of combos. Handles `firstItem` option
         */
         fillCommon: function(key) {
             var values = [],
                 relTime;
-                
+
             if(this.options.firstItem === 'name') {
                 //need both to support moment ver < 2 and  >= 2
-                relTime = moment.relativeTime || moment.langData()._relativeTime; 
+                relTime = moment.relativeTime || moment.langData()._relativeTime;
                 var header = typeof relTime[key] === 'function' ? relTime[key](1, true, key, false) : relTime[key];
-                //take last entry (see momentjs lang files structure) 
-                header = header.split(' ').reverse()[0];                
+                //take last entry (see momentjs lang files structure)
+                header = header.split(' ').reverse()[0];
                 values.push(['', header]);
             } else if(this.options.firstItem === 'empty') {
                 values.push(['', '']);
             }
             return values;
-        },  
+        },
 
 
         /*
@@ -11164,18 +11164,18 @@ $(function(){
                 name = twoDigit ? this.leadZero(i) : i;
                 items.push([i, name]);
             }
-            return items;        
+            return items;
         },
-        
+
         /*
         fill month
         */
         fillMonth: function() {
-            var items = this.fillCommon('M'), name, i, 
+            var items = this.fillCommon('M'), name, i,
                 longNames = this.options.template.indexOf('MMMM') !== -1,
                 shortNames = this.options.template.indexOf('MMM') !== -1,
                 twoDigit = this.options.template.indexOf('MM') !== -1;
-                
+
             for(i=0; i<=11; i++) {
                 if(longNames) {
                     //see https://github.com/timrwood/momentjs.com/pull/36
@@ -11188,27 +11188,27 @@ $(function(){
                     name = i+1;
                 }
                 items.push([i, name]);
-            } 
+            }
             return items;
-        },  
-        
+        },
+
         /*
         fill year
         */
         fillYear: function() {
-            var items = [], name, i, 
+            var items = [], name, i,
                 longNames = this.options.template.indexOf('YYYY') !== -1;
-           
+
             for(i=this.options.maxYear; i>=this.options.minYear; i--) {
                 name = longNames ? i : (i+'').substring(2);
                 items[this.options.yearDescending ? 'push' : 'unshift']([i, name]);
             }
-            
+
             items = this.fillCommon('y').concat(items);
-            
-            return items;              
-        },    
-        
+
+            return items;
+        },
+
         /*
         fill hour
         */
@@ -11217,16 +11217,16 @@ $(function(){
                 h12 = this.options.template.indexOf('h') !== -1,
                 h24 = this.options.template.indexOf('H') !== -1,
                 twoDigit = this.options.template.toLowerCase().indexOf('hh') !== -1,
-                min = h12 ? 1 : 0, 
+                min = h12 ? 1 : 0,
                 max = h12 ? 12 : 23;
-                
+
             for(i=min; i<=max; i++) {
                 name = twoDigit ? this.leadZero(i) : i;
                 items.push([i, name]);
-            } 
-            return items;                 
-        },    
-        
+            }
+            return items;
+        },
+
         /*
         fill minute
         */
@@ -11237,10 +11237,10 @@ $(function(){
             for(i=0; i<=59; i+= this.options.minuteStep) {
                 name = twoDigit ? this.leadZero(i) : i;
                 items.push([i, name]);
-            }    
-            return items;              
-        },  
-        
+            }
+            return items;
+        },
+
         /*
         fill second
         */
@@ -11251,85 +11251,85 @@ $(function(){
             for(i=0; i<=59; i+= this.options.secondStep) {
                 name = twoDigit ? this.leadZero(i) : i;
                 items.push([i, name]);
-            }    
-            return items;              
-        },  
-        
+            }
+            return items;
+        },
+
         /*
         fill ampm
         */
         fillAmpm: function() {
             var ampmL = this.options.template.indexOf('a') !== -1,
-                ampmU = this.options.template.indexOf('A') !== -1,            
+                ampmU = this.options.template.indexOf('A') !== -1,
                 items = [
                     ['am', ampmL ? 'am' : 'AM'],
                     ['pm', ampmL ? 'pm' : 'PM']
                 ];
-            return items;                              
-        },                                       
+            return items;
+        },
 
         /*
-         Returns current date value from combos. 
+         Returns current date value from combos.
          If format not specified - `options.format` used.
          If format = `null` - Moment object returned.
         */
         getValue: function(format) {
-            var dt, values = {}, 
+            var dt, values = {},
                 that = this,
                 notSelected = false;
-                
-            //getting selected values    
+
+            //getting selected values
             $.each(this.map, function(k, v) {
                 if(k === 'ampm') {
                     return;
                 }
                 var def = k === 'day' ? 1 : 0;
-                  
-                values[k] = that['$'+k] ? parseInt(that['$'+k].val(), 10) : def; 
-                
+
+                values[k] = that['$'+k] ? parseInt(that['$'+k].val(), 10) : def;
+
                 if(isNaN(values[k])) {
                    notSelected = true;
-                   return false; 
+                   return false;
                 }
             });
-            
+
             //if at least one visible combo not selected - return empty string
             if(notSelected) {
                return '';
             }
-            
-            //convert hours 12h --> 24h 
+
+            //convert hours 12h --> 24h
             if(this.$ampm) {
                 //12:00 pm --> 12:00 (24-h format, midday), 12:00 am --> 00:00 (24-h format, midnight, start of day)
                 if(values.hour === 12) {
-                    values.hour = this.$ampm.val() === 'am' ? 0 : 12;                    
+                    values.hour = this.$ampm.val() === 'am' ? 0 : 12;
                 } else {
                     values.hour = this.$ampm.val() === 'am' ? values.hour : values.hour+12;
                 }
-            }    
-            
+            }
+
             dt = moment([values.year, values.month, values.day, values.hour, values.minute, values.second]);
-            
+
             //highlight invalid date
             this.highlight(dt);
-                              
+
             format = format === undefined ? this.options.format : format;
             if(format === null) {
-               return dt.isValid() ? dt : null; 
+               return dt.isValid() ? dt : null;
             } else {
-               return dt.isValid() ? dt.format(format) : ''; 
-            }           
+               return dt.isValid() ? dt.format(format) : '';
+            }
         },
-        
+
         setValue: function(value) {
             if(!value) {
                 return;
             }
-            
+
             var dt = typeof value === 'string' ? moment(value, this.options.format) : moment(value),
                 that = this,
                 values = {};
-            
+
             //function to find nearest value in select options
             function getNearest($select, value) {
                 var delta = {};
@@ -11338,23 +11338,23 @@ $(function(){
                     distance;
 
                     if(optValue === '') return;
-                    distance = Math.abs(optValue - value); 
+                    distance = Math.abs(optValue - value);
                     if(typeof delta.distance === 'undefined' || distance < delta.distance) {
                         delta = {value: optValue, distance: distance};
-                    } 
-                }); 
+                    }
+                });
                 return delta.value;
-            }             
-            
+            }
+
             if(dt.isValid()) {
                 //read values from date object
                 $.each(this.map, function(k, v) {
                     if(k === 'ampm') {
-                       return; 
+                       return;
                     }
                     values[k] = dt[v[1]]();
                 });
-               
+
                 if(this.$ampm) {
                     //12:00 pm --> 12:00 (24-h format, midday), 12:00 am --> 00:00 (24-h format, midnight, start of day)
                     if(values.hour >= 12) {
@@ -11367,21 +11367,21 @@ $(function(){
                         if(values.hour === 0) {
                             values.hour = 12;
                         }
-                    } 
+                    }
                 }
-               
+
                 $.each(values, function(k, v) {
                     //call val() for each existing combo, e.g. this.$hour.val()
                     if(that['$'+k]) {
-                       
+
                         if(k === 'minute' && that.options.minuteStep > 1 && that.options.roundTime) {
                            v = getNearest(that['$'+k], v);
                         }
-                       
+
                         if(k === 'second' && that.options.secondStep > 1 && that.options.roundTime) {
                            v = getNearest(that['$'+k], v);
-                        }                       
-                       
+                        }
+
                         that['$'+k].val(v);
                     }
                 });
@@ -11390,11 +11390,11 @@ $(function(){
                 if (this.options.smartDays) {
                     this.fillCombo('day');
                 }
-               
+
                this.$element.val(dt.format(this.options.format)).change();
             }
         },
-        
+
         /*
          highlight combos if date is invalid
         */
@@ -11405,29 +11405,29 @@ $(function(){
                 } else {
                     //store original border color
                     if(!this.borderColor) {
-                        this.borderColor = this.$widget.find('select').css('border-color'); 
+                        this.borderColor = this.$widget.find('select').css('border-color');
                     }
                     this.$widget.find('select').css('border-color', 'red');
-                } 
+                }
             } else {
                 if(this.options.errorClass) {
                     this.$widget.removeClass(this.options.errorClass);
                 } else {
                     this.$widget.find('select').css('border-color', this.borderColor);
-                }  
+                }
             }
         },
-        
+
         leadZero: function(v) {
-            return v <= 9 ? '0' + v : v; 
+            return v <= 9 ? '0' + v : v;
         },
-        
+
         destroy: function() {
             this.$widget.remove();
             this.$element.removeData('combodate').show();
         }
-        
-        //todo: clear method        
+
+        //todo: clear method
     };
 
     $.fn.combodate = function ( option ) {
@@ -11437,8 +11437,8 @@ $(function(){
         //getValue returns date as string / object (not jQuery object)
         if(option === 'getValue' && this.length && (d = this.eq(0).data('combodate'))) {
           return d.getValue.apply(d, args);
-        }        
-        
+        }
+
         return this.each(function () {
             var $this = $(this),
             data = $this.data('combodate'),
@@ -11450,15 +11450,15 @@ $(function(){
                 data[option].apply(data, args);
             }
         });
-    };  
-    
+    };
+
     $.fn.combodate.defaults = {
          //in this format value stored in original input
-        format: 'DD-MM-YYYY HH:mm',      
+        format: 'DD-MM-YYYY HH:mm',
         //in this format items in dropdowns are displayed
         template: 'D / MMM / YYYY   H : mm',
-        //initial value, can be `new Date()`    
-        value: null,                       
+        //initial value, can be `new Date()`
+        value: null,
         minYear: 1970,
         maxYear: 2015,
         yearDescending: true,
@@ -11472,19 +11472,19 @@ $(function(){
 
 }(window.jQuery));
 /**
-Combodate input - dropdown date and time picker.    
+Combodate input - dropdown date and time picker.
 Based on [combodate](http://vitalets.github.com/combodate) plugin (included). To use it you should manually include [momentjs](http://momentjs.com).
 
     <script src="js/moment.min.js"></script>
-   
+
 Allows to input:
 
 * only date
-* only time 
-* both date and time  
+* only time
+* both date and time
 
-Please note, that format is taken from momentjs and **not compatible** with bootstrap-datepicker / jquery UI datepicker.  
-Internally value stored as `momentjs` object. 
+Please note, that format is taken from momentjs and **not compatible** with bootstrap-datepicker / jquery UI datepicker.
+Internally value stored as `momentjs` object.
 
 @class combodate
 @extends abstractinput
@@ -11495,9 +11495,9 @@ Internally value stored as `momentjs` object.
 <script>
 $(function(){
     $('#dob').editable({
-        format: 'YYYY-MM-DD',    
-        viewformat: 'DD.MM.YYYY',    
-        template: 'D / MMMM / YYYY',    
+        format: 'YYYY-MM-DD',
+        viewformat: 'DD.MM.YYYY',
+        template: 'D / MMMM / YYYY',
         combodate: {
                 minYear: 2000,
                 maxYear: 2015,
@@ -11513,15 +11513,15 @@ $(function(){
 
 (function ($) {
     "use strict";
-    
+
     var Constructor = function (options) {
         this.init('combodate', options, Constructor.defaults);
-        
+
         //by default viewformat equals to format
         if(!this.options.viewformat) {
             this.options.viewformat = this.options.format;
-        }        
-        
+        }
+
         //try parse combodate config defined as json string in data-combodate
         options.combodate = $.fn.editableutils.tryParseJson(options.combodate, true);
 
@@ -11532,19 +11532,19 @@ $(function(){
         });
     };
 
-    $.fn.editableutils.inherit(Constructor, $.fn.editabletypes.abstractinput);    
-    
+    $.fn.editableutils.inherit(Constructor, $.fn.editabletypes.abstractinput);
+
     $.extend(Constructor.prototype, {
         render: function () {
             this.$input.combodate(this.options.combodate);
-                    
+
             if($.fn.editableform.engine === 'bs3') {
                 this.$input.siblings().find('select').addClass('form-control');
             }
-            
+
             if(this.options.inputclass) {
                 this.$input.siblings().find('select').addClass(this.options.inputclass);
-            }            
+            }
             //"clear" link
             /*
             if(this.options.clear) {
@@ -11553,117 +11553,117 @@ $(function(){
                     e.stopPropagation();
                     this.clear();
                 }, this));
-                
-                this.$tpl.parent().append($('<div class="editable-clear">').append(this.$clear));  
-            } 
-            */               
+
+                this.$tpl.parent().append($('<div class="editable-clear">').append(this.$clear));
+            }
+            */
         },
-        
+
         value2html: function(value, element) {
             var text = value ? value.format(this.options.viewformat) : '';
             //$(element).text(text);
-            Constructor.superclass.value2html.call(this, text, element);  
+            Constructor.superclass.value2html.call(this, text, element);
         },
 
         html2value: function(html) {
             return html ? moment(html, this.options.viewformat) : null;
-        },   
-        
+        },
+
         value2str: function(value) {
             return value ? value.format(this.options.format) : '';
-       }, 
-       
+       },
+
        str2value: function(str) {
            return str ? moment(str, this.options.format) : null;
-       }, 
-       
+       },
+
        value2submit: function(value) {
            return this.value2str(value);
-       },                    
+       },
 
        value2input: function(value) {
            this.$input.combodate('setValue', value);
        },
-        
-       input2value: function() { 
+
+       input2value: function() {
            return this.$input.combodate('getValue', null);
-       },       
-       
+       },
+
        activate: function() {
            this.$input.siblings('.combodate').find('select').eq(0).focus();
        },
-       
+
        /*
        clear:  function() {
           this.$input.data('datepicker').date = null;
           this.$input.find('.active').removeClass('active');
        },
        */
-       
+
        autosubmit: function() {
-           
+
        }
 
     });
-    
+
     Constructor.defaults = $.extend({}, $.fn.editabletypes.abstractinput.defaults, {
         /**
-        @property tpl 
+        @property tpl
         @default <input type="text">
-        **/         
+        **/
         tpl:'<input type="text">',
         /**
-        @property inputclass 
+        @property inputclass
         @default null
-        **/         
+        **/
         inputclass: null,
         /**
         Format used for sending value to server. Also applied when converting date from <code>data-value</code> attribute.<br>
-        See list of tokens in [momentjs docs](http://momentjs.com/docs/#/parsing/string-format)  
-        
-        @property format 
+        See list of tokens in [momentjs docs](http://momentjs.com/docs/#/parsing/string-format)
+
+        @property format
         @type string
         @default YYYY-MM-DD
-        **/         
+        **/
         format:'YYYY-MM-DD',
         /**
-        Format used for displaying date. Also applied when converting date from element's text on init.   
+        Format used for displaying date. Also applied when converting date from element's text on init.
         If not specified equals to `format`.
-        
-        @property viewformat 
+
+        @property viewformat
         @type string
         @default null
-        **/          
-        viewformat: null,        
+        **/
+        viewformat: null,
         /**
         Template used for displaying dropdowns.
-        
-        @property template 
+
+        @property template
         @type string
         @default D / MMM / YYYY
-        **/          
-        template: 'D / MMM / YYYY',  
+        **/
+        template: 'D / MMM / YYYY',
         /**
         Configuration of combodate.
         Full list of options: http://vitalets.github.com/combodate/#docs
-        
-        @property combodate 
+
+        @property combodate
         @type object
         @default null
         **/
         combodate: null
-        
+
         /*
         (not implemented yet)
-        Text shown as clear date button. 
+        Text shown as clear date button.
         If <code>false</code> clear button will not be rendered.
-        
-        @property clear 
+
+        @property clear
         @type boolean|string
-        @default 'x clear'         
+        @default 'x clear'
         */
         //clear: '&times; clear'
-    });   
+    });
 
     $.fn.editabletypes.combodate = Constructor;
 
@@ -11674,67 +11674,67 @@ Editableform based on Twitter Bootstrap 3
 */
 (function ($) {
     "use strict";
-    
+
     //store parent methods
     var pInitInput = $.fn.editableform.Constructor.prototype.initInput;
-    
+
     $.extend($.fn.editableform.Constructor.prototype, {
         initTemplate: function() {
-            this.$form = $($.fn.editableform.template); 
+            this.$form = $($.fn.editableform.template);
             this.$form.find('.control-group').addClass('form-group');
             this.$form.find('.editable-error-block').addClass('help-block');
         },
-        initInput: function() {  
+        initInput: function() {
             pInitInput.apply(this);
 
             //for bs3 set default class `input-sm` to standard inputs
             var emptyInputClass = this.input.options.inputclass === null || this.input.options.inputclass === false;
             var defaultClass = 'input-sm';
-            
+
             //bs3 add `form-control` class to standard inputs
-            var stdtypes = 'text,select,textarea,password,email,url,tel,number,range,time,typeaheadjs'.split(','); 
+            var stdtypes = 'text,select,textarea,password,email,url,tel,number,range,time,typeaheadjs'.split(',');
             if(~$.inArray(this.input.type, stdtypes)) {
                 this.input.$input.addClass('form-control');
                 if(emptyInputClass) {
                     this.input.options.inputclass = defaultClass;
                     this.input.$input.addClass(defaultClass);
                 }
-            }             
-        
+            }
+
             //apply bs3 size class also to buttons (to fit size of control)
             var $btn = this.$form.find('.editable-buttons');
             var classes = emptyInputClass ? [defaultClass] : this.input.options.inputclass.split(' ');
             for(var i=0; i<classes.length; i++) {
                 // `btn-sm` is default now
                 /*
-                if(classes[i].toLowerCase() === 'input-sm') { 
-                    $btn.find('button').addClass('btn-sm');  
+                if(classes[i].toLowerCase() === 'input-sm') {
+                    $btn.find('button').addClass('btn-sm');
                 }
                 */
                 if(classes[i].toLowerCase() === 'input-lg') {
-                    $btn.find('button').removeClass('btn-sm').addClass('btn-lg'); 
+                    $btn.find('button').removeClass('btn-sm').addClass('btn-lg');
                 }
             }
         }
-    });    
-    
+    });
+
     //buttons
-    $.fn.editableform.buttons = 
+    $.fn.editableform.buttons =
       '<button type="submit" class="ui green icon button editable-submit">'+
         '<i class="check mark icon"></i>'+
       '</button>'+
       '<button type="button" class="ui icon button editable-cancel">'+
         '<i class="cross icon"></i>'+
-      '</button>';         
-    
+      '</button>';
+
     //error classes
     $.fn.editableform.errorGroupClass = 'has-error';
-    $.fn.editableform.errorBlockClass = null;  
+    $.fn.editableform.errorBlockClass = null;
     //engine
-    $.fn.editableform.engine = 'bs3';  
+    $.fn.editableform.engine = 'bs3';
 }(window.jQuery));
 /**
-* Editable Popover3 (for Bootstrap 3) 
+* Editable Popover3 (for Bootstrap 3)
 * ---------------------
 * requires bootstrap-popover.js
 */
@@ -11755,49 +11755,49 @@ Editableform based on Twitter Bootstrap 3
                 content: ' ',
                 template: this.defaults.template
             });
-            
+
             //as template property is used in inputs, hide it from popover
             var t;
             if(this.$element.data('template')) {
                t = this.$element.data('template');
-               this.$element.removeData('template');  
-            } 
-            
+               this.$element.removeData('template');
+            }
+
             this.call(this.containerOptions);
-            
+
             if(t) {
                //restore data('template')
-               this.$element.data('template', t); 
+               this.$element.data('template', t);
             }
-        }, 
-        
+        },
+
         /* show */
         innerShow: function () {
-            this.call('show');                
-        },  
-        
+            this.call('show');
+        },
+
         /* hide */
         innerHide: function () {
-            this.call('hide');       
-        }, 
-        
+            this.call('hide');
+        },
+
         /* destroy */
         innerDestroy: function() {
             this.call('destroy');
-        },                               
-        
+        },
+
         setContainerOption: function(key, value) {
-            this.container().options[key] = value; 
-        },               
+            this.container().options[key] = value;
+        },
 
         /**
         * move popover to new position. This function mainly copied from bootstrap-popover.
         */
         /*jshint laxcomma: true, eqeqeq: false*/
-        setPosition: function () { 
+        setPosition: function () {
 
             (function() {
-            /*    
+            /*
                 var $tip = this.tip()
                 , inside
                 , pos
@@ -11815,14 +11815,14 @@ Editableform based on Twitter Bootstrap 3
                 this.options.placement;
 
                 inside = /in/.test(placement);
-               
+
                 $tip
               //  .detach()
               //vitalets: remove any placement class because otherwise they dont influence on re-positioning of visible popover
                 .removeClass('top right bottom left')
                 .css({ top: 0, left: 0, display: 'block' });
               //  .insertAfter(this.$element);
-               
+
                 pos = this.getPosition(inside);
 
                 actualWidth = $tip[0].offsetWidth;
@@ -11908,21 +11908,21 @@ Editableform based on Twitter Bootstrap 3
                 .addClass(placement)
                 .addClass('in');
            */
-                     
-           
+
+
             var $tip = this.tip();
-            
+
             var placement = typeof this.options.placement == 'function' ?
                 this.options.placement.call(this, $tip[0], this.$element[0]) :
-                this.options.placement;            
+                this.options.placement;
 
             var autoToken = /\s?auto?\s?/i;
             var autoPlace = autoToken.test(placement);
             if (autoPlace) {
                 placement = placement.replace(autoToken, '') || 'top';
             }
-            
-            
+
+
             var pos = this.getPosition();
             var actualWidth = $tip[0].offsetWidth;
             var actualHeight = $tip[0].offsetHeight;
@@ -11950,12 +11950,12 @@ Editableform based on Twitter Bootstrap 3
 
             var calculatedOffset = this.getCalculatedOffset(placement, pos, actualWidth, actualHeight);
 
-            this.applyPlacement(calculatedOffset, placement);            
-                     
-                
+            this.applyPlacement(calculatedOffset, placement);
+
+
             }).call(this.container());
-          /*jshint laxcomma: false, eqeqeq: true*/  
-        }            
+          /*jshint laxcomma: false, eqeqeq: true*/
+        }
     });
 
 }(window.jQuery));
@@ -13216,11 +13216,11 @@ Editableform based on Twitter Bootstrap 3
 }( window.jQuery ));
 
 /**
-Bootstrap-datepicker.  
-Description and examples: https://github.com/eternicode/bootstrap-datepicker.  
+Bootstrap-datepicker.
+Description and examples: https://github.com/eternicode/bootstrap-datepicker.
 For **i18n** you should include js file from here: https://github.com/eternicode/bootstrap-datepicker/tree/master/js/locales
-and set `language` option.  
-Since 1.4.0 date has different appearance in **popup** and **inline** modes. 
+and set `language` option.
+Since 1.4.0 date has different appearance in **popup** and **inline** modes.
 
 @class date
 @extends abstractinput
@@ -13230,8 +13230,8 @@ Since 1.4.0 date has different appearance in **popup** and **inline** modes.
 <script>
 $(function(){
     $('#dob').editable({
-        format: 'yyyy-mm-dd',    
-        viewformat: 'dd/mm/yyyy',    
+        format: 'yyyy-mm-dd',
+        viewformat: 'dd/mm/yyyy',
         datepicker: {
                 weekStart: 1
            }
@@ -13242,20 +13242,20 @@ $(function(){
 **/
 (function ($) {
     "use strict";
-    
+
     //store bootstrap-datepicker as bdateicker to exclude conflict with jQuery UI one
     $.fn.bdatepicker = $.fn.datepicker.noConflict();
     if(!$.fn.datepicker) { //if there were no other datepickers, keep also original name
-        $.fn.datepicker = $.fn.bdatepicker;    
-    }    
-    
+        $.fn.datepicker = $.fn.bdatepicker;
+    }
+
     var Date = function (options) {
         this.init('date', options, Date.defaults);
         this.initPicker(options, Date.defaults);
     };
 
-    $.fn.editableutils.inherit(Date, $.fn.editabletypes.abstractinput);    
-    
+    $.fn.editableutils.inherit(Date, $.fn.editabletypes.abstractinput);
+
     $.extend(Date.prototype, {
         initPicker: function(options, defaults) {
             //'format' is set directly from settings or data-* attributes
@@ -13264,30 +13264,30 @@ $(function(){
             if(!this.options.viewformat) {
                 this.options.viewformat = this.options.format;
             }
-            
+
             //try parse datepicker config defined as json string in data-datepicker
             options.datepicker = $.fn.editableutils.tryParseJson(options.datepicker, true);
-            
+
             //overriding datepicker config (as by default jQuery extend() is not recursive)
             //since 1.4 datepicker internally uses viewformat instead of format. Format is for submit only
             this.options.datepicker = $.extend({}, defaults.datepicker, options.datepicker, {
                 format: this.options.viewformat
             });
-            
+
             //language
-            this.options.datepicker.language = this.options.datepicker.language || 'en'; 
+            this.options.datepicker.language = this.options.datepicker.language || 'en';
 
             //store DPglobal
-            this.dpg = $.fn.bdatepicker.DPGlobal; 
+            this.dpg = $.fn.bdatepicker.DPGlobal;
 
             //store parsed formats
             this.parsedFormat = this.dpg.parseFormat(this.options.format);
-            this.parsedViewFormat = this.dpg.parseFormat(this.options.viewformat);            
+            this.parsedViewFormat = this.dpg.parseFormat(this.options.viewformat);
         },
-        
+
         render: function () {
             this.$input.bdatepicker(this.options.datepicker);
-            
+
             //"clear" link
             if(this.options.clear) {
                 this.$clear = $('<a href="#"></a>').html(this.options.clear).click($.proxy(function(e){
@@ -13295,39 +13295,39 @@ $(function(){
                     e.stopPropagation();
                     this.clear();
                 }, this));
-                
-                this.$tpl.parent().append($('<div class="editable-clear">').append(this.$clear));  
-            }                
+
+                this.$tpl.parent().append($('<div class="editable-clear">').append(this.$clear));
+            }
         },
-        
+
         value2html: function(value, element) {
            var text = value ? this.dpg.formatDate(value, this.parsedViewFormat, this.options.datepicker.language) : '';
-           Date.superclass.value2html.call(this, text, element); 
+           Date.superclass.value2html.call(this, text, element);
         },
 
         html2value: function(html) {
             return this.parseDate(html, this.parsedViewFormat);
-        },   
+        },
 
         value2str: function(value) {
             return value ? this.dpg.formatDate(value, this.parsedFormat, this.options.datepicker.language) : '';
-        }, 
+        },
 
         str2value: function(str) {
             return this.parseDate(str, this.parsedFormat);
-        }, 
+        },
 
         value2submit: function(value) {
             return this.value2str(value);
-        },                    
+        },
 
         value2input: function(value) {
             this.$input.bdatepicker('update', value);
         },
 
-        input2value: function() { 
+        input2value: function() {
             return this.$input.data('datepicker').date;
-        },       
+        },
 
         activate: function() {
         },
@@ -13336,7 +13336,7 @@ $(function(){
             this.$input.data('datepicker').date = null;
             this.$input.find('.active').removeClass('active');
             if(!this.options.showbuttons) {
-                this.$input.closest('form').submit(); 
+                this.$input.closest('form').submit();
             }
         },
 
@@ -13360,11 +13360,11 @@ $(function(){
            });
            */
        },
-       
+
        /*
         For incorrect date bootstrap-datepicker returns current date that is not suitable
         for datefield.
-        This function returns null for incorrect date.  
+        This function returns null for incorrect date.
        */
        parseDate: function(str, format) {
            var date = null, formattedBack;
@@ -13384,29 +13384,29 @@ $(function(){
 
     Date.defaults = $.extend({}, $.fn.editabletypes.abstractinput.defaults, {
         /**
-        @property tpl 
+        @property tpl
         @default <div></div>
-        **/         
+        **/
         tpl:'<div class="editable-date well"></div>',
         /**
-        @property inputclass 
+        @property inputclass
         @default null
         **/
         inputclass: null,
         /**
         Format used for sending value to server. Also applied when converting date from <code>data-value</code> attribute.<br>
-        Possible tokens are: <code>d, dd, m, mm, yy, yyyy</code>  
+        Possible tokens are: <code>d, dd, m, mm, yy, yyyy</code>
 
-        @property format 
+        @property format
         @type string
         @default yyyy-mm-dd
         **/
         format:'yyyy-mm-dd',
         /**
-        Format used for displaying date. Also applied when converting date from element's text on init.   
+        Format used for displaying date. Also applied when converting date from element's text on init.
         If not specified equals to <code>format</code>
 
-        @property viewformat 
+        @property viewformat
         @type string
         @default null
         **/
@@ -13415,7 +13415,7 @@ $(function(){
         Configuration of datepicker.
         Full list of options: http://bootstrap-datepicker.readthedocs.org/en/latest/options.html
 
-        @property datepicker 
+        @property datepicker
         @type object
         @default {
             weekStart: 0,
@@ -13431,10 +13431,10 @@ $(function(){
             autoclose: false
         },
         /**
-        Text shown as clear date button. 
+        Text shown as clear date button.
         If <code>false</code> clear button will not be rendered.
 
-        @property clear 
+        @property clear
         @type boolean|string
         @default 'x clear'
         **/
@@ -13447,7 +13447,7 @@ $(function(){
 
 /**
 Bootstrap datefield input - modification for inline mode.
-Shows normal <input type="text"> and binds popup datepicker.  
+Shows normal <input type="text"> and binds popup datepicker.
 Automatically shown in inline mode.
 
 @class datefield
@@ -13457,63 +13457,63 @@ Automatically shown in inline mode.
 **/
 (function ($) {
     "use strict";
-    
+
     var DateField = function (options) {
         this.init('datefield', options, DateField.defaults);
         this.initPicker(options, DateField.defaults);
     };
 
-    $.fn.editableutils.inherit(DateField, $.fn.editabletypes.date);    
-    
+    $.fn.editableutils.inherit(DateField, $.fn.editabletypes.date);
+
     $.extend(DateField.prototype, {
         render: function () {
             this.$input = this.$tpl.find('input');
             this.setClass();
             this.setAttr('placeholder');
-    
-            //bootstrap-datepicker is set `bdateicker` to exclude conflict with jQuery UI one. (in date.js)        
+
+            //bootstrap-datepicker is set `bdateicker` to exclude conflict with jQuery UI one. (in date.js)
             this.$tpl.bdatepicker(this.options.datepicker);
-            
+
             //need to disable original event handlers
             this.$input.off('focus keydown');
-            
+
             //update value of datepicker
             this.$input.keyup($.proxy(function(){
                this.$tpl.removeData('date');
                this.$tpl.bdatepicker('update');
             }, this));
-            
-        },   
-        
+
+        },
+
        value2input: function(value) {
            this.$input.val(value ? this.dpg.formatDate(value, this.parsedViewFormat, this.options.datepicker.language) : '');
            this.$tpl.bdatepicker('update');
        },
-        
-       input2value: function() { 
+
+       input2value: function() {
            return this.html2value(this.$input.val());
-       },              
-        
+       },
+
        activate: function() {
            $.fn.editabletypes.text.prototype.activate.call(this);
        },
-       
+
        autosubmit: function() {
-         //reset autosubmit to empty  
+         //reset autosubmit to empty
        }
     });
-    
+
     DateField.defaults = $.extend({}, $.fn.editabletypes.date.defaults, {
         /**
-        @property tpl 
-        **/         
+        @property tpl
+        **/
         tpl:'<div class="input-append date"><input type="text"/><span class="add-on"><i class="icon-th"></i></span></div>',
         /**
-        @property inputclass 
+        @property inputclass
         @default 'input-small'
-        **/         
+        **/
         inputclass: 'input-small',
-        
+
         /* datepicker config */
         datepicker: {
             weekStart: 0,
@@ -13522,20 +13522,20 @@ Automatically shown in inline mode.
             autoclose: true
         }
     });
-    
+
     $.fn.editabletypes.datefield = DateField;
 
 }(window.jQuery));
 /**
-Bootstrap-datetimepicker.  
-Based on [smalot bootstrap-datetimepicker plugin](https://github.com/smalot/bootstrap-datetimepicker). 
+Bootstrap-datetimepicker.
+Based on [smalot bootstrap-datetimepicker plugin](https://github.com/smalot/bootstrap-datetimepicker).
 Before usage you should manually include dependent js and css:
 
-    <link href="css/datetimepicker.css" rel="stylesheet" type="text/css"></link> 
+    <link href="css/datetimepicker.css" rel="stylesheet" type="text/css"></link>
     <script src="js/bootstrap-datetimepicker.js"></script>
 
 For **i18n** you should include js file from here: https://github.com/smalot/bootstrap-datetimepicker/tree/master/js/locales
-and set `language` option.  
+and set `language` option.
 
 @class datetime
 @extends abstractinput
@@ -13546,8 +13546,8 @@ and set `language` option.
 <script>
 $(function(){
     $('#last_seen').editable({
-        format: 'yyyy-mm-dd hh:ii',    
-        viewformat: 'dd/mm/yyyy hh:ii',    
+        format: 'yyyy-mm-dd hh:ii',
+        viewformat: 'dd/mm/yyyy hh:ii',
         datetimepicker: {
                 weekStart: 1
            }
@@ -13574,7 +13574,7 @@ $(function(){
             if(!this.options.viewformat) {
                 this.options.viewformat = this.options.format;
             }
-            
+
             //try parse datetimepicker config defined as json string in data-datetimepicker
             options.datetimepicker = $.fn.editableutils.tryParseJson(options.datetimepicker, true);
 
@@ -13585,10 +13585,10 @@ $(function(){
             });
 
             //language
-            this.options.datetimepicker.language = this.options.datetimepicker.language || 'en'; 
+            this.options.datetimepicker.language = this.options.datetimepicker.language || 'en';
 
             //store DPglobal
-            this.dpg = $.fn.datetimepicker.DPGlobal; 
+            this.dpg = $.fn.datetimepicker.DPGlobal;
 
             //store parsed formats
             this.parsedFormat = this.dpg.parseFormat(this.options.format, this.options.formatType);
@@ -13616,7 +13616,7 @@ $(function(){
                     this.clear();
                 }, this));
 
-                this.$tpl.parent().append($('<div class="editable-clear">').append(this.$clear));  
+                this.$tpl.parent().append($('<div class="editable-clear">').append(this.$clear));
             }
         },
 
@@ -13632,7 +13632,7 @@ $(function(){
 
         html2value: function(html) {
             //parseDate return utc date!
-            var value = this.parseDate(html, this.parsedViewFormat); 
+            var value = this.parseDate(html, this.parsedViewFormat);
             return value ? this.fromUTC(value) : null;
         },
 
@@ -13657,7 +13657,7 @@ $(function(){
            }
        },
 
-       input2value: function() { 
+       input2value: function() {
            //date may be cleared, in that case getDate() triggers error
            var dt = this.$input.data('datetimepicker');
            return dt.date ? dt.getDate() : null;
@@ -13670,8 +13670,8 @@ $(function(){
           this.$input.data('datetimepicker').date = null;
           this.$input.find('.active').removeClass('active');
           if(!this.options.showbuttons) {
-             this.$input.closest('form').submit(); 
-          }          
+             this.$input.closest('form').submit();
+          }
        },
 
        autosubmit: function() {
@@ -13685,18 +13685,18 @@ $(function(){
 
        //convert date from local to utc
        toUTC: function(value) {
-         return value ? new Date(value.valueOf() - value.getTimezoneOffset() * 60000) : value;  
+         return value ? new Date(value.valueOf() - value.getTimezoneOffset() * 60000) : value;
        },
 
        //convert date from utc to local
        fromUTC: function(value) {
-         return value ? new Date(value.valueOf() + value.getTimezoneOffset() * 60000) : value;  
+         return value ? new Date(value.valueOf() + value.getTimezoneOffset() * 60000) : value;
        },
 
        /*
         For incorrect date bootstrap-datetimepicker returns current date that is not suitable
         for datetimefield.
-        This function returns null for incorrect date.  
+        This function returns null for incorrect date.
        */
        parseDate: function(str, format) {
            var date = null, formattedBack;
@@ -13706,7 +13706,7 @@ $(function(){
                    formattedBack = this.dpg.formatDate(date, format, this.options.datetimepicker.language, this.options.formatType);
                    if(str !== formattedBack) {
                        date = null;
-                   } 
+                   }
                }
            }
            return date;
@@ -13716,30 +13716,30 @@ $(function(){
 
     DateTime.defaults = $.extend({}, $.fn.editabletypes.abstractinput.defaults, {
         /**
-        @property tpl 
+        @property tpl
         @default <div></div>
-        **/         
+        **/
         tpl:'<div class="editable-date well"></div>',
         /**
-        @property inputclass 
+        @property inputclass
         @default null
         **/
         inputclass: null,
         /**
         Format used for sending value to server. Also applied when converting date from <code>data-value</code> attribute.<br>
-        Possible tokens are: <code>d, dd, m, mm, yy, yyyy, h, i</code>  
-        
-        @property format 
+        Possible tokens are: <code>d, dd, m, mm, yy, yyyy, h, i</code>
+
+        @property format
         @type string
         @default yyyy-mm-dd hh:ii
-        **/         
+        **/
         format:'yyyy-mm-dd hh:ii',
         formatType:'standard',
         /**
-        Format used for displaying date. Also applied when converting date from element's text on init.   
+        Format used for displaying date. Also applied when converting date from element's text on init.
         If not specified equals to <code>format</code>
-        
-        @property viewformat 
+
+        @property viewformat
         @type string
         @default null
         **/
@@ -13748,7 +13748,7 @@ $(function(){
         Configuration of datetimepicker.
         Full list of options: https://github.com/smalot/bootstrap-datetimepicker
 
-        @property datetimepicker 
+        @property datetimepicker
         @type object
         @default { }
         **/
@@ -13757,10 +13757,10 @@ $(function(){
             autoclose: false
         },
         /**
-        Text shown as clear date button. 
+        Text shown as clear date button.
         If <code>false</code> clear button will not be rendered.
 
-        @property clear 
+        @property clear
         @type boolean|string
         @default 'x clear'
         **/
@@ -13772,7 +13772,7 @@ $(function(){
 }(window.jQuery));
 /**
 Bootstrap datetimefield input - datetime input for inline mode.
-Shows normal <input type="text"> and binds popup datetimepicker.  
+Shows normal <input type="text"> and binds popup datetimepicker.
 Automatically shown in inline mode.
 
 @class datetimefield
@@ -13781,69 +13781,69 @@ Automatically shown in inline mode.
 **/
 (function ($) {
     "use strict";
-    
+
     var DateTimeField = function (options) {
         this.init('datetimefield', options, DateTimeField.defaults);
         this.initPicker(options, DateTimeField.defaults);
     };
 
     $.fn.editableutils.inherit(DateTimeField, $.fn.editabletypes.datetime);
-    
+
     $.extend(DateTimeField.prototype, {
         render: function () {
             this.$input = this.$tpl.find('input');
             this.setClass();
             this.setAttr('placeholder');
-            
+
             this.$tpl.datetimepicker(this.options.datetimepicker);
-            
+
             //need to disable original event handlers
             this.$input.off('focus keydown');
-            
+
             //update value of datepicker
             this.$input.keyup($.proxy(function(){
                this.$tpl.removeData('date');
                this.$tpl.datetimepicker('update');
             }, this));
-            
-        },   
-      
+
+        },
+
        value2input: function(value) {
            this.$input.val(this.value2html(value));
            this.$tpl.datetimepicker('update');
        },
-        
-       input2value: function() { 
+
+       input2value: function() {
            return this.html2value(this.$input.val());
-       },              
-        
+       },
+
        activate: function() {
            $.fn.editabletypes.text.prototype.activate.call(this);
        },
-       
+
        autosubmit: function() {
-         //reset autosubmit to empty  
+         //reset autosubmit to empty
        }
     });
-    
+
     DateTimeField.defaults = $.extend({}, $.fn.editabletypes.datetime.defaults, {
         /**
-        @property tpl 
-        **/         
+        @property tpl
+        **/
         tpl:'<div class="input-append date"><input type="text"/><span class="add-on"><i class="icon-th"></i></span></div>',
         /**
-        @property inputclass 
+        @property inputclass
         @default 'input-medium'
-        **/         
+        **/
         inputclass: 'input-medium',
-        
+
         /* datetimepicker config */
         datetimepicker:{
             todayHighlight: false,
             autoclose: true
         }
     });
-    
+
     $.fn.editabletypes.datetimefield = DateTimeField;
 
 }(window.jQuery));
@@ -13980,14 +13980,14 @@ d+"px",a.getContext("2d")._resize(a.width,a.height)):a[b]=d}},this.registeredEve
 /*!
  *  BarCode Coder Library (BCC Library)
  *  BCCL Version 2.0
- *    
- *  Porting : jQuery barcode plugin 
+ *
+ *  Porting : jQuery barcode plugin
  *  Version : 2.0.3
- *   
+ *
  *  Date    : 2013-01-06
  *  Author  : DEMONTE Jean-Baptiste <jbdemonte@gmail.com>
  *            HOUREZ Jonathan
- *             
+ *
  *  Web site: http://barcode-coder.com/
  *  dual licence :  http://www.cecill.info/licences/Licence_CeCILL_V2-fr.html
  *                  http://www.gnu.org/licenses/gpl.html
@@ -14019,60 +14019,60 @@ d+"px",a.getContext("2d")._resize(a.width,a.height)):a[b]=d}},this.registeredEve
                 interval: 5000,
                 pauseOnHover: true
             },
-            responsiveBreakpoints: { 
-                portrait: { 
+            responsiveBreakpoints: {
+                portrait: {
                     changePoint:480,
                     visibleItems: 1,
                     itemsToScroll: 1
-                }, 
-                landscape: { 
+                },
+                landscape: {
                     changePoint:640,
                     visibleItems: 2,
                     itemsToScroll: 2
                 },
-                tablet: { 
+                tablet: {
                     changePoint:768,
                     visibleItems: 3,
                     itemsToScroll: 3
                 }
             }
         }, options);
-        
+
         /******************************
         Private Variables
-        *******************************/         
-        
+        *******************************/
+
         var object = $(this);
-        var settings = $.extend(defaults, options);        
+        var settings = $.extend(defaults, options);
         var itemsWidth;
-        var canNavigate = true; 
-        var itemCount; 
-        var itemsVisible = settings.visibleItems; 
+        var canNavigate = true;
+        var itemCount;
+        var itemsVisible = settings.visibleItems;
         var itemsToScroll = settings.itemsToScroll;
         var responsivePoints = [];
         var resizeTimeout;
-        var autoPlayInterval;        
-        
+        var autoPlayInterval;
+
         /******************************
         Public Methods
-        *******************************/        
-        
+        *******************************/
+
         var methods = {
-                
+
             init: function() {
                 return this.each(function () {
                     methods.appendHTML();
-                    methods.setEventHandlers();                  
-                    methods.initializeItems();                    
+                    methods.setEventHandlers();
+                    methods.initializeItems();
                 });
             },
 
             /******************************
             Initialize Items
-            *******************************/            
-            
+            *******************************/
+
             initializeItems: function() {
-                
+
                 var obj = settings.responsiveBreakpoints;
                 for(var i in obj) { responsivePoints.push(obj[i]); }
                 responsivePoints.sort(function(a, b) { return a.changePoint - b.changePoint; });
@@ -14083,74 +14083,74 @@ d+"px",a.getContext("2d")._resize(a.width,a.height)):a[b]=d}},this.registeredEve
                 object.css({ 'left': -itemsWidth * (itemsVisible + 1) });
                 object.fadeIn();
                 $(window).trigger('resize');
-                
+
             },
-            
+
             /******************************
             Append HTML
-            *******************************/            
-            
+            *******************************/
+
             appendHTML: function() {
-                
+
                 object.addClass("nbs-flexisel-ul");
                 object.wrap("<div class='nbs-flexisel-container'><div class='nbs-flexisel-inner'></div></div>");
                 object.find("li").addClass("nbs-flexisel-item");
-                
+
                 if(settings.navigationTargetSelector && $(settings.navigationTargetSelector).length > 0) {
                     $("<div class='nbs-flexisel-nav-left'></div><div class='nbs-flexisel-nav-right'></div>").appendTo(settings.navigationTargetSelector);
                 } else {
                     settings.navigationTargetSelector = object.parent();
-                    $("<div class='nbs-flexisel-nav-left'></div><div class='nbs-flexisel-nav-right'></div>").insertAfter(object);    
+                    $("<div class='nbs-flexisel-nav-left'></div><div class='nbs-flexisel-nav-right'></div>").insertAfter(object);
                 }
-                    
-                if(settings.infinite) {    
+
+                if(settings.infinite) {
                     var childSet = object.children();
                     var cloneContentBefore = childSet.clone();
                     var cloneContentAfter = childSet.clone();
                     object.prepend(cloneContentBefore);
                     object.append(cloneContentAfter);
                 }
-                
+
             },
-                    
-            
+
+
             /******************************
             Set Event Handlers
             *******************************/
             setEventHandlers: function() {
-                
+
                 var childSet = object.children();
-                
+
                 $(window).on("resize", function(event){
                     clearTimeout(resizeTimeout);
                     resizeTimeout = setTimeout(function(){
                         methods.calculateDisplay();
                         itemsWidth = methods.getCurrentItemWidth();
                         childSet.width(itemsWidth);
-                        
+
                         if(settings.infinite) {
                             object.css({
                                 'left': -itemsWidth * Math.floor(childSet.length / 2)
-                            });        
+                            });
                         } else {
                             methods.clearDisabled();
                             $(settings.navigationTargetSelector).find(".nbs-flexisel-nav-left").addClass('disabled');
                             object.css({
                                 'left': 0
                             });
-                        }                                                    
+                        }
                     }, 100);
-                    
-                });                    
-                
+
+                });
+
                 $(settings.navigationTargetSelector).find(".nbs-flexisel-nav-left").on("click", function (event) {
                     methods.scroll(true);
                 });
-                
+
                 $(settings.navigationTargetSelector).find(".nbs-flexisel-nav-right").on("click", function (event) {
                     methods.scroll(false);
                 });
-                
+
                 if(settings.autoPlay.enable) {
 
                     methods.setAutoplayInterval();
@@ -14163,33 +14163,33 @@ d+"px",a.getContext("2d")._resize(a.width,a.height)):a[b]=d}},this.registeredEve
                             mouseleave : function() {
                                 canNavigate = true;
                             }
-                        });        
-                    }            
-                    
+                        });
+                    }
+
                 }
-                
-                object[0].addEventListener('touchstart', methods.touchHandler.handleTouchStart, false);        
-                object[0].addEventListener('touchmove', methods.touchHandler.handleTouchMove, false);                
-                
-            },        
-            
+
+                object[0].addEventListener('touchstart', methods.touchHandler.handleTouchStart, false);
+                object[0].addEventListener('touchmove', methods.touchHandler.handleTouchMove, false);
+
+            },
+
             /******************************
             Calculate Display
-            *******************************/            
-            
+            *******************************/
+
             calculateDisplay: function() {
                 var contentWidth = $('html').width();
-                var largestCustom = responsivePoints[responsivePoints.length-1].changePoint; // sorted array 
-                
+                var largestCustom = responsivePoints[responsivePoints.length-1].changePoint; // sorted array
+
                 for(var i in responsivePoints) {
-                    
-                    if(contentWidth >= largestCustom) { // set to default if width greater than largest custom responsiveBreakpoint 
+
+                    if(contentWidth >= largestCustom) { // set to default if width greater than largest custom responsiveBreakpoint
                         itemsVisible = settings.visibleItems;
                         itemsToScroll = settings.itemsToScroll;
                         break;
                     }
                     else { // determine custom responsiveBreakpoint to use
-                    
+
                         if(contentWidth < responsivePoints[i].changePoint) {
                             itemsVisible = responsivePoints[i].visibleItems;
                             itemsToScroll = responsivePoints[i].itemsToScroll;
@@ -14200,13 +14200,13 @@ d+"px",a.getContext("2d")._resize(a.width,a.height)):a[b]=d}},this.registeredEve
                         }
                     }
                 }
-                
-            },                
-            
+
+            },
+
             /******************************
             Scroll
-            *******************************/                
-            
+            *******************************/
+
             scroll: function(reverse) {
 
                 if(typeof reverse === 'undefined') { reverse = true }
@@ -14214,74 +14214,74 @@ d+"px",a.getContext("2d")._resize(a.width,a.height)):a[b]=d}},this.registeredEve
                 if(canNavigate == true) {
                     canNavigate = false;
                     itemsWidth = methods.getCurrentItemWidth();
-                    
+
                     if(settings.autoPlay.enable) {
                         clearInterval(autoPlayInterval);
                     }
-                    
+
                     if(!settings.infinite) {
-                        
+
                         var scrollDistance = itemsWidth * itemsToScroll;
-                        
-                        if(reverse) {                            
+
+                        if(reverse) {
                             object.animate({
                                 'left': methods.calculateNonInfiniteLeftScroll(scrollDistance)
                             }, settings.animationSpeed, function(){
                                 canNavigate = true;
-                            });                            
-                            
+                            });
+
                         } else {
                             object.animate({
                                 'left': methods.calculateNonInfiniteRightScroll(scrollDistance)
                             },settings.animationSpeed, function(){
                                 canNavigate = true;
-                            });                                    
+                            });
                         }
-                        
-                        
-                        
-                    } else {                    
+
+
+
+                    } else {
                         object.animate({
                             'left' : reverse ? "+=" + itemsWidth * itemsToScroll : "-=" + itemsWidth * itemsToScroll
                         }, settings.animationSpeed, function() {
                             canNavigate = true;
-                            
-                            if(reverse) { 
-                                methods.offsetItemsToBeginning(itemsToScroll); 
+
+                            if(reverse) {
+                                methods.offsetItemsToBeginning(itemsToScroll);
                             } else {
                                 methods.offsetItemsToEnd(itemsToScroll);
                             }
-                            methods.offsetSliderPosition(reverse); 
-                            
+                            methods.offsetSliderPosition(reverse);
+
                         });
                     }
-                    
+
                     if(settings.autoPlay.enable) {
                         methods.setAutoplayInterval();
                     }
-                    
+
                 }
             },
-            
+
             touchHandler: {
 
                 xDown: null,
                 yDown: null,
-                handleTouchStart: function(evt) {                                         
-                    this.xDown = evt.touches[0].clientX;                                      
+                handleTouchStart: function(evt) {
+                    this.xDown = evt.touches[0].clientX;
                     this.yDown = evt.touches[0].clientY;
-                }, 
+                },
                 handleTouchMove: function (evt) {
                     if (!this.xDown || !this.yDown) {
                         return;
                     }
 
-                    var xUp = evt.touches[0].clientX;                                    
+                    var xUp = evt.touches[0].clientX;
                     var yUp = evt.touches[0].clientY;
 
                     var xDiff = this.xDown - xUp;
                     var yDiff = this.yDown - yUp;
-                    
+
                     // only comparing xDiff
                     // compare which is greater against yDiff to determine whether left/right or up/down  e.g. if (Math.abs( xDiff ) > Math.abs( yDiff ))
                     if (Math.abs( xDiff ) > 0) {
@@ -14291,42 +14291,42 @@ d+"px",a.getContext("2d")._resize(a.width,a.height)):a[b]=d}},this.registeredEve
                         } else {
                             //swipe right
                             methods.scroll(true);
-                        }                       
+                        }
                     }
-                    
+
                     /* reset values */
                     this.xDown = null;
                     this.yDown = null;
                     canNavigate = true;
                 }
-            },            
-            
+            },
+
             /******************************
             Utility Functions
             *******************************/
-            
+
             getCurrentItemWidth: function() {
                 return (object.parent().width())/itemsVisible;
-            },            
-            
+            },
+
             offsetItemsToBeginning: function(number) {
                 if(typeof number === 'undefined') { number = 1 }
                 for(var i = 0; i < number; i++) {
                     object.children().last().insertBefore(object.children().first());
-                }    
-            },                
-            
+                }
+            },
+
             offsetItemsToEnd: function(number) {
                 if(typeof number === 'undefined') { number = 1 }
                 for(var i = 0; i < number; i++) {
-                    object.children().first().insertAfter(object.children().last());    
+                    object.children().first().insertAfter(object.children().last());
                 }
-            },            
-            
+            },
+
             offsetSliderPosition: function(reverse) {
                 var left = parseInt(object.css('left').replace('px', ''));
-                if (reverse) { 
-                    left = left - itemsWidth * itemsToScroll; 
+                if (reverse) {
+                    left = left - itemsWidth * itemsToScroll;
                 } else {
                     left = left + itemsWidth * itemsToScroll;
                 }
@@ -14336,11 +14336,11 @@ d+"px",a.getContext("2d")._resize(a.width,a.height)):a[b]=d}},this.registeredEve
             },
 
             getOffsetPosition: function() {
-                return parseInt(object.css('left').replace('px', ''));    
+                return parseInt(object.css('left').replace('px', ''));
             },
-            
+
             calculateNonInfiniteLeftScroll: function(toScroll) {
-                
+
                 methods.clearDisabled();
                 if(methods.getOffsetPosition() + toScroll >= 0) {
                     $(settings.navigationTargetSelector).find(".nbs-flexisel-nav-left").addClass('disabled');
@@ -14349,43 +14349,43 @@ d+"px",a.getContext("2d")._resize(a.width,a.height)):a[b]=d}},this.registeredEve
                     return methods.getOffsetPosition() + toScroll;
                 }
             },
-            
+
             calculateNonInfiniteRightScroll: function(toScroll){
-                
+
                 methods.clearDisabled();
                 var negativeOffsetLimit = (itemCount * itemsWidth) - (itemsVisible * itemsWidth);
-                
+
                 if(methods.getOffsetPosition() - toScroll <= -negativeOffsetLimit) {
                     $(settings.navigationTargetSelector).find(".nbs-flexisel-nav-right").addClass('disabled');
-                    return -negativeOffsetLimit;        
+                    return -negativeOffsetLimit;
                 } else {
                     return methods.getOffsetPosition() - toScroll;
                 }
             },
-            
+
             setAutoplayInterval: function(){
                 autoPlayInterval = setInterval(function() {
                     if (canNavigate) {
                         methods.scroll(false);
                     }
-                }, settings.autoPlay.interval);                    
+                }, settings.autoPlay.interval);
             },
-            
+
             clearDisabled: function() {
                 var parent = $(settings.navigationTargetSelector);
                 parent.find(".nbs-flexisel-nav-left").removeClass('disabled');
                 parent.find(".nbs-flexisel-nav-right").removeClass('disabled');
-            }                        
-            
+            }
+
         };
-        
+
         if (methods[options]) {     // $("#element").pluginName('methodName', 'arg1', 'arg2');
             return methods[options].apply(this, Array.prototype.slice.call(arguments, 1));
         } else if (typeof options === 'object' || !options) {     // $("#element").pluginName({ option: 1, option:2 });
-            return methods.init.apply(this);  
+            return methods.init.apply(this);
         } else {
             $.error( 'Method "' +  method + '" does not exist in flexisel plugin!');
-        }        
+        }
 };
 
 })(jQuery);
@@ -14455,9 +14455,9 @@ d+"px",a.getContext("2d")._resize(a.width,a.height)):a[b]=d}},this.registeredEve
     $.fn.repeater = function(options, data) {
         var $container = $(this),
             $btnAdd, $btnRemove, patternName, patternId, patternText,
-            idVal, nameVal, labelText, labelFor, $elem, elemName, 
+            idVal, nameVal, labelText, labelFor, $elem, elemName,
             $label, row, $newClone, $formElems;
-            
+
         $container.opts = $.extend({}, $.fn.repeater.defaults, options);
         $container.repeatCount = 0;
 
@@ -14679,7 +14679,7 @@ d+"px",a.getContext("2d")._resize(a.width,a.height)):a[b]=d}},this.registeredEve
      */
     function parsePattern(pattern, replaceText, count, container) {
         var returnVal = replaceText;
-        
+
         count = parseInt(count);
         if (pattern) {
             // check pattern type
@@ -14702,7 +14702,7 @@ d+"px",a.getContext("2d")._resize(a.width,a.height)):a[b]=d}},this.registeredEve
      * Wrapper to handle re-indexing form elements in a group.
      */
     function reindex(container) {
-        var $repeaters = container.find('.' + container.opts.groupClass), 
+        var $repeaters = container.find('.' + container.opts.groupClass),
             startIndex = container.opts.startingIndex,
             $curGroup;
 
@@ -14720,14 +14720,14 @@ d+"px",a.getContext("2d")._resize(a.width,a.height)):a[b]=d}},this.registeredEve
         if ($.isFunction(container.opts.beforeDelete)) {
             container.opts.beforeDelete.call(this, $match);
         }
-    	
+
         $match.remove();
         if (container.repeatCount) {
             container.repeatCount--;
         }
-        
+
         reindex(container);
-        
+
         if ($.isFunction(container.opts.afterDelete)) {
             container.opts.afterDelete.call(this, $match);
         }
@@ -14781,7 +14781,7 @@ d+"px",a.getContext("2d")._resize(a.width,a.height)):a[b]=d}},this.registeredEve
                 }
             });
         }
-        
+
         return $curGroup;
     }
 
@@ -14808,14 +14808,14 @@ $.fn.repeater.defaults = {
 };
 
 /*
- 
+
 jSignature v2 "2012-11-01T22:48" "commit ID 1c15dfafecc75925c3b7d529356a558b59220edb"
 Copyright (c) 2012 Willow Systems Corp http://willow-systems.com
 Copyright (c) 2010 Brinley Ang http://www.unbolt.net
-MIT License <http://www.opensource.org/licenses/mit-license.php> 
+MIT License <http://www.opensource.org/licenses/mit-license.php>
 
 
-Simplify.js BSD 
+Simplify.js BSD
 (c) 2012, Vladimir Agafonkin
 mourner.github.com/simplify-js
 
@@ -14886,14 +14886,14 @@ d,c,h,i,k=0,m=0,n="",n=[];do d=a.charCodeAt(k++),c=a.charCodeAt(k++),h=a.charCod
 "export",p,v);u("addPlugin","export","svgbase64",z);u("addPlugin","export",h,z)})();
 ;(function($){
 /*
- 
+
 jSignature v2 "2012-11-01T22:48" "commit ID 1c15dfafecc75925c3b7d529356a558b59220edb"
 Copyright (c) 2012 Willow Systems Corp http://willow-systems.com
 Copyright (c) 2010 Brinley Ang http://www.unbolt.net
-MIT License <http://www.opensource.org/licenses/mit-license.php> 
+MIT License <http://www.opensource.org/licenses/mit-license.php>
 
 
-Simplify.js BSD 
+Simplify.js BSD
 (c) 2012, Vladimir Agafonkin
 mourner.github.com/simplify-js
 
@@ -15088,7 +15088,8 @@ d,c,h,i,k=0,m=0,n="",n=[];do d=a.charCodeAt(k++),c=a.charCodeAt(k++),h=a.charCod
     // Attach event handlers to the newly minted DOM elements
     this.$overlay.hide().on('click', function() {
         $("#materialbox-overlay").css('display','none');
-
+        $('.materialboxed').removeAttr('style');
+        $(window).scrollTop($(window).scrollTop()+1);
         self.end();
       return false;
     });
@@ -15096,6 +15097,8 @@ d,c,h,i,k=0,m=0,n="",n=[];do d=a.charCodeAt(k++),c=a.charCodeAt(k++),h=a.charCod
     this.$lightbox.hide().on('click', function(event) {
       if ($(event.target).attr('id') === 'lightbox') {
           $("#materialbox-overlay").css('display','none');
+          $('.materialboxed').removeAttr('style');
+          $(window).scrollTop($(window).scrollTop()+1);
 
           self.end();
       }
@@ -15105,7 +15108,8 @@ d,c,h,i,k=0,m=0,n="",n=[];do d=a.charCodeAt(k++),c=a.charCodeAt(k++),h=a.charCod
     this.$outerContainer.on('click', function(event) {
       if ($(event.target).attr('id') === 'lightbox') {
           $("#materialbox-overlay").css('display','none');
-
+          $('.materialboxed').removeAttr('style');
+          $(window).scrollTop($(window).scrollTop()+1);
           self.end();
       }
       return false;
@@ -15157,6 +15161,8 @@ d,c,h,i,k=0,m=0,n="",n=[];do d=a.charCodeAt(k++),c=a.charCodeAt(k++),h=a.charCod
 
     this.$lightbox.find('.lb-loader, .lb-close').on('click', function() {
         $("#materialbox-overlay").css('display','none');
+        $('.materialboxed').removeAttr('style');
+        $(window).scrollTop($(window).scrollTop()+1);
         self.end();
       return false;
     });
@@ -23469,7 +23475,7 @@ return PickerConstructor
 			t.jqi[opts.show](opts.promptspeed, function(){
 
 				t.goToState(
-					isNaN(opts.initialState) ? opts.initialState : 
+					isNaN(opts.initialState) ? opts.initialState :
 						t.jqi.find('.'+ opts.prefix +'states .'+ opts.prefix +'state').eq(opts.initialState).data('jqi-name')
 				);
 
@@ -23503,11 +23509,11 @@ return PickerConstructor
 
 			if(t.jqib){
 				t.jqib[t.options.hide]('fast',function(){
-					
+
 					t.jqib.trigger('impromptu:close', [clicked,msg,formvals]);
-					
+
 					t.jqib.remove();
-					
+
 					$(window).off('resize', t._windowResize);
 
 					if(typeof callCallback === 'function'){
@@ -23582,7 +23588,7 @@ return PickerConstructor
 
 				state += '" name="' + opts.prefix + '_' + statename + '_button' + v.title.replace(/[^a-z0-9]+/gi,'') + '" value="' + v.value + '">' + v.title + '</button>';
 			}
-			
+
 			state += '</div></div>';
 
 			$state = $(state).css({display:'none'});
@@ -23701,7 +23707,7 @@ return PickerConstructor
 				buttons = statename;
 				statename = null;
 			}
-			
+
 			t.getState(statename || t.getCurrentStateName()).find('.'+ t.options.prefix + 'button').each(function(i,btn){
 				if(buttons === undefined || $.inArray(btn.value, buttons) !== -1){
 					btn.disabled = !enable;
@@ -23766,7 +23772,7 @@ return PickerConstructor
 			if(pos && pos.container){
 				var offset = $(pos.container).offset(),
 					hasScrolled = false;
-					
+
 				if($.isPlainObject(offset) && offset.top !== undefined){
 					top = (offset.top + pos.y) - (t.options.top.toString().indexOf('%') >= 0? (windowHeight*(parseInt(t.options.top,10)/100)) : parseInt(t.options.top,10));
 
@@ -23779,7 +23785,7 @@ return PickerConstructor
 						marginLeft: 0,
 						width: (pos.width !== undefined)? pos.width : null
 					}, function(){
-						// if it didn't scroll before, check that the bottom is within view. Since width 
+						// if it didn't scroll before, check that the bottom is within view. Since width
 						// is animated we must use the callback before we know the height
 						if(!hasScrolled && (offset.top + pos.y + t.jqi.outerHeight(true)) > (scrollTop + windowHeight)){
 							$('html,body').animate({ scrollTop: top }, 'slow', 'swing', function(){});
@@ -23829,7 +23835,7 @@ return PickerConstructor
 		*/
 		style: function(){
 			var t = this;
-			
+
 			t.jqif.css({
 				zIndex: t.options.zIndex,
 				display: "none",
@@ -23902,7 +23908,7 @@ return PickerConstructor
 					$state.slideDown(jqiopts.promptspeed,function(){
 						var $t = $(this);
 						t.enableStateButtons();
-						
+
 						// if focus is a selector, find it, else its button index
 						if(typeof(stateobj.focus) === 'string'){
 							$t.find(stateobj.focus).eq(0).focus();
@@ -23924,7 +23930,7 @@ return PickerConstructor
 					if(!subState){
 						t.position();
 					}
-				} // end isDefaultPrevented()	
+				} // end isDefaultPrevented()
 			}// end stateobj !== undefined
 
 			return $state;
@@ -24142,7 +24148,7 @@ return PickerConstructor
 
 				// Build container
 				$select.select('buildContainer');
-				
+
 				// Update labels
 				$select.select('updateLabel');
 
@@ -24160,9 +24166,9 @@ return PickerConstructor
 		buildTrigger: function () {
 			// Get select element
 			var $select = $(this);
-			
+
 			var $trigger;
-			
+
 			// If trigger has allready been created
 			if ($select.data('jquery.select.trigger')) {
 				// Get trigger
@@ -24231,7 +24237,7 @@ return PickerConstructor
 
 			// Save trigger element on select
 			$select.data('jquery.select.trigger', $trigger);
-			
+
 			return $select;
 		},
 
@@ -24241,17 +24247,17 @@ return PickerConstructor
 		buildContainer: function () {
 			// Get select element
 			var $select = $(this);
-			
+
 			// Get trigger
 			var $trigger = $select.data('jquery.select.trigger');
-			
+
 			var $container, $containerInner;
-			
+
 			// If container has allready been created
 			if ($select.data('jquery.select.container')) {
 				// Get container
 				$container = $select.data('jquery.select.container');
-				
+
 				// Get inner container
 				$containerInner = $container.children();
 			} else {
@@ -24262,13 +24268,13 @@ return PickerConstructor
 					.data('jquery.select.no', select.counter)
 					.data('jquery.select.source.element', $select)
 					.insertAfter($trigger);
-				
+
 				// Create inner container
 				$containerInner = $('<div>')
 					.addClass('jquery-select-container-inner')
 					.appendTo($container);
 			}
-			
+
 			// Loop through option groups and options
 			$select.find('optgroup, option').each(function (index, element) {
 				// Get element
@@ -24321,7 +24327,7 @@ return PickerConstructor
 								$(this).prev().focus();
 								return false;
 							}
-							
+
 							// If arrow down is pressed
 							if (event.keyCode == 40) {
 								event.preventDefault();
@@ -24329,12 +24335,12 @@ return PickerConstructor
 								$(this).next().focus();
 								return false;
 							}
-							
+
 							// If space is pressed
 							if (event.keyCode == 0) {
 								event.preventDefault();
 								event.stopPropagation();
-								
+
 								// Get item
 								var $item = $(this);
 
@@ -24430,7 +24436,7 @@ return PickerConstructor
 									// Hide options
 									$trigger.select('close');
 								}
-								
+
 								return false;
 							}
 						})
@@ -24449,13 +24455,13 @@ return PickerConstructor
 
 							// Get trigger
 							var $trigger = $('#jquery-select-trigger-' + $container.data('jquery.select.no'));
-							
+
 							// If not multiple select
 							if (!$trigger.data('jquery.select.source.element').attr('multiple')) {
 								// Unselect all items
 								$container.find('.selected').removeClass('selected');
 							}
-							
+
 							// If item is selected
 							if ($item.hasClass('selected')) {
 								// Unselect
@@ -24464,7 +24470,7 @@ return PickerConstructor
 								// Select
 								$item.addClass('selected');
 							}
-							
+
 							// Update selected option on source element
 							if ($trigger.data('jquery.select.source.element').attr('multiple')) {
 								// Get selected items
@@ -24530,17 +24536,17 @@ return PickerConstructor
 								// Hide options
 								$trigger.select('close');
 							}
-							
+
 							return false;
 						})
 						.appendTo($containerInner);
-					
+
 					// If option is selected
 					if ($element.prop('selected')) {
 						// Add selected class to item
 						$item.addClass('selected');
 					}
-					
+
 					// If option is disabled
 					if ($element.prop('disabled')) {
 						// Add disabled class to item
@@ -24557,7 +24563,7 @@ return PickerConstructor
 
 			// Save container element on select
 			$select.data('jquery.select.container', $container);
-			
+
 			return $select;
 		},
 
@@ -24570,7 +24576,7 @@ return PickerConstructor
 
 			// Get trigger element
 			var $trigger = $select.data('jquery.select.trigger');
-			
+
 			// Get label
 			var $label = $trigger.find('.jquery-select-trigger-label');
 
@@ -24596,7 +24602,7 @@ return PickerConstructor
 					}
 					html+= $(element).clone().children().remove().end().text();
 				});
-				
+
 				$label.removeClass('placeholder').html(html);
 			} else {
 				$label.addClass('placeholder').html($label.data('jquery.select.original.label'));
@@ -24627,7 +24633,7 @@ return PickerConstructor
 
 			// Add active class on the trigger
 			$trigger.addClass('active');
-			
+
 			// Set focus to first element in the container
 			$container.find('a').first().focus();
 
@@ -24669,7 +24675,7 @@ return PickerConstructor
 
 			// Trigger close event on the source element
 			$trigger.data('jquery.select.source.element').trigger('close');
-			
+
 			return $trigger;
 		},
 
@@ -34988,7 +34994,7 @@ $.fn.popup = function(parameters) {
             }
           },
           documentChanged: function(mutations) {
-           
+
           },
           hideGracefully: function(event) {
             var
@@ -47526,7 +47532,7 @@ $.fn.visibility.settings = {
             var link = elements[i];
 
             // Setup a player instance and add to the element
-            if (typeof link.shr === 'undefined') { 
+            if (typeof link.shr === 'undefined') {
                 // Create new instance
                 var instance = new Shr(link);
 
@@ -51138,7 +51144,7 @@ var Skaip=Skaip||{};Skaip.buttons=new function(){var self=this,commands={},usern
 }(jQuery, window, 'sortable');
 ;(function(window, document, undefined) {
   "use strict";
-  
+
   (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
@@ -52373,7 +52379,7 @@ var logStr = function logStr(string) {
 };
 
 /*
- * Set hover, active and focus-states for buttons 
+ * Set hover, active and focus-states for buttons
  * (source: http://www.sitepoint.com/javascript-generate-lighter-darker-color)
  */
 var colorLuminance = function colorLuminance(hex, lum) {
@@ -52407,11 +52413,11 @@ exports.colorLuminance = colorLuminance;
 },{}]},{},[1])
 //# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIm5vZGVfbW9kdWxlcy9icm93c2VyaWZ5L25vZGVfbW9kdWxlcy9icm93c2VyLXBhY2svX3ByZWx1ZGUuanMiLCIvVXNlcnMvVHJpc3Rhbi9kZXYvU3dlZXRBbGVydC9kZXYvc3dlZXRhbGVydC5lczYuanMiLCIvVXNlcnMvVHJpc3Rhbi9kZXYvU3dlZXRBbGVydC9kZXYvbW9kdWxlcy9kZWZhdWx0LXBhcmFtcy5qcyIsIi9Vc2Vycy9UcmlzdGFuL2Rldi9Td2VldEFsZXJ0L2Rldi9tb2R1bGVzL2hhbmRsZS1jbGljay5qcyIsIi9Vc2Vycy9UcmlzdGFuL2Rldi9Td2VldEFsZXJ0L2Rldi9tb2R1bGVzL2hhbmRsZS1kb20uanMiLCIvVXNlcnMvVHJpc3Rhbi9kZXYvU3dlZXRBbGVydC9kZXYvbW9kdWxlcy9oYW5kbGUta2V5LmpzIiwiL1VzZXJzL1RyaXN0YW4vZGV2L1N3ZWV0QWxlcnQvZGV2L21vZHVsZXMvaGFuZGxlLXN3YWwtZG9tLmpzIiwiL1VzZXJzL1RyaXN0YW4vZGV2L1N3ZWV0QWxlcnQvZGV2L21vZHVsZXMvaW5qZWN0ZWQtaHRtbC5qcyIsIi9Vc2Vycy9UcmlzdGFuL2Rldi9Td2VldEFsZXJ0L2Rldi9tb2R1bGVzL3NldC1wYXJhbXMuanMiLCIvVXNlcnMvVHJpc3Rhbi9kZXYvU3dlZXRBbGVydC9kZXYvbW9kdWxlcy91dGlscy5qcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTs7Ozs7Ozs7Ozs7Ozs7OztzSkNnQk8sc0JBQXNCOzs7Ozs7MkRBV3RCLGlCQUFpQjs7Ozs7O3dIQWNqQiwyQkFBMkI7Ozs7dURBSXdCLHdCQUF3Qjs7NkJBQ3hELHNCQUFzQjs7Ozs7OzZCQUl0QiwwQkFBMEI7Ozs7NkJBQzFCLHNCQUFzQjs7Ozs7Ozs7QUFNaEQsSUFBSSxxQkFBcUIsQ0FBQztBQUMxQixJQUFJLGlCQUFpQixDQUFDOzs7Ozs7QUFPdEIsSUFBSSxVQUFVLEVBQUUsSUFBSSxDQUFDOztxQkFFTixVQUFVLEdBQUcsSUFBSSxHQUFHLFlBQVc7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RyxDQUFDLENBQUMsRUFBRSxDQUFDLEdBQUcsQ0FBQyxHQUFHLEdBQUcsQ0FBQyxFQUFFLEdBQUcsQ0FBQyxDQUFDLENBQUMsUUFBUSxDQUFDLEVBQUUsQ0FBQyxDQUFDO0FBQ3JFLE9BQUcsSUFBSSxDQUFDLElBQUksR0FBRyxDQUFDLENBQUEsQ0FBRSxNQUFNLENBQUMsQ0FBQyxDQUFDLE1BQU0sQ0FBQyxDQUFDO0dBQ3BDOztBQUVELFNBQU8sR0FBRyxDQUFDO0NBQ1osQ0FBQzs7UUFJQSxNQUFNLEdBQU4sTUFBTTtRQUNOLFFBQVEsR0FBUixRQUFRO1FBQ1IsS0FBSyxHQUFMLEtBQUs7UUFDTCxNQUFNLEdBQU4sTUFBTTtRQUNOLGNBQWMsR0FBZCxjQUFjIiwiZmlsZSI6ImdlbmVyYXRlZC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzQ29udGVudCI6WyIoZnVuY3Rpb24gZSh0LG4scil7ZnVuY3Rpb24gcyhvLHUpe2lmKCFuW29dKXtpZighdFtvXSl7dmFyIGE9dHlwZW9mIHJlcXVpcmU9PVwiZnVuY3Rpb25cIiYmcmVxdWlyZTtpZighdSYmYSlyZXR1cm4gYShvLCEwKTtpZihpKXJldHVybiBpKG8sITApO3ZhciBmPW5ldyBFcnJvcihcIkNhbm5vdCBmaW5kIG1vZHVsZSAnXCIrbytcIidcIik7dGhyb3cgZi5jb2RlPVwiTU9EVUxFX05PVF9GT1VORFwiLGZ9dmFyIGw9bltvXT17ZXhwb3J0czp7fX07dFtvXVswXS5jYWxsKGwuZXhwb3J0cyxmdW5jdGlvbihlKXt2YXIgbj10W29dWzFdW2VdO3JldHVybiBzKG4/bjplKX0sbCxsLmV4cG9ydHMsZSx0LG4scil9cmV0dXJuIG5bb10uZXhwb3J0c312YXIgaT10eXBlb2YgcmVxdWlyZT09XCJmdW5jdGlvblwiJiZyZXF1aXJlO2Zvcih2YXIgbz0wO288ci5sZW5ndGg7bysrKXMocltvXSk7cmV0dXJuIHN9KSIsIi8vIFN3ZWV0QWxlcnRcbi8vIDIwMTQtMjAxNSAoYykgLSBUcmlzdGFuIEVkd2FyZHNcbi8vIGdpdGh1Yi5jb20vdDR0NS9zd2VldGFsZXJ0XG5cbi8qXG4gKiBqUXVlcnktbGlrZSBmdW5jdGlvbnMgZm9yIG1hbmlwdWxhdGluZyB0aGUgRE9NXG4gKi9cbmltcG9ydCB7XG4gIGhhc0NsYXNzLCBhZGRDbGFzcywgcmVtb3ZlQ2xhc3MsXG4gIGVzY2FwZUh0bWwsXG4gIF9zaG93LCBzaG93LCBfaGlkZSwgaGlkZSxcbiAgaXNEZXNjZW5kYW50LFxuICBnZXRUb3BNYXJnaW4sXG4gIGZhZGVJbiwgZmFkZU91dCxcbiAgZmlyZUNsaWNrLFxuICBzdG9wRXZlbnRQcm9wYWdhdGlvblxufSBmcm9tICcuL21vZHVsZXMvaGFuZGxlLWRvbSc7XG5cbi8qXG4gKiBIYW5keSB1dGlsaXRpZXNcbiAqL1xuaW1wb3J0IHtcbiAgZXh0ZW5kLFxuICBoZXhUb1JnYixcbiAgaXNJRTgsXG4gIGxvZ1N0cixcbiAgY29sb3JMdW1pbmFuY2Vcbn0gZnJvbSAnLi9tb2R1bGVzL3V0aWxzJztcblxuLypcbiAqICBIYW5kbGUgc3dlZXRBbGVydCdzIERPTSBlbGVtZW50c1xuICovXG5pbXBvcnQge1xuICBzd2VldEFsZXJ0SW5pdGlhbGl6ZSxcbiAgZ2V0TW9kYWwsXG4gIGdldE92ZXJsYXksXG4gIGdldElucHV0LFxuICBzZXRGb2N1c1N0eWxlLFxuICBvcGVuTW9kYWwsXG4gIHJlc2V0SW5wdXQsXG4gIGZpeFZlcnRpY2FsUG9zaXRpb25cbn0gZnJvbSAnLi9tb2R1bGVzL2hhbmRsZS1zd2FsLWRvbSc7XG5cblxuLy8gSGFuZGxlIGJ1dHRvbiBldmVudHMgYW5kIGtleWJvYXJkIGV2ZW50c1xuaW1wb3J0IHsgaGFuZGxlQnV0dG9uLCBoYW5kbGVDb25maXJtLCBoYW5kbGVDYW5jZWwgfSBmcm9tICcuL21vZHVsZXMvaGFuZGxlLWNsaWNrJztcbmltcG9ydCBoYW5kbGVLZXlEb3duIGZyb20gJy4vbW9kdWxlcy9oYW5kbGUta2V5JztcblxuXG4vLyBEZWZhdWx0IHZhbHVlc1xuaW1wb3J0IGRlZmF1bHRQYXJhbXMgZnJvbSAnLi9tb2R1bGVzL2RlZmF1bHQtcGFyYW1zJztcbmltcG9ydCBzZXRQYXJhbWV0ZXJzIGZyb20gJy4vbW9kdWxlcy9zZXQtcGFyYW1zJztcblxuLypcbiAqIFJlbWVtYmVyIHN0YXRlIGluIGNhc2VzIHdoZXJlIG9wZW5pbmcgYW5kIGhhbmRsaW5nIGEgbW9kYWwgd2lsbCBmaWRkbGUgd2l0aCBpdC5cbiAqIChXZSBhbHNvIHVzZSB3aW5kb3cucHJldmlvdXNBY3RpdmVFbGVtZW50IGFzIGEgZ2xvYmFsIHZhcmlhYmxlKVxuICovXG52YXIgcHJldmlvdXNXaW5kb3dLZXlEb3duO1xudmFyIGxhc3RGb2N1c2VkQnV0dG9uO1xuXG5cbi8qXG4gKiBHbG9iYWwgc3dlZXRBbGVydCBmdW5jdGlvblxuICogKHRoaXMgaXMgd2hhdCB0aGUgdXNlciBjYWxscylcbiAqL1xudmFyIHN3ZWV0QWxlcnQsIHN3YWw7XG5cbmV4cG9ydCBkZWZhdWx0IHN3ZWV0QWxlcnQgPSBzd2FsID0gZnVuY3Rpb24oKSB7XG4gIHZhciBjdXN0b21pemF0aW9ucyA9IGFyZ3VtZW50c1swXTtcblxuICBhZGRDbGFzcyhkb2N1bWVudC5ib2R5LCAnc3RvcC1zY3JvbGxpbmcnKTtcbiAgcmVzZXRJbnB1dCgpO1xuXG4gIC8qXG4gICAqIFVzZSBhcmd1bWVudCBpZiBkZWZpbmVkIG9yIGRlZmF1bHQgdmFsdWUgZnJvbSBwYXJhbXMgb2JqZWN0IG90aGVyd2lzZS5cbiAgICogU3VwcG9ydHMgdGhlIGNhc2Ugd2hlcmUgYSBkZWZhdWx0IHZhbHVlIGlzIGJvb2xlYW4gdHJ1ZSBhbmQgc2hvdWxkIGJlXG4gICAqIG92ZXJyaWRkZW4gYnkgYSBjb3JyZXNwb25kaW5nIGV4cGxpY2l0IGFyZ3VtZW50IHdoaWNoIGlzIGJvb2xlYW4gZmFsc2UuXG4gICAqL1xuICBmdW5jdGlvbiBhcmd1bWVudE9yRGVmYXVsdChrZXkpIHtcbiAgICB2YXIgYXJncyA9IGN1c3RvbWl6YXRpb25zO1xuICAgIHJldHVybiAoYXJnc1trZXldID09PSB1bmRlZmluZWQpID8gIGRlZmF1bHRQYXJhbXNba2V5XSA6IGFyZ3Nba2V5XTtcbiAgfVxuXG4gIGlmIChjdXN0b21pemF0aW9ucyA9PT0gdW5kZWZpbmVkKSB7XG4gICAgbG9nU3RyKCdTd2VldEFsZXJ0IGV4cGVjdHMgYXQgbGVhc3QgMSBhdHRyaWJ1dGUhJyk7XG4gICAgcmV0dXJuIGZhbHNlO1xuICB9XG5cbiAgdmFyIHBhcmFtcyA9IGV4dGVuZCh7fSwgZGVmYXVsdFBhcmFtcyk7XG5cbiAgc3dpdGNoICh0eXBlb2YgY3VzdG9taXphdGlvbnMpIHtcblxuICAgIC8vIEV4OiBzd2FsKFwiSGVsbG9cIiwgXCJKdXN0IHRlc3RpbmdcIiwgXCJpbmZvXCIpO1xuICAgIGNhc2UgJ3N0cmluZyc6XG4gICAgICBwYXJhbXMudGl0bGUgPSBjdXN0b21pemF0aW9ucztcbiAgICAgIHBhcmFtcy50ZXh0ICA9IGFyZ3VtZW50c1sxXSB8fCAnJztcbiAgICAgIHBhcmFtcy50eXBlICA9IGFyZ3VtZW50c1syXSB8fCAnJztcbiAgICAgIGJyZWFrO1xuXG4gICAgLy8gRXg6IHN3YWwoeyB0aXRsZTpcIkhlbGxvXCIsIHRleHQ6IFwiSnVzdCB0ZXN0aW5nXCIsIHR5cGU6IFwiaW5mb1wiIH0pO1xuICAgIGNhc2UgJ29iamVjdCc6XG4gICAgICBpZiAoY3VzdG9taXphdGlvbnMudGl0bGUgPT09IHVuZGVmaW5lZCkge1xuICAgICAgICBsb2dTdHIoJ01pc3NpbmcgXCJ0aXRsZVwiIGFyZ3VtZW50IScpO1xuICAgICAgICByZXR1cm4gZmFsc2U7XG4gICAgICB9XG5cbiAgICAgIHBhcmFtcy50aXRsZSA9IGN1c3RvbWl6YXRpb25zLnRpdGxlO1xuXG4gICAgICBmb3IgKGxldCBjdXN0b21OYW1lIGluIGRlZmF1bHRQYXJhbXMpIHtcbiAgICAgICAgcGFyYW1zW2N1c3RvbU5hbWVdID0gYXJndW1lbnRPckRlZmF1bHQoY3VzdG9tTmFtZSk7XG4gICAgICB9XG5cbiAgICAgIC8vIFNob3cgXCJDb25maXJtXCIgaW5zdGVhZCBvZiBcIk9LXCIgaWYgY2FuY2VsIGJ1dHRvbiBpcyB2aXNpYmxlXG4gICAgICBwYXJhbXMuY29uZmlybUJ1dHRvblRleHQgPSBwYXJhbXMuc2hvd0NhbmNlbEJ1dHRvbiA/ICdDb25maXJtJyA6IGRlZmF1bHRQYXJhbXMuY29uZmlybUJ1dHRvblRleHQ7XG4gICAgICBwYXJhbXMuY29uZmlybUJ1dHRvblRleHQgPSBhcmd1bWVudE9yRGVmYXVsdCgnY29uZmlybUJ1dHRvblRleHQnKTtcblxuICAgICAgLy8gQ2FsbGJhY2sgZnVuY3Rpb24gd2hlbiBjbGlja2luZyBvbiBcIk9LXCIvXCJDYW5jZWxcIlxuICAgICAgcGFyYW1zLmRvbmVGdW5jdGlvbiA9IGFyZ3VtZW50c1sxXSB8fCBudWxsO1xuXG4gICAgICBicmVhaztcblxuICAgIGRlZmF1bHQ6XG4gICAgICBsb2dTdHIoJ1VuZXhwZWN0ZWQgdHlwZSBvZiBhcmd1bWVudCEgRXhwZWN0ZWQgXCJzdHJpbmdcIiBvciBcIm9iamVjdFwiLCBnb3QgJyArIHR5cGVvZiBjdXN0b21pemF0aW9ucyk7XG4gICAgICByZXR1cm4gZmFsc2U7XG5cbiAgfVxuXG4gIHNldFBhcmFtZXRlcnMocGFyYW1zKTtcbiAgZml4VmVydGljYWxQb3NpdGlvbigpO1xuICBvcGVuTW9kYWwoYXJndW1lbnRzWzFdKTtcblxuICAvLyBNb2RhbCBpbnRlcmFjdGlvbnNcbiAgdmFyIG1vZGFsID0gZ2V0TW9kYWwoKTtcblxuXG4gIC8qXG4gICAqIE1ha2Ugc3VyZSBhbGwgbW9kYWwgYnV0dG9ucyByZXNwb25kIHRvIGFsbCBldmVudHNcbiAgICovXG4gIHZhciAkYnV0dG9ucyA9IG1vZGFsLnF1ZXJ5U2VsZWN0b3JBbGwoJ2J1dHRvbicpO1xuICB2YXIgYnV0dG9uRXZlbnRzID0gWydvbmNsaWNrJywgJ29ubW91c2VvdmVyJywgJ29ubW91c2VvdXQnLCAnb25tb3VzZWRvd24nLCAnb25tb3VzZXVwJywgJ29uZm9jdXMnXTtcbiAgdmFyIG9uQnV0dG9uRXZlbnQgPSAoZSkgPT4gaGFuZGxlQnV0dG9uKGUsIHBhcmFtcywgbW9kYWwpO1xuXG4gIGZvciAobGV0IGJ0bkluZGV4ID0gMDsgYnRuSW5kZXggPCAkYnV0dG9ucy5sZW5ndGg7IGJ0bkluZGV4KyspIHtcbiAgICBmb3IgKGxldCBldnRJbmRleCA9IDA7IGV2dEluZGV4IDwgYnV0dG9uRXZlbnRzLmxlbmd0aDsgZXZ0SW5kZXgrKykge1xuICAgICAgbGV0IGJ0bkV2dCA9IGJ1dHRvbkV2ZW50c1tldnRJbmRleF07XG4gICAgICAkYnV0dG9uc1tidG5JbmRleF1bYnRuRXZ0XSA9IG9uQnV0dG9uRXZlbnQ7XG4gICAgfVxuICB9XG5cbiAgLy8gQ2xpY2tpbmcgb3V0c2lkZSB0aGUgbW9kYWwgZGlzbWlzc2VzIGl0IChpZiBhbGxvd2VkIGJ5IHVzZXIpXG4gIGdldE92ZXJsYXkoKS5vbmNsaWNrID0gb25CdXR0b25FdmVudDtcblxuICBwcmV2aW91c1dpbmRvd0tleURvd24gPSB3aW5kb3cub25rZXlkb3duO1xuXG4gIHZhciBvbktleUV2ZW50ID0gKGUpID0+IGhhbmRsZUtleURvd24oZSwgcGFyYW1zLCBtb2RhbCk7XG4gIHdpbmRvdy5vbmtleWRvd24gPSBvbktleUV2ZW50O1xuXG4gIHdpbmRvdy5vbmZvY3VzID0gZnVuY3Rpb24gKCkge1xuICAgIC8vIFdoZW4gdGhlIHVzZXIgaGFzIGZvY3VzZWQgYXdheSBhbmQgZm9jdXNlZCBiYWNrIGZyb20gdGhlIHdob2xlIHdpbmRvdy5cbiAgICBzZXRUaW1lb3V0KGZ1bmN0aW9uICgpIHtcbiAgICAgIC8vIFB1dCBpbiBhIHRpbWVvdXQgdG8ganVtcCBvdXQgb2YgdGhlIGV2ZW50IHNlcXVlbmNlLlxuICAgICAgLy8gQ2FsbGluZyBmb2N1cygpIGluIHRoZSBldmVudCBzZXF1ZW5jZSBjb25mdXNlcyB0aGluZ3MuXG4gICAgICBpZiAobGFzdEZvY3VzZWRCdXR0b24gIT09IHVuZGVmaW5lZCkge1xuICAgICAgICBsYXN0Rm9jdXNlZEJ1dHRvbi5mb2N1cygpO1xuICAgICAgICBsYXN0Rm9jdXNlZEJ1dHRvbiA9IHVuZGVmaW5lZDtcbiAgICAgIH1cbiAgICB9LCAwKTtcbiAgfTtcbiAgXG4gIC8vIFNob3cgYWxlcnQgd2l0aCBlbmFibGVkIGJ1dHRvbnMgYWx3YXlzXG4gIHN3YWwuZW5hYmxlQnV0dG9ucygpO1xufTtcblxuXG5cbi8qXG4gKiBTZXQgZGVmYXVsdCBwYXJhbXMgZm9yIGVhY2ggcG9wdXBcbiAqIEBwYXJhbSB7T2JqZWN0fSB1c2VyUGFyYW1zXG4gKi9cbnN3ZWV0QWxlcnQuc2V0RGVmYXVsdHMgPSBzd2FsLnNldERlZmF1bHRzID0gZnVuY3Rpb24odXNlclBhcmFtcykge1xuICBpZiAoIXVzZXJQYXJhbXMpIHtcbiAgICB0aHJvdyBuZXcgRXJyb3IoJ3VzZXJQYXJhbXMgaXMgcmVxdWlyZWQnKTtcbiAgfVxuICBpZiAodHlwZW9mIHVzZXJQYXJhbXMgIT09ICdvYmplY3QnKSB7XG4gICAgdGhyb3cgbmV3IEVycm9yKCd1c2VyUGFyYW1zIGhhcyB0byBiZSBhIG9iamVjdCcpO1xuICB9XG5cbiAgZXh0ZW5kKGRlZmF1bHRQYXJhbXMsIHVzZXJQYXJhbXMpO1xufTtcblxuXG4vKlxuICogQW5pbWF0aW9uIHdoZW4gY2xvc2luZyBtb2RhbFxuICovXG5zd2VldEFsZXJ0LmNsb3NlID0gc3dhbC5jbG9zZSA9IGZ1bmN0aW9uKCkge1xuICB2YXIgbW9kYWwgPSBnZXRNb2RhbCgpO1xuXG4gIGZhZGVPdXQoZ2V0T3ZlcmxheSgpLCA1KTtcbiAgZmFkZU91dChtb2RhbCwgNSk7XG4gIHJlbW92ZUNsYXNzKG1vZGFsLCAnc2hvd1N3ZWV0QWxlcnQnKTtcbiAgYWRkQ2xhc3MobW9kYWwsICdoaWRlU3dlZXRBbGVydCcpO1xuICByZW1vdmVDbGFzcyhtb2RhbCwgJ3Zpc2libGUnKTtcblxuICAvKlxuICAgKiBSZXNldCBpY29uIGFuaW1hdGlvbnNcbiAgICovXG4gIHZhciAkc3VjY2Vzc0ljb24gPSBtb2RhbC5xdWVyeVNlbGVjdG9yKCcuc2EtaWNvbi5zYS1zdWNjZXNzJyk7XG4gIHJlbW92ZUNsYXNzKCRzdWNjZXNzSWNvbiwgJ2FuaW1hdGUnKTtcbiAgcmVtb3ZlQ2xhc3MoJHN1Y2Nlc3NJY29uLnF1ZXJ5U2VsZWN0b3IoJy5zYS10aXAnKSwgJ2FuaW1hdGVTdWNjZXNzVGlwJyk7XG4gIHJlbW92ZUNsYXNzKCRzdWNjZXNzSWNvbi5xdWVyeVNlbGVjdG9yKCcuc2EtbG9uZycpLCAnYW5pbWF0ZVN1Y2Nlc3NMb25nJyk7XG5cbiAgdmFyICRlcnJvckljb24gPSBtb2RhbC5xdWVyeVNlbGVjdG9yKCcuc2EtaWNvbi5zYS1lcnJvcicpO1xuICByZW1vdmVDbGFzcygkZXJyb3JJY29uLCAnYW5pbWF0ZUVycm9ySWNvbicpO1xuICByZW1vdmVDbGFzcygkZXJyb3JJY29uLnF1ZXJ5U2VsZWN0b3IoJy5zYS14LW1hcmsnKSwgJ2FuaW1hdGVYTWFyaycpO1xuXG4gIHZhciAkd2FybmluZ0ljb24gPSBtb2RhbC5xdWVyeVNlbGVjdG9yKCcuc2EtaWNvbi5zYS13YXJuaW5nJyk7XG4gIHJlbW92ZUNsYXNzKCR3YXJuaW5nSWNvbiwgJ3B1bHNlV2FybmluZycpO1xuICByZW1vdmVDbGFzcygkd2FybmluZ0ljb24ucXVlcnlTZWxlY3RvcignLnNhLWJvZHknKSwgJ3B1bHNlV2FybmluZ0lucycpO1xuICByZW1vdmVDbGFzcygkd2FybmluZ0ljb24ucXVlcnlTZWxlY3RvcignLnNhLWRvdCcpLCAncHVsc2VXYXJuaW5nSW5zJyk7XG5cbiAgLy8gUmVzZXQgY3VzdG9tIGNsYXNzIChkZWxheSBzbyB0aGF0IFVJIGNoYW5nZXMgYXJlbid0IHZpc2libGUpXG4gIHNldFRpbWVvdXQoZnVuY3Rpb24oKSB7XG4gICAgdmFyIGN1c3RvbUNsYXNzID0gbW9kYWwuZ2V0QXR0cmlidXRlKCdkYXRhLWN1c3RvbS1jbGFzcycpO1xuICAgIHJlbW92ZUNsYXNzKG1vZGFsLCBjdXN0b21DbGFzcyk7XG4gIH0sIDMwMCk7XG5cbiAgLy8gTWFrZSBwYWdlIHNjcm9sbGFibGUgYWdhaW5cbiAgcmVtb3ZlQ2xhc3MoZG9jdW1lbnQuYm9keSwgJ3N0b3Atc2Nyb2xsaW5nJyk7XG5cbiAgLy8gUmVzZXQgdGhlIHBhZ2UgdG8gaXRzIHByZXZpb3VzIHN0YXRlXG4gIHdpbmRvdy5vbmtleWRvd24gPSBwcmV2aW91c1dpbmRvd0tleURvd247XG4gIGlmICh3aW5kb3cucHJldmlvdXNBY3RpdmVFbGVtZW50KSB7XG4gICAgd2luZG93LnByZXZpb3VzQWN0aXZlRWxlbWVudC5mb2N1cygpO1xuICB9XG4gIGxhc3RGb2N1c2VkQnV0dG9uID0gdW5kZWZpbmVkO1xuICBjbGVhclRpbWVvdXQobW9kYWwudGltZW91dCk7XG5cbiAgcmV0dXJuIHRydWU7XG59O1xuXG5cbi8qXG4gKiBWYWxpZGF0aW9uIG9mIHRoZSBpbnB1dCBmaWVsZCBpcyBkb25lIGJ5IHVzZXJcbiAqIElmIHNvbWV0aGluZyBpcyB3cm9uZyA9PiBjYWxsIHNob3dJbnB1dEVycm9yIHdpdGggZXJyb3JNZXNzYWdlXG4gKi9cbnN3ZWV0QWxlcnQuc2hvd0lucHV0RXJyb3IgPSBzd2FsLnNob3dJbnB1dEVycm9yID0gZnVuY3Rpb24oZXJyb3JNZXNzYWdlKSB7XG4gIHZhciBtb2RhbCA9IGdldE1vZGFsKCk7XG5cbiAgdmFyICRlcnJvckljb24gPSBtb2RhbC5xdWVyeVNlbGVjdG9yKCcuc2EtaW5wdXQtZXJyb3InKTtcbiAgYWRkQ2xhc3MoJGVycm9ySWNvbiwgJ3Nob3cnKTtcblxuICB2YXIgJGVycm9yQ29udGFpbmVyID0gbW9kYWwucXVlcnlTZWxlY3RvcignLnNhLWVycm9yLWNvbnRhaW5lcicpO1xuICBhZGRDbGFzcygkZXJyb3JDb250YWluZXIsICdzaG93Jyk7XG5cbiAgJGVycm9yQ29udGFpbmVyLnF1ZXJ5U2VsZWN0b3IoJ3AnKS5pbm5lckhUTUwgPSBlcnJvck1lc3NhZ2U7XG5cbiAgc2V0VGltZW91dChmdW5jdGlvbigpIHtcbiAgICBzd2VldEFsZXJ0LmVuYWJsZUJ1dHRvbnMoKTtcbiAgfSwgMSk7XG5cbiAgbW9kYWwucXVlcnlTZWxlY3RvcignaW5wdXQnKS5mb2N1cygpO1xufTtcblxuXG4vKlxuICogUmVzZXQgaW5wdXQgZXJyb3IgRE9NIGVsZW1lbnRzXG4gKi9cbnN3ZWV0QWxlcnQucmVzZXRJbnB1dEVycm9yID0gc3dhbC5yZXNldElucHV0RXJyb3IgPSBmdW5jdGlvbihldmVudCkge1xuICAvLyBJZiBwcmVzcyBlbnRlciA9PiBpZ25vcmVcbiAgaWYgKGV2ZW50ICYmIGV2ZW50LmtleUNvZGUgPT09IDEzKSB7XG4gICAgcmV0dXJuIGZhbHNlO1xuICB9XG5cbiAgdmFyICRtb2RhbCA9IGdldE1vZGFsKCk7XG5cbiAgdmFyICRlcnJvckljb24gPSAkbW9kYWwucXVlcnlTZWxlY3RvcignLnNhLWlucHV0LWVycm9yJyk7XG4gIHJlbW92ZUNsYXNzKCRlcnJvckljb24sICdzaG93Jyk7XG5cbiAgdmFyICRlcnJvckNvbnRhaW5lciA9ICRtb2RhbC5xdWVyeVNlbGVjdG9yKCcuc2EtZXJyb3ItY29udGFpbmVyJyk7XG4gIHJlbW92ZUNsYXNzKCRlcnJvckNvbnRhaW5lciwgJ3Nob3cnKTtcbn07XG5cbi8qXG4gKiBEaXNhYmxlIGNvbmZpcm0gYW5kIGNhbmNlbCBidXR0b25zXG4gKi9cbnN3ZWV0QWxlcnQuZGlzYWJsZUJ1dHRvbnMgPSBzd2FsLmRpc2FibGVCdXR0b25zID0gZnVuY3Rpb24oZXZlbnQpIHtcbiAgdmFyIG1vZGFsID0gZ2V0TW9kYWwoKTtcbiAgdmFyICRjb25maXJtQnV0dG9uID0gbW9kYWwucXVlcnlTZWxlY3RvcignYnV0dG9uLmNvbmZpcm0nKTtcbiAgdmFyICRjYW5jZWxCdXR0b24gPSBtb2RhbC5xdWVyeVNlbGVjdG9yKCdidXR0b24uY2FuY2VsJyk7XG4gICRjb25maXJtQnV0dG9uLmRpc2FibGVkID0gdHJ1ZTtcbiAgJGNhbmNlbEJ1dHRvbi5kaXNhYmxlZCA9IHRydWU7XG59O1xuXG4vKlxuICogRW5hYmxlIGNvbmZpcm0gYW5kIGNhbmNlbCBidXR0b25zXG4gKi9cbnN3ZWV0QWxlcnQuZW5hYmxlQnV0dG9ucyA9IHN3YWwuZW5hYmxlQnV0dG9ucyA9IGZ1bmN0aW9uKGV2ZW50KSB7XG4gIHZhciBtb2RhbCA9IGdldE1vZGFsKCk7XG4gIHZhciAkY29uZmlybUJ1dHRvbiA9IG1vZGFsLnF1ZXJ5U2VsZWN0b3IoJ2J1dHRvbi5jb25maXJtJyk7XG4gIHZhciAkY2FuY2VsQnV0dG9uID0gbW9kYWwucXVlcnlTZWxlY3RvcignYnV0dG9uLmNhbmNlbCcpO1xuICAkY29uZmlybUJ1dHRvbi5kaXNhYmxlZCA9IGZhbHNlO1xuICAkY2FuY2VsQnV0dG9uLmRpc2FibGVkID0gZmFsc2U7XG59O1xuXG5pZiAodHlwZW9mIHdpbmRvdyAhPT0gJ3VuZGVmaW5lZCcpIHtcbiAgLy8gVGhlICdoYW5kbGUtY2xpY2snIG1vZHVsZSByZXF1aXJlc1xuICAvLyB0aGF0ICdzd2VldEFsZXJ0JyB3YXMgc2V0IGFzIGdsb2JhbC5cbiAgd2luZG93LnN3ZWV0QWxlcnQgPSB3aW5kb3cuc3dhbCA9IHN3ZWV0QWxlcnQ7XG59IGVsc2Uge1xuICBsb2dTdHIoJ1N3ZWV0QWxlcnQgaXMgYSBmcm9udGVuZCBtb2R1bGUhJyk7XG59XG4iLCJ2YXIgZGVmYXVsdFBhcmFtcyA9IHtcbiAgdGl0bGU6ICcnLFxuICB0ZXh0OiAnJyxcbiAgdHlwZTogbnVsbCxcbiAgYWxsb3dPdXRzaWRlQ2xpY2s6IGZhbHNlLFxuICBzaG93Q29uZmlybUJ1dHRvbjogdHJ1ZSxcbiAgc2hvd0NhbmNlbEJ1dHRvbjogZmFsc2UsXG4gIGNsb3NlT25Db25maXJtOiB0cnVlLFxuICBjbG9zZU9uQ2FuY2VsOiB0cnVlLFxuICBjb25maXJtQnV0dG9uVGV4dDogJ09LJyxcbiAgY29uZmlybUJ1dHRvbkNvbG9yOiAnIzhDRDRGNScsXG4gIGNhbmNlbEJ1dHRvblRleHQ6ICdDYW5jZWwnLFxuICBpbWFnZVVybDogbnVsbCxcbiAgaW1hZ2VTaXplOiBudWxsLFxuICB0aW1lcjogbnVsbCxcbiAgY3VzdG9tQ2xhc3M6ICcnLFxuICBodG1sOiBmYWxzZSxcbiAgYW5pbWF0aW9uOiB0cnVlLFxuICBhbGxvd0VzY2FwZUtleTogdHJ1ZSxcbiAgaW5wdXRUeXBlOiAndGV4dCcsXG4gIGlucHV0UGxhY2Vob2xkZXI6ICcnLFxuICBpbnB1dFZhbHVlOiAnJyxcbiAgc2hvd0xvYWRlck9uQ29uZmlybTogZmFsc2Vcbn07XG5cbmV4cG9ydCBkZWZhdWx0IGRlZmF1bHRQYXJhbXM7XG4iLCJpbXBvcnQgeyBjb2xvckx1bWluYW5jZSB9IGZyb20gJy4vdXRpbHMnO1xuaW1wb3J0IHsgZ2V0TW9kYWwgfSBmcm9tICcuL2hhbmRsZS1zd2FsLWRvbSc7XG5pbXBvcnQgeyBoYXNDbGFzcywgaXNEZXNjZW5kYW50IH0gZnJvbSAnLi9oYW5kbGUtZG9tJztcblxuXG4vKlxuICogVXNlciBjbGlja2VkIG9uIFwiQ29uZmlybVwiL1wiT0tcIiBvciBcIkNhbmNlbFwiXG4gKi9cbnZhciBoYW5kbGVCdXR0b24gPSBmdW5jdGlvbihldmVudCwgcGFyYW1zLCBtb2RhbCkge1xuICB2YXIgZSA9IGV2ZW50IHx8IHdpbmRvdy5ldmVudDtcbiAgdmFyIHRhcmdldCA9IGUudGFyZ2V0IHx8IGUuc3JjRWxlbWVudDtcblxuICB2YXIgdGFyZ2V0ZWRDb25maXJtID0gdGFyZ2V0LmNsYXNzTmFtZS5pbmRleE9mKCdjb25maXJtJykgIT09IC0xO1xuICB2YXIgdGFyZ2V0ZWRPdmVybGF5ID0gdGFyZ2V0LmNsYXNzTmFtZS5pbmRleE9mKCdzd2VldC1vdmVybGF5JykgIT09IC0xO1xuICB2YXIgbW9kYWxJc1Zpc2libGUgID0gaGFzQ2xhc3MobW9kYWwsICd2aXNpYmxlJyk7XG4gIHZhciBkb25lRnVuY3Rpb25FeGlzdHMgPSAocGFyYW1zLmRvbmVGdW5jdGlvbiAmJiBtb2RhbC5nZXRBdHRyaWJ1dGUoJ2RhdGEtaGFzLWRvbmUtZnVuY3Rpb24nKSA9PT0gJ3RydWUnKTtcblxuICAvLyBTaW5jZSB0aGUgdXNlciBjYW4gY2hhbmdlIHRoZSBiYWNrZ3JvdW5kLWNvbG9yIG9mIHRoZSBjb25maXJtIGJ1dHRvbiBwcm9ncmFtbWF0aWNhbGx5LFxuICAvLyB3ZSBtdXN0IGNhbGN1bGF0ZSB3aGF0IHRoZSBjb2xvciBzaG91bGQgYmUgb24gaG92ZXIvYWN0aXZlXG4gIHZhciBub3JtYWxDb2xvciwgaG92ZXJDb2xvciwgYWN0aXZlQ29sb3I7XG4gIGlmICh0YXJnZXRlZENvbmZpcm0gJiYgcGFyYW1zLmNvbmZpcm1CdXR0b25Db2xvcikge1xuICAgIG5vcm1hbENvbG9yICA9IHBhcmFtcy5jb25maXJtQnV0dG9uQ29sb3I7XG4gICAgaG92ZXJDb2xvciAgID0gY29sb3JMdW1pbmFuY2Uobm9ybWFsQ29sb3IsIC0wLjA0KTtcbiAgICBhY3RpdmVDb2xvciAgPSBjb2xvckx1bWluYW5jZShub3JtYWxDb2xvciwgLTAuMTQpO1xuICB9XG5cbiAgZnVuY3Rpb24gc2hvdWxkU2V0Q29uZmlybUJ1dHRvbkNvbG9yKGNvbG9yKSB7XG4gICAgaWYgKHRhcmdldGVkQ29uZmlybSAmJiBwYXJhbXMuY29uZmlybUJ1dHRvbkNvbG9yKSB7XG4gICAgICB0YXJnZXQuc3R5bGUuYmFja2dyb3VuZENvbG9yID0gY29sb3I7XG4gICAgfVxuICB9XG5cbiAgc3dpdGNoIChlLnR5cGUpIHtcbiAgICBjYXNlICdtb3VzZW92ZXInOlxuICAgICAgc2hvdWxkU2V0Q29uZmlybUJ1dHRvbkNvbG9yKGhvdmVyQ29sb3IpO1xuICAgICAgYnJlYWs7XG5cbiAgICBjYXNlICdtb3VzZW91dCc6XG4gICAgICBzaG91bGRTZXRDb25maXJtQnV0dG9uQ29sb3Iobm9ybWFsQ29sb3IpO1xuICAgICAgYnJlYWs7XG5cbiAgICBjYXNlICdtb3VzZWRvd24nOlxuICAgICAgc2hvdWxkU2V0Q29uZmlybUJ1dHRvbkNvbG9yKGFjdGl2ZUNvbG9yKTtcbiAgICAgIGJyZWFrO1xuXG4gICAgY2FzZSAnbW91c2V1cCc6XG4gICAgICBzaG91bGRTZXRDb25maXJtQnV0dG9uQ29sb3IoaG92ZXJDb2xvcik7XG4gICAgICBicmVhaztcblxuICAgIGNhc2UgJ2ZvY3VzJzpcbiAgICAgIGxldCAkY29uZmlybUJ1dHRvbiA9IG1vZGFsLnF1ZXJ5U2VsZWN0b3IoJ2J1dHRvbi5jb25maXJtJyk7XG4gICAgICBsZXQgJGNhbmNlbEJ1dHRvbiAgPSBtb2RhbC5xdWVyeVNlbGVjdG9yKCdidXR0b24uY2FuY2VsJyk7XG5cbiAgICAgIGlmICh0YXJnZXRlZENvbmZpcm0pIHtcbiAgICAgICAgJGNhbmNlbEJ1dHRvbi5zdHlsZS5ib3hTaGFkb3cgPSAnbm9uZSc7XG4gICAgICB9IGVsc2Uge1xuICAgICAgICAkY29uZmlybUJ1dHRvbi5zdHlsZS5ib3hTaGFkb3cgPSAnbm9uZSc7XG4gICAgICB9XG4gICAgICBicmVhaztcblxuICAgIGNhc2UgJ2NsaWNrJzpcbiAgICAgIGxldCBjbGlja2VkT25Nb2RhbCA9IChtb2RhbCA9PT0gdGFyZ2V0KTtcbiAgICAgIGxldCBjbGlja2VkT25Nb2RhbENoaWxkID0gaXNEZXNjZW5kYW50KG1vZGFsLCB0YXJnZXQpO1xuXG4gICAgICAvLyBJZ25vcmUgY2xpY2sgb3V0c2lkZSBpZiBhbGxvd091dHNpZGVDbGljayBpcyBmYWxzZVxuICAgICAgaWYgKCFjbGlja2VkT25Nb2RhbCAmJiAhY2xpY2tlZE9uTW9kYWxDaGlsZCAmJiBtb2RhbElzVmlzaWJsZSAmJiAhcGFyYW1zLmFsbG93T3V0c2lkZUNsaWNrKSB7XG4gICAgICAgIGJyZWFrO1xuICAgICAgfVxuXG4gICAgICBpZiAodGFyZ2V0ZWRDb25maXJtICYmIGRvbmVGdW5jdGlvbkV4aXN0cyAmJiBtb2RhbElzVmlzaWJsZSkge1xuICAgICAgICBoYW5kbGVDb25maXJtKG1vZGFsLCBwYXJhbXMpO1xuICAgICAgfSBlbHNlIGlmIChkb25lRnVuY3Rpb25FeGlzdHMgJiYgbW9kYWxJc1Zpc2libGUgfHwgdGFyZ2V0ZWRPdmVybGF5KSB7XG4gICAgICAgIGhhbmRsZUNhbmNlbChtb2RhbCwgcGFyYW1zKTtcbiAgICAgIH0gZWxzZSBpZiAoaXNEZXNjZW5kYW50KG1vZGFsLCB0YXJnZXQpICYmIHRhcmdldC50YWdOYW1lID09PSAnQlVUVE9OJykge1xuICAgICAgICBzd2VldEFsZXJ0LmNsb3NlKCk7XG4gICAgICB9XG4gICAgICBicmVhaztcbiAgfVxufTtcblxuLypcbiAqICBVc2VyIGNsaWNrZWQgb24gXCJDb25maXJtXCIvXCJPS1wiXG4gKi9cbnZhciBoYW5kbGVDb25maXJtID0gZnVuY3Rpb24obW9kYWwsIHBhcmFtcykge1xuICB2YXIgY2FsbGJhY2tWYWx1ZSA9IHRydWU7XG5cbiAgaWYgKGhhc0NsYXNzKG1vZGFsLCAnc2hvdy1pbnB1dCcpKSB7XG4gICAgY2FsbGJhY2tWYWx1ZSA9IG1vZGFsLnF1ZXJ5U2VsZWN0b3IoJ2lucHV0JykudmFsdWU7XG5cbiAgICBpZiAoIWNhbGxiYWNrVmFsdWUpIHtcbiAgICAgIGNhbGxiYWNrVmFsdWUgPSAnJztcbiAgICB9XG4gIH1cblxuICBwYXJhbXMuZG9uZUZ1bmN0aW9uKGNhbGxiYWNrVmFsdWUpO1xuXG4gIGlmIChwYXJhbXMuY2xvc2VPbkNvbmZpcm0pIHtcbiAgICBzd2VldEFsZXJ0LmNsb3NlKCk7XG4gIH1cbiAgLy8gRGlzYWJsZSBjYW5jZWwgYW5kIGNvbmZpcm0gYnV0dG9uIGlmIHRoZSBwYXJhbWV0ZXIgaXMgdHJ1ZVxuICBpZiAocGFyYW1zLnNob3dMb2FkZXJPbkNvbmZpcm0pIHtcbiAgICBzd2VldEFsZXJ0LmRpc2FibGVCdXR0b25zKCk7XG4gIH1cbn07XG5cbi8qXG4gKiAgVXNlciBjbGlja2VkIG9uIFwiQ2FuY2VsXCJcbiAqL1xudmFyIGhhbmRsZUNhbmNlbCA9IGZ1bmN0aW9uKG1vZGFsLCBwYXJhbXMpIHtcbiAgLy8gQ2hlY2sgaWYgY2FsbGJhY2sgZnVuY3Rpb24gZXhwZWN0cyBhIHBhcmFtZXRlciAodG8gdHJhY2sgY2FuY2VsIGFjdGlvbnMpXG4gIHZhciBmdW5jdGlvbkFzU3RyID0gU3RyaW5nKHBhcmFtcy5kb25lRnVuY3Rpb24pLnJlcGxhY2UoL1xccy9nLCAnJyk7XG4gIHZhciBmdW5jdGlvbkhhbmRsZXNDYW5jZWwgPSBmdW5jdGlvbkFzU3RyLnN1YnN0cmluZygwLCA5KSA9PT0gJ2Z1bmN0aW9uKCcgJiYgZnVuY3Rpb25Bc1N0ci5zdWJzdHJpbmcoOSwgMTApICE9PSAnKSc7XG5cbiAgaWYgKGZ1bmN0aW9uSGFuZGxlc0NhbmNlbCkge1xuICAgIHBhcmFtcy5kb25lRnVuY3Rpb24oZmFsc2UpO1xuICB9XG5cbiAgaWYgKHBhcmFtcy5jbG9zZU9uQ2FuY2VsKSB7XG4gICAgc3dlZXRBbGVydC5jbG9zZSgpO1xuICB9XG59O1xuXG5cbmV4cG9ydCBkZWZhdWx0IHtcbiAgaGFuZGxlQnV0dG9uLFxuICBoYW5kbGVDb25maXJtLFxuICBoYW5kbGVDYW5jZWxcbn07XG4iLCJ2YXIgaGFzQ2xhc3MgPSBmdW5jdGlvbihlbGVtLCBjbGFzc05hbWUpIHtcbiAgcmV0dXJuIG5ldyBSZWdFeHAoJyAnICsgY2xhc3NOYW1lICsgJyAnKS50ZXN0KCcgJyArIGVsZW0uY2xhc3NOYW1lICsgJyAnKTtcbn07XG5cbnZhciBhZGRDbGFzcyA9IGZ1bmN0aW9uKGVsZW0sIGNsYXNzTmFtZSkge1xuICBpZiAoIWhhc0NsYXNzKGVsZW0sIGNsYXNzTmFtZSkpIHtcbiAgICBlbGVtLmNsYXNzTmFtZSArPSAnICcgKyBjbGFzc05hbWU7XG4gIH1cbn07XG5cbnZhciByZW1vdmVDbGFzcyA9IGZ1bmN0aW9uKGVsZW0sIGNsYXNzTmFtZSkge1xuICB2YXIgbmV3Q2xhc3MgPSAnICcgKyBlbGVtLmNsYXNzTmFtZS5yZXBsYWNlKC9bXFx0XFxyXFxuXS9nLCAnICcpICsgJyAnO1xuICBpZiAoaGFzQ2xhc3MoZWxlbSwgY2xhc3NOYW1lKSkge1xuICAgIHdoaWxlIChuZXdDbGFzcy5pbmRleE9mKCcgJyArIGNsYXNzTmFtZSArICcgJykgPj0gMCkge1xuICAgICAgbmV3Q2xhc3MgPSBuZXdDbGFzcy5yZXBsYWNlKCcgJyArIGNsYXNzTmFtZSArICcgJywgJyAnKTtcbiAgICB9XG4gICAgZWxlbS5jbGFzc05hbWUgPSBuZXdDbGFzcy5yZXBsYWNlKC9eXFxzK3xcXHMrJC9nLCAnJyk7XG4gIH1cbn07XG5cbnZhciBlc2NhcGVIdG1sID0gZnVuY3Rpb24oc3RyKSB7XG4gIHZhciBkaXYgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdkaXYnKTtcbiAgZGl2LmFwcGVuZENoaWxkKGRvY3VtZW50LmNyZWF0ZVRleHROb2RlKHN0cikpO1xuICByZXR1cm4gZGl2LmlubmVySFRNTDtcbn07XG5cbnZhciBfc2hvdyA9IGZ1bmN0aW9uKGVsZW0pIHtcbiAgZWxlbS5zdHlsZS5vcGFjaXR5ID0gJyc7XG4gIGVsZW0uc3R5bGUuZGlzcGxheSA9ICdibG9jayc7XG59O1xuXG52YXIgc2hvdyA9IGZ1bmN0aW9uKGVsZW1zKSB7XG4gIGlmIChlbGVtcyAmJiAhZWxlbXMubGVuZ3RoKSB7XG4gICAgcmV0dXJuIF9zaG93KGVsZW1zKTtcbiAgfVxuICBmb3IgKHZhciBpID0gMDsgaSA8IGVsZW1zLmxlbmd0aDsgKytpKSB7XG4gICAgX3Nob3coZWxlbXNbaV0pO1xuICB9XG59O1xuXG52YXIgX2hpZGUgPSBmdW5jdGlvbihlbGVtKSB7XG4gIGVsZW0uc3R5bGUub3BhY2l0eSA9ICcnO1xuICBlbGVtLnN0eWxlLmRpc3BsYXkgPSAnbm9uZSc7XG59O1xuXG52YXIgaGlkZSA9IGZ1bmN0aW9uKGVsZW1zKSB7XG4gIGlmIChlbGVtcyAmJiAhZWxlbXMubGVuZ3RoKSB7XG4gICAgcmV0dXJuIF9oaWRlKGVsZW1zKTtcbiAgfVxuICBmb3IgKHZhciBpID0gMDsgaSA8IGVsZW1zLmxlbmd0aDsgKytpKSB7XG4gICAgX2hpZGUoZWxlbXNbaV0pO1xuICB9XG59O1xuXG52YXIgaXNEZXNjZW5kYW50ID0gZnVuY3Rpb24ocGFyZW50LCBjaGlsZCkge1xuICB2YXIgbm9kZSA9IGNoaWxkLnBhcmVudE5vZGU7XG4gIHdoaWxlIChub2RlICE9PSBudWxsKSB7XG4gICAgaWYgKG5vZGUgPT09IHBhcmVudCkge1xuICAgICAgcmV0dXJuIHRydWU7XG4gICAgfVxuICAgIG5vZGUgPSBub2RlLnBhcmVudE5vZGU7XG4gIH1cbiAgcmV0dXJuIGZhbHNlO1xufTtcblxudmFyIGdldFRvcE1hcmdpbiA9IGZ1bmN0aW9uKGVsZW0pIHtcbiAgZWxlbS5zdHlsZS5sZWZ0ID0gJy05OTk5cHgnO1xuICBlbGVtLnN0eWxlLmRpc3BsYXkgPSAnYmxvY2snO1xuXG4gIHZhciBoZWlnaHQgPSBlbGVtLmNsaWVudEhlaWdodCxcbiAgICAgIHBhZGRpbmc7XG4gIGlmICh0eXBlb2YgZ2V0Q29tcHV0ZWRTdHlsZSAhPT0gXCJ1bmRlZmluZWRcIikgeyAvLyBJRSA4XG4gICAgcGFkZGluZyA9IHBhcnNlSW50KGdldENvbXB1dGVkU3R5bGUoZWxlbSkuZ2V0UHJvcGVydHlWYWx1ZSgncGFkZGluZy10b3AnKSwgMTApO1xuICB9IGVsc2Uge1xuICAgIHBhZGRpbmcgPSBwYXJzZUludChlbGVtLmN1cnJlbnRTdHlsZS5wYWRkaW5nKTtcbiAgfVxuXG4gIGVsZW0uc3R5bGUubGVmdCA9ICcnO1xuICBlbGVtLnN0eWxlLmRpc3BsYXkgPSAnbm9uZSc7XG4gIHJldHVybiAoJy0nICsgcGFyc2VJbnQoKGhlaWdodCArIHBhZGRpbmcpIC8gMikgKyAncHgnKTtcbn07XG5cbnZhciBmYWRlSW4gPSBmdW5jdGlvbihlbGVtLCBpbnRlcnZhbCkge1xuICBpZiAoK2VsZW0uc3R5bGUub3BhY2l0eSA8IDEpIHtcbiAgICBpbnRlcnZhbCA9IGludGVydmFsIHx8IDE2O1xuICAgIGVsZW0uc3R5bGUub3BhY2l0eSA9IDA7XG4gICAgZWxlbS5zdHlsZS5kaXNwbGF5ID0gJ2Jsb2NrJztcbiAgICB2YXIgbGFzdCA9ICtuZXcgRGF0ZSgpO1xuICAgIHZhciB0aWNrID0gZnVuY3Rpb24oKSB7XG4gICAgICBlbGVtLnN0eWxlLm9wYWNpdHkgPSArZWxlbS5zdHlsZS5vcGFjaXR5ICsgKG5ldyBEYXRlKCkgLSBsYXN0KSAvIDEwMDtcbiAgICAgIGxhc3QgPSArbmV3IERhdGUoKTtcblxuICAgICAgaWYgKCtlbGVtLnN0eWxlLm9wYWNpdHkgPCAxKSB7XG4gICAgICAgIHNldFRpbWVvdXQodGljaywgaW50ZXJ2YWwpO1xuICAgICAgfVxuICAgIH07XG4gICAgdGljaygpO1xuICB9XG4gIGVsZW0uc3R5bGUuZGlzcGxheSA9ICdibG9jayc7IC8vZmFsbGJhY2sgSUU4XG59O1xuXG52YXIgZmFkZU91dCA9IGZ1bmN0aW9uKGVsZW0sIGludGVydmFsKSB7XG4gIGludGVydmFsID0gaW50ZXJ2YWwgfHwgMTY7XG4gIGVsZW0uc3R5bGUub3BhY2l0eSA9IDE7XG4gIHZhciBsYXN0ID0gK25ldyBEYXRlKCk7XG4gIHZhciB0aWNrID0gZnVuY3Rpb24oKSB7XG4gICAgZWxlbS5zdHlsZS5vcGFjaXR5ID0gK2VsZW0uc3R5bGUub3BhY2l0eSAtIChuZXcgRGF0ZSgpIC0gbGFzdCkgLyAxMDA7XG4gICAgbGFzdCA9ICtuZXcgRGF0ZSgpO1xuXG4gICAgaWYgKCtlbGVtLnN0eWxlLm9wYWNpdHkgPiAwKSB7XG4gICAgICBzZXRUaW1lb3V0KHRpY2ssIGludGVydmFsKTtcbiAgICB9IGVsc2Uge1xuICAgICAgZWxlbS5zdHlsZS5kaXNwbGF5ID0gJ25vbmUnO1xuICAgIH1cbiAgfTtcbiAgdGljaygpO1xufTtcblxudmFyIGZpcmVDbGljayA9IGZ1bmN0aW9uKG5vZGUpIHtcbiAgLy8gVGFrZW4gZnJvbSBodHRwOi8vd3d3Lm5vbm9idHJ1c2l2ZS5jb20vMjAxMS8xMS8yOS9wcm9ncmFtYXRpY2FsbHktZmlyZS1jcm9zc2Jyb3dzZXItY2xpY2stZXZlbnQtd2l0aC1qYXZhc2NyaXB0L1xuICAvLyBUaGVuIGZpeGVkIGZvciB0b2RheSdzIENocm9tZSBicm93c2VyLlxuICBpZiAodHlwZW9mIE1vdXNlRXZlbnQgPT09ICdmdW5jdGlvbicpIHtcbiAgICAvLyBVcC10by1kYXRlIGFwcHJvYWNoXG4gICAgdmFyIG1ldnQgPSBuZXcgTW91c2VFdmVudCgnY2xpY2snLCB7XG4gICAgICB2aWV3OiB3aW5kb3csXG4gICAgICBidWJibGVzOiBmYWxzZSxcbiAgICAgIGNhbmNlbGFibGU6IHRydWVcbiAgICB9KTtcbiAgICBub2RlLmRpc3BhdGNoRXZlbnQobWV2dCk7XG4gIH0gZWxzZSBpZiAoIGRvY3VtZW50LmNyZWF0ZUV2ZW50ICkge1xuICAgIC8vIEZhbGxiYWNrXG4gICAgdmFyIGV2dCA9IGRvY3VtZW50LmNyZWF0ZUV2ZW50KCdNb3VzZUV2ZW50cycpO1xuICAgIGV2dC5pbml0RXZlbnQoJ2NsaWNrJywgZmFsc2UsIGZhbHNlKTtcbiAgICBub2RlLmRpc3BhdGNoRXZlbnQoZXZ0KTtcbiAgfSBlbHNlIGlmIChkb2N1bWVudC5jcmVhdGVFdmVudE9iamVjdCkge1xuICAgIG5vZGUuZmlyZUV2ZW50KCdvbmNsaWNrJykgO1xuICB9IGVsc2UgaWYgKHR5cGVvZiBub2RlLm9uY2xpY2sgPT09ICdmdW5jdGlvbicgKSB7XG4gICAgbm9kZS5vbmNsaWNrKCk7XG4gIH1cbn07XG5cbnZhciBzdG9wRXZlbnRQcm9wYWdhdGlvbiA9IGZ1bmN0aW9uKGUpIHtcbiAgLy8gSW4gcGFydGljdWxhciwgbWFrZSBzdXJlIHRoZSBzcGFjZSBiYXIgZG9lc24ndCBzY3JvbGwgdGhlIG1haW4gd2luZG93LlxuICBpZiAodHlwZW9mIGUuc3RvcFByb3BhZ2F0aW9uID09PSAnZnVuY3Rpb24nKSB7XG4gICAgZS5zdG9wUHJvcGFnYXRpb24oKTtcbiAgICBlLnByZXZlbnREZWZhdWx0KCk7XG4gIH0gZWxzZSBpZiAod2luZG93LmV2ZW50ICYmIHdpbmRvdy5ldmVudC5oYXNPd25Qcm9wZXJ0eSgnY2FuY2VsQnViYmxlJykpIHtcbiAgICB3aW5kb3cuZXZlbnQuY2FuY2VsQnViYmxlID0gdHJ1ZTtcbiAgfVxufTtcblxuZXhwb3J0IHsgXG4gIGhhc0NsYXNzLCBhZGRDbGFzcywgcmVtb3ZlQ2xhc3MsIFxuICBlc2NhcGVIdG1sLCBcbiAgX3Nob3csIHNob3csIF9oaWRlLCBoaWRlLCBcbiAgaXNEZXNjZW5kYW50LCBcbiAgZ2V0VG9wTWFyZ2luLFxuICBmYWRlSW4sIGZhZGVPdXQsXG4gIGZpcmVDbGljayxcbiAgc3RvcEV2ZW50UHJvcGFnYXRpb25cbn07XG4iLCJpbXBvcnQgeyBzdG9wRXZlbnRQcm9wYWdhdGlvbiwgZmlyZUNsaWNrIH0gZnJvbSAnLi9oYW5kbGUtZG9tJztcbmltcG9ydCB7IHNldEZvY3VzU3R5bGUgfSBmcm9tICcuL2hhbmRsZS1zd2FsLWRvbSc7XG5cblxudmFyIGhhbmRsZUtleURvd24gPSBmdW5jdGlvbihldmVudCwgcGFyYW1zLCBtb2RhbCkge1xuICB2YXIgZSA9IGV2ZW50IHx8IHdpbmRvdy5ldmVudDtcbiAgdmFyIGtleUNvZGUgPSBlLmtleUNvZGUgfHwgZS53aGljaDtcblxuICB2YXIgJG9rQnV0dG9uICAgICA9IG1vZGFsLnF1ZXJ5U2VsZWN0b3IoJ2J1dHRvbi5jb25maXJtJyk7XG4gIHZhciAkY2FuY2VsQnV0dG9uID0gbW9kYWwucXVlcnlTZWxlY3RvcignYnV0dG9uLmNhbmNlbCcpO1xuICB2YXIgJG1vZGFsQnV0dG9ucyA9IG1vZGFsLnF1ZXJ5U2VsZWN0b3JBbGwoJ2J1dHRvblt0YWJpbmRleF0nKTtcblxuXG4gIGlmIChbOSwgMTMsIDMyLCAyN10uaW5kZXhPZihrZXlDb2RlKSA9PT0gLTEpIHtcbiAgICAvLyBEb24ndCBkbyB3b3JrIG9uIGtleXMgd2UgZG9uJ3QgY2FyZSBhYm91dC5cbiAgICByZXR1cm47XG4gIH1cblxuICB2YXIgJHRhcmdldEVsZW1lbnQgPSBlLnRhcmdldCB8fCBlLnNyY0VsZW1lbnQ7XG5cbiAgdmFyIGJ0bkluZGV4ID0gLTE7IC8vIEZpbmQgdGhlIGJ1dHRvbiAtIG5vdGUsIHRoaXMgaXMgYSBub2RlbGlzdCwgbm90IGFuIGFycmF5LlxuICBmb3IgKHZhciBpID0gMDsgaSA8ICRtb2RhbEJ1dHRvbnMubGVuZ3RoOyBpKyspIHtcbiAgICBpZiAoJHRhcmdldEVsZW1lbnQgPT09ICRtb2RhbEJ1dHRvbnNbaV0pIHtcbiAgICAgIGJ0bkluZGV4ID0gaTtcbiAgICAgIGJyZWFrO1xuICAgIH1cbiAgfVxuXG4gIGlmIChrZXlDb2RlID09PSA5KSB7XG4gICAgLy8gVEFCXG4gICAgaWYgKGJ0bkluZGV4ID09PSAtMSkge1xuICAgICAgLy8gTm8gYnV0dG9uIGZvY3VzZWQuIEp1bXAgdG8gdGhlIGNvbmZpcm0gYnV0dG9uLlxuICAgICAgJHRhcmdldEVsZW1lbnQgPSAkb2tCdXR0b247XG4gICAgfSBlbHNlIHtcbiAgICAgIC8vIEN5Y2xlIHRvIHRoZSBuZXh0IGJ1dHRvblxuICAgICAgaWYgKGJ0bkluZGV4ID09PSAkbW9kYWxCdXR0b25zLmxlbmd0aCAtIDEpIHtcbiAgICAgICAgJHRhcmdldEVsZW1lbnQgPSAkbW9kYWxCdXR0b25zWzBdO1xuICAgICAgfSBlbHNlIHtcbiAgICAgICAgJHRhcmdldEVsZW1lbnQgPSAkbW9kYWxCdXR0b25zW2J0bkluZGV4ICsgMV07XG4gICAgICB9XG4gICAgfVxuXG4gICAgc3RvcEV2ZW50UHJvcGFnYXRpb24oZSk7XG4gICAgJHRhcmdldEVsZW1lbnQuZm9jdXMoKTtcblxuICAgIGlmIChwYXJhbXMuY29uZmlybUJ1dHRvbkNvbG9yKSB7XG4gICAgICBzZXRGb2N1c1N0eWxlKCR0YXJnZXRFbGVtZW50LCBwYXJhbXMuY29uZmlybUJ1dHRvbkNvbG9yKTtcbiAgICB9XG4gIH0gZWxzZSB7XG4gICAgaWYgKGtleUNvZGUgPT09IDEzKSB7XG4gICAgICBpZiAoJHRhcmdldEVsZW1lbnQudGFnTmFtZSA9PT0gJ0lOUFVUJykge1xuICAgICAgICAkdGFyZ2V0RWxlbWVudCA9ICRva0J1dHRvbjtcbiAgICAgICAgJG9rQnV0dG9uLmZvY3VzKCk7XG4gICAgICB9XG5cbiAgICAgIGlmIChidG5JbmRleCA9PT0gLTEpIHtcbiAgICAgICAgLy8gRU5URVIvU1BBQ0UgY2xpY2tlZCBvdXRzaWRlIG9mIGEgYnV0dG9uLlxuICAgICAgICAkdGFyZ2V0RWxlbWVudCA9ICRva0J1dHRvbjtcbiAgICAgIH0gZWxzZSB7XG4gICAgICAgIC8vIERvIG5vdGhpbmcgLSBsZXQgdGhlIGJyb3dzZXIgaGFuZGxlIGl0LlxuICAgICAgICAkdGFyZ2V0RWxlbWVudCA9IHVuZGVmaW5lZDtcbiAgICAgIH1cbiAgICB9IGVsc2UgaWYgKGtleUNvZGUgPT09IDI3ICYmIHBhcmFtcy5hbGxvd0VzY2FwZUtleSA9PT0gdHJ1ZSkge1xuICAgICAgJHRhcmdldEVsZW1lbnQgPSAkY2FuY2VsQnV0dG9uO1xuICAgICAgZmlyZUNsaWNrKCR0YXJnZXRFbGVtZW50LCBlKTtcbiAgICB9IGVsc2Uge1xuICAgICAgLy8gRmFsbGJhY2sgLSBsZXQgdGhlIGJyb3dzZXIgaGFuZGxlIGl0LlxuICAgICAgJHRhcmdldEVsZW1lbnQgPSB1bmRlZmluZWQ7XG4gICAgfVxuICB9XG59O1xuXG5leHBvcnQgZGVmYXVsdCBoYW5kbGVLZXlEb3duO1xuIiwiaW1wb3J0IHsgaGV4VG9SZ2IgfSBmcm9tICcuL3V0aWxzJztcbmltcG9ydCB7IHJlbW92ZUNsYXNzLCBnZXRUb3BNYXJnaW4sIGZhZGVJbiwgc2hvdywgYWRkQ2xhc3MgfSBmcm9tICcuL2hhbmRsZS1kb20nO1xuaW1wb3J0IGRlZmF1bHRQYXJhbXMgZnJvbSAnLi9kZWZhdWx0LXBhcmFtcyc7XG5cbnZhciBtb2RhbENsYXNzICAgPSAnLnN3ZWV0LWFsZXJ0JztcbnZhciBvdmVybGF5Q2xhc3MgPSAnLnN3ZWV0LW92ZXJsYXknO1xuXG4vKlxuICogQWRkIG1vZGFsICsgb3ZlcmxheSB0byBET01cbiAqL1xuaW1wb3J0IGluamVjdGVkSFRNTCBmcm9tICcuL2luamVjdGVkLWh0bWwnO1xuXG52YXIgc3dlZXRBbGVydEluaXRpYWxpemUgPSBmdW5jdGlvbigpIHtcbiAgdmFyIHN3ZWV0V3JhcCA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ2RpdicpO1xuICBzd2VldFdyYXAuaW5uZXJIVE1MID0gaW5qZWN0ZWRIVE1MO1xuXG4gIC8vIEFwcGVuZCBlbGVtZW50cyB0byBib2R5XG4gIHdoaWxlIChzd2VldFdyYXAuZmlyc3RDaGlsZCkge1xuICAgIGRvY3VtZW50LmJvZHkuYXBwZW5kQ2hpbGQoc3dlZXRXcmFwLmZpcnN0Q2hpbGQpO1xuICB9XG59O1xuXG4vKlxuICogR2V0IERPTSBlbGVtZW50IG9mIG1vZGFsXG4gKi9cbnZhciBnZXRNb2RhbCA9IGZ1bmN0aW9uKCkge1xuICB2YXIgJG1vZGFsID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihtb2RhbENsYXNzKTtcblxuICBpZiAoISRtb2RhbCkge1xuICAgIHN3ZWV0QWxlcnRJbml0aWFsaXplKCk7XG4gICAgJG1vZGFsID0gZ2V0TW9kYWwoKTtcbiAgfVxuXG4gIHJldHVybiAkbW9kYWw7XG59O1xuXG4vKlxuICogR2V0IERPTSBlbGVtZW50IG9mIGlucHV0IChpbiBtb2RhbClcbiAqL1xudmFyIGdldElucHV0ID0gZnVuY3Rpb24oKSB7XG4gIHZhciAkbW9kYWwgPSBnZXRNb2RhbCgpO1xuICBpZiAoJG1vZGFsKSB7XG4gICAgcmV0dXJuICRtb2RhbC5xdWVyeVNlbGVjdG9yKCdpbnB1dCcpO1xuICB9XG59O1xuXG4vKlxuICogR2V0IERPTSBlbGVtZW50IG9mIG92ZXJsYXlcbiAqL1xudmFyIGdldE92ZXJsYXkgPSBmdW5jdGlvbigpIHtcbiAgcmV0dXJuIGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3Iob3ZlcmxheUNsYXNzKTtcbn07XG5cbi8qXG4gKiBBZGQgYm94LXNoYWRvdyBzdHlsZSB0byBidXR0b24gKGRlcGVuZGluZyBvbiBpdHMgY2hvc2VuIGJnLWNvbG9yKVxuICovXG52YXIgc2V0Rm9jdXNTdHlsZSA9IGZ1bmN0aW9uKCRidXR0b24sIGJnQ29sb3IpIHtcbiAgdmFyIHJnYkNvbG9yID0gaGV4VG9SZ2IoYmdDb2xvcik7XG4gICRidXR0b24uc3R5bGUuYm94U2hhZG93ID0gJzAgMCAycHggcmdiYSgnICsgcmdiQ29sb3IgKyAnLCAwLjgpLCBpbnNldCAwIDAgMCAxcHggcmdiYSgwLCAwLCAwLCAwLjA1KSc7XG59O1xuXG4vKlxuICogQW5pbWF0aW9uIHdoZW4gb3BlbmluZyBtb2RhbFxuICovXG52YXIgb3Blbk1vZGFsID0gZnVuY3Rpb24oY2FsbGJhY2spIHtcbiAgdmFyICRtb2RhbCA9IGdldE1vZGFsKCk7XG4gIGZhZGVJbihnZXRPdmVybGF5KCksIDEwKTtcbiAgc2hvdygkbW9kYWwpO1xuICBhZGRDbGFzcygkbW9kYWwsICdzaG93U3dlZXRBbGVydCcpO1xuICByZW1vdmVDbGFzcygkbW9kYWwsICdoaWRlU3dlZXRBbGVydCcpO1xuXG4gIHdpbmRvdy5wcmV2aW91c0FjdGl2ZUVsZW1lbnQgPSBkb2N1bWVudC5hY3RpdmVFbGVtZW50O1xuICB2YXIgJG9rQnV0dG9uID0gJG1vZGFsLnF1ZXJ5U2VsZWN0b3IoJ2J1dHRvbi5jb25maXJtJyk7XG4gICRva0J1dHRvbi5mb2N1cygpO1xuXG4gIHNldFRpbWVvdXQoZnVuY3Rpb24gKCkge1xuICAgIGFkZENsYXNzKCRtb2RhbCwgJ3Zpc2libGUnKTtcbiAgfSwgNTAwKTtcblxuICB2YXIgdGltZXIgPSAkbW9kYWwuZ2V0QXR0cmlidXRlKCdkYXRhLXRpbWVyJyk7XG5cbiAgaWYgKHRpbWVyICE9PSAnbnVsbCcgJiYgdGltZXIgIT09ICcnKSB7XG4gICAgdmFyIHRpbWVyQ2FsbGJhY2sgPSBjYWxsYmFjaztcbiAgICAkbW9kYWwudGltZW91dCA9IHNldFRpbWVvdXQoZnVuY3Rpb24oKSB7XG4gICAgICB2YXIgZG9uZUZ1bmN0aW9uRXhpc3RzID0gKCh0aW1lckNhbGxiYWNrIHx8IG51bGwpICYmICRtb2RhbC5nZXRBdHRyaWJ1dGUoJ2RhdGEtaGFzLWRvbmUtZnVuY3Rpb24nKSA9PT0gJ3RydWUnKTtcbiAgICAgIGlmIChkb25lRnVuY3Rpb25FeGlzdHMpIHsgXG4gICAgICAgIHRpbWVyQ2FsbGJhY2sobnVsbCk7XG4gICAgICB9XG4gICAgICBlbHNlIHtcbiAgICAgICAgc3dlZXRBbGVydC5jbG9zZSgpO1xuICAgICAgfVxuICAgIH0sIHRpbWVyKTtcbiAgfVxufTtcblxuLypcbiAqIFJlc2V0IHRoZSBzdHlsaW5nIG9mIHRoZSBpbnB1dFxuICogKGZvciBleGFtcGxlIGlmIGVycm9ycyBoYXZlIGJlZW4gc2hvd24pXG4gKi9cbnZhciByZXNldElucHV0ID0gZnVuY3Rpb24oKSB7XG4gIHZhciAkbW9kYWwgPSBnZXRNb2RhbCgpO1xuICB2YXIgJGlucHV0ID0gZ2V0SW5wdXQoKTtcblxuICByZW1vdmVDbGFzcygkbW9kYWwsICdzaG93LWlucHV0Jyk7XG4gICRpbnB1dC52YWx1ZSA9IGRlZmF1bHRQYXJhbXMuaW5wdXRWYWx1ZTtcbiAgJGlucHV0LnNldEF0dHJpYnV0ZSgndHlwZScsIGRlZmF1bHRQYXJhbXMuaW5wdXRUeXBlKTtcbiAgJGlucHV0LnNldEF0dHJpYnV0ZSgncGxhY2Vob2xkZXInLCBkZWZhdWx0UGFyYW1zLmlucHV0UGxhY2Vob2xkZXIpO1xuXG4gIHJlc2V0SW5wdXRFcnJvcigpO1xufTtcblxuXG52YXIgcmVzZXRJbnB1dEVycm9yID0gZnVuY3Rpb24oZXZlbnQpIHtcbiAgLy8gSWYgcHJlc3MgZW50ZXIgPT4gaWdub3JlXG4gIGlmIChldmVudCAmJiBldmVudC5rZXlDb2RlID09PSAxMykge1xuICAgIHJldHVybiBmYWxzZTtcbiAgfVxuXG4gIHZhciAkbW9kYWwgPSBnZXRNb2RhbCgpO1xuXG4gIHZhciAkZXJyb3JJY29uID0gJG1vZGFsLnF1ZXJ5U2VsZWN0b3IoJy5zYS1pbnB1dC1lcnJvcicpO1xuICByZW1vdmVDbGFzcygkZXJyb3JJY29uLCAnc2hvdycpO1xuXG4gIHZhciAkZXJyb3JDb250YWluZXIgPSAkbW9kYWwucXVlcnlTZWxlY3RvcignLnNhLWVycm9yLWNvbnRhaW5lcicpO1xuICByZW1vdmVDbGFzcygkZXJyb3JDb250YWluZXIsICdzaG93Jyk7XG59O1xuXG5cbi8qXG4gKiBTZXQgXCJtYXJnaW4tdG9wXCItcHJvcGVydHkgb24gbW9kYWwgYmFzZWQgb24gaXRzIGNvbXB1dGVkIGhlaWdodFxuICovXG52YXIgZml4VmVydGljYWxQb3NpdGlvbiA9IGZ1bmN0aW9uKCkge1xuICB2YXIgJG1vZGFsID0gZ2V0TW9kYWwoKTtcbiAgJG1vZGFsLnN0eWxlLm1hcmdpblRvcCA9IGdldFRvcE1hcmdpbihnZXRNb2RhbCgpKTtcbn07XG5cblxuZXhwb3J0IHsgXG4gIHN3ZWV0QWxlcnRJbml0aWFsaXplLFxuICBnZXRNb2RhbCxcbiAgZ2V0T3ZlcmxheSxcbiAgZ2V0SW5wdXQsXG4gIHNldEZvY3VzU3R5bGUsXG4gIG9wZW5Nb2RhbCxcbiAgcmVzZXRJbnB1dCxcbiAgcmVzZXRJbnB1dEVycm9yLFxuICBmaXhWZXJ0aWNhbFBvc2l0aW9uXG59O1xuIiwidmFyIGluamVjdGVkSFRNTCA9IFxuXG4gIC8vIERhcmsgb3ZlcmxheVxuICBgPGRpdiBjbGFzcz1cInN3ZWV0LW92ZXJsYXlcIiB0YWJJbmRleD1cIi0xXCI+PC9kaXY+YCArXG5cbiAgLy8gTW9kYWxcbiAgYDxkaXYgY2xhc3M9XCJzd2VldC1hbGVydFwiPmAgK1xuXG4gICAgLy8gRXJyb3IgaWNvblxuICAgIGA8ZGl2IGNsYXNzPVwic2EtaWNvbiBzYS1lcnJvclwiPlxuICAgICAgPHNwYW4gY2xhc3M9XCJzYS14LW1hcmtcIj5cbiAgICAgICAgPHNwYW4gY2xhc3M9XCJzYS1saW5lIHNhLWxlZnRcIj48L3NwYW4+XG4gICAgICAgIDxzcGFuIGNsYXNzPVwic2EtbGluZSBzYS1yaWdodFwiPjwvc3Bhbj5cbiAgICAgIDwvc3Bhbj5cbiAgICA8L2Rpdj5gICtcblxuICAgIC8vIFdhcm5pbmcgaWNvblxuICAgIGA8ZGl2IGNsYXNzPVwic2EtaWNvbiBzYS13YXJuaW5nXCI+XG4gICAgICA8c3BhbiBjbGFzcz1cInNhLWJvZHlcIj48L3NwYW4+XG4gICAgICA8c3BhbiBjbGFzcz1cInNhLWRvdFwiPjwvc3Bhbj5cbiAgICA8L2Rpdj5gICtcblxuICAgIC8vIEluZm8gaWNvblxuICAgIGA8ZGl2IGNsYXNzPVwic2EtaWNvbiBzYS1pbmZvXCI+PC9kaXY+YCArXG5cbiAgICAvLyBTdWNjZXNzIGljb25cbiAgICBgPGRpdiBjbGFzcz1cInNhLWljb24gc2Etc3VjY2Vzc1wiPlxuICAgICAgPHNwYW4gY2xhc3M9XCJzYS1saW5lIHNhLXRpcFwiPjwvc3Bhbj5cbiAgICAgIDxzcGFuIGNsYXNzPVwic2EtbGluZSBzYS1sb25nXCI+PC9zcGFuPlxuXG4gICAgICA8ZGl2IGNsYXNzPVwic2EtcGxhY2Vob2xkZXJcIj48L2Rpdj5cbiAgICAgIDxkaXYgY2xhc3M9XCJzYS1maXhcIj48L2Rpdj5cbiAgICA8L2Rpdj5gICtcblxuICAgIGA8ZGl2IGNsYXNzPVwic2EtaWNvbiBzYS1jdXN0b21cIj48L2Rpdj5gICtcblxuICAgIC8vIFRpdGxlLCB0ZXh0IGFuZCBpbnB1dFxuICAgIGA8aDI+VGl0bGU8L2gyPlxuICAgIDxwPlRleHQ8L3A+XG4gICAgPGZpZWxkc2V0PlxuICAgICAgPGlucHV0IHR5cGU9XCJ0ZXh0XCIgdGFiSW5kZXg9XCIzXCIgLz5cbiAgICAgIDxkaXYgY2xhc3M9XCJzYS1pbnB1dC1lcnJvclwiPjwvZGl2PlxuICAgIDwvZmllbGRzZXQ+YCArXG5cbiAgICAvLyBJbnB1dCBlcnJvcnNcbiAgICBgPGRpdiBjbGFzcz1cInNhLWVycm9yLWNvbnRhaW5lclwiPlxuICAgICAgPGRpdiBjbGFzcz1cImljb25cIj4hPC9kaXY+XG4gICAgICA8cD5Ob3QgdmFsaWQhPC9wPlxuICAgIDwvZGl2PmAgK1xuXG4gICAgLy8gQ2FuY2VsIGFuZCBjb25maXJtIGJ1dHRvbnNcbiAgICBgPGRpdiBjbGFzcz1cInNhLWJ1dHRvbi1jb250YWluZXJcIj5cbiAgICAgIDxidXR0b24gY2xhc3M9XCJjYW5jZWxcIiB0YWJJbmRleD1cIjJcIj5DYW5jZWw8L2J1dHRvbj5cbiAgICAgIDxkaXYgY2xhc3M9XCJzYS1jb25maXJtLWJ1dHRvbi1jb250YWluZXJcIj5cbiAgICAgICAgPGJ1dHRvbiBjbGFzcz1cImNvbmZpcm1cIiB0YWJJbmRleD1cIjFcIj5PSzwvYnV0dG9uPmAgKyBcblxuICAgICAgICAvLyBMb2FkaW5nIGFuaW1hdGlvblxuICAgICAgICBgPGRpdiBjbGFzcz1cImxhLWJhbGwtZmFsbFwiPlxuICAgICAgICAgIDxkaXY+PC9kaXY+XG4gICAgICAgICAgPGRpdj48L2Rpdj5cbiAgICAgICAgICA8ZGl2PjwvZGl2PlxuICAgICAgICA8L2Rpdj5cbiAgICAgIDwvZGl2PlxuICAgIDwvZGl2PmAgK1xuXG4gIC8vIEVuZCBvZiBtb2RhbFxuICBgPC9kaXY+YDtcblxuZXhwb3J0IGRlZmF1bHQgaW5qZWN0ZWRIVE1MO1xuIiwidmFyIGFsZXJ0VHlwZXMgPSBbJ2Vycm9yJywgJ3dhcm5pbmcnLCAnaW5mbycsICdzdWNjZXNzJywgJ2lucHV0JywgJ3Byb21wdCddO1xuXG5pbXBvcnQge1xuICBpc0lFOFxufSBmcm9tICcuL3V0aWxzJztcblxuaW1wb3J0IHtcbiAgZ2V0TW9kYWwsXG4gIGdldElucHV0LFxuICBzZXRGb2N1c1N0eWxlXG59IGZyb20gJy4vaGFuZGxlLXN3YWwtZG9tJztcblxuaW1wb3J0IHtcbiAgaGFzQ2xhc3MsIGFkZENsYXNzLCByZW1vdmVDbGFzcyxcbiAgZXNjYXBlSHRtbCxcbiAgX3Nob3csIHNob3csIF9oaWRlLCBoaWRlXG59IGZyb20gJy4vaGFuZGxlLWRvbSc7XG5cblxuLypcbiAqIFNldCB0eXBlLCB0ZXh0IGFuZCBhY3Rpb25zIG9uIG1vZGFsXG4gKi9cbnZhciBzZXRQYXJhbWV0ZXJzID0gZnVuY3Rpb24ocGFyYW1zKSB7XG4gIHZhciBtb2RhbCA9IGdldE1vZGFsKCk7XG5cbiAgdmFyICR0aXRsZSA9IG1vZGFsLnF1ZXJ5U2VsZWN0b3IoJ2gyJyk7XG4gIHZhciAkdGV4dCA9IG1vZGFsLnF1ZXJ5U2VsZWN0b3IoJ3AnKTtcbiAgdmFyICRjYW5jZWxCdG4gPSBtb2RhbC5xdWVyeVNlbGVjdG9yKCdidXR0b24uY2FuY2VsJyk7XG4gIHZhciAkY29uZmlybUJ0biA9IG1vZGFsLnF1ZXJ5U2VsZWN0b3IoJ2J1dHRvbi5jb25maXJtJyk7XG5cbiAgLypcbiAgICogVGl0bGVcbiAgICovXG4gICR0aXRsZS5pbm5lckhUTUwgPSBwYXJhbXMuaHRtbCA/IHBhcmFtcy50aXRsZSA6IGVzY2FwZUh0bWwocGFyYW1zLnRpdGxlKS5zcGxpdCgnXFxuJykuam9pbignPGJyPicpO1xuXG4gIC8qXG4gICAqIFRleHRcbiAgICovXG4gICR0ZXh0LmlubmVySFRNTCA9IHBhcmFtcy5odG1sID8gcGFyYW1zLnRleHQgOiBlc2NhcGVIdG1sKHBhcmFtcy50ZXh0IHx8ICcnKS5zcGxpdCgnXFxuJykuam9pbignPGJyPicpO1xuICBpZiAocGFyYW1zLnRleHQpIHNob3coJHRleHQpO1xuXG4gIC8qXG4gICAqIEN1c3RvbSBjbGFzc1xuICAgKi9cbiAgaWYgKHBhcmFtcy5jdXN0b21DbGFzcykge1xuICAgIGFkZENsYXNzKG1vZGFsLCBwYXJhbXMuY3VzdG9tQ2xhc3MpO1xuICAgIG1vZGFsLnNldEF0dHJpYnV0ZSgnZGF0YS1jdXN0b20tY2xhc3MnLCBwYXJhbXMuY3VzdG9tQ2xhc3MpO1xuICB9IGVsc2Uge1xuICAgIC8vIEZpbmQgcHJldmlvdXNseSBzZXQgY2xhc3NlcyBhbmQgcmVtb3ZlIHRoZW1cbiAgICBsZXQgY3VzdG9tQ2xhc3MgPSBtb2RhbC5nZXRBdHRyaWJ1dGUoJ2RhdGEtY3VzdG9tLWNsYXNzJyk7XG4gICAgcmVtb3ZlQ2xhc3MobW9kYWwsIGN1c3RvbUNsYXNzKTtcbiAgICBtb2RhbC5zZXRBdHRyaWJ1dGUoJ2RhdGEtY3VzdG9tLWNsYXNzJywgJycpO1xuICB9XG5cbiAgLypcbiAgICogSWNvblxuICAgKi9cbiAgaGlkZShtb2RhbC5xdWVyeVNlbGVjdG9yQWxsKCcuc2EtaWNvbicpKTtcblxuICBpZiAocGFyYW1zLnR5cGUgJiYgIWlzSUU4KCkpIHtcblxuICAgIGxldCB2YWxpZFR5cGUgPSBmYWxzZTtcblxuICAgIGZvciAobGV0IGkgPSAwOyBpIDwgYWxlcnRUeXBlcy5sZW5ndGg7IGkrKykge1xuICAgICAgaWYgKHBhcmFtcy50eXBlID09PSBhbGVydFR5cGVzW2ldKSB7XG4gICAgICAgIHZhbGlkVHlwZSA9IHRydWU7XG4gICAgICAgIGJyZWFrO1xuICAgICAgfVxuICAgIH1cblxuICAgIGlmICghdmFsaWRUeXBlKSB7XG4gICAgICBsb2dTdHIoJ1Vua25vd24gYWxlcnQgdHlwZTogJyArIHBhcmFtcy50eXBlKTtcbiAgICAgIHJldHVybiBmYWxzZTtcbiAgICB9XG5cbiAgICBsZXQgdHlwZXNXaXRoSWNvbnMgPSBbJ3N1Y2Nlc3MnLCAnZXJyb3InLCAnd2FybmluZycsICdpbmZvJ107XG4gICAgbGV0ICRpY29uO1xuXG4gICAgaWYgKHR5cGVzV2l0aEljb25zLmluZGV4T2YocGFyYW1zLnR5cGUpICE9PSAtMSkge1xuICAgICAgJGljb24gPSBtb2RhbC5xdWVyeVNlbGVjdG9yKCcuc2EtaWNvbi4nICsgJ3NhLScgKyBwYXJhbXMudHlwZSk7XG4gICAgICBzaG93KCRpY29uKTtcbiAgICB9XG5cbiAgICBsZXQgJGlucHV0ID0gZ2V0SW5wdXQoKTtcblxuICAgIC8vIEFuaW1hdGUgaWNvblxuICAgIHN3aXRjaCAocGFyYW1zLnR5cGUpIHtcblxuICAgICAgY2FzZSAnc3VjY2Vzcyc6XG4gICAgICAgIGFkZENsYXNzKCRpY29uLCAnYW5pbWF0ZScpO1xuICAgICAgICBhZGRDbGFzcygkaWNvbi5xdWVyeVNlbGVjdG9yKCcuc2EtdGlwJyksICdhbmltYXRlU3VjY2Vzc1RpcCcpO1xuICAgICAgICBhZGRDbGFzcygkaWNvbi5xdWVyeVNlbGVjdG9yKCcuc2EtbG9uZycpLCAnYW5pbWF0ZVN1Y2Nlc3NMb25nJyk7XG4gICAgICAgIGJyZWFrO1xuXG4gICAgICBjYXNlICdlcnJvcic6XG4gICAgICAgIGFkZENsYXNzKCRpY29uLCAnYW5pbWF0ZUVycm9ySWNvbicpO1xuICAgICAgICBhZGRDbGFzcygkaWNvbi5xdWVyeVNlbGVjdG9yKCcuc2EteC1tYXJrJyksICdhbmltYXRlWE1hcmsnKTtcbiAgICAgICAgYnJlYWs7XG5cbiAgICAgIGNhc2UgJ3dhcm5pbmcnOlxuICAgICAgICBhZGRDbGFzcygkaWNvbiwgJ3B1bHNlV2FybmluZycpO1xuICAgICAgICBhZGRDbGFzcygkaWNvbi5xdWVyeVNlbGVjdG9yKCcuc2EtYm9keScpLCAncHVsc2VXYXJuaW5nSW5zJyk7XG4gICAgICAgIGFkZENsYXNzKCRpY29uLnF1ZXJ5U2VsZWN0b3IoJy5zYS1kb3QnKSwgJ3B1bHNlV2FybmluZ0lucycpO1xuICAgICAgICBicmVhaztcblxuICAgICAgY2FzZSAnaW5wdXQnOlxuICAgICAgY2FzZSAncHJvbXB0JzpcbiAgICAgICAgJGlucHV0LnNldEF0dHJpYnV0ZSgndHlwZScsIHBhcmFtcy5pbnB1dFR5cGUpO1xuICAgICAgICAkaW5wdXQudmFsdWUgPSBwYXJhbXMuaW5wdXRWYWx1ZTtcbiAgICAgICAgJGlucHV0LnNldEF0dHJpYnV0ZSgncGxhY2Vob2xkZXInLCBwYXJhbXMuaW5wdXRQbGFjZWhvbGRlcik7XG4gICAgICAgIGFkZENsYXNzKG1vZGFsLCAnc2hvdy1pbnB1dCcpO1xuICAgICAgICBzZXRUaW1lb3V0KGZ1bmN0aW9uICgpIHtcbiAgICAgICAgICAkaW5wdXQuZm9jdXMoKTtcbiAgICAgICAgICAkaW5wdXQuYWRkRXZlbnRMaXN0ZW5lcigna2V5dXAnLCBzd2FsLnJlc2V0SW5wdXRFcnJvcik7XG4gICAgICAgIH0sIDQwMCk7XG4gICAgICAgIGJyZWFrO1xuICAgIH1cbiAgfVxuXG4gIC8qXG4gICAqIEN1c3RvbSBpbWFnZVxuICAgKi9cbiAgaWYgKHBhcmFtcy5pbWFnZVVybCkge1xuICAgIGxldCAkY3VzdG9tSWNvbiA9IG1vZGFsLnF1ZXJ5U2VsZWN0b3IoJy5zYS1pY29uLnNhLWN1c3RvbScpO1xuXG4gICAgJGN1c3RvbUljb24uc3R5bGUuYmFja2dyb3VuZEltYWdlID0gJ3VybCgnICsgcGFyYW1zLmltYWdlVXJsICsgJyknO1xuICAgIHNob3coJGN1c3RvbUljb24pO1xuXG4gICAgbGV0IF9pbWdXaWR0aCA9IDgwO1xuICAgIGxldCBfaW1nSGVpZ2h0ID0gODA7XG5cbiAgICBpZiAocGFyYW1zLmltYWdlU2l6ZSkge1xuICAgICAgbGV0IGRpbWVuc2lvbnMgPSBwYXJhbXMuaW1hZ2VTaXplLnRvU3RyaW5nKCkuc3BsaXQoJ3gnKTtcbiAgICAgIGxldCBpbWdXaWR0aCA9IGRpbWVuc2lvbnNbMF07XG4gICAgICBsZXQgaW1nSGVpZ2h0ID0gZGltZW5zaW9uc1sxXTtcblxuICAgICAgaWYgKCFpbWdXaWR0aCB8fCAhaW1nSGVpZ2h0KSB7XG4gICAgICAgIGxvZ1N0cignUGFyYW1ldGVyIGltYWdlU2l6ZSBleHBlY3RzIHZhbHVlIHdpdGggZm9ybWF0IFdJRFRIeEhFSUdIVCwgZ290ICcgKyBwYXJhbXMuaW1hZ2VTaXplKTtcbiAgICAgIH0gZWxzZSB7XG4gICAgICAgIF9pbWdXaWR0aCA9IGltZ1dpZHRoO1xuICAgICAgICBfaW1nSGVpZ2h0ID0gaW1nSGVpZ2h0O1xuICAgICAgfVxuICAgIH1cblxuICAgICRjdXN0b21JY29uLnNldEF0dHJpYnV0ZSgnc3R5bGUnLCAkY3VzdG9tSWNvbi5nZXRBdHRyaWJ1dGUoJ3N0eWxlJykgKyAnd2lkdGg6JyArIF9pbWdXaWR0aCArICdweDsgaGVpZ2h0OicgKyBfaW1nSGVpZ2h0ICsgJ3B4Jyk7XG4gIH1cblxuICAvKlxuICAgKiBTaG93IGNhbmNlbCBidXR0b24/XG4gICAqL1xuICBtb2RhbC5zZXRBdHRyaWJ1dGUoJ2RhdGEtaGFzLWNhbmNlbC1idXR0b24nLCBwYXJhbXMuc2hvd0NhbmNlbEJ1dHRvbik7XG4gIGlmIChwYXJhbXMuc2hvd0NhbmNlbEJ1dHRvbikge1xuICAgICRjYW5jZWxCdG4uc3R5bGUuZGlzcGxheSA9ICdpbmxpbmUtYmxvY2snO1xuICB9IGVsc2Uge1xuICAgIGhpZGUoJGNhbmNlbEJ0bik7XG4gIH1cblxuICAvKlxuICAgKiBTaG93IGNvbmZpcm0gYnV0dG9uP1xuICAgKi9cbiAgbW9kYWwuc2V0QXR0cmlidXRlKCdkYXRhLWhhcy1jb25maXJtLWJ1dHRvbicsIHBhcmFtcy5zaG93Q29uZmlybUJ1dHRvbik7XG4gIGlmIChwYXJhbXMuc2hvd0NvbmZpcm1CdXR0b24pIHtcbiAgICAkY29uZmlybUJ0bi5zdHlsZS5kaXNwbGF5ID0gJ2lubGluZS1ibG9jayc7XG4gIH0gZWxzZSB7XG4gICAgaGlkZSgkY29uZmlybUJ0bik7XG4gIH1cblxuICAvKlxuICAgKiBDdXN0b20gdGV4dCBvbiBjYW5jZWwvY29uZmlybSBidXR0b25zXG4gICAqL1xuICBpZiAocGFyYW1zLmNhbmNlbEJ1dHRvblRleHQpIHtcbiAgICAkY2FuY2VsQnRuLmlubmVySFRNTCA9IGVzY2FwZUh0bWwocGFyYW1zLmNhbmNlbEJ1dHRvblRleHQpO1xuICB9XG4gIGlmIChwYXJhbXMuY29uZmlybUJ1dHRvblRleHQpIHtcbiAgICAkY29uZmlybUJ0bi5pbm5lckhUTUwgPSBlc2NhcGVIdG1sKHBhcmFtcy5jb25maXJtQnV0dG9uVGV4dCk7XG4gIH1cblxuICAvKlxuICAgKiBDdXN0b20gY29sb3Igb24gY29uZmlybSBidXR0b25cbiAgICovXG4gIGlmIChwYXJhbXMuY29uZmlybUJ1dHRvbkNvbG9yKSB7XG4gICAgLy8gU2V0IGNvbmZpcm0gYnV0dG9uIHRvIHNlbGVjdGVkIGJhY2tncm91bmQgY29sb3JcbiAgICAkY29uZmlybUJ0bi5zdHlsZS5iYWNrZ3JvdW5kQ29sb3IgPSBwYXJhbXMuY29uZmlybUJ1dHRvbkNvbG9yO1xuXG4gICAgLy8gU2V0IHRoZSBjb25maXJtIGJ1dHRvbiBjb2xvciB0byB0aGUgbG9hZGluZyByaW5nXG4gICAgJGNvbmZpcm1CdG4uc3R5bGUuYm9yZGVyTGVmdENvbG9yID0gcGFyYW1zLmNvbmZpcm1Mb2FkaW5nQnV0dG9uQ29sb3I7XG4gICAgJGNvbmZpcm1CdG4uc3R5bGUuYm9yZGVyUmlnaHRDb2xvciA9IHBhcmFtcy5jb25maXJtTG9hZGluZ0J1dHRvbkNvbG9yO1xuXG4gICAgLy8gU2V0IGJveC1zaGFkb3cgdG8gZGVmYXVsdCBmb2N1c2VkIGJ1dHRvblxuICAgIHNldEZvY3VzU3R5bGUoJGNvbmZpcm1CdG4sIHBhcmFtcy5jb25maXJtQnV0dG9uQ29sb3IpO1xuICB9XG5cbiAgLypcbiAgICogQWxsb3cgb3V0c2lkZSBjbGlja1xuICAgKi9cbiAgbW9kYWwuc2V0QXR0cmlidXRlKCdkYXRhLWFsbG93LW91dHNpZGUtY2xpY2snLCBwYXJhbXMuYWxsb3dPdXRzaWRlQ2xpY2spO1xuXG4gIC8qXG4gICAqIENhbGxiYWNrIGZ1bmN0aW9uXG4gICAqL1xuICB2YXIgaGFzRG9uZUZ1bmN0aW9uID0gcGFyYW1zLmRvbmVGdW5jdGlvbiA/IHRydWUgOiBmYWxzZTtcbiAgbW9kYWwuc2V0QXR0cmlidXRlKCdkYXRhLWhhcy1kb25lLWZ1bmN0aW9uJywgaGFzRG9uZUZ1bmN0aW9uKTtcblxuICAvKlxuICAgKiBBbmltYXRpb25cbiAgICovXG4gIGlmICghcGFyYW1zLmFuaW1hdGlvbikge1xuICAgIG1vZGFsLnNldEF0dHJpYnV0ZSgnZGF0YS1hbmltYXRpb24nLCAnbm9uZScpO1xuICB9IGVsc2UgaWYgKHR5cGVvZiBwYXJhbXMuYW5pbWF0aW9uID09PSAnc3RyaW5nJykge1xuICAgIG1vZGFsLnNldEF0dHJpYnV0ZSgnZGF0YS1hbmltYXRpb24nLCBwYXJhbXMuYW5pbWF0aW9uKTsgLy8gQ3VzdG9tIGFuaW1hdGlvblxuICB9IGVsc2Uge1xuICAgIG1vZGFsLnNldEF0dHJpYnV0ZSgnZGF0YS1hbmltYXRpb24nLCAncG9wJyk7XG4gIH1cblxuICAvKlxuICAgKiBUaW1lclxuICAgKi9cbiAgbW9kYWwuc2V0QXR0cmlidXRlKCdkYXRhLXRpbWVyJywgcGFyYW1zLnRpbWVyKTtcbn07XG5cbmV4cG9ydCBkZWZhdWx0IHNldFBhcmFtZXRlcnM7XG4iLCIvKlxuICogQWxsb3cgdXNlciB0byBwYXNzIHRoZWlyIG93biBwYXJhbXNcbiAqL1xudmFyIGV4dGVuZCA9IGZ1bmN0aW9uKGEsIGIpIHtcbiAgZm9yICh2YXIga2V5IGluIGIpIHtcbiAgICBpZiAoYi5oYXNPd25Qcm9wZXJ0eShrZXkpKSB7XG4gICAgICBhW2tleV0gPSBiW2tleV07XG4gICAgfVxuICB9XG4gIHJldHVybiBhO1xufTtcblxuLypcbiAqIENvbnZlcnQgSEVYIGNvZGVzIHRvIFJHQiB2YWx1ZXMgKCMwMDAwMDAgLT4gcmdiKDAsMCwwKSlcbiAqL1xudmFyIGhleFRvUmdiID0gZnVuY3Rpb24oaGV4KSB7XG4gIHZhciByZXN1bHQgPSAvXiM/KFthLWZcXGRdezJ9KShbYS1mXFxkXXsyfSkoW2EtZlxcZF17Mn0pJC9pLmV4ZWMoaGV4KTtcbiAgcmV0dXJuIHJlc3VsdCA/IHBhcnNlSW50KHJlc3VsdFsxXSwgMTYpICsgJywgJyArIHBhcnNlSW50KHJlc3VsdFsyXSwgMTYpICsgJywgJyArIHBhcnNlSW50KHJlc3VsdFszXSwgMTYpIDogbnVsbDtcbn07XG5cbi8qXG4gKiBDaGVjayBpZiB0aGUgdXNlciBpcyB1c2luZyBJbnRlcm5ldCBFeHBsb3JlciA4IChmb3IgZmFsbGJhY2tzKVxuICovXG52YXIgaXNJRTggPSBmdW5jdGlvbigpIHtcbiAgcmV0dXJuICh3aW5kb3cuYXR0YWNoRXZlbnQgJiYgIXdpbmRvdy5hZGRFdmVudExpc3RlbmVyKTtcbn07XG5cbi8qXG4gKiBJRSBjb21wYXRpYmxlIGxvZ2dpbmcgZm9yIGRldmVsb3BlcnNcbiAqL1xudmFyIGxvZ1N0ciA9IGZ1bmN0aW9uKHN0cmluZykge1xuICBpZiAod2luZG93LmNvbnNvbGUpIHtcbiAgICAvLyBJRS4uLlxuICAgIHdpbmRvdy5jb25zb2xlLmxvZygnU3dlZXRBbGVydDogJyArIHN0cmluZyk7XG4gIH1cbn07XG5cbi8qXG4gKiBTZXQgaG92ZXIsIGFjdGl2ZSBhbmQgZm9jdXMtc3RhdGVzIGZvciBidXR0b25zIFxuICogKHNvdXJjZTogaHR0cDovL3d3dy5zaXRlcG9pbnQuY29tL2phdmFzY3JpcHQtZ2VuZXJhdGUtbGlnaHRlci1kYXJrZXItY29sb3IpXG4gKi9cbnZhciBjb2xvckx1bWluYW5jZSA9IGZ1bmN0aW9uKGhleCwgbHVtKSB7XG4gIC8vIFZhbGlkYXRlIGhleCBzdHJpbmdcbiAgaGV4ID0gU3RyaW5nKGhleCkucmVwbGFjZSgvW14wLTlhLWZdL2dpLCAnJyk7XG4gIGlmIChoZXgubGVuZ3RoIDwgNikge1xuICAgIGhleCA9IGhleFswXSArIGhleFswXSArIGhleFsxXSArIGhleFsxXSArIGhleFsyXSArIGhleFsyXTtcbiAgfVxuICBsdW0gPSBsdW0gfHwgMDtcblxuICAvLyBDb252ZXJ0IHRvIGRlY2ltYWwgYW5kIGNoYW5nZSBsdW1pbm9zaXR5XG4gIHZhciByZ2IgPSAnIyc7XG4gIHZhciBjO1xuICB2YXIgaTtcblxuICBmb3IgKGkgPSAwOyBpIDwgMzsgaSsrKSB7XG4gICAgYyA9IHBhcnNlSW50KGhleC5zdWJzdHIoaSAqIDIsIDIpLCAxNik7XG4gICAgYyA9IE1hdGgucm91bmQoTWF0aC5taW4oTWF0aC5tYXgoMCwgYyArIGMgKiBsdW0pLCAyNTUpKS50b1N0cmluZygxNik7XG4gICAgcmdiICs9ICgnMDAnICsgYykuc3Vic3RyKGMubGVuZ3RoKTtcbiAgfVxuXG4gIHJldHVybiByZ2I7XG59O1xuXG5cbmV4cG9ydCB7XG4gIGV4dGVuZCxcbiAgaGV4VG9SZ2IsXG4gIGlzSUU4LFxuICBsb2dTdHIsXG4gIGNvbG9yTHVtaW5hbmNlXG59O1xuIl19
 
-  
+
   /*
    * Use SweetAlert with RequireJS
    */
-  
+
   if (typeof define === 'function' && define.amd) {
     define(function () {
       return sweetAlert;
@@ -52438,9 +52444,9 @@ if (document.location.hostname == 'localhost' || document.location.hostname == '
 	var baseUrl = getUrl .protocol + "//" + getUrl.host + "/";
 }
 */
-var openPrompt = function(params) { 
+var openPrompt = function(params) {
 	var buttons = {};
-	
+
 	if(params.submit != undefined) {
 		buttons[params.title] = 1;
 	} else {
@@ -52453,8 +52459,8 @@ var openPrompt = function(params) {
 			html: params.response,
 			uid: params.id,
 			buttons: buttons,
-			
-			submit: function(e, v, m, f) { 
+
+			submit: function(e, v, m, f) {
 				e.preventDefault();
 			}
 		}
@@ -52463,7 +52469,7 @@ var openPrompt = function(params) {
 	$.prompt(promptInfo);
 }
 
-var getMyLocation = function() { 
+var getMyLocation = function() {
  	if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
             var positionUser = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -52476,7 +52482,7 @@ var getMyLocation = function() {
 					data: {
 						city: results[2]['address_components'][1].long_name
 					},
-					success: function(response) {					
+					success: function(response) {
 					}
 				});
     		});
@@ -52500,12 +52506,12 @@ function callAjax(restaurantsArray, map) {
 					address: nextId.address,
 					zipcode: nextId.zipcode
 				},
-				success: function(response) {					
+				success: function(response) {
 					var companyJson = JSON.parse(response);
 
 					if (typeof companyJson[0] != 'undefined') {
 						var latlng = new google.maps.LatLng(companyJson[0].lat, companyJson[0].lng);
-								
+
 						var marker = new google.maps.Marker({
 							position: latlng,
 							map: map,
@@ -52523,13 +52529,13 @@ function callAjax(restaurantsArray, map) {
 
 					setTimeout(callAjax(restaurantsArray, map), 2000);
 				}
-			});		
-		}	
+			});
+		}
 	}
 }
 
 function initMap() {
-	
+
 	if(document.getElementById('map')) {
 		var map = new google.maps.Map(document.getElementById('map'), {
 			zoom: 10,
@@ -52549,7 +52555,7 @@ function initMap() {
 		});
 	}
 }
-	   
+
 function Redirect(url) {
 	var ua        = navigator.userAgent.toLowerCase(),
 		isIE      = ua.indexOf('msie') !== -1,
@@ -52558,7 +52564,7 @@ function Redirect(url) {
 	// Internet Explorer 8 and lower
 	if(isIE && version < 9) {
 	    var link = document.createElement('a');
-	    
+
 	    link.href = url;
 	    document.body.appendChild(link);
 	    link.click();
@@ -52568,7 +52574,7 @@ function Redirect(url) {
 
 function getParameterByName(name){
     var regexS = "[\\?&]"+name+"=([^&#]*)", regex = new RegExp(regexS), results = regex.exec(window.location.search);
-	 
+
 	if (results == null) {
 	    return "";
 	} else{
@@ -52679,20 +52685,20 @@ $(document).ready(function() {
 
 
 	// Old browsers
-	$.reject({  
-        reject: { 
+	$.reject({
+        reject: {
         	msie: 9,
         	unknown: true,
-        }, // Reject all renderers for demo  
-        header: 'Uw browser is verouderd.', // Header Text  
-        paragraph1: 'U maakt waarschijnlijk gebruik van een verouderde browser, waardoor er onderdelen op deze website niet optimaal te zien zijn.', // Paragraph 1  
-        paragraph2: 'Installeer een van de volgende webbrowsers',  
-        imagePath: baseUrl + '/public/images/',  
+        }, // Reject all renderers for demo
+        header: 'Uw browser is verouderd.', // Header Text
+        paragraph1: 'U maakt waarschijnlijk gebruik van een verouderde browser, waardoor er onderdelen op deze website niet optimaal te zien zijn.', // Paragraph 1
+        paragraph2: 'Installeer een van de volgende webbrowsers',
+        imagePath: baseUrl + '/public/images/',
 
-        closeLink: 'Sluit scherm', // Message below close window link  
-        closeMessage: '' // Message below close window link  
-    }); // Customized Text  
-  
+        closeLink: 'Sluit scherm', // Message below close window link
+        closeMessage: '' // Message below close window link
+    }); // Customized Text
+
 	$('#sliderImage img.background').responsify();
 
 	$('.card').slice(0, 9).show();
@@ -52706,7 +52712,7 @@ $(document).ready(function() {
 
        	var showRecommended2 = $('.recommend .company:hidden').slice(0, 4).slideDown();
 
-        if ($('.recommend .company:hidden').length == 0) {        	
+        if ($('.recommend .company:hidden').length == 0) {
             $('.load').fadeOut('slow');
             $('#loadMoreRecommend').fadeOut('slow');
         }
@@ -52748,18 +52754,18 @@ $(document).ready(function() {
 	      	interval: 5000,
 	      	pauseOnHover: true
 	    },
-	    responsiveBreakpoints: { 
-	      portrait: { 
+	    responsiveBreakpoints: {
+	      portrait: {
 	        changePoint:480,
 	        visibleItems: 5,
 	        itemsToScroll: 1
-	      }, 
-	        landscape: { 
+	      },
+	        landscape: {
 	        changePoint:640,
 	        visibleItems: 5,
 	        itemsToScroll: 2
 	      },
-	        tablet: { 
+	        tablet: {
 	        changePoint:768,
 	        visibleItems: 5,
 	        itemsToScroll: 3
@@ -52778,18 +52784,18 @@ $(document).ready(function() {
 	      	interval: 5000,
 	      	pauseOnHover: true
 	    },
-	    responsiveBreakpoints: { 
-	      portrait: { 
+	    responsiveBreakpoints: {
+	      portrait: {
 	        changePoint:480,
 	        visibleItems: 2,
 	        itemsToScroll: 1
-	      }, 
-	        landscape: { 
+	      },
+	        landscape: {
 	        changePoint:640,
 	        visibleItems: 2,
 	        itemsToScroll: 2
 	      },
-	        tablet: { 
+	        tablet: {
 	        changePoint:768,
 	        visibleItems: 2,
 	        itemsToScroll: 3
@@ -52813,10 +52819,10 @@ $(document).ready(function() {
 			item: '<li class="item">' +
 				  	'<div class="image"><input class="checkbox user" name="guest[]" type="checkbox" /></div>' +
 				  	'<div class="content">' +
-				  		'<span class="id" style="display: none;"></span>' + 
-				  		'<span class="name"></span>' + 
-				  		'<strong class="company"></strong>' + 
-				  	'</div>' + 
+				  		'<span class="id" style="display: none;"></span>' +
+				  		'<span class="name"></span>' +
+				  		'<strong class="company"></strong>' +
+				  	'</div>' +
 				   '</li>'
 		};
 
@@ -52869,8 +52875,8 @@ $(document).ready(function() {
 	// Notifications
 	$('#notificationView').on('click', function() {
 		ajaxFramework.openNotificationById(
-			$('input[name="id"]').val(), 
-			$('input[name="width"]').val(), 
+			$('input[name="id"]').val(),
+			$('input[name="width"]').val(),
 			$('input[name="height"]').val(),
 			encodeURIComponent(tinymce.get('text').getContent())
 		);
@@ -52904,14 +52910,14 @@ $(document).ready(function() {
 	$('.ui.modal .header').html('Zoeken');
 
 	$('.ui.modal .content').html(content);
-	
+
 	$('.search-full-open, #search-open').on('click', function() {
 		$('.ui.modal').modal('show');
 
 		$('.searchRedirectCategories2 select').change(function() {
 			switch($('.searchRedirectCategories2').dropdown('get value')[1]) {
 			    case 'restaurant':
-					textReplace = 'Waar wilt u gaan reserveren?';					
+					textReplace = 'Waar wilt u gaan reserveren?';
 			        break;
 
 			    case 'saldo':
@@ -52938,7 +52944,7 @@ $(document).ready(function() {
 	$('footer .ui.floating.basic.button').mouseenter(function() {
 	 	$(this).transition('pulse');
 	});
-	
+
 	var index = currentUrl.indexOf("open-menu");
 	if(index != -1) {
 	    $('.ui.sidebar').sidebar('toggle');
@@ -52975,15 +52981,15 @@ $(document).ready(function() {
     	selectYears: true,
     	selectMonths: true
 	});
-	
-        var $datepickerInputWithoutMin = $('.datepicker_no_min_date').pickadate({		
+
+        var $datepickerInputWithoutMin = $('.datepicker_no_min_date').pickadate({
 		formatSubmit: 'yyyy-mm-dd',
 		format: 'yyyy-mm-dd',
 		hiddenName: true,
     	selectYears: true,
-    	selectMonths: true,        
+    	selectMonths: true,
 	});
-                
+
 //        Date now_dt=new Date();
 //        $datepickerInputWithoutMin.set('select',now_dt);
 	var datepicker = $datepickerInput.pickadate('picker');
@@ -53004,7 +53010,7 @@ $(document).ready(function() {
         clear: 'verwijderen',
         min: [8,00],
     });
-    
+
 	$('.green.label, .thumb-discount-label').popup({
 		position: 'top right',
 		hoverable: true
@@ -53092,7 +53098,7 @@ $(document).ready(function() {
 			$('#optionOne').css('display', 'block');
 		} else if($(this).val() == 2) {
 			$('#optionTwo').css('display', 'block');
-		} 
+		}
 	});
 
 	// Search
@@ -53140,9 +53146,9 @@ $(document).ready(function() {
 	$('.sidebar.open').click(function() {
 		Tawk_API.hideWidget();
 
-		$('.ui.sidebar').sidebar({	
+		$('.ui.sidebar').sidebar({
 	      	transition: 'push',
-	      	dimPage: false, 
+	      	dimPage: false,
 	     	closable: true,
 	     	onHide: function() {
 				Tawk_API.showWidget();
@@ -53150,7 +53156,7 @@ $(document).ready(function() {
 	     	onShow: function() {
 
 	     	}
-	    });	
+	    });
 
 		$('.ui.sidebar').sidebar('toggle');
 	});
@@ -53193,12 +53199,12 @@ $(document).ready(function() {
 	    		currentUrl += currentUrl.indexOf("?") === -1 ? "?" : "&";
 	    		window.location = currentUrl + 'sort=' + $(this).attr('data-slug') + '&order=' + orderBy;
 	    	} else {
-			  	window.location = currentUrl.replace(/(sort=)[^\&]+/, '$1' + $(this).attr('data-slug')).replace(/(order=)[^\&]+/, '$1' + orderBy); 
+			  	window.location = currentUrl.replace(/(sort=)[^\&]+/, '$1' + $(this).attr('data-slug')).replace(/(order=)[^\&]+/, '$1' + orderBy);
 			}
 		}
 	});
 
-	$('#filteRedirect').change(function() { 
+	$('#filteRedirect').change(function() {
     	if(currentUrl.indexOf("filter") == -1) {
     		currentUrl += currentUrl.indexOf("?") === -1 ? "?" : "&";
     		window.location = currentUrl + 'filter=' + $(this).val();
@@ -53218,9 +53224,9 @@ $(document).ready(function() {
 	});
 
 	$('#guestComplete .item').on('click', function() {
-		$('input[name="phone"]').val($(this).attr('data-phone'));	
-		$('input[name="email"]').val($(this).attr('data-email'));	
-		$('input[name="name"]').val($(this).attr('data-name'));	
+		$('input[name="phone"]').val($(this).attr('data-phone'));
+		$('input[name="email"]').val($(this).attr('data-email'));
+		$('input[name="name"]').val($(this).attr('data-name'));
 	});
 
 	//Slider datepicker
@@ -53230,10 +53236,10 @@ $(document).ready(function() {
 		format: 'd mmmm, yyyy',
 		hiddenName: true
 	});
-	
+
 	var datepickerSlider = $datepickerInputSlider.pickadate('picker');
 	var splitCurrentUrl = currentUrl.replace('https://', '').split('/');
-	
+
 	if (typeof datepickerSlider !== 'undefined') {
 		datepickerSlider.on({
 			set: function(dateSelect) {
@@ -53245,7 +53251,7 @@ $(document).ready(function() {
 
 					// check if the date is in the past
 					var day = selectedDate + ' ' + $(this).data('value');
-					
+
 					if (day < moment().format('YYYY-MM-DD HH:mm')) {
 						$(this).hide();
 						$(this).removeClass('available');
@@ -53311,7 +53317,7 @@ $(document).ready(function() {
 	var owlWrap = $('.owl-wrapper');
 
     // checking if the dom element exists
-   
+
     	var startTime = new Date(2016, 2, 20, 7, 45);
 		var endTime = new Date(2016, 2, 20, 23, 45);
 
@@ -53329,11 +53335,11 @@ $(document).ready(function() {
 		}
 
         // check if plugin is loaded
-		
+
         if (owlWrap.length > 0/*jQuery.owlCarousel*/) {
             owlWrap.each(function() {
             	var positionTop = $(this).parent().parent().position().top - 600;
-				
+
 				var carousel = $(this).find('.owl-carousel'),
 		            navigation = $(this).find('.customNavigation'),
 		            nextBtn = navigation.find('.next'),
@@ -53388,7 +53394,7 @@ $(document).ready(function() {
 
 							wrapper.removeClass('active');
 			        	}
-			       
+
 
 	            // Custom Navigation Events
 	            prevBtn.click(function(){
@@ -53400,14 +53406,14 @@ $(document).ready(function() {
 	            });
             });
         };
-    
+
 });
 register('registerButton', 'tegoed-sparen');
 register('registerButton2', 'tegoed-sparen');
 register('registerButton3', 'tegoed-sparen');
 register('registerButton4', 'tegoed-sparen');
 
-var recoverPassword = function(response) { 
+var recoverPassword = function(response) {
 	openPrompt({
 		'id' : 'forgot-password',
 		'title' : 'Wachtwoord vergeten',
@@ -53432,21 +53438,21 @@ var recoverPassword = function(response) {
 				$('.error.forgot-password').hide(); // Hide error message
 				$('.jqimessage .field').hide(); // Hide all fields
 				$('.jqibuttons').hide(); // Hide submit button
-				
+
 				$('.success.forgot-password').show();
-				$('.success.forgot-password').html('Er is een mail naar uw e-mailadres gestuurd voor het aanvragen van een nieuw wachtwoord.');	
-								
+				$('.success.forgot-password').html('Er is een mail naar uw e-mailadres gestuurd voor het aanvragen van een nieuw wachtwoord.');
+
 			} else {
 				$('.error.forgot-password').show();
 				$('.errors.forgot-password').html(output);
 			}
 		}
-	});	
+	});
 }
 
 function register(identifier, redirectTo) {
 	$(document).ready(function() {
-		$('#' + identifier).api({	
+		$('#' + identifier).api({
 			url: baseUrl + 'register',
 			onComplete: function(response) {
 				openPrompt({
@@ -53461,7 +53467,7 @@ function register(identifier, redirectTo) {
 					serializeForm: true,
 					onComplete: function(response) {
 						var output = '<ul class="list">';
-							
+
 						for(var i in response) {
 							output += '<li>' + response[i] + '</li>';
 						}
@@ -53476,7 +53482,7 @@ function register(identifier, redirectTo) {
 							$('.errors.register').html(output);
 						}
 					}
-				});	
+				});
 			}
 		});
 	});
@@ -53576,7 +53582,7 @@ ajaxFramework = {
 					;
 
 					$('.ui.modal .content').html(jsonParse.text);
-					
+
 					$('.ui.notification.modal .close.icon').on('click', function() {
 						Cookies.set('notification-modal-' + jsonParse.id, 1, { expires: 365 });
 					});
@@ -53621,7 +53627,7 @@ $(document).ready(function() {
 				},
 				success: function(response) {
 					var jsonParse = JSON.parse(response);
-					
+
 					$('#appointmentEmail').val(jsonParse[0].email);
 					$('#appointmentContactName').val(jsonParse[0].contact_name);
 					$('#appointmentComment').val(jsonParse[0].contact_name);
@@ -53637,8 +53643,8 @@ $(document).ready(function() {
 						'id': $(this).val(),
 					},
 					success: function(response) {
-						var jsonParse = JSON.parse(response); 
-						
+						var jsonParse = JSON.parse(response);
+
 						$('#appointmentContactName').val(jsonParse[0].contact_name);
 						$('#appointmentEmail').val(jsonParse[0].email);
 						$('#appointmentComment').val(jsonParse[0].contact_name);
@@ -53763,7 +53769,7 @@ $(document).ready(function() {
 			}
 		});
     });
-    
+
 	$('#faq .title').on('click', function() {
     	$.ajax({
 			url: baseUrl + 'ajax/faqs',
@@ -53834,20 +53840,20 @@ $(document).ready(function() {
 						}
 					}
 				}
-					
+
 				var redirectdiscount = $('#discountCardButton').data('redirect');
 				var redirectcashback = $(this).find('.cashback').data('redirect');
 
 				if(redirectdiscount !== undefined) {
 					Redirect(baseUrl + 'social/login/facebook?redirect=' + encodeURIComponent(redirectdiscount));
 					return false;
-				} 
+				}
 
 				if(redirectcashback !== undefined) {
 					window.open(baseUrl + 'social/login/facebook?redirect=' + encodeURIComponent(redirectcashback));
-					return false;	
+					return false;
 				}
-				
+
 				if(reservationUrl !== undefined) {
 					window.open(baseUrl + 'social/login/facebook?redirect=' + reservationUrl);
 					return false;
@@ -53866,7 +53872,7 @@ $(document).ready(function() {
 
 			$('#googleButton').click(function() {
 				var redirect = $('#discountCardButton').data('redirect');
-					
+
 				$form = $('#reservationForm');
 				$encode = $('input[name="encode_url"]').val();
 
@@ -53882,7 +53888,7 @@ $(document).ready(function() {
 				if (redirect !== undefined) {
 					Redirect(baseUrl + 'social/login/google?redirect=' +  encodeURIComponent(redirect));
 					return false;
-				} 
+				}
 
 				if (reservationUrl !== undefined) {
 					window.open(baseUrl + 'social/login/google?redirect=' + reservationUrl);
@@ -53926,7 +53932,7 @@ $(document).ready(function() {
 						if (redirectUrl !== undefined) {
 							Redirect(redirectUrl);
 						} else {
-							Redirect(baseUrl + 'open-menu'); 
+							Redirect(baseUrl + 'open-menu');
 						}
 					} else if(response.throttling == 1) {
 						$('.error.login').css('display', 'block');
@@ -53942,7 +53948,7 @@ $(document).ready(function() {
 						$('.errors.login').html(output);
 					}
 				}
-			});	
+			});
 
 			$('.recover.password').api({
 				url: baseUrl + 'forgot-password',
@@ -53950,7 +53956,7 @@ $(document).ready(function() {
 					recoverPassword(response);
 				}
 			});
-			
+
 			register('registerButton3', redirectUrlDefault);
 		}
 	});
@@ -53965,7 +53971,7 @@ if (typeof activateAjax !== 'undefined') {
 
 		var ajaxDatePicker = $ajaxDateInput.pickadate('picker');
 
-		ajaxDatePicker.on({ 
+		ajaxDatePicker.on({
 			set: function(thingSet) {
 				if (thingSet.select) {
 				    var redirectDate = moment(thingSet.select).year() + '' + zeroPad(parseInt(moment(thingSet.select).month() + 1)) + '' + zeroPad(moment(thingSet.select).date());
@@ -54263,7 +54269,7 @@ times = {
 			}
 		})
 		  	.done(function(response) {
-				var jsonParse = JSON.parse(response); 
+				var jsonParse = JSON.parse(response);
 				var jsonKeys = Object.keys(jsonParse)[0];
 
 				if (jsonKeys != undefined) {
@@ -54273,7 +54279,7 @@ times = {
 
 					$.each ($('#personsField .item'), function(key, value) {
 						$(this).show();
-						
+
 						if (availablePersons != undefined && availablePersons < $(value).data('value')) {
 							$(this).hide();
 						}
@@ -54371,7 +54377,7 @@ calendar = {
 	 					$(target.element).addClass('active');
 						calendar.setFirstDate(target.date._i, 1);
 					}
-				}	
+				}
 			},
 			render: function (data) {
 			 	var renderData = _.template(calendarTemplate);
@@ -54407,14 +54413,14 @@ calendar = {
 
 		if (typeof activateAjaxTwo !== 'undefined' && activateAjaxTwo == 'reservation-groups' && clickEvent == 0) {
 			reservationDatePicker.set('select',
-				date, 
+				date,
 				{ format: 'yyyy-mm-dd' }
 			);
 		}
 
 		times.refresh({
 			'date': date,
-			'firstDate': 1, 
+			'firstDate': 1,
 			'defaultValue': null
 		});
 	},
@@ -54426,7 +54432,7 @@ calendar = {
 				month: $('input[name="month"]').val(),
 				year: $('input[name="year"]').val(),
 				company:  $('input[name="company_id"]').val()
-			},	
+			},
 			success: function(response) {
 				var jsonParse = JSON.parse(response);
 
@@ -54437,10 +54443,10 @@ calendar = {
 				if(!$.isEmptyObject(jsonParse)) {
 					times.disabled();
 				}
-				
+
 				$.each($('#personsField .item'), function(key, value) {
 					$(this).show();
-						
+
 					if (jsonParse.availablePersons <= key) {
 						$(this).hide();
 					}
@@ -54451,22 +54457,22 @@ calendar = {
  }
 
  if (typeof activateAjax !== 'undefined') {
-	if (activateAjax == 'restaurant') {	
+	if (activateAjax == 'restaurant') {
 		$('.persons .item').on('click', function() {
 			$('input[name="persons"]').val($(this).attr('data-value'));
 		});
 
 		var calendarTemplate = calendar.template();
 		var calendarInit = calendar.init(calendarTemplate);
-	 					
+
 		calendar.setDates(calendarInit);
-		
+
 		$('#month .item').on('click', function() {
 			$('input[name="month"]').val($(this).attr('data-month'));
 			$('input[name="year"]').val($(this).attr('data-year'));
 
 			calendar.setMonthYear(
-				calendarInit, 
+				calendarInit,
 				parseInt($('input[name="month"]').val()),
 				parseInt($('input[name="year"]').val())
 			);
@@ -54683,11 +54689,11 @@ notification = {
 		});
 
 		var reservationDatePicker = $reservationDateInput.pickadate('picker');
-		
+
 		reservationDatePicker.set('disable', true);
 
 		// Refresh time dropdown
-		reservationDatePicker.on({ 
+		reservationDatePicker.on({
 			open: function(thingSet) {
 				var view = reservationDatePicker.get('view');
 				$('input[name="setTimeBack"]').val(1);
@@ -54713,15 +54719,15 @@ notification = {
 
 				    if ($('input[name="setTimeBack"]').val() == 0) {
 				    	times.refresh({
-				    		'date': formattedDate, 
-				    		'firstDate': 1, 
+				    		'date': formattedDate,
+				    		'firstDate': 1,
 				    		'defaultValue': ($('#reservationForm #timeInput').val() != '' ? $('#reservationForm #timeInput').val() : null),
 				    		'groupReservation': $('input[name="group_reservation"]').val()
 				    	});
 				    } else {
 						times.refresh({
-				    		'date': formattedDate, 
-				    		'firstDate': 1, 
+				    		'date': formattedDate,
+				    		'firstDate': 1,
 				    		'defaultValue': null,
 							'groupReservation': $('input[name="group_reservation"]').val()
 				    	});
@@ -54734,7 +54740,7 @@ notification = {
 		if (typeof activateAjax !== 'undefined' && activateAjax == 'reservation') {
 			reservationDatePicker.set(
 				'select',
-				$('input[name="date_hidden"]').val(), 
+				$('input[name="date_hidden"]').val(),
 				{ format: 'yyyy-mm-dd' }
 			);
 		}
@@ -54746,8 +54752,8 @@ notification = {
 		// Refresh time dropdown
 	    $('.persons .item').on('click', function() {
 	    	times.refresh({
-	    		'date': $('input[name="date_hidden"]').val(), 
-	    		'firstDate': 1, 
+	    		'date': $('input[name="date_hidden"]').val(),
+	    		'firstDate': 1,
 	    		'defaultValue': null
 	    	});
 	    });
@@ -54762,8 +54768,8 @@ notification = {
 		});
 
 		var ajaxDatePicker = $ajaxDateInput.pickadate('picker');
-		
-		ajaxDatePicker.on({ 
+
+		ajaxDatePicker.on({
 			open: function(thingSet) {
 				var view = ajaxDatePicker.get('view');
 			},
@@ -54787,10 +54793,10 @@ notification = {
 
 		var ajaxDatePicker = $ajaxDateInput.pickadate('picker');
 
-		ajaxDatePicker.on({ 
+		ajaxDatePicker.on({
 			open: function(thingSet) {
 				var view = ajaxDatePicker.get('view');
-				
+
 				reservation.refresh(
 					view.month,
 					view.year,
@@ -54801,7 +54807,7 @@ notification = {
 			set: function(thingSet) {
 				var view = ajaxDatePicker.get('view');
 
-				if (thingSet.highlight) {	
+				if (thingSet.highlight) {
 					reservation.refresh(
 						view.month,
 						view.year,
@@ -54836,7 +54842,7 @@ reservation = {
 
 				$.each($("#personsField .item"), function( key, value ) {
 					$(this).show();
-				
+
 					if(jsonParse.availablePersons <= key) {
 						$(this).hide();
 					}
@@ -54844,8 +54850,8 @@ reservation = {
 
 				$.each(jsonParse.dates, function(idx, obj) {
 					var dateParse = new Date(
-						moment(obj.date).year(), 
-						moment(obj.date).month(), 
+						moment(obj.date).year(),
+						moment(obj.date).month(),
 						parseInt(moment(obj.date).date())
 					);
 
@@ -54856,14 +54862,14 @@ reservation = {
 					if (typeof ajaxDatePicker !== 'undefined') {
 						ajaxDatePicker.set(
 							'disable',
-							 arr, 
+							 arr,
 							 { muted: true }
 						);
 					} else {
 
 						reservationDatePicker.set(
 							'disable',
-							 arr, 
+							 arr,
 							 { muted: true }
 						);
 					}
@@ -54900,7 +54906,7 @@ $('.changeTableNr').bind('keyup input', function() {
 		},
 		success: function(response) {
 			console.log('goldfish');
-		}	
+		}
 	});
 });
 
