@@ -535,8 +535,7 @@ $(document).ready(function() {
 	$('select.multipleSelect').select({
 		maxOptionsInLabel: 1
 	});
-
-	// Datepicker
+		// Datepicker
    	var $datepickerInput = $('.datepicker').pickadate({
 		min: new Date(),
 		formatSubmit: 'yyyy-mm-dd',

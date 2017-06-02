@@ -1,4 +1,5 @@
 /*var $ = jQuery;*/
+SITE_URL='http://localhost/uwvoordeelpas_live/public';
 
 // callback after ready the document
 $(document).ready(function($){
@@ -146,3 +147,11 @@ $(window).resize(function(){
 	}, 2000);
 
 });
+
+function handleSelect(slug){
+    var e = document.getElementById("city");
+    var slug_url = e.options[e.selectedIndex].value;
+
+    window.location.href = SITE_URL+'/search?regio='+slug_url;
+
+}

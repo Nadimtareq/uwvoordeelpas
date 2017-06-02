@@ -30,11 +30,22 @@
 		<div class="content">
 			 <div class="static-menu row">
 			 	<div class="jsearch col-md-2 col-sm-2 col-xs-6">
-			 	
-				{{ Form::select('discount[]', 
-				    (isset($preference[9]) ? $preference[9] : array()),  
-				    (Request::has('city') ? Request::get('city') : ''),  
-				    array('class' => 'multipleSelect', 'data-placeholder' => 'Stad', 'multiple' => 'multiple')) }}
+			 	<?php $data=''; ?>
+                    @if(isset($preference[9]))
+                    <select name="discount[]" class = 'multipleSelect' id='city' onchange="javascript:handleSelect(this)">
+
+                        <option value=""><a href="#" >{{(!empty($_GET['regio'])?$_GET['regio']:'Stad')}}</a></option>
+
+                        @foreach ($preference[9] as $key=>$pre)
+
+                        <option value="{{$key}}"><a href="#" >{{$pre}}</a></option>
+                        @endforeach
+
+                    </select>
+                       @endif
+
+
+
 					
 				</div>
 				<div class="jsearch col-md-2 col-sm-2 col-xs-6" >

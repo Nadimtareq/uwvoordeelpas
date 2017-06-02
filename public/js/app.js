@@ -15087,20 +15087,26 @@ d,c,h,i,k=0,m=0,n="",n=[];do d=a.charCodeAt(k++),c=a.charCodeAt(k++),h=a.charCod
 
     // Attach event handlers to the newly minted DOM elements
     this.$overlay.hide().on('click', function() {
-      self.end();
+        $("#materialbox-overlay").css('display','none');
+
+        self.end();
       return false;
     });
 
     this.$lightbox.hide().on('click', function(event) {
       if ($(event.target).attr('id') === 'lightbox') {
-        self.end();
+          $("#materialbox-overlay").css('display','none');
+
+          self.end();
       }
       return false;
     });
 
     this.$outerContainer.on('click', function(event) {
       if ($(event.target).attr('id') === 'lightbox') {
-        self.end();
+          $("#materialbox-overlay").css('display','none');
+
+          self.end();
       }
       return false;
     });
@@ -15151,8 +15157,7 @@ d,c,h,i,k=0,m=0,n="",n=[];do d=a.charCodeAt(k++),c=a.charCodeAt(k++),h=a.charCod
 
     this.$lightbox.find('.lb-loader, .lb-close').on('click', function() {
         $("#materialbox-overlay").css('display','none');
-        alert("dassa");
-      self.end();
+        self.end();
       return false;
     });
   };

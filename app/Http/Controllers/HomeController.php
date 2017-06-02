@@ -897,7 +897,7 @@ class HomeController extends Controller
         ) {
             alert()->error('', 'Er zijn geen zoekresultaten gevonden met uw selectiecriteria.')->persistent('Sluiten');
 
-            return Redirect::to('/');
+            return Redirect::to('/index');
         }   
 
         return view('pages/search', [
