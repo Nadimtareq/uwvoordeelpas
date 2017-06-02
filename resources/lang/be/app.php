@@ -5,4 +5,6 @@ return array (
   'register' => 'Register',
   'keyword' => 'Keyword',
   'enter_name' => 'Enter a name',
+  'profile' => 'профіль',
+  'status' => 'статус',
 );

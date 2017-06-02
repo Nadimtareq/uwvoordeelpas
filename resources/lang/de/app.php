@@ -5,4 +5,6 @@ return array (
   'register' => 'Aanmelden',
   'keyword' => 'Trefwoord',
   'enter_name' => 'Typ een naam in',
+  'profile' => 'Profil',
+  'status' => 'Status',
 );
