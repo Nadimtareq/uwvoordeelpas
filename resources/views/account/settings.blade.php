@@ -12,17 +12,17 @@ $(document).ready(function() {
 	@endif
 
 	$('#removeButton').click(function() {
-  		swal({   
-			title: "Weet u het zeker?",   
-			text: "Weet u zeker dat u definitief uw account wil verwijderen?",   
-			type: "warning",  
+  		swal({
+			title: "Weet u het zeker?",
+			text: "Weet u zeker dat u definitief uw account wil verwijderen?",
+			type: "warning",
                         html:true,
-			showCancelButton: true,   
-			confirmButtonColor: "#DD6B55",  
-			cancelButtonText: "Nee",   
-			confirmButtonText: "Ja, ik weet het zeker!",   
-		}, function() { 
-			$('#deleteForm').submit(); 
+			showCancelButton: true,
+			confirmButtonColor: "#DD6B55",
+			cancelButtonText: "Nee",
+			confirmButtonText: "Ja, ik weet het zeker!",
+		}, function() {
+			$('#deleteForm').submit();
 			return true;
 		});
 
@@ -115,7 +115,7 @@ $(document).ready(function() {
 						$preferences[str_slug($data->name)] = $data->name;
 					}
 
-					echo Form::select('preferences[]', $preferences, json_decode(Sentinel::getUser()->preferences), array('multiple' => true, 'class' => 'ui normal fluid search dropdown')); 
+					echo Form::select('preferences[]', $preferences, json_decode(Sentinel::getUser()->preferences), array('multiple' => true, 'class' => 'ui normal fluid search dropdown'));
 					?>
 				</div>
 
@@ -130,7 +130,7 @@ $(document).ready(function() {
 						$sustainability[str_slug($data->name)] = $data->name;
 					}
 
-					echo Form::select('sustainability[]', $sustainability, json_decode(Sentinel::getUser()->sustainability), array('multiple' => true, 'class' => 'ui normal fluid search dropdown')); 
+					echo Form::select('sustainability[]', $sustainability, json_decode(Sentinel::getUser()->sustainability), array('multiple' => true, 'class' => 'ui normal fluid search dropdown'));
 					?>
 				</div>
 			</div>
@@ -147,9 +147,9 @@ $(document).ready(function() {
 						$kitchens[str_slug($data->name)] = $data->name;
 					}
 
-					echo Form::select('kitchens[]', $kitchens, json_decode(Sentinel::getUser()->kitchens), array('multiple' => true, 'class' => 'ui normal fluid search dropdown')); 
+					echo Form::select('kitchens[]', $kitchens, json_decode(Sentinel::getUser()->kitchens), array('multiple' => true, 'class' => 'ui normal fluid search dropdown'));
 					?>
-				</div>		  		  
+				</div>
 
 				<div class="field">
 					<label>Allergie&euml;n</label>
@@ -161,10 +161,10 @@ $(document).ready(function() {
 					{
 						$allergies[str_slug($data->name)] = $data->name;
 					}
-						
-					echo Form::select('allergies[]', $allergies, json_decode(Sentinel::getUser()->allergies), array('multiple' => true, 'class' => 'ui normal fluid search dropdown')); 
+
+					echo Form::select('allergies[]', $allergies, json_decode(Sentinel::getUser()->allergies), array('multiple' => true, 'class' => 'ui normal fluid search dropdown'));
 					?>
-				</div>		  		  	
+				</div>
 			</div>
 
 			<div class="two fields">
@@ -179,27 +179,27 @@ $(document).ready(function() {
 						$facilities[str_slug($data->name)] = $data->name;
 					}
 
-					echo Form::select('facilities[]', $facilities, json_decode(Sentinel::getUser()->facilities), array('multiple' => true, 'class' => 'ui normal fluid search dropdown')); 
+					echo Form::select('facilities[]', $facilities, json_decode(Sentinel::getUser()->facilities), array('multiple' => true, 'class' => 'ui normal fluid search dropdown'));
 					?>
-				</div>		  		  
+				</div>
 
 				<div class="field">
 					<label>Personen</label>
 					 <div class="ui normal compact selection dropdown ">
                         <input type="hidden" name="kids" value="{{ Sentinel::getUser()->kids }}">
-						
+
 						<div class="default text">Personen</div>
                         <i class="dropdown icon"></i>
-                        
+
                         <div class="menu">
-                            @for($i = 1; $i <= 10; $i++) 
+                            @for($i = 1; $i <= 10; $i++)
                                 <div class="item" data-value="<?php echo $i; ?>"><?php echo $i; ?> <?php echo $i == 1 ? 'persoon' : 'personen'; ?></div>
                             @endfor
                         </div>
                     </div>
-				</div>		  		  	
+				</div>
 			</div>
-		  	
+
 			<div class="two fields">
 				<div class="field">
 					<label>Korting</label>
@@ -211,9 +211,9 @@ $(document).ready(function() {
 						$discount[rawurlencode($data->name)] = $data->name;
 					}
 
-					echo Form::select('discount[]', $discount, json_decode(Sentinel::getUser()->discount), array('multiple' => true, 'class' => 'ui normal fluid search dropdown')); 
+					echo Form::select('discount[]', $discount, json_decode(Sentinel::getUser()->discount), array('multiple' => true, 'class' => 'ui normal fluid search dropdown'));
 					?>
-				</div>		  		  
+				</div>
 
 				<div class="field">
 					<label>Soort</label>
@@ -225,9 +225,9 @@ $(document).ready(function() {
 						$price[str_slug($data->name)] = $data->name;
 					}
 
-					echo Form::select('price[]', $price, json_decode(Sentinel::getUser()->price), array('multiple' => true, 'class' => 'ui normal fluid search dropdown')); 
+					echo Form::select('price[]', $price, json_decode(Sentinel::getUser()->price), array('multiple' => true, 'class' => 'ui normal fluid search dropdown'));
 					?>
-				</div>		  		  	
+				</div>
 		</div>
 
 		<div class="field">

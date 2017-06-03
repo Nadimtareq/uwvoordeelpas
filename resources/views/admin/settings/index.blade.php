@@ -5,13 +5,13 @@
     @include('admin.template.breadcrumb')
 
    	<div class="ui top attached tabular menu">
-		<a class="active item" data-tab="website">Website</a>
-		<a class=" item" data-tab="api">API gegevens</a>
+		<a class="active item" data-tab="website">{{trans('app.website')}}</a>
+		<a class=" item" data-tab="api">{{trans('app.api_data')}}</a>
 		<a class="item" data-tab="cronjobs">Cronjobs</a>
 		<a class="item" data-tab="discount">Afbeeldingen</a>
 		<a class="item" data-tab="eetnu">EetNU</a>
 		<a class="item" data-tab="invoices">Opstartkosten</a>
-		<a class="item" data-tab="newsletter">Newsletter</a>
+		<a class="item" data-tab="newsletter">{{trans('app.newsletter')}}</a>
 	</div>
 
 	<div class="ui bottom active attached tab segment" data-tab="website">
@@ -694,35 +694,51 @@
 		<?php echo Form::close() ?>
 	</div>
 
-	<div class="ui bottom attached tab segment" data-tab="nieuwsbrief">
-		<?php echo Form::open(array('url' => 'admin/settings/newsletter', 'method' => 'post', 'class' => 'ui form')) ?>
-		           <div class="field">
-Stuur nieuwsbrief  <input type="text" name="emailto"><br></div>
-<input type="hidden" name="_token" id="csrf-token" value="{{ Session::token() }}" />
-<div class="field">
-				<button class="ui tiny button" type="submit"><i class="plus icon"></i> Stuur nieuwsbrief</button>
-		</div>
-		<?php echo Form::close() ?>
-		</div>
     <div class="ui bottom attached tab segment" data-tab="newsletter">
+      <?php echo Form::open(array('url' => 'admin/settings/newsletter', 'method' => 'post', 'class' => 'ui form')) ?>
         <table id="tableClients" class="ui sortable very basic collapsing celled unstackable table"
                style="width: 100%;">
             <thead>
             <tr>
-                <th class="three wide" data-slug="name">Naam</th>
-                <th data-slug="category_id">Date time</th>
-                <th data-slug="category_id">Status</th>
+                <th class="three wide" data-slug="name">{{trans('app.name')}}</th>
+                <th data-slug="category_id">{{trans('app.date_time')}}</th>
+                <th data-slug="category_id">{{trans('app.status')}}</th>
             </tr>
             </thead>
             <tbody class="list search">
             @if(count($citiesData) >= 1)
+                <?php
+                  $days = array('' => 'Not Selected' , trans('app.monday') => trans('app.monday'), trans('app.tuesday') => trans('app.tuesday'), trans('app.wednesday') => trans('app.wednesday'), trans('app.thursday') => trans('app.thursday'), trans('app.friday') => trans('app.friday'), trans('app.saturday') => trans('app.saturday'),trans('app.sunday') => trans('app.sunday'));
+                  $hours = array('' => 'Not Selected', '00:00' => "00:00", '01:00' => "01:00",'02:00' => "02:00",'03:00' => "03:00",'04:00' => "04:00",'05:00' => "05:00",'06:00' => "06:00",'07:00' => "07:00",'08:00' => "08:00", '09:00' => "09:00",'10:00' => "10:00",'11:00' => "11:00",'12:00' => "12:00",'13:00' => "13:00",'14:00' => "14:00",'15:00' => "15:00",'16:00' => "16:00",'17:00' => "17:00",'18:00' => "18:00",'19:00' => "19:00",'20:00' => "20:00",'21:00' => "21:00",'22:00' => "22:00",'23:00' => "23:00");
+                  $daysValue = [];
+                  $hoursValue = [];
+                  $statusValue = [];
+                  $dataArray = [];
+                  // print_r(App\Models\NewsletterJob::all(['city_id','date','time','status']));
+                  foreach (App\Models\NewsletterJob::all(['city_id','date','time','status']) as $value) {
+                    $dataArray[$value->city_id]["date"]=json_decode($value->date);
+                    $dataArray[$value->city_id]["time"]=json_decode($value->time);
+                    $dataArray[$value->city_id]["status"]=$value->status;
+                  }
+                  // print_r($dataArray);
+                ?>
+
                 @foreach($citiesData as $data)
+                  <?php
+                    $hoursValue = $dataArray[$data->id]["date"];
+                    $daysValue = $dataArray[$data->id]["time"];
+                    $statusValue = $dataArray[$data->id]["status"];
+                  ?>
                     <tr>
                         <td>{{ $data->name }}</td>
-                        <td><div class="col-lg-6 col-md-6 col-xs-6">{{Form::select('date_jobs', array('' => 'Not selected', '2' => 'Monday', '3' => 'Tuesday','4' => 'Wednesday','5' => 'Thursday','6' => 'Friday','7' => 'Saturday','8' => 'Sunday'), null, ['class' => 'ui normal icon search selection fluid dropdown'])}}</div>
+                        <td>
+                          <div class="col-lg-6 col-md-6 col-xs-6">{{Form::select("date_jobs[$data->id][]",$days , $daysValue, ['multiple'=> true ,'class' => 'ui normal icon search selection fluid dropdown', 'required' => 'required'])}}</div>
+                            <div class="col-lg-6 col-md-6 col-xs-6">
+                                {{Form::select("time_jobs[$data->id][]",$hours , $hoursValue, ['multiple'=> true ,'class' => 'ui normal icon search selection fluid dropdown', 'required' => 'required'])}}</div>
+                            </div>
                         </td>
                         <td>
-                            <div class="col-lg-6 col-md-6 col-xs-6">{{Form::select('date_jobs', array('' => 'Not selected', '0' => 'OFF', '1' => 'ON'), null, ['class' => 'ui normal icon search selection fluid dropdown'])}}</div>
+                            <div class="col-lg-6 col-md-6 col-xs-6">{{Form::select("status_jobs[$data->id]", array('' => 'Not selected', '0' => 'OFF', '1' => 'ON'), $statusValue, ['class' => 'ui normal icon search selection fluid dropdown','required' => 'required'])}}</div>
                         </td>
                     </tr>
                 @endforeach
@@ -735,6 +751,10 @@ Stuur nieuwsbrief  <input type="text" name="emailto"><br></div>
             @endif
             </tbody>
         </table>
+        <div class="field">
+  				<button class="ui tiny button" type="submit"><i class="plus icon"></i>&nbsp;{{trans('app.save')}}</button>
+    		</div>
+  		<?php echo Form::close() ?>
     </div>
 
 </div>

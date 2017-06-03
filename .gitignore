@@ -1,6 +1,9 @@
 
 # Created by https://www.gitignore.io/api/windows,laravel,node
 
+### database config ###
+config/database.php
+
 ### Windows ###
 # Windows image file caches
 Thumbs.db
@@ -88,6 +91,3 @@ nbproject
 nbproject
 /env
 /env
-
-### database config ###
-config/database.php
