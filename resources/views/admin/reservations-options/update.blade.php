@@ -24,11 +24,22 @@
 
             @if ($userAdmin)
             <div class="field">
-                <label>Bedrijf</label>
-                <?php echo Form::select('company_id', $companies, $data->company_id, array('class' => 'ui normal search dropdown')); ?>
+                <label>Image</label>
+                {!! Form::file('image') !!}
+                @if($data->image!='')
+                    <img src="{{ asset('images/deals/'.$data->image) }}" alt="No Image Found" width="100px;">
+                @else
+                <img src="{{ asset('images/deals/no-img.jpg') }}" alt="No Image Found" width="100px">
+                 @endif
             </div>
             @endif
 
+            @if ($userAdmin)
+                <div class="field">
+                    <label>Logo</label>
+                    <?php echo Form::select('company_id', $companies, $data->company_id, array('class' => 'ui normal search dropdown')); ?>
+                </div>
+            @endif
             <br /> <br />
 
             <div class="two fields">
@@ -38,7 +49,7 @@
                     <div class="ui icon input">
                         <?php
                         echo Form::text(
-                                'date_from', $data->date_from, array(
+                            'date_from', $data->date_from, array(
                             'class' => 'datepicker',
                             'placeholder' => 'Selecteer een datum',
                             'data-value' => $data->date_from

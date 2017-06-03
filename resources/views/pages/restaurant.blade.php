@@ -37,11 +37,11 @@ while ($st->lte($dt)) {
 												 @if(file_exists(public_path($mediaItem->disk. DIRECTORY_SEPARATOR . $mediaItem->id . DIRECTORY_SEPARATOR . $mediaItem->file_name)))
 													<li style="float: left; list-style: outside none none; position: relative; width: 674px;">
 													<a href="{{ url($mediaItem->getUrl()) }}" data-lightbox="roadtrip">
-														<img class="ui image " src="{{ url($mediaItem->getUrl()) }}">
+														<img class="ui image materialboxed intialized" src="{{ url($mediaItem->getUrl()) }}">
 													</a>
 												 @else
 												  <li style="float: left; list-style: outside none none; position: relative; width: 674px;">
-													<img src="{{ asset('images/s.jpg') }}" alt="s" class="">
+													<img src="{{ asset('images/s.jpg') }}" alt="s" class="materialboxed">
 												 @endif
 
 
@@ -171,7 +171,15 @@ while ($st->lte($dt)) {
 							<div class="menu">
 								<div class="left_m">
 									<h2>{{ $deal->name }}</h2>
-									<img src="{{ asset('images/menu.jpg') }}" alt="menu">
+									@if($deal->image!='')
+										<a   href="{{ url('future-deal/'.$company->slug).'?deal='.$deal->id }}"> <img src="{{ asset('images/deals/'.$deal->image) }}" alt="No Image Found" width="400px"></a>
+
+
+									@else
+										<a   href="{{ url('future-deal/'.$company->slug).'?deal='.$deal->id }}"> 										<img src="{{ asset('images/deals/no-img.jpg') }}" alt="No Image Found" width="400px">
+										</a>
+
+									@endif
 									<ul class="price">
 										<li><span>Verkocht<i>  &euro; {{ $deal->price_from }}  </i></span></li>
 										<li><span>Korting<i>50%</i></span></li>
@@ -185,7 +193,13 @@ while ($st->lte($dt)) {
 								</div>
 								<!-- <div class="end">* This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. </div>
 								<div class="end2">Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh </div> -->
+								@if(count($deals)==1)
+								<div id="koop">
 								<a class="more"  href="{{ url('future-deal/'.$company->slug).'?deal='.$deal->id }}">KOOP DEAL</a>
+								</div>
+									@else
+									<a class="more"  href="{{ url('future-deal/'.$company->slug).'?deal='.$deal->id }}">KOOP DEAL</a>
+								@endif
 
 							</div>
 

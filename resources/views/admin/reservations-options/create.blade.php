@@ -20,7 +20,15 @@
 			<div class="field">
 				<label>Naam</label>
 				<?php echo Form::text('name'); ?>
-			</div>	
+			</div>
+
+			@if ($userAdmin)
+				<div class="field">
+					<label>Image</label>
+					{!! Form::file('image') !!}
+
+				</div>
+			@endif
 
 			@if ($userAdmin)
 			<div class="field">

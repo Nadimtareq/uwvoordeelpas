@@ -6,6 +6,7 @@ use App\Models\ReservationOption;
 use App\Models\Company;
 use App\User;
 use Alert;
+use Illuminate\Support\Facades\Input;
 use Mail;
 use App;
 use DB;
@@ -36,7 +37,7 @@ class ReservationsOptionsController extends Controller
         );
     }
 
-    public function index(Request $request, $slug = NULL) 
+    public function index(Request $request, $slug = NULL)
     {
         if ($this->isCompanyOwner($slug)['exist'] == 0 && $slug != NULL && Sentinel::inRole('admin') == FALSE) {
             User::getRoleErrorPopup();
@@ -164,9 +165,12 @@ class ReservationsOptionsController extends Controller
             'date_from' => 'required',
             'date_to' => 'required',
             'time_to' => 'required',
-            'time_from' => 'required'
+            'time_from' => 'required',
+            'image'       => 'required|mimes:jpeg,bmp,png|max:10000'
+
         ]);
-        
+
+
         $data = new ReservationOption();
         $data->name = $request->input('name');
         $data->description = $request->input('content');
@@ -179,7 +183,14 @@ class ReservationsOptionsController extends Controller
         $data->date_from = $request->input('date_from');    
         $data->date_to = $request->input('date_to');    
         $data->company_id = ($slug != NULL ? $this->isCompanyOwner($slug)['id'] : $request->input('company_id'));    
+        $data->company_id = ($slug != NULL ? $this->isCompanyOwner($slug)['id'] : $request->input('company_id'));
         $data->save();
+
+        $data_id = $data->id;
+        $destinationPath = 'images/deals/'; // upload path
+        $extension = Input::file('image')->getClientOriginalExtension(); // getting image extension
+        $fileName = 'deal_'.$data_id.'.'.$extension; // renameing image
+        Input::file('image')->move($destinationPath, $fileName);
 
         Alert::success('U heeft succesvol een nieuwe reserverings optie aangemaakt.')->html()->persistent('Sluiten');
         
@@ -188,6 +199,8 @@ class ReservationsOptionsController extends Controller
 
     public function update(Request $request, $id) 
     {
+       /* echo "<pre>";
+        print_r($request);exit;*/
         $data = ReservationOption::select(
             'reservations_options.id',
             'reservations_options.company_id',
@@ -201,6 +214,7 @@ class ReservationsOptionsController extends Controller
             'reservations_options.description',
             'reservations_options.short_description',
             'reservations_options.name',
+            'reservations_options.image',
             'companies.slug'
         )
             ->leftJoin('companies', 'reservations_options.company_id', '=', 'companies.id')
@@ -255,13 +269,22 @@ class ReservationsOptionsController extends Controller
             'date_from' => 'required',
             'date_to' => 'required',
             'time_to' => 'required',
-            'time_from' => 'required'
+            'time_from' => 'required',
+            'image'       => 'mimes:jpeg,bmp,png|max:10000'
         ]);
         
         if ($data) {
             if ($this->isCompanyOwner($data->slug)['exist'] == 0 && Sentinel::inRole('admin') == fALSE) {
                 User::getRoleErrorPopup();
                 return Redirect::to('/');
+            }
+            $fileName='';
+            if(Input::file('image')) {
+                $destinationPath = 'images/deals/'; // upload path
+                $extension = Input::file('image')->getClientOriginalExtension(); // getting image extension
+                $fileName = 'deal_' . $data->id . '.' . $extension; // renameing image
+                Input::file('image')->move($destinationPath, $fileName);
+
             }
 
             $data->name = $request->input('name');
@@ -274,8 +297,8 @@ class ReservationsOptionsController extends Controller
             $data->time_from = $request->input('time_from');    
             $data->date_from = $request->input('date_from');    
             $data->date_to = $request->input('date_to');    
+            $data->image = $fileName;
             $data->save();
-
             Alert::success('U heeft deze aanbieding veranderd')->html()->persistent('Sluiten');
             
             return Redirect::to('admin/'.$this->slugController.'/update/'.$id);

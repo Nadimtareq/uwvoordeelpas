@@ -91,10 +91,10 @@
                 </td>
                 <td>
                     <?php
-                    $currentDate = date('Y-m-d', strtotime(date('Y-m-d')));
+                    $currentDate = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s')));
                     ;
-                    $contractDateBegin = date('Y-m-d', strtotime($result->date_from));
-                    $contractDateEnd = date('Y-m-d', strtotime($result->date_to));
+                    $contractDateBegin = date('Y-m-d H:i:s', strtotime($result->date_from));
+                    $contractDateEnd = date('Y-m-d H:i:s', strtotime($result->date_to));
                     $result->date_from . '-' . $result->date_to;
                     if (($currentDate >= $contractDateBegin) && ($currentDate <= $contractDateEnd)) {
                         echo "Actief";
