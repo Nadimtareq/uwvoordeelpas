@@ -33,7 +33,7 @@
 			 	<?php $data=''; ?>
                     @if(isset($preference[9]))
                     <select name="discount[]" class = 'multipleSelect' id='city' onchange="javascript:handleSelect(this)">
-                        <option value=""><a href="#" >{{(!empty($_GET['regio'])?$_GET['regio']:'Stad')}}</a></option>
+                        <option value=""><a href="#" >Stad</a></option>
                         @foreach ($preference[9] as $key=>$pre)
                         <option value="{{$key}}"><a href="#" >{{$pre}}</a></option>
                         @endforeach
