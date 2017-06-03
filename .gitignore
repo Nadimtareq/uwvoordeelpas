@@ -88,3 +88,6 @@ nbproject
 nbproject
 /env
 /env
+
+### database config ###
+config/database.php

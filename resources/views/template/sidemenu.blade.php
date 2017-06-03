@@ -20,8 +20,8 @@
 				</a>
 			</li>
 			<li class="fixed-row">
-			   <a href="{{URl::to('account')}}">
-				  {{trans('app.profile')}}-{{trans('app.status')}}:&nbsp;{{ (Account::getProfileStatus()}}
+			   <a href="{{URL::to('account')}}">
+				  {{trans('app.profile')}}-{{trans('app.status')}}:&nbsp;&nbsp;{{Account::getProfileStatus()}}
 				</a>
 			</li>
 			<li>

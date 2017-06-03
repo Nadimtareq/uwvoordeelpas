@@ -28,7 +28,7 @@ class AccountHelper
       $profileStatus["remfields"] = $remFields;
       $profileStatus["completed"] = $status."%";
     }
-    return $profileStatus["completed"];
+    return ($profileStatus["completed"]);
   }
 
 }
