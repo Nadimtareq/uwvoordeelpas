@@ -27,7 +27,7 @@ class DealHelper
    */
   private function getNewsletter()
   {
-    $newsletterJobs = NewsletterJob::all();
+    $newsletterJobs = NewsletterJob::all()->where('status',1);
     $newsletters = [];
     foreach ($newsletterJobs as $job) {
       # code...
