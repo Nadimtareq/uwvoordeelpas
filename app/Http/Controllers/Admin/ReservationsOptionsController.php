@@ -208,7 +208,7 @@
                 'reservations_options.total_amount',
                 'reservations_options.price_from',
                 'reservations_options.price',
-                'reservations_options.price_per_person',
+                'reservations_options.price_per_guest',
                 'reservations_options.time_from',
                 'reservations_options.time_to',
                 'reservations_options.date_to',
@@ -253,7 +253,7 @@
                 'reservations_options.total_amount',
                 'reservations_options.price_from',
                 'reservations_options.price',
-                'reservations_options.price_per_person',
+                'reservations_options.price_per_guest',
                 'reservations_options.time_from',
                 'reservations_options.time_to',
                 'reservations_options.date_to',
@@ -297,7 +297,7 @@
                 $data->total_amount = $request->input('total_amount');
                 $data->price_from = $request->input('price_from');
                 $data->price = $request->input('price');
-                $data->price_per_person = $request->input('price_per_person');
+                $data->price_per_guest = $request->input('price_per_guest');
                 $data->time_to = $request->input('time_to');
                 $data->time_from = $request->input('time_from');    
                 $data->date_from = $request->input('date_from');    
