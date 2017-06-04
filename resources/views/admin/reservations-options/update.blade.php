@@ -132,7 +132,7 @@
             <div class="two fields">
                 <div class="field">
                     <label>Prijs per persoon</label>
-                    <?php echo Form::number('price_per_person', $data->price_per_person, array('min' => 1)); ?>
+                    <?php echo Form::number('price_per_guest', $data->price_per_guest, array('min' => 1)); ?>
                 </div>
             </div>
 
