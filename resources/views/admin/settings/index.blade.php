@@ -714,19 +714,17 @@
                   $hoursValue = [];
                   $statusValue = [];
                   $dataArray = [];
-                  // print_r(App\Models\NewsletterJob::all(['city_id','date','time','status']));
                   foreach (App\Models\NewsletterJob::all(['city_id','date','time','status']) as $value) {
                     $dataArray[$value->city_id]["date"]=json_decode($value->date);
                     $dataArray[$value->city_id]["time"]=json_decode($value->time);
                     $dataArray[$value->city_id]["status"]=$value->status;
                   }
-                  // print_r($dataArray);
                 ?>
 
                 @foreach($citiesData as $data)
                   <?php
-                    $hoursValue = $dataArray[$data->id]["date"];
-                    $daysValue = $dataArray[$data->id]["time"];
+                    $hoursValue = $dataArray[$data->id]["time"];
+                    $daysValue = $dataArray[$data->id]["date"];
                     $statusValue = $dataArray[$data->id]["status"];
                   ?>
                     <tr>

@@ -8,6 +8,7 @@ use App\Models\CompanyService;
 use App\Models\NewsletterJob;
 use App\Models\Company;
 use App\Models\Invoice;
+use App\Helpers\DealHelper;
 use Config;
 use Sentinel;
 use Illuminate\Support\Facades\Response;
@@ -286,13 +287,8 @@ class SettingsController extends Controller
          $city = $key;
          $days = json_encode($value);
          $time = json_encode($data['time_jobs'][$key]);
-         $status = json_encode($data['status_jobs'][$key]);
-         $newsletterJob = new NewsletterJob;
-         $newsletterJob->city_id = $city;
-         $newsletterJob->date = $days;
-         $newsletterJob->time = $time;
-         $newsletterJob->status = $status;
-         $newsletterJob->save();
+         $status = $data['status_jobs'][$key];
+         NewsletterJob::updateOrCreate(['city_id' => $city],['city_id' => $city,'date' => $days, 'time' => $time, 'status' => $status]);
        }
 
 

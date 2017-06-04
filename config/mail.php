@@ -31,7 +31,7 @@ return [
 
     //'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
     'host' => env('MAIL_HOST', 'mail.uwvoordeelpas.nl'),
-    
+
     /*
     |--------------------------------------------------------------------------
     | SMTP Host Port
@@ -45,7 +45,7 @@ return [
 
     //'port' => env('MAIL_PORT', 587),
     'port' => env('MAIL_PORT', 25),
-    
+
     /*
     |--------------------------------------------------------------------------
     | Global "From" Address

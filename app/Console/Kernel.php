@@ -44,11 +44,12 @@ class Kernel extends ConsoleKernel
         Commands\Transaction\Tradetracker::class,
         Commands\Transaction\Tradedoubler::class,
         Commands\Transaction\Zanox::class,
-        Commands\Transaction\Que::class
+        Commands\Transaction\Que::class,
+        Commands\Newsletter\NewsletterEmail::class,
     ];
 
     protected function schedule(Schedule $schedule)
-    {   
+    {
         // Affiliate
         $schedule
             ->command('daisycon:affiliate')
@@ -81,7 +82,7 @@ class Kernel extends ConsoleKernel
             ->hourly()
         ;
 
-        // Guest 
+        // Guest
         $schedule
             ->command('wifi:guest')
             ->everyFiveMinutes()
@@ -107,7 +108,7 @@ class Kernel extends ConsoleKernel
             ->everyFiveMinutes()
         ;
 
-        // Invoice 
+        // Invoice
         $schedule
             ->command('debit:invoice')
             ->everyMinute()
@@ -128,7 +129,7 @@ class Kernel extends ConsoleKernel
             ->everyMinute()
         ;
 
-        // Other 
+        // Other
         $schedule
             ->command('sitemap:other')
             ->weekly()
@@ -150,7 +151,7 @@ class Kernel extends ConsoleKernel
             ->command('thirdparty:reservation')
             ->everyMinute()
         ;
-        
+
         $schedule
             ->command('reminder:reservation')
             ->everyMinute()
@@ -207,6 +208,12 @@ class Kernel extends ConsoleKernel
         $schedule
             ->command('eetnu:other')
             ->hourly()
+        ;
+
+        //Newsletter Deals
+        $schedule
+          ->command('newsletter:dealmail')
+          ->hourly()
         ;
 
     }

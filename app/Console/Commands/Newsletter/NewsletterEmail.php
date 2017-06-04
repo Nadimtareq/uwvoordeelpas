@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Console\Commands\Reservation;
+namespace App\Console\Commands\Newsletter;
 
 use App\Models\Reservation;
 use App\Models\MailTemplate;
+use App\Helpers\DealHelper;
 use Mail;
 use Illuminate\Console\Command;
 use Exception;
@@ -15,8 +16,8 @@ class NewsletterEmail extends Command
      * The name and signature of the console command.
      *
      * @var string
-     */ 
-    protected $signature = 'newsletter:email';
+     */
+    protected $signature = 'newsletter:dealmail';
 
     /**
      * The console command description.
@@ -35,11 +36,9 @@ class NewsletterEmail extends Command
         parent::__construct();
     }
 
-    public function sendEmail()
+    public function sendNewsletter()
     {
-
-
-
+      DealHelper::sendNewsletterEmail();
     }
 
     /**
@@ -62,10 +61,10 @@ class NewsletterEmail extends Command
 
                 // Processing
                 try {
-                    $this->sendEmail();
+                    $this->sendNewsletter();
                 } catch (Exception $e) {
                     $this->line('Er is een fout opgetreden. '.$this->signature);
-                   
+
                     Mail::raw('Er is een fout opgetreden:<br /><br /> '.$e, function ($message) {
                         $message->to(getenv('DEVELOPER_EMAIL'))->subject('Fout opgetreden: '.$this->signature);
                     });
@@ -77,7 +76,7 @@ class NewsletterEmail extends Command
             } else {
                 // Don't run a task mutiple times, when the first task hasnt been finished
                 $this->line('This task is busy at the moment.');
-            }    
+            }
         }
     }
 }

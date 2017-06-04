@@ -222,5 +222,6 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Bugsnag' => Bugsnag\BugsnagLaravel\Facades\Bugsnag::class,
         'Account' => App\Helpers\AccountHelper::class,
+        'Newsletters' => App\Helpers\DealHelper::class,
     ],
 ];
