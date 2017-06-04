@@ -168,6 +168,8 @@ class ReservationsController extends Controller
 
     public function listSaldo(Request $request, $company = null)
     {
+
+    	//Added price_per_guest by Ocean
         $reservations = Reservation::select(
             DB::raw('month(reservations.date) as month'),
             DB::raw('year(reservations.date) as year'),
@@ -182,6 +184,7 @@ class ReservationsController extends Controller
             'reservations.time',
             'reservations_options.price as deal_price',
             'reservations_options.name as deal_name',
+            'reservations_options.price_per_guest as price_per_guest',
             'companies.slug as companySlug',
             'companies.name as companyName'
         )
