@@ -31,5 +31,6 @@ $date = \Carbon\Carbon::create(date('Y', strtotime($result->date)), date('m', st
     <td>{{ $result->persons }}</td>
     <td class="text-aligned center">{!! ($result->restaurant_is_paid == 1 ? '<i class="green icon checkmark"></i>' : '<i class="red remove icon"></i>') !!}</td>
     <td><i class="euro icon"></i> {{ (float)$result->saldo }}</td>
+    <td><i class="euro icon"></i> {{ (float)($result->price_per_guest * $result->persons )  }}</td>
 </tr>
 @endforeach
