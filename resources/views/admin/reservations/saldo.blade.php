@@ -177,6 +177,7 @@
                 <th data-slug="persons" data-column-order="desc" class="one wide">Personen</th>
                 <th data-slug="disabled" class="disabled one wide">Betaald</th> 
                 <th data-slug="saldo" class="three wide">Saldo</th> 
+                <th data-slug="saldo" class="three wide">Total</th> 
             </tr>
         </thead>
         <tbody class="list search">
