@@ -116,6 +116,15 @@ class AffiliatesController extends Controller
             $data = $data->where('affiliates.affiliate_network', '=', $request->input('network'));
         }
 
+        //Added by Ocean From and to date condition
+        if (!empty($request->input('from'))) {
+            $data->where(DB::raw('(affiliates.updated_at)'), '>=', $request->input('from'));
+        }
+        if (!empty($request->input('to'))) {
+            $data->where(DB::raw('(affiliates.updated_at)'), '<=', $request->input('to'));
+        }
+
+
         if ($request->has('q')) {
             $data = $data
                 ->where('affiliates.name', 'LIKE', '%'.$request->input('q').'%')
