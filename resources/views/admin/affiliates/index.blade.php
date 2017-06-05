@@ -112,62 +112,97 @@
                     <a href="{{ url('admin/subcategories') }}" class="ui icon button"><i class="ordered list icon"></i> Subrubrieken </a>
                 </div>
 
-                <div class="right floated sixteen wide mobile five wide computer column">
-                    <div class="ui normal icon selection fluid dropdown">
-                        <input type="hidden" name="filters" value="{{ Request::input('network') }}">
-                        <i class="filter icon"></i>
-                                              
-                        <span class="text">Netwerk</span>
+                
+            </div>
 
-                        <i class="dropdown icon"></i>
 
-                        <div class="menu">
-                            <div class="header">
-                                <i class="tags icon"></i>
-                                Netwerk
-                            </div>
+            <!-- Changed by Ocean -->
 
-                            <div class="scrolling menu">
-                                <a class="item" 
-                                    href="{{ url('admin/'.$slugController.'?'.http_build_query(array('network' => 'affilinet', 'limit' => Request::input('limit')))) }}" 
-                                    data-value="affilinet">
-                                    Affilinet
-                                </a>
+            <div class="sixteen wide mobile four wide computer column">
+                <div class="ui normal icon selection fluid dropdown">
+                    <input type="hidden" name="filters" value="{{ Request::input('network') }}">
+                    <i class="filter icon"></i>
+                                          
+                    <span class="text">Netwerk</span>
 
-                                <a class="item" 
-                                   href="{{ url('admin/'.$slugController.'?'.http_build_query(array('network' => 'familyblend', 'limit' => Request::input('limit')))) }}" 
-                                   data-value="familyblend">
-                                   FamilyBlend
-                                </a>
+                    <i class="dropdown icon"></i>
 
-                                <a class="item" 
-                                   href="{{ url('admin/'.$slugController.'?'.http_build_query(array('network' => 'daisycon', 'limit' => Request::input('limit')))) }}" 
-                                   data-value="daisycon">
-                                   Daisycon
-                                </a>
+                    <div class="menu">
+                        <div class="header">
+                            <i class="tags icon"></i>
+                            Netwerk
+                        </div>
 
-                                <a class="item" 
-                                   href="{{ url('admin/'.$slugController.'?'.http_build_query(array('network' => 'tradedoubler', 'limit' => Request::input('limit')))) }}" 
-                                   data-value="tradedoubler">
-                                   Tradedoubler
-                                </a>
+                        <div class="scrolling menu">
+                            <a class="item" 
+                                href="{{ url('admin/'.$slugController.'?'.http_build_query(array('network' => 'affilinet', 'limit' => Request::input('limit')))) }}" 
+                                data-value="affilinet">
+                                Affilinet
+                            </a>
 
-                                <a class="item" 
-                                   href="{{ url('admin/'.$slugController.'?'.http_build_query(array('network' => 'tradetracker', 'limit' => Request::input('limit')))) }}" 
-                                   data-value="tradetracker">
-                                   Tradetracker
-                                </a>
+                            <a class="item" 
+                               href="{{ url('admin/'.$slugController.'?'.http_build_query(array('network' => 'familyblend', 'limit' => Request::input('limit')))) }}" 
+                               data-value="familyblend">
+                               FamilyBlend
+                            </a>
 
-                                <a class="item" 
-                                   href="{{ url('admin/'.$slugController.'?'.http_build_query(array('network' => 'zanox', 'limit' => Request::input('limit')))) }}" 
-                                   data-value="zanox">
-                                   Zanox
-                                </a>
-                            </div>
+                            <a class="item" 
+                               href="{{ url('admin/'.$slugController.'?'.http_build_query(array('network' => 'daisycon', 'limit' => Request::input('limit')))) }}" 
+                               data-value="daisycon">
+                               Daisycon
+                            </a>
+
+                            <a class="item" 
+                               href="{{ url('admin/'.$slugController.'?'.http_build_query(array('network' => 'tradedoubler', 'limit' => Request::input('limit')))) }}" 
+                               data-value="tradedoubler">
+                               Tradedoubler
+                            </a>
+
+                            <a class="item" 
+                               href="{{ url('admin/'.$slugController.'?'.http_build_query(array('network' => 'tradetracker', 'limit' => Request::input('limit')))) }}" 
+                               data-value="tradetracker">
+                               Tradetracker
+                            </a>
+
+                            <a class="item" 
+                               href="{{ url('admin/'.$slugController.'?'.http_build_query(array('network' => 'zanox', 'limit' => Request::input('limit')))) }}" 
+                               data-value="zanox">
+                               Zanox
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="sixteen wide mobile twelve wide computer column">
+            <form method="get" action="{{ url('admin/'.$slugController.'?'.http_build_query($queryString)) }}">
+                <div class="ui input">
+                    <?php
+                    echo Form::text(
+                            'from', old('from'), array(
+                        'class' => 'datepicker_no_min_date',
+                        'placeholder' => 'Datum van',
+                        'style' => 'width: 300px;'
+                            )
+                    );
+                    ?>
+                </div>
+
+                <div class="ui input">
+                    <?php
+                    echo Form::text(
+                            'to', old('to'), array(
+                        'class' => 'datepicker_no_min_date',
+                        'placeholder' => 'Datum tot',
+                        'style' => 'width: 300px;'
+                            )
+                    );
+                    ?>
+                </div>
+                <button class="ui button" type="submit"><i class="search icon"></i></button>
+            </form>
+        </div>
+
+
         </div>
     </div>
                      
