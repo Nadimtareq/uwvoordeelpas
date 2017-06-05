@@ -13,7 +13,7 @@ class ReservationsOptions extends Migration
     public function up()
     {
         Schema::table('reservations_options', function($table) {
-            $table->integer('image');
+            $table->string('image',50);
         });
     }
 
