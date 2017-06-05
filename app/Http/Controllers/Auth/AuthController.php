@@ -281,53 +281,70 @@ public function dcrypt($encoded)
             'password' => $pass
         );
 
-        $data = array(
-            'secret' => "6LecMCQUAAAAAJOLNtAoU6pFVwe0K-JGQ7cUlNTK",
-            'response' => $request->input("g-recaptcha-response")
-        );
+        $attempts = User::select('attempts','id')->where('email',$email)->first();
+        if($attempts->attempts<10 || $attempts->attempts=='') {
+            $data = array(
+                'secret' => "6LecMCQUAAAAAJOLNtAoU6pFVwe0K-JGQ7cUlNTK",
+                'response' => $request->input("g-recaptcha-response")
+            );
 
-        $verify = curl_init();
-        curl_setopt($verify, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify");
-        curl_setopt($verify, CURLOPT_POST, true);
-        curl_setopt($verify, CURLOPT_POSTFIELDS, http_build_query($data));
-        curl_setopt($verify, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($verify, CURLOPT_RETURNTRANSFER, true);
-        $response = curl_exec($verify);
-        $response=json_decode($response);
-        if($response->success==true){
+            $verify = curl_init();
+            curl_setopt($verify, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify");
+            curl_setopt($verify, CURLOPT_POST, true);
+            curl_setopt($verify, CURLOPT_POSTFIELDS, http_build_query($data));
+            curl_setopt($verify, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($verify, CURLOPT_RETURNTRANSFER, true);
+            $response = curl_exec($verify);
+            $response = json_decode($response);
+            if ($response->success == true) {
 
-        try {
-            if ($request->input('remember') == 1) {
-                $auth = Sentinel::authenticateAndRemember($credentials);
+                try {
+                    if ($request->input('remember') == 1) {
+                        $auth = Sentinel::authenticateAndRemember($credentials);
+                    } else {
+                        $auth = Sentinel::authenticate($credentials);
+                    }
+
+                    if ($auth == TRUE) {
+                        return Response::json(array('success' => 1));
+                    } else {
+                        DB::table('users')
+                            ->where('email', $email)
+                            ->increment('attempts', 1);
+                        return Response::json(array(
+                            'name' => 'Dit e-mailadres en het opgegeven wachtwoord komen niet overeen met elkaar.'
+                        ));
+
+                    }
+                } catch (ThrottlingException $e) {
+                    return Response::json(array(
+                        'throttling' => 1
+                    ));
+                } catch (NotActivatedException $e) {
+                    return Response::json(array(
+                        'activation' => 1
+                    ));
+                } catch (TokenMismatchException $e) {
+                    return Response::json(array(
+                        'tokemismatch' => 1
+                    ));
+                }
             } else {
-                 $auth = Sentinel::authenticate($credentials);
-            }
 
-            if ($auth == TRUE) {
-                return Response::json(array('success' => 1));
-            }  else {
                 return Response::json(array(
-                    'name' => 'Dit e-mailadres en het opgegeven wachtwoord komen niet overeen met elkaar.'
+                    'name' => 'Captcha not match'
                 ));
             }
-        } catch (ThrottlingException $e) {
+        }else{
+            $uban = new App\Models\UserBan();
+            $uban->user_id = $attempts->id;
+            $uban->reason = 'multiple login failed';
+            $uban->expired_date = date('Y-m-d');
+            $uban->created_at = 14.95;
+            $uban->updated_at = 14.95;
+            $uban->save();
             return Response::json(array(
-                'throttling' => 1
-            ));
-        } catch (NotActivatedException $e) {
-            return Response::json(array(
-                'activation' => 1
-            ));
-        } catch (TokenMismatchException $e) {
-            return Response::json(array(
-                'tokemismatch' => 1
-            ));
-        }
-        }
-        else{
-
-            return Response::json(array(
-                'name' => 'Captcha not match'
+                'name' => 'Your account has been locked please contact admin to unlock your account'
             ));
         }
     }

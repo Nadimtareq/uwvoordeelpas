@@ -49,4 +49,4 @@
 	<a href="#" id="registerButton3" data-redirect="">Nog geen lid?</a>
 </div>
 
-<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+{{csrf_field()}}

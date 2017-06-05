@@ -10,5 +10,11 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 abstract class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    protected function addCookieToResponse($request, $response)
+    {
+        $request->session()->regenerateToken();
+
+        return parent::addCookieToResponse($request, $response);
+    }
 
 }
