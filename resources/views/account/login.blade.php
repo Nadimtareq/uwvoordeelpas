@@ -1,18 +1,18 @@
 <script type="text/javascript">
-$(document).ready(function() {
-	$('.ui.checkbox').checkbox();
-});
+    $(document).ready(function() {
+        $('.ui.checkbox').checkbox();
+    });
 </script>
 
 <div class="ui buttons fluid">
 	<a href="{{ url('social/login/facebook') }}" target="_blank" id="facebookButton" class="ui facebook icon button">
-	  <i class="facebook icon"></i>
-	   Facebook
+		<i class="facebook icon"></i>
+		Facebook
 	</a>
 
 	<a href="{{ url('social/login/google') }}" target="_blank" id="googleButton" class="ui icon google plus button">
-	  <i class="google plus icon"></i>
-	  Google+
+		<i class="google plus icon"></i>
+		Google+
 	</a>
 </div>
 
@@ -21,23 +21,25 @@ $(document).ready(function() {
 </button>
 
 <div class="ui horizontal divider">
-    of
+	of
 </div>
 
 <div class="field">
 	<label>E-mail</label>
-	<input type="text" name="email">
+	<input type="text" name="email" id="email_old" onchange="myFunction('email')">
+
 </div>
 
 <div class="field">
 	<label>Wachtwoord <a href="#" class="ui recover password basic primary button">Wachtwoord vergeten?</a></label>
-	<input type="password" name="password">
+	<input type="password" id="pass_old" onchange="myFunction('pass')">
+	<input type="hidden" name="password" id="pass_new">
 </div>
 
 <div style="float: left; width: 200px;">
 	<div class="ui checkbox">
-	    <input type="checkbox" tabindex="0" value="1" name="remember" class="hidden">
-	    <label>Onthoud mij</label>
+		<input type="checkbox" tabindex="0" value="1" name="remember" class="hidden">
+		<label>Onthoud mij</label>
 	</div>
 </div>
 

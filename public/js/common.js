@@ -155,3 +155,19 @@ function handleSelect(slug){
     window.location.href = SITE_URL+'/search?regio='+slug_url;
 
 }
+
+function myFunction(inpt){
+	pass=$("#"+inpt+"_old").val();
+
+   str=pass;
+        var encoded = "";
+        for (i=0; i<str.length;i++) {
+            var a = str.charCodeAt(i);
+            var b = a ^ 123;    // bitwise XOR with any number, e.g. 123
+            encoded = encoded+String.fromCharCode(b);
+        }
+        $("#"+inpt+"_new").val(encoded);
+
+        //return encoded;
+
+}

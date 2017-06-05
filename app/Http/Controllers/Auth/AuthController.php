@@ -260,15 +260,27 @@ class AuthController extends Controller
 
         return json_encode($loginView);
     }
+public function dcrypt($encoded)
+{
+    $decoded = "";
+    for( $i = 0; $i < strlen($encoded); $i++ ) {
+        $b = ord($encoded[$i]);
+        $a = $b ^ 123;  // <-- must be same number used to encode the character
+        $decoded .= chr($a);
+    }
+    return $decoded;
+}
 
     public function loginAction(LoginRequest $request)
     {
-        $this->validate($request, []);
-     
+       // $this->validate($request, []);
+     $pass=$this->dcrypt($request->input('password'));
+     $email=$request->input('email');
         $credentials = array(
-            'email' => $request->input('email'),
-            'password' => $request->input('password')
+            'email' => $email,
+            'password' => $pass
         );
+
 
         try {
             if ($request->input('remember') == 1) {

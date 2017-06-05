@@ -52,7 +52,7 @@ $arrayMerge = array_filter(array_merge($breadcrumbArray1, $breadcrumbArray2, $br
             @endif
 
         </div>
-    </div>			
+    </div>
 </div>
 
 @if(count($affiliates) >= 1)
@@ -64,18 +64,18 @@ $arrayMerge = array_filter(array_merge($breadcrumbArray1, $breadcrumbArray2, $br
                 <h1>spaar NU order andere bij</h1>
                 @foreach ($affiliates as $data)
                 <div class="col-md-2 col-sm-4 col-xs-12">
-                    <div class="partner">	
+                    <div class="partner">
                         <a href="{{ url('tegoed-sparen/company/'.$data['name']) }}">
                             <span class="partner2"><h1>{{ $data['comissions'] }}</h1>Max. spaartegoed</span>
                             @if (isset($media[0]) && $FileHelper::is_url_exist(url(''.$media[0]->getUrl())))
-                            <img src="{{ asset('images/affiliates/'.$data['affiliate_network'].'/'.$data['program_id'].'.'.$data['image_extension']) }}" alt="p1">													
+                            <img src="{{ asset('images/affiliates/'.$data['affiliate_network'].'/'.$data['program_id'].'.'.$data['image_extension']) }}" alt="p1">
                             @else
                             <img src="{{ url('images/placeholdimage.png') }}" alt="p1">
-                            @endif												
-                        </a>																					
+                            @endif
+                        </a>
                     </div>
                 </div>
-                @endforeach	
+                @endforeach
             </div>
         </div>
     </div>
@@ -114,7 +114,7 @@ $arrayMerge = array_filter(array_merge($breadcrumbArray1, $breadcrumbArray2, $br
 
     @if(Request::has('time'))
     <input type="hidden" name="time_format" value="<?php echo date('Hi', strtotime(Request::get('time'))); ?>" />
-    @endif       
+    @endif
     <input type="hidden" id="typePage" name="typePage" value="1" />
     <input type="hidden" name="q" value="<?php echo Request::get('q'); ?>" />
     @if(Request::has('persons'))
@@ -124,35 +124,35 @@ $arrayMerge = array_filter(array_merge($breadcrumbArray1, $breadcrumbArray2, $br
     <div class="content">
         <div class="static-menu row">
             <div class="jsearch col-md-2 col-sm-2 col-xs-6" >
-                {{ Form::select('preference[]', 
-								(isset($preference[1]) ? $preference[1] : array()),  
-								(Request::has('preference') ? Request::get('preference') : ''), 
+                {{ Form::select('preference[]',
+								(isset($preference[1]) ? $preference[1] : array()),
+								(Request::has('preference') ? Request::get('preference') : ''),
 								array('class' => 'multipleSelect', 'data-placeholder' => 'Voorkeuren', 'multiple' => 'multiple')) }}
 
             </div>
             <div class="jsearch col-md-2 col-sm-2 col-xs-6">
-                {{  Form::select('kitchen[]', 
-								(isset($preference[2]) ? $preference[2] : array()),  
-								(Request::has('kitchen') ? Request::get('kitchen') : ($user && $user->kitchens != NULL ? json_decode($user->kitchens) : '')), 
+                {{  Form::select('kitchen[]',
+								(isset($preference[2]) ? $preference[2] : array()),
+								(Request::has('kitchen') ? Request::get('kitchen') : ($user && $user->kitchens != NULL ? json_decode($user->kitchens) : '')),
 								array('class' => 'multipleSelect', 'data-placeholder' => 'Keuken', 'multiple' => 'multiple')) }}
             </div>
             <div class="jsearch col-md-2 col-sm-2 col-xs-6">
-                {{ Form::select('price[]', 
-                                        (isset($preference[4]) ? $preference[4] : array()),  
-                                        (Request::has('price') ? Request::get('price') : ($user && $user->price != NULL ? json_decode($user->price) : '')), 
+                {{ Form::select('price[]',
+                                        (isset($preference[4]) ? $preference[4] : array()),
+                                        (Request::has('price') ? Request::get('price') : ($user && $user->price != NULL ? json_decode($user->price) : '')),
                                         array('class' => 'multipleSelect', 'data-placeholder' => 'Soort', 'multiple' => 'multiple')) }}
             </div>
             <div class="jsearch col-md-2 col-sm-2 col-xs-6">
-                {{ Form::select('discount[]', 
-                                        (isset($preference[5]) ? $preference[5] : array()),  
-                                        (Request::has('discount') ? Request::get('discount') : ($user && $user->discount != NULL ? json_decode($user->discount) : '')), 
+                {{ Form::select('discount[]',
+                                        (isset($preference[5]) ? $preference[5] : array()),
+                                        (Request::has('discount') ? Request::get('discount') : ($user && $user->discount != NULL ? json_decode($user->discount) : '')),
                                         array('class' => 'multipleSelect', 'data-placeholder' => 'Korting', 'multiple' => 'multiple')) }}
 
             </div>
             <div class="jsearch col-md-2 col-sm-2 col-xs-6">
-                {{ Form::select('allergies[]', 
-										(isset($preference[3]) ? $preference[3] : array()),  
-										(Request::has('allergies') ? Request::get('allergies') : ($user && $user->allergies != NULL ? json_decode($user->allergies) : '')), 
+                {{ Form::select('allergies[]',
+										(isset($preference[3]) ? $preference[3] : array()),
+										(Request::has('allergies') ? Request::get('allergies') : ($user && $user->allergies != NULL ? json_decode($user->allergies) : '')),
 										array('class' => 'multipleSelect', 'data-placeholder' => 'Allergieen',  'multiple' => 'multiple')) }}
             </div>
             <div class="jsearch col-md-2 col-sm-2 col-xs-12">
@@ -171,7 +171,7 @@ $arrayMerge = array_filter(array_merge($breadcrumbArray1, $breadcrumbArray2, $br
 
                 @if (count($companies) >= 1)
 
-                @include('company-list') 
+                @include('company-list')
 
                 <div class="ui vertically divided grid container">
                     <div class="row mobile only">
@@ -216,7 +216,7 @@ $arrayMerge = array_filter(array_merge($breadcrumbArray1, $breadcrumbArray2, $br
                             @endif
                         </div>
                     </div>
-                </div>						
+                </div>
 
                 {!! $companies->appends($paginationQueryString)->render() !!}
 
@@ -231,14 +231,14 @@ $arrayMerge = array_filter(array_merge($breadcrumbArray1, $breadcrumbArray2, $br
                             <a class="item" href="{{ url('/?'.http_build_query(array_add($queryString, 'limit', '45'))) }}">45</a>
                         </div>
                     </div>
-                </div>						 
+                </div>
 
 
                 @else
                 {!! "Er zijn geen restaurants gevonden met uw selectiecreteria." !!}
                 @endif
             </div>
-        </div>		 
+        </div>
     </div>
 </section>
 

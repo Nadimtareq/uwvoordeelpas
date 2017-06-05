@@ -3,7 +3,7 @@ register('registerButton2', 'tegoed-sparen');
 register('registerButton3', 'tegoed-sparen');
 register('registerButton4', 'tegoed-sparen');
 
-var recoverPassword = function(response) { 
+var recoverPassword = function(response) {
 	openPrompt({
 		'id' : 'forgot-password',
 		'title' : 'Wachtwoord vergeten',
@@ -28,21 +28,21 @@ var recoverPassword = function(response) {
 				$('.error.forgot-password').hide(); // Hide error message
 				$('.jqimessage .field').hide(); // Hide all fields
 				$('.jqibuttons').hide(); // Hide submit button
-				
+
 				$('.success.forgot-password').show();
-				$('.success.forgot-password').html('Er is een mail naar uw e-mailadres gestuurd voor het aanvragen van een nieuw wachtwoord.');	
-								
+				$('.success.forgot-password').html('Er is een mail naar uw e-mailadres gestuurd voor het aanvragen van een nieuw wachtwoord.');
+
 			} else {
 				$('.error.forgot-password').show();
 				$('.errors.forgot-password').html(output);
 			}
 		}
-	});	
+	});
 }
 
 function register(identifier, redirectTo) {
 	$(document).ready(function() {
-		$('#' + identifier).api({	
+		$('#' + identifier).api({
 			url: baseUrl + 'register',
 			onComplete: function(response) {
 				openPrompt({
@@ -57,7 +57,7 @@ function register(identifier, redirectTo) {
 					serializeForm: true,
 					onComplete: function(response) {
 						var output = '<ul class="list">';
-							
+
 						for(var i in response) {
 							output += '<li>' + response[i] + '</li>';
 						}
@@ -72,7 +72,7 @@ function register(identifier, redirectTo) {
 							$('.errors.register').html(output);
 						}
 					}
-				});	
+				});
 			}
 		});
 	});
@@ -172,7 +172,7 @@ ajaxFramework = {
 					;
 
 					$('.ui.modal .content').html(jsonParse.text);
-					
+
 					$('.ui.notification.modal .close.icon').on('click', function() {
 						Cookies.set('notification-modal-' + jsonParse.id, 1, { expires: 365 });
 					});
@@ -217,7 +217,7 @@ $(document).ready(function() {
 				},
 				success: function(response) {
 					var jsonParse = JSON.parse(response);
-					
+
 					$('#appointmentEmail').val(jsonParse[0].email);
 					$('#appointmentContactName').val(jsonParse[0].contact_name);
 					$('#appointmentComment').val(jsonParse[0].contact_name);
@@ -233,8 +233,8 @@ $(document).ready(function() {
 						'id': $(this).val(),
 					},
 					success: function(response) {
-						var jsonParse = JSON.parse(response); 
-						
+						var jsonParse = JSON.parse(response);
+
 						$('#appointmentContactName').val(jsonParse[0].contact_name);
 						$('#appointmentEmail').val(jsonParse[0].email);
 						$('#appointmentComment').val(jsonParse[0].contact_name);
@@ -359,7 +359,7 @@ $(document).ready(function() {
 			}
 		});
     });
-    
+
 	$('#faq .title').on('click', function() {
     	$.ajax({
 			url: baseUrl + 'ajax/faqs',
@@ -430,20 +430,20 @@ $(document).ready(function() {
 						}
 					}
 				}
-					
+
 				var redirectdiscount = $('#discountCardButton').data('redirect');
 				var redirectcashback = $(this).find('.cashback').data('redirect');
 
 				if(redirectdiscount !== undefined) {
 					Redirect(baseUrl + 'social/login/facebook?redirect=' + encodeURIComponent(redirectdiscount));
 					return false;
-				} 
+				}
 
 				if(redirectcashback !== undefined) {
 					window.open(baseUrl + 'social/login/facebook?redirect=' + encodeURIComponent(redirectcashback));
-					return false;	
+					return false;
 				}
-				
+
 				if(reservationUrl !== undefined) {
 					window.open(baseUrl + 'social/login/facebook?redirect=' + reservationUrl);
 					return false;
@@ -462,7 +462,7 @@ $(document).ready(function() {
 
 			$('#googleButton').click(function() {
 				var redirect = $('#discountCardButton').data('redirect');
-					
+
 				$form = $('#reservationForm');
 				$encode = $('input[name="encode_url"]').val();
 
@@ -478,7 +478,7 @@ $(document).ready(function() {
 				if (redirect !== undefined) {
 					Redirect(baseUrl + 'social/login/google?redirect=' +  encodeURIComponent(redirect));
 					return false;
-				} 
+				}
 
 				if (reservationUrl !== undefined) {
 					window.open(baseUrl + 'social/login/google?redirect=' + reservationUrl);
@@ -522,7 +522,7 @@ $(document).ready(function() {
 						if (redirectUrl !== undefined) {
 							Redirect(redirectUrl);
 						} else {
-							Redirect(baseUrl + 'open-menu'); 
+							Redirect(baseUrl + 'open-menu');
 						}
 					} else if(response.throttling == 1) {
 						$('.error.login').css('display', 'block');
@@ -538,7 +538,7 @@ $(document).ready(function() {
 						$('.errors.login').html(output);
 					}
 				}
-			});	
+			});
 
 			$('.recover.password').api({
 				url: baseUrl + 'forgot-password',
@@ -546,7 +546,7 @@ $(document).ready(function() {
 					recoverPassword(response);
 				}
 			});
-			
+
 			register('registerButton3', redirectUrlDefault);
 		}
 	});

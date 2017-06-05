@@ -1,6 +1,8 @@
  @php
    $isGrey = ( Route::getCurrentRoute()->uri() != '/')
  @endphp
+ <script type="text/javascript" src="/public/js/jquery.jcryption.3.1.0.js"></script>
+
  <header id="navigation" class="root-sec white nav {{ (($isGrey) ) ? 'header_grey' : '' }} "> <!--   -->
 			<div class="container">
 				<div class="row">
