@@ -3,6 +3,7 @@
         $('.ui.checkbox').checkbox();
     });
 </script>
+<script src='https://www.google.com/recaptcha/api.js'></script>
 
 <div class="ui buttons fluid">
 	<a href="{{ url('social/login/facebook') }}" target="_blank" id="facebookButton" class="ui facebook icon button">
@@ -35,6 +36,9 @@
 	<input type="password" id="pass_old" onchange="myFunction('pass')">
 	<input type="hidden" name="password" id="pass_new">
 </div>
+<div class="field">
+    <div class="g-recaptcha" data-sitekey="6LecMCQUAAAAACsXqJ5s1V57lFqau7Ti6cnqiyu0"></div><div style="float: right;">
+    </div>
 
 <div style="float: left; width: 200px;">
 	<div class="ui checkbox">
@@ -42,8 +46,6 @@
 		<label>Onthoud mij</label>
 	</div>
 </div>
-
-<div style="float: right;">
 	<a href="#" id="registerButton3" data-redirect="">Nog geen lid?</a>
 </div>
 

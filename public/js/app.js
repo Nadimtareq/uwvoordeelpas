@@ -54152,9 +54152,6 @@ $('#companiesWaitersSearch').search({
     }
 });
 
-$(function() {
-    $(".encrypt_password").jCryption();
-});
 $('#barcodesCompaniesSearch').search({
     apiSettings: {
         url: baseUrl + 'ajax/companies/barcodes?q={query}'

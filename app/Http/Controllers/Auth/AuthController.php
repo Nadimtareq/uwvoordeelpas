@@ -281,6 +281,20 @@ public function dcrypt($encoded)
             'password' => $pass
         );
 
+        $data = array(
+            'secret' => "6LecMCQUAAAAAJOLNtAoU6pFVwe0K-JGQ7cUlNTK",
+            'response' => $request->input("g-recaptcha-response")
+        );
+
+        $verify = curl_init();
+        curl_setopt($verify, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify");
+        curl_setopt($verify, CURLOPT_POST, true);
+        curl_setopt($verify, CURLOPT_POSTFIELDS, http_build_query($data));
+        curl_setopt($verify, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($verify, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($verify);
+        $response=json_decode($response);
+        if($response->success==true){
 
         try {
             if ($request->input('remember') == 1) {
@@ -307,6 +321,13 @@ public function dcrypt($encoded)
         } catch (TokenMismatchException $e) {
             return Response::json(array(
                 'tokemismatch' => 1
+            ));
+        }
+        }
+        else{
+
+            return Response::json(array(
+                'name' => 'Captcha not match'
             ));
         }
     }
