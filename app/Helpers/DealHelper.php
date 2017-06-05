@@ -73,10 +73,10 @@ class DealHelper
   private function getDeals($city_id)
   {
     # code...
-    $data = Company::where('regio','LIKE',"%$city_id%")->get(['id','name','slug','regio']);
+    $data = Company::where('regio','LIKE','%"'.$city_id.'"%')->get(['id','name','slug','regio']);
     foreach ($data as $company) {
       # code...
-      $deals[] = DB::table('reservations_options')->where('company_id',$company->id)->get();
+      $deals[$company->slug] = DB::table('reservations_options')->where([['company_id',$company->id],['newsletter', 1]])->get();
     }
     return $deals;
   }
@@ -89,7 +89,7 @@ class DealHelper
   private function getSubscribedUsers($city_id)
   {
     # code...
-    $users = DB::table('users')->where('city','LIKE',"%$city_id%")->get(['email','name','saldo']);
+    $users = DB::table('users')->where([['city','LIKE','%"'.$city_id.'"%'],['newsletter',1]])->get(['email','name','saldo','extension_downloaded']);
     return $users;
   }
 

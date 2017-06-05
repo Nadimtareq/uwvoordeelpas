@@ -20,17 +20,23 @@
             <div class="field">
                 <label>Naam</label>
                 <?php echo Form::text('name', $data->name); ?>
-            </div>  
+            </div>
 
             @if ($userAdmin)
-            <div class="field">
-                <label>Image</label>
-                {!! Form::file('image') !!}
-                @if($data->image!='')
-                    <img src="{{ asset('images/deals/'.$data->image) }}" alt="No Image Found" width="100px;">
-                @else
-                <img src="{{ asset('images/deals/no-img.jpg') }}" alt="No Image Found" width="100px">
-                 @endif
+            <div class="two fields">
+              <div class="field">
+                  <label>Image</label>
+                  {{ Form::file('image') }}
+                  @if($data->image!='')
+                      <img src="{{ asset('images/deals/'.$data->image) }}" alt="No Image Found" width="100px;">
+                  @else
+                  <img src="{{ asset('images/deals/no-img.jpg') }}" alt="No Image Found" width="100px">
+                   @endif
+              </div>
+              <div class="field">
+                <label for="newsletter">{{trans('app.newsletter')}}</label>
+                {{Form::select("newsletter", array('' => 'Not selected', '0' => 'OFF', '1' => 'ON'), $data->newsletter, ['class' => 'ui normal icon search selection fluid dropdown margin-0','required' => 'required'])}}
+              </div>
             </div>
             @endif
 
@@ -58,7 +64,7 @@
                         ?>
                         <i class="calendar icon"></i>
                     </div>
-                </div>  
+                </div>
 
                 <div class="field">
                     <label>Datum tot</label>
@@ -75,8 +81,8 @@
                         ?>
                         <i class="calendar icon"></i>
                     </div>
-                </div>  
-            </div>  
+                </div>
+            </div>
 
             <div class="two fields">
                 <div class="field">
@@ -93,7 +99,7 @@
                         ?>
                         <i class="clock icon"></i>
                     </div>
-                </div>  
+                </div>
 
                 <div class="field">
                     <label>Tijd tot</label>
@@ -109,8 +115,8 @@
                         ?>
                         <i class="clock icon"></i>
                     </div>
-                </div>  
-            </div>  
+                </div>
+            </div>
             <div class="two fields">
                 <div class="field">
                     <label>Aantal beschikbaar</label>

@@ -15,16 +15,16 @@
     use Redirect;
     use Sentinel;
 
-    class ReservationsOptionsController extends Controller 
+    class ReservationsOptionsController extends Controller
     {
-        public function __construct(Request $request) 
+        public function __construct(Request $request)
         {
             $this->slugController = 'reservations-options';
             $this->limit = $request->input('limit', 15);
             $this->companies = Company::orderBy('id', 'asc')->lists('name', 'id');
         }
 
-        public function isCompanyOwner($slug) 
+        public function isCompanyOwner($slug)
         {
             $myCompany = Company::where('user_id', Sentinel::getUser()->id)
                 ->where('slug', $slug)
@@ -82,9 +82,9 @@
 
             $data = $data->groupBy('reservations_options.id')->paginate($this->limit);
             $data->setPath($this->slugController.(trim($slug) != '' ? '/'.$slug : ''));
-         
+
             # Redirect to last page when page don't exist
-            if ($request->input('page') > $data->lastPage()) { 
+            if ($request->input('page') > $data->lastPage()) {
                 $lastPageQueryString = json_decode(json_encode($request->query()), true);
                 $lastPageQueryString['page'] = $data->lastPage();
 
@@ -99,9 +99,9 @@
             return view('admin/'.$this->slugController.'/index', [
                 'slugController' => $this->slugController.(trim($slug) != '' ? '/'.$slug : ''),
                 'section' => 'Aanbiedingen',
-                'currentPage' => 'Overzicht',     
-                'slug' => $slug, 
-                'data' => $data, 
+                'currentPage' => 'Overzicht',
+                'slug' => $slug,
+                'data' => $data,
                 'queryString' => $queryString,
                 'paginationQueryString' => $request->query(),
                 'limit' => $this->limit,
@@ -136,7 +136,7 @@
             return Redirect::to('admin/'.$this->slugController);
         }
 
-        public function create(Request $request, $slug = NULL) 
+        public function create(Request $request, $slug = NULL)
         {
             if ($this->isCompanyOwner($slug)['exist'] == 0 && $slug != NULL) {
                 User::getRoleErrorPopup();
@@ -153,7 +153,7 @@
             ]);
         }
 
-        public function createAction(Request $request, $slug = NULL) 
+        public function createAction(Request $request, $slug = NULL)
         {
             if ($this->isCompanyOwner($slug)['exist'] == 0 && $slug != NULL && Sentinel::inRole('admin') == fALSE) {
                 User::getRoleErrorPopup();
@@ -179,10 +179,10 @@
             $data->price_from = $request->input('price_from');
             $data->price = $request->input('price');
             $data->time_to = $request->input('time_to');
-            $data->time_from = $request->input('time_from');    
-            $data->date_from = $request->input('date_from');    
-            $data->date_to = $request->input('date_to');    
-            $data->company_id = ($slug != NULL ? $this->isCompanyOwner($slug)['id'] : $request->input('company_id'));    
+            $data->time_from = $request->input('time_from');
+            $data->date_from = $request->input('date_from');
+            $data->date_to = $request->input('date_to');
+            $data->company_id = ($slug != NULL ? $this->isCompanyOwner($slug)['id'] : $request->input('company_id'));
             $data->company_id = ($slug != NULL ? $this->isCompanyOwner($slug)['id'] : $request->input('company_id'));
             $data->save();
 
@@ -193,11 +193,11 @@
             Input::file('image')->move($destinationPath, $fileName);
 
             Alert::success('U heeft succesvol een nieuwe reserverings optie aangemaakt.')->html()->persistent('Sluiten');
-            
+
             return Redirect::to('admin/'.$this->slugController.'/create');
         }
 
-        public function update(Request $request, $id) 
+        public function update(Request $request, $id)
         {
            /* echo "<pre>";
             print_r($request);exit;*/
@@ -217,6 +217,7 @@
                 'reservations_options.short_description',
                 'reservations_options.name',
                 'reservations_options.image',
+                'reservations_options.newsletter',
                 'companies.slug'
             )
                 ->leftJoin('companies', 'reservations_options.company_id', '=', 'companies.id')
@@ -244,7 +245,7 @@
             }
         }
 
-        public function updateAction(Request $request, $id) 
+        public function updateAction(Request $request, $id)
         {
             //Added price_per_person by Ocean
             $data = ReservationOption::select(
@@ -276,7 +277,7 @@
                 'time_from' => 'required',
                 'image'       => 'mimes:jpeg,bmp,png|max:10000'
             ]);
-            
+
             if ($data) {
                 if ($this->isCompanyOwner($data->slug)['exist'] == 0 && Sentinel::inRole('admin') == fALSE) {
                     User::getRoleErrorPopup();
@@ -299,13 +300,13 @@
                 $data->price = $request->input('price');
                 $data->price_per_guest = $request->input('price_per_guest');
                 $data->time_to = $request->input('time_to');
-                $data->time_from = $request->input('time_from');    
-                $data->date_from = $request->input('date_from');    
-                $data->date_to = $request->input('date_to');    
+                $data->time_from = $request->input('time_from');
+                $data->date_from = $request->input('date_from');
+                $data->date_to = $request->input('date_to');
                 $data->image = $fileName;
                 $data->save();
                 Alert::success('U heeft deze aanbieding veranderd')->html()->persistent('Sluiten');
-                
+
                 return Redirect::to('admin/'.$this->slugController.'/update/'.$id);
             }
 

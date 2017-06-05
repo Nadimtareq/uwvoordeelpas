@@ -51,6 +51,7 @@ input, select, textarea, .ui.dropdown { border-radius: 0!important; }
 .nbs-flexisel-inner { position: relative; overflow: hidden; float: left; width: 100%; padding-bottom: 20px; background: #FFF; }
 .nbs-flexisel-item { float: left; margin: 0px; padding: 0px; cursor: pointer; position: relative; line-height: 0px; }
 .nbs-flexisel-item .logoHeight { height: 75px; }
+.margin-0 { margin: 0 !important;}
 /*** Navigation ***/
 
 .nbs-flexisel-nav-left, .nbs-flexisel-nav-right { padding: 5px 10px; border-radius: 15px; -moz-border-radius: 15px; -webkit-border-radius: 15px; position: absolute; cursor: pointer; z-index: 4; top: 40%; background: rgba(0,0,0,0.5); color: #fff; }
@@ -236,15 +237,15 @@ img { border: 0; }
 .ui.grid .left-sidebar .ac-container a{
 
     display: block;
-    
+
     color: #7986cb;
-    
+
     background: #e8eaf6;
-    
+
     margin-bottom: 1px;
-    
+
     font: 14px 'LatoRegular';
-    
+
     padding: 9px 29px;
 }
 .ui.grid .left-sidebar .ac-container input:checked ~ article.ac-small{height: auto;}
@@ -286,7 +287,7 @@ img { border: 0; }
 .ui.grid .right-content .sort .r a{
 
     padding: 8px 6px;
-    
+
     display: inline-block;
 }
 .ui.grid .right-content .sort .ls{
@@ -1495,7 +1496,7 @@ to { width: 0; background: transparent; }
 .daisyconEnergySelectProgram:hover { background-color: #f3f3f3; }
 .daisyconEnergySelectProgram img { width: 80%; box-shadow: none; }
 .daisyconEnergySelectProgramActive { background-color: #f3f3f3; }
-/*! X-editable - v1.5.0 
+/*! X-editable - v1.5.0
 * In-place editing with Twitter Bootstrap, jQuery UI or pure jQuery
 * http://github.com/vitalets/x-editable
 * Copyright (c) 2013 Vitaliy Potapov; Licensed MIT */
@@ -1676,7 +1677,7 @@ opacity: 1; }
 #jr_close { clear: both; padding: 0; margin: 0; }
 #jr_close a { color: #000; display: block; width: auto; margin: 0; padding: 0; text-decoration: underline; }
 #jr_close p { padding: 10px 0 0 0; margin: 0; }
-/* 
+/*
  * 	Core Owl Carousel CSS File
  *	v1.3.3
  */
@@ -13295,8 +13296,8 @@ html.ios, html.ios body { height: initial !important; }
 }
 
 
-input[type=text], input[type=password], input[type=email], 
-input[type=url], input[type=date], input[type=tel], input[type=number], 
+input[type=text], input[type=password], input[type=email],
+input[type=url], input[type=date], input[type=tel], input[type=number],
 input[type=search]
 {
 	-webkit-box-sizing:border-box !important;

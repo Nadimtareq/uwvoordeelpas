@@ -5,7 +5,7 @@
 
 	<script type="text/javascript">
 		$(document).ready(function() {
-		    closeBrowser();  
+		    closeBrowser();
 		});
 	</script>
 @stop
@@ -23,11 +23,16 @@
 			</div>
 
 			@if ($userAdmin)
-				<div class="field">
-					<label>Image</label>
-					{!! Form::file('image') !!}
-
-				</div>
+        <div class="two fields">
+          <div class="field">
+  					<label>Image</label>
+  					{{ Form::file('image',['class'=>'btn btn-file']) }}
+  				</div>
+          <div class="field">
+            <label for="newsletter">{{trans('app.newsletter')}}</label>
+            {{Form::select("newsletter", array('' => 'Not selected', '0' => 'OFF', '1' => 'ON'), null, ['class' => 'ui normal icon search selection fluid dropdown margin-0','required' => 'required'])}}
+          </div>
+        </div>
 			@endif
 
 			@if ($userAdmin)
@@ -38,82 +43,82 @@
 			@endif
 
 			<br /> <br />
-			
+
 			<div class="two fields">
 				<div class="field">
 					<label>Datum van</label>
 
 					<div class="ui icon input">
-						<?php 
+						<?php
 						echo Form::text(
-							'date_from', 
+							'date_from',
 							'',
 							array(
-								'class' => 'datepicker', 
+								'class' => 'datepicker',
 								'placeholder' => 'Selecteer een datum'
 							)
 						);
 						?>
 						<i class="calendar icon"></i>
 					</div>
-				</div>	
+				</div>
 
 				<div class="field">
 					<label>Datum tot</label>
 
 					<div class="ui icon input">
-						<?php 
+						<?php
 						echo Form::text(
-							'date_to', 
+							'date_to',
 							'',
 							array(
-								'class' => 'datepicker', 
+								'class' => 'datepicker',
 								'placeholder' => 'Selecteer een datum'
 							)
 						);
 						?>
 						<i class="calendar icon"></i>
 					</div>
-				</div>	
-			</div>	
+				</div>
+			</div>
 
 			<div class="two fields">
 				<div class="field">
 					<label>Tijd van</label>
 
 					<div class="ui icon input">
-						<?php 
+						<?php
 						echo Form::text(
-							'time_from', 
+							'time_from',
 							'',
 							array(
-								'class' => 'timepicker', 
+								'class' => 'timepicker',
 								'placeholder' => 'Selecteer een tijd'
 							)
 						);
 						?>
 						<i class="clock icon"></i>
 					</div>
-				</div>	
+				</div>
 
 				<div class="field">
 					<label>Tijd tot</label>
 
 					<div class="ui icon input">
-						<?php 
+						<?php
 						echo Form::text(
-							'time_to', 
+							'time_to',
 							'',
 							array(
-								'class' => 'timepicker', 
+								'class' => 'timepicker',
 								'placeholder' => 'Selecteer een tijd'
 							)
 						);
 						?>
 						<i class="clock icon"></i>
 					</div>
-				</div>	
-			</div>	
+				</div>
+			</div>
 
 			<div class="two fields">
 				<div class="field">
