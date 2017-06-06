@@ -27,7 +27,8 @@ class ApiController extends Controller {
 
     public function findProgram($userId, $url) {
         $match_links_array = $slash_links = array();
-        $match_links_array[] = $domain_without_www = preg_replace('/^www\./', '', $url);
+        $match_links_array[] = $without_http_or_https = preg_replace('/[https:\/\/]|[http:\/\/]/', '', $url);
+        $match_links_array[] = $domain_without_www = preg_replace('/www\./', '', $without_http_or_https);
         $match_links_array[] = $domain_with_www = 'www.' . $domain_without_www;
         $match_links_array[] = $with_http_1 = "http://" . $domain_without_www;
         $match_links_array[] = $with_http_2 = "http://" . $domain_with_www;
@@ -97,7 +98,7 @@ class ApiController extends Controller {
         $ret_array = array();
         $ret_array['status'] = 'fail';
         $ret_array['deposit_balance'] = 0;
-        $ret_array['current_balance'] = 0;        
+        $ret_array['current_balance'] = 0;
         DB::transaction(function () use (&$ret_array){
             $current_user = Sentinel::getUser();
             $extension_download_bonus = 5.0;
@@ -107,7 +108,7 @@ class ApiController extends Controller {
                     $update_balance = $cur_balance + $extension_download_bonus;
 
                     $result = User::where('id', $current_user->id)->update(array('extension_downloaded' => 1, 'saldo' => $update_balance));
-                    
+
                      $insertTransaction[] = array(
                         'program_id' => 0,
                         'ip' => '',
@@ -119,9 +120,9 @@ class ApiController extends Controller {
                         'affiliate_network' => 'uwvoordeelpas',
                         'created_at' => date('Y-m-d H:i:s')
                     );
-                    
+
                     Transaction::insert($insertTransaction);
-                    
+
                     if ($result) {
                         $ret_array['status'] = 'success';
                         $ret_array['deposit_balance'] = $extension_download_bonus;

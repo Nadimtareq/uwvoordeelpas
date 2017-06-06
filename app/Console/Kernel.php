@@ -76,6 +76,11 @@ class Kernel extends ConsoleKernel
             ->daily()
         ;
 
+        $schedule
+            ->command('afftargetlink:other')
+            ->daily()
+        ;
+
         // Barcode
         $schedule
             ->command('expired:barcode')
