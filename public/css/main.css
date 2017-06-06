@@ -830,7 +830,7 @@ header.nav li a:hover {
     width: 1170px;
 }
 .container2 {
-    width: 940px;
+
 }
 }
 
@@ -4319,5 +4319,10 @@ padding-top: 90px;
         width: 100%;
     }
 
+ .left-sidebar{display:none;}
+ .sort{display:none;}
+ .wrap{
+     background: none !important;
 
+ }
 }

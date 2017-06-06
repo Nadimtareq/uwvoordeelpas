@@ -70,7 +70,6 @@ class UsersBanController extends Controller
         if ($id != NULL) {
             $data = Sentinel::findById($id);
         }
-
         return view('admin/'.$this->slugController.'/create', [
             'slugController' => $this->slugController,
             'section' => $this->section, 

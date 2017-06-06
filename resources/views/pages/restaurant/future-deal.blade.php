@@ -141,11 +141,12 @@
     $(function () {
         $('select.regionSelect').select();
         $('#personsField').find('.item').on('click', function () {
-            person = $(this).data('value');            
-            amout = parseFloat(deal_price) * parseInt(person);            
+            person = $(this).data('value');
+            amout = parseFloat(deal_price) * parseInt(person);
             $('#deal_amount').html(amout.toFixed(2));
             $('[name="saldo"]').val(amout);
             $('[name="persons"]').val(person);
+
         });
         curr_person = $('#futureDealForm').find('input[name="persons"]').val();
         if(curr_person){

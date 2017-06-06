@@ -375,7 +375,6 @@ class RestaurantController extends Controller {
         $deal_id = $request->input('deal');
         $rest_amount = $user_saldo = 0;
         $enough_balance = false;
-
         $mediaItems = NULL;
         $company = Company::query()
                 ->where('slug', '=', $slug)
@@ -384,6 +383,8 @@ class RestaurantController extends Controller {
         if ($company) {
             if ($deal_id) {
                 $deal = ReservationOption::where([['id', '=', $deal_id], ['company_id', '=', $company->id]])->first();
+               /* echo "<pre>";
+                print_r($deal);exit;*/
                 if (!$deal) {
                     alert()->error('', 'Het is niet mogelijk om op dit tijdstip te reserveren of er zijn geen plaatsen beschikbaar.')->html()->persistent('Sluiten');
                     return Redirect::to('/');
@@ -392,11 +393,13 @@ class RestaurantController extends Controller {
                 alert()->error('', 'Het is niet mogelijk om op dit tijdstip te reserveren of er zijn geen plaatsen beschikbaar.')->html()->persistent('Sluiten');
                 return Redirect::to('/');
             }
+
             if ($request->isMethod('post')) {
+
                 if (Sentinel::check()) {
                     $user = Sentinel::getUser();
                     $validator = Validator::make($request->all(), [
-                                'persons' => 'required|numeric',
+                                'persons' => 'required',
                                 'av' => 'accepted'
                                     ], [
                                 'persons.required' => 'Het aantal personen moet minimaal 1 persoon zijn',
@@ -405,7 +408,7 @@ class RestaurantController extends Controller {
                     ]);
                 } else {
                     $validator = Validator::make($request->all(), [
-                                'persons' => 'required|numeric',
+                                'persons' => 'required',
                                 'email' => 'required|email',
                                 'name' => 'required',
                                 'phone' => 'required|min:10',
@@ -438,10 +441,15 @@ class RestaurantController extends Controller {
                     alert()->error($message_str, '&nbsp;')->html()->persistent('Sluiten');
                     return redirect('future-deal/' . $slug . '?deal=' . $deal_id);
                 }
-
-                $deal_saldo = (float) MoneyHelper::getAmount($request->input('saldo'));
+                print_r($request->input('persons'));
+              $persons=$this->dcrypt($request->input('persons'));
+                print_r($persons);exit;
+                //$deal_saldo = (float) MoneyHelper::getAmount($request->input('saldo'));
+                $deal_saldo=(float)MoneyHelper::getAmount($persons*$deal->price);
                 if ($user) {
+
                     $user_saldo = (float) MoneyHelper::getAmount($user->saldo);
+
                     if ($deal_saldo > $user_saldo) {
                         $enough_balance = false;
                         $rest_amount = $deal_saldo - $user_saldo;
@@ -449,6 +457,7 @@ class RestaurantController extends Controller {
                         $enough_balance = true;
                         $user->saldo = $user_saldo - $deal_saldo;
                     }
+
                 } elseif ($request->input('email')) {
                     $randomPassword = str_random(20);
 
@@ -473,11 +482,12 @@ class RestaurantController extends Controller {
                 if (Sentinel::check() == FALSE) {                    
                     Sentinel::login($user);
                 }
+
                 $future_deal = new FutureDeal();
                 $future_deal->deal_id = $deal_id;
                 $future_deal->user_id = $user->id;
-                $future_deal->persons = $request->input('persons');
-                $future_deal->persons_remain = $request->input('persons');
+                $future_deal->persons = $persons;
+                $future_deal->persons_remain = $persons;
                 $future_deal->deal_price = $deal_saldo;
                 $future_deal->deal_base_price = $deal->price;
                 $future_deal->user_discount = $user_saldo;
@@ -491,12 +501,14 @@ class RestaurantController extends Controller {
                 }
                 $future_deal->save();
                 
-                if (!$enough_balance && $rest_amount) {                    
+                if (!$enough_balance && $rest_amount) {
+
                     return view('pages/discount/extra-pay', array(
                         'amount' => $rest_amount,
                         'future_deal_id' => $future_deal->id
                     ));
                 } else {
+
                     $deal = ReservationOption::find($future_deal->deal_id);
                     Alert::success('U heeft succesvol 2x de deal: ' . $deal->name . ' gekocht voor een prijs van &euro;' . $future_deal->deal_price . ' <br /><br /> Klik hier als u direct een reservering wilt maken. <br /><br />' . '<span class=\'addthis_sharing_toolbox\'></span>', 'Bedankt ' . $user->name
                     )->html()->persistent('Sluiten');
