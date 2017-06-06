@@ -166,6 +166,7 @@
                 'date_to' => 'required',
                 'time_to' => 'required',
                 'time_from' => 'required',
+                'newsletter' => 'required',
                 'image'       => 'required|mimes:jpeg,bmp,png|max:10000'
 
             ]);
@@ -181,6 +182,7 @@
             $data->time_to = $request->input('time_to');
             $data->time_from = $request->input('time_from');
             $data->date_from = $request->input('date_from');
+            $data->newsletter = $request->input('newsletter');
             $data->date_to = $request->input('date_to');
             $data->company_id = ($slug != NULL ? $this->isCompanyOwner($slug)['id'] : $request->input('company_id'));
             $data->company_id = ($slug != NULL ? $this->isCompanyOwner($slug)['id'] : $request->input('company_id'));
@@ -199,9 +201,6 @@
 
         public function update(Request $request, $id)
         {
-           /* echo "<pre>";
-            print_r($request);exit;*/
-            //Ocean added price_per_person field
             $data = ReservationOption::select(
                 'reservations_options.id',
                 'reservations_options.company_id',
@@ -262,6 +261,7 @@
                 'reservations_options.description',
                 'reservations_options.short_description',
                 'reservations_options.name',
+                'reservations_options.newsletter',
                 'companies.slug'
             )
                 ->leftJoin('companies', 'reservations_options.company_id', '=', 'companies.id')
@@ -275,6 +275,7 @@
                 'date_to' => 'required',
                 'time_to' => 'required',
                 'time_from' => 'required',
+                'newsletter' => 'required',
                 'image'       => 'mimes:jpeg,bmp,png|max:10000'
             ]);
 
@@ -303,6 +304,7 @@
                 $data->time_from = $request->input('time_from');
                 $data->date_from = $request->input('date_from');
                 $data->date_to = $request->input('date_to');
+                $data->newsletter = $request->input('newsletter');
                 $data->image = $fileName;
                 $data->save();
                 Alert::success('U heeft deze aanbieding veranderd')->html()->persistent('Sluiten');

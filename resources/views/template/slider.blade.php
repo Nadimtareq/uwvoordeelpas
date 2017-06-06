@@ -1,15 +1,15 @@
 @inject('affiliateHelper', 'App\Helpers\AffiliateHelper')
 
-<?php @$browser = Session::get('browser'); ?>   
+<?php @$browser = Session::get('browser'); ?>
 <div class="extension-install-overlay" style="display: none;">
     <div class="extension-install-fade">
         <div class="text {{$browser['name']}}">
             <h3>Klik hier!</h3>
-            <p style="text-align: left;">Gebruik alle fantastische functionaliteiten van de uwvoordeelpas.nl Spaarhulp!</p>            
+            <p style="text-align: left;">Gebruik alle fantastische functionaliteiten van de uwvoordeelpas.nl Spaarhulp!</p>
         </div>
     </div>
 </div>
-<?php 
+<?php
 $compatible_browser_array = array('Chrome','Firefox', 'Opera');
 ?>
 <div id="sliderImage" class="slider{{ Request::is('admin/*') == TRUE ? ' admin' : '' }}" >
@@ -20,10 +20,10 @@ $compatible_browser_array = array('Chrome','Firefox', 'Opera');
     <section id="home" class="scroll-section root-sec grey lighten-5 home-wrap">
         <div class="sec-overlay">
             <div class="container">
-                <div class="row">                    
+                <div class="row">
                     <div class="col-sm-12">
-                        <div class="home-inner">                            
-                            <div class="center-align home-content">								                                                                                         
+                        <div class="home-inner">
+                            <div class="center-align home-content">
                                 <?php if (($userAuth == FALSE) OR ( $userAuth && $userInfo->extension_downloaded == 0)): ?>
                                     <h1 class="home-title">Activeer de spaarhulp en ontvang direct €5.- </h1>
                                     <h2 class="home-subtitle">Spaar nu automatisch bij wel 2000+ webshops. <br>
@@ -33,10 +33,10 @@ $compatible_browser_array = array('Chrome','Firefox', 'Opera');
                                             <button data-browser="{{$browser['name']}}" class="login button_action" data-type="login" data-redirect="{{ URL::full('/').'?extension_download_btn=1' }}">Ja ik wil ook sparen!</button>
                                         <?php elseif ($userAuth && $userInfo->extension_downloaded == 0): ?>
                                             <button data-browser="{{$browser['name']}}" id="header_extension_button" class="install-button-ext button_action">Ja ik wil ook sparen!</button>
-                                        <?php endif; ?>    
+                                        <?php endif; ?>
                                     <?php else:?>
                                             <button data-browser="{{$browser['name']}}" class="incompatible_browser_ext button_action">Ja ik wil ook sparen!</button>
-                                    <?php endif; ?>        
+                                    <?php endif; ?>
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -88,7 +88,7 @@ $compatible_browser_array = array('Chrome','Firefox', 'Opera');
                         <?php else:?>
                             <button data-browser="{{$browser['name']}}" class="incompatible_browser_ext button_action">Ja ik wil ook sparen!</button>
                         <?php endif;?>
-                        
+
                     </div>
                 </div>
             </div>
@@ -152,7 +152,7 @@ $compatible_browser_array = array('Chrome','Firefox', 'Opera');
     <div class="homepage_block_2">
 
             <h3 style="color: #808080; margin: 48px 29px 0px 0px; font-size: 1.9em; text-align: center;"><em>"Wilt u na 1 klik automatisch tot<br> wel 10% sparen bij 2000+ webshops?"</em></h3>
-             
+
             if(strtolower($browser['name']) == 'chrome')
             <script type="text/javascript">
                     function chromeInstallFunction() {
@@ -164,16 +164,16 @@ $compatible_browser_array = array('Chrome','Firefox', 'Opera');
                             return false;
                     };
             </script>
-            endif 
-            if(strtolower($browser['name']) == 'firefox')               
-            <a  style="margin-top: 80px; display: inline-block;" class="homepage_btn install {{$browser['name']}}" 
+            endif
+            if(strtolower($browser['name']) == 'firefox')
+            <a  style="margin-top: 80px; display: inline-block;" class="homepage_btn install {{$browser['name']}}"
                     href="/firefox.xpi" iconURL="/images/icons/android-icon-48x48.png">Ja! Ik wil gratis sparen!</a>
             endif
             if(strtolower($browser['name']) == 'chrome')
             <a href="#" onclick="chromeInstallFunction();" id="install-button" style="margin-top: 80px; display: inline-block;" class="homepage_btn install {{$browser['name']}}">Ja! Ik wil gratis sparen!</a>
     endif
 
-    </div> 
+    </div>
     -->
     @endif
     <span style="clear: both;"></span>
@@ -185,7 +185,7 @@ $compatible_browser_array = array('Chrome','Firefox', 'Opera');
 @push('inner_scripts')
 <script type="text/javascript">
     var is_download_ext = "<?php echo (app('request')->has('extension_download_btn') && (app('request')->get('extension_download_btn') == '1')) ? '1' : '0'; ?>";
-    $(function () {        
+    $(function () {
         $('.install-button-ext').click(function (e) {
             var browser = $(this).attr('data-browser');
             if (browser == 'Firefox') {
@@ -200,7 +200,7 @@ $compatible_browser_array = array('Chrome','Firefox', 'Opera');
 //                    alert(errorCode + "-----------" + error);
                 });
             }
-            else {               
+            else {
                 sweetAlert(" ", "Sorry momenteel ondersteunen we alleen de browsers: Chrome, Firefox en Opera.");
             }
             e.preventDefault();
