@@ -8,11 +8,11 @@
 <div class="content">
     @include('admin.template.breadcrumb')
 
-    <div class="buttonToolbar">  
+    <div class="buttonToolbar">
         <div class="ui grid">
             <div class="sixteen wide mobile seven wide computer column">
                 <a href="{{ url('admin/'.$slugController.'/create') }}" class="ui icon blue button"><i class="plus icon"></i> Nieuw</a>
-                        
+
                 <button id="removeButton" type="submit" name="action" value="remove" class="ui disabled icon grey button">
                     <i class="trash icon"></i> Verwijderen
                 </button>
@@ -29,13 +29,13 @@
                             <div class="ui normal search selection fluid dropdown item">
                                 <input type="hidden" name="companiesId" value="{{ Request::input('regio') }}">
                                 <i class="filter icon"></i>
-                              
+
                                 <span class="text">Regio</span>
 
                                 <i class="dropdown icon"></i>
 
                                 <div class="menu">
-                                    @foreach($regio as $prefId => $prefName) 
+                                    @foreach($regio as $prefId => $prefName)
                                     <a href="{{ url('admin/companies?'.http_build_query(array_add($queryString, 'regio', $prefId))) }}" data-value="{{ $prefId }}" class="item">{{ $prefName }}</a>
                                     @endforeach
                                 </div>
@@ -103,7 +103,7 @@
                         </td>
                         <td>
                             <a href="{{ url('admin/reservations/saldo/'.$result->slug) }}">
-                                &euro;{{ number_format($result->saldoCodmpany, 2, '.', '') }} 99
+                                &euro;{{ number_format($result->saldoCompany, 2, '.', '') }}
                             </a>
                         </td>
                         <td>
@@ -128,14 +128,14 @@
                 		<td>
                             <div class="ui buttons">
                                 @if (count($documentItems) > 0)
-                                <a href="{{  url('public'.$documentItems[0]->getUrl()) }}" 
-                                   target="_blank" 
+                                <a href="{{  url('public'.$documentItems[0]->getUrl()) }}"
+                                   target="_blank"
                                    class="ui icon tiny red button">
                                     <i class="file pdf icon"></i>
                                 </a>
                                 @else
-                                <a href="{{ url('admin/companies/contract/'.$result->id.'/'.$result->slug) }}" 
-                                   target="_blank" 
+                                <a href="{{ url('admin/companies/contract/'.$result->id.'/'.$result->slug) }}"
+                                   target="_blank"
                                    class="ui icon tiny {{ (trim($result->signature_url) != '' ? 'red' : '') }} button">
                                     <i class="file pdf icon"></i>
                                 </a>
@@ -148,7 +148,7 @@
                                 <a href="{{ url('admin/'.$slugController.'/login/'.$result->slug) }}" class="ui icon tiny orange button loginAs" data-content="Inloggen als {{ $result->name }}">
                                     <i class="key icon"></i>
                                 </a>
-                                
+
                                 <span class="ui icon tiny disabled button">
                                 @if (count($logoItems) >= 1 && file_exists(public_path($logoItems[0]->getUrl())))
                                     <i class="image green  icon"></i>
@@ -156,7 +156,7 @@
                                     <i class="image red icon"></i>
                                 @endif
                                 </span>
-                                
+
                                 <span class="ui icon tiny disabled button">
                                 @if (trim($result->signature_url) != '' OR count($documentItems) > 0)
                                     <i class="check mark green center aligned icon"></i>

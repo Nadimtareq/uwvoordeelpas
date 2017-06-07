@@ -27,11 +27,13 @@
     </div>
     @endif
     <div class="ui grid">
-        <div class="row"> 
+        <div class="row">
             <div class="col-md-3">
                 @if(!empty($mediaItems) && isset($mediaItems[0]))
+{{--
                 <img id="image" src="{{ url($mediaItems[0]->getUrl('175Thumb')) }}" class="img-responsive" alt="" />
-                @endif 
+--}}
+                @endif
             </div>
             <?php if ($deal): ?>
                 <div class="col-md-6">
@@ -57,27 +59,30 @@
         <?php echo Form::hidden('iframe', $iframe); ?>
         <?php echo Form::hidden('encode_url', 1); ?>
         <?php echo Form::hidden('setTimeBack', 0); ?>
-        <?php if ($deal): ?>
-            <?php echo Form::hidden('reservations_options', $deal->id); ?>       
+        <?php
+      /*  echo "<pre>";
+        print_r($deal);exit;*/
+        if ($deal): ?>
+            <?php echo Form::hidden('reservations_options', $deal->id); ?>
             <input type="hidden" name="deal_price" class="deal_price" id="deal_price" value="<?php echo $deal->price ?>">
         <?php endif; ?>
         <?php echo Form::hidden('reservation_url', URL::to('restaurant/reservation/' . $company->slug)); ?>
-        @if(isset($iframe))<br>        
+        @if(isset($iframe))<br>
         @if($userAuth == FALSE)
         <button data-type="iframe" class="ui blue fluid login button" data-redirect="{{ URL::full() }}">
             <i class="sign in icon"></i> Login met uw UWvoordeelpas account
         </button><br><br>
         @endif
         <div class="ui grid">
-            <div class="row"> 
-                <div class="six wide column"> 
+            <div class="row">
+                <div class="six wide column">
                     <div class="field">
-                        <label>Datum</label>
+                        <label>Datdsum</label>
                         <?php echo Form::text('date', '', array('class' => 'reservationDatepicker')); ?>
-                    </div>	
+                    </div>
                 </div>
 
-                <div class="five wide column"> 
+                <div class="five wide column">
                     <div class="field">
                         <label>Tijd</label>
                         <div id="timeField" class="ui normal selection compact dropdown time timeRefresh">
@@ -95,7 +100,7 @@
                     </div>
                 </div>
 
-                <div class="five wide column"> 
+                <div class="five wide column">
                     <div class="field">
                         <label>Personen</label>
 
@@ -118,12 +123,12 @@
                                 ?>
                             </div>
                         </div>
-                    </div>	
+                    </div>
                 </div>
 
             </div>
 
-            <div class="<?php echo ((isset($iframe) ? 'two' : 'three')); ?> column row"> 
+            <div class="<?php echo ((isset($iframe) ? 'two' : 'three')); ?> column row">
 
                 <?php if ($deal): ?>
                     <?php
@@ -133,10 +138,11 @@
                 <?php else: ?>
                     <div class="column">
                         <div class="field">
-                            <label>Spaartegoed {{ $userAuth ? '&euro;'.$user->saldo : '' }}</label>
-                            <?php echo Form::text('saldo', $userAuth ? $user->saldo : '', array('min' => 0, 'max' => 500)); ?>
-                        </div>	
+                            <label>Allergie&euml;n</label>
+                            <?php echo Form::select('allergies[]', array_combine(json_decode($company->allergies), array_map('ucfirst', json_decode($company->allergies))), ($user && $user->allergies != NULL ? json_decode($user->allergies) : ''), array('class' => 'ui normal dropdown', 'data-placeholder' => 'Allergieen', 'multiple' => 'multiple')); ?>
+                        </div>
                     </div>
+
                 <?php endif; ?>
                 <div class="column">
                     <div class="field">
@@ -152,30 +158,30 @@
                                 )
                         );
                         ?>
-                    </div>	
-                </div>	
+                    </div>
+                </div>
 
-                <div class="column">
-                    <div class="field">
-                        <label>Allergie&euml;n</label>
-                        <?php echo Form::select('allergies[]', array_combine(json_decode($company->allergies), array_map('ucfirst', json_decode($company->allergies))), ($user && $user->allergies != NULL ? json_decode($user->allergies) : ''), array('class' => 'ui normal dropdown', 'data-placeholder' => 'Allergieen', 'multiple' => 'multiple')); ?>
-                    </div>	
-                </div>	
+                    <div class="column">
+                        <div class="field">
+                            <label>Spaartegoed {{ $userAuth ? '&euro;'.$user->saldo : '' }}</label>
+                            <?php echo Form::text('saldo', $userAuth ? $user->saldo : '', array('min' => 0, 'max' => 500)); ?>
+                        </div>
+                    </div>
             </div>
 
-            <div class="three column row"> 
+            <div class="three column row">
                 <div class="column">
                     <div class="field">
                         <label>Naam</label>
                         <?php echo Form::text('name', $userAuth ? $user->name : ''); ?>
-                    </div>	
-                </div>	
+                    </div>
+                </div>
                 <div class="column">
                     <div class="field">
                         <label>Telefoonnummer</label>
                         <?php echo Form::text('phone', $userAuth ? $user->phone : ''); ?>
-                    </div>	
-                </div>	
+                    </div>
+                </div>
                 <div class="column">
                     <div class="field">
                         <label>E-mailadres</label>
@@ -184,7 +190,7 @@
                 </div>
             </div>
 
-            <div class="row"> 
+            <div class="row">
                 <div class="column">
                     <div class="field">
                         <label>Opmerking</label>
@@ -202,7 +208,7 @@
             <div class="field">
                 <label>Datum</label>
                 <?php echo Form::text('date', '', array('class' => 'reservationDatepicker')); ?>
-            </div>	
+            </div>
 
             <div class="field">
                 <label>Tijd</label>
@@ -228,12 +234,12 @@
                     <div class="default text">Personen</div>
                     <i class="dropdown icon"></i>
                     <div class="menu">
-                        @for($i = 1; $i <= 10; $i++) 
+                        @for($i = 1; $i <= 10; $i++)
                         <div class="item"  data-value="<?php echo $i; ?>"><?php echo $i; ?> <?php echo $i == 1 ? 'persoon' : 'personen'; ?></div>
                         @endfor
                     </div>
                 </div>
-            </div>	
+            </div>
         </div>
 
         <div class="<?php echo ($deal) ? 'two fields' : 'three fields'; ?>" >
@@ -247,30 +253,30 @@
                 <div class="field">
                     <label>Spaartegoed {{ $userAuth ? '&euro;'.$user->saldo : '' }}</label>
                     <?php echo Form::text('saldo', $userAuth ? $user->saldo : '', array('min' => 0, 'max' => 500)); ?>
-                </div>	
+                </div>
 
             <?php endif; ?>
             <div class="field">
                 <label>Voorkeuren</label>
                 <?php echo Form::select('preferences[]', ($userAuth ? array_combine(json_decode($company->preferences), array_map('ucfirst', json_decode($company->preferences))) : array()), ($user && $user->preferences != NULL ? json_decode($user->preferences) : ''), array('class' => 'multipleSelect', 'data-placeholder' => 'Voorkeuren', 'multiple' => 'multiple')); ?>
-            </div>	
+            </div>
 
             <div class="field">
                 <label>Allergie&euml;n</label>
                 <?php echo Form::select('allergies[]', ($userAuth ? array_combine(json_decode($company->allergies), array_map('ucfirst', json_decode($company->allergies))) : array()), ($user && $user->allergies != NULL ? json_decode($user->allergies) : ''), array('class' => 'multipleSelect', 'data-placeholder' => 'Allergieen', 'multiple' => 'multiple')); ?>
-            </div>	
+            </div>
         </div>
 
         <div class="two fields">
             <div class="field">
                 <label>Naam</label>
                 <?php echo Form::text('name', $userAuth ? $user->name : ''); ?>
-            </div>	
+            </div>
 
             <div class="field">
                 <label>Telefoonnummer</label>
                 <?php echo Form::text('phone', $userAuth ? $user->phone : ''); ?>
-            </div>	
+            </div>
 
             <div class="field">
                 <label>E-mailadres</label>
@@ -310,9 +316,9 @@
             <div class="ui checkbox">
                 <?php echo Form::checkbox('av', 1); ?>
                 <label>Ik ga akkoord met de <a href="{{ url('algemene-voorwaarden') }}" target="_blank">voorwaarden</a></label>
-            </div>  
+            </div>
         </div>
-        @else        
+        @else
         <?php echo Form::hidden('av', 1); ?>
         @endif
         @else
@@ -320,10 +326,10 @@
             <div class="ui checkbox">
                 <?php echo Form::checkbox('av', 1); ?>
                 <label>Ik ga akkoord met de <a href="{{ url('algemene-voorwaarden') }}" target="_blank">voorwaarden</a></label>
-            </div>  
+            </div>
         </div>
         @endif
-        {{-- CODE FOR SUBMIT BUTTON AND FORM END --}}        
+        {{-- CODE FOR SUBMIT BUTTON AND FORM END --}}
         <div id="normal_case">
             <button class="ui tiny button" type="submit"><i class="plus icon"></i> Bevestig</button>
             <?php echo Form::close(); ?>
@@ -343,6 +349,7 @@
         $('#personsField').find('.item').on('click', function () {
             person = $(this).data('value');
             deal_price = $('#deal_price').val();
+
             amout = parseFloat(deal_price) * parseInt(person);
             $('[name="saldo"]').val(amout);
             $('[name="persons"]').val(person);

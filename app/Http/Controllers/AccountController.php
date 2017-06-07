@@ -497,7 +497,7 @@ class AccountController extends Controller {
                         ->where('media.collection_name', '=', 'default');
                     })
                     ->where('future_deals.user_id', $user->id)
-                    ->groupby('future_deals.id')
+                    ->groupby('future_deals.id')->orderBy('future_deals.created_at','desc')
                     ->get()
             ;
         }

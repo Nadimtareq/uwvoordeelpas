@@ -2,6 +2,17 @@
 @section('content')
 <div class="clear" style="height: 80px;">&nbsp;</div>
 <div class="container" style="min-height: 500px">
+    <div class="ui breadcrumb">
+        <a href="{{ url('/') }}" class="section">Home</a>
+        <i class="right chevron icon divider"></i>
+
+        <a href="#" class="sidebar open">Menu</a>
+        <i class="right chevron icon divider"></i>
+
+        <div class="active section">Future Deals</div>
+    </div>
+    <div class="ui divider"></div>
+    <div class="ui divider"></div>
     <div class="col-sm-12 col-ms1">
         <div class="col-sm-3 col5">
             <ul>

@@ -124,8 +124,9 @@
                     </div>
                 </td>
                 <td>
+
                     <a href="{{ url('admin/'.$slugController.'/update/'.$result->id) }}">
-                        {{ $result->name }}
+                        {{ $result->name?$result->name:'' }}
                     </a>
                 </td>
                 <td>
@@ -144,8 +145,9 @@
                 <td>{{ $result->email }}</td>
                 <td class="text-center"><i class="icon checkmark {{ $result->newsletter == 1 ? 'green' : 'red' }}"></i></td>
                 <td>
+                    <a href="{{ url('account/reservations/saldo/'.$result->id) }}" class="ui fluid text1 aligned center label">&euro;{{ $result->saldo }}</a>
+
                     <a href="{{ url('admin/users/saldo/reset/'.$result->id) }}" class="ui mini blue fluid button">Reset</a>
-                    <a href="{{ url('account/reservations/saldo/'.$result->id) }}" class="ui fluid text aligned center label">&euro;{{ $result->saldo }}</a>
                 </td>
                 <td>{{ date('d-m-Y H:i', strtotime($result->created_at)) }}</td>
                 <td>{{ date('d-m-Y H:i', strtotime($result->updated_at)) }}</td>

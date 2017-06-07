@@ -4280,7 +4280,7 @@ padding-top: 90px;
 }
 
 .space-header {
-	padding-top:70px;
+
 	padding-bottom:50px;
 }
 
@@ -4321,8 +4321,16 @@ padding-top: 90px;
 
  .left-sidebar{display:none;}
  .sort{display:none;}
- .wrap{
-     background: none !important;
+    .wrap{
+        background: none !important;
+        height:auto !important;
 
- }
+    }
+
 }
+.wrap{
+    height:150px;
+}
+.wrap img{
+    width: 150px;
+    height: 150px;}

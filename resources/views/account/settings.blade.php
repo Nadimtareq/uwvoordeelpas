@@ -75,7 +75,7 @@ $(document).ready(function() {
 				<?php echo Form::text('birthday_at', '', array('class' => 'bdy-datepicker', 'data-value' => Sentinel::getUser()->birthday_at)); ?>
 			</div>
 
-			<h4 class="ui dividing header">Wachtwoord <small>(optioneel)</small></h4>
+			<h4 class="ui dividing">Wachtwoord <small>(optioneel)</small></h4>
 
 			<div class="field">
 			    <label>Wachtwoord</label>
@@ -87,7 +87,7 @@ $(document).ready(function() {
 			  <?php echo Form::password('password_confirmation') ?>
 			</div>
 
-			<h4 class="ui dividing header" id="preferences">Voorkeuren</h4>
+			<h4 class="ui dividing" id="preferences">Voorkeuren</h4>
 			Geef uw voorkeuren aan, en ons systeem filtert hierop uw zoekresultaat.<br /><br />
 
 			<div class="field">
