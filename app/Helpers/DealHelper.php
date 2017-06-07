@@ -5,6 +5,8 @@ use App\Models\ReservationOption;
 use App\Models\NewsletterJob;
 use App\Models\Company;
 use App\Models\Preference;
+use App\Models\TempAuthRedirectUrl;
+use App\Models\TemporaryAuth;
 use Carbon\Carbon;
 use Mail;
 use DB;
@@ -89,7 +91,7 @@ class DealHelper
   private function getSubscribedUsers($city_id)
   {
     # code...
-    $users = DB::table('users')->where([['city','LIKE','%"'.$city_id.'"%'],['newsletter',1]])->get(['email','name','saldo','extension_downloaded']);
+    $users = DB::table('users')->where([['city','LIKE','%"'.$city_id.'"%'],['newsletter',1]])->get(['id','email','name','saldo','extension_downloaded']);
     return $users;
   }
 
@@ -103,11 +105,40 @@ class DealHelper
     if(!empty($deals) && !empty($users)){
       foreach ($users as $user) {
         # code...
-        Mail::queue('emails.deals',['user' => $user,'deals' => $deals],function($message) use ($user){
+        $data = $this->createTempAuth($user,$deals);
+        Mail::queue('emails.deals',['user' => $data[0],'deals' => $data[1]],function($message) use ($user){
           $message->to($user->email)->subject('UW Voordeelpas - De beste deals');
         });
       }
     }
+  }
+
+  /**
+   * Create TemporaryAuth for the user.
+   * @param array $user,$deals.
+   * @return auth id.
+   */
+  private function createTempAuth($user,$deals)
+  {
+    # code...
+    if(!empty($user) && !empty($deals)){
+      $tempAuth = new TemporaryAuth;
+      $user->{'saldo_url'}=$tempAuth->createCode($user->id,'account/reservations/saldo');
+      $user->{'unsubscribe_url'}=$tempAuth->createCode($user->id,'unsubscribe/'.$user->id);
+      $user->{'extension_download_url'}=$tempAuth->createCode($user->id,'?extension_download_btn=1');
+
+      foreach ($deals as $key => $restaurant) {
+        # code...
+        foreach ($restaurant as $index => $deal) {
+          # code...
+          $url = 'future-deal/'.$key.'?deal='.$deal->id;
+          $deals[$key][$index]->{'deal_url'} = $tempAuth->createCode($user->id,$url);
+        }
+      }
+
+    }
+    $data = [$user,$deals];
+    return $data;
   }
 
 }

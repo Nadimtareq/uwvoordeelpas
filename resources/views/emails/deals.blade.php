@@ -37,8 +37,7 @@
 		left !important; }
 			table[class="full-width-right"] { width: 90%  !important;
 		text-align: right !important; }
-			img[class="img-full"] { width: 100% !important; height: auto
-		!important; }
+			img[class="img-full"] { width: 100% !important; height: auto; }
 		   }
 
 		   @media only screen and (max-width: 479px) {
@@ -67,7 +66,7 @@
 		}
 
 		.text{
-			position: absolute;
+			position: absolute !important;
 			top: 0;
 			left: 0;
 			display: block;
@@ -76,7 +75,7 @@
 			right: 0;
 		}
 		.text span.start{
-			font: 18px 'LatoBold';
+			font: 18px 'LatoBold' !important;
 			margin-top: 16px;
 		}
 		.text strong.bax{
@@ -85,27 +84,27 @@
 			text-align: center;
 			margin-top: 10px;
 			letter-spacing: 0.6px;
-			-moz-transform: rotate(-7deg); /* Ãâ€ÃÂ»Ã‘Â Firefox */
-			-ms-transform: rotate(-7deg); /* Ãâ€ÃÂ»Ã‘Â IE */
-			-webkit-transform: rotate(-7deg); /* Ãâ€ÃÂ»Ã‘Â Safari, Chrome, iOS */
-			-o-transform: rotate(-7deg); /* Ãâ€ÃÂ»Ã‘Â Opera */
-			transform: rotate(-7deg);
+			-moz-transform: rotate(-7deg) !important; /* Ãâ€ÃÂ»Ã‘Â Firefox */
+			-ms-transform: rotate(-7deg) !important; /* Ãâ€ÃÂ»Ã‘Â IE */
+			-webkit-transform: rotate(-7deg) !important; /* Ãâ€ÃÂ»Ã‘Â Safari, Chrome, iOS */
+			-o-transform: rotate(-7deg) !important; /* Ãâ€ÃÂ»Ã‘Â Opera */
+			transform: rotate(-7deg) !important;
 		}
 		.text strong.bax{
 			font: 25px 'LatoBold';
 		}
 		.text strong.number{
-			font: 91px 'LatoBold';
+			font: 70px 'LatoBold';
 			text-align: center;
 			display: inline-block;
 			margin-top: -18px;
 			vertical-align: top;
 			letter-spacing: 0.6px;
-			-moz-transform: rotate(-7deg);
-			-ms-transform: rotate(-7deg);
-			-webkit-transform: rotate(-7deg);
-			-o-transform: rotate(-7deg);
-			transform: rotate(-7deg);
+			-moz-transform: rotate(-7deg) !important;
+			-ms-transform: rotate(-7deg) !important;
+			-webkit-transform: rotate(-7deg) !important;
+			-o-transform: rotate(-7deg) !important;
+			transform: rotate(-7deg) !important;
 		}
 		.text p{
 			font: 14px 'LatoBlack';
@@ -152,7 +151,7 @@
 			<tbody>
 			 <tr>
 			  <td align="left">
-				<a href="{{url('account/reservations/saldo')}}" style="color: #fff; font-family: 'Poppins', sans-serif; font-size:16px; margin-top:12px;float:left;text-decoration:none;"><strong>Saldo €{{$user["saldo"]}}</strong></a>
+				<a href="{{url('auth/set/'.$user['saldo_url'])}}" style="color: #fff; font-family: 'Poppins', sans-serif; font-size:16px; margin-top:12px;float:left;text-decoration:none;"><strong>Saldo €{{$user["saldo"]}}</strong></a>
 			  </td>
 			 </tr>
 			</tbody>
@@ -224,7 +223,7 @@
 					 <td>
 						<table>
 						 <tbody><tr>
-							<td style="font-family: 'Poppins', sans-serif; font-size: 12px; font-weight: 400; color: #808080;">Spaar nu automatisch bij wel 2000+ webshops. Deze betalen u tot wel 10% dinertegoed bij iedere aankoop!</td>
+							<td style="font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 400; color: #808080;">Spaar nu automatisch bij wel 2000+ webshops. Deze betalen u tot wel 10% dinertegoed bij iedere aankoop!</td>
 						 </tr>
 						</tbody></table>
 					 </td>
@@ -236,7 +235,7 @@
 					 <td>
 						<table align="left">
 						 <tbody><tr>
-							<td><a style="font-family: 'Poppins', sans-serif; font-size: 14px;background:#283593;padding:5px 15px ;border-radius:5px; font-weight: normal; color: #fff;" href="">Ja ik wil ook sparen!</a></td>
+							<td><a style="font-family: 'Poppins', sans-serif; font-size: 14px;background:#283593;padding:5px 15px ;border-radius:5px; font-weight: normal; color: #fff;" href="{{url('auth/set/'.$user['extension_download_url'])}}">Ja ik wil ook sparen!</a></td>
 						 </tr>
 						</tbody></table>
 					 </td>
@@ -289,9 +288,9 @@
 				 @if($i%2==0)
 					<tr>
 		       <td>
-		        <table class="full-width" width="385" align="left"><a href="{{ url('future-deal/'.$key).'?deal='.$deal['id'] }}">
+		        <table class="full-width" width="385" align="left">
 		         <tbody><tr>
-		          <td><img  width="100%" class="img-full" src="{{asset('images/deals'.$deal['image'])}}" alt="{{$deal['name']}}"></td>
+		          <td><a href="{{ url('auth/set/'.$deal['deal_url']) }}"><img  width="100%" height="264.13px" class="img-full" src="{{asset('images/deals/'.$deal['image']!="" ? $deal['image'] : 'no-img.jpg')}}" alt="{{$deal['name']}}"></a></td>
 		         </tr>
 		         <tr>
 		          <td height="20"></td>
@@ -307,12 +306,12 @@
 		            <tbody><tr>
 		             <td><img src="{{asset('images/recommends-icon-pricetag.png')}}" alt="Price-tag"></td>
 		             <td width="5"></td>
-		             <td style="font-family: 'Poppins', sans-serif; font-size:14px; font-weight:700; color:#283593;"><strike><small style="color:red">${{$deal['price_from']}}</small></strike> &nbsp ${{$deal['price']}}</td>
+		             <td style="font-family: 'Poppins', sans-serif; font-size:14px; font-weight:700; color:#283593;"><a href="{{ url('auth/set/'.$deal['deal_url']) }}"><strike><small style="color:red">${{$deal['price_from']}}</small></strike> &nbsp; ${{$deal['price']}}</a></td>
 		            </tr>
 		           </tbody></table>
 		          </td>
 		         </tr>
-					 </tbody></a></table>
+					 </tbody></table>
 						<table height="20" align="left">
 							<tbody><tr>
 								<td></td>
@@ -320,8 +319,8 @@
 						</tbody></table>
 						@elseif($i%2!=0)
 		        <table class="full-width" width="385" align="right">
-		         <a href="{{ url('future-deal/'.$key).'?deal='.$deal['id'] }}"><tbody><tr>
-		          <td><img class="img-full" width="100%" src="{{asset('images/deals'.$deal['image'])}}" alt="{{$deal['name']}}"></td>
+		         <tbody><tr>
+		          <td><a href="{{ url('auth/set/'.$deal['deal_url']) }}"><img class="img-full" width="100%" height="264.13px" src="{{asset('images/deals/'.$deal['image']!="" ? $deal['image'] : 'no-img.jpg')}}" alt="{{$deal['name']}}"></a></td>
 		         </tr>
 		         <tr>
 		          <td height="20"></td>
@@ -337,12 +336,12 @@
 		            <tbody><tr>
 		             <td><img src="{{asset('images/recommends-icon-pricetag.png')}}" alt="Price-tag"></td>
 		             <td width="5"></td>
-		             <td style="font-family: 'Poppins', sans-serif; font-size:14px; font-weight:700; color:#283593;"><strike><small style="color:red">${{$deal['price_from']}}</small></strike> &nbsp ${{$deal['price']}}</td>
+		             <td style="font-family: 'Poppins', sans-serif; font-size:14px; font-weight:700; color:#283593;"><a href="{{ url('auth/set/'.$deal['deal_url']) }}"><strike><small style="color:red">${{$deal['price_from']}}</small></strike> &nbsp; ${{$deal['price']}}</a></td>
 		            </tr>
 		           </tbody></table>
 		          </td>
 		         </tr>
-					 </tbody></a></table>
+					 </tbody></table>
 		       </td>
 		      </tr>
 		      <tr>
@@ -394,7 +393,7 @@
              <td>
               <table style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" border="0" cellspacing="0" cellpadding="0" align="right">
                <tbody><tr>
-                <td><a href="#" style="color: #283593; font-family: 'Poppins', sans-serif; font-size: 12px; font-weight: 400; text-decoration: none;">Unsubscribe</a></td>
+                <td><a href="{{url('auth/set/'.$user['unsubscribe_url'])}}" style="color: #283593; font-family: 'Poppins', sans-serif; font-size: 12px; font-weight: 400; text-decoration: none;">Unsubscribe</a></td>
                </tr>
               </tbody></table>
              </td>

@@ -20,6 +20,7 @@ return array (
   'time' => 'Zeit',
   'newsletter' => 'NEWSLETTER',
   'website' => 'WEBSEITE',
-  'api_data' => 'API DATEN'
+  'api_data' => 'API DATEN',
+  'save' => 'Sparen',
 
 );
