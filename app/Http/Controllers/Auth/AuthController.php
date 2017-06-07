@@ -275,7 +275,7 @@ class AuthController extends Controller
         $attempts = User::select('attempts','id')->where('email',$email)->first();
         if($attempts->attempts<10 || $attempts->attempts=='') {
             $data = array(
-                'secret' => "6LecMCQUAAAAAJOLNtAoU6pFVwe0K-JGQ7cUlNTK",
+                'secret' => getenv('CAPTCHA_SECRET'),
                 'response' => $request->input("g-recaptcha-response")
             );
 

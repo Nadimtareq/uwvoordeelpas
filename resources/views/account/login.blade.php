@@ -37,15 +37,15 @@
 	<input type="hidden" name="password" id="pass_new">
 </div>
 <div class="field">
-    <div class="g-recaptcha" data-sitekey="6LecMCQUAAAAACsXqJ5s1V57lFqau7Ti6cnqiyu0"></div><div style="float: right;">
-    </div>
-
-<div style="float: left; width: 200px;">
-	<div class="ui checkbox">
-		<input type="checkbox" tabindex="0" value="1" name="remember" class="hidden">
-		<label>Onthoud mij</label>
+	<div class="g-recaptcha" data-sitekey="{{getenv('CAPTCHA_FRONT')}}"></div><div style="float: right;">
 	</div>
-</div>
+
+	<div style="float: left; width: 200px;">
+		<div class="ui checkbox">
+			<input type="checkbox" tabindex="0" value="1" name="remember" class="hidden">
+			<label>Onthoud mij</label>
+		</div>
+	</div>
 	<a href="#" id="registerButton3" data-redirect="">Nog geen lid?</a>
 </div>
 
