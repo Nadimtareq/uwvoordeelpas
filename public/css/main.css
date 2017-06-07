@@ -1882,7 +1882,7 @@ header.nav li a:hover {
     background: #333399 !important;
 }
 .tabss{
-/*    padding-top: 100px;*/
+    padding-top: 100px !important;
     padding-bottom: 100px;
 }
 .tabss .left_side{
@@ -4334,3 +4334,10 @@ padding-top: 90px;
 .wrap img{
     width: 150px;
     height: 150px;}
+
+.custom_class{
+   width:100%;
+}
+.company{
+    margin-top:10%;
+}

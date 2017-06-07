@@ -53920,7 +53920,7 @@ $(document).ready(function() {
 				method: 'POST',
 				serializeForm: true,
 				onComplete: function(response) {
-					var output = '<div class="header">Er zijn fouten opgetreden</div><ul class="list">';
+					var output = '<div class="header1">Er zijn fouten opgetreden</div><ul class="list">';
 
 					for(var i in response) {
 						output += '<li>' + response[i] + '</li>';
