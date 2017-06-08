@@ -170,11 +170,7 @@
         <thead>
             <tr>
                 <th data-slug="date" data-column-order="desc" class="three wide">Datum en tijd</th>
-<<<<<<< Updated upstream
                 <th data-slug="companyName" data-column-order="desc" class="two wide">Bedrijf</th>
-=======
-                <th data-slug="companyName" data-column-order="desc" class="two wide">Bedrijf</th> 
->>>>>>> Stashed changes
                 <th data-slug="name" data-column-order="desc" class="two wide">Naam</th>
                 <th data-slug="email" data-column-order="desc" class="two wide">Email</th>
                 <th data-slug="phone" data-column-order="desc" class="two wide">Telefoon</th>
