@@ -53920,14 +53920,23 @@ $(document).ready(function() {
 				method: 'POST',
 				serializeForm: true,
 				onComplete: function(response) {
-					var output = '<div class="header1">Er zijn fouten opgetreden</div><ul class="list">';
+                    if (response['err_code'] == 400) {
+                        var output = '<div class="header1">u bent vergeten om de beveiliging aan te vinken</div><ul class="list">';
 
-					for(var i in response) {
-						output += '<li>' + response[i] + '</li>';
-					}
 
-					output += '</ul>';
+                            output += '<li>' + response['name'] + '</li>';
 
+                            output += '</ul>';
+
+                    }else {
+                     var output = '<div class="header1">Er zijn fouten opgetreden</div><ul class="list">';
+
+                    for (var i in response) {
+                        output += '<li>' + response[i] + '</li>';
+                    }
+
+                    output += '</ul>';
+                 }
 					if (response.success == 1) {
 						if (redirectUrl !== undefined) {
 							Redirect(redirectUrl);

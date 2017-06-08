@@ -21,7 +21,7 @@
             <div class="row">
                 <div class="col-md-3">
                     @if(!empty($mediaItems) && isset($mediaItems[0]))
-                        <img id="image" src="{{ url($mediaItems[0]->getUrl('175Thumb')) }}" class="img-responsive" alt="" />
+                        <img id="image" src="{{ url('images/deals/'.$deal->image) }}" class="img-responsive" alt="" />
                     @endif
                 </div>
                 <?php if ($deal): ?>

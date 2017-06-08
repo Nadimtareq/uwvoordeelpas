@@ -54,6 +54,7 @@
         <th data-slug="price_from" class="four wide">prijs van</th>
         <th data-slug="price" class="four wide">prijs tot</th>
         <th data-slug="total_res" class="four wide">Staat</th>
+        <th data-slug="news_letter" class="four wide">Nieuwsbrief</th>
         <th data-slug="disabled">online</th>
         </tr>
         </thead>
@@ -91,6 +92,7 @@
                 </td>
                 <td>
                     <?php
+
                     $currentDate = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s')));
                     ;
                     $contractDateBegin = date('Y-m-d H:i:s', strtotime($result->date_from));
@@ -103,7 +105,14 @@
                     }
                     ?>
                 </td>
-               
+                <td>
+                    @if($result->newsletter==0)
+                        {{ "niet toevoegen" }}
+                        @else
+                        {{ "toevoegen" }}
+                    @endif
+                </td>
+
                 <td>
                     <a href="{{ url('admin/'.$slugController.'/update/'.$result->id) }}" class="ui icon tiny button">
                         <i class="pencil icon"></i>

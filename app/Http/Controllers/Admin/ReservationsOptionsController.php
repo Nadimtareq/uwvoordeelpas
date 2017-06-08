@@ -14,6 +14,7 @@
     use Illuminate\Http\Request;
     use Redirect;
     use Sentinel;
+    use File;
 
     class ReservationsOptionsController extends Controller
     {
@@ -39,6 +40,7 @@
 
         public function index(Request $request, $slug = NULL)
         {
+
             if ($this->isCompanyOwner($slug)['exist'] == 0 && $slug != NULL && Sentinel::inRole('admin') == FALSE) {
                 User::getRoleErrorPopup();
                 return Redirect::to('/');
@@ -56,7 +58,9 @@
                 'reservations_options.price',
                 'reservations_options.time_to',
                 'reservations_options.time_to',
-                DB::raw('sum(reservations.persons) as total_res')
+                'reservations_options.newsletter',
+                DB::raw('sum(reservations.persons) as total_res'),
+                DB::raw('sum(reservations.id) as reservated')
             )->leftJoin('companies', 'companies.id', '=', 'reservations_options.company_id')
                 ->leftJoin('reservations', function ($join) {
                     $join
@@ -90,9 +94,9 @@
 
                 return Redirect::to($request->url().'?'.http_build_query($lastPageQueryString));
             }
-    //        echo "<pre>";
-    //        print_r($data->toArray());
-    //        die();
+            //echo "<pre>";
+           //print_r($data->toArray());
+            //die();
             $queryString = $request->query();
             unset($queryString['limit']);
 
@@ -289,7 +293,9 @@
                     $destinationPath = 'images/deals/'; // upload path
                     $extension = Input::file('image')->getClientOriginalExtension(); // getting image extension
                     $fileName = 'deal_' . $data->id . '.' . $extension; // renameing image
+                    File::delete($fileName);
                     Input::file('image')->move($destinationPath, $fileName);
+                    chmod($destinationPath.$fileName,777);
 
                 }
 

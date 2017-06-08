@@ -279,16 +279,6 @@ class AuthController extends Controller
                 'response' => $request->input("g-recaptcha-response")
             );
 
-            $verify = curl_init();
-            curl_setopt($verify, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify");
-            curl_setopt($verify, CURLOPT_POST, true);
-            curl_setopt($verify, CURLOPT_POSTFIELDS, http_build_query($data));
-            curl_setopt($verify, CURLOPT_SSL_VERIFYPEER, false);
-            curl_setopt($verify, CURLOPT_RETURNTRANSFER, true);
-            $response = curl_exec($verify);
-            $response = json_decode($response);
-            if ($response->success == true) {
-
                 try {
                     if ($request->input('remember') == 1) {
                         $auth = Sentinel::authenticateAndRemember($credentials);
@@ -297,7 +287,26 @@ class AuthController extends Controller
                     }
 
                     if ($auth == TRUE) {
-                        return Response::json(array('success' => 1));
+                        $verify = curl_init();
+                        curl_setopt($verify, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify");
+                        curl_setopt($verify, CURLOPT_POST, true);
+                        curl_setopt($verify, CURLOPT_POSTFIELDS, http_build_query($data));
+                        curl_setopt($verify, CURLOPT_SSL_VERIFYPEER, false);
+                        curl_setopt($verify, CURLOPT_RETURNTRANSFER, true);
+                        $response = curl_exec($verify);
+                        $response = json_decode($response);
+                        if ($response->success == true) {
+
+                            return Response::json(array('success' => 1));
+
+                        }else {
+                            Sentinel::logout();
+                            return Response::json(array(
+                                'name' => 'Captcha not match',
+                                'err_code'=>400
+                            ));
+                        }
+
                     } else {
                         DB::table('users')
                             ->where('email', $email)
@@ -320,12 +329,7 @@ class AuthController extends Controller
                         'tokemismatch' => 1
                     ));
                 }
-            } else {
 
-                return Response::json(array(
-                    'name' => 'Captcha not match'
-                ));
-            }
         }else{
             $uban = new App\Models\UserBan();
             $uban->user_id = $attempts->id;
