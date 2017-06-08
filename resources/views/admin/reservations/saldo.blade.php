@@ -18,7 +18,7 @@
 
         <div class="section">{{ $companyName }}</div>
         <i class="right chevron icon divider"></i>
-        
+
         <a href="{{ url('admin/'.$slugController.(isset($slugParam) ? $slugParam : '')) }}">
             <div class="ui normal scrolling bread pointing dropdown item">
                 <div class="text">Saldo</div>
@@ -27,7 +27,7 @@
                     @if($userCompanies)
                          @include('template/navigation/company')
                     @endif
-                    
+
                     @include('template/navigation/admin')
                 </div>
             </div>
@@ -61,30 +61,30 @@
             </div>
 
             <div class="three wide field">
-                <?php 
+                <?php
                 echo Form::select(
-                    'month', 
-                    $selectMonths, 
-                    (Request::has('month') ? Request::has('month') : date('m')), 
-                    array(
-                        'class' => 'ui normal dropdown'
-                    )
-                ); 
-                ?>
-            </div>
-
-            <div class="field">
-                <?php 
-                echo Form::select(
-                    'year', 
-                    $selectYears, 
-                    (Request::has('year') ? Request::get('year') : date('Y')), 
+                    'month',
+                    $selectMonths,
+                    (Request::has('month') ? Request::has('month') : date('m')),
                     array(
                         'class' => 'ui normal dropdown'
                     )
                 );
                 ?>
-            </div>        
+            </div>
+
+            <div class="field">
+                <?php
+                echo Form::select(
+                    'year',
+                    $selectYears,
+                    (Request::has('year') ? Request::get('year') : date('Y')),
+                    array(
+                        'class' => 'ui normal dropdown'
+                    )
+                );
+                ?>
+            </div>
 
             <div class="one wide field">
                 <button type="submit" class="ui blue icon fluid filter button">
@@ -151,7 +151,7 @@
         <div class="five wide column">
             <div class="ui normal selection fluid dropdown item">
                 <input type="hidden" name="caller_id" value="{{ Request::get('caller_id') }}">
-                
+
                 <div class="text">Beller</div>
                 <i class="dropdown icon"></i>
 
@@ -170,14 +170,14 @@
         <thead>
             <tr>
                 <th data-slug="date" data-column-order="desc" class="three wide">Datum en tijd</th>
-                <th data-slug="companyName" data-column-order="desc" class="two wide">Bedrijf</th> 
-                <th data-slug="name" data-column-order="desc" class="two wide">Naam</th> 
-                <th data-slug="email" data-column-order="desc" class="two wide">Email</th> 
-                <th data-slug="phone" data-column-order="desc" class="two wide">Telefoon</th> 
+                <th data-slug="companyName" data-column-order="desc" class="two wide">Bedrijf</th>
+                <th data-slug="name" data-column-order="desc" class="two wide">Naam</th>
+                <th data-slug="email" data-column-order="desc" class="two wide">Email</th>
+                <th data-slug="phone" data-column-order="desc" class="two wide">Telefoon</th>
                 <th data-slug="persons" data-column-order="desc" class="one wide">Personen</th>
-                <th data-slug="disabled" class="disabled one wide">Betaald</th> 
-                <th data-slug="saldo" class="three wide">Saldo</th> 
-                <th data-slug="saldo" class="three wide">Total</th> 
+                <th data-slug="saldo" class="three wide">Kosten</th>
+                <th data-slug="disabled" class="disabled one wide">Betaald</th>
+                <th data-slug="saldo" class="three wide">Saldo</th>
             </tr>
         </thead>
         <tbody class="list search">
@@ -185,12 +185,13 @@
                 @include('admin/reservations.list-saldo')
                 <tr>
                     <td colspan="5">Totaal</td>
-                    <td colspan="2"><i class="euro icon"></i> {{ $totalPersons }}</td>
-                    <td><i class="euro icon"></i> {{ number_format($totalSaldo, 2, '.', '') }}</td>
+                    <td > {{ $totalPersons }} </td>
+                    <td ><i class="euro icon"></i> {{ $totalKosten }}</td>
+                    <td colspan="2"><i class="euro icon"></i> {{ number_format($totalSaldo, 2, '.', '') }}</td>
                 </tr>
                 <tr>
                     <td colspan="7">Totaal bedrag</td>
-                  
+
                     <td><i class="euro icon"></i> {{ number_format($totalSaldo - $totalPersons, 2, '.', '') }}</td>
                 </tr>
             @else

@@ -25,12 +25,12 @@ use Redirect;
 use DB;
 use URL;
 
-class ReservationsController extends Controller 
+class ReservationsController extends Controller
 {
-    
+
     public static $per_time = array(
-        15 => '15 minutes', 
-        30 => '30 minutes', 
+        15 => '15 minutes',
+        30 => '30 minutes',
         60 => '1 hour'
     );
 
@@ -47,25 +47,25 @@ class ReservationsController extends Controller
         $this->months = Config::get('preferences.months');
     }
 
-    public function index(Request $request, $slug = null) 
+    public function index(Request $request, $slug = null)
     {
         $limit = $request->input('limit', 15);
 
         $companyOwner = Company::isCompanyUserBySlug($slug, Sentinel::getUser()->id);
 
         $data = CompanyReservation::select(
-            'companies.id', 
+            'companies.id',
             'companies.name as company_name',
-            'company_reservations.start_time', 
-            'company_reservations.end_time',  
-            'company_reservations.per_time',  
-            'company_reservations.id as res_id',  
-            'company_reservations.company_id', 
-            'company_reservations.locked_times', 
+            'company_reservations.start_time',
+            'company_reservations.end_time',
+            'company_reservations.per_time',
+            'company_reservations.id as res_id',
+            'company_reservations.company_id',
+            'company_reservations.locked_times',
             'company_reservations.available_persons',
             'company_reservations.date as company_reservation_date',
-            'company_reservations.is_locked', 
-            'company_reservations.date', 
+            'company_reservations.is_locked',
+            'company_reservations.date',
             DB::raw('SUM(reservations.persons) as persons')
         )
             ->leftJoin('companies', 'company_reservations.company_id', '=', 'companies.id')
@@ -87,7 +87,7 @@ class ReservationsController extends Controller
                 $data = $data->where('companies.waiter_user_id', '=', Sentinel::getUser()->id);
             }
         }
-                        
+
         if ($request->has('q')) {
             $data = $data->where('company_reservations.date', '=', date('Y-m-d', strtotime($request->input('q'))));
         }
@@ -133,7 +133,7 @@ class ReservationsController extends Controller
             $data->setPath((trim($slug) != '' ? $slug : ''));
 
             # Redirect to last page when page don't exist
-            if ($request->input('page') > $data->lastPage()) { 
+            if ($request->input('page') > $data->lastPage()) {
                 $lastPageQueryString = json_decode(json_encode($request->query()), true);
                 $lastPageQueryString['page'] = $data->lastPage();
 
@@ -147,8 +147,8 @@ class ReservationsController extends Controller
             sort($getTimes);
 
             return view('admin/'.$this->slugController.'/index', [
-                'times' => $getTimes, 
-                'data' => $data, 
+                'times' => $getTimes,
+                'data' => $data,
                 'admin' => Sentinel::inRole('admin'),
                 'companies' => Company::all(),
                 'owner' => $companyOwner,
@@ -158,7 +158,7 @@ class ReservationsController extends Controller
                 'queryString' => $queryString,
                 'paginationQueryString' => $request->query(),
                 'limit' => $limit,
-                'section' => $this->section, 
+                'section' => $this->section,
                 'currentPage' => 'Overzicht'
             ]);
         } else {
@@ -188,7 +188,7 @@ class ReservationsController extends Controller
             'companies.slug as companySlug',
             'companies.name as companyName'
         )
-            ->leftJoin('users', 'reservations.user_id', '=', 'users.id') 
+            ->leftJoin('users', 'reservations.user_id', '=', 'users.id')
             ->leftJoin('reservations_options','reservations.option_id', '=', 'reservations_options.id')
             ->leftJoin('companies', 'reservations.company_id', '=', 'companies.id')
             ->where('reservations.is_cancelled', 0)
@@ -206,12 +206,12 @@ class ReservationsController extends Controller
                 switch ($request->input('source')) {
                     case 'wifi':
                         $reservations = $reservations
-                            ->leftJoin('guests_wifi', 'guests_wifi.email', '=', 'users.email') 
+                            ->leftJoin('guests_wifi', 'guests_wifi.email', '=', 'users.email')
                             ->whereNotNull('guests_wifi.email')
                             ->whereNotNull('guests_wifi.name')
                         ;
                     break;
-                        
+
                 default:
                     $reservations = $reservations
                         ->where('reservations.source', '=', $request->input('source'))
@@ -286,6 +286,7 @@ class ReservationsController extends Controller
 
         $totalPersons = 0;
         $totalSaldo = 0;
+        $totalKosten = 0;
 
         # Filter by month and year
         if ($request->has('month') && $request->has('year')) {
@@ -300,23 +301,25 @@ class ReservationsController extends Controller
                 'invoices.id',
                 'invoices.week'
             )
-                ->leftJoin('companies', 'invoices.company_id', '=', 'companies.id')   
+                ->leftJoin('companies', 'invoices.company_id', '=', 'companies.id')
                 ->whereMonth('invoices.date', '=', $request->input('month'))
                 ->whereYear('invoices.date', '=', $request->input('year'))
                 ->where('companies.slug', $company)
                 ->get()
             ;
         }
-        
+
         # Count total persons and saldo
         foreach($reservations->get() as $reservation) {
             $totalPersons += $reservation->persons;
             $totalSaldo += (float)$reservation->saldo;
+            $totalKosten += (float)($reservation->price_per_guest * $reservation->persons );
+
         }
-        
+
         $reservations = $reservations->paginate($this->limit);
 
-        if ($request->input('page') > $reservations->lastPage()) { 
+        if ($request->input('page') > $reservations->lastPage()) {
             $lastPageQueryString = json_decode(json_encode($request->query()), true);
             $lastPageQueryString['page'] = $reservations->lastPage();
 
@@ -332,16 +335,17 @@ class ReservationsController extends Controller
 
         $role = Sentinel::findRoleBySlug('callcenter');
         $callcenterUsers = $role->users()->with('roles')->get();
-       
+
         return view('admin/'.$this->slugController.'/saldo', [
-            'data' => $reservations, 
-            'callcenterUsers' => $callcenterUsers, 
-            'company' => $company, 
-            'months' => $this->months, 
+            'data' => $reservations,
+            'callcenterUsers' => $callcenterUsers,
+            'company' => $company,
+            'months' => $this->months,
             'filterCompanies' => Company::select('id', 'slug', 'name')->get(),
             'slugController' => 'reservations/saldo/'.$company,
             'totalPersons' => isset($totalPersons) ? $totalPersons : 0,
             'totalSaldo' => isset($totalSaldo) ? $totalSaldo : 0,
+            'totalKosten' => isset($totalKosten) ? $totalKosten : 0,
             'selectMonths' => isset($selectMonths) ? $selectMonths : array(),
             'selectYears' => isset($selectYears) ? $selectYears : array(),
             'invoices' => isset($invoices) ? $invoices : '',
@@ -360,9 +364,9 @@ class ReservationsController extends Controller
         $regioName = $request->input('city');
 
         $statistics = Reservation::select(
-            DB::raw('(SELECT 
-                            count(reservations.id) 
-                        FROM 
+            DB::raw('(SELECT
+                            count(reservations.id)
+                        FROM
                             reservations
                         '.($request->has('city') && isset($regio['regioNumber'][$regioName]) ? 'LEFT JOIN companies ON companies.id = reservations.company_id' : '').'
                         WHERE
@@ -374,9 +378,9 @@ class ReservationsController extends Controller
                     ) AS allReservations'),
 
             DB::raw('(
-                        SELECT 
-                            count(reservations.id) 
-                        FROM 
+                        SELECT
+                            count(reservations.id)
+                        FROM
                             reservations
                             '.($request->has('city') && isset($regio['regioNumber'][$regioName]) ? 'LEFT JOIN companies ON companies.id = reservations.company_id' : '').'
 
@@ -388,9 +392,9 @@ class ReservationsController extends Controller
                         '.($request->input('date') != NULL ? 'AND reservations.date = date("'.$request->input('date').'")' : '').'
                     ) AS cancelledReservations'),
             DB::raw('(
-                        SELECT 
-                            count(reservations.id) 
-                        FROM 
+                        SELECT
+                            count(reservations.id)
+                        FROM
                             reservations
                             '.($request->has('city') && isset($regio['regioNumber'][$regioName]) ? 'LEFT JOIN companies ON companies.id = reservations.company_id' : '').'
                         WHERE
@@ -402,9 +406,9 @@ class ReservationsController extends Controller
                         '.($request->input('date') != NULL ? 'AND date = date("'.$request->input('date').'")' : '').'
                     ) AS thirdPartyReservations'),
             DB::raw('(
-                        SELECT 
-                            count(reservations.id) 
-                        FROM 
+                        SELECT
+                            count(reservations.id)
+                        FROM
                             reservations
                             '.($request->has('city') && isset($regio['regioNumber'][$regioName]) ? 'LEFT JOIN companies ON companies.id = reservations.company_id' : '').'
                         WHERE
@@ -415,9 +419,9 @@ class ReservationsController extends Controller
                         '.($request->input('date') != NULL ? 'AND reservations.date = date("'.$request->input('date').'")' : '').'
                     ) AS iframeReservations'),
             DB::raw('(
-                        SELECT 
-                            count(reservations.id) 
-                        FROM 
+                        SELECT
+                            count(reservations.id)
+                        FROM
                             reservations
                             '.($request->has('city') && isset($regio['regioNumber'][$regioName]) ? 'LEFT JOIN companies ON companies.id = reservations.company_id' : '').'
                         WHERE
@@ -427,7 +431,7 @@ class ReservationsController extends Controller
                         '.($request->has('city') && isset($regio['regioNumber'][$regioName]) ? 'OR companies.regio = "'.$regio['regioNumber'][$regioName].'")' : '').'
                         '.($request->input('date') != NULL ? 'AND reservations.date = date("'.$request->input('date').'")' : '').'
                     ) AS noShowReservations')
-        );  
+        );
 
         if ($companyId != NULL) {
             $statistics = $statistics->where('reservations.company_id', $companyId);
@@ -436,35 +440,35 @@ class ReservationsController extends Controller
         $statistics = $statistics->first();
 
         $data = Reservation::select(
-            'companies.name as companyName', 
-            'companies.slug as companySlug', 
-            'companies.id as companyId', 
-            'companies.user_id as owner', 
-            'companies.days', 
-            'companies.discount', 
+            'companies.name as companyName',
+            'companies.slug as companySlug',
+            'companies.id as companyId',
+            'companies.user_id as owner',
+            'companies.days',
+            'companies.discount',
             'reservations.*',
             'barcodes_users.created_at as barcodeDate',
             'reservations_options.name as deal'
         )
             ->leftJoin('companies', 'reservations.company_id', '=', 'companies.id')
             ->leftJoin('reservations_options','reservations.option_id', '=', 'reservations_options.id')
-            ->leftJoin('users', 'reservations.user_id', '=', 'users.id') 
+            ->leftJoin('users', 'reservations.user_id', '=', 'users.id')
             ->leftJoin('barcodes_users', function($join) {
                 $join
                     ->on('barcodes_users.company_id', '=', 'companies.id')
                     ->on('barcodes_users.user_id', '=', 'reservations.user_id');
-            });  
+            });
 
         if ($request->has('source')) {
             switch ($request->input('source')) {
                 case 'wifi':
                     $data = $data
-                        ->leftJoin('guests_wifi', 'guests_wifi.email', '=', 'users.email') 
+                        ->leftJoin('guests_wifi', 'guests_wifi.email', '=', 'users.email')
                         ->whereNotNull('guests_wifi.email')
                         ->whereNotNull('guests_wifi.name')
                     ;
                 break;
-                        
+
                 default:
                     $data = $data
                         ->where('reservations.source', '=', $request->input('source'))
@@ -501,7 +505,7 @@ class ReservationsController extends Controller
             } else {
                 $data = $data->orderBy($request->input('sort'), $request->input('order'));
             }
-            
+
             session(['sort' => $request->input('sort'), 'order' => $request->input('order')]);
         } else {
             if ($request->has('date')) {
@@ -529,8 +533,8 @@ class ReservationsController extends Controller
         $data = $data
             ->where('reservations.is_cancelled', ($request->has('cancelled') ? 1 : 0))
             ->paginate($this->limit);
- 
-        if ($request->input('page') > $data->lastPage()) { 
+
+        if ($request->input('page') > $data->lastPage()) {
             $lastPageQueryString = json_decode(json_encode($request->query()), true);
             $lastPageQueryString['page'] = $data->lastPage();
 
@@ -546,7 +550,7 @@ class ReservationsController extends Controller
         } else if (Sentinel::inRole('admin') == FALSE && Sentinel::inRole('bedrijf')) {
             $companyInfo = $companyInfo->where('user_id', Sentinel::getUser()->id);
         }
-        
+
         if ($companyId != null) {
             $companyInfo = $companyInfo->first();
         }
@@ -556,10 +560,10 @@ class ReservationsController extends Controller
             unset($queryString['limit']);
             unset($queryString['source']);
             unset($queryString['city']);
-          
+
             return view('admin/'.$this->slugController.'/clients', [
-                'data' => $data, 
-                'date' => $date, 
+                'data' => $data,
+                'date' => $date,
                 'companyInfo' => isset($companyInfo) ? $companyInfo : '',
                 'company' => $companyId,
                 'filterCompanies' => Company::select('id', 'slug', 'name')->get(),
@@ -605,7 +609,7 @@ class ReservationsController extends Controller
                     $reservation->status = 'refused';
 
                     $user = Sentinel::findById($reservation->user_id);
-                    
+
                     $mailtemplate->sendMail(array(
                         'email' => $reservation->email,
                         'template_id' => 'reservation-refused',
@@ -714,13 +718,13 @@ class ReservationsController extends Controller
             }
 
             $reservation->save();
-            
+
             return Redirect::to('admin/reservations/clients/'.$reservation->company_id.($reservation->status == 'noshow' ? '?status=noshow' : ''));
         }
     }
 
-    public function listDate($company, $date, Request $request) 
-    {  
+    public function listDate($company, $date, Request $request)
+    {
         $limit = $request->input('limit', 15);
 
         $companyOwner = Company::isCompanyUser($company, Sentinel::getUser()->id);
@@ -788,7 +792,7 @@ class ReservationsController extends Controller
             $id = $result->id;
             $slug = $result->slug;
         }
-        
+
         // Take all rows of the date
         foreach ($reservationArray as $reservationFetch) {
             foreach ($reservationFetch as $dateFetch) {
@@ -803,9 +807,9 @@ class ReservationsController extends Controller
                 }
 
                 $startTime = strtotime($dateFetch['start_time']);
-                $endTime = strtotime($dateFetch['end_time']); 
+                $endTime = strtotime($dateFetch['end_time']);
                 $convertedTime = date('H:i', $startTime);
-               
+
                 $timeResult[$convertedTime] = array(
                     'available_persons' => (isset($availablePersons[$convertedTime]) ? $availablePersons[$convertedTime] : 0),
                     'persons' => (isset($reservation[$convertedTime]) ? array_sum($reservation[$convertedTime]) : 0),
@@ -814,7 +818,7 @@ class ReservationsController extends Controller
                     'company_id' => $dateFetch['company_id']
                 );
 
-                while ($startTime < $endTime) {  
+                while ($startTime < $endTime) {
                     $startTime = strtotime('+'.self::$per_time[$dateFetch['interval']], $startTime);
 
                     if ($endTime >= $startTime) {
@@ -827,14 +831,14 @@ class ReservationsController extends Controller
                             'company_id' => $dateFetch['company_id']
                         );
                     }
-                } 
+                }
             }
         }
 
         if ($request->has('sort') && $request->has('order')) {
             if ($request->input('sort') == 'time' && $request->input('order') == 'desc') {
                 krsort($timeResult);
-            }  
+            }
 
             if ($request->input('sort') == 'available_persons' && $request->input('order') == 'desc') {
                 uasort($timeResult, function($a, $b) {
@@ -870,7 +874,7 @@ class ReservationsController extends Controller
         $results = new LengthAwarePaginator($pagedData, count($timeResult), $limit);
         $results->setPath('');
 
-        if ($request->input('page') > $results->lastPage()) { 
+        if ($request->input('page') > $results->lastPage()) {
             $lastPageQueryString = json_decode(json_encode($request->query()), true);
             $lastPageQueryString['page'] = $results->lastPage();
 
@@ -886,9 +890,9 @@ class ReservationsController extends Controller
 
             return view('admin/'.$this->slugController.'/date', array(
                 'times' => $getTimes,
-                'data' => $results, 
-                'date' => date('Y-m-d', strtotime($date)), 
-                'company' => $company, 
+                'data' => $results,
+                'date' => date('Y-m-d', strtotime($date)),
+                'company' => $company,
                 'slugController' => $this->slugController.'/date/'.$company.'/'.$date,
                 'carbon' => new Carbon,
                 'companyId' => (trim($id) != '' ? '/'.$id : ''),
@@ -905,8 +909,8 @@ class ReservationsController extends Controller
         }
     }
 
-    public function create($company = null) 
-    {  
+    public function create($company = null)
+    {
         if ($company != null) {
             $company = Company::where('slug', $company)->first();
 
@@ -923,12 +927,12 @@ class ReservationsController extends Controller
             'company' => isset($company) ? $company->id : '',
             'slug' => isset($company) ? $company->slug : '',
             'slugController' => $this->slugController,
-            'section' => $this->section, 
-            'currentPage' => 'Nieuwe reserveringen'        
+            'section' => $this->section,
+            'currentPage' => 'Nieuwe reserveringen'
         ]);
     }
 
-    public function createAction(Request $request, $slug = null) 
+    public function createAction(Request $request, $slug = null)
     {
         $company = new Company();
 
@@ -949,25 +953,25 @@ class ReservationsController extends Controller
 
         $startDate = gmdate("Y-m-d", strtotime($request->input('start_date')));
         $endDate = gmdate("Y-m-d", strtotime($request->input('end_date')));
-        
+
         foreach ($request->input('start_time') as $key => $startime) {
             $startTime  = strtotime($request->input('start_time')[$key]);
             $endTime = strtotime($request->input('end_time')[$key]);
             $timeLoop[] = date('H:i', $startTime);
 
-            while ($startDate <= $endDate) {  
+            while ($startDate <= $endDate) {
                 // Get all dates between two dates
-                $startDate = date("Y-m-d", strtotime("+1 day", strtotime($startDate)));  
-                $dates[] = $startDate;  
-            }  
+                $startDate = date("Y-m-d", strtotime("+1 day", strtotime($startDate)));
+                $dates[] = $startDate;
+            }
 
-            while ($startTime < $endTime) {  
+            while ($startTime < $endTime) {
                 // Get all times between two times
                 $startTime = strtotime('+'.self::$per_time[$request->input('per_time')], $startTime);
                 if ($endTime >= $startTime)  {
-                    $timeLoop[] = date('H:i', $startTime); 
+                    $timeLoop[] = date('H:i', $startTime);
                 }
-            }  
+            }
 
             // Set the amount of available persons per time period in an array.
             $availablePersons[$key] = array();
@@ -978,15 +982,15 @@ class ReservationsController extends Controller
                $availableDeals[$key][$time] = $request->input('available_deals');
             }
 
-            while ($startDate <= $endDate) {  
+            while ($startDate <= $endDate) {
                 // Get all dates between two dates
-                $startDate = date("Y-m-d", strtotime("+1 day", strtotime($startDate)));  
-                $dates[] = $startDate;  
-            }  
-        }  
+                $startDate = date("Y-m-d", strtotime("+1 day", strtotime($startDate)));
+                $dates[] = $startDate;
+            }
+        }
 
-        foreach ($dates as $date) {   
-            foreach ($request->input('days') as $key => $day) {   
+        foreach ($dates as $date) {
+            foreach ($request->input('days') as $key => $day) {
                 if (in_array(date('N', strtotime($date)), $day)) {
                     $reservationDate[] = array(
                         'created_at' => date('now'),
@@ -1016,7 +1020,7 @@ class ReservationsController extends Controller
             CompanyReservation::insert($reservationDate);
         }
 
-        Alert::success('Uw opgegeven data voor reserveringen zijn succesvol aangemaakt.')->persistent('Sluiten');   
+        Alert::success('Uw opgegeven data voor reserveringen zijn succesvol aangemaakt.')->persistent('Sluiten');
 
         if ($request->has('step')) {
             return Redirect::to('faq/3/restaurateurs?step=3&slug='.$slug);
@@ -1025,8 +1029,8 @@ class ReservationsController extends Controller
         }
     }
 
-    public function update(Request $request, $company, $date = null) 
-    {  
+    public function update(Request $request, $company, $date = null)
+    {
         $limit = $request->input('limit', 15);
 
         $companyOwner = Company::isCompanyUser($company, Sentinel::getUser()->id);
@@ -1045,26 +1049,26 @@ class ReservationsController extends Controller
         if ($date != null) {
             $reservations = $reservations->where('company_reservations.date', '=', date('Y-m-d', strtotime($date)));
         }
-        
+
         $reservations = $reservations->first();
 
         if ($companyOwner == TRUE || Sentinel::inRole('admin')) {
             if (count($reservations) == 0 && isset($companyInfo)) {
                 return Redirect::to('admin/reservations/create/'.$companyInfo->slug.'?step=2');
             }
-            
+
             if ($reservations) {
                 $date = \Carbon\Carbon::create(
-                    date('Y', strtotime($reservations->date)), 
-                    date('m', strtotime($reservations->date)), 
+                    date('Y', strtotime($reservations->date)),
+                    date('m', strtotime($reservations->date)),
                     date('d', strtotime($reservations->date))
                 );
             }
 
             return view('admin/'.$this->slugController.'/update', array(
-                'data' => $reservations, 
-                'date' => $date, 
-                'company' => $company, 
+                'data' => $reservations,
+                'date' => $date,
+                'company' => $company,
                 'slugController' => $this->slugController.'/settings/'.$company.($date != null ? '/'.$date : ''),
                 'carbon' => new Carbon,
             ));
@@ -1074,8 +1078,8 @@ class ReservationsController extends Controller
         }
     }
 
-    public function updateAction(Request $request, $company, $date = null) 
-    {  
+    public function updateAction(Request $request, $company, $date = null)
+    {
         $companyOwner = Company::isCompanyUser($company, Sentinel::getUser()->id);
 
         $reservations = CompanyReservation::select(
@@ -1105,19 +1109,19 @@ class ReservationsController extends Controller
                     $endTime = strtotime($request->input('end_time')[$key]);
                     $timeLoop[] = date('H:i', $startTime);
 
-                    while ($startDate <= $endDate) {  
+                    while ($startDate <= $endDate) {
                         // Get all dates between two dates
-                        $startDate = date("Y-m-d", strtotime("+1 day", strtotime($startDate)));  
-                        $dates[] = $startDate;  
-                    }  
+                        $startDate = date("Y-m-d", strtotime("+1 day", strtotime($startDate)));
+                        $dates[] = $startDate;
+                    }
 
-                    while ($startTime < $endTime) {  
+                    while ($startTime < $endTime) {
                         // Get all times between two times
                         $startTime = strtotime('+'.self::$per_time[$request->input('per_time')], $startTime);
                         if ($endTime >= $startTime)  {
-                            $timeLoop[] = date('H:i', $startTime); 
+                            $timeLoop[] = date('H:i', $startTime);
                         }
-                    }  
+                    }
 
                     // Set the amount of available persons per time period in an array.
                     $availablePersons[$key] = array();
@@ -1127,18 +1131,18 @@ class ReservationsController extends Controller
                        $availablePersons[$key][$time] = $request->input('available_persons');
                     }
 
-                    while ($startDate <= $endDate) {  
+                    while ($startDate <= $endDate) {
                         // Get all dates between two dates
-                        $startDate = date("Y-m-d", strtotime("+1 day", strtotime($startDate)));  
-                        $dates[] = $startDate;  
-                    }  
-                }  
+                        $startDate = date("Y-m-d", strtotime("+1 day", strtotime($startDate)));
+                        $dates[] = $startDate;
+                    }
+                }
 
-                foreach ($dates as $date) {   
+                foreach ($dates as $date) {
                     if ($request->has('days')) {
-                        foreach ($request->input('days') as $key => $day) {   
+                        foreach ($request->input('days') as $key => $day) {
                             if (in_array(date('N', strtotime($date)), $day)) {
-                                $i++; 
+                                $i++;
 
                                 $reservationDate[$i] = array(
                                     'created_at' => date('now'),
@@ -1172,13 +1176,13 @@ class ReservationsController extends Controller
                             'extra_reservations' => $request->input('extra_reservations'),
                             'closed_at_time' => $request->input('closed_at_time')
                         )
-                    ); 
-                        
-                    Company::where('id', '=', $company)->update(array('min_saldo' => $request->input('min_saldo'))); 
+                    );
+
+                    Company::where('id', '=', $company)->update(array('min_saldo' => $request->input('min_saldo')));
                 }
             }
-          
-            Alert::success('De instellingen zijn succesvol doorgevoerd.')->persistent('Sluiten');   
+
+            Alert::success('De instellingen zijn succesvol doorgevoerd.')->persistent('Sluiten');
             return Redirect::to('admin/reservations/update/'.$company);
         } else {
             User::getRoleErrorPopup();
@@ -1227,7 +1231,7 @@ class ReservationsController extends Controller
         switch ($request->input('action')) {
             case 'close':
                 if ($request->has('time')) {
-                    if (isset($timeArray)) {                   
+                    if (isset($timeArray)) {
                         foreach ($timeArray as $reservationId => $timeFetch) {
                             CompanyReservation::where('id', '=', $reservationId)
                                    ->update(
@@ -1300,7 +1304,7 @@ class ReservationsController extends Controller
                 $this->validate($request, [
                     'persons' => 'min:1'
                 ]);
-                
+
                 if ($request->has('persons')) {
                     if ($request->has('time')) {
                         foreach ($reservations as $reservation) {
@@ -1340,7 +1344,7 @@ class ReservationsController extends Controller
                                 ;
 
                                 $timesArray = array();
-                                
+
                                 if (count($data) == 1) {
                                     foreach ($data as $reservation) {
                                         foreach (json_decode($reservation->available_persons) as $key => $times) {
@@ -1358,7 +1362,7 @@ class ReservationsController extends Controller
                 }
             break;
         }
-        
+
         return Redirect::to('admin/'.$this->slugController.(isset($company) ? '/'.$company : ''));
     }
 
@@ -1376,7 +1380,7 @@ class ReservationsController extends Controller
         ;
 
         switch ($request->get('action')) {
-            case 'open': 
+            case 'open':
                 if (count($reservations) >= 1) {
                     foreach ($reservations as $reservation) {
                         if (trim($reservation->locked_times) != '') {
@@ -1459,7 +1463,7 @@ class ReservationsController extends Controller
                                 unset($timesArray[$reservation->id][$value]);
                             }
                         }
-                    }   
+                    }
 
                     if (isset($timesArray)) {
                         foreach ($timesArray as $reservationId => $times)  {
@@ -1486,7 +1490,7 @@ class ReservationsController extends Controller
                             if (isset($timesArray[$reservation->id][$key])){
                                 if ($timesArray[$reservation->id][$key] != $value)  {
                                     $timesArray[$reservation->id] = array_except($timesArray[$reservation->id], [$key]);
-                             
+
                                      // Set new  value
                                     array_set($timesArray[$reservation->id] , $key, $value);
                                     ksort($timesArray[$reservation->id]);
@@ -1515,7 +1519,7 @@ class ReservationsController extends Controller
                 }
                 break;
         }
-        
+
         return Redirect::to('admin/'.$this->slugController.'/date/'.$request->input('company').'/'.date('Ymd', strtotime($request->input('date'))));
     }
 
@@ -1545,7 +1549,7 @@ class ReservationsController extends Controller
                 switch ($request->input('status')) {
                     case 'refused':
                         $reservation->status = 'refused';
-                            
+
                         $mailtemplate->sendMail(array(
                             'email' => $reservation->email,
                             'template_id' => 'reservation-refused',
@@ -1576,13 +1580,13 @@ class ReservationsController extends Controller
                         Alert::success('Deze reservering staat nu als geweigerd.')
                             ->persistent('Sluiten')
                         ;
-                            
+
                         $reservation->user_is_paid_back = 1;
                     break;
 
                     case 'reserved-pending':
                         $reservation->status = 'reserved';
-                        
+
                         // Send to client
                         $mailtemplate->sendMail(array(
                             'email' => $reservation->email,
@@ -1610,7 +1614,7 @@ class ReservationsController extends Controller
                 }
 
                 $reservation->save();
-                
+
                 return Redirect::to('admin/reservations/clients/'.$reservation->companyId);
             } else {
                 Alert::error('U heeft niet genoeg rechten om deze reservering te wijzigen.')->persistent('Sluiten');
@@ -1619,7 +1623,7 @@ class ReservationsController extends Controller
             }
         } else {
             Alert::error('Deze reservering bestaat niet.')->persistent('Sluiten');
-        
+
             return Redirect::to('/');
         }
     }
@@ -1636,7 +1640,7 @@ class ReservationsController extends Controller
             $data = $data->orderBy($request->input('sort'), $request->input('order'));
 
             session(['sort' => $request->input('sort'), 'order' => $request->input('order')]);
-        } 
+        }
 
         $data =  $data
             ->where('reservation_date', '!=', '0000-00-00 00:00:00')
@@ -1657,16 +1661,16 @@ class ReservationsController extends Controller
         ;
 
         $guestThirdPartyData = GuestThirdParty::select(
-            DB::raw('(SELECT 
-                        count(id) 
-                     FROM  
-                        guests_third_party 
-                     GROUP BY 
+            DB::raw('(SELECT
+                        count(id)
+                     FROM
+                        guests_third_party
+                     GROUP BY
                         mail_id
                      ) as pending'),
-            DB::raw('(SELECT 
+            DB::raw('(SELECT
                         count(reservations.id)
-                    FROM 
+                    FROM
                         reservations
                     WHERE
                         source IN ("couverts", "seatme", "eetnu")
@@ -1697,7 +1701,7 @@ class ReservationsController extends Controller
         $this->validate($request, array(
             'id' => 'required'
         ));
-        
+
         $companiesQuery = Company::all();
 
         foreach ($companiesQuery as $key => $companiesFetch) {
