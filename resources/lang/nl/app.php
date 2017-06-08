@@ -20,5 +20,6 @@ return array (
   'name' => 'Naam',
   'newsletter' => 'Nieuwsbrief',
   'website' => 'Website',
-  'api_data' => 'API GEGEVENS'
+  'api_data' => 'API GEGEVENS',
+  'save' => 'Opslaan',
 );

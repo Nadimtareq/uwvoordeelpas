@@ -2,8 +2,8 @@
 setlocale(LC_TIME, 'Dutch');
 ?>
 @foreach($data as $result)
-<?php 
-$date = \Carbon\Carbon::create(date('Y', strtotime($result->date)), date('m', strtotime($result->date)), date('d', strtotime($result->date))); 
+<?php
+$date = \Carbon\Carbon::create(date('Y', strtotime($result->date)), date('m', strtotime($result->date)), date('d', strtotime($result->date)));
 
 ?>
 <tr>
@@ -18,7 +18,7 @@ $date = \Carbon\Carbon::create(date('Y', strtotime($result->date)), date('m', st
         {{ $result->companyName }}
     </td>
     <td>
-        <a href="{{ url('account/reservations/'.$result->companySlug.'/user/'.$result->user_id) }}"> 
+        <a href="{{ url('account/reservations/'.$result->companySlug.'/user/'.$result->user_id) }}">
             {{ $result->name }}
         </a>
     </td>
@@ -29,8 +29,8 @@ $date = \Carbon\Carbon::create(date('Y', strtotime($result->date)), date('m', st
         <a href="{{ url('account/reservations/'.$result->companySlug.'/user/'.$result->user_id) }}">{{ $result->phone }}</a>
     </td>
     <td>{{ $result->persons }}</td>
+    <td><i class="euro icon"></i> {{ (float)($result->price_per_guest * $result->persons )  }}</td>
     <td class="text-aligned center">{!! ($result->restaurant_is_paid == 1 ? '<i class="green icon checkmark"></i>' : '<i class="red remove icon"></i>') !!}</td>
     <td><i class="euro icon"></i> {{ (float)$result->saldo }}</td>
-    <td><i class="euro icon"></i> {{ (float)($result->price_per_guest * $result->persons )  }}</td>
 </tr>
 @endforeach

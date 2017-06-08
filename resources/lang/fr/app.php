@@ -20,5 +20,6 @@ return array (
   'time' => 'Temps',
   'newsletter' => 'Bulletin',
   'website' => 'Site Internet',
-  'api_data' => 'API LES DONNÉES'
+  'api_data' => 'API LES DONNÉES',
+  'save' => 'Sauvegarder',
 );

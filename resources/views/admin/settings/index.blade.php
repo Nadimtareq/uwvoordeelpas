@@ -460,6 +460,20 @@
 			</div>
 		</div>
 
+    <h4>{{trans('app.newsletter')}}</h4>
+
+    <div class="two fields">
+      <div class="field">
+          <div class="ui slider checkbox">
+          <input
+              type="checkbox"
+              name="newsletter_dealmail"
+              {{ isset($cronjobSettings['newsletter_dealmail']) ? 'checked="checked"' : '' }}>
+            <label>Verzend Deal Nieuwsbrief aan alle gebruikers die zijn aangemeld <span class="ui red small header color">nieuw</span></label>
+        </div>
+      </div>
+    </div>
+
 		<br /><br />
 
 		<button class="ui tiny button" type="submit"><i class="plus icon"></i> Opslaan</button>
@@ -723,9 +737,11 @@
 
                 @foreach($citiesData as $data)
                   <?php
-                    $hoursValue = $dataArray[$data->id]["time"];
-                    $daysValue = $dataArray[$data->id]["date"];
-                    $statusValue = $dataArray[$data->id]["status"];
+                    if(!empty($dataArray)){
+                      $hoursValue = $dataArray[$data->id]["time"];
+                      $daysValue = $dataArray[$data->id]["date"];
+                      $statusValue = $dataArray[$data->id]["status"];
+                    }
                   ?>
                     <tr>
                         <td>{{ $data->name }}</td>

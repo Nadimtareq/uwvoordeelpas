@@ -29,7 +29,7 @@ Route::group(array('middleware' => 'userInfo'), function () {
 });
 
 Route::get('foor', function() {
-   
+
     Artisan::call('daisycon:affiliate', [
     ]);
 });
@@ -42,7 +42,7 @@ Route::group(array('prefix' => 'compare', 'middleware' => 'userInfo'), function 
     Route::get('building', 'CompareController@building');
     Route::get('law', 'CompareController@law');
     Route::get('travel', 'CompareController@travel');
-    Route::get('care', 'CompareController@care');   
+    Route::get('care', 'CompareController@care');
 
 });
 /**
@@ -143,7 +143,7 @@ Route::group(array('prefix' => 'tegoed-sparen',  'middleware' => 'userInfo'), fu
 Route::group(array('middleware' => 'userInfo'), function() {
     Route::get('restaurant/{slug}', 'RestaurantController@index');
     Route::get('landingpage/{slug}', 'RestaurantController@landingpage');
-    
+
     ## Post routes - Contact ##
     Route::post('contact/{slug}', 'RestaurantController@contact');
 
@@ -218,8 +218,8 @@ Route::group(array('middleware' => array('auth', 'userInfo')), function () {
         Route::post('reservations', 'AccountController@reservationsAction');
         Route::get('reserve-futuredeal/{deal_id}', 'AccountController@reserveFutureDeal');
         Route::post('reserve-futuredeal/{deal_id}', 'AccountController@processReserveFutureDeal');
-        
-        Route::post('reviews', 'AccountController@reviewsDeleteAction');        
+
+        Route::post('reviews', 'AccountController@reviewsDeleteAction');
         Route::post('reviews/edit/{id}', 'AccountController@reviewsUpdateAction');
 
         # Favorite #
@@ -304,7 +304,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', '
 
         Route::post('publish/{slug?}', 'Admin\TranslationController@postPublish');
         Route::post('import/{slug?}', 'Admin\TranslationController@postImport');
-    });  
+    });
 
     # Newsletter #
     Route::group(array('prefix' => 'newsletter'), function () {
@@ -363,7 +363,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', '
         Route::post('/', 'Admin\TransactionsController@indexAction');
         Route::post('create', 'Admin\TransactionsController@createAction');
         Route::post('update/{slug}', 'Admin\TransactionsController@updateAction');
-    });   
+    });
 
     # Reservations #
     Route::group(array('prefix' => 'reservations'), function () {
@@ -423,6 +423,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', '
         Route::get('update/{id}', 'Admin\UsersController@update');
         Route::get('login/{id}', 'Admin\UsersController@login');
         Route::get('saldo/reset/{id}', 'Admin\UsersController@resetSaldo');
+        Route::get('unsubscribe/{id}', 'Admin\UsersController@unsubscribe');
 
         Route::post('create', 'Admin\UsersController@createAction');
         Route::post('update/{id}', 'Admin\UsersController@updateAction');
@@ -487,7 +488,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', '
         Route::post('update/{id}', 'Admin\AffiliatesController@updateAction');
         Route::post('delete', 'Admin\AffiliatesController@deleteAction');
     });
-    
+
     # Pages #
     Route::group(array('prefix' => 'pages'), function () {
         Route::get('/', 'Admin\PagesController@index');
@@ -521,7 +522,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', '
         Route::post('delete', 'Admin\ContentsController@deleteAction');
     });
 
-    # FAQ # 
+    # FAQ #
     Route::group(array('prefix' => 'faq'), function () {
         Route::get('/', 'Admin\FaqController@index');
         Route::get('create', 'Admin\FaqController@create');
@@ -532,14 +533,14 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', '
         Route::post('delete', 'Admin\FaqController@deleteAction');
     });
 
-    # FAQ # 
+    # FAQ #
     Route::group(array('prefix' => 'faq/categories'), function () {
         Route::get('/', 'Admin\FaqCategoryController@indexParent');
         Route::get('create/parent', 'Admin\FaqCategoryController@createParent');
         Route::get('update/child/{id}', 'Admin\FaqCategoryController@updateChild');
         Route::get('update/parent/{id}', 'Admin\FaqCategoryController@updateParent');
         Route::get('children', 'Admin\FaqCategoryController@indexChild');
-        Route::get('create/child', 'Admin\FaqCategoryController@createChild'); 
+        Route::get('create/child', 'Admin\FaqCategoryController@createChild');
 
         Route::post('create/child', 'Admin\FaqCategoryController@createChildAction');
         Route::post('create/parent', 'Admin\FaqCategoryController@createParentAction');
@@ -570,7 +571,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', '
     # Reservations #
     Route::group(array('prefix' => 'reservations'), function () {
         Route::get('emails', 'Admin\ReservationsController@emails');
-        
+
         Route::post('emails', 'Admin\ReservationsController@emailsAction');
         Route::post('date/update', 'Admin\ReservationsController@dateUpdateAction');
     });
@@ -724,7 +725,3 @@ Route::get('/development12345', 'DevelopmentController@index');
 
 Route::get('/dev/viewdata', 'DevelopmentController@viewdata');
 Route::post('/dev/rundata', 'DevelopmentController@rundata');
-
-
-
-

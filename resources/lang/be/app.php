@@ -20,6 +20,7 @@ return array (
   'time' => 'час',
   'newsletter' => 'бюлетэнь',
   'website' => 'вэб-сайт',
-  'api_data' => 'API DATA'
+  'api_data' => 'API DATA',
+  'save' => 'захаваць',
 
 );

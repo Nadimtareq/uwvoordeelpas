@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use Redirect;
 
-class UsersController extends Controller 
+class UsersController extends Controller
 {
 
     public function __construct()
@@ -26,7 +26,7 @@ class UsersController extends Controller
         $this->companies = Company::where('no_show', '=', 0)->get();
     }
 
-    public function stristrArray($haystack, $needle) 
+    public function stristrArray($haystack, $needle)
     {
         if (!is_array($haystack)) {
             return false;
@@ -38,7 +38,7 @@ class UsersController extends Controller
             }
         }
     }
- 
+
     public function index(Request $request)
     {
         $preferences = new Preference();
@@ -80,13 +80,13 @@ class UsersController extends Controller
             switch ($request->input('source')) {
                 case 'wifi':
                     $data = $data
-                        ->rightJoin('guests_wifi', 'guests_wifi.email', '=', 'users.email')  
+                        ->rightJoin('guests_wifi', 'guests_wifi.email', '=', 'users.email')
                     ;
                     break;
-                
+
                 default:
                      $data = $data
-                        ->leftJoin('reservations', 'reservations.user_id', '=', 'users.id')  
+                        ->leftJoin('reservations', 'reservations.user_id', '=', 'users.id')
                         ->where('reservations.source', '=', $request->input('source'))
                         ->groupBy('users.id')
                     ;
@@ -100,7 +100,7 @@ class UsersController extends Controller
                     break;
                 case '1':
                     $data = $data->where('users.extension_downloaded', '=', 1);
-                    break;                
+                    break;
             }
         }
         if ($request->has('sort') && $request->has('order')) {
@@ -128,38 +128,38 @@ class UsersController extends Controller
         $data->setPath($this->slugController);
 
         # Redirect to last page when page don't exist
-        if ($request->input('page') > $data->lastPage()) { 
+        if ($request->input('page') > $data->lastPage()) {
             $lastPageQueryString = json_decode(json_encode($request->query()), true);
             $lastPageQueryString['page'] = $data->lastPage();
 
             return Redirect::to($request->url().'?'.http_build_query($lastPageQueryString));
         }
-        
+
         $queryString = $request->query();
         unset($queryString['source']);
         unset($queryString['has_saving']);
         unset($queryString['limit']);
 
         return view('admin/'.$this->slugController.'/index', [
-            'data' => $data, 
-            'regio' => $regio['regio'], 
-            'countItems' => $dataCount, 
+            'data' => $data,
+            'regio' => $regio['regio'],
+            'countItems' => $dataCount,
             'slugController' => $this->slugController,
             'queryString' => $queryString,
             'paginationQueryString' => $request->query(),
             'limit' => $request->input('limit', 15),
-            'section' => $this->section, 
-            'currentPage' => 'Overzicht',     
-            'companies' => $this->companies   
+            'section' => $this->section,
+            'currentPage' => 'Overzicht',
+            'companies' => $this->companies
         ]);
     }
 
     public function create()
     {
         return view('admin/'.$this->slugController.'/create', [
-            'section' => $this->section, 
+            'section' => $this->section,
             'slugController' => $this->slugController,
-            'section' => $this->section, 
+            'section' => $this->section,
             'currentPage' => 'Nieuwe gebruiker',
             'roles' => $this->roles
         ]);
@@ -171,9 +171,9 @@ class UsersController extends Controller
 
         return view('admin/'.$this->slugController.'/update', [
             'data' => $data,
-            'section' => $this->section, 
+            'section' => $this->section,
             'slugController' => $this->slugController,
-            'section' => $this->section, 
+            'section' => $this->section,
             'currentPage' => 'Wijzig gebruiker',
             'roles' => $this->roles
         ]);
@@ -206,24 +206,24 @@ class UsersController extends Controller
         $user->price = json_encode($request->input('price'));
         $user->preferences = json_encode($request->input('preferences'));
         $user->discount = json_encode($request->input('discount'));
-        
+
         if ($request->has('role')) {
             switch ($request->input('role')) {
                 case 5:
                     $role = Sentinel::findRoleByName('Callcenter');
                     $role->users()->attach($user);
                     break;
-                    
+
                 case 4:
                     $role = Sentinel::findRoleByName('Bediening');
                     $role->users()->attach($user);
                     break;
-                
+
                 case 2:
                     $role = Sentinel::findRoleByName('Bedrijf');
                     $role->users()->attach($user);
                     break;
-                
+
                 case 3:
                     $role = Sentinel::findRoleByName('Admin');
                     $role->users()->attach($user);
@@ -233,7 +233,7 @@ class UsersController extends Controller
 
         $user->save();
 
-        Alert::success('Deze gebruiker is succesvol aangemaakt.')->persistent('Sluiten');   
+        Alert::success('Deze gebruiker is succesvol aangemaakt.')->persistent('Sluiten');
         return Redirect::to('admin/'.$this->slugController.'/update/'.$user->id);
     }
 
@@ -263,9 +263,9 @@ class UsersController extends Controller
         $user->discount = json_encode($request->input('discount'));
 
         $roleArray = array(
-            'Callcenter', 
-            'Bediening', 
-            'Bedrijf', 
+            'Callcenter',
+            'Bediening',
+            'Bedrijf',
             'Admin'
         );
 
@@ -293,7 +293,7 @@ class UsersController extends Controller
                     $role = Sentinel::findRoleByName('Bedrijf');
                     $role->users()->attach($user);
                     break;
-                
+
                 case 3:
                     $role = Sentinel::findRoleByName('Admin');
                     $role->users()->attach($user);
@@ -304,10 +304,10 @@ class UsersController extends Controller
         if ($request->has('password')) {
             Sentinel::update($user, array('password' => $request->input('password')));
         }
-        
+
         $user->save();
-    	  
-        Alert::success('Deze gebruiker is succesvol aangepast.')->persistent('Sluiten');   
+
+        Alert::success('Deze gebruiker is succesvol aangepast.')->persistent('Sluiten');
         return Redirect::to('admin/'.$this->slugController.'/update/'.$user->id);
     }
 
@@ -431,6 +431,19 @@ class UsersController extends Controller
         }
 
         return Redirect::to('admin/users');
- 
+
+    }
+
+    public function unsubscribe($id){
+      $user = Sentinal::findById($id);
+      if(!empty($user){
+        $user->newsletter=0;
+        $user->save();
+        Alert::success('Afgesloten Nieuwsbrief succesvol.')->persistent('Sluiten');
+      }
+      else {
+          alert()->error('', 'Kan nu niet uitschrijven. Er is iets fout gegaan..')->persistent('Sluiten');
+      }
+      return Redirect::to('admin/users');
     }
 }

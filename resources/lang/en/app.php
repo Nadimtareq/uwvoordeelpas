@@ -20,5 +20,6 @@ return array (
   'time' => 'Time',
   'newsletter' => 'NEWSLETTER',
   'website' => 'WEBSITE',
-  'api_data' => 'API DATA'
+  'api_data' => 'API DATA',
+  'save' => 'Save',
 );

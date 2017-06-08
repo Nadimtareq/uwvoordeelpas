@@ -35,7 +35,7 @@
               </div>
               <div class="field">
                 <label for="newsletter">{{trans('app.newsletter')}}</label>
-                {{Form::select("newsletter", array('' => 'Not selected', '0' => 'OFF', '1' => 'ON'), $data->newsletter, ['class' => 'ui normal icon search selection fluid dropdown margin-0','required' => 'required'])}}
+                {{Form::select("newsletter", array('' => 'Not selected', '0' => 'niet toevoegen', '1' => 'toevoegen'), $data->newsletter, ['class' => 'ui normal icon search selection fluid dropdown margin-0','required' => 'required'])}}
               </div>
             </div>
             @endif

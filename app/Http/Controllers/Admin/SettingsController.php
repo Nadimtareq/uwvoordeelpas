@@ -115,6 +115,7 @@ class SettingsController extends Controller
             'zanox_pw',
             'hotspot_pw',
             'callcenter_reminder',
+            'newsletter_dealmail',
             'callcenter_reminder_status',
         );
 

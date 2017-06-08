@@ -48,8 +48,8 @@ class NewsletterEmail extends Command
      */
     public function handle()
     {
-        $commandName = 'newsletter_email';
-
+        $commandName = 'newsletter_dealmail';
+        Setting::set('cronjobs.active.'.$commandName, 0);
         if (Setting::get('cronjobs.'.$commandName) == NULL) {
             echo 'This command is not working right now. Please activate this command.';
         } else {
@@ -63,10 +63,11 @@ class NewsletterEmail extends Command
                 try {
                     $this->sendNewsletter();
                 } catch (Exception $e) {
-                    $this->line('Er is een fout opgetreden. '.$this->signature);
+                    $this->line('Er is een fout opgetreden. '.$this->signature.$e);
 
                     Mail::raw('Er is een fout opgetreden:<br /><br /> '.$e, function ($message) {
-                        $message->to(getenv('DEVELOPER_EMAIL'))->subject('Fout opgetreden: '.$this->signature);
+                        // $message->to(getenv('DEVELOPER_EMAIL'))->subject('Fout opgetreden: '.$this->signature);
+                        $message->to('prateek.darmwal@gmail.com')->subject('Fout opgetreden: '.$this->signature);
                     });
                 }
                 // End cronjob
