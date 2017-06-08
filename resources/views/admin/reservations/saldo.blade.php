@@ -171,9 +171,8 @@
             <tr>
                 <th data-slug="date" data-column-order="desc" class="three wide">Datum en tijd</th>
                 <th data-slug="companyName" data-column-order="desc" class="two wide">Bedrijf</th>
-                <th data-slug="name" data-column-order="desc" class="two wide">Naam</th>
-                <th data-slug="email" data-column-order="desc" class="two wide">Email</th>
-                <th data-slug="phone" data-column-order="desc" class="two wide">Telefoon</th>
+                <th data-slug="name" data-column-order="desc" class="two wide">Gereserveerd als</th>
+                <th data-slug="phone" data-column-order="desc" class="two wide">Omschrijving</th>
                 <th data-slug="persons" data-column-order="desc" class="one wide">Personen</th>
                 <th data-slug="saldo" class="three wide">Kosten</th>
                 <th data-slug="disabled" class="disabled one wide">Betaald</th>

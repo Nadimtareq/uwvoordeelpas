@@ -436,7 +436,7 @@ class UsersController extends Controller
 
     public function unsubscribe($id){
       $user = Sentinal::findById($id);
-      if(!empty($user){
+      if(!empty($user)){
         $user->newsletter=0;
         $user->save();
         Alert::success('Afgesloten Nieuwsbrief succesvol.')->persistent('Sluiten');

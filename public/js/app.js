@@ -53920,6 +53920,7 @@ $(document).ready(function() {
 				method: 'POST',
 				serializeForm: true,
 				onComplete: function(response) {
+				    
                     if (response['err_code'] == 400) {
                         var output = '<div class="header1">u bent vergeten om de beveiliging aan te vinken</div><ul class="list">';
 

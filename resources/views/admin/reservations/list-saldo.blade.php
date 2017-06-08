@@ -2,7 +2,9 @@
 setlocale(LC_TIME, 'Dutch');
 ?>
 @foreach($data as $result)
+
 <?php
+
 $date = \Carbon\Carbon::create(date('Y', strtotime($result->date)), date('m', strtotime($result->date)), date('d', strtotime($result->date)));
 
 ?>
@@ -21,12 +23,14 @@ $date = \Carbon\Carbon::create(date('Y', strtotime($result->date)), date('m', st
         <a href="{{ url('account/reservations/'.$result->companySlug.'/user/'.$result->user_id) }}">
             {{ $result->name }}
         </a>
-    </td>
-    <td>
         <a href="{{ url('account/reservations/'.$result->companySlug.'/user/'.$result->user_id) }}">{{ $result->email }}</a>
-    </td>
-    <td>
         <a href="{{ url('account/reservations/'.$result->companySlug.'/user/'.$result->user_id) }}">{{ $result->phone }}</a>
+
+    </td>
+
+    <td>
+        {{ $result->deal_name }}
+
     </td>
     <td>{{ $result->persons }}</td>
     <td><i class="euro icon"></i> {{ (float)($result->price_per_guest * $result->persons )  }}</td>

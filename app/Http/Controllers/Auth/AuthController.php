@@ -297,7 +297,7 @@ class AuthController extends Controller
                         $response = json_decode($response);
                         if ($response->success == true) {
 
-                            return Response::json(array('success' => 1));
+                            return Response::json(array('success' => 1, 'err_code'=>200));
 
                         }else {
                             Sentinel::logout();
@@ -312,14 +312,15 @@ class AuthController extends Controller
                             ->where('email', $email)
                             ->increment('attempts', 1);
                         return Response::json(array(
-                            'name' => 'Dit e-mailadres en het opgegeven wachtwoord komen niet overeen met elkaar.'
+                            'name' => 'Dit e-mailadres en het opgegeven wachtwoord komen niet overeen met elkaar.',
+                            'err_code'=>200
                         ));
 
                     }
                 } catch (ThrottlingException $e) {
                     return Response::json(array(
                         'throttling' => 1
-                    ));
+                  ));
                 } catch (NotActivatedException $e) {
                     return Response::json(array(
                         'activation' => 1
