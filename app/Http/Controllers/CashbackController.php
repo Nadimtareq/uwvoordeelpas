@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Response;
 
 use Alert;
 use App;
@@ -493,6 +494,19 @@ class CashbackController extends Controller
         Alert::success('Je hebt succesvol deze  webwinkel uit je favorieten verwijderd.')->persistent('Sluiten');   
 
         return Redirect::to('tegoed-sparen/company/'.$slug);    
+    }
+
+    public function getSubCat(Request $request,$slug){
+        $id=Category::select('id')->where('slug',$slug)->first();
+
+        $subcate=Category::select(
+            'categories.id as catId',
+            'categories.slug as slug',
+            'categories.name as name')->where('subcategory_id',$id->id)->get();
+            //->leftJoin('categories as subcategories', 'subcategories.subcategory_id', '=', 'categories.id')->get();
+        return Response::json(array(
+            'subcat' => $subcate
+        ));
     }
 
 }

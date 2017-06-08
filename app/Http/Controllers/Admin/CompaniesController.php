@@ -126,6 +126,7 @@ class CompaniesController extends Controller
         unset($queryString['limit']);
         unset($queryString['regio']);
 
+
         return view('admin/'.$this->slugController.'/index', [
             'data' => $data,
             'countItems' => $dataCount,
@@ -135,6 +136,7 @@ class CompaniesController extends Controller
             'limit' => $request->input('limit', 15),
             'section' => $this->section,
             'currentPage' => 'Overzicht'
+
         ]);
     }
 

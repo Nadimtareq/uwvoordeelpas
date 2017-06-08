@@ -30,6 +30,7 @@ use App\Models\FutureDeal;
 class RestaurantController extends Controller {
 
     public function index($slug, Request $request) {
+
         $company = Company::with('media')
                 ->where('no_show', 0)
                 ->where('slug', $slug)
@@ -441,9 +442,9 @@ class RestaurantController extends Controller {
                     alert()->error($message_str, '&nbsp;')->html()->persistent('Sluiten');
                     return redirect('future-deal/' . $slug . '?deal=' . $deal_id);
                 }
-                print_r($request->input('persons'));
-              $persons=$this->dcrypt($request->input('persons'));
-                print_r($persons);exit;
+
+              $persons=$request->input('persons');
+
                 //$deal_saldo = (float) MoneyHelper::getAmount($request->input('saldo'));
                 $deal_saldo=(float)MoneyHelper::getAmount($persons*$deal->price);
                 if ($user) {

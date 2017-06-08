@@ -55,12 +55,12 @@
 					<div class="field">
 						<div id="personsField" class="ui normal compact selection dropdown persons searchReservation calendarInput">
 							<input type="hidden" name="persons" value="{{ ($userAuth && $userInfo->kids != 'null' && $userInfo->kids != NULL && $userInfo->kids != '[""]' ? $userInfo->kids : 1) }}">
-																
+
 							<div class="default text">Personen</div>
 							<i class="dropdown icon"></i>
 
 							<div class="menu">
-								@for ($i = 1; $i <= 10; $i++) 
+								@for ($i = 1; $i <= 10; $i++)
 								<div class="item" data-value="{{ $i }}">{{ $i }} {{ $i == 1 ? 'persoon' : 'personen' }}</div>
 								@endfor
 							</div>
@@ -104,9 +104,9 @@
 
 	<script type="text/javascript">
 		var activateAjax = 'restaurant';
-                var baseUrl = {!! json_encode(url('/')."/") !!};   
+                var baseUrl = {!! json_encode(url('/')."/") !!};
 	</script>
-    <script type="text/javascript" src="{{ asset('js/jquery-1.11.3.min.js?rand='.str_random(40)) }}"></script> 
+    <script type="text/javascript" src="{{ asset('js/jquery-1.11.3.min.js?rand='.str_random(40)) }}"></script>
     <script type="text/javascript" src="{{ asset('js/app.js?rand='.str_random(40)) }}"></script>
 </body>
 </html>

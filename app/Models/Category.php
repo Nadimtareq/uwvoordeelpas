@@ -75,5 +75,9 @@ class Category extends Model implements HasMediaConversions
 
     	return $item;
     }
+
+    public function sub_cat(){
+        return $this->hasMany('App\Models\Category', 'subcategory_id');
+    }
     
 }

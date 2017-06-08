@@ -34,6 +34,7 @@
         </form>
     </div>
 </div>
+<script src="{{ asset('js/jquery-1.11.3.min.js') }} "></script>
 
 @if (isset($mediaItems))
 @foreach($mediaItems as $id => $ad)
@@ -56,12 +57,12 @@
                     <input id="ac-{{$i}}" name="accordion-1" type="checkbox" />
                     <label for="ac-{{$i}}">{{ $category['name'] }}</label>
                     @else
-                    
+
                     <a href="{{ url('tegoed-sparen/category/'.$category['id'].'/'.$category['slug']) }}" class="firstitem">
                         {{ $category['name'] }}
                     </a>
                     @endif
-                    
+
                     <article class="ac-small">
                         @foreach($category['subcategories'] as $subcategory)
                         @if ($subcategory['name'] != NULL && $subcategory['countSubCategoryPrograms'] >= 1)
@@ -118,3 +119,26 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+
+        $(".category").on('change', function(e) {
+            slug=$("select.category option").filter(":selected").val();
+            $.ajax({
+                url: "tegoed-sparen/get-sub-cat/"+slug,
+                type: 'GET',
+                dataType: 'json', // added data type
+                success: function(res) {
+                    console.log(res['subcat'][0].name);
+                    $('.subcategory option').remove();
+                    $('.subcategory').append($('<option>').text('Subcategory').attr('value', 0));
+                    $.each(res['subcat'], function(index, value) {
+                        $('.subcategory').append($('<option>').text(value.slug).attr('value', value.name));
+                    });
+                }
+            });
+        });
+
+    });
+</script>

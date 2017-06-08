@@ -24,9 +24,9 @@
 			  	<textarea><iframe src="{{ url('widget/calendar/restaurant/'.$company->slug) }}" width="500" height="550" frameborder="0"></iframe></textarea><br />
 			  	<h5>Voorbeeld</h5>
 
-				<iframe src="{{ url('widget/calendar/restaurant/'.$company->slug) }}" 
-						width="100%" 
-						height="550" 
+				<iframe src="{{ url('widget/calendar/restaurant/'.$company->slug) }}"
+						width="100%"
+						height="550"
 						frameborder="0">
 				</iframe>
 

@@ -55,7 +55,7 @@ class ReservationController extends Controller {
         return Redirect::to('restaurant/reservation/' . $slug . '?' . http_build_query($data));
     }
 
-    public function reservationStepTwo(Request $request, $slug) {   
+    public function reservationStepTwo(Request $request, $slug) {
         $time = date('H:i', strtotime($request->input('time')));
         $date = date('Y-m-d', strtotime($request->input('date')));
         $deal = NULL;
@@ -91,7 +91,8 @@ class ReservationController extends Controller {
                 }
             } 
                 
-            if (isset($reservationTimes[$time])) {                
+            if (isset($reservationTimes[$time])) {
+
                 return view('pages/reservation', [
                     'discountMessage' => Company::getDiscountMessage($company->days, $company->discount, $company->discount_comment),
                     'company' => $company,

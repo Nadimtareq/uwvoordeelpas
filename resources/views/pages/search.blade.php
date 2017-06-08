@@ -20,13 +20,13 @@
 
         @if(Request::has('time'))
             <input type="hidden" name="time_format" value="<?php echo date('Hi', strtotime(Request::get('time'))); ?>" />
-        @endif       
+        @endif
         <input type="hidden" id="typePage" name="typePage" value="1" />
         <input type="hidden" name="q" value="<?php echo Request::get('q'); ?>" />
         @if(Request::has('persons'))
             <input type="hidden" name="persons" value="<?php echo Request::get('persons'); ?>" />
         @endif
-		
+
 		<div class="content">
 			 <div class="static-menu row">
 			 	<div class="jsearch col-md-2 col-sm-2 col-xs-6">
@@ -41,42 +41,42 @@
                        @endif
 				</div>
 				<div class="jsearch col-md-2 col-sm-2 col-xs-6" >
-				 {{ Form::select('preference[]', 
-								(isset($preference[1]) ? $preference[1] : array()),  
-								(Request::has('preference') ? Request::get('preference') : ''), 
+				 {{ Form::select('preference[]',
+								(isset($preference[1]) ? $preference[1] : array()),
+								(Request::has('preference') ? Request::get('preference') : ''),
 								array('class' => 'multipleSelect', 'data-placeholder' => 'Voorkeuren', 'multiple' => 'multiple')) }}
-		
+
 				</div>
 				<div class="jsearch col-md-2 col-sm-2 col-xs-6">
-				{{  Form::select('kitchen[]', 
-								(isset($preference[2]) ? $preference[2] : array()),  
-								(Request::has('kitchen') ? Request::get('kitchen') : ''),  
+				{{  Form::select('kitchen[]',
+								(isset($preference[2]) ? $preference[2] : array()),
+								(Request::has('kitchen') ? Request::get('kitchen') : ''),
 								array('class' => 'multipleSelect', 'data-placeholder' => 'Keuken', 'multiple' => 'multiple')) }}
 				</div>
 				<div class="jsearch col-md-2 col-sm-2 col-xs-6">
-				{{ Form::select('price[]', 
-                                        (isset($preference[4]) ? $preference[4] : array()),  
-                                        (Request::has('price') ? Request::get('price') : ''), 
+				{{ Form::select('price[]',
+                                        (isset($preference[4]) ? $preference[4] : array()),
+                                        (Request::has('price') ? Request::get('price') : ''),
                                         array('class' => 'multipleSelect', 'data-placeholder' => 'Soort', 'multiple' => 'multiple')) }}
 				</div>
 				<!--<div class="jsearch col-md-2 col-sm-2 col-xs-6">
-				 {{ Form::select('discount[]', 
-                                        (isset($preference[5]) ? $preference[5] : array()),  
-                                        (Request::has('discount') ? Request::get('discount') : ''),  
+				 {{ Form::select('discount[]',
+                                        (isset($preference[5]) ? $preference[5] : array()),
+                                        (Request::has('discount') ? Request::get('discount') : ''),
                                         array('class' => 'multipleSelect', 'data-placeholder' => 'Korting', 'multiple' => 'multiple')) }}
-										
+
 				</div>-->
 				<div class="jsearch col-md-2 col-sm-2 col-xs-6">
-				{{ Form::select('allergies[]', 
-                                                (isset($preference[3]) ? $preference[3] : array()),  
-                                                (Request::has('allergies') ? Request::get('allergies') : ''), 
+				{{ Form::select('allergies[]',
+                                                (isset($preference[3]) ? $preference[3] : array()),
+                                                (Request::has('allergies') ? Request::get('allergies') : ''),
                                                 array('class' => 'multipleSelect', 'data-placeholder' => 'Allergieen',  'multiple' => 'multiple')) }}
 				</div>
 				<div class="jsearch col-md-2 col-sm-2 col-xs-12">
 				  <input type="submit" class="ui bluelink fluid filter button" value="Filteren" />
 				</div>
 			</div>
-			
+
 		</div>
 		 <?php echo Form::close() ?>
 </div>
@@ -112,7 +112,7 @@
 								<a href="#" class="more">Reserveer nu</a>
 							</div>
 						</li>
-						
+
 					</ul>
 					<div class="pages">
 						<a href="#" class="prev2">&lt;</a>
@@ -129,13 +129,13 @@
 		</div>
 </section>
 -->
-			
+
 <section  id="prices" >
   <div class="content">
     <div class="col-sm-12 col-ms1">
         <div class="col-sm-3 col5">
             @if (count($companies) >= 1)
-                @include('company-list') 
+                @include('company-list')
 
                 @if (count($recommended) >= 1)
                     <h3 class="ui header">Zie ook</h3>
@@ -148,7 +148,7 @@
                         <div class="ui normal floating icon selection dropdown">
                             <i class="dropdown right floated icon"></i>
                             <div class="text">{{ $limit }} resultaten weergeven</div>
-                         
+
                             <div class="menu">
                                 <a class="item" href="{{ url('search?'.http_build_query(array_add($queryString, 'limit', '15'))) }}">15</a>
                                 <a class="item" href="{{ url('search?'.http_build_query(array_add($queryString, 'limit', '30'))) }}">30</a>

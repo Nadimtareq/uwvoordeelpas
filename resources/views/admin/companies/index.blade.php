@@ -104,8 +104,7 @@
                         <td>
                             <a href="{{ url('admin/reservations/saldo/'.$result->slug) }}">
                                 &euro;{{ number_format($result->saldoCompany, 2, '.', '') }}
-                            </a>
-                        </td>
+
                         <td>
                             <a href="{{ url('admin/'.$slugController.'/update/'.$result->id.'/'.$result->slug) }}" class="ui icon tiny button">
                                 {{ $result->contact_name }}

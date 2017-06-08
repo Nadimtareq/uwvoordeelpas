@@ -135,6 +135,7 @@ Route::group(array('prefix' => 'tegoed-sparen',  'middleware' => 'userInfo'), fu
     Route::get('favorite/{id}/{slug}', 'CashbackController@favorite')->middleware(['auth']);
     Route::get('delete-favorite/{id}/{slug}', 'CashbackController@deleteFavorite')->middleware(['auth']);
     Route::get('search', 'CashbackController@search');
+    Route::get('get-sub-cat/{slug}', 'CashbackController@getSubCat');
 });
 
 /**
