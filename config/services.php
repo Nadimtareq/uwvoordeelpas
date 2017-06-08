@@ -15,8 +15,8 @@ return [
     */
 
     'mailgun' => [
-        'domain' => env('mail.uwvoordeelpas.nl'),
-        'secret' => env('https://api.mailgun.net/v3/mail.uwvoordeelpas.nl'),
+        'domain' => env('MAILGUN_DOMAIN'),
+        'secret' => env('MAILGUN_SECRET'),
     ],
 
     'mandrill' => [
