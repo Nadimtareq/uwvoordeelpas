@@ -295,7 +295,7 @@
                     $fileName = 'deal_' . $data->id . '.' . $extension; // renameing image
                     File::delete($fileName);
                     Input::file('image')->move($destinationPath, $fileName);
-                    chmod($destinationPath.$fileName,777);
+                    chmod($destinationPath.$fileName,0777);
 
                 }
 

@@ -133,6 +133,7 @@ while ($st->lte($dt)) {
 									</select>
 								</li>
 							</ul>
+
 							@if($user)
 								<button  id="submitField"  class="more">Reserveer nu</button>
 							@else

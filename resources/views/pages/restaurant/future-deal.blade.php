@@ -21,7 +21,7 @@
             <div class="row">
                 <div class="col-md-3">
                     @if(!empty($mediaItems) && isset($mediaItems[0]))
-                        <img id="image" src="{{ url('images/deals/'.$deal->image) }}" class="img-responsive" alt="" />
+                        <img id="image" src="{{ url('images/deals/'.$deal->image) }}" class="img-responsive1 img_responsive" alt="" />
                     @endif
                 </div>
                 <?php if ($deal): ?>
@@ -71,8 +71,8 @@
                 @if ($userAuth == FALSE)
                     <div class="column" style="position: relative; left: -14px;">
                         <div class="field">
-                            <label>Nieuwsbrief</label>
-                            <?php echo Form::select('city[]', (isset($regio) && !empty($regio)) ? $regio : [], '', array('class' => 'regionSelect', 'multiple' => 'multiple', 'data-placeholder' => 'Maak uw keuze')); ?>
+                            <label>Nieuwsbrief1</label>
+                            <?php echo Form::select('city[]', (isset($regio) && !empty($regio)) ? $regio : [], '', array('class' => 'regionSelect regionSelectResponse', 'multiple' => 'multiple', 'data-placeholder' => 'Maak uw keuze')); ?>
                         </div>
                     </div>
                 @else

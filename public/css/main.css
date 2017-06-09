@@ -4326,6 +4326,12 @@ padding-top: 90px;
         height:auto !important;
 
     }
+    .regionSelectResponse{
+        width:212px !important;
+    }
+    .ui.grid > [class*="three column"].row > .column {
+        width: 100% !important;
+    }
 
 }
 .wrap{

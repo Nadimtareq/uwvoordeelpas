@@ -33,6 +33,7 @@ $arrayMerge = array_filter(array_merge($breadcrumbArray1, $breadcrumbArray2, $br
                 <div class="col-sm-4 col-xs-12 col4">
                     <a href="{{ url('search?regio='.$city->slug) }}">
                         @if (isset($media[0]) && $FileHelper::is_url_exist(url(''.$media[0]->getUrl('thumb'))))
+
                         <img class="ui image" src="{{ url(''.$media[0]->getUrl('thumb')) }}" alt="{{ $city->name }}">
                         @else
                         <img class="ui image" src="{{ url('images/placeholdimage.png') }}" alt="{{ $city->name }}" data-url="{{ url(''.$media[0]->getUrl('thumb')) }}">

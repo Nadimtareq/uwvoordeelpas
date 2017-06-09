@@ -53933,6 +53933,7 @@ $(document).ready(function() {
                      var output = '<div class="header1">Er zijn fouten opgetreden</div><ul class="list">';
 
                     for (var i in response) {
+                        if(response[i]!==200)
                         output += '<li>' + response[i] + '</li>';
                     }
 

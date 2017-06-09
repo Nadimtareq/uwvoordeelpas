@@ -72,6 +72,8 @@
                                 <i class="pencil icon"></i>
                             </a>
                         </td>
+
+
                 	</tr>
                 	@endforeach
                  @else

@@ -273,11 +273,12 @@ class AuthController extends Controller
         );
 
         $attempts = User::select('attempts','id')->where('email',$email)->first();
-        if($attempts->attempts<10 || $attempts->attempts=='') {
-            $data = array(
-                'secret' => getenv('CAPTCHA_SECRET'),
-                'response' => $request->input("g-recaptcha-response")
-            );
+        if($attempts) {
+            if ($attempts->attempts < 10 || $attempts->attempts == '') {
+                $data = array(
+                    'secret' => getenv('CAPTCHA_SECRET'),
+                    'response' => $request->input("g-recaptcha-response")
+                );
 
                 try {
                     if ($request->input('remember') == 1) {
@@ -296,14 +297,16 @@ class AuthController extends Controller
                         $response = curl_exec($verify);
                         $response = json_decode($response);
                         if ($response->success == true) {
+                            DB::table('users')
+                                ->where('email', $email)
+                                ->update(['attempts'=> 0]);
+                            return Response::json(array('success' => 1, 'err_code' => 200));
 
-                            return Response::json(array('success' => 1, 'err_code'=>200));
-
-                        }else {
+                        } else {
                             Sentinel::logout();
                             return Response::json(array(
                                 'name' => 'Captcha not match',
-                                'err_code'=>400
+                                'err_code' => 400
                             ));
                         }
 
@@ -313,14 +316,14 @@ class AuthController extends Controller
                             ->increment('attempts', 1);
                         return Response::json(array(
                             'name' => 'Dit e-mailadres en het opgegeven wachtwoord komen niet overeen met elkaar.',
-                            'err_code'=>200
+                            'err_code' => 200
                         ));
 
                     }
                 } catch (ThrottlingException $e) {
                     return Response::json(array(
                         'throttling' => 1
-                  ));
+                    ));
                 } catch (NotActivatedException $e) {
                     return Response::json(array(
                         'activation' => 1
@@ -331,17 +334,25 @@ class AuthController extends Controller
                     ));
                 }
 
+
+            } else {
+                $uban = new App\Models\UserBan();
+                $uban->user_id = $attempts->id;
+                $uban->reason = 'multiple login failed';
+                $uban->expired_date = date('Y-m-d');
+                $uban->created_at = date('Y-m-d');
+                $uban->updated_at = date('Y-m-d');
+                $uban->save();
+                return Response::json(array(
+                    'name' => 'Uw account is geblokkeerd omdat u 10x  de onjuiste gegevens heeft gebruikt. Neem contact op via ons contactformulier.'
+                ));
+            }
         }else{
-            $uban = new App\Models\UserBan();
-            $uban->user_id = $attempts->id;
-            $uban->reason = 'multiple login failed';
-            $uban->expired_date = date('Y-m-d');
-            $uban->created_at = 14.95;
-            $uban->updated_at = 14.95;
-            $uban->save();
             return Response::json(array(
-                'name' => 'Your account has been locked please contact admin to unlock your account'
+                'name' => 'Dit e-mailadres en het opgegeven wachtwoord komen niet overeen met elkaar.',
+                'err_code' => 200
             ));
+
         }
     }
 

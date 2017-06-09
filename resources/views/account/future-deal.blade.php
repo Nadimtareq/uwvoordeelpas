@@ -15,6 +15,7 @@
     <div class="ui divider"></div>
     <div class="col-sm-12 col-ms1">
         <div class="col-sm-3 col5">
+            @if(count($futureDeals)>0)
             <ul>
                 @foreach($futureDeals as $futureDeal)
                 <li>
@@ -67,7 +68,10 @@
                     </div>
                 </li>
                 @endforeach
-            </ul>                
+            </ul>
+                @else
+                <a href="{{url('/')}}">Helaas, u heeft nog geen vouchers gekocht klik hier om uw eerste voucher aan te schaffen</a>
+                @endif
         </div>
     </div>
 </div>

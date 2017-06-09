@@ -23,13 +23,14 @@
 				echo Form::select(
 					'days',
 					array(
-						1 => 'Een dag', 
-						7 => 'Een week', 
+						1 => 'Een dag',
+						7 => 'Een week',
 						14 => 'Twee weken', 
 						30 => 'Een maand', 
 						365 => 'Een jaar',
 						730 => 'Twee jaar',
 						120000 => 'Altijd',
+
 					), 
 					'', 
 					array('class' => 'ui normal dropdown')
