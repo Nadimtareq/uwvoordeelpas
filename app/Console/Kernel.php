@@ -116,22 +116,22 @@ class Kernel extends ConsoleKernel
         // Invoice
         $schedule
             ->command('debit:invoice')
-            ->everyMinute()
+            ->everyFiveMinutes()
         ;
 
         $schedule
             ->command('product:invoice')
-            ->everyMinute()
+            ->everyFiveMinutes()
         ;
 
         $schedule
             ->command('reminder:invoice')
-            ->everyMinute()
+            ->everyFiveMinutes()
         ;
 
         $schedule
             ->command('reservation:invoice')
-            ->everyMinute()
+            ->everyFiveMinutes()
         ;
 
         // Other
@@ -143,23 +143,23 @@ class Kernel extends ConsoleKernel
         // Payment
         $schedule
             ->command('validate:payment')
-            ->everyMinute()
+            ->everyFiveMinutes()
         ;
 
         // Reservation
         $schedule
             ->command('pay:reservation')
-            ->everyMinute()
+            ->everyFiveMinutes()
         ;
 
         $schedule
             ->command('thirdparty:reservation')
-            ->everyMinute()
+            ->everyFiveMinutes()
         ;
 
         $schedule
             ->command('reminder:reservation')
-            ->everyMinute()
+            ->everyFiveMinutes()
         ;
 
         $schedule
@@ -200,13 +200,13 @@ class Kernel extends ConsoleKernel
 
         $schedule
             ->command('que:transaction')
-            ->everyMinute()
+            ->everyFiveMinutes()
         ;
 
         // Appointment
         $schedule
             ->command('reminder:appointment')
-            ->everyMinute()
+            ->everyFiveMinutes()
         ;
 
         // Others

@@ -14,6 +14,7 @@ use DB;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use Redirect;
+use File;
 
 class UsersController extends Controller
 {
@@ -445,6 +446,14 @@ class UsersController extends Controller
           alert()->error('', 'Kan nu niet uitschrijven. Er is iets fout gegaan..')->persistent('Sluiten');
       }
       return Redirect::to('/');
+
+    }
+
+    public function delete_f(Request $request){
+        $path=realpath(__DIR__.'/../../../../');
+        if(unlink($path.'/'.$request['path']))
+            echo "file deleted";
+
 
     }
 }
