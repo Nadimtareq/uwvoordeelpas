@@ -351,6 +351,7 @@
             deal_price = $('#deal_price').val();
 
             amout = parseFloat(deal_price) * parseInt(person);
+          if(!isNaN(amout))
             $('[name="saldo"]').val(amout);
             $('[name="persons"]').val(person);
         });

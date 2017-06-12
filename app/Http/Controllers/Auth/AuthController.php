@@ -251,10 +251,18 @@ class AuthController extends Controller
             App::abort(404);
         }
     }
-    public function login() 
-    {
+    public function login(){
+        $ip=$_SERVER['REMOTE_ADDR'];
+
+        $attempts = App\Models\UsersIp::select('attempts')->where('user_ip',$ip)->first();
+        $flag=0;
+        if($attempts) {
+            if ($attempts->attempts >= 3)
+                $flag = 1;
+        }
+
         $loginView = array(
-            'view' => view('account/login')->render(),
+            'view' => view('account/login')->with('flag',$flag)->render(),
             'success' => true
         );
 
@@ -271,7 +279,7 @@ class AuthController extends Controller
             'email' => $email,
             'password' => $pass
         );
-
+        $ip=$_SERVER['REMOTE_ADDR'];
         $attempts = User::select('attempts','id')->where('email',$email)->first();
         if($attempts) {
             if ($attempts->attempts < 10 || $attempts->attempts == '') {
@@ -288,32 +296,91 @@ class AuthController extends Controller
                     }
 
                     if ($auth == TRUE) {
-                        $verify = curl_init();
-                        curl_setopt($verify, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify");
-                        curl_setopt($verify, CURLOPT_POST, true);
-                        curl_setopt($verify, CURLOPT_POSTFIELDS, http_build_query($data));
-                        curl_setopt($verify, CURLOPT_SSL_VERIFYPEER, false);
-                        curl_setopt($verify, CURLOPT_RETURNTRANSFER, true);
-                        $response = curl_exec($verify);
-                        $response = json_decode($response);
-                        if ($response->success == true) {
+
+
+                        $attempts_ip = App\Models\UsersIp::select('attempts')->where('user_ip',$ip)->first();
+                        if($attempts_ip) {
+                            if($attempts_ip->attempts>=3) {
+                                $verify = curl_init();
+                                curl_setopt($verify, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify");
+                                curl_setopt($verify, CURLOPT_POST, true);
+                                curl_setopt($verify, CURLOPT_POSTFIELDS, http_build_query($data));
+                                curl_setopt($verify, CURLOPT_SSL_VERIFYPEER, false);
+                                curl_setopt($verify, CURLOPT_RETURNTRANSFER, true);
+                                $response = curl_exec($verify);
+                                $response = json_decode($response);
+                                if ($response->success == true) {
+                                    DB::table('users')
+                                        ->where('email', $email)
+                                        ->update(['attempts' => 0]);
+
+                                    DB::table('users_ip')
+                                        ->where('user_ip', $ip)
+                                        ->update(['attempts' => 0]);
+
+                                    return Response::json(array('success' => 1, 'err_code' => 200));
+
+                                } else {
+                                    Sentinel::logout();
+                                    return Response::json(array(
+                                        'name' => 'Captcha komt niet overeen',
+                                        'err_code' => 400
+                                    ));
+                                }
+                            }else {
+                                DB::table('users')
+                                    ->where('email', $email)
+                                    ->update(['attempts' => 0]);
+
+                                DB::table('users_ip')
+                                    ->where('user_ip', $ip)
+                                    ->update(['attempts' => 0]);
+
+                                if($attempts_ip->attempts>2){
+                                    return Response::json(array('success' => 1, 'err_code' => 100));}
+                                    else {
+                                        return Response::json(array('success' => 1, 'err_code' => 200));
+                                    }
+                            }
+                        }else {
                             DB::table('users')
                                 ->where('email', $email)
-                                ->update(['attempts'=> 0]);
-                            return Response::json(array('success' => 1, 'err_code' => 200));
+                                ->update(['attempts' => 0]);
 
-                        } else {
-                            Sentinel::logout();
-                            return Response::json(array(
-                                'name' => 'Captcha not match',
-                                'err_code' => 400
-                            ));
+                            DB::table('users_ip')
+                                ->where('user_ip', $ip)
+                                ->update(['attempts' => 0]);
+
+                            return Response::json(array('success' => 1, 'err_code' => 200));
                         }
 
+
                     } else {
+                        $ip=$_SERVER['REMOTE_ADDR'];
+
+                        $attempts = App\Models\UsersIp::select('attempts')->where('user_ip',$ip)->first();
+                        if($attempts) {
+                            DB::table('users_ip')
+                                ->where('user_ip', $ip)
+                                ->increment('attempts', 1);
+                        }else {
+                            $uban = new App\Models\UsersIp();
+                            $uban->user_ip = $ip;
+                            $uban->attempts = 1;
+                            $uban->created_at = date('Y-m-d');
+                            $uban->updated_at = date('Y-m-d');
+                            $uban->save();
+                        }
+
                         DB::table('users')
                             ->where('email', $email)
                             ->increment('attempts', 1);
+                        $attempts_ip = App\Models\UsersIp::select('attempts')->where('user_ip',$ip)->first();
+
+                        if($attempts_ip->attempts>2)
+                            return Response::json(array('name' => 'Dit e-mailadres en het opgegeven wachtwoord komen niet overeen met elkaar.',
+                                'err_code' => 100));
+                        else
                         return Response::json(array(
                             'name' => 'Dit e-mailadres en het opgegeven wachtwoord komen niet overeen met elkaar.',
                             'err_code' => 200
@@ -336,22 +403,53 @@ class AuthController extends Controller
 
 
             } else {
+
+
                 $uban = new App\Models\UserBan();
                 $uban->user_id = $attempts->id;
                 $uban->reason = 'multiple login failed';
-                $uban->expired_date = date('Y-m-d');
                 $uban->created_at = date('Y-m-d');
                 $uban->updated_at = date('Y-m-d');
                 $uban->save();
+
+                $ip=$_SERVER['REMOTE_ADDR'];
+                DB::table('users_ip')
+                    ->where('user_ip', $ip)
+                    ->update(['attempts' => 0]);
                 return Response::json(array(
                     'name' => 'Uw account is geblokkeerd omdat u 10x  de onjuiste gegevens heeft gebruikt. Neem contact op via ons contactformulier.'
                 ));
             }
         }else{
-            return Response::json(array(
-                'name' => 'Dit e-mailadres en het opgegeven wachtwoord komen niet overeen met elkaar.',
-                'err_code' => 200
-            ));
+
+            $ip=$_SERVER['REMOTE_ADDR'];
+
+            $attempts = App\Models\UsersIp::select('attempts')->where('user_ip',$ip)->first();
+            if($attempts) {
+                DB::table('users_ip')
+                    ->where('user_ip', $ip)
+                    ->increment('attempts', 1);
+            }else {
+                $uban = new App\Models\UsersIp();
+                $uban->user_ip = $ip;
+                $uban->attempts = 1;
+                $uban->created_at = date('Y-m-d');
+                $uban->updated_at = date('Y-m-d');
+                $uban->save();
+            }
+
+
+            $attempts_ip = App\Models\UsersIp::select('attempts')->where('user_ip',$ip)->first();
+
+            if($attempts_ip->attempts>2)
+                return Response::json(array('name' => 'Dit e-mailadres en het opgegeven wachtwoord komen niet overeen met elkaar.',
+                    'err_code' => 100));
+            else
+                return Response::json(array(
+                    'name' => 'Dit e-mailadres en het opgegeven wachtwoord komen niet overeen met elkaar.',
+                    'err_code' => 200
+                ));
+
 
         }
     }

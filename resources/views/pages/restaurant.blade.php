@@ -260,8 +260,8 @@ while ($st->lte($dt)) {
 									@endforeach
 									</strong>
 								@endif
-
-								@if (isset($company->discount))
+                               <?php $discount=json_decode($company->discount); ?>
+								@if (isset($discount))
 									<span>Korting</span>
 									<strong>
 									{{ $company->discount_comment }}

@@ -53808,17 +53808,18 @@ $(document).ready(function() {
 	var redirectUrlDefault = baseUrl + 'tegoed-sparen';
 
 	$('.login[data-redirect]').on('click', function() {
+
 		redirectUrlDefault = $(this).data('redirect');
 	});
-
 	/* Login */
+
 	$('.login').api({
 		url: baseUrl + 'login',
 		onSuccess: function(response) {
+
 			var redirectUrl = $(this).data('redirect');
 			var type = $(this).data('type');
 			var typeRedirect = $(this).data('type-redirect');
-
 			openPrompt({
 				'id' : 'login',
 				'title' : 'Inloggen',
@@ -53920,7 +53921,12 @@ $(document).ready(function() {
 				method: 'POST',
 				serializeForm: true,
 				onComplete: function(response) {
-				    
+
+
+                   // $('.login').trigger('click');
+                    if (response['err_code'] == 100)
+     $(".g-recaptcha").css('display','block');
+
                     if (response['err_code'] == 400) {
                         var output = '<div class="header1">u bent vergeten om de beveiliging aan te vinken</div><ul class="list">';
 
@@ -53933,7 +53939,7 @@ $(document).ready(function() {
                      var output = '<div class="header1">Er zijn fouten opgetreden</div><ul class="list">';
 
                     for (var i in response) {
-                        if(response[i]!==200)
+                        if(response[i]!==200 && response[i]!==100)
                         output += '<li>' + response[i] + '</li>';
                     }
 

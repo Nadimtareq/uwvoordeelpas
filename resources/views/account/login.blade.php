@@ -4,7 +4,6 @@
     });
 </script>
 <script src='https://www.google.com/recaptcha/api.js'></script>
-
 <div class="ui buttons fluid">
 	<a href="{{ url('social/login/facebook') }}" target="_blank" id="facebookButton" class="ui facebook icon button">
 		<i class="facebook icon"></i>
@@ -36,9 +35,13 @@
 	<input type="password" id="pass_old" onchange="myFunction('pass')">
 	<input type="hidden" name="password" id="pass_new">
 </div>
-<div class="field">
-	<div class="g-recaptcha" data-sitekey="{{getenv('CAPTCHA_FRONT')}}"></div><div style="float: right;">
-	</div>
+ <div class="field">
+@if($flag==1)
+         <div class="g-recaptcha" data-sitekey="{{getenv('CAPTCHA_FRONT')}}" ></div><div style="float: right;"></div>
+     @else
+         <div class="g-recaptcha" data-sitekey="{{getenv('CAPTCHA_FRONT')}}" style="display:none;"></div><div style="float: right;"></div>
+
+                 @endif
 
 	<div style="float: left; width: 200px;">
 		<div class="ui checkbox">
