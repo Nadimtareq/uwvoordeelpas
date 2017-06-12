@@ -58,7 +58,8 @@ class DealHelper
        # code...
        if($value==trans("app.$day")){
          $date = $value;
-         $time = !empty($timeArray[$key]) ? $timeArray[$key].":00" : "00:00:00";
+         $currentHour = $hour.":00:00";
+         $time = !empty($timeArray[$key]) ? $timeArray[$key].":00" : $currentHour;
          if(intval($time) >= intval($hour) && intval($time) < intval($hour)+1){
            return true;
          }

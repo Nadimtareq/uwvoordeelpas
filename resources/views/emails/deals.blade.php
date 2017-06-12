@@ -58,25 +58,21 @@
 
 
 		.text span.start{
-			font: 28px 'LatoBold';
+			font: 18px 'LatoBold' !important;
 			display: block;
 			text-align: center;
-			margin-top: 27px;
+			margin-top: -195px !important;
 			letter-spacing: 0.6px;
 		}
 
 		.text{
 			position: absolute !important;
+			color: white !important;
 			top: 0;
-			left: 0;
+			left: 40;
 			display: block;
 			width: 280px;
 			margin: 0 auto;
-			right: 0;
-		}
-		.text span.start{
-			font: 18px 'LatoBold' !important;
-			margin-top: 16px;
 		}
 		.text strong.bax{
 			font: 46px 'LatoBold';
@@ -94,7 +90,7 @@
 			font: 25px 'LatoBold';
 		}
 		.text strong.number{
-			font: 70px 'LatoBold';
+			font: 70px 'LatoBold' !important;
 			text-align: center;
 			display: inline-block;
 			margin-top: -18px;
@@ -107,7 +103,7 @@
 			transform: rotate(-7deg) !important;
 		}
 		.text p{
-			font: 14px 'LatoBlack';
+			font: 12px 'LatoBlack';
 			margin-top: 5px;
 			text-align: center;
 			margin-bottom: 0;
@@ -183,14 +179,7 @@
 				 <table class="full-width" border="0" width="300" cellspacing="0" cellpadding="0" align="left">
 			<tbody>
 			<tr>
-			 <td align="left" style="position: relative;text-align: center;"><img width="340" src="{{asset('images/laptop.png')}}" alt='laptop' />
-				<div class='text' style="color:white">
-					<span class='start'><b style="font-size:22px;">Start nu en ontvang!</b></span>
-					<strong class='bax'>€
-						<strong class='number' style="font-size:70px;">5.-</strong>
-					</strong>
-					<p>90 dagen geldig op alle menu’s van </p>
-				</div>
+			 <td align="left" style="position: relative;text-align: center;"><img width="340" src="{{asset('images/laptop-text.png')}}" alt='laptop' />
 			 </td>
 			</tr>
 			 </tbody>
@@ -235,7 +224,7 @@
 					 <td>
 						<table align="left">
 						 <tbody><tr>
-							<td><a style="font-family: 'Poppins', sans-serif; font-size: 14px;background:#283593;padding:5px 15px ;border-radius:5px; font-weight: normal; color: #fff;" href="{{url('auth/set/'.$user['extension_download_url'])}}">Ja ik wil ook sparen!</a></td>
+							<td><a style="font-family: 'Poppins', sans-serif; font-size: 16px;background:#283593;padding:10px 26px ;border-radius:5px; font-weight: normal; color: #fff;" href="{{url('auth/set/'.$user['extension_download_url'])}}">Ja ik wil ook sparen!</a></td>
 						 </tr>
 						</tbody></table>
 					 </td>
@@ -285,12 +274,15 @@
 			@foreach ($deals as $key => $restaurant)
 			<?php $i=0; ?>
 				@foreach($restaurant as $deal)
+				<?php
+					$image = $deal['image']!='' ? $deal['image'] : 'no-img.jpg';
+				?>
 				 @if($i%2==0)
 					<tr>
 		       <td>
 		        <table class="full-width" width="385" align="left">
 		         <tbody><tr>
-		          <td><a href="{{ url('auth/set/'.$deal['deal_url']) }}"><img  width="100%" height="264.13px" class="img-full" src="{{asset('images/deals/'.$deal['image']!="" ? $deal['image'] : 'no-img.jpg')}}" alt="{{$deal['name']}}"></a></td>
+		          <td><a href="{{ url('auth/set/'.$deal['deal_url']) }}"><img  width="100%" height="264.13px" class="img-full" src="{{asset('images/deals/'.$image) }}" alt="{{$deal['name']}}"></a></td>
 		         </tr>
 		         <tr>
 		          <td height="20"></td>
@@ -306,7 +298,7 @@
 		            <tbody><tr>
 		             <td><img src="{{asset('images/recommends-icon-pricetag.png')}}" alt="Price-tag"></td>
 		             <td width="5"></td>
-		             <td style="font-family: 'Poppins', sans-serif; font-size:14px; font-weight:700; color:#283593;"><a href="{{ url('auth/set/'.$deal['deal_url']) }}"><strike><small style="color:red">${{$deal['price_from']}}</small></strike> &nbsp; ${{$deal['price']}}</a></td>
+		             <td style="font-family: 'Poppins', sans-serif; font-size:14px; font-weight:700; color:#283593;"><a href="{{ url('auth/set/'.$deal['deal_url']) }}"><strike><small style="color:red">€{{$deal['price_from']}}</small></strike> &nbsp; €{{$deal['price']}}</a></td>
 		            </tr>
 		           </tbody></table>
 		          </td>
@@ -320,7 +312,7 @@
 						@elseif($i%2!=0)
 		        <table class="full-width" width="385" align="right">
 		         <tbody><tr>
-		          <td><a href="{{ url('auth/set/'.$deal['deal_url']) }}"><img class="img-full" width="100%" height="264.13px" src="{{asset('images/deals/'.$deal['image']!="" ? $deal['image'] : 'no-img.jpg')}}" alt="{{$deal['name']}}"></a></td>
+		          <td><a href="{{ url('auth/set/'.$deal['deal_url']) }}"><img class="img-full" width="100%" height="264.13px" src="{{asset('images/deals/'.$image) }}" alt="{{$deal['name']}}"></a></td>
 		         </tr>
 		         <tr>
 		          <td height="20"></td>
@@ -336,7 +328,7 @@
 		            <tbody><tr>
 		             <td><img src="{{asset('images/recommends-icon-pricetag.png')}}" alt="Price-tag"></td>
 		             <td width="5"></td>
-		             <td style="font-family: 'Poppins', sans-serif; font-size:14px; font-weight:700; color:#283593;"><a href="{{ url('auth/set/'.$deal['deal_url']) }}"><strike><small style="color:red">${{$deal['price_from']}}</small></strike> &nbsp; ${{$deal['price']}}</a></td>
+		             <td style="font-family: 'Poppins', sans-serif; font-size:14px; font-weight:700; color:#283593;"><a href="{{ url('auth/set/'.$deal['deal_url']) }}"><strike><small style="color:red">€{{$deal['price_from']}}</small></strike> &nbsp; €{{$deal['price']}}</a></td>
 		            </tr>
 		           </tbody></table>
 		          </td>
@@ -377,7 +369,7 @@
        <td>
         <table class="full-width" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" border="0" width="280" cellspacing="0" cellpadding="0" align="left">
          <tbody><tr>
-          <td><a href="#" style="color: #131619; font-family: 'Poppins', sans-serif; font-size: 12px; font-weight: 400; text-decoration: none;">© 2017 Health. All rights reserved.</a></td>
+          <td><a href="#" style="color: #131619; font-family: 'Poppins', sans-serif; font-size: 12px; font-weight: 400; text-decoration: none;">© 2017 UWvoordeelpas. All rights reserved.</a></td>
          </tr>
         </tbody></table>
         <table width="30" align="left">
