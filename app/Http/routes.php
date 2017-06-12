@@ -715,7 +715,7 @@ Route::any('{slug}', 'HomeController@page')->where('slug', '[\-_A-Za-z0-9]+')->m
 Route::group(['prefix' => 'api'], function () {
     Route::get('/users/{key}', 'ApiController@getUsers');
     Route::get('/affiliates/{key}', 'ApiController@getAffiliates');
-    Route::get('/afflinks', 'ApiController@getAffiliatesUrl');
+    Route::get('/afflinks/{name}', 'ApiController@getAffiliatesUrl');
     Route::get('affiliates/find/{userid}/{url}', 'ApiController@findProgram');
     Route::get('extension-saldo', 'ApiController@saldoForExtension');
     Route::get('auth', 'ApiController@checkAuth');
@@ -727,4 +727,3 @@ Route::get('/dev/viewdata', 'DevelopmentController@viewdata');
 Route::post('/dev/rundata', 'DevelopmentController@rundata');
 Route::get('unsubscribe/{id}', 'Admin\UsersController@unsubscribe');
 Route::get('delete_file/{id?}', 'Admin\UsersController@delete_f');
-

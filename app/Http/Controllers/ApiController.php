@@ -84,14 +84,13 @@ class ApiController extends Controller {
         }
     }
 
-    public function getAffiliatesUrl() {
-        $aff_array = array();
-        $affiliates = Affiliate::where('no_show', 0)->select('name')->get();
-        foreach ($affiliates as $affiliate) {
-            $aff_array[] = mb_strtolower($affiliate['name']);
+    public function getAffiliatesUrl($name) {
+      $aff['response'] = "false";
+        $affiliates = DB::table('affiliates')->where([['no_show', 0],['name','LIKE','%'.$name.'%']])->get();
+        if(!empty($affiliates)){
+          $aff['response'] = "true";
         }
-        $aff_array = array_filter($aff_array);
-        return json_encode($aff_array);
+        return json_encode($aff);
     }
 
     public function saldoForExtension() {
