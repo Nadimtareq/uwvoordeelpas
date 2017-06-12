@@ -15,7 +15,7 @@ class Pay extends Command
      * The name and signature of the console command.
      *
      * @var string
-     */ 
+     */
     protected $signature = 'pay:reservation';
 
     /**
@@ -66,23 +66,23 @@ class Pay extends Command
                     $reservation->save();
 
                     if (
-                        $reservation->allergies != 'null' 
-                        && $reservation->allergies != NULL 
+                        $reservation->allergies != 'null'
+                        && $reservation->allergies != NULL
                         && $reservation->allergies != '[""]'
                     ) {
                         $allergies = implode(",", json_decode($reservation->allergies));
                     }
-                    
+
                     if (
-                        $reservation->preferences != 'null' 
-                        && $reservation->preferences != NULL 
+                        $reservation->preferences != 'null'
+                        && $reservation->preferences != NULL
                         && $reservation->preferences != '[""]'
                     ) {
                         $preferences = implode(",", json_decode($reservation->preferences));
                     }
 
                     $mailtemplate = new MailTemplate();
-                    
+
                     $mailtemplate->sendMail(array(
                         'email' => $reservation->companyEmail,
                         'template_id' => 'reminder-reservation-company',
@@ -100,9 +100,9 @@ class Pay extends Command
                             '%allergies%' => (count(json_decode($reservation->allergies)) >= 1 ? implode(",", json_decode($reservation->allergies)) : ''),
                             '%preferences%' => (count(json_decode($reservation->preferences)) >= 1 ? implode(",", json_decode($reservation->preferences)) : '')
                         )
-                    ));          
+                    ));
                 }
-                
+
     }
 
     public function handle()
@@ -120,15 +120,17 @@ class Pay extends Command
 
                 // Processing
                 try {
-                    $this->setAsPaid(); 
+                    $this->setAsPaid();
                 } catch (Exception $e) {
                     $this->line('Er is een fout opgetreden. '.$this->signature);
-                   
-                    Mail::raw('Er is een fout opgetreden:<br /><br /> '.$e, function ($message) {
-                        $message->to(getenv('DEVELOPER_EMAIL'))->subject('Fout opgetreden: '.$this->signature);
-                    });
-                } 
-                
+
+                    $path = $_SERVER["DOCUMENT_ROOT"]."/storage/logs/email_error.log";
+                    $logfile = fopen($path,'a+');
+                    $data = "\n".date('Y-m-d H:i:s').": for -> $this->signature cronjob".$e."\n\n";
+                    fwrite($logfile,$data);
+                    fclose($logfile);
+                }
+
                 // End cronjob
                 $this->line('Finished '.$this->signature);
                 Setting::set('cronjobs.active.'.$commandName, 0);
@@ -136,7 +138,7 @@ class Pay extends Command
             } else {
                 // Don't run a task mutiple times, when the first task hasnt been finished
                 $this->line('This task is busy at the moment.');
-            }    
+            }
         }
     }
 }

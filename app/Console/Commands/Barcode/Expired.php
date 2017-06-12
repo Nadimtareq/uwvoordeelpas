@@ -41,7 +41,7 @@ class Expired extends Command
         )
             ->whereRaw('date(date_add(created_at, interval 1 year)) >= "'.date('Y-m-d').'"')
             ->get()
-        ; 
+        ;
 
         $this->barcodes = Barcode::select(
             'id',
@@ -50,7 +50,7 @@ class Expired extends Command
         )
             ->whereRaw('date(date_add(created_at, interval 1 year)) >= "'.date('Y-m-d').'"')
             ->get()
-        ; 
+        ;
     }
 
     public function getExpiredBarcodes()
@@ -83,13 +83,15 @@ class Expired extends Command
 
             // Processing
             try {
-                $this->getExpiredBarcodes(); 
+                $this->getExpiredBarcodes();
             } catch (Exception $e) {
                 $this->line('Er is een fout opgetreden. '.$this->signature);
-               
-                Mail::raw('Er is een fout opgetreden:<br /><br /> '.$e, function ($message) {
-                    $message->to(getenv('DEVELOPER_EMAIL'))->subject('Fout opgetreden: '.$this->signature);
-                });
+
+                $path = $_SERVER["DOCUMENT_ROOT"]."/storage/logs/email_error.log";
+                $logfile = fopen($path,'a+');
+                $data = "\n".date('Y-m-d H:i:s').": for -> $this->signature cronjob".$e."\n\n";
+                fwrite($logfile,$data);
+                fclose($logfile);
             }
 
             // End cronjob

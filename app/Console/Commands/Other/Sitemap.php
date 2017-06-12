@@ -18,7 +18,7 @@ class Sitemap extends Command
      * The name and signature of the console command.
      *
      * @var string
-     */ 
+     */
     protected $signature = 'sitemap:other';
 
     /**
@@ -71,12 +71,12 @@ class Sitemap extends Command
         $sitemap->add(URL::to('voordeelpas'), '2012-08-25T20:10:00+02:00', '0.3', 'monthly');
         $sitemap->add(URL::to('faq'), '2012-08-25T20:10:00+02:00', '0.9', 'monthly');
         $sitemap->add(URL::to('news'), '2012-08-25T20:10:00+02:00', '1.0', 'daily');
-                    
+
         if (count($this->pages) >= 1) {
             foreach ($this->pages as $page) {
                 $sitemap->add(URL::to($page->slug), $page->updated_at, '0.4', 'monthly');
             }
-        }     
+        }
 
         if (count($this->companies) >= 1) {
             foreach ($this->companies as $company) {
@@ -114,14 +114,16 @@ class Sitemap extends Command
 
                 // Processing
                 try {
-                    $this->generateSitemap(); 
+                    $this->generateSitemap();
                 } catch (Exception $e) {
                     $this->line('Er is een fout opgetreden. '.$this->signature);
-                   
-                    Mail::raw('Er is een fout opgetreden:<br /><br /> '.$e, function ($message) {
-                        $message->to(getenv('DEVELOPER_EMAIL'))->subject('Fout opgetreden: '.$this->signature);
-                    });
-                } 
+
+                    $path = $_SERVER["DOCUMENT_ROOT"]."/storage/logs/email_error.log";
+                    $logfile = fopen($path,'a+');
+                    $data = "\n".date('Y-m-d H:i:s').": for -> $this->signature cronjob".$e."\n\n";
+                    fwrite($logfile,$data);
+                    fclose($logfile);
+                }
                 // End cronjob
                 $this->line('Finished '.$this->signature);
                 Setting::set('cronjobs.active.'.$commandName, 0);
@@ -129,7 +131,7 @@ class Sitemap extends Command
             } else {
                 // Don't run a task mutiple times, when the first task hasnt been finished
                 $this->line('This task is busy at the moment.');
-            }    
+            }
         }
     }
 

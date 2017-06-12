@@ -14,7 +14,7 @@ class Expired extends Command
      * The name and signature of the console command.
      *
      * @var string
-     */ 
+     */
     protected $signature = 'expired:transaction';
 
     /**
@@ -43,13 +43,13 @@ class Expired extends Command
                     ->where('status', '=', 'accepted')
                     ->whereRaw('date(date_add(created_at, interval 90 day)) <= "'.date('Y-m-d').'"')
                     ->get()
-                ; 
+                ;
                 $expired_ids = array();
-                if (count($this->transaction) >= 1) {                    
+                if (count($this->transaction) >= 1) {
                     foreach ($this->transaction as $transaction) {
                         $expired_ids[] = $transaction->id;
-                    }                    
-                    if(!empty($expired_ids)){                     
+                    }
+                    if(!empty($expired_ids)){
                         Transaction::whereIn('id', $expired_ids)->update(['status' => 'expired']);
                     }
                 }
@@ -75,13 +75,15 @@ class Expired extends Command
 
                 // Processing
                 try {
-                    $this->setAsExpired(); 
+                    $this->setAsExpired();
                 } catch (Exception $e) {
                     $this->line('Er is een fout opgetreden. '.$this->signature);
-                   
-                    Mail::raw('Er is een fout opgetreden:<br /><br /> '.$e, function ($message) {
-                        $message->to(getenv('DEVELOPER_EMAIL'))->subject('Fout opgetreden: '.$this->signature);
-                    });
+
+                    $path = $_SERVER["DOCUMENT_ROOT"]."/storage/logs/email_error.log";
+                    $logfile = fopen($path,'a+');
+                    $data = "\n".date('Y-m-d H:i:s').": for -> $this->signature cronjob".$e."\n\n";
+                    fwrite($logfile,$data);
+                    fclose($logfile);
                 }
                 // End cronjob
                 $this->line('Finished '.$this->signature);
@@ -90,7 +92,7 @@ class Expired extends Command
             } else {
                 // Don't run a task mutiple times, when the first task hasnt been finished
                 $this->line('This task is busy at the moment.');
-            }    
+            }
         }
     }
 }

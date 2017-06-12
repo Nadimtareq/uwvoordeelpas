@@ -36,14 +36,14 @@ class Tradetracker extends Command
     public function __construct()
     {
         parent::__construct();
-        
+
         $this->transaction = Transaction::select(
             'external_id'
         )
             ->where('affiliate_network', $this->affiliate_network)
             ->get()
             ->toArray()
-        ; 
+        ;
     }
 
     public function addTransactions()
@@ -129,15 +129,17 @@ class Tradetracker extends Command
 
                 // Processing
                 try {
-                    $this->addTransactions(); 
+                    $this->addTransactions();
                 } catch (Exception $e) {
                     $this->line('Er is een fout opgetreden. '.$this->signature);
-                   
-                    Mail::raw('Er is een fout opgetreden:<br /><br /> '.$e, function ($message) {
-                        $message->to(getenv('DEVELOPER_EMAIL'))->subject('Fout opgetreden: '.$this->signature);
-                    });
+
+                    $path = $_SERVER["DOCUMENT_ROOT"]."/storage/logs/email_error.log";
+                    $logfile = fopen($path,'a+');
+                    $data = "\n".date('Y-m-d H:i:s').": for -> $this->signature cronjob".$e."\n\n";
+                    fwrite($logfile,$data);
+                    fclose($logfile);
                 }
-                
+
                 // End cronjob
                 $this->line('Finished '.$this->signature);
                 Setting::set('cronjobs.active.'.$commandName, 0);
@@ -145,7 +147,7 @@ class Tradetracker extends Command
             } else {
                 // Don't run a task mutiple times, when the first task hasnt been finished
                 $this->line('This task is busy at the moment.');
-            }    
+            }
         }
     }
 

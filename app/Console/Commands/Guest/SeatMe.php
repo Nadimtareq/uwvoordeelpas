@@ -21,7 +21,7 @@ class SeatMe extends Command
      * The name and signature of the console command.
      *
      * @var string
-     */ 
+     */
     protected $signature = 'seatme:guest';
 
     /**
@@ -56,7 +56,7 @@ class SeatMe extends Command
             ->where('zipcode', '!=', '')
             ->get()
         ;
-        
+
         $this->reservation = array();
 
         $this->thirdParty = GuestThirdParty::select(
@@ -69,7 +69,7 @@ class SeatMe extends Command
         $this->reservationModel = new Reservation();
     }
 
-    public function convertMonth($name) 
+    public function convertMonth($name)
     {
         $months = array();
 
@@ -82,10 +82,10 @@ class SeatMe extends Command
 
     public function removeGender($name)
     {
-       return preg_replace('/(heer|mevrouw|meneer)/i', '', $name); 
+       return preg_replace('/(heer|mevrouw|meneer)/i', '', $name);
     }
 
-    public function addGuests() 
+    public function addGuests()
     {
         $reservationExists = array();
         $connection = imap_open($this->hostname, $this->username, $this->password) or die('Cannot connect to Gmail: ' . imap_last_error());
@@ -121,29 +121,29 @@ class SeatMe extends Command
 
                     // Email
                     preg_match('/(E-mail|Email:|Email|E-mail:?) (.*?) (Notities|Eventuele promotie|RESTAURANT GEGEVENS)/i', $messageBody, $emailMatches, PREG_OFFSET_CAPTURE);
-                        
+
                     // Persons
                     preg_match('/(Aantal personen|Aantal personen:) (\d+) Reserveringsnummer/i', $messageBody, $personsMatches, PREG_OFFSET_CAPTURE);
-                        
+
                     // Reservation number
                     preg_match('/(Reserveringsnummer|Reserveringsnummer:) (\d+) (Gastgegevens|GAST GEGEVENS)/i', $messageBody, $numberMatches, PREG_OFFSET_CAPTURE);
-                
+
                     // Date
                     preg_match('/(Datum reservering|Datum reservering:) (.*?) (Start|Aanvangstijd reservering)/i', $messageBody, $dateMatches, PREG_OFFSET_CAPTURE);
-                 
+
                     // Time
                     preg_match('/(Starttijd reservering|Starttijd reservering:|Aanvangstijd reservering|Aanvangstijd reservering:) (.*?) Aantal personen/i', $messageBody, $timeMatches, PREG_OFFSET_CAPTURE);
-   
+
                     // Company Name
                     preg_match('/voor (.*?) Reserveringsgegevens/i', $messageBody, $companyNamesMatches, PREG_OFFSET_CAPTURE);
                     preg_match('/RESERVERINGS GEGEVENS (Restaurant:?) (.*?) Datum/i', $messageBody, $companyNamesMatchesTwo, PREG_OFFSET_CAPTURE);
 
                     // Company Name
                     preg_match('/(annulering|gewijzigd)/i', $messageBody, $statusMatches, PREG_OFFSET_CAPTURE);
-                    
+
                     // Comment
                     preg_match('/(Eventuele notitie|Eventuele notitie:|Notities:) (.*?) (Eventuele promotie|Eventuele Cadeaukaart)/i', $messageBody, $commentMatches, PREG_OFFSET_CAPTURE);
-                   
+
                     if (isset($statusMatches[0][0])) {
                         switch ($statusMatches[0][0]) {
                             case 'annulering':
@@ -165,17 +165,17 @@ class SeatMe extends Command
                             'reservation_date' => isset($dateMatches[1][0]) ? ($dates[2].'-'.$this->convertMonth($dates[1]).'-'.$dates[0]).' '.(isset($timeMatches[2][0]) ? $timeMatches[2][0].':00' : '') : '',
                             'network_status' => $networkStatus,
                             'reservation_status' => 'pending',
-                            'restaurant_name' => isset($companyNamesMatches[1][0]) ? ucwords($companyNamesMatches[1][0]) : (isset($companyNamesMatchesTwo[2][0]) ? ucwords($companyNamesMatchesTwo[2][0]) : ''),   
-                            'name' => isset($nameMatches[3][0]) ? $this->removeGender(ucwords($nameMatches[3][0])) : NULL,   
-                            'email' => isset($emailMatches[2][0]) ? strtolower($emailMatches[2][0]) : NULL,   
-                            'reservation_number' => isset($numberMatches[2][0]) ? $numberMatches[2][0] : NULL,   
-                            'persons' => isset($personsMatches[2][0]) ? $personsMatches[2][0] : NULL,   
-                            'phone' => isset($phoneMatches[2][0]) ? $phoneMatches[2][0] : NULL,   
-                            'comment' => isset($commentMatches[2][0]) ? $commentMatches[2][0] : '',   
+                            'restaurant_name' => isset($companyNamesMatches[1][0]) ? ucwords($companyNamesMatches[1][0]) : (isset($companyNamesMatchesTwo[2][0]) ? ucwords($companyNamesMatchesTwo[2][0]) : ''),
+                            'name' => isset($nameMatches[3][0]) ? $this->removeGender(ucwords($nameMatches[3][0])) : NULL,
+                            'email' => isset($emailMatches[2][0]) ? strtolower($emailMatches[2][0]) : NULL,
+                            'reservation_number' => isset($numberMatches[2][0]) ? $numberMatches[2][0] : NULL,
+                            'persons' => isset($personsMatches[2][0]) ? $personsMatches[2][0] : NULL,
+                            'phone' => isset($phoneMatches[2][0]) ? $phoneMatches[2][0] : NULL,
+                            'comment' => isset($commentMatches[2][0]) ? $commentMatches[2][0] : '',
                             'created_at' => date('Y-m-d H:i:s'),
                             'network' => 'seatme',
                             'mail_id' => $emailNumber
-                        ); 
+                        );
                     }
                 }
             }
@@ -188,7 +188,7 @@ class SeatMe extends Command
         imap_close($connection);
     }
 
-    public function updateReservation() 
+    public function updateReservation()
     {
         $reservationExists = array();
         $connection = imap_open($this->hostname, $this->username, $this->password) or die('Cannot connect to Gmail: ' . imap_last_error());
@@ -289,7 +289,7 @@ class SeatMe extends Command
      * @return mixed
      */
     public function handle()
-    {        
+    {
         $commandName = 'seatme_guests';
 
         if (Setting::get('cronjobs.active.'.$commandName) == NULL OR Setting::get('cronjobs.active.'.$commandName) == 0) {
@@ -300,16 +300,18 @@ class SeatMe extends Command
 
             // Processing
             try  {
-                $this->addGuests(); 
+                $this->addGuests();
                 $this->updateGuests();
                 $this->updateReservation();
             } catch (Exception $e) {
                 $this->line('Er is een fout opgetreden. '.$this->signature);
-               
-                Mail::raw('Er is een fout opgetreden:<br /><br /> '.$e, function ($message) {
-                    $message->to(getenv('DEVELOPER_EMAIL'))->subject('Fout opgetreden: '.$this->signature);
-                });
-            }   
+
+                $path = $_SERVER["DOCUMENT_ROOT"]."/storage/logs/email_error.log";
+                $logfile = fopen($path,'a+');
+                $data = "\n".date('Y-m-d H:i:s').": for -> $this->signature cronjob".$e."\n\n";
+                fwrite($logfile,$data);
+                fclose($logfile);
+            }
             // End cronjob
             $this->line('Finished '.$this->signature);
             Setting::set('cronjobs.active.'.$commandName, 0);

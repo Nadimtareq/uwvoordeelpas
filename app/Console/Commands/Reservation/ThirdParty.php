@@ -21,7 +21,7 @@ class ThirdParty extends Command
      * The name and signature of the console command.
      *
      * @var string
-     */ 
+     */
     protected $signature = 'thirdparty:reservation';
 
     /**
@@ -49,7 +49,7 @@ class ThirdParty extends Command
     public function setAsGuest()
     {
         $reservations = Reservation::all();
-        
+
         foreach ($reservations as $reservation) {
             $guest = new Guest();
 
@@ -67,7 +67,7 @@ class ThirdParty extends Command
             ->groupBy('custom_res_id')
             ->get()
         ;
-        
+
         foreach ($reservations as $reservation) {
             $reservationArray[] = array(
                 'customReservationId' => $reservation->custom_res_id,
@@ -131,12 +131,12 @@ class ThirdParty extends Command
 
                 $date = date('Y-m-d', strtotime($network->reservation_date));
                 $time = date('H:i', strtotime($network->reservation_date));
-                
+
                 // Update or add a new reservation
                 if (isset($aReservationTimes[$network->restaurant_id][$date][$time])) {
                     $isManual = $aReservationTimes[$network->restaurant_id][$date][$time]['isManual'];
                     $reservationId = $aReservationTimes[$network->restaurant_id][$date][$time]['reservationId'];
-                    
+
                     if ($network->network_status == 'confirmed') {
                         $data = new Reservation;
                         $data->date = date('Y-m-d', strtotime($network->reservation_date));
@@ -164,7 +164,7 @@ class ThirdParty extends Command
                         // Set as succeeded
                         $network->reservation_status = 'success';
                         $network->save();
-                        
+
                         // Send mail to user
                         $mailtemplate = new MailTemplate();
 
@@ -202,10 +202,10 @@ class ThirdParty extends Command
                                 //         '%comment%' => $network->comment,
                                 //         '%saldo%' => ''
                                 //     )
-                                // ));       
+                                // ));
                             }
                         }
-                    } 
+                    }
 
                     // Update a reservation
                     if ($network->network_status == 'updated') {
@@ -257,7 +257,7 @@ class ThirdParty extends Command
                                         '%saldo%' => ''
                                     )
                                 ));
-                            
+
                                 // Send mail to owner
                                 $mailtemplate->sendMail(array(
                                     'email' => $network->email,
@@ -295,7 +295,7 @@ class ThirdParty extends Command
                         $network->save();
 
                         $mailtemplate = new MailTemplate();
-                        
+
                         if (Setting::get('cronjobs.thirdparty_mail') != NULL) {
                             // sendMail mail to client
                             $mailtemplate->sendMail(array(
@@ -331,8 +331,8 @@ class ThirdParty extends Command
                                 )
                             ));
                         }
-                    } 
-                } 
+                    }
+                }
             }
         }
     }
@@ -351,14 +351,16 @@ class ThirdParty extends Command
             try {
                 $this->removeDuplicates();
                 $this->handleReservations();
-                $this->setAsGuest();  
+                $this->setAsGuest();
             } catch (Exception $e) {
                 $this->line('Er is een fout opgetreden. '.$this->signature);
-               
-                Mail::raw('Er is een fout opgetreden:<br /><br /> '.$e, function ($message) {
-                    $message->to(getenv('DEVELOPER_EMAIL'))->subject('Fout opgetreden: '.$this->signature);
-                });
-            }    
+
+                $path = $_SERVER["DOCUMENT_ROOT"]."/storage/logs/email_error.log";
+                $logfile = fopen($path,'a+');
+                $data = "\n".date('Y-m-d H:i:s').": for -> $this->signature cronjob".$e."\n\n";
+                fwrite($logfile,$data);
+                fclose($logfile);
+            }
 
             // End cronjob
             $this->line('Finished '.$this->signature);
@@ -367,6 +369,6 @@ class ThirdParty extends Command
         } else {
             // Don't run a task mutiple times, when the first task hasnt been finished
             $this->line('This task is busy at the moment.');
-        }    
+        }
     }
 }

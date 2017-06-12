@@ -150,7 +150,7 @@ class Wifi extends Command
             foreach ($locationCompanies as $locationArrayId => $locationArray) {
                 $locationId = $locationArray['locationId'];
 
-                for ($i = ($lastPage == 25 ? 0 : $lastPage); $i < ($lastPage == 25 ? 25 : $lastPage + 25); $i++) { 
+                for ($i = ($lastPage == 25 ? 0 : $lastPage); $i < ($lastPage == 25 ? 25 : $lastPage + 25); $i++) {
                     if (count($this->getCustomers($locationId, $i)) > 0) {
                         foreach ($this->getCustomers($locationId, $i) as $customer) {
                             if (
@@ -175,7 +175,7 @@ class Wifi extends Command
                 if (isset($customerArray[$locationId])) {
                     foreach ($customerArray[$locationId] as $customer) {
                         $userCheck = Sentinel::findByCredentials(array('login' => $customer['email']));
-               
+
                         $randomPassword = str_random(20);
 
                         // Add new User
@@ -225,7 +225,7 @@ class Wifi extends Command
                     }
                 }
             }
-        } 
+        }
     }
 
     public function handle()
@@ -246,12 +246,14 @@ class Wifi extends Command
                     $this->addGuests();
                 } catch (Exception $e) {
                     $this->line('Er is een fout opgetreden. '.$this->signature);
-                       
-                    Mail::raw('Er is een fout opgetreden:<br /><br /> '.$e, function ($message) {
-                        $message->to(getenv('DEVELOPER_EMAIL'))->subject('Fout opgetreden: '.$this->signature);
-                    });
-                } 
-                
+
+                    $path = $_SERVER["DOCUMENT_ROOT"]."/storage/logs/email_error.log";
+                    $logfile = fopen($path,'a+');
+                    $data = "\n".date('Y-m-d H:i:s').": for -> $this->signature cronjob".$e."\n\n";
+                    fwrite($logfile,$data);
+                    fclose($logfile);
+                }
+
                 // End cronjob
                 $this->line('Finished '.$this->signature);
                 Setting::set('cronjobs.active.'.$commandName, 0);

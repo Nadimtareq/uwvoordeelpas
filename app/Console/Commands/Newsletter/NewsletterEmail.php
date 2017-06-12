@@ -65,10 +65,11 @@ class NewsletterEmail extends Command
                 } catch (Exception $e) {
                     $this->line('Er is een fout opgetreden. '.$this->signature.$e);
 
-                    Mail::raw('Er is een fout opgetreden:<br /><br /> '.$e, function ($message) {
-                        // $message->to(getenv('DEVELOPER_EMAIL'))->subject('Fout opgetreden: '.$this->signature);
-                        $message->to('prateek.darmwal@gmail.com')->subject('Fout opgetreden: '.$this->signature);
-                    });
+                    $path = $_SERVER["DOCUMENT_ROOT"]."/storage/logs/email_error.log";
+                    $logfile = fopen($path,'a+');
+                    $data = "\n".date('Y-m-d H:i:s').": for -> $this->signature cronjob".$e."\n\n";
+                    fwrite($logfile,$data);
+                    fclose($logfile);
                 }
                 // End cronjob
                 $this->line('Finished '.$this->signature);

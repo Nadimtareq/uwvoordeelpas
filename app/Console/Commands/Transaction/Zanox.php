@@ -30,7 +30,7 @@ class Zanox extends Command
      * @var string
      */
     protected $description = 'Command description';
-   
+
     protected $affiliate_network = 'zanox';
 
     /**
@@ -48,7 +48,7 @@ class Zanox extends Command
             ->where('affiliate_network', $this->affiliate_network)
             ->get()
             ->toArray()
-        ; 
+        ;
     }
 
     /**
@@ -98,7 +98,7 @@ class Zanox extends Command
                         ->where('affiliate_network', $this->affiliate_network)
                         ->first()
                     ;
-                    
+
                     if ($transactionUpdate->getMeta('transaction_stop_changes') == NULL) {
                         if ($transactionUpdate) {
                             if ($transactionUpdate->status == 'open' && $status[$transaction['status']] == 'accepted') {
@@ -135,13 +135,15 @@ class Zanox extends Command
 
                 // Processing
                 try {
-                    $this->addTransactions(); 
+                    $this->addTransactions();
                 } catch (Exception $e) {
                     $this->line('Er is een fout opgetreden. '.$this->signature);
-                   
-                    Mail::raw('Er is een fout opgetreden:<br /><br /> '.$e, function ($message) {
-                        $message->to(getenv('DEVELOPER_EMAIL'))->subject('Fout opgetreden: '.$this->signature);
-                    });
+
+                    $path = $_SERVER["DOCUMENT_ROOT"]."/storage/logs/email_error.log";
+                    $logfile = fopen($path,'a+');
+                    $data = "\n".date('Y-m-d H:i:s').": for -> $this->signature cronjob".$e."\n\n";
+                    fwrite($logfile,$data);
+                    fclose($logfile);
                 }
 
                 // End cronjob
@@ -151,7 +153,7 @@ class Zanox extends Command
             } else {
                 // Don't run a task mutiple times, when the first task hasnt been finished
                 $this->line('This task is busy at the moment.');
-            }    
+            }
         }
     }
 }

@@ -17,7 +17,7 @@ class Reminder extends Command
      * Thd name and signature of the console command.
      *
      * @var string
-     */ 
+     */
     protected $signature = 'reminder:appointment';
 
     /**
@@ -74,7 +74,7 @@ class Reminder extends Command
                     date('i'),
                     0
                 );
-                    
+
         foreach ($appointments as $appointment) {
             if ($appointment->last_reminder_at != NULL) {
                 $lastReminderDate = Carbon::create(
@@ -85,17 +85,17 @@ class Reminder extends Command
                     date('i', strtotime($appointment->last_reminder_at)),
                     0
                 );
-                    
+
                 $nextReminderDate = $lastReminderDate->addHours(Setting::get('settings.callcenter_reminder') != NULL ? Setting::get('settings.callcenter_reminder') : 48);
             }
 
             $mailtemplate = new MailTemplate();
-            
+
             // Reminder after 48 hours
             if (isset($nextReminderDate) && $nextReminderDate == $nowDate) {
                 $temporaryAuth = new TemporaryAuth();
                 $createAuthSignup = $temporaryAuth->createCode($appointment->ownerId, 'admin/companies/update/'.$appointment->companyId.'/'.$appointment->companySlug.'?step=1');
-                
+
                 // Send a company sign up mail
                 $mailtemplate->sendMailSite(array(
                     'email' =>  $appointment->appointmentEmail,
@@ -131,13 +131,15 @@ class Reminder extends Command
 
             // Processing
             try {
-                $this->sendReminder(); 
+                $this->sendReminder();
             } catch (Exception $e) {
                 $this->line('Er is een fout opgetreden. '.$this->signature);
-               
-                Mail::raw('Er is een fout opgetreden:<br /><br /> '.$e, function ($message) {
-                    $message->to(getenv('DEVELOPER_EMAIL'))->subject('Fout opgetreden: '.$this->signature);
-                });
+
+                $path = $_SERVER["DOCUMENT_ROOT"]."/storage/logs/email_error.log";
+                $logfile = fopen($path,'a+');
+                $data = "\n".date('Y-m-d H:i:s').": for -> $this->signature cronjob".$e."\n\n";
+                fwrite($logfile,$data);
+                fclose($logfile);
             }
 
             // End cronjob

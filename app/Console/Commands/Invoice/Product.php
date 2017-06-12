@@ -19,7 +19,7 @@ class Product extends Command
      * The name and signature of the console command.
      *
      * @var string
-     */ 
+     */
     protected $signature = 'product:invoice';
 
     /**
@@ -36,13 +36,13 @@ class Product extends Command
      */
     private $mollie;
 
-    public function __construct() 
+    public function __construct()
     {
         parent::__construct();
 
         $this->mollie = new Mollie_API_Client;
         $this->mollie->setApiKey(App::environment('production') ? getenv('MOLLIE_PRODKEY') : getenv('MOLLIE_TESTKEY'));
-    
+
         $this->getLastId = Invoice::select(
             'invoice_number'
         )
@@ -82,10 +82,10 @@ class Product extends Command
                 ->where('invoices.end_date', '=', '0000-00-00')
                 ->orWhere('invoices.end_date', '>=', date('Y-m-d'))
                 ->get()
-            ;  
+            ;
 
             foreach ($invoices as $key => $invoice) {
-                // Add the next invoice 
+                // Add the next invoice
                 if (
                     $invoice->next_invoice_at == date('Y-m-d')
                     && $invoice->getMeta('next_invoice_send') == NULL
@@ -101,7 +101,7 @@ class Product extends Command
                     $newInvoice->save();
 
                     $invoice->addMeta(
-                        'next_invoice_send', 
+                        'next_invoice_send',
                         1
                     );
                 }
@@ -126,10 +126,10 @@ class Product extends Command
                         $totalPrice = 0;
 
                         foreach ($productsArray as $product) {
-                            if (isset($product->amount, $product->price, $product->tax)) { 
-                                $totalTax = $product->tax; 
-                                $totalPriceExTax += $product->amount * $product->price; 
-                                $totalPrice += $product->amount * $product->price * ($product->tax / 100 + 1); 
+                            if (isset($product->amount, $product->price, $product->tax)) {
+                                $totalTax = $product->tax;
+                                $totalPriceExTax += $product->amount * $product->price;
+                                $totalPrice += $product->amount * $product->price * ($product->tax / 100 + 1);
                             }
                         }
 
@@ -162,7 +162,7 @@ class Product extends Command
                     if ($invoice->period > 0 && $invoice->next_invoice_at == NULL) {
                         $invoice->next_invoice_at = date('Y-m-d', strtotime($invoice->start_date.' +'.$invoice->period.' days'));
                     }
-                    
+
                     $invoice->save();
 
                     $this->info('Invoice #'.$invoice->invoice_number.' has been sent.');
@@ -172,17 +172,17 @@ class Product extends Command
 
                     $startDate = date('Y-m-d', strtotime($invoice->start_date));
                     $expireDate = date('Y-m-d', strtotime($startDate.' +14 days'));
-            
+
                     $getInvoice = $invoiceModel->getInvoice(
                         array(
-                            'products' => (object) $productsArray, 
-                            'type' => $invoice->type, 
-                            'totalSaldo' => $invoice->totalSaldo, 
-                            'totalPersons' => $invoice->totalPersons, 
-                            'invoiceNumber' => $invoice->invoice_number, 
+                            'products' => (object) $productsArray,
+                            'type' => $invoice->type,
+                            'totalSaldo' => $invoice->totalSaldo,
+                            'totalPersons' => $invoice->totalPersons,
+                            'invoiceNumber' => $invoice->invoice_number,
                             'debitCredit' => $invoice->debit_credit,
-                            'footer' => (isset($contentBlock[17]) ? $contentBlock[17] : ''), 
-                            'footer_2' => (isset($contentBlock[18]) ? $contentBlock[18] : ''), 
+                            'footer' => (isset($contentBlock[17]) ? $contentBlock[17] : ''),
+                            'footer_2' => (isset($contentBlock[18]) ? $contentBlock[18] : ''),
                             'totalPrice' => 0,
                             'totalPriceExTax' => 0,
                             'totalTax' => 21,
@@ -205,7 +205,7 @@ class Product extends Command
                         ),
                         'output'
                     );
-                    
+
                     // Send mail to company owner
                     switch ($invoice->payment_method) {
                         case 'ideal':
@@ -226,7 +226,7 @@ class Product extends Command
                                 )
                             ));
                             break;
-                        
+
                         default:
                             $mailtemplateModel->sendMail(array(
                                 'email' => $invoice->companyFinancialEmail,
@@ -264,15 +264,17 @@ class Product extends Command
 
             // Processing
             try {
-                $this->sendReminder(); 
+                $this->sendReminder();
             } catch (Exception $e) {
                 $this->line('Er is een fout opgetreden. '.$this->signature);
-               
-                Mail::raw('Er is een fout opgetreden:<br /><br /> '.$e, function ($message) {
-                    $message->to(getenv('DEVELOPER_EMAIL'))->subject('Fout opgetreden: '.$this->signature);
-                });
-            } 
-            
+
+                $path = $_SERVER["DOCUMENT_ROOT"]."/storage/logs/email_error.log";
+                $logfile = fopen($path,'a+');
+                $data = "\n".date('Y-m-d H:i:s').": for -> $this->signature cronjob".$e."\n\n";
+                fwrite($logfile,$data);
+                fclose($logfile);
+            }
+
             // End cronjob
             $this->line('Finished '.$this->signature);
             Setting::set('cronjobs.active.'.$commandName, 0);

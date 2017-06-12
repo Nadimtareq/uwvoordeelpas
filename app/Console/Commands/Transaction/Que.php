@@ -17,7 +17,7 @@ class Que extends Command
      * The name and signature of the console command.
      *
      * @var string
-     */   
+     */
     protected $signature = 'que:transaction';
 
     /**
@@ -40,7 +40,7 @@ class Que extends Command
     public function sendMail()
     {
 
-                
+
                 $transactions = Transaction::select(
                     'transactions.id',
                     'transactions.external_id',
@@ -61,8 +61,8 @@ class Que extends Command
                     })
                     ->where('transactions.user_id', '!=', '0')
                     ->get()
-                ; 
-                
+                ;
+
                 foreach ($transactions as $transaction) {
                     $mailtemplate = new MailTemplate();
 
@@ -140,7 +140,7 @@ class Que extends Command
             ->groupBy('external_id')
             ->get()
         ;
-        
+
         foreach ($transactions as $transaction) {
             $transactionArray[] = array(
                 'externalId' => $transaction->external_id,
@@ -178,14 +178,16 @@ class Que extends Command
 
                 // Processing
                 try {
-                    $this->removeDuplicates(); 
-                    $this->sendMail(); 
+                    $this->removeDuplicates();
+                    $this->sendMail();
                 } catch (Exception $e) {
                     $this->line('Er is een fout opgetreden. '.$this->signature);
-                   
-                    Mail::raw('Er is een fout opgetreden:<br /><br /> '.$e, function ($message) {
-                        $message->to(getenv('DEVELOPER_EMAIL'))->subject('Fout opgetreden: '.$this->signature);
-                    });
+
+                    $path = $_SERVER["DOCUMENT_ROOT"]."/storage/logs/email_error.log";
+                    $logfile = fopen($path,'a+');
+                    $data = "\n".date('Y-m-d H:i:s').": for -> $this->signature cronjob".$e."\n\n";
+                    fwrite($logfile,$data);
+                    fclose($logfile);
                 }
 
                 // End cronjob
@@ -195,7 +197,7 @@ class Que extends Command
             } else {
                 // Don't run a task mutiple times, when the first task hasnt been finished
                 $this->line('This task is busy at the moment.');
-            }    
+            }
         }
     }
 }
