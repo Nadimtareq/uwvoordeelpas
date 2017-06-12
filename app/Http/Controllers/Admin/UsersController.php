@@ -435,7 +435,7 @@ class UsersController extends Controller
     }
 
     public function unsubscribe($id){
-      $user = Sentinal::findById($id);
+      $user = Sentinel::findById($id);
       if(!empty($user)){
         $user->newsletter=0;
         $user->save();
@@ -444,6 +444,7 @@ class UsersController extends Controller
       else {
           alert()->error('', 'Kan nu niet uitschrijven. Er is iets fout gegaan..')->persistent('Sluiten');
       }
-      return Redirect::to('admin/users');
+      return Redirect::to('/');
+
     }
 }

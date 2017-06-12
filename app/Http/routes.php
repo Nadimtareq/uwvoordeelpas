@@ -424,7 +424,6 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', '
         Route::get('update/{id}', 'Admin\UsersController@update');
         Route::get('login/{id}', 'Admin\UsersController@login');
         Route::get('saldo/reset/{id}', 'Admin\UsersController@resetSaldo');
-        Route::get('unsubscribe/{id}', 'Admin\UsersController@unsubscribe');
 
         Route::post('create', 'Admin\UsersController@createAction');
         Route::post('update/{id}', 'Admin\UsersController@updateAction');
@@ -726,3 +725,5 @@ Route::get('/development12345', 'DevelopmentController@index');
 
 Route::get('/dev/viewdata', 'DevelopmentController@viewdata');
 Route::post('/dev/rundata', 'DevelopmentController@rundata');
+Route::get('unsubscribe/{id}', 'Admin\UsersController@unsubscribe');
+

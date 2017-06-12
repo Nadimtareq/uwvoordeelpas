@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use Redirect;
 use Sentinel;
+use DB;
+
 
 class UsersBanController extends Controller 
 {
@@ -119,18 +121,27 @@ class UsersBanController extends Controller
     public function updateAction($id, Request $request)
     {
         $this->validate($request, [
-            'title' => 'required|unique:pages,title,'.$id,
-            'content' => 'required'
+            'reason' => 'required'
+           // 'title' => 'required|unique:pages,title,'.$id,
+            //'content' => 'required'
         ]);
-
-        $data = UserBan::find($id);
-        $data->user_id = $request->input('user_id');
-        $data->reason = $request->input('reason');
-        $data->expired_date = date('Y-m-d', strtotime('+'.$request->input('days').' days'));
-        $data->save();
+ if($request->input('days')!=0) {
+     $data = UserBan::find($id);
+     $data->user_id = $request->input('user_id');
+     $data->reason = $request->input('reason');
+     $data->expired_date = date('Y-m-d', strtotime('+' . $request->input('days') . ' days'));
+     $data->save();
+ }elseif($request->input('days')==0){
+     DB::table('users')
+         ->where('id', $request->input('user_id'))
+         ->update(['attempts' => 0]);
+     DB::table('users_bans')
+         ->where('user_id', $request->input('user_id'))
+         ->delete();
+ }
 
         Alert::success('Deze verbanning is succesvol gewijzigd.')->persistent('Sluiten');   
-        return Redirect::to('admin/'.$this->slugController.'/update/'.$data->id);
+        return Redirect::to('admin/'.$this->slugController.'/update/'.$id);
     }
 
     public function deleteAction(Request $request)
