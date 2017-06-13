@@ -12,6 +12,7 @@
     @foreach ($data->ReservationOptions2()->get() as $deal)
 	<li>
         <?php
+			
         $media = $data->getMedia('default');
 
         $getRec        = HomeController::getPersons($deal->id);

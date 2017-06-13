@@ -18,24 +18,25 @@
         </div>
         <div class="clear">&nbsp;</div>
         <div class="ui grid">
+
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-3 col-md-12">
                     @if(!empty($mediaItems) && isset($mediaItems[0]))
-                        <img id="image" src="{{ url('images/deals/'.$deal->image) }}" class="img-responsive1 img_responsive" alt="" />
+                        <img id="image" src="{{ url('images/deals/'.$deal->image) }}" class="img-responsive1 img_responsive image_rest" alt="" />
                     @endif
                 </div>
                 <?php if ($deal): ?>
-                <div class="col-md-6">
-                    <h4 style="color: #333399;">{{$deal->name}}</h4>
-                    <div style="color:#999999;"><?php echo html_entity_decode($deal->description); ?></div>
-                </div>
-                <div class="col-md-3 pull-right">
-                    <div class="mdg_price">
+                <div class="col-md-9 col-md-12">
+                    <h4 style="color: #333399;">{{$deal->name}}
+                        <div class="mdg_price">
                         <span>
                             &euro; <span id="deal_amount">{{ $deal->price }}</span>
                         </span>
-                    </div>
+                        </div>
+                    </h4>
+                    <div style="color:#999999;"><?php echo html_entity_decode($deal->description); ?></div>
                 </div>
+
                 <?php endif; ?>
             </div>
         </div>

@@ -126,8 +126,13 @@ while ($st->lte($dt)) {
 									<select id="persons-calendar"  name="persons" class="quantity2" >
 										<option value="0">Personen</option>
 										<?php $person_list=[]; ?>
-										<?php for ($i = 1; $i <= 10; $i++) { ?>
+										<?php for ($i = 1; $i <= 10; $i++) {
+										    if($i==2){
+										    ?>
+										<option value="{{ $i }}" data-value="{{ $i }}" selected="true">{{ $i }} {{ $i == 1 ? 'persoon' : 'personen' }}</option>
+										<?php }else{?>
 											<option value="{{ $i }}" data-value="{{ $i }}">{{ $i }} {{ $i == 1 ? 'persoon' : 'personen' }}</option>
+										<?php } ?>
 											<?php $person_list[$i] = $i." ".(($i == 1) ? 'persoon' : 'personen'); ?>
 										<?php } ?>
 									</select>
@@ -181,10 +186,10 @@ while ($st->lte($dt)) {
 										</a>
 
 									@endif
-									<ul class="price">
+									{{--<ul class="price">
 										<li><span>Verkocht<i>  &euro; {{ $deal->price_from }}  </i></span></li>
 										<li><span>Korting<i>50%</i></span></li>
-									</ul>
+									</ul>--}}
 								</div>
 								<div class="right_m">
 									<span>&euro; {{ $deal->price_from }}<strong>&euro; {{ $deal->price }}</strong></span>

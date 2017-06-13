@@ -28,24 +28,24 @@
                         <a href="{{ url('restaurant/'.$futureDeal->company_slug)}}" title="{{ $futureDeal->company_name }}">
                             <img src="{{ url('images/placeholdimagerest.png') }}" alt="{{ $futureDeal->company_name }}" class="thumbnails"  />
                         </a>
-                        @endif                        
+                        @endif
                     </div>
                     <div class="text3" style="min-height: 280px;">
                         <strong>{{$futureDeal->deal_name}}</strong>
                         <span class="city">
-                            
+
                             <a href="{{ url('search?q='.$futureDeal->city) }}">
                                 <span>
                                     {{ $futureDeal->company_name }}
                                 </span>
-                                 | 
-                                <span>                                    
+                                 |
+                                <span>
                                     <i class="marker icon"></i> {{ $futureDeal->city }}&nbsp;
                                 </span>
                             </a>
                         </span>
 
-                        <span class="stars"><img src="{{ asset('images/stars.png') }}" alt="stars">5.00</span>                        
+                        <span class="stars"><img src="{{ asset('images/stars.png') }}" alt="stars">5.00</span>
                         <p>{{ $futureDeal->company_disc }}</p>
                         <div>
                             <b style="max-width: 250px;">
@@ -53,7 +53,7 @@
                                     Beschikbaar voor {{$futureDeal->remain_persons}} personen
                                 @else
                                     Alles is verzilverd
-                                @endif    
+                                @endif
                             </b>
                         </div>
                         <div>
@@ -61,10 +61,10 @@
                                 vervaldatum: {{ Carbon\Carbon::parse($futureDeal->expired_at)->formatLocalized('%d %B %Y') }}
                             </b>
                         </div>
-                        <br />                        
+                        <br />
                         @if(($futureDeal->expired_at >= date('Y-m-d')) && ($futureDeal->remain_persons > 0))
                             <a href="{{url('account/reserve-futuredeal/'.$futureDeal->future_deal_id)}}" class="more">Reserveer nu</a>
-                        @endif    
+                        @endif
                     </div>
                 </li>
                 @endforeach

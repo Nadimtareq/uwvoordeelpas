@@ -312,6 +312,7 @@
                 $data->date_from = $request->input('date_from');
                 $data->date_to = $request->input('date_to');
                 $data->newsletter = $request->input('newsletter');
+                $data->company_id = $request->input('company_id');
                 $data->image = $fileName;
                 $data->save();
                 Alert::success('U heeft deze aanbieding veranderd')->html()->persistent('Sluiten');
