@@ -219,7 +219,7 @@
         @else
         <div class="ui divider"></div>
 
-        {!! $discountMessage !!}
+       {{-- {!! $discountMessage !!}--}}
 
         <div class="three fields">
             <div class="field">
