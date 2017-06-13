@@ -60,7 +60,7 @@
 			</div>
 		</div>
 
-		<h4 class="ui dividing header">Voorkeuren</h4>
+		<h4 class="ui dividing header no_blue">Voorkeuren</h4>
 
 		<div class="field">
 			<label>Nieuwsbrief</label>
@@ -139,7 +139,7 @@
 			</div>		  		  	
 		</div>
 
-		<h4 class="ui dividing header">Wachtwoord <small>(optioneel)</small></h4>
+		<h4 class="ui dividing header no_blue">Wachtwoord <small>(optioneel)</small></h4>
 
 		<div class="field">
 		    <label>Wachtwoord</label>

@@ -4347,3 +4347,10 @@ padding-top: 90px;
 .company{
     margin-top:10%;
 }
+.no_blue{
+    background: none !important;
+}
+
+#companiesSearch{
+    width:100%;
+}

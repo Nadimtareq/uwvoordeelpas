@@ -68,6 +68,7 @@
                         ->on('reservations.option_id', '=', 'reservations_options.id')
                     ;
                 });
+
             if ($request->has('q')) {
                 $data = $data->where('reservations_options.name', 'LIKE', '%'.$request->input('q').'%');
             }
@@ -94,11 +95,11 @@
 
                 return Redirect::to($request->url().'?'.http_build_query($lastPageQueryString));
             }
-            //echo "<pre>";
-           //print_r($data->toArray());
-            //die();
+
+
             $queryString = $request->query();
             unset($queryString['limit']);
+
 
             return view('admin/'.$this->slugController.'/index', [
                 'slugController' => $this->slugController.(trim($slug) != '' ? '/'.$slug : ''),

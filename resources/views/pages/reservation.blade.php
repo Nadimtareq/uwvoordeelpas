@@ -8,7 +8,11 @@
     var user_current_balance = 0;
     var user_authenticate = false;
 </script>
-
+<style>
+    .space-header{
+        padding-top:0px !important;
+    }
+</style>
 <?php if (($userAuth == TRUE) && isset($userInfo->saldo)): ?>
     <script type="text/javascript"> user_current_balance = "<?php echo $userInfo->saldo; ?>";
             user_authenticate = true;</script>
@@ -161,10 +165,10 @@
                     </div>
                 </div>
 
-                    <div class="column">
+                    <div class="column" style="display:none;">
                         <div class="field">
                             <label>Spaartegoed {{ $userAuth ? '&euro;'.$user->saldo : '' }}</label>
-                            <?php echo Form::text('saldo', $userAuth ? $user->saldo : '', array('min' => 0, 'max' => 500)); ?>
+                            <?php echo Form::hidden('saldo', $userAuth ? $user->saldo : '', array('min' => 0, 'max' => 500)); ?>
                         </div>
                     </div>
             </div>

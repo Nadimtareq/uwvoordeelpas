@@ -32,6 +32,7 @@ use Carbon\Carbon;
 use League\Csv\Reader;
 use Session;
 use Setting;
+use File;
 
 
 class HomeController extends Controller 
@@ -890,7 +891,7 @@ class HomeController extends Controller
                 'selectPersons' => ($request->has('persons') ? $request->input('persons') : null)
             )
         );
-        
+
         if (
             count($companies) == 0 
             OR date('Y-m-d') == date('Y-m-d', strtotime($request->input('date')))
@@ -1040,6 +1041,8 @@ class HomeController extends Controller
          return $data;
          
     }
-
+    public function delete(Request $request){
+        File::delete($filename);
+    }
 
 }
