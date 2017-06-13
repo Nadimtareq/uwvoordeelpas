@@ -29,9 +29,14 @@
 		
             <div class="ob" >                                        
                     @if (isset($media[0]) && isset($media[0]->file_name) && file_exists(public_path($media[0]->disk. DIRECTORY_SEPARATOR . $media[0]->id . DIRECTORY_SEPARATOR . $media[0]->file_name)) )
-                        <a href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}" title="{{ $data->name }}" >
-                            <img width="420" src="{{ url('media/'.$media[0]->id.'/'.$media[0]->file_name) }}" alt="{{ $data->name }}"  class="thumbnails" />
-                        </a>
+					@if($count_persons >= $deal->total_amount)
+						<img width="420" src="{{ url('media/'.$media[0]->id.'/'.$media[0]->file_name) }}" alt="{{ $data->name }}"  class="thumbnails" />
+
+					@else
+						<a href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}" title="{{ $data->name }}" >
+							<img width="420" src="{{ url('media/'.$media[0]->id.'/'.$media[0]->file_name) }}" alt="{{ $data->name }}"  class="thumbnails" />
+						</a>
+						@endif
                     @else
 
 
