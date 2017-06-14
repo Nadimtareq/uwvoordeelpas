@@ -10,7 +10,7 @@
 
     <div class="buttonToolbar">  
         <div class="ui grid">
-            <div class="left floated sixteen wide mobile seven wide computer column">
+            <div class="left floated sixteen wide mobile five wide computer column">
                 <a href="{{ url('admin/reservations-options/create'.($slug != NULL ? '/'.$slug : '')) }}" class="ui icon blue button">
                     <i class="plus icon"></i> Nieuw
                 </a>
@@ -20,9 +20,55 @@
                 </button>
             </div>
 
-            <div class="right floated sixteen wide mobile six wide computer column">
+            <div class="right floated sixteen wide mobile eleven wide computer column">
                 <div class="ui grid">
-                    <div class="two column row">
+                    <div class="five column row">
+                        <div class="column">
+                            @if ($userAdmin)
+                            <div class="ui normal icon search selection fluid dropdown">
+                                <i class="filter icon"></i>
+
+                                <div class="text">Bedrijf</div>
+
+                                <i class="dropdown icon"></i>
+                                <div class="menu">
+                                    @if (count($companies) >= 1)
+                                        @foreach ($companies as $company)
+                                        <a class="item" href="{{ url('admin/reservations-options?company=').$company->id  }}">{{ $company->name }}</a>
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
+                            @endif
+                        </div>
+                        <div class="column">
+                            <div class="ui normal icon search selection fluid dropdown">
+                                <i class="filter icon"></i>
+
+                                <div class="text">Nieuwsbrief</div>
+
+                                <i class="dropdown icon"></i>
+
+                                <div class="menu">
+                                    <a class="item" href="{{ url('admin/reservations-options?newsletter=1') }}">Yes</a>
+                                    <a class="item" href="{{ url('admin/reservations-options?newsletter=0') }}">No</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="ui normal icon search selection fluid dropdown">
+                                <i class="filter icon"></i>
+
+                                <div class="text">Online</div>
+
+                                <i class="dropdown icon"></i>
+
+                                <div class="menu">
+                                    <a class="item" href="{{ url('admin/reservations-options?online=1') }}">Yes</a>
+                                    <a class="item" href="{{ url('admin/reservations-options?online=0') }}">No</a>
+                                </div>
+                            </div>
+                        </div>
                         <div class="column">
                             @include('admin.template.limit')
                         </div>
@@ -33,6 +79,41 @@
                     </div>
                 </div>
             </div>
+            <div class="sixteen wide mobile sixteen wide computer column">
+            <form method="get" action="{{ url('admin/'.$slugController.'?'.http_build_query($queryString)) }}">
+                <div class="ui input">
+                    <?php
+                    echo Form::text(
+                            'city', old('city'),array('placeholder' => 'City')
+                    );
+                    ?>
+                </div>
+                <div class="ui input">
+                    <?php
+                    echo Form::text(
+                            'from', old('from'), array(
+                        'class' => 'datepicker_no_min_date',
+                        'placeholder' => 'Online from',
+                        'style' => 'width: 300px;'
+                            )
+                    );
+                    ?>
+                </div>
+
+                <div class="ui input">
+                    <?php
+                    echo Form::text(
+                            'to', old('to'), array(
+                        'class' => 'datepicker_no_min_date',
+                        'placeholder' => 'Online tot',
+                        'style' => 'width: 300px;'
+                            )
+                    );
+                    ?>
+                </div>
+                <button class="ui button" type="submit"><i class="search icon"></i></button>
+            </form>
+        </div>
         </div>
     </div>
 
@@ -48,6 +129,8 @@
         </th>
         <th data-slug="name" class="three wide">Plaats</th>
         <th data-slug="name" class="three wide">Naam</th>
+        <th data-slug="company_id" class="three wide">Bedrijf</th>
+        <th data-slug="city" class="three wide">City</th>
         <th data-slug="total_amount" class="four wide">beschikbaar</th>
         <th data-slug="total_res" class="four wide">verkocht</th>
         <th data-slug="date_from" class="four wide">Online van</th>
@@ -75,6 +158,12 @@
                 <td>{{$i++}}</td>
                 <td>
                     {{ $result->name }}
+                </td>
+                <td>
+                    {{ $result->company_name }}
+                </td>
+                <td>
+                    {{ $result->city }}
                 </td>
                 <td>
                     {{ $result->total_amount }}
@@ -105,10 +194,10 @@
                 <td>
                     <?php
 
-                    $currentDate = date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s')));
+                    $currentDate = date('Y-m-d');
                     ;
-                    $contractDateBegin = date('Y-m-d H:i:s', strtotime($result->date_from));
-                    $contractDateEnd = date('Y-m-d H:i:s', strtotime($result->date_to));
+                    $contractDateBegin = date('Y-m-d', strtotime($result->date_from));
+                    $contractDateEnd = date('Y-m-d', strtotime($result->date_to));
                     $result->date_from . '-' . $result->date_to;
                     if (($currentDate >= $contractDateBegin) && ($currentDate <= $contractDateEnd)) {
                         echo '<i class="icon green checkmark"></i>';
@@ -119,18 +208,13 @@
                 </td>
                 <td>
                     <?php 
-                    if ($result->newsletter==0) {
+                    if ($result->newsletter != 0) {
                         echo '<i class="icon green checkmark"></i>';
                     } else {
                         echo '<i class="icon red remove"></i>';
                     }
                     ?>
                 </td>
-                 <!-- <td>
-                   <?php
-                    echo $result->reservated;
-                    ?>
-                </td> -->
                 <td>
                     <a href="{{ url('admin/'.$slugController.'/update/'.$result->id) }}" class="ui icon tiny button">
                         <i class="pencil icon"></i>
@@ -140,7 +224,7 @@
             @endforeach
             @else
             <tr>
-                <td colspan="2"><div class="ui error message">Er is geen data gevonden.</div></td>
+                <td colspan="13"><div class="ui error message">Er is geen data gevonden.</div></td>
             </tr>
             @endif
         </tbody>
