@@ -14,7 +14,7 @@
 			<img align="left" 
 				 alt="{{ $info['name'] }}" 
 				 class="mcnImage" 
-			 	 src="{{ url('public/images/vplogo.png') }}" 
+			 	 src="{{ url('images/vplogo.png') }}" 
 				 style="width: 280px; padding-bottom: 0;display: inline !important;vertical-align: bottom;border: 0;height: auto;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" width="200">
 		@endif
 	</a>
@@ -23,7 +23,7 @@
 			<img align="left" 
 				 alt="UWvoordeelpas" 
 				 class="mcnImage" 
-			     src="https://www.uwvoordeelpas.nl/public/images/vplogo.png" 
+			     src="https://www.uwvoordeelpas.nl/images/vplogo.png" 
 				 style="width: 280px; padding-bottom: 0;display: inline !important;vertical-align: bottom;border: 0;height: auto;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" width="200">
 		</a>
 	@endif

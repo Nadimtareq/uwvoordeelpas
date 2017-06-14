@@ -4405,3 +4405,7 @@ img.thumbnails{
     width: 48%;
     float: left;
 }
+.shop .up .start ul.list li p {
+    font-size: 16px !important;
+    color: #555 !important;
+}
