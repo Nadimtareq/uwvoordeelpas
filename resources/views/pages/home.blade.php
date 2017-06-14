@@ -165,14 +165,14 @@ $arrayMerge = array_filter(array_merge($breadcrumbArray1, $breadcrumbArray2, $br
     <?php echo Form::close() ?>
 </div>
 
-<section  id="prices" >
+<section  id="prices" class="home_price_div">
     <div class="container">
         <div class="col-sm-12 col-ms1">
             <div class="col-sm-3 col5">
 
                 @if (count($companies) >= 1)
 
-                @include('company-list')
+                @include('company-list-home')
 
                 <div class="ui vertically divided grid container">
                     <div class="row mobile only">

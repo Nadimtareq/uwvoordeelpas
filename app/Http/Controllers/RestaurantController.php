@@ -35,6 +35,8 @@ class RestaurantController extends Controller {
                 ->where('no_show', 0)
                 ->where('slug', $slug)
                 ->first();
+        /*echo "<pre>";
+        print_r($company);exit;*/
         if ($company) {
             // Add Click
             $companyClick = new Company;

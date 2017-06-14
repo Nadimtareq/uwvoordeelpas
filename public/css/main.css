@@ -4354,7 +4354,7 @@ padding-top: 90px;
    width:100%;
 }
 .company{
-    margin-top:10%;
+   clear:both;
 }
 .no_blue{
     background: none !important;
@@ -4365,4 +4365,11 @@ padding-top: 90px;
 }
 #usersSearch{
     width:100%;
+}
+.home_price_div{
+    padding-top:0px !important;
+}
+.col5 .ob {
+
+    margin-top: 10px;
 }
