@@ -3,15 +3,15 @@
 @inject('invoiceModel', 'App\Models\Invoice')
 
 @section('scripts')
-    @include('admin.template.remove_alert')
+@include('admin.template.remove_alert')
 
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('.payment-status').on('change', function() {
-                 $('#formList').submit();
-            });
-        });
-    </script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.payment-status').on('change', function() {
+         $('#formList').submit();
+     });
+    });
+</script>
 @stop
 
 @section('content')
@@ -92,24 +92,24 @@
                     <th data-slug="disabled" class="disabled one wide">
                         <div class="ui master checkbox">
                            <input type="checkbox" name="example">
-                            <label></label>
-                        </div>
-                    </th>
-                    @endif
-                    <th data-slug="invoice_number" class="one wide">Factuurnummer</th>
-                    <th data-slug="start_date" class="one wide">Startdatum</th>
-                    <th data-slug="disabled" class="one wide">Verloopdatum</th>
-                    <th data-slug="total_persons" class="one wide">Te betalen</th>
-                    <th data-slug="total_persons" class="one wide">Te ontvangen</th>
-                    <th data-slug="name" class="two wide">Restaurant</th>
+                           <label></label>
+                       </div>
+                   </th>
+                   @endif
+                   <th data-slug="invoice_number" class="one wide">Factuurnummer</th>
+                   <th data-slug="start_date" class="one wide">Startdatum</th>
+                   <th data-slug="disabled" class="one wide">Verloopdatum</th>
+                   <th data-slug="total_persons" class="one wide">Te betalen</th>
+                   <th data-slug="total_persons" class="one wide">Te ontvangen</th>
+                   <th data-slug="name" class="two wide">Restaurant</th>
                     <th data-slug="paid" class="two wide">Betaald</th><!-- 
                     <th data-slug="type" class="one wide">Soort</th> -->
                     <th data-slug="disabled" class="disabled two wide"></th>
                 </tr>
             </thead>
             <tbody class="list search">
-            @if(count($invoices) >= 1)
-            {{ $slug }}
+                @if(count($invoices) >= 1)
+                {{ $slug }}
                 @foreach($invoices as $invoice)
                 <tr>
                     @if ($userAdmin)
@@ -125,28 +125,28 @@
                     <td>{{ date('d-m-Y', strtotime($invoice->start_date.' +14 days')) }}</td>
                     <td>
                         @if ($slug == null)
-                            @if ($invoice->type != 'products')
-                                &euro;{{ $invoice->total_saldo }}
-                            @endif
+                        @if ($invoice->type != 'products')
+                        &euro;{{ $invoice->total_saldo }}
+                        @endif
                         @else
-                            @if ($invoice->type == 'products')
-                                {{ $invoiceModel->getTotalProductsSaldo($invoice->products) }}
-                            @else
-                                &euro;{{ ($invoice->total_persons * 1.21) }}
-                            @endif
+                        @if ($invoice->type == 'products')
+                        {{ $invoiceModel->getTotalProductsSaldo($invoice->products) }}
+                        @else
+                        &euro;{{ ($invoice->total_persons * 1.21) }}
+                        @endif
                         @endif
                     </td>
                     <td>
                         @if ($slug == null)
-                            @if ($invoice->type == 'products')
-                                {{ $invoiceModel->getTotalProductsSaldo($invoice->products) }}
-                            @else
-                                &euro;{{ ($invoice->total_persons * 1.21) }}
-                            @endif
+                        @if ($invoice->type == 'products')
+                        {{ $invoiceModel->getTotalProductsSaldo($invoice->products) }}
                         @else
-                            @if ($invoice->type != 'products')
-                                &euro;{{ $invoice->total_saldo }}
-                            @endif
+                        &euro;{{ ($invoice->total_persons * 1.21) }}
+                        @endif
+                        @else
+                        @if ($invoice->type != 'products')
+                        &euro;{{ $invoice->total_saldo }}
+                        @endif
                         @endif
                     </td>
                     <td>{{ $invoice->name }}</td>
@@ -166,13 +166,13 @@
                             </div>
                         </div>
                         @else
-                            @if ($invoice->paid == 0)
-                                <span class="ui label fluid red">Niet betaald</span>
-                            @elseif ($invoice->paid == 2)
-                                <span class="ui label fluid red">Geannuleerd</span>
-                            @else
-                                <span class="ui label fluid green">Betaald</span>
-                            @endif
+                        @if ($invoice->paid == 0)
+                        <span class="ui label fluid red">Niet betaald</span>
+                        @elseif ($invoice->paid == 2)
+                        <span class="ui label fluid red">Geannuleerd</span>
+                        @else
+                        <span class="ui label fluid green">Betaald</span>
+                        @endif
                         @endif
                     </td>
                     <td>
@@ -190,25 +190,27 @@
                             <a href="{{ url('admin/invoices/download/'.$invoice->invoice_number) }}" class="ui icon button">
                                 <i class="download icon"></i>
                             </a>
-
                             <span class="ui icon label">
-                                <span class="method-icon micon" data-method="{{ $invoice->payment_method }}"></span> 
+                                {{-- <span class="method-icon micon" data-method="{{ $invoice->payment_method }}"></span> --}}
+
+                                <a href="{{ url('payment/pay-invoice/pay/'.$invoice->invoice_number) }}" class="method-icon micon">
+                                </a> 
                             </span>
                         </div>
                     </td>
                 </tr>
                 @endforeach
-            @else
+                @else
                 <tr>
                     <td colspan="2"><div class="ui error message">Er is geen data gevonden.</div></td>
                 </tr>
-            @endif
+                @endif
             </tbody>
         </table>
     </div>
     <?php echo Form::close(); ?>
 
-            {!! with(new \App\Presenter\Pagination($invoices->appends($paginationQueryString)))->render() !!}
+    {!! with(new \App\Presenter\Pagination($invoices->appends($paginationQueryString)))->render() !!}
 
 </div>
 @stop
