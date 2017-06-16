@@ -21,7 +21,7 @@ class Reservation extends Command
      * The name and signature of the console command.
      *
      * @var string
-     */
+     */ 
     protected $signature = 'reservation:invoice';
 
     /**
@@ -38,7 +38,7 @@ class Reservation extends Command
      */
     private $mollie;
 
-    public function __construct()
+    public function __construct() 
     {
         parent::__construct();
 
@@ -77,10 +77,10 @@ class Reservation extends Command
                 ->where('invoices.end_date', '=', '0000-00-00')
                 ->orWhere('invoices.end_date', '>=', date('Y-m-d'))
                 ->get()
-            ;
+            ;  
 
             foreach ($invoices as $invoice) {
-                // Add the next invoice
+                // Add the next invoice 
                 if (
                     $invoice->next_invoice_at == date('Y-m-d')
                     && $invoice->getMeta('next_invoice_send') == NULL
@@ -136,7 +136,7 @@ class Reservation extends Command
                     if ($invoice->period > 0 && $invoice->next_invoice_at == NULL) {
                         $invoice->next_invoice_at = date('Y-m-d', strtotime($invoice->start_date.' +'.$invoice->period.' days'));
                     }
-
+                    
                     $invoice->save();
 
                     $weeksAgo = date('Y-m-d', strtotime($invoice->start_date.' -'.$invoice->period.' days'));
@@ -169,13 +169,13 @@ class Reservation extends Command
                     $getInvoice = $invoiceModel->getInvoice(
                         array(
                             'debitCredit' => $invoice->debit_credit,
-                            'type' => $invoice->type,
-                            'pricePerGuest' => $invoice->price_per_guest,
-                            'totalSaldo' => $invoice->total_saldo,
-                            'totalPersons' => $invoice->total_persons,
-                            'invoiceNumber' => $invoice->invoice_number,
-                            'footer' => (isset($contentBlock[17]) ? $contentBlock[17] : ''),
-                            'footer_2' => (isset($contentBlock[18]) ? $contentBlock[18] : ''),
+                            'type' => $invoice->type, 
+                            'pricePerGuest' => $invoice->price_per_guest, 
+                            'totalSaldo' => $invoice->total_saldo, 
+                            'totalPersons' => $invoice->total_persons, 
+                            'invoiceNumber' => $invoice->invoice_number, 
+                            'footer' => (isset($contentBlock[17]) ? $contentBlock[17] : ''), 
+                            'footer_2' => (isset($contentBlock[18]) ? $contentBlock[18] : ''), 
                             'totalPrice' => 0,
                             'invoiceDate' => array(
                                 'startDate' => date('d-m-Y', strtotime($invoice->start_date)),
@@ -217,7 +217,7 @@ class Reservation extends Command
                                     )
                                 ));
                                 break;
-
+                        
                             default:
                                 $mailtemplateModel->sendMail(array(
                                     'email' => $invoice->companyFinancialEmail,
@@ -259,16 +259,14 @@ class Reservation extends Command
 
                 // Processing
                 try {
-                    $this->sendReminder();
+                    $this->sendReminder(); 
                 } catch (Exception $e) {
                     $this->line('Er is een fout opgetreden. '.$this->signature);
-
-                    $path = $_SERVER["DOCUMENT_ROOT"]."/storage/logs/email_error.log";
-                    $logfile = fopen($path,'a+');
-                    $data = "\n".date('Y-m-d H:i:s').": for -> $this->signature cronjob".$e."\n\n";
-                    fwrite($logfile,$data);
-                    fclose($logfile);
-                }
+                   
+                    Mail::raw('Er is een fout opgetreden:<br /><br /> '.$e, function ($message) {
+                        $message->to(getenv('DEVELOPER_EMAIL'))->subject('Fout opgetreden: '.$this->signature);
+                    });
+                }     
                 // End cronjob
                 $this->line('Finished '.$this->signature);
                 Setting::set('cronjobs.active.'.$commandName, 0);
@@ -276,7 +274,7 @@ class Reservation extends Command
             } else {
                 // Don't run a task mutiple times, when the first task hasnt been finished
                 $this->line('This task is busy at the moment.');
-            }
+            }    
         }
     }
 

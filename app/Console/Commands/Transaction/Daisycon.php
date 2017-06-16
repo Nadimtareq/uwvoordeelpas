@@ -18,7 +18,7 @@ class Daisycon extends Command
      * The name and signature of the console command.
      *
      * @var string
-     */
+     */   
     protected $signature = 'daisycon:transaction';
 
     /**
@@ -51,15 +51,15 @@ class Daisycon extends Command
                 $endDate = date('Y-m-d', strtotime('today'));
 
                 $curl = new cURL;
-
+                
                 $this->transaction = Transaction::select(
                     'external_id'
                 )
                     ->where('affiliate_network', $this->affiliate_network)
                     ->get()
                     ->toArray()
-                ;
-
+                ; 
+ 
                 $this->feedTransactions = $curl
                     ->newRequest(
                         'GET', 'https://services.daisycon.com/publishers/370506/transactions?page=1&per_page=1000&start='.$startDate.'&end='.$endDate
@@ -73,7 +73,7 @@ class Daisycon extends Command
                 $this->feedTransactions = json_decode($this->feedTransactions->body);
 
                 $status = Config::get('preferences.transactionStatus');
-
+                
                 if (isset($this->feedTransactions)) {
                     foreach ($this->feedTransactions as $transaction) {
                         if (!in_array($transaction->affiliatemarketing_id, array_flatten($this->transaction))) {
@@ -138,12 +138,10 @@ class Daisycon extends Command
                     $this->addTransactions();
                 } catch (Exception $e) {
                     $this->line('Er is een fout opgetreden. '.$this->signature);
-
-                    $path = $_SERVER["DOCUMENT_ROOT"]."/storage/logs/email_error.log";
-                    $logfile = fopen($path,'a+');
-                    $data = "\n".date('Y-m-d H:i:s').": for -> $this->signature cronjob".$e."\n\n";
-                    fwrite($logfile,$data);
-                    fclose($logfile);
+                   
+                    Mail::raw('Er is een fout opgetreden:<br /><br /> '.$e, function ($message) {
+                        $message->to(getenv('DEVELOPER_EMAIL'))->subject('Fout opgetreden: '.$this->signature);
+                    });
                 }
 
                 // End cronjob
@@ -153,7 +151,7 @@ class Daisycon extends Command
             } else {
                 // Don't run a task mutiple times, when the first task hasnt been finished
                 $this->line('This task is busy at the moment.');
-            }
+            }    
         }
     }
 }

@@ -8,8 +8,6 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use Redirect;
 use Sentinel;
-use DB;
-
 
 class UsersBanController extends Controller 
 {
@@ -118,7 +116,7 @@ class UsersBanController extends Controller
         return Redirect::to('admin/'.$this->slugController);
     }
 
-    public function updateAction($id, Request $request)
+  public function updateAction($id, Request $request)
     {
         $this->validate($request, [
             'reason' => 'required'

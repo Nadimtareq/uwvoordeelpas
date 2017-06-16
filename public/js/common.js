@@ -1,6 +1,6 @@
 /*var $ = jQuery;*/
 //SITE_URL='http://localhost/uwvoordeelpas_live/public';
-SITE_URL='https://www.live.uwvoordeelpas.nl';
+SITE_URL='https://www.uwvoordeelpas.nl';
 
 // callback after ready the document
 $(document).ready(function($){

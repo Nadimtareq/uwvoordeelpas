@@ -20,7 +20,7 @@ class DirectDebit extends Command
      * The name and signature of the console command.
      *
      * @var string
-     */
+     */ 
     protected $signature = 'debit:invoice';
 
     /**
@@ -55,7 +55,7 @@ class DirectDebit extends Command
             $invoices = Invoice::where('invoices.paid', 0)
                 ->where('invoices.start_date', '<=', date('Y-m-d').'"')
                 ->get()
-            ;
+            ;  
 
             foreach ($invoices as $key => $invoice) {
                 if ($invoice->getMeta('invoice_direct_debit') == NULL) {
@@ -76,7 +76,7 @@ class DirectDebit extends Command
                     }
                 }
             }
-
+            
             foreach ($invoicesArray as $key => $invoicesFetch) {
                 if (isset($invoicesArray[$key])) {
                     $debit = new Incasso();
@@ -92,7 +92,7 @@ class DirectDebit extends Command
                     foreach ($invoicesArray[$key] as $invoices) {
                         $invoices->is_debit = 1;
                         $invoices->save();
-
+                        
                         $invoices->addMeta('invoice_direct_debit', 1);
                     }
                 }
@@ -117,16 +117,14 @@ class DirectDebit extends Command
 
                     // Processing
                     try {
-                        $this->directDebit();
+                        $this->directDebit();  
                     } catch (Exception $e) {
                         $this->line('Er is een fout opgetreden. '.$this->signature);
-
-                        $path = $_SERVER["DOCUMENT_ROOT"]."/storage/logs/email_error.log";
-                        $logfile = fopen($path,'a+');
-                        $data = "\n".date('Y-m-d H:i:s').": for -> $this->signature cronjob".$e."\n\n";
-                        fwrite($logfile,$data);
-                        fclose($logfile);
-                    }
+                       
+                        Mail::raw('Er is een fout opgetreden:<br /><br /> '.$e, function ($message) {
+                            $message->to(getenv('DEVELOPER_EMAIL'))->subject('Fout opgetreden: '.$this->signature);
+                        });
+                    } 
                     // End cronjob
                     $this->line('Finished '.$this->signature);
                     Setting::set('cronjobs.active.'.$commandName, 0);

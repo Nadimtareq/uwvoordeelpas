@@ -97,6 +97,7 @@
 					   <i class="marker icon"></i> {{ $data->city }}&nbsp;</span>
 					</a>
 				</span>
+				
 
 				<span class="stars"><img src="{{ asset('images/stars.png') }}" alt="stars">5.00</span>
 				
@@ -128,7 +129,8 @@
 					@endif
 				@endif
 				
-              <p>{!!  $deal->description !!}</p>
+              <p>{!! $deal->description !!}</p>
+
 			  <div class="wr">
                 {!!
                     $companyReservation->getTimeCarouselHTML(

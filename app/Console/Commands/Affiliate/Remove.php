@@ -12,7 +12,7 @@ class Remove extends Command
      * The name and signature of the console command.
      *
      * @var string
-     */
+     */ 
     protected $signature = 'remove:affiliate';
 
     /**
@@ -49,12 +49,10 @@ class Remove extends Command
             echo '- Finished '.$this->signature;
         } catch (Exception $e) {
             echo 'Er is een fout opgetreden. '.$this->signature.
-
-            $path = $_SERVER["DOCUMENT_ROOT"]."/storage/logs/email_error.log";
-            $logfile = fopen($path,'a+');
-            $data = "\n".date('Y-m-d H:i:s').": for -> $this->signature cronjob".$e."\n\n";
-            fwrite($logfile,$data);
-            fclose($logfile);
+           
+            Mail::raw('Er is een fout opgetreden:<br /><br /> '.$e, function ($message) {
+                $message->to(getenv('DEVELOPER_EMAIL'))->subject('Fout opgetreden: '.$this->signature);
+            });
         }
     }
 }

@@ -73,7 +73,7 @@ class Tradetracker extends Command
     public function __construct()
     {
         parent::__construct();
-
+        
         $this->affiliateHelper = new AffiliateHelper;
 
         $this->lastAffiliates = Affiliate::select(
@@ -81,15 +81,15 @@ class Tradetracker extends Command
             'name'
         )
             ->get()
-        ;
-
+        ; 
+                
         $this->affiliates = Affiliate::select(
             'program_id'
         )
             ->where('affiliate_network', $this->affiliate_network)
             ->get()
             ->toArray()
-        ;
+        ; 
 
         $this->categories = Category::select(
             'id',
@@ -104,7 +104,7 @@ class Tradetracker extends Command
         $this->lastId = count($this->lastAffiliates) >= 1 ? $this->lastAffiliates->last()->id : 0;
     }
 
-    public function checkConnection()
+    public function checkConnection() 
     {
         $options =  array(
             'compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP,
@@ -112,8 +112,8 @@ class Tradetracker extends Command
                 array(
                     'ssl' => array(
                         'verify_peer' => false,
-                        'verify_peer_name' => false,
-                        'allow_self_signed' => true
+                        'verify_peer_name' => false, 
+                        'allow_self_signed' => true 
                      )
                 )
             )
@@ -125,10 +125,10 @@ class Tradetracker extends Command
 
             $this->client = new SoapClient('http://ws.tradetracker.com/soap/affiliate?wsdl', $options);
             $this->client->authenticate(
-                Setting::get('settings.tradetracker_name'),
+                Setting::get('settings.tradetracker_name'), 
                 Setting::get('settings.tradetracker_pw')
             );
-
+            
             return $this->client;
         } catch (SoapFault $fault) {
             echo $fault->faultstring;
@@ -138,27 +138,27 @@ class Tradetracker extends Command
     public function getCampaigns()
     {
         $campaigns = $this->checkConnection()->getCampaigns(
-            232507,
+            232507, 
             array(
                 'assignmentStatus' => 'accepted'
             )
         );
 
         $programs = array();
-
-        foreach ($campaigns as $campaign) {
+        
+        foreach ($campaigns as $campaign) {    
             if (
-                isset($campaign->info->policyCashbackStatus, $campaign->info->deeplinkingSupported)
+                isset($campaign->info->policyCashbackStatus, $campaign->info->deeplinkingSupported) 
                 && $campaign->info->deeplinkingSupported === TRUE
-                && !in_array($campaign->name, array_flatten($this->lastAffiliates))
-                && !in_array($campaign->ID, array_flatten($this->affiliates))
+                && !in_array($campaign->name, array_flatten($this->lastAffiliates)) 
+                && !in_array($campaign->ID, array_flatten($this->affiliates)) 
                 && $this->affiliateHelper->domainRestriction($campaign->URL) == 1
             ) {
-
+            	
                 $this->lastId++;
 
                 $trackingDuration = $this->getTrackingDays($campaign);
-
+               
                 $programs[] = array(
                     'affiliateId' => $this->lastId,
                     'affiliateCreated' => date('now'),
@@ -190,41 +190,41 @@ class Tradetracker extends Command
         if (isset($saleCommissionVariable) && $saleCommissionVariable > 0) {
             if (isset($campaign->info->commission->saleMaximumAssessmentInterval)) {
                 preg_match('/([0-9]{1,3})D/', $campaign->info->commission->saleMaximumAssessmentInterval, $matches);
-
+                                  
                 if (isset($matches[0])) {
                     $trackingDuration = str_replace('D', '', $matches[0]).' dagen';
                 }
 
                 preg_match('/([0-9]{1,3})W/', $campaign->info->commission->saleMaximumAssessmentInterval, $matches);
-
+                                    
                 if (isset($matches[0])) {
                     $trackingDuration = (intval(str_replace('W', '', $matches[0])) * 7).' dagen';
                 }
 
                 preg_match( '/([0-9]{1,3})M/', $campaign->info->commission->saleMaximumAssessmentInterval, $matches);
-
+                                    
                 if (isset($matches[0])) {
                     $trackingDuration = (intval(str_replace('W', '', $matches[0])) * 30.5).' dagen';
                 }
             }
         }
-
+        
         if (isset($campaign->info->commission->leadCommission) && $campaign->info->commission->leadCommission > 0 ) {
             if (isset($campaign->info->leadMaximumAssessmentInterval)) {
                 preg_match('/([0-9]{1,3})D/', $campaign->info->leadMaximumAssessmentInterval, $matches);
-
+                                
                 if (isset($matches[0])) {
                     $trackingDuration = str_replace('D', '', $matches[0]) .' dagen';
                 }
 
                 preg_match('/([0-9]{1,3})W/', $campaign->info->leadMaximumAssessmentInterval, $matches);
-
+                                
                 if (isset($matches[0])) {
                     $trackingDuration = (intval(str_replace('W', '', $matches[0])) * 7).' dagen';
                 }
 
                 preg_match('/([0-9]{1,3})M/', $campaign->info->leadMaximumAssessmentInterval, $matches);
-
+                                
                 if (isset($matches[0])) {
                     $trackingDuration = (intval(str_replace('W', '', $matches[0])) * 30).' dagen';
                 }
@@ -234,7 +234,7 @@ class Tradetracker extends Command
         return $trackingDuration;
     }
 
-    public function generateCategories()
+    public function generateCategories() 
     {
         foreach ($this->client->getCampaignCategories() as $category) {
             $this->parentsArray[$category->ID] = array(
@@ -253,7 +253,7 @@ class Tradetracker extends Command
                 }
             }
         }
-
+     
         $flattenCategories = array_flatten($this->categories);
 
         if (isset($this->parentsArray)) {
@@ -261,10 +261,10 @@ class Tradetracker extends Command
             foreach ($this->parentsArray as $parentResult) {
                 // Check if category name constains name of categories
                 $duplicatedCategories = $this->affiliateHelper->categoryDuplicates(
-                    $parentResult['name'],
+                    $parentResult['name'], 
                     $flattenCategories
                 );
-
+            
                 // This category isn't in the database
                 if (!in_array($parentResult['name'], $flattenCategories) && count($duplicatedCategories) == 0) {
                     $createCategory = Category::newItem($parentResult['name']);
@@ -289,7 +289,7 @@ class Tradetracker extends Command
             }
 
             // - Children -
-            foreach ($this->parentsChilds as $parentSlug => $parrentChildsItems) {
+            foreach ($this->parentsChilds as $parentSlug => $parrentChildsItems) {  
                 $parentKey = str_slug($this->parentsArray[$parentSlug]['name']);
                 if(!isset($this->temporaryParents[$parentKey])) {
                 	continue;
@@ -342,7 +342,7 @@ class Tradetracker extends Command
                             );
                         }
                     }
-                }
+                }   
             }
         }
     }
@@ -350,7 +350,7 @@ class Tradetracker extends Command
     public function getCommission($campaignId)
     {
         $campaignCommision = $this->client->getCampaignCommissionExtended(
-            232507,
+            232507, 
             $campaignId
         );
 
@@ -361,7 +361,7 @@ class Tradetracker extends Command
                     'unit' => '&euro;',
                     'value' => $commision->saleCommissionFixed
                 );
-            }
+            }                    
 
             if ($commision->leadCommission > 0) {
                 $commissions[] = array(
@@ -386,7 +386,7 @@ class Tradetracker extends Command
     public function updateCampaigns()
     {
         $campaigns = $this->checkConnection()->getCampaigns(
-            232507,
+            232507, 
             array(
                 'assignmentStatus' => 'accepted'
             )
@@ -411,12 +411,12 @@ class Tradetracker extends Command
         	$affiliates = Affiliate::whereIn('program_id', array_keys($commissionArray))
         	->where('affiliate_network', 'tradetracker')
         	->get();
-
+        	
         	if(!empty($affiliates)) {
         		foreach ($affiliates as $key => $affiliate) {
-
+        			 
         			$affiliate_compensations = json_decode($affiliate->compensations, true);
-
+        			 
         			if (is_array($affiliate_compensations)) {
         				foreach ($affiliate_compensations as $key => $commission) {
         					$affiliateCommissionArray[$affiliate->program_id][$key.'-'.str_slug($commission['name']).'-'.$commission['value']] = array(
@@ -424,20 +424,20 @@ class Tradetracker extends Command
         							'unit' => (isset($commissionArray[$affiliate->program_id][$key.'-'.str_slug($commission['name']).'-'.$commission['value']]) ? $commissionArray[$affiliate->program_id][$key.'-'.str_slug($commission['name']).'-'.$commission['value']]['unit'] : $commission['unit']),
         							'value' => $commission['value']
         					);
-
+        					 
         					$this->line('Updating affliate #'.$affiliate->program_id.' - '.$affiliate->name);
         				}
-
+        		
         				//                 foreach (json_decode($affiliate->compensations) as $key => $commission) {
         				//                     $affiliateCommissionArray[$affiliate->program_id][$key.'-'.str_slug($commission->name).'-'.$commission->value] = array(
         				//                         'name' => $commission->name,
         				//                         'unit' => (isset($commissionArray[$affiliate->program_id][$key.'-'.str_slug($commission->name).'-'.$commission->value]) ? $commissionArray[$affiliate->program_id][$key.'-'.str_slug($commission->name).'-'.$commission->value]['unit'] : $commission->unit),
         				//                         'value' => $commission->value
         				//                     );
-
+        				 
         				//                     $this->line('Updating affliate #'.$affiliate->program_id.' - '.$affiliate->name);
         				//                 }
-
+        				 
         				foreach ($commissionArray as $programId => $commissions) {
         					foreach ($commissions as $commisionKey => $commission) {
         						$affiliateCommissionArray[$programId][$commisionKey] = array(
@@ -448,7 +448,7 @@ class Tradetracker extends Command
         					}
         				}
         			}
-
+        			 
         			if (isset($affiliateCommissionArray[$affiliate->program_id])) {
         				$affiliate->compensations = json_encode(array_values($affiliateCommissionArray[$affiliate->program_id]));
         				$affiliate->save();
@@ -465,14 +465,14 @@ class Tradetracker extends Command
         )
             ->where('affiliate_network', $this->affiliate_network)
             ->get()
-        ;
+        ; 
 
         foreach ($existedAffiliates as $existedAffiliate) {
             $programsArray[] = $existedAffiliate->program_id;
         }
 
         $activePrograms = $this->checkConnection()->getCampaigns(
-            232507,
+            232507, 
             array(
                 'assignmentStatus' => 'accepted'
             )
@@ -485,7 +485,7 @@ class Tradetracker extends Command
         		}
         	}
         }
-
+       
         if (isset($activeCampaigns)) {
             $affiliates = Affiliate::whereNotIn('program_id', $activeCampaigns)
                 ->where('affiliate_network', $this->affiliate_network)
@@ -499,7 +499,7 @@ class Tradetracker extends Command
     public function addCampaigns()
     {
         $campaigns = $this->getCampaigns();  // Get all accepted programs
-
+                
         foreach ($campaigns as $key => $campaign) {
             $insertAffiliate[] = array(
                 'id' => $campaign['affiliateId'],
@@ -520,10 +520,10 @@ class Tradetracker extends Command
             $categoryId = $campaign['programInfo']->category->ID;
 
             if (isset($this->parentsArray[$categoryId])) {
-
+            	
             	if(isset($this->temporaryParents[$this->parentsArray[$categoryId]['slug']])) {
             		$connectParentKey = $this->temporaryParents[$this->parentsArray[$categoryId]['slug']];
-
+            		
             		if (is_array($connectParentKey)) {
             			foreach ($connectParentKey as $connectParentId) {
             				$insertAffiliateCategory[] = array(
@@ -538,11 +538,11 @@ class Tradetracker extends Command
             			);
             		}
             	}
-
+                
             }
 
             if (isset($campaign['programInfo']->subCategories)) {
-                foreach ($campaign['programInfo']->subCategories as $subcat) {
+                foreach ($campaign['programInfo']->subCategories as $subcat) { 
                     if (isset($this->temporaryChilds[$subcat->name])) {
                         $insertAffiliateCategory[] = array(
                             'affiliate_id' => $campaign['affiliateId'],
@@ -561,7 +561,7 @@ class Tradetracker extends Command
             } catch (NotReadableException $e) {
             }
         }
-
+                
         // Add affiliate in database
         if (isset($insertAffiliate)) {
             Affiliate::insert($insertAffiliate);
@@ -572,7 +572,7 @@ class Tradetracker extends Command
             AffiliateCategory::insert($insertAffiliateCategory);
         }
     }
-
+    
     function addClicks() {
     	$programsClickAndViews = $this->getProgramsClickAndViews();
     	$affiliates = Affiliate::where('affiliate_network', $this->affiliate_network)->get();
@@ -583,7 +583,7 @@ class Tradetracker extends Command
     		}
     	}
     }
-
+    
     public function getProgramsClickAndViews() {
     	$programClicks = array();
     	$data = $this->checkConnection()->getReportCampaign(232507);
@@ -637,12 +637,10 @@ class Tradetracker extends Command
             } catch (Exception $e) {
             	$this->line($e->getMessage() . $e->getLine());
 //                 $this->line('Er is een fout opgetreden. '.$this->signature);
-
-              $path = $_SERVER["DOCUMENT_ROOT"]."/storage/logs/email_error.log";
-              $logfile = fopen($path,'a+');
-              $data = "\n".date('Y-m-d H:i:s').": for -> $this->signature cronjob".$e."\n\n";
-              fwrite($logfile,$data);
-              fclose($logfile);
+               
+                Mail::raw('Er is een fout opgetreden:<br /><br /> '.$e, function ($message) {
+                    $message->to(getenv('DEVELOPER_EMAIL'))->subject('Fout opgetreden: '.$this->signature);
+                });
             }
         }
     }

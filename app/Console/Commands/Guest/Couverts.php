@@ -20,7 +20,7 @@ class Couverts extends Command
      * The name and signature of the console command.
      *
      * @var string
-     */
+     */ 
     protected $signature = 'couverts:guest';
 
     /**
@@ -47,7 +47,7 @@ class Couverts extends Command
             ->where('zipcode', '!=', '')
             ->get()
         ;
-
+        
         $this->thirdParty = GuestThirdParty::select(
            'mail_id'
         )
@@ -58,7 +58,7 @@ class Couverts extends Command
         $this->reservationModel = new Reservation();
     }
 
-    public function convertMonth($name)
+    public function convertMonth($name) 
     {
         $months = array();
 
@@ -149,7 +149,7 @@ class Couverts extends Command
 
                     $message2 = preg_replace('/&nbsp;/i', ' ', $message2);
                     $message2 = preg_replace('/(heer)\/(mevrouw) /i', ' ', $message2);
-
+                    
                     // Network
                     preg_match('/Couverts|couverts/i', $message2, $networkMatches, PREG_OFFSET_CAPTURE);
 
@@ -162,9 +162,9 @@ class Couverts extends Command
                     // Date
                     preg_match('/Wanneer:.*?([0-9]{1,2} .*? [0-9]{4})/i', $message2, $dateMatches, PREG_OFFSET_CAPTURE);
 
-                    // Time
+                    // Time 
                     preg_match('/\b(24:00|2[0-3]:\d\d|[01]?\d((:\d\d)( ?(a|p)m?)?| ?(a|p)m?))\b uur/i', $message2, $timeMatches, PREG_OFFSET_CAPTURE);
-
+                    
                     // Address + zipcode
                     preg_match('/Adres:(.*? [0-9]+) ([0-9]{4}\s?[A-Za-z]{2})/i', $message2, $addressMatch, PREG_OFFSET_CAPTURE);
 
@@ -172,12 +172,12 @@ class Couverts extends Command
                     preg_match('/Waar:(\w+\s?\w+)/i', $message2, $restaurantMatch, PREG_OFFSET_CAPTURE);
 
                     preg_match('/(gewijzigd|geannuleerd)/i', imap_utf8($messageHeader->subject), $subjectStatusMatches, PREG_OFFSET_CAPTURE);
-
+                    
                     $dates = (isset($dateMatches[1][0]) ? explode(' ', $dateMatches[1][0]) : '');
                     $zipcode = (isset($addressMatch[2][0]) ? str_replace(' ', '', $addressMatch[2][0]) : '');
 
                     // Only couverts mails
-
+                    
                     if (isset($networkMatches[0][0]) && strtolower($networkMatches[0][0]) == 'couverts') {
                         $message1 = quoted_printable_decode(imap_fetchbody($connection, $emailNumber, 2));
 
@@ -187,23 +187,23 @@ class Couverts extends Command
                         $xpath = new \DOMXPath($html);
 
                         foreach($html->getElementsByTagName('meta') as $meta) {
-                            if ($meta->getAttribute('itemprop') == 'reservationNumber') {
+                            if ($meta->getAttribute('itemprop') == 'reservationNumber') { 
                                 $reservationNumber[$emailNumber] = $meta->getAttribute('content');
                             }
                         }
 
                         foreach($xpath->query('//*[@itemprop]') as $div) {
-                            if ($div->getAttribute('itemprop') == 'underName') {
+                            if ($div->getAttribute('itemprop') == 'underName') { 
                                 foreach($div->getElementsByTagName('meta') as $meta) {
-                                    if ($meta->getAttribute('itemprop') == 'name') {
+                                    if ($meta->getAttribute('itemprop') == 'name') { 
                                         $name = $meta->getAttribute('content');
                                     }
                                 }
                             }
 
-                            if ($div->getAttribute('itemprop') == 'reservationFor') {
+                            if ($div->getAttribute('itemprop') == 'reservationFor') { 
                                 foreach($div->getElementsByTagName('meta') as $meta) {
-                                    if ($meta->getAttribute('itemprop') == 'name') {
+                                    if ($meta->getAttribute('itemprop') == 'name') { 
                                         $companyName = $meta->getAttribute('content');
                                     }
                                 }
@@ -211,7 +211,7 @@ class Couverts extends Command
                         }
 
                         foreach ($html->getElementsByTagName('link') as $link) {
-                            if ($link->getAttribute('itemprop') == 'reservationStatus') {
+                            if ($link->getAttribute('itemprop') == 'reservationStatus') { 
                                 $networkStatus = $link->getAttribute('href');
                             }
                         }
@@ -221,7 +221,7 @@ class Couverts extends Command
                                 case 'http://schema.org/Cancelled':
                                     $networkStatus = 'cancelled';
                                 break;
-
+                                        
                                 case 'http://schema.org/Confirmed':
                                     $networkStatus = 'confirmed';
                                 break;
@@ -236,7 +236,7 @@ class Couverts extends Command
                                     case 'geannuleerd':
                                         $networkStatus = 'cancelled';
                                     break;
-
+                                            
                                 }
                             }
 
@@ -251,18 +251,18 @@ class Couverts extends Command
                                     'restaurant_id' => isset($companiesArray[$zipcode]) ? $companiesArray[$zipcode] : NULL,
                                     'restaurant_name' => isset($restaurantMatch[1][0]) ? $restaurantMatch[1][0] : NULL,
                                     'restaurant_zipcode' => isset($addressMatch[2][0]) ? $zipcode : NULL,
-                                    'restaurant_address' => isset($addressMatch[1][0]) ? $addressMatch[1][0] : NULL,
+                                    'restaurant_address' => isset($addressMatch[1][0]) ? $addressMatch[1][0] : NULL,                            
                                     'created_at' => date('Y-m-d H:i:s'),
                                     'network' => 'couverts',
                                     'mail_id' => $emailNumber
-                                );
+                                ); 
                             }
                         }
                     }
 
                 }
             }
-        }
+        } 
 
         if (isset($reservationsArray)) {
             GuestThirdParty::insert($reservationsArray);
@@ -288,17 +288,15 @@ class Couverts extends Command
 
             // Processing
             try {
-                $this->addGuests();
+                $this->addGuests(); 
                 $this->updateGuests();
             } catch (Exception $e) {
                 $this->line('Er is een fout opgetreden. '.$this->signature);
-
-                $path = $_SERVER["DOCUMENT_ROOT"]."/storage/logs/email_error.log";
-                $logfile = fopen($path,'a+');
-                $data = "\n".date('Y-m-d H:i:s').": for -> $this->signature cronjob".$e."\n\n";
-                fwrite($logfile,$data);
-                fclose($logfile);
-            }
+               
+                Mail::raw('Er is een fout opgetreden:<br /><br /> '.$e, function ($message) {
+                    $message->to(getenv('DEVELOPER_EMAIL'))->subject('Fout opgetreden: '.$this->signature);
+                });
+            }     
             // End cronjob
             $this->line('Finished '.$this->signature);
             Setting::set('cronjobs.active.'.$commandName, 0);

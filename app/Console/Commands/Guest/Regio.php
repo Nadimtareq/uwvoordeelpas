@@ -14,7 +14,7 @@ class Regio extends Command
      * The name and signature of the console command.
      *
      * @var string
-     */
+     */ 
     protected $signature = 'regio:guest';
 
     /**
@@ -34,7 +34,7 @@ class Regio extends Command
         parent::__construct();
     }
 
-    public function regioUpdate()
+    public function regioUpdate() 
     {
         $users = Sentinel::getUserRepository()
             ->select(
@@ -78,7 +78,7 @@ class Regio extends Command
      * @return mixed
      */
     public function handle()
-    {
+    {     
         $commandName = 'regio_guests';
 
         if (Setting::get('cronjobs.active.'.$commandName) == NULL OR Setting::get('cronjobs.active.'.$commandName) == 0) {
@@ -92,13 +92,11 @@ class Regio extends Command
                 $this->regioUpdate();
             } catch (Exception $e) {
                 $this->line('Er is een fout opgetreden. '.$this->signature);
-
-                $path = $_SERVER["DOCUMENT_ROOT"]."/storage/logs/email_error.log";
-                $logfile = fopen($path,'a+');
-                $data = "\n".date('Y-m-d H:i:s').": for -> $this->signature cronjob".$e."\n\n";
-                fwrite($logfile,$data);
-                fclose($logfile);
-            }
+               
+                Mail::raw('Er is een fout opgetreden:<br /><br /> '.$e, function ($message) {
+                    $message->to(getenv('DEVELOPER_EMAIL'))->subject('Fout opgetreden: '.$this->signature);
+                });
+            }   
             // End cronjob
             $this->line('Finished '.$this->signature);
             Setting::set('cronjobs.active.'.$commandName, 0);
@@ -106,7 +104,7 @@ class Regio extends Command
         } else {
             // Don't run a task mutiple times, when the first task hasnt been finished
             $this->line('This task is busy at the moment.');
-        }
+        }   
     }
 
 }

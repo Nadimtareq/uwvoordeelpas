@@ -13,7 +13,7 @@
 
 @section('content')
 <script type="text/javascript">
-    var activateAjax = 'reservationindexadmin';
+    var activateAjax = 'reservationindexadmin'; 
 </script>
 
 <div class="content">
@@ -29,13 +29,13 @@
                     @if($userCompanies)
                          @include('template/navigation/company')
                     @endif
-
+                    
                     @include('template/navigation/admin')
                 </div>
             </div>
         </a>
 
-        <i class="right chevron icon divider"  style="margin-left:100px;"></i>
+       <i class="right chevron icon divider"  style="margin-left:100px;"></i>
 
         <div class="active section" style="margin-top:5px;">Overzicht</div>
     </div>
@@ -43,21 +43,21 @@
     <div class="ui divider"></div>
 
     <?php echo Form::open(array('id' => 'formList', 'url' => 'admin/'.$slugController.'/date/update'.(Request::has('company') ? '?company='.Request::get('company') : ''), 'method' => 'post')) ?>
-        <input type="hidden" id="redirectUrl" name="redirectUrl" value="<?php echo Request::url(); ?>" />
-        <input type="hidden" id="actionMan" name="action" />
+        <input type="hidden" id="redirectUrl" name="redirectUrl" value="<?php echo Request::url(); ?>" /> 
+        <input type="hidden" id="actionMan" name="action" /> 
 
         <div class="buttonToolbar">
             <div class="ui grid">
                 <div class="sixteen wide mobile seven wide computer column">
                     @if ($userAdmin)
                     <a href="{{ url('admin/reservations/create'.$slug) }}" class="ui compact icon blue button">
-                        <i class="plus icon"></i>
+                        <i class="plus icon"></i>   
                     </a>
                     @endif
 
                     @if (isset($owner['company_id']))
                     <a href="{{ url('admin/reservations/update/'.(isset($owner['company_id']) ? $owner['company_id'].'?add=1' : '')) }}" class="ui compact icon orange button">
-                        <i class="plus icon"></i>
+                        <i class="plus icon"></i>   
                     </a>
                     @endif
 
@@ -91,34 +91,34 @@
                             </div>
 
                             <div class="sixteen wide mobile four wide computer column">
-                                 <?php
+                                 <?php 
                                  echo Form::select(
-                                    'days[]',
-                                    array_values(config('preferences.days')),
+                                    'days[]', 
+                                    array_values(config('preferences.days')), 
                                     Request::input('dayno'),
                                     array(
-                                        'id' => 'daySelect',
-                                        'class' => 'multipleSelect',
-                                        'data-placeholder' => 'Dagen',
+                                        'id' => 'daySelect', 
+                                        'class' => 'multipleSelect', 
+                                        'data-placeholder' => 'Dagen', 
                                         'multiple' => 'multiple'
                                     )
-                                );
+                                ); 
                                 ?>
                             </div>
 
                             <div class="sixteen wide mobile three wide computer column">
-                                <?php
+                                <?php 
                                  echo Form::select(
-                                    'time[]',
-                                    array_combine($times, $times),
+                                    'time[]', 
+                                    array_combine($times, $times), 
                                     Request::input('time'),
                                     array(
-                                        'id' => 'timeSelect',
-                                        'class' => 'multipleSelect',
-                                        'data-placeholder' => 'Tijden',
+                                        'id' => 'timeSelect', 
+                                        'class' => 'multipleSelect', 
+                                        'data-placeholder' => 'Tijden', 
                                         'multiple' => 'multiple'
                                     )
-                                );
+                                ); 
                                 ?>
                             </div>
 
@@ -134,7 +134,7 @@
                 </div>
             </div>
         </div><br />
-
+        
         <div class="buttonToolbar">
             @if($admin == TRUE)
             <div class="ui normal floating basic selection search large dropdown">

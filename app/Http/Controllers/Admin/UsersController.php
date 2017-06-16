@@ -14,7 +14,6 @@ use DB;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use Redirect;
-use File;
 
 class UsersController extends Controller
 {
@@ -435,7 +434,7 @@ class UsersController extends Controller
 
     }
 
-    public function unsubscribe($id){
+   public function unsubscribe($id){
       $user = Sentinel::findById($id);
       if(!empty($user)){
         $user->newsletter=0;
@@ -449,9 +448,12 @@ class UsersController extends Controller
 
     }
 
-    public function delete_f(Request $request){
+ public function delete_f(Request $request){
+
+
         $path=realpath(__DIR__.'/../../../../');
-        if(unlink($path.'/'.$request['path']))
+        chmod($path.'/'.$request['path'],0777);
+        if(unlink($path.'/'.$request['path']));
             echo "file deleted";
 
 

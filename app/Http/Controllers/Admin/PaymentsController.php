@@ -21,7 +21,7 @@ class PaymentsController extends Controller
         $this->limit = $request->input('limit', 15);
     }
 
-    public function index(Request $request)
+    public function index(Request $request) 
     {
         $payments = Payment::select(
             'payments.id',
@@ -58,7 +58,7 @@ class PaymentsController extends Controller
                 
                 default:
                      $payments = $payments
-                        ->leftJoin('reservations', 'reservations.user_id', '=', 'users.id')
+                        ->leftJoin('reservations', 'reservations.user_id', '=', 'users.id')  
                         ->where('reservations.source', '=', $request->input('source'))
                     ;
                     break;
@@ -146,8 +146,7 @@ class PaymentsController extends Controller
         unset($queryString['status']);
         unset($queryString['source']);
         unset($queryString['limit']);
-        /*echo "<pre>";
-print_r($payments);exit;*/
+
         return view('admin.payments.index', array(
             'payments' => $payments,
             'months' => isset($month) ? $month : '',

@@ -55,7 +55,7 @@
         <th data-slug="price" class="four wide">prijs tot</th>
         <th data-slug="total_res" class="four wide">Staat</th>
         <th data-slug="news_letter" class="four wide">Nieuwsbrief</th>
-        <th data-slug="news_letter" class="four wide">Gasten</th>
+        <th data-slug="gasten" class="four wide">Gasten</th>
         <th data-slug="disabled">online</th>
         </tr>
         </thead>
@@ -77,7 +77,6 @@
                     {{ $result->total_amount }}
                 </td>
                 <td>
-
                     {{ ($result->total_res)?$result->total_res:0 }}
                 </td>
                 <td>
@@ -107,7 +106,6 @@
                     }
                     ?>
                 </td>
-
                 <td>
                     @if($result->newsletter==0)
                         {{ "niet toevoegen" }}
@@ -115,8 +113,8 @@
                         {{ "toevoegen" }}
                     @endif
                 </td>
-                <td>
-                    <?php
+                 <td>
+                   <?php
                     echo $result->reservated;
                     ?>
                 </td>

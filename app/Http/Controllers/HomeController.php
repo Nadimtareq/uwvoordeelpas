@@ -32,8 +32,6 @@ use Carbon\Carbon;
 use League\Csv\Reader;
 use Session;
 use Setting;
-use File;
-
 
 class HomeController extends Controller 
 {
@@ -1040,9 +1038,6 @@ class HomeController extends Controller
          
          return $data;
          
-    }
-    public function delete(Request $request){
-        File::delete($filename);
     }
 
 }

@@ -32,7 +32,7 @@ use Carbon;
 class AuthController extends Controller
 {
 
-    public function auth()
+    public function auth() 
     {
         alert()->error('', 'Uw account is nog niet geactiveerd, of u bent nog niet ingelogd.')->persistent('Sluiten');
 
@@ -42,16 +42,16 @@ class AuthController extends Controller
     public function authRemove(Request $request)
     {
         $authCheck = TemporaryAuth::where('code', '=', $request->input('code'))->first();
-
+        
         if ($authCheck) {
             $date = Carbon\Carbon::create(
-                date('Y', strtotime($authCheck->created_at)),
-                date('m', strtotime($authCheck->created_at)),
-                date('d', strtotime($authCheck->created_at)),
-                date('H', strtotime($authCheck->created_at)),
+                date('Y', strtotime($authCheck->created_at)), 
+                date('m', strtotime($authCheck->created_at)), 
+                date('d', strtotime($authCheck->created_at)), 
+                date('H', strtotime($authCheck->created_at)), 
                 date('i', strtotime($authCheck->created_at))
             );
-
+            
             $expireDate = $date->addDays(2);
 
             if ($expireDate->isPast() == FALSE) {
@@ -67,16 +67,16 @@ class AuthController extends Controller
         }
     }
 
-    public function authSet(Request $request, $authCode)
+    public function authSet(Request $request, $authCode) 
     {
         $authCheck = TemporaryAuth::where('code', '=', $authCode)->first();
 
         if ($authCheck) {
             $date = Carbon\Carbon::create(
-                date('Y', strtotime($authCheck->created_at)),
-                date('m', strtotime($authCheck->created_at)),
-                date('d', strtotime($authCheck->created_at)),
-                date('H', strtotime($authCheck->created_at)),
+                date('Y', strtotime($authCheck->created_at)), 
+                date('m', strtotime($authCheck->created_at)), 
+                date('d', strtotime($authCheck->created_at)), 
+                date('H', strtotime($authCheck->created_at)), 
                 date('i', strtotime($authCheck->created_at))
             );
 
@@ -95,7 +95,7 @@ class AuthController extends Controller
                         Sentinel::login($user);
 
                         return redirect()->action(
-                            'Auth\AuthController@authRemove',
+                            'Auth\AuthController@authRemove', 
                             array(
                                 'code' => $authCode,
                                 'redirectTo' => $authCheck->redirect_to
@@ -114,7 +114,7 @@ class AuthController extends Controller
                             Sentinel::login($user);
 
                             return redirect()->action(
-                                'Auth\AuthController@authRemove',
+                                'Auth\AuthController@authRemove', 
                                 array(
                                     'code' => $authCode,
                                     'redirectTo' => $authCheck->redirect_to
@@ -131,18 +131,18 @@ class AuthController extends Controller
         }
     }
 
-    public function logout()
+    public function logout() 
     {
         Sentinel::logout();
         return Redirect::to('/');
     }
 
-    public function forgotPassword()
+    public function forgotPassword() 
     {
         return view('account/forgot-password');
     }
 
-    public function activate($code)
+    public function activate($code) 
     {
         $userId = Activation::where(
             'code', $code
@@ -153,12 +153,12 @@ class AuthController extends Controller
 
         $user = Sentinel::findById($userId);
 
-        if (Activation::complete($user, $code)) {
+        if (Activation::complete($user, $code)) {       
             Alert::success(
                 'Uw account is succesvol geactiveerd.'
             )
                 ->persistent('Sluiten')
-            ;
+            ;   
         }
 
         return Redirect::to('/');
@@ -172,7 +172,7 @@ class AuthController extends Controller
             ->where('completed', 0)
             ->first()
         ;
-
+        
         if ($activation) {
             $user = Sentinel::findById($activation->user_id);
 
@@ -184,13 +184,13 @@ class AuthController extends Controller
                 'Er is een activatie mail naar uw e-mailadres gestuurd.'
             )
                 ->persistent('Sluiten')
-            ;
+            ;   
         } else {
             Alert::error(
                 'Uw account is al geactiveerd, of uw activatiecode werkt niet.'
             )
                 ->persistent('Sluiten')
-            ;
+            ;   
         }
 
         return Redirect::to('/');
@@ -204,7 +204,7 @@ class AuthController extends Controller
             ->first()
         ;
 
-        if ($user) {
+        if ($user) {       
             $user->email = $user->new_email;
             $user->new_email = '';
             $user->new_email_code = '';
@@ -225,7 +225,7 @@ class AuthController extends Controller
             ->first()
         ;
 
-        if ($reminder) {
+        if ($reminder) {       
              return view('account/new-password');
         } else {
             App::abort(404);
@@ -238,20 +238,19 @@ class AuthController extends Controller
 
         $reminder = Reminder::where('code', $code)->first();
 
-        if ($reminder) {
+        if ($reminder) {  
             $user = Sentinel::findById($reminder->user_id);
 
             Sentinel::update($user, array('password' => $request->input('password')));
             Sentinel::login($user);
 
-            Alert::success('Uw wachtwoord is succesvol gewijzigd.')->persistent('Sluiten');
+            Alert::success('Uw wachtwoord is succesvol gewijzigd.')->persistent('Sluiten');   
 
             return Redirect::to('/');
         } else {
             App::abort(404);
         }
     }
-
     public function login(){
         $ip=$_SERVER['REMOTE_ADDR'];
 
@@ -455,12 +454,12 @@ class AuthController extends Controller
         }
     }
 
-    public function register()
+    public function register() 
     {
         return view('account/register');
     }
 
-    public function registerAction(RegisterRequest $request)
+    public function registerAction(RegisterRequest $request) 
     {
         $this->validate($request, []);
 
@@ -495,18 +494,18 @@ class AuthController extends Controller
                 '%url%' => url('auth/set/'.$createAuthRegister)
             )
         ));
-
+            
         $user = Sentinel::findById($data->id);
 
         Sentinel::login($user);
-
+            
         return Response::json(array(
-            'success' => 1,
+            'success' => 1, 
             'state' => 2
         ));
     }
 
-    public function forgotPasswordAction(ForgotPasswordRequest $request)
+    public function forgotPasswordAction(ForgotPasswordRequest $request) 
     {
         $this->validate($request, []);
 
@@ -541,10 +540,10 @@ class AuthController extends Controller
         ));
     }
 
-    public function socialLogin(Request $request, $provider)
+    public function socialLogin(Request $request, $provider) 
     {
         $providers = array(
-            'facebook',
+            'facebook', 
             'google'
         );
 
@@ -555,14 +554,14 @@ class AuthController extends Controller
             else{
                 $request->session()->flash('redirectTo',  '/');
             }
-
+            
             return Socialite::driver($provider)->redirect();
         } else {
             return Redirect::to('/');
         }
-    }
+    }  
 
-    public function socialLoginInfo(Request $request, $provider)
+    public function socialLoginInfo(Request $request, $provider) 
     {
         $request->session()->put('state', $request->input('state'));
 
@@ -594,7 +593,7 @@ class AuthController extends Controller
                         $data->facebook_id = $user->getId();
                         $data->source = 'facebook';
                         break;
-
+                        
                     case 'google':
                         $data->google_id = $user->getId();
                         $data->source = 'google';
@@ -629,7 +628,7 @@ class AuthController extends Controller
                 return Redirect::to($request->session()->has('redirectTo') ? $request->session()->get('redirectTo') : 'tegoed-sparen');
             }
         } catch (Exception $e) {
-
+          
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             alert()->error('', 'Er ging iets mis tijdens het inloggen. Waarschijnlijk is uw sessie verlopen, probeer het alstublieft opnieuw.')->persistent('Sluiten');
 

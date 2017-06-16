@@ -82,15 +82,15 @@ class Daisycon extends Command
             'name'
         )
             ->get()
-        ;
-
+        ; 
+                
         $this->affiliates = Affiliate::select(
             'program_id'
         )
             ->where('affiliate_network', $this->affiliate_network)
             ->get()
             ->toArray()
-        ;
+        ; 
 
         $this->categories = Category::select(
             'id',
@@ -107,7 +107,7 @@ class Daisycon extends Command
         $this->lastId = count($this->lastAffiliates) >= 1 ? $this->lastAffiliates->last()->id : 0;
     }
 
-    public function checkConnection()
+    public function checkConnection() 
     {
         try {
             set_time_limit(0);
@@ -134,11 +134,11 @@ class Daisycon extends Command
                 	break;
                 }
             }
-
+            
 			$totalPrograms = 0;
-            for ($i = 1; $i < 5; $i++) {
+            for ($i = 1; $i < 5; $i++) { 
             	$totalPrograms = ($i * 1000);
-
+            	
                 $this->client[] = $curl->newRequest(
                     'GET', 'https://services.daisycon.com/publishers/370506/programs?page='.$i.'&locale_id=1&per_page=1000&type=affiliatemarketing&fields='.$this->fieldsPrograms
                 )
@@ -171,14 +171,14 @@ class Daisycon extends Command
                         $campaign->cashback == 'true'
                         OR $campaign->cashback == 'partial'
                         && $commission != null
-                        && !in_array($campaign->name, array_flatten($this->lastAffiliates))
+                        && !in_array($campaign->name, array_flatten($this->lastAffiliates)) 
                         && $this->affiliateHelper->domainRestriction($campaign->name) == 1
                         && $this->affiliateHelper->domainRestriction($campaign->url) == 1
                     ) {
                         if ($campaign->status == 'active') {
                             if (!in_array($campaign->id, array_flatten($this->affiliates))) {
                                 $this->lastId++;
-
+                               
                                 $programs[$campaign->id] = array(
                                     'affiliateId' => $this->lastId,
                                     'affiliateCreated' => date('now'),
@@ -196,11 +196,11 @@ class Daisycon extends Command
                                 );
 
                                 try {
-
+                                	
                                 	if(!File::isDirectory(public_path('images/affiliates/'.$this->affiliate_network))) {
                                 		File::makeDirectory(public_path('images/affiliates/'.$this->affiliate_network), 0775, true);
                                 	}
-
+                                	
                                     ImageManagerStatic::make(
                                         'http:'.$campaign->logo
                                     )
@@ -241,7 +241,7 @@ class Daisycon extends Command
                         if ($campaign->status == 'active') {
                             if (in_array($campaign->id, array_flatten($this->affiliates))) {
                                 $this->lastId++;
-
+                               
                                 $programs[$campaign->id] = array(
                                     'affiliateCreated' => date('now'),
                                     'programId' => $campaign->id,
@@ -260,7 +260,7 @@ class Daisycon extends Command
         return array_unique($programs, SORT_REGULAR);
     }
 
-    public function generateCategories()
+    public function generateCategories() 
     {
         $this->programCategories = json_decode($this->feedCategories->body);
 
@@ -277,7 +277,7 @@ class Daisycon extends Command
                 }
             }
         }
-
+        
         $flattenCategories = array_flatten($this->categories);
 
         if (isset($this->parentsArray)) {
@@ -285,10 +285,10 @@ class Daisycon extends Command
             foreach ($this->parentsArray as $parentResult) {
                 // Check if category name constains name of categories
                 $duplicatedCategories = $this->affiliateHelper->categoryDuplicates(
-                    $parentResult['name'],
+                    $parentResult['name'], 
                     $flattenCategories
                 );
-
+            
                 // This category isn't in the database
                 if (!in_array($parentResult['name'], $flattenCategories) && count($duplicatedCategories) == 0) {
                     $createCategory = Category::newItem($parentResult['name']);
@@ -318,7 +318,7 @@ class Daisycon extends Command
     {
 //         foreach ($this->feedCommissions as $feed) {
 //             $commissionsFeed = json_decode($feed->body);
-
+        
 //             if (count($commissionsFeed) > 0) {
 //                 foreach ($commissionsFeed as $commission) {
 //                     foreach ($commission->compensations as $key => $compensations) {
@@ -343,8 +343,8 @@ class Daisycon extends Command
 //                 }
 //             }
 //         }
-
-
+        
+        
     	$commission = $this->programFeedCommissions[$campaignId];
     	if(isset($commission)) {
     		foreach ($commission->compensations as $key => $compensations) {
@@ -352,20 +352,20 @@ class Daisycon extends Command
 					$commissions [] = array (
 							'name' => $compensations->name,
 							'unit' => '&euro;',
-							'value' => $compensations->amount
+							'value' => $compensations->amount 
 					);
 				}
-
+    		
     			if ($compensations->percentage > 0) {
 					$commissions [] = array (
 							'name' => $compensations->name,
 							'unit' => '%',
-							'value' => $compensations->percentage
+							'value' => $compensations->percentage 
 					);
 				}
     		}
     	}
-
+      
 
         return isset($commissions) ? json_encode($commissions): null;
     }
@@ -392,7 +392,7 @@ class Daisycon extends Command
             if (isset($campaign['programCategory']) && $campaign['programCategory'] >= 1) {
                 if (isset($this->parentsArray[$campaign['programCategory']])) {
                     $subcategorySlug = str_slug($this->parentsArray[$campaign['programCategory']]['name']);
-
+                                        
                     // Don't add a new category if the primary category_id is the same as a subcategory id
                     if (isset($this->temporaryParents[$subcategorySlug])) {
                         $insertAffiliateCategory[] = array(
@@ -407,7 +407,7 @@ class Daisycon extends Command
                 foreach ($campaign['programCategories'] as $categoryId) {
                     if (isset($this->parentsArray[$categoryId])) {
                         $subcategorySlug = str_slug($this->parentsArray[$categoryId]['name']);
-
+                                
                         // Don't add a new category if the primary category_id is the same as a subcategory id
                         if (isset($this->temporaryParents[$subcategorySlug])) {
                             $insertAffiliateCategory[] = array(
@@ -448,17 +448,17 @@ class Daisycon extends Command
                 }
             }
         }
-
+        
         if (isset($commissionArray)) {
             $affiliates = Affiliate::whereIn('program_id', array_keys($commissionArray))
                 ->where('affiliate_network', 'daisycon')
                 ->get()
             ;
-
+            
             foreach ($affiliates as $key => $affiliate) {
-
+            	
             	$affiliate_compensations = json_decode($affiliate->compensations, true);
-
+            	
                 if (is_array($affiliate_compensations)) {
                     foreach ($affiliate_compensations as $key => $commission) {
 //                         $affiliateCommissionArray[$affiliate->program_id][$key.'-'.str_slug($commission->name).'-'.$commission->value] = array(
@@ -466,7 +466,7 @@ class Daisycon extends Command
 //                             'unit' => (isset($commissionArray[$affiliate->program_id][$key.'-'.str_slug($commission->name).'-'.$commission->value]) ? $commissionArray[$affiliate->program_id][$key.'-'.str_slug($commission->name).'-'.$commission->value]['unit'] : $commission->unit),
 //                             'value' => $commission->value
 //                         );
-
+                        
                         $affiliateCommissionArray[$affiliate->program_id][$key.'-'.str_slug($commission['name']).'-'.$commission['value']] = array(
                         		'name' => $commission['name'],
                         		'unit' => (isset($commissionArray[$affiliate->program_id][$key.'-'.str_slug($commission['name']).'-'.$commission['value']]) ? $commissionArray[$affiliate->program_id][$key.'-'.str_slug($commission['name']).'-'.$commission['value']]['unit'] : $commission['unit']),
@@ -500,16 +500,16 @@ class Daisycon extends Command
         $curl = new cURL;
 
         $totalSubscriptions = 0;
-        for ($i = 1; $i < 5; $i++) {
+        for ($i = 1; $i < 5; $i++) { 
         	$totalSubscriptions = ($i * 1000);
-
+        	
             $inactives = $curl
                 ->newRequest('GET', 'https://services.daisycon.com/publishers/370506/media/246340/subscriptions?page='.$i.'&per_page=1000')
                 ->setUser(getenv('DAISYCON_EMAIL'))
                 ->setPass(getenv('DAISYCON_PASS'))
                 ->setOption(CURLOPT_CAINFO, base_path('cacert.pem'))
                 ->send() ;
-
+            
             $totalClientSubscriptions = $inactives->headers['x-total-count'];
 
              if (trim($inactives->body) != '') {
@@ -521,12 +521,12 @@ class Daisycon extends Command
                     }
                 }
             }
-
+            
             if($totalSubscriptions >= $totalClientSubscriptions) {
             	break;
             }
         }
-
+   
         if (isset($approved)) {
             $affiliates = Affiliate::whereNotIn('program_id', $approved)
                 ->where('affiliate_network', $this->affiliate_network)
@@ -545,12 +545,12 @@ class Daisycon extends Command
             }
         }
     }
-
+    
     public function setProgramFeedCommissions() {
     	$this->programFeedCommissions = array();
     	foreach ($this->feedCommissions as $feed) {
     		$commissionsFeed = json_decode($feed->body);
-
+    	
     		if (count($commissionsFeed) > 0) {
     			foreach ($commissionsFeed as $commission) {
     				$this->programFeedCommissions[$commission->program_id] = $commission;
@@ -558,7 +558,7 @@ class Daisycon extends Command
     		}
     	}
     }
-
+    
     function addClicks() {
     	$programsClickAndViews = $this->getProgramsClickAndViews();
     	$affiliates = Affiliate::where('affiliate_network', $this->affiliate_network)->get();
@@ -569,12 +569,12 @@ class Daisycon extends Command
     		}
     	}
     }
-
+    
     public function getProgramsClickAndViews() {
     	$programClicks = array();
-
+    	
     	$curl = new cURL;
-
+    	
     	$totalClicks = 0;
     	for ($i = 1; $i < 5; $i++) {
     		$totalClicks = ($i * 1000);
@@ -592,12 +592,12 @@ class Daisycon extends Command
     				$programClicks[$click->program_id] = $click->raw;
     			}
     		}
-
+    		
     		if($totalClicks >= $totalClientClicks) {
     			break;
     		}
     	}
-
+    	
     	return $programClicks;
     }
 
@@ -644,12 +644,10 @@ class Daisycon extends Command
             } catch (Exception $e) {
             	$this->line($e->getMessage() . $e->getLine());
 //                 $this->line('Er is een fout opgetreden. '.$this->signature);
-
-              $path = $_SERVER["DOCUMENT_ROOT"]."/storage/logs/email_error.log";
-              $logfile = fopen($path,'a+');
-              $data = "\n".date('Y-m-d H:i:s').": for -> $this->signature cronjob".$e."\n\n";
-              fwrite($logfile,$data);
-              fclose($logfile);
+               
+                Mail::raw('Er is een fout opgetreden:<br /><br /> '.$e, function ($message) {
+                    $message->to(getenv('DEVELOPER_EMAIL'))->subject('Fout opgetreden: '.$this->signature);
+                });
             }
         }
     }

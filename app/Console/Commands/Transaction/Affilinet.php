@@ -19,7 +19,7 @@ class Affilinet extends Command
      * The name and signature of the console command.
      *
      * @var string
-     */
+     */   
     protected $signature = 'affilinet:transaction';
 
     /**
@@ -46,7 +46,7 @@ class Affilinet extends Command
         parent::__construct();
         $this->transaction = Transaction::select('external_id')->where('affiliate_network', $this->affiliate_network)->get()->toArray();
     }
-
+    
     public function addTransactions()
     {
     	$status = Config::get('preferences.transactionStatus');
@@ -70,30 +70,30 @@ class Affilinet extends Command
     				->where('affiliate_network', $this->affiliate_network)
     				->first()
     				;
-
+    				 
     				if ($transactionUpdate->getMeta('transaction_stop_changes') == NULL) {
     					if ($transactionUpdate) {
     						if ($transactionUpdate->status == 'open' && $status[strtolower($transaction->TransactionStatus)] == 'accepted') {
     							$transactionUpdate->processed = date('Y-m-d H:i:s');
     						}
-
+    						 
     						$transactionUpdate->status = $status[strtolower($transaction->TransactionStatus)];
     						$transactionUpdate->save();
     					}
     				}
     			}
     		}
-
+    		 
     		if (isset($insertTransaction)) {
     			Transaction::insert($insertTransaction);
     		}
     	}
     }
-
+    
     public function getTransactions() {
     	define("WSDL_LOGON", "https://api.affili.net/V2.0/Logon.svc?wsdl");
     	define("WSDL_STATS", "https://api.affili.net/V2.0/PublisherStatistics.svc?wsdl");
-
+    	
     	$soapLogon = new \SoapClient(WSDL_LOGON);
     	$token = $soapLogon->Logon(array(
     			'Username'  => env("AFFILINET_SITE_ID"),
@@ -102,12 +102,12 @@ class Affilinet extends Command
     	));
     	// Set page setting parameters
     	$pageSettings = array('CurrentPage' => 1, 'PageSize' => 100);
-
+    	 
     	// Set transaction query parameters
     	$startDate = strtotime("-2 weeks");
     	$endDate = strtotime("today");
     	$rateFilter = array('RateMode' => 'PayPerSale','RateNumber' => 1);
-
+    	 
     	$transactionQuery = array(
     			'StartDate' => $startDate,
     			'EndDate' => $endDate,
@@ -115,18 +115,18 @@ class Affilinet extends Command
     			'TransactionStatus' => 'All',
     			'ValuationType' => 'DateOfRegistration'
     	);
-
+    	 
     	$soapRequest  = new \SoapClient(WSDL_STATS);
-
+    	 
     	$transactionData = $soapRequest->GetTransactions(array(
     			'CredentialToken' => $token,
     			'PageSettings' => $pageSettings,
     			'TransactionQuery' => $transactionQuery
     	));
-
+    	 
     	return $transactionData;
     }
-
+    
 
     /**
      * Execute the console command.
@@ -135,9 +135,9 @@ class Affilinet extends Command
      */
     public function handle()
     {
-
+    	
     	$commandName = 'affilinet_transaction';
-
+    	
     	if (Setting::get('cronjobs.'.$commandName) == NULL) {
     		echo 'This command is not working right now. Please activate this command.';
     	} else {
@@ -148,18 +148,16 @@ class Affilinet extends Command
     			$this->line(' Start '.$this->signature);
     			Setting::set('cronjobs.active.'.$commandName, 1);
     			Setting::save();
-
+    	
     			// Processing
     			try {
     				$this->addTransactions();
     			} catch (Exception $e) {
     				$this->line($e->getMessage() . $e->getLine());
-
-            $path = $_SERVER["DOCUMENT_ROOT"]."/storage/logs/email_error.log";
-            $logfile = fopen($path,'a+');
-            $data = "\n".date('Y-m-d H:i:s').": for -> $this->signature cronjob".$e."\n\n";
-            fwrite($logfile,$data);
-            fclose($logfile);
+    				 
+    				Mail::raw('Er is een fout opgetreden:<br /><br /> '.$e, function ($message) {
+    					$message->to(getenv('DEVELOPER_EMAIL'))->subject('Fout opgetreden: '.$this->signature);
+    				});
     			}
     			// End cronjob
     			$this->line('Finished '.$this->signature);
@@ -170,15 +168,15 @@ class Affilinet extends Command
     			$this->line('This task is busy at the moment.');
     		}
     	}
-
+    	
         // // Set webservice endpoints
         // define("WSDL_LOGON", "https://api.affili.net/V2.0/Logon.svc?wsdl");
         // define("WSDL_STATS", "https://api.affili.net/V2.0/PublisherStatistics.svc?wsdl");
-
+         
         // // Set credentials
         // $username = ''; // the publisher ID
         // $password = ''; // the publisher web services password
-
+         
         // // Send a request to the Logon Service to get an authentication token
         // $soapLogon = new SoapClient(WSDL_LOGON);
         // $token = $soapLogon->Logon(array(
@@ -186,17 +184,17 @@ class Affilinet extends Command
         //     'Password' => Setting::get('settings.affilinet_pw'),
         //     'WebServiceType' => 'Publisher'
         // ));
-
+         
         // // Set page setting parameters
         // $pageSettings = array(
         //     'CurrentPage' => 1,
         //     'PageSize' => 5,
         // );
-
+         
         // // Set transaction query parameters
         // $startDate = strtotime("-2 weeks");
         // $endDate = strtotime("today");
-
+        
         // $rateFilter = array(
         //     'RateMode' => 'PayPerSale',
         //     'RateNumber' => 1
@@ -209,7 +207,7 @@ class Affilinet extends Command
         //     'TransactionStatus' => 'All',
         //     'ValuationType' => 'DateOfRegistration'
         // );
-
+         
         // // Send a request to the Publisher Statistics Service
         // $soapRequest = new SoapClient(WSDL_STATS);
         // $response = $soapRequest->GetTransactions(array(
@@ -217,7 +215,7 @@ class Affilinet extends Command
         //     'PageSettings' => $pageSettings,
         //     'TransactionQuery' => $transactionQuery
         // ));
-
+         
         // // Show response
         // print_r($response);
     }

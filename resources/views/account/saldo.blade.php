@@ -83,6 +83,7 @@
                 </tr>
             </thead>
             <tbody class="list search">
+
                 @foreach($data as $fetch)
                 <?php 
                 $date = \Carbon\Carbon::create(
@@ -131,6 +132,7 @@
                     @if ($userAdmin)
                     <td>{{ $fetch['userName'] }}</td>
                     @endif
+
                     <td>{{ $fetch['company'] }}</td>
                     <td>
                         @if ($fetch['type']  == 'Transactie')

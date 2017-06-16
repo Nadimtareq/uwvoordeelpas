@@ -10,9 +10,6 @@
 
 
 		   .ReadMsgBody { width: 100%; background-color: #f5f5f5; }
-		   .ExternalClass { width: 100%; background-color: #f5f5f5; }
-		   .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass
-		 font, .ExternalClass td, .ExternalClass div { line-height: 100%; }
 		   html { width: 100%; }
 		   body { background-color: #f5f5f5; -webkit-text-size-adjust: none;
 		-ms-text-size-adjust: none; margin: 0; padding: 0; }
@@ -20,7 +17,7 @@
 		   table td { border-collapse: collapse; }
 		   .yshortcuts a { border-bottom: none !important; }
 		   img { display: block !important; }
-		   a { text-decoration: none; color: #26c6da; }
+		   a { text-decoration: none;}
 		   table[class="table800"]{width: 800px;}
 
 		   /* Media Queries */

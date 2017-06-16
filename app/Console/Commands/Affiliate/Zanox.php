@@ -64,13 +64,13 @@ class Zanox extends Command
      * @var array
      */
     protected $commissions = array();
-
+    
     /**
      * @var array
      */
     protected $totalPrograms = array();
-
-
+    
+    
 
     /**
      * Create a new command instance.
@@ -80,7 +80,7 @@ class Zanox extends Command
     public function __construct()
     {
         parent::__construct();
-
+        
         $this->affiliateHelper = new AffiliateHelper;
 
         $this->lastAffiliates = Affiliate::select(
@@ -88,11 +88,11 @@ class Zanox extends Command
             'name'
         )
             ->get()
-        ;
-
+        ; 
+                
         $this->affiliatesExists = Affiliate::where('affiliate_network', $this->affiliate_network)
             ->get()
-        ;
+        ; 
 
         $this->affiliates = Affiliate::select(
             'program_id'
@@ -100,7 +100,7 @@ class Zanox extends Command
             ->where('affiliate_network', $this->affiliate_network)
             ->get()
             ->toArray()
-        ;
+        ; 
 
         $this->categories = Category::select(
             'id',
@@ -118,7 +118,7 @@ class Zanox extends Command
         $this->lastId = count($this->lastAffiliates) >= 1 ? $this->lastAffiliates->last()->id : 0;
     }
 
-    public function checkConnection()
+    public function checkConnection() 
     {
         try {
             ini_set('soap.wsdl_cache_enabled', 0);
@@ -140,31 +140,31 @@ class Zanox extends Command
         $this->totalPrograms = $campaigns->total;
         if (isset($campaigns->programApplicationItems->programApplicationItem)) {
             $campaigns = $campaigns->programApplicationItems->programApplicationItem;
-
+            
             $programs = array();
-            foreach ($campaigns as $campaign) {
+            foreach ($campaigns as $campaign) { 
             	if(in_array($campaign->program->id, array_flatten($this->affiliates)) ) {
             		continue;
-            	}
+            	}   
                 $getProgram = $this->client->getProgram($campaign->program->id);
-
+                
                 if (
                     isset($getProgram->programItem)
-                    && !in_array($getProgram->programItem->name, array_flatten($this->lastAffiliates))
-                    && !in_array($campaign->program->id, array_flatten($this->affiliates))
+                    && !in_array($getProgram->programItem->name, array_flatten($this->lastAffiliates)) 
+                    && !in_array($campaign->program->id, array_flatten($this->affiliates)) 
                     && isset($getProgram->programItem)
                     && $this->affiliateHelper->domainRestriction($getProgram->programItem->url) == 1
                 ) {
                     $this->lastId++;
 
                     $getTrackingLink = $this->client->getAdmedia(
-                        $campaign->program->id,
-                        'NL',
-                        null,
-                        null,
-                        'startPage',
-                        'text',
-                        null,
+                        $campaign->program->id, 
+                        'NL', 
+                        null, 
+                        null, 
+                        'startPage', 
+                        'text', 
+                        null, 
                         $this->adspaceId
                     );
 
@@ -195,12 +195,12 @@ class Zanox extends Command
             $programs = null;
         }
 
-        return $programs;
+        return $programs;  
     }
 
-    public function generateCategories()
+    public function generateCategories() 
     {
-        $this->programCategories = $this->client->getProgramCategories();
+        $this->programCategories = $this->client->getProgramCategories(); 
 
         foreach ($this->programCategories as $feedCategory) {
             foreach ($feedCategory as $listCategories) {
@@ -219,10 +219,10 @@ class Zanox extends Command
             foreach ($this->parentsArray as $parentResult) {
                 // Check if category name constains name of categories
                 $duplicatedCategories = $this->affiliateHelper->categoryDuplicates(
-                    $parentResult['name'],
+                    $parentResult['name'], 
                     $this->flattenCategories
                 );
-
+            
                 // This category isn't in the database
                 if (!in_array($parentResult['name'], $this->flattenCategories) && count($duplicatedCategories) == 0) {
                     $createCategory = Category::newItem($parentResult['name']);
@@ -286,16 +286,16 @@ class Zanox extends Command
     public function addCampaigns()
     {
         $categories = $this->generateCategories();
-
-        for ($i = 0; $i < 10; $i++) {
-
+        
+        for ($i = 0; $i < 10; $i++) { 
+        	
         	$total_record = ($i * 50);
         	if($total_record > $this->totalPrograms) {
         		break;
         	}
-
+        	
             $campaigns = $this->getCampaigns($i);  // Get all accepted programs
-
+                        
             if ($campaigns != null) {
                 foreach ($campaigns as $key => $campaign) {
                     $insertAffiliate[] = array(
@@ -330,7 +330,7 @@ class Zanox extends Command
                                         'category_id' => $connectParentKey
                                     );
                                 }
-                            }
+                            }   
                         }
                     }
 
@@ -346,7 +346,7 @@ class Zanox extends Command
                 }
             }
         }
-
+                    
         // Add affiliate in database
         if (isset($insertAffiliate)) {
             Affiliate::insert($insertAffiliate);
@@ -360,7 +360,7 @@ class Zanox extends Command
 
     public function updateCampaigns()
     {
-        foreach ($this->affiliatesExists as $campaign) {
+        foreach ($this->affiliatesExists as $campaign) {  
             $programs[] = array(
                 'programId' => $campaign->program_id,
                 'programCommissions' => $campaign->compensations
@@ -370,9 +370,9 @@ class Zanox extends Command
         if (isset($programs)) {
             foreach ($programs as $key => $campaign) {
                 if ($campaign['programId'] != NULL) {
-
+                	
                 	$commission_data = json_decode($this->getCommission($campaign['programId']));
-
+                	
                     if (is_array($commission_data)) {
                         foreach ($commission_data as $key => $commission) {
                             $commissionArray[$campaign['programId']][$key.'-'.str_slug($commission->name).'-'.$commission->value] = array(
@@ -395,9 +395,9 @@ class Zanox extends Command
                 ;
 
                 foreach ($affiliates as $key => $affiliate) {
-
+                	
                 	$affiliate_compensations = json_decode($affiliate->compensations, true);
-
+                	
                     if (is_array($affiliate_compensations)) {
                         foreach ($affiliate_compensations as $key => $commission) {
 //                             $affiliateCommissionArray[$affiliate->program_id][$key.'-'.str_slug($commission->name).'-'.$commission->value] = array(
@@ -405,7 +405,7 @@ class Zanox extends Command
 //                                 'unit' => (isset($commissionArray[$affiliate->program_id][$key.'-'.str_slug($commission->name).'-'.$commission->value]) ? $commissionArray[$affiliate->program_id][$key.'-'.str_slug($commission->name).'-'.$commission->value]['unit'] : $commission->unit),
 //                                 'value' => $commission->value
 //                             );
-
+                            
                             $affiliateCommissionArray [$affiliate->program_id] [$key . '-' . str_slug ( $commission['name'] ) . '-' . $commission['value']] = array (
                             		'name' => $commission['name'],
                             		'unit' => (isset ( $commissionArray [$affiliate->program_id] [$key . '-' . str_slug ( $commission['name'] ) . '-' . $commission['value']] ) ? $commissionArray [$affiliate->program_id] [$key . '-' . str_slug ( $commission['name'] ) . '-' . $commission['value']] ['unit'] : $commission['unit']),
@@ -434,18 +434,18 @@ class Zanox extends Command
             }
         }
     }
-
+    
 	public function removeCampaigns() {
 		$removeProgramIds = array();
-
+		
 		$existedAffiliates = $this->affiliatesExists;
-
+		
 		foreach ($existedAffiliates as $existedAffiliate) {
             $programsArray[] = $existedAffiliate->program_id;
         }
-
+        
         $activeProgramsIds = $this->getActiveProgramIds();
-
+        
         if(!empty($activeProgramsIds)) {
         	foreach ($programsArray as $key => $programID) {
         		if (!in_array($programID, $activeProgramsIds)) {
@@ -459,8 +459,8 @@ class Zanox extends Command
         	->update(array('no_show' => 1));
         }
 	}
-
-
+	
+	
 	public function getActiveProgramIds() {
 		$programs = array();
 		$total_record = 0;
@@ -475,15 +475,15 @@ class Zanox extends Command
 // 						if($campaign->program->active == "true") {
 							$programs[] = $campaign->program->id;
 // 						}
-
+						
 					}
 				}
 			}
 		}
-
+		
 		return $programs;
 	}
-
+	
 	public function addClicks() {
 		$programsClickAndViews = $this->getProgramsClickAndViews();
 		$existedAffiliates = $this->affiliatesExists;
@@ -500,7 +500,7 @@ class Zanox extends Command
 			}
 		}
 	}
-
+	
 	public function getProgramsClickAndViews() {
 		$data = array();
 		$report = $this->checkConnection()->getReportBasic(date('Y-m-d', strtotime('-1 week')),date("Y-m-d", time()),null,null,null,null,null,$this->adspaceId,null,"program");
@@ -558,12 +558,10 @@ class Zanox extends Command
                 }
             } catch (Exception $e) {
                 $this->line('Er is een fout opgetreden. '.$this->signature);
-
-                $path = $_SERVER["DOCUMENT_ROOT"]."/storage/logs/email_error.log";
-                $logfile = fopen($path,'a+');
-                $data = "\n".date('Y-m-d H:i:s').": for -> $this->signature cronjob".$e."\n\n";
-                fwrite($logfile,$data);
-                fclose($logfile);
+               
+                Mail::raw('Er is een fout opgetreden:<br /><br /> '.$e, function ($message) {
+                    $message->to(getenv('DEVELOPER_EMAIL'))->subject('Fout opgetreden: '.$this->signature);
+                });
             }
         }
     }

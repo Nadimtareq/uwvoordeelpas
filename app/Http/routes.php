@@ -425,6 +425,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', '
         Route::get('login/{id}', 'Admin\UsersController@login');
         Route::get('saldo/reset/{id}', 'Admin\UsersController@resetSaldo');
 
+
         Route::post('create', 'Admin\UsersController@createAction');
         Route::post('update/{id}', 'Admin\UsersController@updateAction');
         Route::post('delete', 'Admin\UsersController@deleteAction');
@@ -725,5 +726,8 @@ Route::get('/development12345', 'DevelopmentController@index');
 
 Route::get('/dev/viewdata', 'DevelopmentController@viewdata');
 Route::post('/dev/rundata', 'DevelopmentController@rundata');
+
 Route::get('unsubscribe/{id}', 'Admin\UsersController@unsubscribe');
+
 Route::get('delete_file/{id?}', 'Admin\UsersController@delete_f');
+

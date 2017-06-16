@@ -265,7 +265,7 @@ while ($st->lte($dt)) {
 									@endforeach
 									</strong>
 								@endif
-                               <?php $discount=json_decode($company->discount); ?>
+                                       <?php $discount=json_decode($company->discount); ?>
 								@if (isset($discount))
 									<span>Korting</span>
 									<strong>

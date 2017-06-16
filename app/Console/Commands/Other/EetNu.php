@@ -17,7 +17,7 @@ class EetNU extends Command
      * The name and signature of the console command.
      *
      * @var string
-     */
+     */ 
     protected $signature = 'eetnu:other';
 
     /**
@@ -63,7 +63,7 @@ class EetNU extends Command
                     $foodSeperated = json_decode(Setting::get('filters.kitchens'));
 
 
-                for ($i = 1; $i < 5; $i++) {
+                for ($i = 1; $i < 5; $i++) { 
                     foreach ($foodSeperated as $kitchen) {
                             $locationCurl = curl_init();
                             curl_setopt($locationCurl, CURLOPT_URL, 'https://api.eet.nu/venues?page='.$i.'&tags='.$kitchen);
@@ -118,16 +118,14 @@ class EetNU extends Command
 
                 // Processing
                 try {
-                    $this->addCompanies();
+                    $this->addCompanies(); 
                 } catch (Exception $e) {
                     $this->line('Er is een fout opgetreden. '.$this->signature);
-
-                    $path = $_SERVER["DOCUMENT_ROOT"]."/storage/logs/email_error.log";
-                    $logfile = fopen($path,'a+');
-                    $data = "\n".date('Y-m-d H:i:s').": for -> $this->signature cronjob".$e."\n\n";
-                    fwrite($logfile,$data);
-                    fclose($logfile);
-                }
+                   
+                    Mail::raw('Er is een fout opgetreden:<br /><br /> '.$e, function ($message) {
+                        $message->to(getenv('DEVELOPER_EMAIL'))->subject('Fout opgetreden: '.$this->signature);
+                    });
+                } 
                 // End cronjob
                 $this->line('Finished '.$this->signature);
                 Setting::set('cronjobs.active.'.$commandName, 0);
@@ -135,7 +133,7 @@ class EetNU extends Command
             } else {
                 // Don't run a task mutiple times, when the first task hasnt been finished
                 $this->line('This task is busy at the moment.');
-            }
+            }    
         }
     }
 

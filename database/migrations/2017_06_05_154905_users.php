@@ -11,10 +11,10 @@ class Users extends Migration
      * @return void
      */
     public function up()
-    {/*
+    {
         Schema::table('users', function($table) {
             $table->integer('attempts')->default(0);
-        });*/
+        });
     }
 
     /**

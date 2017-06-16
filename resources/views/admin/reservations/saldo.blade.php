@@ -180,7 +180,7 @@
             </tr>
         </thead>
         <tbody class="list search">
-            @if(count($data) >= 1)
+             @if(count($data) >= 1)
                 @include('admin/reservations.list-saldo')
                 <tr>
                     <td colspan="4">Totaal</td>

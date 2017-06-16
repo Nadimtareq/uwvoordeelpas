@@ -15,7 +15,7 @@ class Reminder extends Command
      * The name and signature of the console command.
      *
      * @var string
-     */
+     */ 
     protected $signature = 'reminder:reservation';
 
     /**
@@ -49,16 +49,16 @@ class Reminder extends Command
                 foreach ($this->reservations as $reservation) {
                     if ($reservation->getMeta('send_reservation_reminder_email') == NULL) {
                         if (
-                            $reservation->allergies != 'null'
-                            && $reservation->allergies != NULL
+                            $reservation->allergies != 'null' 
+                            && $reservation->allergies != NULL 
                             && $reservation->allergies != '[""]'
                         ) {
                             $allergies = implode(",", json_decode($reservation->allergies));
                         }
-
+                        
                         if (
-                            $reservation->preferences != 'null'
-                            && $reservation->preferences != NULL
+                            $reservation->preferences != 'null' 
+                            && $reservation->preferences != NULL 
                             && $reservation->preferences != '[""]'
                         ) {
                             $preferences = implode(",", json_decode($reservation->preferences));
@@ -83,11 +83,11 @@ class Reminder extends Command
                                 '%allergies%' => (count(json_decode($reservation->allergies)) >= 1 ? implode(",", json_decode($reservation->allergies)) : ''),
                                 '%preferences%' => (count(json_decode($reservation->preferences)) >= 1 ? implode(",", json_decode($reservation->preferences)) : '')
                             )
-                        ));
+                        ));   
 
                         # Add a meta
                         $reservation->addMeta(
-                            'send_reservation_reminder_email',
+                            'send_reservation_reminder_email', 
                             array(
                                 date('Y-m-d H')
                             )
@@ -116,17 +116,15 @@ class Reminder extends Command
 
                 // Processing
                 try {
-                    $this->sendRemider();
+                    $this->sendRemider(); 
                 } catch (Exception $e) {
                     $this->line('Er is een fout opgetreden. '.$this->signature);
-
-                    $path = $_SERVER["DOCUMENT_ROOT"]."/storage/logs/email_error.log";
-                    $logfile = fopen($path,'a+');
-                    $data = "\n".date('Y-m-d H:i:s').": for -> $this->signature cronjob".$e."\n\n";
-                    fwrite($logfile,$data);
-                    fclose($logfile);
-                }
-
+                   
+                    Mail::raw('Er is een fout opgetreden:<br /><br /> '.$e, function ($message) {
+                        $message->to(getenv('DEVELOPER_EMAIL'))->subject('Fout opgetreden: '.$this->signature);
+                    });
+                }     
+                
                 // End cronjob
                 $this->line('Finished '.$this->signature);
                 Setting::set('cronjobs.active.'.$commandName, 0);
@@ -134,7 +132,7 @@ class Reminder extends Command
             } else {
                 // Don't run a task mutiple times, when the first task hasnt been finished
                 $this->line('This task is busy at the moment.');
-            }
+            }    
         }
     }
 }

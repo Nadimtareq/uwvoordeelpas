@@ -5,7 +5,7 @@
 @section('scripts')
 	<script type="text/javascript">
 		$(document).ready(function() {
-		    closeBrowser();
+		    closeBrowser();  
 		});
 	</script>
 @stop
@@ -18,21 +18,21 @@
 		<div class="two fields">
 			<div class="field">
 				<label>Tijd</label>
-				<?php
+				<?php 
 				echo Form::select(
 					'days',
 					array(
-						1 => 'Een dag',
-						7 => 'Een week',
-						14 => 'Twee weken',
-						30 => 'Een maand',
+						1 => 'Een dag', 
+						7 => 'Een week', 
+						14 => 'Twee weken', 
+						30 => 'Een maand', 
 						365 => 'Een jaar',
 						730 => 'Twee jaar',
 						120000 => 'Altijd',
-					),
-					1,
+					), 
+					1, 
 					array('class' => 'ui normal dropdown')
-				);
+				); 
 				?>
 			</div>
 
