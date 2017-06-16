@@ -192,7 +192,7 @@
                 <tr>
                     <td colspan="7">Totaal bedrag</td>
 
-                    <td><i class="euro icon"></i> {{ number_format($totalSaldo - $totalPersons, 2, '.', '') }}</td>
+                    <td><i class="euro icon"></i> {{ number_format($totalSaldo - $totalKosten, 2, '.', '') }}</td>
                 </tr>
             @else
                 <tr>
