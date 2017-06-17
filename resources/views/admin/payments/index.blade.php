@@ -80,15 +80,27 @@
                             <div class="ui blue empty circular label"></div>
                             Open
                         </a>
-                    </div>
-                </div>
+                        <a class="item" 
+                        href="{{ url('admin/'.$slugController.'?'.http_build_query(array_add($queryString, 'status', 'cancelled'))) }}" 
+                        data-value="Cancelled">
+                        <div class="ui red empty circular label"></div>
+                        Cancelled
+                    </a>
+                    <a class="item" 
+                    href="{{ url('admin/'.$slugController.'?'.http_build_query(array_add($queryString, 'status', 'expired'))) }}" 
+                    data-value="Expired">
+                    <div class="ui light-red empty circular label"></div>
+                    Expired
+                </a>
             </div>
         </div>
-
-        <div class="sixteen wide mobile four wide computer column">
-            @include('admin.template.search.form')
-        </div>
     </div>
+</div>
+
+<div class="sixteen wide mobile four wide computer column">
+    @include('admin.template.search.form')
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -165,6 +177,10 @@
             <div class="ui blue empty circular label"></div>
             @elseif($payment->status == 'pending')
             <div class="ui orange empty circular label"></div>
+            @elseif($payment->status == 'cancelled')
+            <div class="ui red empty circular label"></div> 
+            @elseif($payment->status == 'expired')
+            <div class="ui light-red empty circular label"></div>
             @endif
         </td>
         <td>
