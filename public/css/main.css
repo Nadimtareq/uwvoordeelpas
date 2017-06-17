@@ -4128,6 +4128,9 @@ padding-top: 90px;
 .footerWrap{
 	position: static;
 }
+select#sendEmail {
+    width: 150px;
+}
 
 @media (max-width: 550px){
     .tabs-content .col4 {

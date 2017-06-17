@@ -25,6 +25,7 @@ use Mail;
 use Carbon\Carbon;
 use Excel;
 use Storage;
+use Illuminate\Support\Facades\Validator;
 
 class GuestsController extends Controller 
 {
@@ -62,6 +63,17 @@ class GuestsController extends Controller
             return Redirect::to('/');
         }
 
+        $v = Validator::make($request->all(), [
+            'csv' => 'required|in:csv'
+        ]);
+
+        if ($v->fails())
+        {
+            return redirect()->back()->withErrors($v->errors());
+        }
+
+        $sendEmail = $request->input('sendEmail');
+
         $excel = App::make('excel');
         $excel
             ->load($request->file('csv')->getRealPath(), function($reader) use($companyOwner) {
@@ -98,6 +110,8 @@ class GuestsController extends Controller
                                     'company_id' => $companyOwner['company_id']
                                 ));
 
+                                if($sendEmail){
+
                                 $mailtemplate = new MailTemplate();
                                 $mailtemplate->sendMailSite(array(
                                     'email' => $row->email,
@@ -111,6 +125,8 @@ class GuestsController extends Controller
                                         '%url%' => \URL::to('auth/set/'.$newUser->expire_code)
                                     )
                                 ));
+                                
+                                }
                             } else {
                                 $guest = new Guest();
                                 $guest->addGuest(array(

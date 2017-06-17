@@ -25,7 +25,7 @@
 			    <label>Upload hier een CSV bestand</label>
 			    <?php echo Form::file('csv') ?>
 			</div>
-		</div>
+		</div>		
 	
 		<button class="ui tiny button" type="submit"><i class="plus icon"></i> Importeer</button>
 	<?php echo Form::close(); ?>

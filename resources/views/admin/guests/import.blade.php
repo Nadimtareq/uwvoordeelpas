@@ -34,7 +34,11 @@
 			    <?php echo Form::file('csv') ?>
 			</div>
 		</div>
-
+	<p> Send Welcome Email ? </p>
+		<p> <select name="sendEmail" id="sendEmail">
+			<option value="1" selected="selected">Yes</option>
+			<option value="0">No</option>
+		</select></p>
 	
 		 <button class="ui tiny button" type="submit"><i class="plus icon"></i> Importeer</button>
 	<?php echo Form::close(); ?>

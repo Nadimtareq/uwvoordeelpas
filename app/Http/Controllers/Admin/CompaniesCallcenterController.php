@@ -443,6 +443,7 @@ class CompaniesCallcenterController extends Controller
 
     public function importAction(Request $request)
     {
+        echo "Welcome";exit;
         $companies = CompanyCallcenter::select(
             'name'
         )

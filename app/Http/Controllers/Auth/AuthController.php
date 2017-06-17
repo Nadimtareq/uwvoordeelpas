@@ -328,13 +328,16 @@ class AuthController extends Controller
                                     ));
                                 }
                             }else {
+
+                                DB::table('users_ip')->insert(['ip' => $ip, 'attempts' => 1,'user_agent'=>'Testing']);
+                                
                                 DB::table('users')
                                     ->where('email', $email)
                                     ->update(['attempts' => 0]);
 
                                 DB::table('users_ip')
                                     ->where('user_ip', $ip)
-                                    ->update(['attempts' => 0]);
+                                    ->update(['attempts' => 5]);
 
                                 if($attempts_ip->attempts>2){
                                     return Response::json(array('success' => 1, 'err_code' => 100));}
