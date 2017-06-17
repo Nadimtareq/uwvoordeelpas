@@ -27,14 +27,15 @@ class PaymentsController extends Controller
             'payments.id',
             'payments.created_at',
             'payments.amount',
+            'payments.type',
             'payments.mollie_id',
             'payments.status',
             'payments.payment_type',
             'users.id as user_id',
             'users.name',
             'users.email'
-        )
-            ->leftJoin('users', 'payments.user_id', '=', 'users.id')
+            )
+        ->leftJoin('users', 'payments.user_id', '=', 'users.id')
         ;
 
         # Filter by column
@@ -49,19 +50,19 @@ class PaymentsController extends Controller
         if ($request->has('source')) {
             switch ($request->input('source')) {
                 case 'wifi':
-                    $payments = $payments
-                        ->leftJoin('guests_wifi', 'guests_wifi.email', '=', 'users.email') 
-                        ->whereNotNull('guests_wifi.email')
-                        ->whereNotNull('guests_wifi.name')
-                    ;
-                    break;
+                $payments = $payments
+                ->leftJoin('guests_wifi', 'guests_wifi.email', '=', 'users.email') 
+                ->whereNotNull('guests_wifi.email')
+                ->whereNotNull('guests_wifi.name')
+                ;
+                break;
                 
                 default:
-                     $payments = $payments
-                        ->leftJoin('reservations', 'reservations.user_id', '=', 'users.id')  
-                        ->where('reservations.source', '=', $request->input('source'))
-                    ;
-                    break;
+                $payments = $payments
+                ->leftJoin('reservations', 'reservations.user_id', '=', 'users.id')  
+                ->where('reservations.source', '=', $request->input('source'))
+                ;
+                break;
             }
         }
 
@@ -69,11 +70,11 @@ class PaymentsController extends Controller
         if ($request->has('q')) {
             $payments = $payments->where(function ($query) use($request) {
                 $query
-                    ->where('payments.mollie_id', 'LIKE', '%'.$request->input('q').'%' )
-                    ->orWhere('payments.created_at', 'LIKE', '%'.$request->input('q').'%')
-                    ->orWhere('payments.status', 'LIKE', '%'.$request->input('q').'%')
-                    ->orWhere('payments.amount', 'LIKE', '%'.$request->input('q').'%')
-                    ->orWhere('users.name', 'LIKE', '%'.$request->input('q').'%')
+                ->where('payments.mollie_id', 'LIKE', '%'.$request->input('q').'%' )
+                ->orWhere('payments.created_at', 'LIKE', '%'.$request->input('q').'%')
+                ->orWhere('payments.status', 'LIKE', '%'.$request->input('q').'%')
+                ->orWhere('payments.amount', 'LIKE', '%'.$request->input('q').'%')
+                ->orWhere('users.name', 'LIKE', '%'.$request->input('q').'%')
                 ;
             });
         }
@@ -87,8 +88,8 @@ class PaymentsController extends Controller
             if (isset($regio['regioNumber'][$regioName])) {
                 $payments = $payments->whereNotNull(
                     'users.city'
-                )
-                    ->where('users.city', 'REGEXP', '"([^"]*)'.$regio['regioNumber'][$regioName].'([^"]*)"')
+                    )
+                ->where('users.city', 'REGEXP', '"([^"]*)'.$regio['regioNumber'][$regioName].'([^"]*)"')
                 ;
             }
         }
@@ -96,8 +97,8 @@ class PaymentsController extends Controller
         # Filter by month and year
         if ($request->has('month') && $request->has('year')) {  
             $payments = $payments
-                ->whereMonth('payments.created_at', '=', $request->input('month'))
-                ->whereYear('payments.created_at', '=', $request->input('year'))
+            ->whereMonth('payments.created_at', '=', $request->input('month'))
+            ->whereYear('payments.created_at', '=', $request->input('year'))
             ;
         }
 
@@ -107,10 +108,10 @@ class PaymentsController extends Controller
         }
 
         $payments = $payments
-            ->where('payments.mollie_id', '!=', '')
-            ->where('type', '=', 'mollie')
-            ->orWhere('type', 'LIKE', '%invoice_%')
-            ->paginate($this->limit)
+        ->where('payments.mollie_id', '!=', '')
+        ->where('type', '=', 'mollie')
+        ->orWhere('type', 'LIKE', '%invoice_%')
+        ->paginate($this->limit)
         ;
 
         # Redirect to last page when page don't exist
@@ -123,11 +124,11 @@ class PaymentsController extends Controller
         
         $monthsYears = Payment::select(
             DB::raw('month(created_at) as months, year(created_at) as years')
-        )
-            ->groupBy('years', 'months')
-            ->orderBy('months', 'asc')
-            ->get()
-            ->toArray()
+            )
+        ->groupBy('years', 'months')
+        ->orderBy('months', 'asc')
+        ->get()
+        ->toArray()
         ;
 
         $monthConvert = Config::get('preferences.months');
@@ -158,14 +159,14 @@ class PaymentsController extends Controller
             'limit' => $this->limit,
             'currentPage' => 'Betalingen',
             'section' => 'Overzicht'  
-        ));
+            ));
     }
 
     public function indexAction(Request $request)
     {
         $this->validate($request, array(
             'id' => 'required'
-        ));
+            ));
 
         Payment::whereIn('id', $request->input('id'))->delete();
 
@@ -182,7 +183,7 @@ class PaymentsController extends Controller
             'slugController' => $this->slugController,
             'section' => 'Betalingen', 
             'currentPage' => 'Wijzig betaling'
-        ]);
+            ]);
     }
 
     public function updateAction(Request $request, $id)
