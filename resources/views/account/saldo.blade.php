@@ -133,7 +133,7 @@
                     <td>{{ $fetch['userName'] }}</td>
                     @endif
 
-                    <td>{{ $fetch['company'] }}</td>
+                    <td class="companyname">{{ $fetch['company'] }}</td>
                     <td>
                         @if ($fetch['type']  == 'Transactie')
                             <i class="calendar icon"></i> {{ $expired->formatLocalized('%d %B %Y') }}

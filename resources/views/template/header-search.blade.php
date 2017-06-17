@@ -19,8 +19,12 @@
 										 </a>
 									 </div> -->
 									    <a href="#" data-activates="mobile-top" class="button-collapse"> <i class="material-icons material-icons2">menu</i></a> 										
-										<div class="brand-logo">
-											 <a href="{{ url('/')}}" >
+										<div class="brand-logo rushabh">
+											@if($userAuth)
+												<a href="{{ url('/home') }}">
+											@else
+												<a href="{{ url('/') }}">
+											@endif
 												<img src="{{ asset('images/logo.png') }}" alt="" class="responsive-img">
 											 </a>																	
 										 </div>

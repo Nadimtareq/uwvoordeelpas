@@ -154,10 +154,9 @@ class HomeController extends Controller
             && $this->user->city != NULL
             && $this->user->city != '[""]'
         ) {
-            $userCities = json_decode($this->user->city);
-
+            $userCities = json_decode($this->user->city);            
             if (is_array($userCities)) {
-                foreach ($userCities as $userCity) {
+                foreach ($userCities as $userCity) {  
                     $companies = $companies->orderByRaw('companies.regio REGEXP "[[:<:]]'.$userCity.'[[:>:]]" desc, companies.clicks asc');
                 }
             } else {
@@ -406,6 +405,300 @@ class HomeController extends Controller
             'paginationQueryString' => $request->query()
         ]);
     } 
+
+    public function indexHome(Request $request)
+    {
+        $deals = App\Models\ReservationOption::all();
+
+        // Preferences cities
+        $cities = Preference::where('category_id', 9)
+            ->where('no_frontpage', 0)
+            ->with('media')
+        ;
+
+        if ($request->cookie('user_off_regio') != null) {
+            $cities = $cities->orderByRaw('id = "'. $request->cookie('user_off_regio').'" desc');
+        } else {
+            $cities = $cities->orderByRaw('name desc');
+        }
+
+        $cities = $cities->get();
+        // Companies
+        $companies = Company::select(           
+            'companies.id',
+            'companies.name',
+            'companies.slug',
+            'companies.description',
+            'companies.discount',
+            'companies.days',
+            'companies.kitchens',
+            'companies.city'
+        );
+
+        if (
+            Sentinel::check()
+            && $this->user->city != 'null'
+            && $this->user->city != NULL
+            && $this->user->city != '[""]'
+        ) {
+            $userCities = json_decode($this->user->city);
+            
+            if (is_array($userCities)) {
+                foreach ($userCities as $userCity) {
+                    //return $userCity;
+                    $cities = Preference::find($userCity);
+                    if($cities){
+                        return redirect()->action('HomeController@search',['regio'=> $cities->slug]);
+                    }
+                    $companies = $companies->orderByRaw('companies.regio REGEXP "[[:<:]]'.$userCity.'[[:>:]]" desc, companies.clicks asc');
+                }
+            } else {
+                $companies = $companies->orderBy('companies.clicks', 'desc');
+            }
+        } else {
+            $companies = $companies->orderBy('companies.clicks', 'desc');
+        }
+
+        if ($request->has('no_filter') == FALSE) {
+            // Filter Preferences
+            if ($request->input('filter') == 1 && $request->has('preference')) {
+                $optionCount = count($request->input('preference'));
+                foreach ($request->input('preference') as $option) {
+                    if (!$request->has('page')) {
+                        $preferenceClick = new Preference();
+                        $preferenceClick->addClick($option, 1);
+                    }
+
+                    if (count($request->input('preference')) >= 2) {
+                        $companies->orWhere('preferences', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
+                    } else {
+                        $companies->where('preferences', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
+                    }
+                }
+            } else  {
+                if (
+                    $request->has('filter') == FALSE
+                    && Sentinel::check()
+                    && $this->user->preferences != 'null'
+                    && $this->user->preferences != NULL
+                    && $this->user->preferences != '[""]'
+                ) {
+                    $userPreferences = json_decode($this->user->preferences);
+                    foreach (json_decode($this->user->preferences) as $option) {
+                        if (count($userPreferences) >= 2) {
+                            $companies->orWhere('preferences', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
+                        } else {
+                            $companies->where('preferences', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
+                        }
+                    }
+                }
+            }
+
+            // Filter Kitchens
+            if ($request->input('filter') == 1 && $request->has('kitchen')) {
+                foreach ($request->input('kitchen') as $option) {
+                    if (!$request->has('page')) {
+                        $preferenceClick = new Preference();
+                        $preferenceClick->addClick($option, 2);
+                    }
+
+                    if (count($request->input('kitchen')) >= 2) {
+                        $companies->orWhere('kitchens', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
+                    } else  {
+                        $companies->where('kitchens', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
+                    }
+                }
+            } else  {
+                if (
+                    $request->has('filter') == FALSE
+                    && Sentinel::check()
+                    && $this->user->kitchens != 'null'
+                    && $this->user->kitchens != NULL
+                    && $this->user->kitchens != '[""]'
+                ) {
+                    $userKitchens = json_decode($this->user->kitchens);
+                    foreach ($userKitchens as $option) {
+                        if (count($userKitchens) >= 2) {
+                            $companies->orWhere('kitchens', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
+                        } else {
+                            $companies->where('kitchens', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
+                        }
+                    }
+                }
+            }
+
+            // Filter Allergies
+            if ($request->input('filter') == 1 && $request->has('allergies')) {
+                foreach ($request->input('allergies') as $option) {
+                    if (!$request->has('page')) {
+                        $preferenceClick = new Preference();
+                        $preferenceClick->addClick($option, 3);
+                    }
+
+                    if (count($request->input('allergies')) >= 2) {
+                        $companies->orWhere('allergies', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
+                    } else {
+                        $companies->where('allergies', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
+                    }
+                }
+            } else  {
+                if (
+                    $request->has('filter') == FALSE
+                    && Sentinel::check() 
+                    && $this->user->allergies != 'null' 
+                    && $this->user->allergies != NULL 
+                    && $this->user->allergies != '[""]'
+                ) {
+                    $userAllergies = json_decode($this->user->allergies);
+                    foreach ($userAllergies as $option) {
+                        if (count($userAllergies) >= 2) {
+                            $companies->orWhere('allergies', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
+                        } else  {
+                            $companies->where('allergies', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
+                        }
+                    }
+                }
+            }
+
+            // Filter Price
+            if ($request->input('filter') == 1 && $request->has('price')) {
+                foreach ($request->input('price') as $option) {
+                    if (!$request->has('page')) {
+                        $preferenceClick = new Preference();
+                        $preferenceClick->addClick($option, 4);
+                    }
+
+                    if (count($request->input('price')) >= 2) {
+                        $companies->orWhere('price', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
+                    } else  {
+                        $companies->where('price', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
+                    }
+                }
+            } else  {
+                if (
+                    $request->has('filter') == FALSE
+                    && Sentinel::check() 
+                    && $this->user->price != 'null' 
+                    && $this->user->price != NULL 
+                    && $this->user->price != '[""]'
+                ) {
+                    $userPrices = json_decode($this->user->price);
+                    foreach ($userPrices as $option) {
+                        if (count($userPrices) >= 2) {
+                            $companies->orWhere('price', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
+                        } else {
+                            $companies->where('price', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
+                        }
+                    }
+                }
+            }
+
+            // Filter Discount
+             if ($request->input('filter') == 1 && $request->has('discount')) {
+                $companies = $companies->where(function ($query) use($request) {
+                    foreach ($request->input('discount') as $key => $option) {
+                        if (!$request->has('page')) {
+                            $preferenceClick = new Preference();
+                            $preferenceClick->addClick($option, 5);
+                        }
+
+                        if ($key == 0) {
+                            $query->where('discount', 'REGEXP', '"([^"]*)'.rawurldecode($option).'([^"]*)"');
+                        } else {
+                            $query->orWhere('discount', 'REGEXP', '"([^"]*)'.rawurldecode($option).'([^"]*)"');
+                        }
+                    }
+                });
+            } else {
+                if (
+                    $request->has('filter') == FALSE
+                    && Sentinel::check() 
+                    && $this->user->discount != 'null'
+                    && $this->user->discount != NULL
+                    && $this->user->discount != '[""]'
+                ) {
+                    $userDiscounts = json_decode($this->user->discount);
+
+                    $companies = $companies->where(function ($query) use($userDiscounts) {
+                        foreach ($userDiscounts as $key => $option) {
+                            if ($key == 0) {
+                                $query->where('discount', 'REGEXP', '"([^"]*)'.rawurldecode($option).'([^"]*)"');
+                            } else {
+                                $query->orWhere('discount', 'REGEXP', '"([^"]*)'.rawurldecode($option).'([^"]*)"');
+                            }
+                        }
+                    });
+                }
+            }
+        }
+
+        if ($request->has('time') && $request->has('date')) {
+            $companies = $companies
+                ->join('company_reservations', 'company_reservations.company_id', '=', 'companies.id')
+                ->where('company_reservations.date', '=', $request->input('date'));
+        } 
+
+        $companies = $companies
+            ->where('no_show', 0)
+            ->with('media')
+        ;
+        
+        $countCompanies = $companies->count();
+        $companies = $companies->paginate($request->input('limit', 15));
+        
+        foreach($companies as $company) {
+            if($company->ReservationOptions()){
+                foreach($company->ReservationOptions()->get() as $deal) {
+                    $companyIds[] = $company->id;
+                }
+            }            
+        }
+        $reservationDate = date('Y-m-d');
+        $tomorrowDate = date('Y-m-d', strtotime('+1 days'));
+        
+        if (isset($companyIds)) {
+            $reservationTimesArray = CompanyReservation::getReservationTimesArray(
+                array(
+                    'company_id' => $companyIds, 
+                    'date' => $reservationDate,
+                    'selectPersons' => NULL
+                )
+            );
+
+            $tomorrowArray = CompanyReservation::getReservationTimesArray(
+                array(
+                    'company_id' => $companyIds, 
+                    'date' => $tomorrowDate,
+                    'selectPersons' => NULL
+                )
+            );
+        }
+
+        if (!$request->has('no_filter') && count($companies) == 0) {
+            alert()->error('', 'Er zijn geen zoekresultaten gevonden met uw selectiecriteria.<br /> <br /><small>Klik <a href=\''.URL::to('account').'\'> hier</a> om uw criteria aan te passen.</small>')->html()->persistent('Sluiten');
+
+            return Redirect::to('/?no_filter=1'.($request->has('mobilefilter') ? '&mobilefilter=1' : ''));
+        }   
+
+        $queryString = $request->query();
+        unset($queryString['limit']);
+
+        return view('pages/home', [
+            'user' => $this->user,
+            'cities' => $cities,
+            'countCompanies' => $countCompanies,
+            'companies' => $companies,
+            'limit' => $request->input('limit', 15),
+            'queryString' => $queryString,
+            'news' => $this->news,
+            'affiliates' => $this->affiliates,
+            'reservationDate' => $reservationDate,
+            'tomorrowArray' => (isset($tomorrowArray) ? $tomorrowArray : array()),
+            'reservationTimesArray' => (isset($reservationTimesArray) ? $reservationTimesArray : array()),
+            'paginationQueryString' => $request->query()
+        ]);
+    } 
+
 
     public function review($id) 
     {

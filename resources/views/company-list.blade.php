@@ -149,7 +149,11 @@
                 ?>
 			  </div>
 			  <span class="price">
-			     &euro; {{ $deal->price_from }}
+			    @if($deal->price_from >= 1)
+			    	&euro; {{ $deal->price_from }}
+			    @else
+			    	&nbsp;&nbsp;
+			    @endif
 			  </span>
 			  
 			  <span class="price2">
