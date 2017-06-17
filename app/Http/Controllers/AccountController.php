@@ -261,7 +261,7 @@ class AccountController extends Controller {
         }
 
         $transactions = Transaction::select(
-                        DB::raw('"" AS restaurant_is_paid'), 'users.name AS userName', 'transactions.created_at as date', 'transactions.created_at as time', 'transactions.program_id AS name', 'transactions.amount AS amount', 'transactions.status AS status', DB::raw('"Transactie" as type'), DB::raw('IF(transactions.external_id = "uwvoordeelpas", "uwvoordeelpas", "affiliates.name") as company'), DB::raw('date(date_add(transactions.created_at, interval 90 day)) as expired_date')
+                        DB::raw('"" AS restaurant_is_paid'), 'users.name AS userName', 'transactions.created_at as date', 'transactions.created_at as time', 'transactions.program_id AS name', 'transactions.amount AS amount', 'transactions.status AS status', DB::raw('"Transactie" as type'), DB::raw('affiliates.name as company'), DB::raw('date(date_add(transactions.created_at, interval 90 day)) as expired_date')
                 )
                 ->leftJoin('affiliates', 'transactions.program_id', '=', 'affiliates.program_id')
                 ->leftJoin('users', 'users.id', '=', 'transactions.user_id')

@@ -22,7 +22,7 @@
 	    <div class="two fields">
 		    <div class="field">
 			  	<textarea><iframe src="{{ url('widget/calendar/restaurant/'.$company->slug) }}" width="500" height="550" frameborder="0"></iframe></textarea><br />
-			  	<h5>Voorbeeld</h5>
+			  	<h5>Voorbeel</h5>
 
 				<iframe src="{{ url('widget/calendar/restaurant/'.$company->slug) }}"
 						width="100%"

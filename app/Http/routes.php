@@ -5,6 +5,7 @@ use App\Models\MailTemplate;
  */
 Route::group(array('middleware' => 'userInfo'), function () {
     Route::get('/', 'HomeController@index');
+    Route::get('/home', 'HomeController@indexHome');
     Route::get('/deals', 'HomeController@deals');
     Route::get('test-page', 'HomeController@testPage');
     Route::get('aansluiten/callmeback', 'Admin\CompaniesCallcenterController@callMeBack');
