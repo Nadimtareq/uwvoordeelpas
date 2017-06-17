@@ -26,6 +26,10 @@ class ContentsController extends Controller
         {
             $data = $data->where('name', 'LIKE', '%'.$request->input('q').'%');
         }
+        if($request->has('type'))
+        {
+            $data = $data->where('type', $request->input('type'));
+        }
 
         if($request->has('sort') && $request->has('order'))
         {
@@ -53,6 +57,7 @@ class ContentsController extends Controller
         
         $queryString = $request->query();
         unset($queryString['limit']);
+        unset($queryString['type']);
 
         return view('admin/'.$this->slugController.'/index', [
             'data'                  => $data, 
@@ -61,9 +66,10 @@ class ContentsController extends Controller
             'queryString'           => $queryString,
             'paginationQueryString' => $request->query(),
             'limit'                 => $request->input('limit', 15),
+            'type'                 => $request->input('type'),
             'section'               => $this->section, 
             'currentPage'           => 'Overzicht'        
-        ]);
+            ]);
     }
 
     public function create()
@@ -72,7 +78,7 @@ class ContentsController extends Controller
             'slugController' => $this->slugController,
             'section'        => $this->section, 
             'currentPage'    => 'Nieuw tekstblok'
-        ]);
+            ]);
     }
 
     public function update($id)
@@ -84,7 +90,7 @@ class ContentsController extends Controller
             'slugController' => $this->slugController,
             'section'        => $this->section, 
             'currentPage'    => 'Wijzig tekstblok'
-        ]);
+            ]);
     }
 
     public function createAction(Request $request)
@@ -92,8 +98,7 @@ class ContentsController extends Controller
         $this->validate($request, [
             'name'       => 'required|unique:content_blocks',
             'content'    => 'required'
-        ]);
-
+            ]);
         $data              = new Content;
         $data->slug        = str_slug($request->input('name'));
         $data->name        = $request->input('name');
@@ -110,7 +115,7 @@ class ContentsController extends Controller
     {
         $this->validate($request, [
             'name'       => 'required|unique:content_blocks,name,'.$id,
-        ]);
+            ]);
 
         $data              = Content::find($id);
         $data->slug        = str_slug($request->input('name'));
