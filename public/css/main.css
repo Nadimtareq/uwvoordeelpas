@@ -4131,6 +4131,9 @@ padding-top: 90px;
 select#sendEmail {
     width: 150px;
 }
+span.price.price_min_box {
+    margin: 37px 38px 10px 77px !important;
+}
 
 @media (max-width: 550px){
     .tabs-content .col4 {

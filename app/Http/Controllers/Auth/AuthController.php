@@ -28,6 +28,8 @@ use Mail;
 use Redirect;
 use Socialite;
 use Carbon;
+use App\Models\UserIp;
+
 
 class AuthController extends Controller
 {
@@ -272,6 +274,8 @@ class AuthController extends Controller
 
     public function loginAction(LoginRequest $request)
     {
+
+    $userAgent = $request->server('HTTP_USER_AGENT');
        // $this->validate($request, []);
      $pass=$this->dcrypt($request->input('password'));
      $email=$request->input('email');
@@ -279,6 +283,8 @@ class AuthController extends Controller
             'email' => $email,
             'password' => $pass
         );
+
+
         $ip=$_SERVER['REMOTE_ADDR'];
         $attempts = User::select('attempts','id')->where('email',$email)->first();
         if($attempts) {
@@ -298,8 +304,9 @@ class AuthController extends Controller
                     if ($auth == TRUE) {
 
 
-                        $attempts_ip = App\Models\UsersIp::select('attempts')->where('user_ip',$ip)->first();
-                        if($attempts_ip) {
+                    $attempts_ip = App\Models\UsersIp::select('attempts')->where('user_ip',$ip)->first();
+                   
+                 if($attempts_ip) {
                             if($attempts_ip->attempts>=3) {
                                 $verify = curl_init();
                                 curl_setopt($verify, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify");
@@ -318,6 +325,9 @@ class AuthController extends Controller
                                         ->where('user_ip', $ip)
                                         ->update(['attempts' => 0]);
 
+                                    DB::table('users_ip')->insert(['ip' => $ip, 'attempts' => 1,'user_agent'=>$userAgent]);
+
+
                                     return Response::json(array('success' => 1, 'err_code' => 200));
 
                                 } else {
@@ -328,16 +338,13 @@ class AuthController extends Controller
                                     ));
                                 }
                             }else {
-
-                                DB::table('users_ip')->insert(['ip' => $ip, 'attempts' => 1,'user_agent'=>'Testing']);
-                                
-                                DB::table('users')
+                               DB::table('users')
                                     ->where('email', $email)
                                     ->update(['attempts' => 0]);
 
                                 DB::table('users_ip')
                                     ->where('user_ip', $ip)
-                                    ->update(['attempts' => 5]);
+                                    ->update(['attempts' => 0]);
 
                                 if($attempts_ip->attempts>2){
                                     return Response::json(array('success' => 1, 'err_code' => 100));}
@@ -406,8 +413,6 @@ class AuthController extends Controller
 
 
             } else {
-
-
                 $uban = new App\Models\UserBan();
                 $uban->user_id = $attempts->id;
                 $uban->reason = 'multiple login failed';

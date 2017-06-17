@@ -160,9 +160,16 @@
                     $count_persons = $getRec[0]->total_persons;
                 ?>
 			  </div>
-			  <span class="price">
+			   @if($deal->price_from >= 1)
+			   <span class="price">			    
 			     &euro; {{ $deal->price_from }}
-			  </span>
+			   </span>
+			    @else
+			    <span class="price price_min_box">			    
+			     
+			    </span>
+			    @endif
+			  
 
 			  <span class="price2">
 			     &euro; {{ $deal->price }}

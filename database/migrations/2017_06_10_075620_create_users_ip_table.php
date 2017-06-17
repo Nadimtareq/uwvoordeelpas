@@ -15,8 +15,9 @@ class CreateUsersIpTable extends Migration
         Schema::create('users_ip', function(Blueprint $table)
         {
             $table->increments('id');
-            $table->string('user_ip',100);
+            $table->string('user_ip');
             $table->integer('attempts')->default(0);
+            $table->string('user_agent');
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateUsersIpTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('users_ip');
     }
 }
