@@ -10,8 +10,12 @@
 								@include('template.sidemenu')
 								
 								<div class="clearfix nav-wrapper">
-								
-									<a href="{{ url('/')}}" class="brand-logo">
+									@if($userAuth)
+										<a href="{{ url('/home') }}" class="brand-logo">
+									@else
+										<a href="{{ url('/') }}" class="brand-logo">
+									@endif
+									
 										<!--<div style="background-image=url({{ asset('images/logo.png') }})" class="responsive-img">-->
 										<img src="{{ (($isGrey) ) ? asset('images/logo_grey.png') : asset('images/logo.png') }}" alt="" class="responsive-img">
 									</a>

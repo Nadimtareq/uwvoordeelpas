@@ -124,6 +124,17 @@ $arrayMerge = array_filter(array_merge($breadcrumbArray1, $breadcrumbArray2, $br
 
     <div class="content">
         <div class="static-menu row">
+            <div class="jsearch col-md-2 col-sm-2 col-xs-6">
+                <?php $data=''; ?>
+                    @if(isset($preference[9]))
+                    <select name="discount[]" class = 'multipleSelect' id='city' onchange="javascript:handleSelect(this)">
+                        <option value=""><a href="#" >Stad</a></option>
+                        @foreach ($preference[9] as $key=>$pre)
+                        <option value="{{$key}}"><a href="#" >{{$pre}}</a></option>
+                        @endforeach
+                    </select>
+                       @endif
+            </div>
             <div class="jsearch col-md-2 col-sm-2 col-xs-6" >
                 {{ Form::select('preference[]',
 								(isset($preference[1]) ? $preference[1] : array()),
@@ -143,6 +154,7 @@ $arrayMerge = array_filter(array_merge($breadcrumbArray1, $breadcrumbArray2, $br
                                         (Request::has('price') ? Request::get('price') : ($user && $user->price != NULL ? json_decode($user->price) : '')),
                                         array('class' => 'multipleSelect', 'data-placeholder' => 'Soort', 'multiple' => 'multiple')) }}
             </div>
+            <!-- 
             <div class="jsearch col-md-2 col-sm-2 col-xs-6">
                 {{ Form::select('discount[]',
                                         (isset($preference[5]) ? $preference[5] : array()),
@@ -150,6 +162,7 @@ $arrayMerge = array_filter(array_merge($breadcrumbArray1, $breadcrumbArray2, $br
                                         array('class' => 'multipleSelect', 'data-placeholder' => 'Korting', 'multiple' => 'multiple')) }}
 
             </div>
+            -->
             <div class="jsearch col-md-2 col-sm-2 col-xs-6">
                 {{ Form::select('allergies[]',
 										(isset($preference[3]) ? $preference[3] : array()),
