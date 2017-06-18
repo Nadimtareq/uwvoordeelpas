@@ -24,7 +24,7 @@ use Spatie\MediaLibrary\Media;
 
 class CompaniesController extends Controller
 {
-    
+
     public function __construct()
     {
         $this->slugController = 'companies';
@@ -37,40 +37,40 @@ class CompaniesController extends Controller
         $data = Company::select(
             'companies.*',
             DB::raw('(SELECT 
-                        (sum(saldo) - sum(persons))
-                    FROM 
-                        reservations 
-                    WHERE 
-                        companies.id = reservations.company_id 
-                    AND 
-                        reservations.is_cancelled = 0
-                    AND 
-                        reservations.status IN("present", "reserved")
-                    ) as saldoCompany')
-        )
-            ->with('media')
-            ->leftJoin('users', 'users.id', '=', 'companies.user_id')
+                (sum(saldo) - sum(persons))
+                FROM 
+                reservations 
+                WHERE 
+                companies.id = reservations.company_id 
+                AND 
+                reservations.is_cancelled = 0
+                AND 
+                reservations.status IN("present", "reserved")
+                ) as saldoCompany')
+            )
+        ->with('media')
+        ->leftJoin('users', 'users.id', '=', 'companies.user_id')
         ;
 
         if ($request->has('q')) {
             $data = $data
-                ->where('companies.name', 'LIKE', '%'.$request->input('q'))
-                ->orWhere('companies.email', 'LIKE', '%'.$request->input('q').'%')
-                ->orWhere('companies.contact_email', 'LIKE', '%'.$request->input('q').'%')
-                ->orWhere('companies.address', 'LIKE', '%'.$request->input('q').'%')
-                ->orWhere('companies.contact_name', 'LIKE', '%'.$request->input('q').'%')
-                ->orWhere('companies.contact_phone', 'LIKE', '%'.$request->input('q').'%')
-                ->orWhere('companies.contact_role', 'LIKE', '%'.$request->input('q').'%')
-                ->orWhere('companies.website', 'LIKE', '%'.$request->input('q').'%')
-                ->orWhere('companies.city', 'LIKE', '%'.$request->input('q').'%')
-                ->orWhere('companies.zipcode', 'LIKE', '%'.$request->input('q').'%')
+            ->where('companies.name', 'LIKE', '%'.$request->input('q'))
+            ->orWhere('companies.email', 'LIKE', '%'.$request->input('q').'%')
+            ->orWhere('companies.contact_email', 'LIKE', '%'.$request->input('q').'%')
+            ->orWhere('companies.address', 'LIKE', '%'.$request->input('q').'%')
+            ->orWhere('companies.contact_name', 'LIKE', '%'.$request->input('q').'%')
+            ->orWhere('companies.contact_phone', 'LIKE', '%'.$request->input('q').'%')
+            ->orWhere('companies.contact_role', 'LIKE', '%'.$request->input('q').'%')
+            ->orWhere('companies.website', 'LIKE', '%'.$request->input('q').'%')
+            ->orWhere('companies.city', 'LIKE', '%'.$request->input('q').'%')
+            ->orWhere('companies.zipcode', 'LIKE', '%'.$request->input('q').'%')
             ;
         }
 
         if ($request->has('regio')) {
             $data = $data
-                ->whereRaw('companies.regio REGEXP "[[:<:]]'.$request->input('regio').'[[:>:]]"')
-                ->orWhere('companies.regio', '=', $request->input('regio'))
+            ->whereRaw('companies.regio REGEXP "[[:<:]]'.$request->input('regio').'[[:>:]]"')
+            ->orWhere('companies.regio', '=', $request->input('regio'))
             ;
         }
 
@@ -83,541 +83,546 @@ class CompaniesController extends Controller
                 'updated_at',
                 'name',
                 'city'
-            );
+                );
 
             if (in_array($request->input('sort'), $companiesColumn)) {
                 $data = $data->orderBy('companies.'.$request->input('sort'), $request->input('order'));
             } elseif ($request->input('sort') == 'saldoCompany') {
-                 $data = $data->orderByRaw('(SELECT 
-                        (sum(saldo) - sum(persons))
-                    FROM 
-                        reservations 
-                    WHERE 
-                        companies.id = reservations.company_id 
-                    AND 
-                        reservations.is_cancelled = 0
-                    AND 
-                        reservations.status IN("present", "reserved")
-                    ) '.$request->input('order'));
+             $data = $data->orderByRaw('(SELECT 
+                (sum(saldo) - sum(persons))
+                FROM 
+                reservations 
+                WHERE 
+                companies.id = reservations.company_id 
+                AND 
+                reservations.is_cancelled = 0
+                AND 
+                reservations.status IN("present", "reserved")
+                ) '.$request->input('order'));
 
-            } else {
-                $data = $data->orderBy($request->input('sort'), $request->input('order'));
-            }
-
-            session(['sort' => $request->input('sort'), 'order' => $request->input('order')]);
-        } else {
-            $data = $data->orderBy('companies.id', 'asc');
+         } else {
+            $data = $data->orderBy($request->input('sort'), $request->input('order'));
         }
 
-        $dataCount = $data->count();
+        session(['sort' => $request->input('sort'), 'order' => $request->input('order')]);
+    } else {
+        $data = $data->orderBy('companies.id', 'asc');
+    }
 
-        $data = $data->paginate($request->input('limit', 15));
-        $data->setPath($this->slugController);
+    $dataCount = $data->count();
+
+    $data = $data->paginate($request->input('limit', 15));
+    $data->setPath($this->slugController);
 
         # Redirect to last page when page don't exist
-        if ($request->input('page') > $data->lastPage()) { 
-            $lastPageQueryString = json_decode(json_encode($request->query()), true);
-            $lastPageQueryString['page'] = $data->lastPage();
+    if ($request->input('page') > $data->lastPage()) { 
+        $lastPageQueryString = json_decode(json_encode($request->query()), true);
+        $lastPageQueryString['page'] = $data->lastPage();
 
-            return Redirect::to($request->url().'?'.http_build_query($lastPageQueryString));
-        }
-        
-        $queryString = $request->query();
-        unset($queryString['limit']);
-        unset($queryString['regio']);
-
-
-        return view('admin/'.$this->slugController.'/index', [
-            'data' => $data,
-            'countItems' => $dataCount,
-            'slugController' => $this->slugController,
-            'queryString' => $queryString,
-            'paginationQueryString' => $request->query(),
-            'limit' => $request->input('limit', 15),
-            'section' => $this->section,
-            'currentPage' => 'Overzicht'
-
-        ]);
+        return Redirect::to($request->url().'?'.http_build_query($lastPageQueryString));
     }
 
-    public function create()
-    {
-        return view('admin/'.$this->slugController.'/create', [
-            'users' => $this->users,
-            'slugController' => $this->slugController,
-            'section' => $this->section,
-            'currentPage' => 'Nieuw bedrijf'
+    $queryString = $request->query();
+    unset($queryString['limit']);
+    unset($queryString['regio']);
+
+
+    return view('admin/'.$this->slugController.'/index', [
+        'data' => $data,
+        'countItems' => $dataCount,
+        'slugController' => $this->slugController,
+        'queryString' => $queryString,
+        'paginationQueryString' => $request->query(),
+        'limit' => $request->input('limit', 15),
+        'section' => $this->section,
+        'currentPage' => 'Overzicht'
+
         ]);
+}
+
+public function create()
+{
+    return view('admin/'.$this->slugController.'/create', [
+        'users' => $this->users,
+        'slugController' => $this->slugController,
+        'section' => $this->section,
+        'currentPage' => 'Nieuw bedrijf'
+        ]);
+}
+
+public function createAction(Request $request)
+{
+    $rules = [
+    'name' => 'required|unique:companies',
+    'email' => 'email',
+    'price_per_guest' => 'required',
+    'contact_name' => 'required',
+    'contact_email' => 'required|email',
+    'financial_email' => 'email',
+    'images' => 'max:6',
+    'logo' => 'mimes:jpeg,jpg,png|max:2000'
+    ];
+
+    $images = count($request->file('images')) - 1;
+    $files  = $request->file('images');
+
+    if ($request->hasFile('images')) {
+        foreach (range(0, $images) as $index)  {
+            $rule['images.'.$index] = 'required|mimes:jpeg,jpg,png';
+        }
     }
 
-    public function createAction(Request $request)
-    {
-        $rules = [
-            'name' => 'required|unique:companies',
-            'email' => 'email',
-            'contact_name' => 'required',
-            'contact_email' => 'required|email',
-            'financial_email' => 'email',
-            'images' => 'max:6',
-            'logo' => 'mimes:jpeg,jpg,png|max:2000'
-        ];
+    $this->validate($request, $rules);
 
-        $images = count($request->file('images')) - 1;
-        $files  = $request->file('images');
+    $data = new Company;
+    $data->slug = str_slug($request->input('name'));
+    $data->name = $request->input('name');
+    $data->description = $request->input('description');
+    $data->contact = $request->input('contact');
+    $data->details = $request->input('details');
+    $data->price_per_guest = $request->input('price_per_guest');
+    $data->about_us = $request->input('about_us');
+    $data->menu = $request->input('menu');
+    $data->website = $request->input('website');
+    $data->contact_name = $request->input('contact_name');
+    $data->contact_email = $request->input('contact_email');
+    $data->contact_phone = $request->input('contact_phone');
+    $data->contact_role = $request->input('contact_role');
+    $data->email = $request->input('email');
+    $data->phone = $request->input('phone');
+    $data->address = $request->input('address');
+    $data->zipcode = $request->input('zipcode');
+    $data->city = $request->input('city');
+    $data->regio = json_encode($request->input('regio'));
+    $data->days = json_encode($request->input('days'));
+    $data->financial_iban = $request->input('financial_iban');
+    $data->financial_iban_tnv = $request->input('financial_iban_tnv');
+    $data->financial_email = $request->input('financial_email');
+    $data->kvk = $request->input('kvk');
+    $data->btw = $request->input('btw');
 
-        if ($request->hasFile('images')) {
-            foreach (range(0, $images) as $index)  {
-                $rule['images.'.$index] = 'required|mimes:jpeg,jpg,png';
-            }
-        }
+    
 
-        $this->validate($request, $rules);
+    if ($request->has('waiter')) {
+        $data->waiter_user_id = $request->input('waiter');
+    }
 
-        $data = new Company;
-        $data->slug = str_slug($request->input('name'));
-        $data->name = $request->input('name');
-        $data->description = $request->input('description');
-        $data->contact = $request->input('contact');
-        $data->details = $request->input('details');
-        $data->about_us = $request->input('about_us');
-        $data->menu = $request->input('menu');
-        $data->website = $request->input('website');
-        $data->contact_name = $request->input('contact_name');
-        $data->contact_email = $request->input('contact_email');
-        $data->contact_phone = $request->input('contact_phone');
-        $data->contact_role = $request->input('contact_role');
-        $data->email = $request->input('email');
-        $data->phone = $request->input('phone');
-        $data->address = $request->input('address');
-        $data->zipcode = $request->input('zipcode');
-        $data->city = $request->input('city');
-        $data->regio = json_encode($request->input('regio'));
-        $data->days = json_encode($request->input('days'));
-        $data->financial_iban = $request->input('financial_iban');
-        $data->financial_iban_tnv = $request->input('financial_iban_tnv');
-        $data->financial_email = $request->input('financial_email');
-        $data->kvk = $request->input('kvk');
-        $data->btw = $request->input('btw');
+    if ($request->has('caller')) {
+        $data->caller_id = $request->input('caller');
+    }
 
-        if ($request->has('waiter')) {
-            $data->waiter_user_id = $request->input('waiter');
-        }
-
-        if ($request->has('caller')) {
-            $data->caller_id = $request->input('caller');
-        }
-
-        $user = Sentinel::findByCredentials(array(
-            'login' => $request->input('contact_email') 
+    $user = Sentinel::findByCredentials(array(
+        'login' => $request->input('contact_email') 
         ));
 
-        if ($request->input('new_user') == 1 && !$user) {
-            $user = Sentinel::registerAndActivate(array(
-                'email' =>  $request->input('contact_email'),
-                'password' => 12345678
+    if ($request->input('new_user') == 1 && !$user) {
+        $user = Sentinel::registerAndActivate(array(
+            'email' =>  $request->input('contact_email'),
+            'password' => 12345678
             ));
 
-            $user->name = $request->input('contact_name');
-            $user->phone = $request->input('contact_phone');
-            $user->default_role_id = 2;
-            $user->save();
+        $user->name = $request->input('contact_name');
+        $user->phone = $request->input('contact_phone');
+        $user->default_role_id = 2;
+        $user->save();
 
-            $data->user_id = $user->id;
+        $data->user_id = $user->id;
 
-            $role = Sentinel::findRoleByName('Bedrijf');
-            $role->users()->attach($user);
-        } else {
-            $data->user_id = $request->input('owner');
+        $role = Sentinel::findRoleByName('Bedrijf');
+        $role->users()->attach($user);
+    } else {
+        $data->user_id = $request->input('owner');
+    }
+
+    $data->start_invoice = $request->input('start_invoice') == 0 ? 0 : 1;
+    $data->website = $request->input('website');
+    $data->facilities = json_encode($request->input('facilities'));
+    $data->kitchens = json_encode($request->input('kitchens'));
+    $data->allergies = json_encode($request->input('allergies'));
+    $data->sustainability = json_encode($request->input('sustainability'));
+    $data->kids = json_encode($request->input('kids'));
+    $data->price = json_encode($request->input('price'));
+    $data->preferences = json_encode($request->input('preferences'));
+    $data->discount = json_encode($request->input('discount'));
+    $data->save();
+
+    $pdfCode = str_random(5);
+    $pdfName = $data->id.'-'.str_slug($request->input('name')).$pdfCode.'.pdf';
+
+    if($request->hasFile('pdf')) {
+        foreach($request->file('pdf') as $pdf) {
+            $data->addMedia($pdf)->toCollection('documents');
         }
+    }
 
-        $data->start_invoice = $request->input('start_invoice') == 0 ? 0 : 1;
-        $data->website = $request->input('website');
-        $data->facilities = json_encode($request->input('facilities'));
-        $data->kitchens = json_encode($request->input('kitchens'));
-        $data->allergies = json_encode($request->input('allergies'));
-        $data->sustainability = json_encode($request->input('sustainability'));
-        $data->kids = json_encode($request->input('kids'));
-        $data->price = json_encode($request->input('price'));
-        $data->preferences = json_encode($request->input('preferences'));
-        $data->discount = json_encode($request->input('discount'));
-        $data->save();
+    if ($request->hasFile('logo')) {
+        $data->addMedia($request->file('logo'))->toCollection('logo');
+    }
 
-        $pdfCode = str_random(5);
-        $pdfName = $data->id.'-'.str_slug($request->input('name')).$pdfCode.'.pdf';
-
-        if($request->hasFile('pdf')) {
-            foreach($request->file('pdf') as $pdf) {
-                $data->addMedia($pdf)->toCollection('documents');
-            }
+    if($request->hasFile('images'))  {
+        foreach($files as $file) {
+            $data->addMedia($file)->toMediaLibrary();
         }
+    }
 
-        if ($request->hasFile('logo')) {
-            $data->addMedia($request->file('logo'))->toCollection('logo');
-        }
+    $temporaryAuth = new TemporaryAuth();
+    $mailtemplate = new MailTemplate();
 
-        if($request->hasFile('images'))  {
-            foreach($files as $file) {
-                $data->addMedia($file)->toMediaLibrary();
-            }
-        }
-
-        $temporaryAuth = new TemporaryAuth();
-        $mailtemplate = new MailTemplate();
-        
-        $createAuthSignup = $temporaryAuth->createCode($user->id, 'admin/companies/update/'.$data->id.'/'.$data->slug.'?step=1');
+    $createAuthSignup = $temporaryAuth->createCode($user->id, 'admin/companies/update/'.$data->id.'/'.$data->slug.'?step=1');
 
         // Send a company sign up mail
-        $mailtemplate->sendMailSite(array(
-            'email' => $request->input('email'),
-            'template_id' => 'appointment_mail',
-            'fromEmail' => 'info@uwvoordeelpas.nl',
-            'replacements' => array(
-                '%name%' => $user->name,
-                '%cname%' => $user->name,
-                '%email%' => $request->input('email'),
-                '%date%' => date('d-m-Y'),
-                '%time%' => date('H:i'),
-                '%randomPassword%' => 12345678,
-                '%url%' => url('auth/set/'.$createAuthSignup)
+    $mailtemplate->sendMailSite(array(
+        'email' => $request->input('email'),
+        'template_id' => 'appointment_mail',
+        'fromEmail' => 'info@uwvoordeelpas.nl',
+        'replacements' => array(
+            '%name%' => $user->name,
+            '%cname%' => $user->name,
+            '%email%' => $request->input('email'),
+            '%date%' => date('d-m-Y'),
+            '%time%' => date('H:i'),
+            '%randomPassword%' => 12345678,
+            '%url%' => url('auth/set/'.$createAuthSignup)
             )
         ));
-            
-        MailTemplate::createMailTemplates($data->id);
 
-        Alert::success('Dit bedrijf is succesvol aangemaakt.')->persistent('Sluiten');
-        return Redirect::to('admin/'.$this->slugController.'/update/'.$data->id.'/'.$data->slug);
-        
+    MailTemplate::createMailTemplates($data->id);
+
+    Alert::success('Dit bedrijf is succesvol aangemaakt.')->persistent('Sluiten');
+    return Redirect::to('admin/'.$this->slugController.'/update/'.$data->id.'/'.$data->slug);
+
+}
+
+public function update($id, $slug)
+{
+    $data = Company::where('id','=', $id);
+
+    if (Sentinel::inRole('bedrijf') && Sentinel::inRole('admin') == FALSE)  {
+        $data = $data->where('user_id', Sentinel::getUser()->id);
     }
 
-    public function update($id, $slug)
-    {
-        $data = Company::where('id','=', $id);
+    $data = $data->first();
 
-        if (Sentinel::inRole('bedrijf') && Sentinel::inRole('admin') == FALSE)  {
-            $data = $data->where('user_id', Sentinel::getUser()->id);
+    if ($data) {
+        if ($data->click_registration == 0 && $data->user_id == Sentinel::getUser()->id) {
+            $data->click_registration = 1;
+            $data->save();
         }
 
-        $data = $data->first();
+        $mediaItems = $data->getMedia('default');
+        $documentItems = $data->getMedia('documents');
+        $logoItem = $data->getMedia('logo');
 
-        if ($data) {
-            if ($data->click_registration == 0 && $data->user_id == Sentinel::getUser()->id) {
-                $data->click_registration = 1;
-                $data->save();
-            }
-
-            $mediaItems = $data->getMedia('default');
-            $documentItems = $data->getMedia('documents');
-            $logoItem = $data->getMedia('logo');
-
-            return view('admin/'.$this->slugController.'/update', [
-                'users' => $this->users,
-                'data' => $data,
-                'admin' => Sentinel::inRole('admin'),
-                'media' => $mediaItems,
-                'documentItems' => $documentItems,
-                'logoItem' => $logoItem,
-                'slugController' => $this->slugController,
-                'section' => $this->section,
-                'currentPage' => 'Wijzig bedrijf'
+        return view('admin/'.$this->slugController.'/update', [
+            'users' => $this->users,
+            'data' => $data,
+            'admin' => Sentinel::inRole('admin'),
+            'media' => $mediaItems,
+            'documentItems' => $documentItems,
+            'logoItem' => $logoItem,
+            'slugController' => $this->slugController,
+            'section' => $this->section,
+            'currentPage' => 'Wijzig bedrijf'
             ]);
-        } else {
-            Alert::error('Dit bedrijf bestaat helaas niet.')->persistent("Sluiten");
-            return Redirect::to('admin/'.$this->slugController);
-        }
-        
+    } else {
+        Alert::error('Dit bedrijf bestaat helaas niet.')->persistent("Sluiten");
+        return Redirect::to('admin/'.$this->slugController);
     }
 
-    public function updateAction(Request $request, $id, $slug)
-    {
-        $data = Company::where('id','=', $id);
+}
 
-        if (Sentinel::inRole('bedrijf') && Sentinel::inRole('admin') == FALSE) {
-            $data = $data->where('user_id', Sentinel::getUser()->id);
-        }
+public function updateAction(Request $request, $id, $slug)
+{
+    $data = Company::where('id','=', $id);
 
-        $data = $data->first();
-        
-        if ($data) {
-            $rules = [
-                'name' => 'required',
-                'email' => 'email',
-                'contact_email' => 'required|email',
-                'financial_email' => 'email',
+    if (Sentinel::inRole('bedrijf') && Sentinel::inRole('admin') == FALSE) {
+        $data = $data->where('user_id', Sentinel::getUser()->id);
+    }
+
+    $data = $data->first();
+
+    if ($data) {
+        $rules = [
+        'name' => 'required',
+        'email' => 'email',
+        'contact_email' => 'required|email',
+        'financial_email' => 'email',
                 /*
                 'images' => 'max:6|image_size:>=500,300',
                 */
                 'images' => 'max:6',
                 'logo' => 'mimes:jpeg,jpg,png|max:2000',
-            ];
+                ];
 
-            if ($request->has('step')) {
-                $rules['av'] = 'required';
-                $rules['signature'] = 'required';
-            }
-
-            $images = count($request->file('images')) - 1;
-            $files = $request->file('images');
-
-            if ($request->hasFile('images'))  {
-                foreach (range(0, $images) as $index) {
-                    $rule['images.' . $index] = 'required|mimes:jpeg,jpg,png';
+                if ($request->has('step')) {
+                    $rules['av'] = 'required';
+                    $rules['signature'] = 'required';
                 }
 
-                $rules = array_merge($rules, $rule);
-            }
+                $images = count($request->file('images')) - 1;
+                $files = $request->file('images');
 
-            if ($request->has('signature')) {
-                $data->signature_url = $request->input('signature');
-            }
+                if ($request->hasFile('images'))  {
+                    foreach (range(0, $images) as $index) {
+                        $rule['images.' . $index] = 'required|mimes:jpeg,jpg,png';
+                    }
 
-            $this->validate($request, $rules);
+                    $rules = array_merge($rules, $rule);
+                }
 
-            $pdfCode = str_random(5);
-            $pdfName = $data->id.'-'.str_slug($request->input('name')).$pdfCode.'.pdf';
+                if ($request->has('signature')) {
+                    $data->signature_url = $request->input('signature');
+                }
 
-            $data->slug = str_slug($request->input('name'));
-            $data->name = $request->input('name');
-            $data->description = $request->input('description');
-            $data->contact = $request->input('contact');
-            $data->details = $request->input('details');
-            $data->about_us = $request->input('about_us');
-            $data->discount_comment = $request->input('discount_comment');
-            $data->facebook = $request->input('facebook');
-            $data->menu = $request->input('menu');
-            $data->waiter_user_id = $request->input('waiter');
-            $data->caller_id = $request->input('caller');
+                $this->validate($request, $rules);
 
-            if (Sentinel::inRole('admin')) {
-                $data->user_id = $request->input('owner');
-                $data->clicks = $request->input('clicks');
-            }
+                $pdfCode = str_random(5);
+                $pdfName = $data->id.'-'.str_slug($request->input('name')).$pdfCode.'.pdf';
 
-            if ($request->has('serialize')) {
-                $asAssociativeArray = json_decode($request->input('serialize'), true);
+                $data->slug = str_slug($request->input('name'));
+                $data->name = $request->input('name');
+                $data->description = $request->input('description');
+                $data->contact = $request->input('contact');
+                $data->details = $request->input('details');
+                $data->price_per_guest = $request->input('price_per_guest');
+                $data->about_us = $request->input('about_us');
+                $data->discount_comment = $request->input('discount_comment');
+                $data->facebook = $request->input('facebook');
+                $data->menu = $request->input('menu');
+                $data->waiter_user_id = $request->input('waiter');
+                $data->caller_id = $request->input('caller');
 
-                foreach ($asAssociativeArray as $asAssociativeFetch) {
-                    foreach ($asAssociativeFetch as $asAssociativeResult) {
-                        $orderArray[] = $asAssociativeResult['id'];
+                if (Sentinel::inRole('admin')) {
+                    $data->user_id = $request->input('owner');
+                    $data->clicks = $request->input('clicks');
+                }
+
+                if ($request->has('serialize')) {
+                    $asAssociativeArray = json_decode($request->input('serialize'), true);
+
+                    foreach ($asAssociativeArray as $asAssociativeFetch) {
+                        foreach ($asAssociativeFetch as $asAssociativeResult) {
+                            $orderArray[] = $asAssociativeResult['id'];
+                        }
+                    }
+
+                    if (is_array($orderArray)) {
+                        Media::setNewOrder($orderArray);
                     }
                 }
 
-                if (is_array($orderArray)) {
-                    Media::setNewOrder($orderArray);
+                $data->contact_name  = $request->input('contact_name');
+                $data->contact_email = $request->input('contact_email');
+                $data->contact_phone = $request->input('contact_phone');
+                $data->contact_role  = $request->input('contact_role');
+                $data->email = $request->input('email');
+                $data->phone = $request->input('phone');
+                $data->address = $request->input('address');
+                $data->zipcode = $request->input('zipcode');
+                $data->city = $request->input('city');
+                $data->regio = json_encode($request->input('regio'));
+                $data->days = json_encode($request->input('days'));
+                $data->financial_iban = $request->input('financial_iban');
+                $data->financial_iban_tnv  = $request->input('financial_iban_tnv');
+                $data->financial_email = $request->input('financial_email');
+                $data->kvk = $request->input('kvk');
+                $data->btw = $request->input('btw');
+                $data->website = $request->input('website');
+                $data->facilities = json_encode($request->input('facilities'));
+                $data->kitchens = json_encode($request->input('kitchens'));
+                $data->allergies = json_encode($request->input('allergies'));
+                $data->sustainability = json_encode($request->input('sustainability'));
+                $data->kids = json_encode($request->input('kids'));
+                $data->price = json_encode($request->input('price'));
+                $data->preferences = json_encode($request->input('preferences'));
+                $data->discount = json_encode($request->input('discount'));
+
+                if ($request->has('step')) {
+                    $data->no_show = 1;
+                } else {
+                    $data->no_show = $request->input('no_show') == 1 ? 1 : 0;
                 }
-            }
 
-            $data->contact_name  = $request->input('contact_name');
-            $data->contact_email = $request->input('contact_email');
-            $data->contact_phone = $request->input('contact_phone');
-            $data->contact_role  = $request->input('contact_role');
-            $data->email = $request->input('email');
-            $data->phone = $request->input('phone');
-            $data->address = $request->input('address');
-            $data->zipcode = $request->input('zipcode');
-            $data->city = $request->input('city');
-            $data->regio = json_encode($request->input('regio'));
-            $data->days = json_encode($request->input('days'));
-            $data->financial_iban = $request->input('financial_iban');
-            $data->financial_iban_tnv  = $request->input('financial_iban_tnv');
-            $data->financial_email = $request->input('financial_email');
-            $data->kvk = $request->input('kvk');
-            $data->btw = $request->input('btw');
-            $data->website = $request->input('website');
-            $data->facilities = json_encode($request->input('facilities'));
-            $data->kitchens = json_encode($request->input('kitchens'));
-            $data->allergies = json_encode($request->input('allergies'));
-            $data->sustainability = json_encode($request->input('sustainability'));
-            $data->kids = json_encode($request->input('kids'));
-            $data->price = json_encode($request->input('price'));
-            $data->preferences = json_encode($request->input('preferences'));
-            $data->discount = json_encode($request->input('discount'));
+                $data->save();
 
-            if ($request->has('step')) {
-                $data->no_show = 1;
-            } else {
-                $data->no_show = $request->input('no_show') == 1 ? 1 : 0;
-            }
-
-            $data->save();
-
-            if ($request->hasFile('images')) {
-                foreach($files as $file) {
-                    $data->addMedia($file)->toMediaLibrary();
+                if ($request->hasFile('images')) {
+                    foreach($files as $file) {
+                        $data->addMedia($file)->toMediaLibrary();
+                    }
                 }
-            }
 
-            if ($request->hasFile('logo')) {
-                $data->addMedia($request->file('logo'))->toCollection('logo');
-            }
-
-            $mediaItems = $data->getMedia();
-
-            if ($request->hasFile('pdf')) {
-                foreach($request->file('pdf') as $pdf) {
-                    $data->addMedia($pdf)->toCollection('documents');
+                if ($request->hasFile('logo')) {
+                    $data->addMedia($request->file('logo'))->toCollection('logo');
                 }
-            }
 
-            Alert::success('Dit bedrijf is succesvol aangepast.')->persistent('Sluiten');
+                $mediaItems = $data->getMedia();
 
-            if ($request->has('step')) {
-                $invoicesSettings = json_decode(json_encode(Setting::get('default')), true);
-                
-                if ($request->has('signature')) {
+                if ($request->hasFile('pdf')) {
+                    foreach($request->file('pdf') as $pdf) {
+                        $data->addMedia($pdf)->toCollection('documents');
+                    }
+                }
+
+                Alert::success('Dit bedrijf is succesvol aangepast.')->persistent('Sluiten');
+
+                if ($request->has('step')) {
+                    $invoicesSettings = json_decode(json_encode(Setting::get('default')), true);
+
+                    if ($request->has('signature')) {
                     // Remove Appointment
-                    Appointment::where('send_mail', '=', 1)
+                        Appointment::where('send_mail', '=', 1)
                         ->where('company_id', '=', $data->id)
                         ->delete()
-                    ;
+                        ;
 
-                    MailTemplate::createMailTemplates($data->id);
+                        MailTemplate::createMailTemplates($data->id);
 
-                    if ($data->start_invoice == 1 && !isset($invoicesSettings['services_noshow'])) {
+                        if ($data->start_invoice == 1 && !isset($invoicesSettings['services_noshow'])) {
                         // Add a new service
-                        $service = new CompanyService();
-                        $service->name = isset($invoicesSettings['services_name']) ? $invoicesSettings['services_name'] : 'Eenmalige aansluitkosten UWvoordeelpas.';
-                        $service->price = isset($invoicesSettings['services_price']) ? $invoicesSettings['services_price'] : 50;
-                        $service->company_id = $data->id;
-                        $service->period = 0;
-                        $service->content = 'Eenmalige aansluitkosten UWvoordeelpas.';
-                        $service->tax = isset($invoicesSettings['services_tax']) ? $invoicesSettings['services_tax'] : 21;
-                        $service->start_date = date('Y-m-d');
-                        $service->end_date = date('Y-m-d', strtotime('+14 days'));
-                        $service->save();
+                            $service = new CompanyService();
+                            $service->name = isset($invoicesSettings['services_name']) ? $invoicesSettings['services_name'] : 'Eenmalige aansluitkosten UWvoordeelpas.';
+                            $service->price = isset($invoicesSettings['services_price']) ? $invoicesSettings['services_price'] : 50;
+                            $service->company_id = $data->id;
+                            $service->period = 0;
+                            $service->content = 'Eenmalige aansluitkosten UWvoordeelpas.';
+                            $service->tax = isset($invoicesSettings['services_tax']) ? $invoicesSettings['services_tax'] : 21;
+                            $service->start_date = date('Y-m-d');
+                            $service->end_date = date('Y-m-d', strtotime('+14 days'));
+                            $service->save();
 
-                        $product = array(
-                            'name' => isset($invoicesSettings['services_name']) ? $invoicesSettings['services_name'] : 'Eenmalige aansluitkosten UWvoordeelpas.',
-                            'description' => 'Eenmalige aansluitkosten UWvoordeelpas.',
-                            'price' => isset($invoicesSettings['services_price']) ? $invoicesSettings['services_price'] : 50,
-                            'amount' => 1,
-                            'tax' => isset($invoicesSettings['services_tax']) ? $invoicesSettings['services_tax'] : 21,
-                        );
+                            $product = array(
+                                'name' => isset($invoicesSettings['services_name']) ? $invoicesSettings['services_name'] : 'Eenmalige aansluitkosten UWvoordeelpas.',
+                                'description' => 'Eenmalige aansluitkosten UWvoordeelpas.',
+                                'price' => isset($invoicesSettings['services_price']) ? $invoicesSettings['services_price'] : 50,
+                                'amount' => 1,
+                                'tax' => isset($invoicesSettings['services_tax']) ? $invoicesSettings['services_tax'] : 21,
+                                );
 
-                        $getLastId = Invoice::select(
-                            'invoice_number'
-                        )
+                            $getLastId = Invoice::select(
+                                'invoice_number'
+                                )
                             ->orderBy('invoice_number', 'desc')
                             ->limit(1)
                             ->first()
-                        ;
+                            ;
 
                         // Add new invoice
-                        $invoice = new Invoice();
-                        $invoice->invoice_number = (isset($getLastId->invoice_number) ? $getLastId->invoice_number + 1 : date('Y').'00' + 1);
-                        $invoice->start_date = date('Y-m-d');
-                        $invoice->end_date = date('Y-m-d', strtotime('+14 days'));
-                        $invoice->period = 0;
-                        $invoice->company_id = $data->id;
-                        $invoice->products = json_encode($product);
-                        $invoice->type = 'products';
-                        $invoice->save();
-                    }
+                            $invoice = new Invoice();
+                            $invoice->invoice_number = (isset($getLastId->invoice_number) ? $getLastId->invoice_number + 1 : date('Y').'00' + 1);
+                            $invoice->start_date = date('Y-m-d');
+                            $invoice->end_date = date('Y-m-d', strtotime('+14 days'));
+                            $invoice->period = 0;
+                            $invoice->company_id = $data->id;
+                            $invoice->products = json_encode($product);
+                            $invoice->type = 'products';
+                            $invoice->save();
+                        }
 
                     // Send welcome mail
-                    $mailtemplate = new MailTemplate();
-                    $mailtemplate->sendMailSite(array(
-                        'email' => $data->contact_email,
-                        'template_id' => 'welcome',
-                        'replacements' => array(
-                            '%cname%' => $data->contact_name,
-                            '%name%' => $data->contact_name,
-                            '%email%' => $data->contact_email
-                        )
-                    ));
+                        $mailtemplate = new MailTemplate();
+                        $mailtemplate->sendMailSite(array(
+                            'email' => $data->contact_email,
+                            'template_id' => 'welcome',
+                            'replacements' => array(
+                                '%cname%' => $data->contact_name,
+                                '%name%' => $data->contact_name,
+                                '%email%' => $data->contact_email
+                                )
+                            ));
+                    }
+
+                    Alert::success('U bent succesvol ingeschreven. <br /><small>Stel nu in stap 2 uw reserveringsvoorkeuren in</small>')->persistent('Sluiten');
+                    return Redirect::to('admin/reservations/create/'.str_slug($request->input('name')).'?step=2');
+                } else {
+                    Alert::success('Dit bedrijf is succesvol aangepast.')->persistent('Sluiten');
+
+                    return Redirect::to('admin/'.$this->slugController.'/update/'.$data->id.'/'.$data->slug);
+                }
+            } else {
+                Alert::error('Dit bedrijf bestaat helaas niet.')->persistent("Sluiten");
+                return Redirect::to('admin/'.$this->slugController);
+            }
+        }
+
+        public function cropImage(Request $request, $slug, $image)
+        {
+            $data = Company::where('slug','=', $slug);
+
+            if (Sentinel::inRole('admin') == FALSE) {
+                $data = $data->where('user_id', Sentinel::getUser()->id);
+            }
+
+            $data = $data->first();
+
+            if ($data) {
+                switch ($request->input('type')) {
+                    case 'logo':
+                    $type = 'logo';
+                    break;
+                    
+                    case 'documents':
+                    $type = 'documents';
+                    break;
+
+                    case 'images':
+                    $type = 'default';
+                    break;
+
+                    default:
+                    $type = 'default';
+                    break;
                 }
 
-                Alert::success('U bent succesvol ingeschreven. <br /><small>Stel nu in stap 2 uw reserveringsvoorkeuren in</small>')->persistent('Sluiten');
-                return Redirect::to('admin/reservations/create/'.str_slug($request->input('name')).'?step=2');
+                $mediaItem = $data->getMedia($type)[$image];
+
+
+                return view('admin/'.$this->slugController.'/crop', [
+                    'slugController' => $this->slugController,
+                    'mediaItem' => $mediaItem,
+                    'section' => $this->section,
+                    'image' => $image,
+                    'slug' => $slug,
+                    'currentPage' => 'Bewerk deze afbeelding'
+                    ]);
             } else {
-                Alert::success('Dit bedrijf is succesvol aangepast.')->persistent('Sluiten');
-                
-                return Redirect::to('admin/'.$this->slugController.'/update/'.$data->id.'/'.$data->slug);
+                alert()->error('', 'Dit bedrijf bestaat helaas niet of u heeft niet genoeg rechten.')->persistent('Sluiten');
+                return Redirect::to('admin/companies/update/'.$slug);
             }
-        } else {
-            Alert::error('Dit bedrijf bestaat helaas niet.')->persistent("Sluiten");
-            return Redirect::to('admin/'.$this->slugController);
-        }
-    }
-
-    public function cropImage(Request $request, $slug, $image)
-    {
-        $data = Company::where('slug','=', $slug);
-
-        if (Sentinel::inRole('admin') == FALSE) {
-            $data = $data->where('user_id', Sentinel::getUser()->id);
         }
 
-        $data = $data->first();
+        public function cropImageAction(Request $request, $slug, $image)
+        {
+            $data = Company::where('slug','=', $slug);
 
-        if ($data) {
-            switch ($request->input('type')) {
-                case 'logo':
+            if (Sentinel::inRole('admin') == FALSE) {
+                $data = $data->where('user_id', Sentinel::getUser()->id);
+            }
+
+            $data = $data->first();
+
+            if ($data) {
+                switch ($request->input('type')) {
+                    case 'logo':
                     $type = 'logo';
                     break;
                     
-                case 'documents':
+                    case 'documents':
                     $type = 'documents';
                     break;
 
-                case 'images':
+                    case 'images':
                     $type = 'default';
                     break;
-                
-                default:
+
+                    default:
                     $type = 'default';
                     break;
-            }
+                }
 
-            $mediaItem = $data->getMedia($type)[$image];
-       
-
-            return view('admin/'.$this->slugController.'/crop', [
-                'slugController' => $this->slugController,
-                'mediaItem' => $mediaItem,
-                'section' => $this->section,
-                'image' => $image,
-                'slug' => $slug,
-                'currentPage' => 'Bewerk deze afbeelding'
-            ]);
-        } else {
-            alert()->error('', 'Dit bedrijf bestaat helaas niet of u heeft niet genoeg rechten.')->persistent('Sluiten');
-            return Redirect::to('admin/companies/update/'.$slug);
-        }
-    }
-
-    public function cropImageAction(Request $request, $slug, $image)
-    {
-        $data = Company::where('slug','=', $slug);
-
-        if (Sentinel::inRole('admin') == FALSE) {
-            $data = $data->where('user_id', Sentinel::getUser()->id);
-        }
-
-        $data = $data->first();
-
-        if ($data) {
-            switch ($request->input('type')) {
-                case 'logo':
-                    $type = 'logo';
-                    break;
-                    
-                case 'documents':
-                    $type = 'documents';
-                    break;
-
-                case 'images':
-                    $type = 'default';
-                    break;
-                
-                default:
-                    $type = 'default';
-                    break;
-            }
-
-            $mediaItem = $data->getMedia($type);
-     echo (int) $request->input('width');
-            $mediaItem[$image]->manipulations = [
-                    'hugeThumb' => [
+                $mediaItem = $data->getMedia($type);
+                echo (int) $request->input('width');
+                $mediaItem[$image]->manipulations = [
+                'hugeThumb' => [
                     /*
                         'w' => $request->input('width'),
                         'h' => $request->input('height'),
@@ -627,18 +632,18 @@ class CompaniesController extends Controller
                         'h' => 386,
                         'rect' => '586,536,164,0'
 
-                    ]
-                ]
-            ;
+                        ]
+                        ]
+                        ;
 
-            $mediaItem[$image]->save();
+                        $mediaItem[$image]->save();
 
-            Alert::success('Deze afbeelding is succesvol aangepast')->persistent('Sluiten');
+                        Alert::success('Deze afbeelding is succesvol aangepast')->persistent('Sluiten');
             /*
             return Redirect::to('admin/companies/crop/image/'.$slug.'/'.$image.'?type='.$request->input('type'));
             */
 
-         } else {
+        } else {
             alert()->error('', 'Dit bedrijf bestaat helaas niet of u heeft niet genoeg rechten.')->persistent('Sluiten');
             return Redirect::to('admin/companies/update/'.$slug);
         }
@@ -657,20 +662,20 @@ class CompaniesController extends Controller
         if ($data) {
             switch ($request->input('type')) {
                 case 'logo':
-                    $type = 'logo';
-                    break;
-                    
+                $type = 'logo';
+                break;
+
                 case 'documents':
-                    $type = 'documents';
-                    break;
+                $type = 'documents';
+                break;
 
                 case 'images':
-                    $type = 'default';
-                    break;
+                $type = 'default';
+                break;
                 
                 default:
-                    $type = 'default';
-                    break;
+                $type = 'default';
+                break;
             }
 
             $mediaItems = $data->getMedia($type);
@@ -696,24 +701,24 @@ class CompaniesController extends Controller
 
         switch ($request->input('action')) {
             case 'remove':
-                $data->delete();
+            $data->delete();
 
-                Alert::success('De gekozen selectie is succesvol verwijderd.')->persistent("Sluiten");
-                return Redirect::to('admin/'.$this->slugController);
-                break;
+            Alert::success('De gekozen selectie is succesvol verwijderd.')->persistent("Sluiten");
+            return Redirect::to('admin/'.$this->slugController);
+            break;
 
             case 'reset':
-                $mailtemplates = MailTemplate::whereIn('company_id', $request->input('id'));
+            $mailtemplates = MailTemplate::whereIn('company_id', $request->input('id'));
 
-                if ($mailtemplates->count() >= 1) {
-                    $mailtemplates->delete();
-                }
+            if ($mailtemplates->count() >= 1) {
+                $mailtemplates->delete();
+            }
 
-                MailTemplate::createMailTemplates($request->input('id'));
+            MailTemplate::createMailTemplates($request->input('id'));
 
-                Alert::success('De mailtemplates voor uw gekozen selectie zijn gereset..')->persistent("Sluiten");
-                return Redirect::to('admin/'.$this->slugController);
-                break;
+            Alert::success('De mailtemplates voor uw gekozen selectie zijn gereset..')->persistent("Sluiten");
+            return Redirect::to('admin/'.$this->slugController);
+            break;
         }
     }
 
@@ -726,7 +731,7 @@ class CompaniesController extends Controller
             'section' => 'Widgets',
             'currentPage' => 'Seleteer widget',
             'companies' => $data
-        ]);
+            ]);
     }
 
     public function widgets($slug)
@@ -746,7 +751,7 @@ class CompaniesController extends Controller
                 'company' => $data,
                 'companies' => Company::all(),
                 'currentPage' => 'Widgets'
-            ]);
+                ]);
         } else {
             Alert::error('Dit bedrijf bestaat helaas niet of u heeft niet genoeg rechten.')->persistent("Sluiten");
             return Redirect::to('admin/'.$this->slugController);
