@@ -4134,6 +4134,9 @@ select#sendEmail {
 span.price.price_min_box {
     margin: 37px 38px 10px 77px !important;
 }
+.showSweetAlert p {
+    text-align: center !important;
+}
 
 @media (max-width: 550px){
     .tabs-content .col4 {

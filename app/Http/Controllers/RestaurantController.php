@@ -408,6 +408,7 @@ class RestaurantController extends Controller {
                                 'persons.required' => 'Het aantal personen moet minimaal 1 persoon zijn',
                                 'persons.numeric' => 'Het aantal personen moet numeriek zijn.',
                                 'persons.min' => 'Het aantal personen moet minimaal 1 persoon zijn.',
+                                'av.accepted'=>'HELAAS, U bent vergeten om de algemene voorwaarden te accepteren',
                     ]);
                 } else {
                     $validator = Validator::make($request->all(), [
