@@ -175,7 +175,7 @@
 			     &euro; {{ $deal->price }}
 			  </span>
 				@if($count_persons >= $deal->total_amount)
-					<a class="more"  href="javascript:void(0)">SOLD OUT</a>
+					<a class="more"  href="javascript:void(0)">Uitverkocht</a>
 				@else
 					<div class="d-inline-block">
 						<a class="more"  href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}">MEER INFO</a>&nbsp;

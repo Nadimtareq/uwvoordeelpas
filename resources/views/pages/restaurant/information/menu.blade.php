@@ -28,22 +28,6 @@
                         &euro; {{ $deal->price }}
                     </span>
                 </p>
-               
-                <?php /*
-                if (isset($deal->reservation_count) && ($deal->reservation_count[0]['total_reservation'] >= $deal->total_amount)) {
-                    ?>
-                    <a class="deal_btn" style="float: right;" href="javascript:void(0)">SOLD OUT</a>
-                    <?php
-                } else {
-                    ?>
-                    <button class="btn-success pull-right" style="font-size: 16px;">
-                        <span><img id="image" src="https://www.live.uwvoordeelpas.nl/media/1723/cart.png" class="img-responsive" alt="" /></span>
-                        Reserveer nu
-                        <span><i class="right chevron icon divider"></i></span>
-                    </button>
-                    <?php
-                } */
-                ?>
             </div>
         </div>
     </div>
