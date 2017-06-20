@@ -4138,6 +4138,10 @@ span.price.price_min_box {
     text-align: center !important;
 }
 
+img.thumbnails{
+    max-height: 278px;
+}
+
 @media (max-width: 550px){
     .tabs-content .col4 {
 		width: inherit !important;

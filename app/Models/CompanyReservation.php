@@ -15,7 +15,7 @@ class CompanyReservation extends Model {
         30 => '30 minutes',
         60 => '1 hour'
     );
-
+    
     public function getTimeCarouselHTML($reservationDate = NULL, $data, $persons, $reservationTimesArray, $tomorrowArray, $hasDate, $deal) {
         $allTimesArray = static::getAllTimes();
 

@@ -36,17 +36,16 @@ class CompaniesController extends Controller
     {
         $data = Company::select(
             'companies.*',
-            DB::raw('(SELECT 
-                (sum(saldo) - sum(persons))
-                FROM 
-                reservations 
-                WHERE 
-                companies.id = reservations.company_id 
-                AND 
-                reservations.is_cancelled = 0
-                AND 
+            DB::raw('(SELECT sum(saldo) FROM reservations WHERE 
+                companies.id = reservations.company_id AND 
+                reservations.is_cancelled = 0 AND 
                 reservations.status IN("present", "reserved")
-                ) as saldoCompany')
+                ) as saldoCompany'),
+            DB::raw('(SELECT sum(reservations.persons*reservations_options.price_per_guest) FROM reservations JOIN reservations_options on reservations.option_id=reservations_options.id WHERE 
+                companies.id = reservations.company_id AND 
+                reservations.is_cancelled = 0 AND 
+                reservations.status IN("present", "reserved")
+                ) as saldoDiscount')
             )
         ->with('media')
         ->leftJoin('users', 'users.id', '=', 'companies.user_id')
@@ -103,7 +102,6 @@ class CompaniesController extends Controller
          } else {
             $data = $data->orderBy($request->input('sort'), $request->input('order'));
         }
-
         session(['sort' => $request->input('sort'), 'order' => $request->input('order')]);
     } else {
         $data = $data->orderBy('companies.id', 'asc');

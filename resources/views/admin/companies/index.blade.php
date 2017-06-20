@@ -103,7 +103,7 @@
                         </td>
                         <td>
                             <a href="{{ url('admin/reservations/saldo/'.$result->slug) }}">
-                                &euro;{{ number_format($result->saldoCompany, 2, '.', '') }}
+                                &euro;{{ number_format(($result->saldoCompany - $result->saldoDiscount), 2, '.', '') }}
 
                         <td>
                             <a href="{{ url('admin/'.$slugController.'/update/'.$result->id.'/'.$result->slug) }}" class="ui icon tiny button">
