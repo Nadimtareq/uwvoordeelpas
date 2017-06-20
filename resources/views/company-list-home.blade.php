@@ -144,17 +144,18 @@
 
               <p>{!!  $deal->description !!}</p>
 			  <div class="wr">
-                {!!
-                    $companyReservation->getTimeCarouselHTML(
+			  <?php 
+             	  $returnval = $companyReservation->getTimeCarouselHTML(
                         isset($reservationDate) ? $reservationDate : NULL,
                         $data,
-                        Request::input('persons', 2),
+                        Request::input('persons', $getRec[0]->total_persons),
                         $reservationTimesArray,
                         $tomorrowArray,
                         Request::input('date'),
                         Request::input('deal', $deal->id)
                     )
-                !!}
+                    ?>
+                    {!! $returnval !!}
                  <?php
                     $getRec        = HomeController::getPersons($deal->id);
                     $count_persons = $getRec[0]->total_persons;
@@ -177,10 +178,12 @@
 				@if($count_persons >= $deal->total_amount)
 					<a class="more"  href="javascript:void(0)">Uitverkocht</a>
 				@else
-					<div class="d-inline-block">
-						<a class="more"  href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}">MEER INFO</a>&nbsp;
-						<a class="more"  href="{{ url('future-deal/'.$data->slug).'?deal='.$deal->id }}">KOOP DEAL</a>
-					</div>
+					@if($returnval != '<div class="ui tiny text-danger"> <i class="clock icon"></i> Helaas, er zijn momenteel geen plaatsen beschikbaar.</div>')
+						<div class="d-inline-block">
+							<a class="more"  href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}">MEER INFO</a>&nbsp;
+							<a class="more"  href="{{ url('future-deal/'.$data->slug).'?deal='.$deal->id }}">KOOP DEAL</a>
+						</div>
+					@endif					
 				@endif
 
            </div>
