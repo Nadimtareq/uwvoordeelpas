@@ -173,8 +173,7 @@
 						<a class="more"  href="{{ url('future-deal/'.$data->slug).'?deal='.$deal->id }}">KOOP DEAL</a>
 					</div>
 				@endif
-					<!--  HEre we have to find this two buttons based on some condition
-					but i am not getting above block of laravel.... -->
+					
 				@endif
 					
            </div>
