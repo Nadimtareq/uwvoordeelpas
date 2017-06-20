@@ -143,6 +143,7 @@
 				@endif
 
               <p>{!!  $deal->description !!}</p>
+              @if($count_persons < $deal->total_amount)
 			  <div class="wr">
 			  <?php 
              	  $returnval = $companyReservation->getTimeCarouselHTML(
@@ -156,11 +157,12 @@
                     )
                     ?>
                     {!! $returnval !!}
-                 <?php
+			  </div>
+			   @endif
+			    <?php
                     $getRec        = HomeController::getPersons($deal->id);
                     $count_persons = $getRec[0]->total_persons;
                 ?>
-			  </div>
 			   @if($deal->price_from >= 1)
 			   <span class="price">			    
 			     &euro; {{ $deal->price_from }}
