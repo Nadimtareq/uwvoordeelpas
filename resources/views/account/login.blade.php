@@ -36,12 +36,12 @@
 	<input type="hidden" name="password" id="pass_new">
 </div>
  <div class="field">
-@if($flag==1)
+{{--@if($flag==1)
          <div class="g-recaptcha" data-sitekey="{{getenv('CAPTCHA_FRONT')}}" ></div><div style="float: right;"></div>
      @else
          <div class="g-recaptcha" data-sitekey="{{getenv('CAPTCHA_FRONT')}}" style="display:none;"></div><div style="float: right;"></div>
 
-                 @endif
+                 @endif--}}
 
 	<div style="float: left; width: 200px;">
 		<div class="ui checkbox">

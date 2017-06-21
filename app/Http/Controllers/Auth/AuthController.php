@@ -262,7 +262,7 @@ class AuthController extends Controller
             if ($attempts->attempts >= 3)
                 $flag = 1;
         }
-        
+
         $loginView = array(
             'view' => view('account/login')->with('flag',$flag)->render(),
             'success' => true

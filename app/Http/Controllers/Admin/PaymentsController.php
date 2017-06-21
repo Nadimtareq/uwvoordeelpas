@@ -38,6 +38,7 @@ class PaymentsController extends Controller
         ->leftJoin('users', 'payments.user_id', '=', 'users.id')
         ;
 
+
         # Filter by column
         if ($request->has('sort') && $request->has('order')) {
             $payments = $payments->orderBy($request->input('sort'), $request->input('order'));
@@ -147,6 +148,7 @@ class PaymentsController extends Controller
         unset($queryString['status']);
         unset($queryString['source']);
         unset($queryString['limit']);
+
 
         return view('admin.payments.index', array(
             'payments' => $payments,
