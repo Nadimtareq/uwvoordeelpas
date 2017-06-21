@@ -136,7 +136,7 @@
              	  $returnval = $companyReservation->getTimeCarouselHTML(
                         isset($reservationDate) ? $reservationDate : NULL,
                         $data,
-                        Request::input('persons', $getRec[0]->total_persons),
+                        Request::input('persons',2),
                         $reservationTimesArray,
                         $tomorrowArray,
                         Request::input('date'),
@@ -150,11 +150,7 @@
                     $getRec        = HomeController::getPersons($deal->id);
                     $count_persons = $getRec[0]->total_persons;
                 ?>
-                <?php
-                    $getRec        = HomeController::getPersons($deal->id);
-                    $count_persons = $getRec[0]->total_persons;
-                ?>
-			  
+               			  
 			    @if($deal->price_from >= 1)
 			   <span class="price">			    
 			     &euro; {{ $deal->price_from }}
