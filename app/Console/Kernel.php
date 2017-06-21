@@ -50,7 +50,7 @@ class Kernel extends ConsoleKernel
 
     protected function schedule(Schedule $schedule)
     {
-        // Affiliate
+        // affiliate
         $schedule
             ->command('daisycon:affiliate')
             ->daily()
@@ -61,15 +61,9 @@ class Kernel extends ConsoleKernel
             ->daily()
         ;
 
-        $schedule
-            ->command('affilinet:affiliate')
-            ->daily()
-        ;
+        
 
-        $schedule
-            ->command('zanox:affiliate')
-            ->daily()
-        ;
+       
 
         $schedule
             ->command('dulicates:affiliate')
@@ -184,10 +178,20 @@ class Kernel extends ConsoleKernel
         ;
 
         $schedule
+            ->command('affilinet:affiliate')
+            ->daily()
+        ;
+
+        $schedule
             ->command('affilinet:transaction')
             ->everyFiveMinutes()
         ;
 
+         $schedule
+            ->command('zanox:affiliate')
+            ->daily()
+        ;
+        
         $schedule
             ->command('zanox:transaction')
             ->everyFiveMinutes()
