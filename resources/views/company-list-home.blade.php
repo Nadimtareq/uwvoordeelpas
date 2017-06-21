@@ -149,7 +149,7 @@
              	  $returnval = $companyReservation->getTimeCarouselHTML(
                         isset($reservationDate) ? $reservationDate : NULL,
                         $data,
-                        Request::input('persons', 2),
+                        Request::input('persons', $getRec[0]->total_persons),
                         $reservationTimesArray,
                         $tomorrowArray,
                         Request::input('date'),
