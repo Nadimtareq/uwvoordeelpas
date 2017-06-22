@@ -19,7 +19,7 @@
 										 </a>
 									 </div> -->
 									    <a href="#" data-activates="mobile-top" class="button-collapse"> <i class="material-icons material-icons2">menu</i></a> 										
-										<div class="brand-logo rushabh">
+										<div class="brand-logo">
 											@if($userAuth)
 												<a href="{{ url('/home') }}">
 											@else
