@@ -73,6 +73,7 @@
                     <th data-slug="contact_name">Contact</th>
                     <th data-slug="clicks">Kliks</th>
                     <th data-slug="contact_role">Functie</th>
+                    <th data-slug="contact_role">Alle Saldo</th>
                     <th data-slug="updated_at" class="two wide">Gewijzigd</th>
                     <th data-slug="no_show">No Show</th>
                     <th data-slug="disabled" class="disabled three wide"></th>
@@ -114,6 +115,11 @@
                             {{ $result->clicks }}x
                         </td>
                         <td>{{ $result->contact_role }}</td>
+                        <td>
+                            <a href="{{ url('admin/reservations/saldo/'.$result->slug) }}">
+                            &euro;{{ number_format(($result->saldoCompany + $result->saldoPayments), 2, '.', '') }}
+                            </a>
+                        </td>
                         <td>{{ date('d-m-Y', strtotime($result->updated_at)) }}</td>
                         <td>
                             <span class="ui icon tiny disabled button">
