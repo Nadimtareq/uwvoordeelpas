@@ -38,6 +38,18 @@ class PaymentsController extends Controller
         ->leftJoin('users', 'payments.user_id', '=', 'users.id')
         ;
 
+        $totalAmountForQuery = 0;
+
+       /* $paymentsCount = $payments->count();
+        if ($paymentsCount > 0) {
+            $records_for_cnt_amounts = $payments->get();
+            foreach ($records_for_cnt_amounts as $pay) {
+                if(isset($pay['amount']) && !empty($pay['amount'])){
+                    $totalAmountForQuery += $pay['amount'];
+                }
+            }
+        }*/
+
 
         # Filter by column
         if ($request->has('sort') && $request->has('order')) {
@@ -92,6 +104,18 @@ class PaymentsController extends Controller
                     )
                 ->where('users.city', 'REGEXP', '"([^"]*)'.$regio['regioNumber'][$regioName].'([^"]*)"')
                 ;
+            }
+
+            $totalAmountForQuery = 0;
+
+            $paymentsCount = $payments->count();
+            if ($paymentsCount > 0) {
+                $records_for_cnt_amounts = $payments->get();
+                foreach ($records_for_cnt_amounts as $pay) {
+                    if(isset($pay['amount']) && !empty($pay['amount'])){
+                        $totalAmountForQuery += $pay['amount'];
+                    }
+                }
             }
         }
 
@@ -149,7 +173,6 @@ class PaymentsController extends Controller
         unset($queryString['source']);
         unset($queryString['limit']);
 
-
         return view('admin.payments.index', array(
             'payments' => $payments,
             'months' => isset($month) ? $month : '',
@@ -160,7 +183,8 @@ class PaymentsController extends Controller
             'paginationQueryString' => $request->query(),
             'limit' => $this->limit,
             'currentPage' => 'Betalingen',
-            'section' => 'Overzicht'  
+            'section' => 'Overzicht',
+            'totalAmountForQuery' => $totalAmountForQuery
             ));
     }
 
