@@ -63,6 +63,7 @@ class CreateCompaniesTable extends Migration
             $table->integer('click_registration');
             $table->text('discount_comment');
             $table->integer('clicks');
+            
         });
         }
         

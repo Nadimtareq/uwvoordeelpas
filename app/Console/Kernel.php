@@ -60,11 +60,7 @@ class Kernel extends ConsoleKernel
             ->command('tradetracker:affiliate')
             ->daily()
         ;
-
         
-
-       
-
         $schedule
             ->command('dulicates:affiliate')
             ->daily()
@@ -191,7 +187,7 @@ class Kernel extends ConsoleKernel
             ->command('zanox:affiliate')
             ->daily()
         ;
-        
+
         $schedule
             ->command('zanox:transaction')
             ->everyFiveMinutes()

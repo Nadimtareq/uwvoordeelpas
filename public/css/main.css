@@ -409,7 +409,7 @@ section.brand-bg .title {
 ----------------------------------- */
 
 header.nav {
-
+    background-color: #333399 !important;
     box-shadow: 0 1px 6px rgba(0,0,0,.35);
     width: 100%;
     top: 0px;
