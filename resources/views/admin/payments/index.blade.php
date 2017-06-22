@@ -198,6 +198,19 @@
 </tbody>
 </table>
 <?php echo Form::close(); ?>
+@if($totalAmountForQuery)
+    <div class="clearfix">&nbsp;</div>
+    <div class="ui grid">
+        <div class="row">
+            <div class="four wide column">
+                <div class="ui red segment">
+                    <strong class="">Totaal bedrag: &euro;{{$totalAmountForQuery}}</strong><br>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix">&nbsp;</div>
+@endif
 
 {!! with(new \App\Presenter\Pagination($payments->appends($paginationQueryString)))->render() !!}<br><br>
 

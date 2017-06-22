@@ -172,8 +172,10 @@
 	<!-- <script  src="{{ asset('js/app.js?rand='.str_random(40)) }}"></script> 		 -->
 	<!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjrbVJMJKWzCl8JZWV3_5Jy5P4CTITznU"></script>    -->
 	<script src="{{ asset('js/jquery-1.11.3.min.js') }} "></script>
+    <script src="{{ asset('js/jquery.serialize-object.js') }} "></script>
 	<script src="{{ asset('js/app.js?version=1') }}"></script>
 	<script src="{{ asset('js/jquery-1.11.3.min.js') }} "></script>
+    <script src="{{ asset('js/jquery.serialize-object.js') }} "></script>
 
 
 	@if (!Request::has('iframe') )

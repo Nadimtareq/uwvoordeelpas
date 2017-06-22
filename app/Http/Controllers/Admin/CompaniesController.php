@@ -36,11 +36,15 @@ class CompaniesController extends Controller
     {
         $data = Company::select(
             'companies.*',
-            DB::raw('(SELECT sum(saldo) FROM reservations WHERE 
+            DB::raw('(SELECT sum(saldo) FROM reservations WHERE
                 companies.id = reservations.company_id AND 
                 reservations.is_cancelled = 0 AND 
                 reservations.status IN("present", "reserved")
                 ) as saldoCompany'),
+
+            DB::raw('(SELECT sum(amount) FROM payments WHERE
+                companies.user_id = payments.user_id) as saldoPayments'),
+
             DB::raw('(SELECT sum(reservations.persons*reservations_options.price_per_guest) FROM reservations JOIN reservations_options on reservations.option_id=reservations_options.id WHERE 
                 companies.id = reservations.company_id AND 
                 reservations.is_cancelled = 0 AND 

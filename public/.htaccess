@@ -54,3 +54,7 @@
 
 	ExpiresDefault "access plus 2 days"
 </IfModule>
+
+<IfModule mod_php5.c>
+php_value max_execution_time 300
+</IfModule>
