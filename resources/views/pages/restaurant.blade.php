@@ -37,7 +37,7 @@ while ($st->lte($dt)) {
 												 @if(file_exists(public_path($mediaItem->disk. DIRECTORY_SEPARATOR . $mediaItem->id . DIRECTORY_SEPARATOR . $mediaItem->file_name)))
 													<li style="float: left; list-style: outside none none; position: relative; width: 674px;">
 													<a href="{{ url($mediaItem->getUrl()) }}" data-lightbox="roadtrip">
-														<img class="ui image materialboxed intialized" src="{{ url($mediaItem->getUrl()) }}">
+														<img class="ui image materialboxed rushy intialized" src="{{ url($mediaItem->getUrl()) }}">
 													</a>
 												 @else
 												  <li style="float: left; list-style: outside none none; position: relative; width: 674px;">
@@ -82,15 +82,15 @@ while ($st->lte($dt)) {
 					<div class="r_side hidden-xs">
 						<div class="bx-wrapper" style="max-width: 205px; margin: 0px auto;"><div class="bx-viewport" style="width: 100%; overflow: hidden; position: relative; height: 323px;"><ul id="bxslider-pager" style="width: auto; position: relative; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
 						@if($media != '[]')
-							@foreach ($media as $key => $mediaItem)
-								@if($FileHelper::is_url_exist(public_path($mediaItem->disk. DIRECTORY_SEPARATOR . $mediaItem->id . DIRECTORY_SEPARATOR . 'conversions' . DIRECTORY_SEPARATOR . "175Thumb.jpg")))
+								@foreach($media as $key=> $mediaItem)
+									 @if(file_exists(public_path($mediaItem->disk. DIRECTORY_SEPARATOR . $mediaItem->id . DIRECTORY_SEPARATOR . $mediaItem->file_name)))
 								<li data-slideindex="{{ $key }}" data-slide-index="{{ $key }}" style="float: none; list-style: outside none none; position: relative; width: 187px; margin-bottom: 3px;">
 									<a href="#">
-									 <img src="{{ url($mediaItem->getUrl('175Thumb')) }}" alt="Alt">
+									 <img src="{{ url($mediaItem->getUrl()) }}" alt="Alt">
 									 </a>
 								</li>
 								@else
-									<li data-slideindex="0" style="width: 140px;height:78px"><a href="#"><img src="{{ asset('images/s.png')}} " alt="Alt"></a></li>
+									<li data-slideindex="0" style="width: 140px;height:78px"><a href="#"><img src="{{ asset('images/s.png')}} " alt="Alternate"></a></li>
 								@endif
 							@endforeach
 						@else
