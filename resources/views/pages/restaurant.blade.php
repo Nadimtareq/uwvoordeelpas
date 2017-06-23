@@ -30,7 +30,7 @@ while ($st->lte($dt)) {
 							<div class="bx-viewport" style="width: 100%; overflow: hidden; position: relative; height: 314px;">
 								<div class="bx-wrapper" style="max-width: 100%; margin: 0px auto;">
 									<div class="bx-viewport" style="width: 100%; overflow: hidden; position: relative; height: 314px;">
-										<ul id="bxslider" style="width: 615%; position: relative; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
+										<ul id="bxslider rushabh" style="width: 615%; position: relative; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
 											@if($media != '[]')
 
 												@foreach($media as $mediaItem)
@@ -79,7 +79,7 @@ while ($st->lte($dt)) {
 					   </div>
 					</div>
 					<!-- The thumbnails -->
-					<!-- <div class="r_side">
+					<div class="r_side hidden-xs">
 						<div class="bx-wrapper" style="max-width: 205px; margin: 0px auto;"><div class="bx-viewport" style="width: 100%; overflow: hidden; position: relative; height: 323px;"><ul id="bxslider-pager" style="width: auto; position: relative; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
 						@if($media != '[]')
 							@foreach ($media as $key => $mediaItem)
@@ -97,7 +97,7 @@ while ($st->lte($dt)) {
 							<li data-slideindex="0" style="width: 140px;height:78px"><a href="#"><img src="{{ asset('images/s.png')}} " alt="Alt"></a></li>
 						@endif
 						</ul></div><div class="bx-controls bx-has-controls-direction"><div class="bx-controls-direction"><a class="bx-prev disabled" href=""><span></span></a><a class="bx-next disabled" href=""><span></span></a></div></div></div>
-					</div> -->
+					</div>
 
 				<div class="right_details calendar-ajax">
 					{!! Form::open(['url' => 'restaurant/'.$company->slug, 'id' => 'reservationForm', 'class' => 'ui form']) !!}
