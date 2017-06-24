@@ -134,6 +134,7 @@ class HomeController extends Controller
         } else {
             $cities = $cities->orderByRaw('id');
         }
+        
 
         $cities = $cities->get();
         // Companies
