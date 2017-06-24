@@ -12,6 +12,7 @@
 <?php
 $compatible_browser_array = array('Chrome','Firefox', 'Opera');
 ?>
+@if(isset($userInfo))
 @if($userInfo->extension_downloaded == 0)
 <div id="sliderImage" class="slider{{ Request::is('admin/*') == TRUE ? ' admin' : '' }}" >
 
@@ -182,6 +183,7 @@ $compatible_browser_array = array('Chrome','Firefox', 'Opera');
 </div>
 
 
+@endif
 @endif
 
 
