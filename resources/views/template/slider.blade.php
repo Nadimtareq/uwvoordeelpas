@@ -33,12 +33,12 @@ $compatible_browser_array = array('Chrome','Firefox', 'Opera');
                                         Deze betalen u tot wel 10% dinertegoed bij iedere aankoop!</h2>
                                     <?php if(in_array($browser['name'], $compatible_browser_array)):?>
                                         <?php if ($userAuth == FALSE): ?>
-                                            <button data-browser="{{$browser['name']}}" class="login button_action" data-type="login" data-redirect="{{ URL::full('/').'?extension_download_btn=1' }}">Ja ik wil ook sparen!</button>
+                                            <button data-browser="{{$browser['name']}}" class="detectbrowser login button_action" data-type="login" data-redirect="{{ URL::full('/').'?extension_download_btn=1' }}">Ja ik wil ook sparen!</button>
                                         <?php elseif ($userAuth && $userInfo->extension_downloaded == 0): ?>
-                                            <button data-browser="{{$browser['name']}}" id="header_extension_button" class="install-button-ext button_action">Ja ik wil ook sparen!</button>
+                                            <button data-browser="{{$browser['name']}}" id="header_extension_button" class="detectbrowser install-button-ext button_action">Ja ik wil ook sparen!</button>
                                         <?php endif; ?>
                                     <?php else:?>
-                                            <button data-browser="{{$browser['name']}}" class="incompatible_browser_ext button_action">Ja ik wil ook sparen!</button>
+                                            <button data-browser="{{$browser['name']}}" class="incompatible_browser_ext button_action detectbrowser">Ja ik wil ook sparen!</button>
                                     <?php endif; ?>
                                 <?php endif; ?>
                             </div>
@@ -84,12 +84,12 @@ $compatible_browser_array = array('Chrome','Firefox', 'Opera');
                         <br>
                         <?php if(in_array($browser['name'], $compatible_browser_array)):?>
                             <?php if ($userAuth == FALSE): ?>
-                                <button data-browser="{{$browser['name']}}" class="login button_action" data-type="login" data-redirect="{{ URL::full('/').'?extension_download_btn=1' }}">Ja ik wil ook sparen!</button>
+                                <button data-browser="{{$browser['name']}}" class="login button_action detectbrowser" data-type="login" data-redirect="{{ URL::full('/').'?extension_download_btn=1' }}">Ja ik wil ook sparen!</button>
                             <?php elseif ($userAuth && $userInfo->extension_downloaded == 0): ?>
-                                <button data-browser="{{$browser['name']}}" id="section_extension_button" class="install-button-ext button_action">Ja ik wil ook sparen!</button>
+                                <button data-browser="{{$browser['name']}}" id="section_extension_button" class="install-button-ext button_action detectbrowser">Ja ik wil ook sparen!</button>
                             <?php endif; ?>
                         <?php else:?>
-                            <button data-browser="{{$browser['name']}}" class="incompatible_browser_ext button_action">Ja ik wil ook sparen!</button>
+                            <button data-browser="{{$browser['name']}}" class="detectbrowser incompatible_browser_ext button_action">Ja ik wil ook sparen!</button>
                         <?php endif;?>
 
                     </div>
@@ -216,6 +216,25 @@ $compatible_browser_array = array('Chrome','Firefox', 'Opera');
         $('.incompatible_browser_ext').click(function(){
             sweetAlert(" ", "Sorry momenteel ondersteunen we alleen de browsers: Chrome, Firefox en Opera.");
         });
+        $('#incompatible_browser_ext').click(function(){
+            sweetAlert(" ", "Sorry momenteel ondersteunen we alleen de browsers: Chrome, Firefox en Opera.");
+        });
+        $(document).on('click','#incompatible_browser_ext',function(event){
+            sweetAlert(" ", "Sorry momenteel ondersteunen we alleen de browsers: Chrome, Firefox en Opera.");
+            event.stopImmediatePropagation();
+        })
+    });
+    $(document).ready(function(){
+    var ua = navigator.userAgent;
+    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(ua))
+    {   $(".detectbrowser").attr('data-browser','InternetExplorer11');
+        $(".detectbrowser").removeAttr('data-type');
+        $(".detectbrowser").removeAttr('data-redirect');
+        $(".detectbrowser").removeClass('login');
+        $(".detectbrowser").attr('id','incompatible_browser_ext');
+        $(".detectbrowser").addClass('incompatible_browser_ext');
+        //alert($(".detectbrowser")[0].outerHTML);
+    }
     });
 </script>
 @endpush
