@@ -95,6 +95,7 @@ class AffiliatesController extends Controller
             'affiliates.name',
             'affiliates.clicks',
             'affiliates.no_show',
+            'affiliates.program_id',
             'affiliates.compensations',
             'affiliates.updated_at',
             'categories.name as catName'
@@ -109,12 +110,15 @@ class AffiliatesController extends Controller
                     ->on('affiliates_categories.category_id', '=', 'categories.id')
                 ;
             })
+            
             ->groupBy('affiliates.id')
         ;
 
         if ($request->has('network')) {
             $data = $data->where('affiliates.affiliate_network', '=', $request->input('network'));
         }
+
+
 
         //Added by Ocean From and to date condition
         if (!empty($request->input('from'))) {
@@ -163,6 +167,19 @@ class AffiliatesController extends Controller
         $dataCount = $data->count();
 
         $data = $data->paginate($request->input('limit', 15));
+        if(isset($data)){
+            $i = 0;
+            foreach($data as $id){
+                $total = DB::table('transactions')->select('transactions.amount')
+                    ->where('transactions.program_id',$id->program_id)->get();
+                $count = 0;
+                foreach ($total as $value){
+                    $count = $count+$value->amount;
+                }
+                $data[$i++]['amount'] = $count;
+            }
+
+        }
         $data->setPath($this->slugController);
 
         # Redirct to last page when page don't exist

@@ -1,5 +1,4 @@
 @inject('affiliateHelper', 'App\Helpers\AffiliateHelper')
-
 @foreach($data as $data)
 <tr>
    <td>
@@ -11,6 +10,7 @@
     <td>{{ $data->name }}</td>
     <td>{{ $affiliateHelper->commissionMaxValue($data->compensations) }}</td>
     <td>{{ $data->clicks }}</td>
+    <td>{{ $data->amount }}</td>
     <td>{{ strtotime($data->updated_at) > 0? date('d-m-Y', strtotime($data->updated_at)) : 'Niet gewijzigd' }}</td>
     <td>{{ $data->catName }}</td>
     <td>
