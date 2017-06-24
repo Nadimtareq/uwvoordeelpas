@@ -12,6 +12,8 @@
 <?php
 $compatible_browser_array = array('Chrome','Firefox', 'Opera');
 ?>
+@if(isset($userInfo))
+@if($userInfo->extension_downloaded == 0)
 <div id="sliderImage" class="slider{{ Request::is('admin/*') == TRUE ? ' admin' : '' }}" >
 
 
@@ -20,6 +22,7 @@ $compatible_browser_array = array('Chrome','Firefox', 'Opera');
     <section id="home" class="scroll-section root-sec grey lighten-5 home-wrap">
         <div class="sec-overlay">
             <div class="container">
+
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="home-inner">
@@ -180,6 +183,8 @@ $compatible_browser_array = array('Chrome','Firefox', 'Opera');
 </div>
 
 
+@endif
+@endif
 
 
 @push('inner_scripts')

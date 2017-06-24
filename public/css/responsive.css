@@ -27,6 +27,23 @@ select.option-white-bg option {
     color: #339;
 }
 
+
+@media screen and ( min-height: 720px ){
+   .space-header{
+       min-height: 750px;
+   }
+}
+@media screen and ( min-height: 800px ){
+   .space-header{
+       min-height: 900px;
+   }
+}
+@media screen and ( min-height: 900px ){
+   .space-header{
+       min-height: 1200px;
+   }
+}
+
 /* Screens Resolution : 1024px
 -------------------------------------------------------------------------- */
 @media only screen and (max-width: 1024px) {
@@ -147,7 +164,11 @@ select.option-white-bg option {
         line-height: 10px;
         padding: 0;
         color: #000;
+<<<<<<< HEAD
+        padding: 15px 15px;
+=======
         padding: 15px 15px; */
+>>>>>>> e101bf518f4e46fb2daa27c005836c6358978a11
     }
     .side-nav li a:hover{
         color: #fff;
