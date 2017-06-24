@@ -130,9 +130,9 @@ class HomeController extends Controller
         ;
 
         if ($request->cookie('user_off_regio') != null) {
-            $cities = $cities->orderByRaw('id = "'. $request->cookie('user_off_regio').'" desc');
+            $cities = $cities->orderByRaw('id = "'. $request->cookie('user_off_regio').'" asc');
         } else {
-            $cities = $cities->orderByRaw('name desc');
+            $cities = $cities->orderByRaw('id');
         }
 
         $cities = $cities->get();
