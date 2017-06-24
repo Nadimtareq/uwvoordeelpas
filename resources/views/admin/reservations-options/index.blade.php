@@ -46,6 +46,7 @@
             <label></label>
         </div>
         </th>
+        <th data-slug="name" class="three wide">Position</th>
         <th data-slug="name" class="three wide">Naam</th>
         <th data-slug="total_amount" class="four wide">Aantal plaatsen</th>
         <th data-slug="total_res" class="four wide">Aantal gasten</th>
@@ -61,6 +62,7 @@
         </thead>
         <tbody class="list">
             @if(count($data) >= 1)
+                <?php $i=1;?>
             @foreach($data as $result)
         
             <tr>
@@ -70,6 +72,7 @@
                         <label></label>
                     </div>
                 </td>
+                <td>{{$i++}}</td>
                 <td>
                     {{ $result->name }}
                 </td>
