@@ -576,6 +576,26 @@ class AccountController extends Controller {
                         $futureDeal->status = 'partially_reserved';
                     }
                     $futureDeal->save();
+
+                    $mailtemplate = new MailTemplate();
+
+                    $mailtemplate->sendMail(array(
+                        'email' => Sentinel::getUser()->email,
+                        'template_id' => 'new-review-client',
+                        'company_id' => $company->id,
+                        'replacements' => array(
+                            '%name%' => Sentinel::getUser()->name,
+                            '%saldo%' => '',
+                            '%phone%' => Sentinel::getUser()->phone,
+                            '%email%' => Sentinel::getUser()->email,
+                            '%date%' => date('d-m-Y', strtotime($data->date)),
+                            '%time%' => date('H:i', strtotime($data->time)),
+                            '%persons%' => '',
+                            '%comment%' => '',
+                            '%allergies%' => '',
+                            '%preferences%' => ''
+                        )
+                    ));
                     return Redirect::to('account/reservations');
                 }
             }

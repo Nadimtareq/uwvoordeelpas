@@ -19,11 +19,19 @@ while ($st->lte($dt)) {
 
 
 @section('content')
+	<div class="content">
+	<div class="ui breadcrumb">
+        <a href="{{ url('/') }}" class="section">Home</a>
+        <i class="right chevron icon divider"></i>
+
+        <a href="#" class="sidebar open">Menu</a>
+        <i class="right chevron icon divider"></i>
+
+        <div class="active section">Resturants</div>
+    </div></div>
 @inject('discountHelper', 'App\Helpers\DiscountHelper')
 	<div class="tabss">
 		<div class="container">
-
-
 			<div class="main_gallery">
 					<div class="left_side">
 						<div class="bx-wrapper" style="max-width: 100%; margin: 0px auto;">
