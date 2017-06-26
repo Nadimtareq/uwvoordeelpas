@@ -771,7 +771,9 @@ header.nav li a:hover {
    color: white;
    padding-bottom: 62px;
 }
-
+.space-header{
+    min-height: 600px;
+}
 #footer h3{
     font-size: 120%;
     margin: 20px 0 4px 0;

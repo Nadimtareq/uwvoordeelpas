@@ -164,11 +164,7 @@ select.option-white-bg option {
         line-height: 10px;
         padding: 0;
         color: #000;
-<<<<<<< HEAD
         padding: 15px 15px;
-=======
-        padding: 15px 15px; */
->>>>>>> e101bf518f4e46fb2daa27c005836c6358978a11
     }
     .side-nav li a:hover{
         color: #fff;
