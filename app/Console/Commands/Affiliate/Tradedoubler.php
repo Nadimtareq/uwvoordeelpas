@@ -99,6 +99,8 @@ class Tradedoubler extends Command
     public function handle()
     {
     	$commandName = 'tradedoubler_affiliate';
+         $dateTime=date('Y-m-d H:i:s');
+        DB::table('crons_log')->insert(['cron_name' => $commandName, 'date_time' => $dateTime]);
     	//getClient = $this->checkConnection();
     	
 

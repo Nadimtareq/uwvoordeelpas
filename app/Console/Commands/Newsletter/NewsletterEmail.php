@@ -49,6 +49,8 @@ class NewsletterEmail extends Command
     public function handle()
     {
         $commandName = 'newsletter_dealmail';
+         $dateTime=date('Y-m-d H:i:s');
+        DB::table('crons_log')->insert(['cron_name' => $commandName, 'date_time' => $dateTime]);
         Setting::set('cronjobs.active.'.$commandName, 0);
         if (Setting::get('cronjobs.'.$commandName) == NULL) {
             echo 'This command is not working right now. Please activate this command.';

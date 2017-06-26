@@ -126,7 +126,16 @@ $classBarcode = $barcodeDate->addYear(1)->isPast() ? '' : isset($days[date('N')]
         @endif
     </td>
     <td style="text-align: center;">
-        <i class="icon {{ $data->restaurant_is_paid  == 1 ? 'green checkmark' : 'red remove' }}"></i>
+    <?php 
+    $dbDate = strtotime($data->date.' '.$data->time);
+    $currentDate = strtotime(date('Y-m-d H:i'));
+         if($currentDate > $dbDate){
+        echo '<i class="icon green checkmark"></i>';
+     }else{
+        echo '<i class="icon red remove"></i>';
+    }
+    ?>
+      <!--  <i class="icon {{ $data->restaurant_is_paid  == 1 ? 'green checkmark' : 'red remove' }}"></i> -->
     </td>
     
     @if ($company == NULL)
@@ -177,4 +186,3 @@ $classBarcode = $barcodeDate->addYear(1)->isPast() ? '' : isset($days[date('N')]
     </td>
 </tr>
 @endforeach
-

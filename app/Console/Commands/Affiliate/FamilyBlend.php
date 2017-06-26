@@ -102,7 +102,8 @@ class FamilyBlend extends Command
      */
     public function handle()
     {
-
+         $dateTime=date('Y-m-d H:i:s');
+        DB::table('crons_log')->insert(['cron_name' => 'FamilyBlend', 'date_time' => $dateTime]);
         $this->checkConnection();
         // if (Setting::get('cronjobs.affilinet_affiliate') == NULL) {
         //     echo 'This command is not working right now. Please activate this command.';

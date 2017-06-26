@@ -37,6 +37,8 @@ class Duplicates extends Command
      */
     public function handle()
     {
+         $dateTime=date('Y-m-d H:i:s');
+        DB::table('crons_log')->insert(['cron_name' => 'Duplicates', 'date_time' => $dateTime]);
         $results = Affiliate::whereIn('id', function ($query) {
             $query
                 ->select('id')
