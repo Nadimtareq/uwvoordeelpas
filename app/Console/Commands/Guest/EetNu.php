@@ -219,7 +219,8 @@ class EetNu extends Command
     public function handle()
     {   
         $commandName = 'eetnu_guests';
-
+        $dateTime=date('Y-m-d H:i:s');
+        DB::table('crons_log')->insert(['cron_name' => $commandName, 'date_time' => $dateTime]);
         if (Setting::get('cronjobs.active.'.$commandName) == NULL OR Setting::get('cronjobs.active.'.$commandName) == 0) {
             // Start cronjob
             $this->line(' Start '.$this->signature);

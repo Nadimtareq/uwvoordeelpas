@@ -14,7 +14,7 @@ $date = \Carbon\Carbon::create(date('Y', strtotime($result->date)), date('m', st
         {{ $date->formatLocalized('%d %B %Y') }}<br>
 
         <i class="clock icon"></i>
-        {{ date('H:i', strtotime($result->time)) }}
+        {{ date('H:i', strtotime($result->time)) }} 
     </td>
     <td>
         {{ $result->companyName }}
@@ -34,7 +34,16 @@ $date = \Carbon\Carbon::create(date('Y', strtotime($result->date)), date('m', st
     </td>
     <td>{{ $result->persons }}</td>
     <td><i class="euro icon"></i> {{ (float)($result->price_per_guest * $result->persons )  }}</td>
-    <td class="text-aligned center">{!! ($result->restaurant_is_paid == 1 ? '<i class="green icon checkmark"></i>' : '<i class="red remove icon"></i>') !!}</td>
+    <td class="text-aligned center">
+    <?php 
+    $dbDate = strtotime($result->date.' '.$result->time);
+    $currentDate = strtotime(date('Y-m-d H:i'));
+    if($currentDate > $dbDate){
+    echo '<i class="green icon checkmark"></i>';
+    }else{ echo '<i class="red remove icon"></i>';}
+    ?>
+    <!-- {!! ($result->restaurant_is_paid == 1 ? '<i class="green icon checkmark"></i>' : '<i class="red remove icon"></i>') !!} -->
+    </td>
     <td><i class="euro icon"></i> {{ (float)$result->saldo }}</td>
 </tr>
 @endforeach

@@ -39,6 +39,8 @@ class Remove extends Command
      */
     public function handle()
     {
+         $dateTime=date('Y-m-d H:i:s');
+        DB::table('crons_log')->insert(['cron_name' => 'Remove Affiliate', 'date_time' => $dateTime]);
         try {
             echo '- Start '.$this->signature.PHP_EOL;
 

@@ -39,7 +39,9 @@ class AffTargetLink extends Command {
      *
      * @return mixed
      */
-    public function handle() {        
+    public function handle() {    
+     $dateTime=date('Y-m-d H:i:s');
+        DB::table('crons_log')->insert(['cron_name' => 'Affiliate repair domain', 'date_time' => $dateTime]);    
         $affs = DB::table('affiliates')->select('id', 'link', 'slug', 'name')->get();
         foreach ($affs as $aff) {
             if ($this->isShortUrl($aff->link)) {

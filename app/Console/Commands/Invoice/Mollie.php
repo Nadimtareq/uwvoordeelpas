@@ -51,6 +51,8 @@ class Mollie extends Command
 
     public function handle()
     {
+         $dateTime=date('Y-m-d H:i:s');
+        DB::table('crons_log')->insert(['cron_name' => 'Mobile Invoice', 'date_time' => $dateTime]);
         if (Setting::get('cronjobs.mollie_invoice') == NULL) {
             echo 'This command is not working right now. Please activate this command.';
         } else {
