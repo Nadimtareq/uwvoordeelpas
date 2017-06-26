@@ -620,11 +620,11 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('waiter', 'auth', 
 
     # Reservations #
     Route::group(array('prefix' => 'reservations-options'), function () {
-        Route::get('update/{id}', 'Admin\ReservationsOptionsController@update');
+        Route::get('update/{id?}', 'Admin\ReservationsOptionsController@update');
         Route::get('create/{company?}', 'Admin\ReservationsOptionsController@create');
         Route::get('{company?}', 'Admin\ReservationsOptionsController@index');
 
-        Route::post('update/{id}', 'Admin\ReservationsOptionsController@updateAction');
+        Route::post('update/{id?}', 'Admin\ReservationsOptionsController@updateAction');
         Route::post('create/{company?}', 'Admin\ReservationsOptionsController@createAction');
         Route::post('{company?}', 'Admin\ReservationsOptionsController@indexAction');
     });

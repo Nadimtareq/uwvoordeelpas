@@ -205,7 +205,7 @@ class ReservationsOptionsController extends Controller
             return Redirect::to('admin/'.$this->slugController.'/create');
         }
 
-        public function update(Request $request, $id)
+        public function update(Request $request, $id,$slug=null)
         {
             $data = ReservationOption::select(
                 'reservations_options.id',
@@ -250,7 +250,7 @@ class ReservationsOptionsController extends Controller
             }
         }
 
-        public function updateAction(Request $request, $id)
+        public function updateAction(Request $request, $id,$slug=null)
         {
             //Added price_per_person by Ocean
             $data = ReservationOption::select(
@@ -318,7 +318,12 @@ class ReservationsOptionsController extends Controller
                 $data->save();
                 Alert::success('U heeft deze aanbieding veranderd')->html()->persistent('Sluiten');
 
-                return Redirect::to('admin/'.$this->slugController.'/update/'.$id);
+                if ($request->has('step')) {
+                    echo 'ok';die;
+                    return Redirect::to('faq/4/restaurateurs?step=4&slug='.$slug);
+                } else {
+                    return Redirect::to('admin/'.$this->slugController.'/update/'.$id);
+                }
             }
 
         }
