@@ -221,6 +221,7 @@
                 <th data-slug="name">Naam</th>
                 <th data-slug="compensations">Max spaartegoed</th>
                 <th data-slug="clicks">Kliks</th>
+                <th data-slug="clicks">winst</th>
                 <th data-slug="updated_at" class="two wide">Gewijzigd op</th>
                 <th data-slug="catName" class="two wide">Rubriek</th>
                 <th data-slug="disabled" class="disabled"></th>
