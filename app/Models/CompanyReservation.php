@@ -794,5 +794,8 @@ class CompanyReservation extends Model {
             return $timeResult;
         }
     }
+    static function getCompanyReservation($id){
+        return ReservationOption::where('company_id',$id)->get()->first();
+    }
 
 }

@@ -116,13 +116,13 @@
 				<div class="r-group four fields">
 					<div class="field">
 						<label>Dag(en)</label>
-						<?php 
+						<?php
 						echo Form::select(
-							'days[0][]', 
-							Config::get('preferences.days'), 
-							'', 
+							'days[0][]',
+							Config::get('preferences.days'),
+							'',
 							array(
-								'multiple' => true, 
+								'multiple' => true,
 								'class' => 'multipleSelect',
 								'id' => 'days_0',
 								'data-pattern-name' => 'days[++][]',
