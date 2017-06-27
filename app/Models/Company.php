@@ -14,7 +14,7 @@ use App\Models\ReservationOption;
 use App\Models\Preference;
 use App\Models\CompanyClick;
 use Config;
-use URL; 
+use URL;
 use Request;
 use DB;
 
@@ -39,6 +39,7 @@ class Company extends Model implements SluggableInterface, HasMediaConversions
 //        return $this->hasOne('App\Models\Company');
         return $this->hasMany('App\Models\ReservationOption', 'company_id', 'id')->first();
     }
+
     public function ReservationOptions2()
     {
 //        return $this->hasOne('App\Models\Company');
@@ -64,10 +65,9 @@ class Company extends Model implements SluggableInterface, HasMediaConversions
             ->leftJoin('companies', 'reservations_options.company_id', '=', 'companies.id')
             ->where('reservations_options.total_amount', '>', 0)
             ->where('reservations_options.company_id', $companyId)
-            ->whereRaw('"'.date('Y-m-d', strtotime($date)).'" BETWEEN reservations_options.date_from AND reservations_options.date_to')
-            ->whereRaw('"'.date('H:i', strtotime($time)).'" BETWEEN reservations_options.time_from AND reservations_options.time_to')
-            ->get()
-        ;
+            ->whereRaw('"' . date('Y-m-d', strtotime($date)) . '" BETWEEN reservations_options.date_from AND reservations_options.date_to')
+            ->whereRaw('"' . date('H:i', strtotime($time)) . '" BETWEEN reservations_options.time_from AND reservations_options.time_to')
+            ->get();
 
         if (count($data) >= 1) {
             $result = '<label>Aanbieding</label>';
@@ -77,11 +77,11 @@ class Company extends Model implements SluggableInterface, HasMediaConversions
                                                 
                             <div class="default text">Maak een keuze</div>
                             <i class="dropdown icon"></i>';
-                            
+
             $result .= '<div class="menu">';
 
             foreach ($data as $key => $option) {
-                $result .= '<div class="item" data-value="'.$option->id.'">'.$option->name.'</div>';
+                $result .= '<div class="item" data-value="' . $option->id . '">' . $option->name . '</div>';
             }
 
             $result .= '</div>';
@@ -91,94 +91,88 @@ class Company extends Model implements SluggableInterface, HasMediaConversions
         }
     }
 
-    public function addClick($ipAddress, $companyId) 
+    public function addClick($ipAddress, $companyId)
     {
         $existsQuery = Company::find($companyId);
 
         if ($existsQuery) {
-            $existsQuery->clicks =  $existsQuery->clicks + 1;
+            $existsQuery->clicks = $existsQuery->clicks + 1;
             $existsQuery->save();
         }
     }
 
-    public function registerMediaConversions()  
+    public function registerMediaConversions()
     {
         $this
             ->addMediaConversion('hugeThumb')
             ->setManipulations(
                 array(
-                    'w' => 550, 
-                    'h' => 500, 
-                    'fit' => 'stretch', 
+                    'w' => 550,
+                    'h' => 500,
+                    'fit' => 'stretch',
                     'format' => 'jpg'
                 )
             )
-            ->nonQueued()
-        ;
+            ->nonQueued();
 
         $this
             ->addMediaConversion('175Thumb')
             ->setManipulations(
                 array(
-                    'w' => 175, 
-                    'h' => 132, 
-                    'fit' => 'stretch', 
+                    'w' => 175,
+                    'h' => 132,
+                    'fit' => 'stretch',
                     'format' => 'jpg'
                 )
             )
-            ->nonQueued()
-        ;
+            ->nonQueued();
 
         $this
             ->addMediaConversion('mobileThumb')
             ->setManipulations(
                 array(
-                    'w' => 550, 
-                    'h' => 340, 
-                    'fit' => 'max', 
+                    'w' => 550,
+                    'h' => 340,
+                    'fit' => 'max',
                     'format' => 'jpg'
                 )
             )
-            ->nonQueued()
-        ;
-        
+            ->nonQueued();
+
         $this
             ->addMediaConversion('450pic')
             ->setManipulations(
                 array(
-                    'w' => 451, 
-                    'h' => 340, 
-                    'fit' => 'stretch', 
+                    'w' => 451,
+                    'h' => 340,
+                    'fit' => 'stretch',
                     'format' => 'jpg'
                 )
             )
-            ->nonQueued()
-        ;
+            ->nonQueued();
 
         $this->addMediaConversion('thumb')
             ->setManipulations(
                 array(
-                    'w' => 368, 
-                    'h' => 232, 
+                    'w' => 368,
+                    'h' => 232,
                     'format' => 'jpg'
                 )
             )
-            ->nonQueued()
-        ;
-    }    
+            ->nonQueued();
+    }
 
     public static function isCompanyUser($company, $user)
     {
         $checkCompany = static::where('id', '=', $company)
             ->where('user_id', '=', $user)
-            ->orWhere('waiter_user_id', '=', $user)
-        ;
+            ->orWhere('waiter_user_id', '=', $user);
 
         if ($checkCompany->count() == 1) {
             return TRUE;
         }
 
-        return FALSE;                             
+        return FALSE;
     }
 
     public static function isCompanyUserBySlug($slug, $user)
@@ -188,8 +182,7 @@ class Company extends Model implements SluggableInterface, HasMediaConversions
         if (Sentinel::inRole('bedrijf')) {
             $checkCompany = $checkCompany
                 ->where('user_id', $user)
-                ->orWhere('waiter_user_id', $user)
-            ;
+                ->orWhere('waiter_user_id', $user);
         }
 
         $checkCompany = $checkCompany->first();
@@ -202,21 +195,22 @@ class Company extends Model implements SluggableInterface, HasMediaConversions
             );
         }
 
-        return FALSE;                             
+        return FALSE;
     }
 
     public static function getLogo($id)
     {
         $company = static::find($id);
 
-        if (count($company) == 1 && isset($company->getMedia('logo')[0]))  {
+        if (count($company) == 1 && isset($company->getMedia('logo')[0])) {
             $getLogo = $company->getMedia('logo')[0]->getUrl();
         }
 
-        return isset($getLogo) ? $getLogo : '';                             
+        return isset($getLogo) ? $getLogo : '';
     }
 
-    public static function getDiscountMessage($days, $discount, $discountComment) {
+    public static function getDiscountMessage($days, $discount, $discountComment)
+    {
         $dayNames = Config::get('preferences.days');
 
         // Discount days
@@ -229,7 +223,7 @@ class Company extends Model implements SluggableInterface, HasMediaConversions
                 foreach ($daysArray as $id => $days) {
                     $i++;
 
-                    $discountDays[] = strtolower($dayNames[$days]).($i < count($daysArray) ? '-' : '');
+                    $discountDays[] = strtolower($dayNames[$days]) . ($i < count($daysArray) ? '-' : '');
                 }
 
                 $discountDaysString = implode(',', $discountDays);
@@ -242,30 +236,30 @@ class Company extends Model implements SluggableInterface, HasMediaConversions
                     $contentBlock = preg_replace('/%discout_comment%/i', $discountPercentString, $discountComment);
 
                     if (Sentinel::check()) {
-                        $loginButton = ' <a href="'.URL::to('voordeelpas/buy/direct').'" class="ui teal button">Neem nu een plus abonnement</a>';
+                        $loginButton = ' <a href="' . URL::to('voordeelpas/buy/direct') . '" class="ui teal button">Neem nu een plus abonnement</a>';
                     } else {
 
-                        $loginButton = ' <a href="'.URL::to('voordeelpas/buy/direct').'"  data-redirect="'.URL::to('voordeelpas/buy/direct?redirect_to='.urlencode(Request::fullUrl())).'" class="ui teal login button">Neem nu een plus abonnement</a>';
+                        $loginButton = ' <a href="' . URL::to('voordeelpas/buy/direct') . '"  data-redirect="' . URL::to('voordeelpas/buy/direct?redirect_to=' . urlencode(Request::fullUrl())) . '" class="ui teal login button">Neem nu een plus abonnement</a>';
                     }
 
                     return '<div class="ui info message">
                         <div class="content">
                             <div class="ui grid">
                                 <div id="textInfoMessage" class="ten wide computer sixteen wide mobile column">
-                                    '.(isset($contentBlock[53]) ? $contentBlock[53] : '').'
+                                    ' . (isset($contentBlock[53]) ? $contentBlock[53] : '') . '
                                 </div>
 
                                 <div class="six wide computer sixteen wide mobile wide column">
                                     <p>
-                                    '.$loginButton.'
+                                    ' . $loginButton . '
                                     </p>
                                 </div>
                             </div>
                         </div>
-                    </div>';  
-                }   
-            }               
-        }               
+                    </div>';
+                }
+            }
+        }
     }
 
     public function createContract($id)
@@ -277,14 +271,14 @@ class Company extends Model implements SluggableInterface, HasMediaConversions
         $company = Company::find($id);
 
         if ($company) {
-            $date =  Carbon::create(
-                date('Y', strtotime($company->created_at)), 
+            $date = Carbon::create(
+                date('Y', strtotime($company->created_at)),
                 date('m', strtotime($company->created_at)),
-                date('d', strtotime($company->created_at)), 
-                0, 
+                date('d', strtotime($company->created_at)),
+                0,
                 0,
                 0
-            );  
+            );
 
             $html = view('template.contract', array(
                 'companyName' => $company->name,
@@ -303,11 +297,19 @@ class Company extends Model implements SluggableInterface, HasMediaConversions
                 'contactIBAN' => $company->financial_iban,
                 'contactIBAName' => $company->financial_iban_tnv,
                 'companyDate' => $date->formatLocalized('%d %B %Y')
-            ))->render()
-            ;
+            ))->render();
 
             $this->pdf = App::make('Vsmoraes\Pdf\Pdf');
             $this->pdf = $this->pdf->load($html)->show();
         }
+    }
+
+    static function checkQuestion($question)
+    {
+        return Faq::where('title',$question)->get()->first();
+    }
+
+    static function saveContact($data){
+        return DB::table('contactfrom')->insertGetId($data);
     }
 }
