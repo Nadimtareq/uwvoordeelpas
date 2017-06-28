@@ -512,7 +512,24 @@ class RestaurantController extends Controller {
                         'future_deal_id' => $future_deal->id
                     ));
                 } else {
-
+                    $mailtemplate = new MailTemplate();
+                    $mailtemplate->sendMail(array(
+                        'email' => Sentinel::getUser()->email,
+                        'template_id' => 'new-review-client',
+                        'company_id' => $company->id,
+                        'replacements' => array(
+                            '%name%' => Sentinel::getUser()->name,
+                            '%saldo%' => '',
+                            '%phone%' => Sentinel::getUser()->phone,
+                            '%email%' => Sentinel::getUser()->email,
+                            '%date%' => date('d-m-Y', strtotime($current_date)),
+                            //'%time%' => date('H:i', strtotime($data->time)),
+                            '%persons%' => '',
+                            '%comment%' => '',
+                            '%allergies%' => '',
+                            '%preferences%' => ''
+                        )
+                    ));
                     $deal = ReservationOption::find($future_deal->deal_id);
                     Alert::success('U heeft succesvol 2x de deal: ' . $deal->name . ' gekocht voor een prijs van &euro;' . $future_deal->deal_price . ' <br /><br /> Klik hier als u direct een reservering wilt maken. <br /><br />' . '<span class=\'addthis_sharing_toolbox\'></span>', 'Bedankt ' . $user->name
                     )->html()->persistent('Sluiten');

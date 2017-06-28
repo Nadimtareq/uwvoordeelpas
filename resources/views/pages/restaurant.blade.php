@@ -19,7 +19,7 @@ while ($st->lte($dt)) {
 
 
 @section('content')
-	<div class="content">
+	<div class="container">
 	<div class="ui breadcrumb">
         <a href="{{ url('/') }}" class="section">Home</a>
         <i class="right chevron icon divider"></i>
@@ -184,12 +184,11 @@ while ($st->lte($dt)) {
 							@if(isset($deals) && count($deals))
 							@foreach($deals as $deal)
 						    <!-- Menu -->
-							<div class="menu">
+							<div class="menu deals-list-page">
 								<div class="left_m">
 									<h2>{{ $deal->name }}</h2>
 									@if($deal->image!='')
 										<a   href="{{ url('future-deal/'.$company->slug).'?deal='.$deal->id }}"> <img src="{{ asset('images/deals/'.$deal->image) }}" alt="No Image Found" width="400px"></a>
-
 
 									@else
 										<a   href="{{ url('future-deal/'.$company->slug).'?deal='.$deal->id }}"> 										<img src="{{ asset('images/deals/no-img.jpg') }}" alt="No Image Found" width="400px">
@@ -204,11 +203,7 @@ while ($st->lte($dt)) {
 								<div class="right_m">
 									<span>&euro; {{ $deal->price_from }}<strong>&euro; {{ $deal->price }}</strong></span>
 									<b class="up">{!! strip_tags( $deal->description ) !!}</b>
-									<!-- <b>Voorgerechten</b>
-									<p>This is Photoshop's versionn  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor.</p> -->
-								</div>
-								<!-- <div class="end">* This is Photoshop's version  of Lorem Ipsum. Proin gravida nibh vel velit auctor aliquet. </div>
-								<div class="end2">Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit. Duis sed odio sit amet nibh </div> -->
+								</div>							
 								@if(count($deals)==1)
 								<div id="koop">
 								<a class="more"  href="{{ url('future-deal/'.$company->slug).'?deal='.$deal->id }}">KOOP DEAL</a>

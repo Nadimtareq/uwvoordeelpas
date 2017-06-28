@@ -4387,4 +4387,11 @@ img.thumbnails{
 	padding-bottom:15px;
     margin-top: 15px;
 }
-
+.deals-list-page .left_m {
+    width: 48%;
+    float: left;
+}
+.deals-list-page .right_m {
+    width: 48%;
+    float: left;
+}
