@@ -506,7 +506,10 @@ while ($st->lte($dt)) {
 								{{ Form::hidden('food', 1) }}
 								{{ Form::hidden('service', 1) }}
 								{{ Form::hidden('decor', 1) }}
-								<div>
+									{{--<input type="hidden" name="_token"  value="{{ Session::token() }}"/>--}}
+									<input type="hidden" name="_token" id="csrf-token" value="{{ csrf_token() }}">
+
+									<div>
 								  <h5>SCHRIJF EEN BEOORDELING</h5>
 								</div>
 
@@ -527,11 +530,12 @@ while ($st->lte($dt)) {
 
 								<label for="idcontent">
 									<span>Recensie</span>
+									<span id="msg"></span>
 									{{ Form::textarea('content',NULL,['id' => 'idcontent']) }}
 								</label>
 
 
-								<button type="submit" class="ui small blue button">VERZENDEN</button>
+								<button type="submit" class="ui small blue button" id="submit">VERZENDEN</button>
 
 								{{ Form::close() }}
 							@else
@@ -565,11 +569,63 @@ while ($st->lte($dt)) {
 		text-transform: uppercase;
 		top: -10px;
 	}
+	#msg{
+		color: red;
+	}
 </style>
 
 	<div class="clear"></div>
+	<script
+			src="https://code.jquery.com/jquery-3.2.1.min.js"
+			integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+			crossorigin="anonymous"></script>
 	<script>
 		var activateAjax = 'restaurant';
+//		$('body').on('keydown','#idcontent',function(){
+		$('#reviews').submit(function(e){
+//            var words = $(this).val().split(' ');
+            var data = $(this).serializeArray();
+            var token = $('#csrf-token').val();
+            alert(token);
+
+//            $.each(words, function(i, v) {
+                $.ajax({
+//                    type: "POST",
+
+                    {{--data: {"value":  new FormData(this) ,"_token": "{{ csrf_token() }}"},--}}
+                    type: 'post',
+                    data: {"value": data },
+                    contentType: false,
+                    cache: false,
+                    url: "restaurant/getUnwantedWords",
+                    success: function(result){
+                        alert(result);
+                        if(result !='') {
+                            $('#msg').html('Please Remove the unwanted words');
+                            $(this).css('color', 'red');
+                            e.preventDefault();
+                        }else{
+                            $('#msg').html('Please Remove the unwanted words');
+                            $(this).css('color', '#DBDCE1');
+                        }
+                    }
+                });
+//            });
+            e.preventDefault()
+//            $("#idcontent").each(function() {
+//
+//            });
+            e.preventDefault();
+		});
+        $("#idcontent").keydown(function() {
+            function badFilter() {
+                $typedText = $('#idcontent').val();
+                $typedText.profanityFilter({
+                    customSwears: ['ass']
+                });
+                $('#idcontent').val($typedText);
+            }
+        });
 	</script>
 
 @stop
