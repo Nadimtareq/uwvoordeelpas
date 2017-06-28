@@ -1270,20 +1270,39 @@ class HomeController extends Controller
             'subject' => 'required|min:5',
             'CaptchaCode' => 'required|valid_captcha'
         ]);
+        $answer = Company::checkQuestion($request->content);
 
         Alert::success('', 'Uw bericht is succesvol verzonden.  Wij hopen u zo snel mogelijk antwoord te kunnen geven.')->persistent('Sluiten');
+        $data['name'] = $request->input('name');
+        $data['email'] = $request->input('email');
+        $data['content'] = $request->input('content');
+        $data['subject'] = $request->input('subject');
+        $data['created_at'] = date('Y-m-d H:i:s');
+        $id = Company::saveContact($data);
 
-        $data = array(
+        $mail = array(
             'request' => $request
         );
 
-        Mail::send('emails.contact_site', $data, function ($message) use ($request) {
+        Mail::send('emails.contact_site', $mail, function ($message) use ($request) {
             $message
                 ->to('sseymor@roc-dev.com')
                 ->subject($request->input('subject'))
                 ->from($request->input('email'))
             ;
         });
+        if(!empty($answer)) {
+            $mail_user = array(
+                'request' => $request,
+                'body' => $answer->answer
+            );
+            Mail::send('emails.contact_site_user', $mail_user, function ($message) use ($request) {
+                $message
+                    ->to($request->email)
+                    ->subject($request->input('subject'))
+                    ->from('sseymor@roc-dev.com');
+            });
+        }
 
         return Redirect::to('contact');
     }
