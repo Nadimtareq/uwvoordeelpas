@@ -19,7 +19,7 @@ while ($st->lte($dt)) {
 
 
 @section('content')
-	<div class="content">
+	<div class="container">
 	<div class="ui breadcrumb">
         <a href="{{ url('/') }}" class="section">Home</a>
         <i class="right chevron icon divider"></i>
