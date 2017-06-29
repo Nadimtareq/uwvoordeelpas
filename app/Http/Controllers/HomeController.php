@@ -158,7 +158,7 @@ class HomeController extends Controller
             $userCities = json_decode($this->user->city);            
             if (is_array($userCities)) {
                 foreach ($userCities as $userCity) {  
-                    $companies = $companies->orderByRaw('companies.regio REGEXP "[[:<:]]'.$userCity.'[[:>:]]" desc, companies.clicks asc');
+                    //$companies = $companies->orderByRaw('companies.regio REGEXP "[[:<:]]'.$userCity.'[[:>:]]" desc, companies.clicks asc');
                 }
             } else {
                 $companies = $companies->orderBy('companies.clicks', 'desc');
@@ -178,9 +178,9 @@ class HomeController extends Controller
                     }
 
                     if (count($request->input('preference')) >= 2) {
-                        $companies->orWhere('preferences', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
+                        //$companies->orWhere('preferences', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
                     } else {
-                        $companies->where('preferences', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
+                        //$companies->where('preferences', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
                     }
                 }
             } else  {
@@ -194,9 +194,9 @@ class HomeController extends Controller
                     $userPreferences = json_decode($this->user->preferences);
                     foreach (json_decode($this->user->preferences) as $option) {
                         if (count($userPreferences) >= 2) {
-                            $companies->orWhere('preferences', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
+                            //$companies->orWhere('preferences', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
                         } else {
-                            $companies->where('preferences', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
+                            //$companies->where('preferences', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
                         }
                     }
                 }
@@ -211,9 +211,9 @@ class HomeController extends Controller
                     }
 
                     if (count($request->input('kitchen')) >= 2) {
-                        $companies->orWhere('kitchens', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
+                        //$companies->orWhere('kitchens', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
                     } else  {
-                        $companies->where('kitchens', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
+                        //$companies->where('kitchens', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
                     }
                 }
             } else  {
@@ -227,9 +227,9 @@ class HomeController extends Controller
                     $userKitchens = json_decode($this->user->kitchens);
                     foreach ($userKitchens as $option) {
                         if (count($userKitchens) >= 2) {
-                            $companies->orWhere('kitchens', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
+                           // $companies->orWhere('kitchens', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
                         } else {
-                            $companies->where('kitchens', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
+                            //$companies->where('kitchens', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
                         }
                     }
                 }
@@ -244,9 +244,9 @@ class HomeController extends Controller
                     }
 
                     if (count($request->input('allergies')) >= 2) {
-                        $companies->orWhere('allergies', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
+                        //$companies->orWhere('allergies', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
                     } else {
-                        $companies->where('allergies', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
+                        //$companies->where('allergies', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
                     }
                 }
             } else  {
@@ -260,9 +260,9 @@ class HomeController extends Controller
                     $userAllergies = json_decode($this->user->allergies);
                     foreach ($userAllergies as $option) {
                         if (count($userAllergies) >= 2) {
-                            $companies->orWhere('allergies', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
+                           // $companies->orWhere('allergies', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
                         } else  {
-                            $companies->where('allergies', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
+                           // $companies->where('allergies', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
                         }
                     }
                 }
@@ -277,9 +277,9 @@ class HomeController extends Controller
                     }
 
                     if (count($request->input('price')) >= 2) {
-                        $companies->orWhere('price', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
+                        //$companies->orWhere('price', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
                     } else  {
-                        $companies->where('price', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
+                        //$companies->where('price', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
                     }
                 }
             } else  {
@@ -293,9 +293,9 @@ class HomeController extends Controller
                     $userPrices = json_decode($this->user->price);
                     foreach ($userPrices as $option) {
                         if (count($userPrices) >= 2) {
-                            $companies->orWhere('price', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
+                            //$companies->orWhere('price', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
                         } else {
-                            $companies->where('price', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
+                           // $companies->where('price', 'REGEXP', '"([^"]*)'.$option.'([^"]*)"');
                         }
                     }
                 }
@@ -311,9 +311,9 @@ class HomeController extends Controller
                         }
 
                         if ($key == 0) {
-                            $query->where('discount', 'REGEXP', '"([^"]*)'.rawurldecode($option).'([^"]*)"');
+                           // $query->where('discount', 'REGEXP', '"([^"]*)'.rawurldecode($option).'([^"]*)"');
                         } else {
-                            $query->orWhere('discount', 'REGEXP', '"([^"]*)'.rawurldecode($option).'([^"]*)"');
+                           // $query->orWhere('discount', 'REGEXP', '"([^"]*)'.rawurldecode($option).'([^"]*)"');
                         }
                     }
                 });
@@ -330,9 +330,9 @@ class HomeController extends Controller
                     $companies = $companies->where(function ($query) use($userDiscounts) {
                         foreach ($userDiscounts as $key => $option) {
                             if ($key == 0) {
-                                $query->where('discount', 'REGEXP', '"([^"]*)'.rawurldecode($option).'([^"]*)"');
+                               // $query->where('discount', 'REGEXP', '"([^"]*)'.rawurldecode($option).'([^"]*)"');
                             } else {
-                                $query->orWhere('discount', 'REGEXP', '"([^"]*)'.rawurldecode($option).'([^"]*)"');
+                               // $query->orWhere('discount', 'REGEXP', '"([^"]*)'.rawurldecode($option).'([^"]*)"');
                             }
                         }
                     });
