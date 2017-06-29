@@ -33,7 +33,7 @@
 
 		<div class="field">
 			<label>Bericht</label>
-			<?php echo Form::textarea('content') ?>
+			<?php echo Form::textarea('content', null, ['size' => '30x80']) ?>
 		</div>
 
 		<div class="two fields">
@@ -50,4 +50,9 @@
 		<button type="submit" class="ui small blue button">VERZENDEN</button>
 	<?php echo Form::close(); ?>
 </div>
+<style>
+	.ui.form textarea{
+		padding: 3.78571em 1em;
+	}
+</style>
 @stop

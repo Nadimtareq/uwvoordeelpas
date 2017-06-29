@@ -587,4 +587,20 @@ class RestaurantController extends Controller {
         }
     }
 
+    public function getUnwantedWords(Request $request){
+        $words = explode(" ",$request->content);
+        foreach ($words as $word) {
+            $unwanted[] = CompanyReservation::getUnwantedWords($word);
+        }
+
+//        $unwanted = CompanyReservation::getWords();
+//        $result=array_intersect($unwanted,$request->value);
+        echo json_encode($unwanted);
+//        if(!empty($unwanted)) {
+//            return $unwanted;
+//        }else{
+//            return '';
+//        }
+    }
+
 }

@@ -4,9 +4,6 @@
 @inject('companyReservation', 'App\Models\companyReservation')
 @inject('FileHelper', 'App\Helpers\FileHelper')
 <style>
-	.space-header{
-		padding-top: 0px;
-	}
 	.home_price_div{
 		padding-top: 0px !important;
 	}
