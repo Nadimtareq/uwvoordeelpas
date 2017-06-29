@@ -19,6 +19,8 @@
     <li><a href="{{ url('admin/preferences') }}" ><i class="material-icons">assignment_turned_in</i> Voorkeuren</a></li>
     <li><a href="{{ url('admin/reviews') }}" ><i class="material-icons">plus_one</i> Recensies</a></li>
     <li><a href="{{ url('admin/widgets') }}" ><i class="material-icons">pages</i> Widgets</a></li>
+    <li><a href="{{ url('admin/contact') }}" ><i class="material-icons">phone</i> Contact Formulier Lijst</a></li>
+    <li><a href="{{ url('admin/unwanted') }}" ><i class="material-icons">remove</i> Ongewenste Woord</a></li>
 
     <li class="fixed-row"><a class="item "> Reserveringen</a></li>
     <li><a href="{{ url('admin/reservations/clients') }}"><i class="material-icons">restaurant</i> Bedrijven</a></li>
