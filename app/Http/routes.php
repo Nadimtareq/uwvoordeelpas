@@ -84,6 +84,8 @@ Route::group(array('prefix' => 'payment', 'middleware' => array('userInfo')), fu
     Route::post('pay', 'PaymentController@initiateIdealPayment');
     Route::get('rest-pay', 'PaymentController@initiateIdealPayment');
     Route::post('pay-invoice/pay', 'PaymentController@directInvoiceToPayment')->middleware(['auth']);
+    Route::post('paygiftcard', 'PaymentController@paygiftcard')->middleware(['auth']);
+    Route::get('giftcode', 'PaymentController@giftcode')->middleware(['auth']);
 });
 
 /**
@@ -206,6 +208,7 @@ Route::group(array('middleware' => array('auth', 'userInfo')), function () {
     Route::group(array('prefix' => 'account'), function () {
         Route::get('/', 'AccountController@settings');
         Route::get('barcodes', 'AccountController@barcodes');
+        Route::get('giftcards', 'AccountController@giftcards');
         Route::get('activate-email/{code}', 'AccountController@activateEmail');
 
         Route::get('reviews', 'AccountController@reviews');
@@ -215,11 +218,13 @@ Route::group(array('middleware' => array('auth', 'userInfo')), function () {
         Route::get('reservations/{companySlug}/user/{userId}', 'AccountController@reservationsByCompany');
         Route::get('reservations/saldo/{userId?}', 'AccountController@saldo');
         Route::get('future-deals', 'AccountController@futuredeals');
+        Route::get('all-future-deals', 'AccountController@getAllfuturedeals');
 
         ## Post routes - Account ##
         Route::post('delete', 'AccountController@deleteAccount');
         Route::post('/', 'AccountController@settingsAction');
         Route::post('barcodes', 'AccountController@barcodeAction');
+        Route::post('giftcards', 'AccountController@buyGiftcard');
         Route::post('reservations', 'AccountController@reservationsAction');
         Route::get('reserve-futuredeal/{deal_id}', 'AccountController@reserveFutureDeal');
         Route::post('reserve-futuredeal/{deal_id}', 'AccountController@processReserveFutureDeal');
@@ -285,11 +290,17 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('callcenter', 'aut
  *  Admin
  */
 Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', 'userInfo')), function () {
+
+     Route::get('all-future-deals', 'AccountController@getAllfuturedeals');
+     
     # Ban #
     Route::group(array('prefix' => 'statistics'), function () {
         Route::get('reservations', 'Admin\StatisticsController@reservations');
         Route::get('search', 'Admin\StatisticsController@search');
+<<<<<<< HEAD
         Route::get('contact', 'Admin\ContactController@index');
+=======
+>>>>>>> cf205831833a8dfb30673be3cd7449f4b5e7de2b
     });
 
     Route::group(array('prefix' => 'bans'), function () {
@@ -605,6 +616,20 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', '
         Route::post('action', 'Admin\InvoicesController@invoicesAction');
         Route::post('create', 'Admin\InvoicesController@createAction');
     });
+    
+    /*Pallavi - Giftcard*/
+    # Giftcards #
+    Route::group(array('prefix' => 'giftcards'), function () {
+        Route::get('/', 'Admin\GiftcardController@index');
+        Route::get('create', 'Admin\GiftcardController@create');
+        Route::get('update/{id}', 'Admin\GiftcardController@update');
+
+        Route::post('create', 'Admin\GiftcardController@createAction');
+        Route::post('update/{id}', 'Admin\GiftcardController@updateAction');
+        Route::post('delete', 'Admin\GiftcardController@deleteAction');
+    });
+
+    /*Pallavi - Giftcard*/
 });
 
 /**
@@ -667,6 +692,10 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('adminowner', 'aut
     Route::group(array('prefix' => 'barcodes'), function () {
         Route::get('{slug}', 'Admin\BarcodesController@company');
     });
+    # Giftcards #
+    Route::group(array('prefix' => 'giftcards'), function () {
+        Route::get('{slug}', 'Admin\GiftcardController@company');
+    });
 
     # Invoices #
     Route::group(array('prefix' => 'invoices'), function () {
@@ -684,6 +713,23 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('adminowner', 'aut
         Route::post('crop/image/{slug}/{image}', 'Admin\CompaniesController@cropImageAction');
         Route::post('update/{id}/{slug}', 'Admin\CompaniesController@updateAction');
     });
+    #contact crud#
+    Route::group(array('prefix' => 'contact'), function () {
+
+        Route::get('/','Admin\ContactController@index');
+        Route::post('delete', 'Admin\ContactController@deleteAction');
+    });
+    Route::group(array('prefix' => 'unwanted'), function () {
+
+        Route::get('/','Admin\UnwantedController@index');
+        Route::get('create', 'Admin\UnwantedController@create');
+        Route::get('update/{id}', 'Admin\UnwantedController@update');
+
+        Route::post('create', 'Admin\UnwantedController@createAction');
+        Route::post('delete', 'Admin\UnwantedController@deleteAction');
+        Route::post('update/{id}', 'Admin\UnwantedController@updateAction');
+    });
+
 
     # Widgets #
     Route::get('widgets/{slug}', 'Admin\CompaniesController@widgets');
@@ -713,6 +759,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('adminowner', 'aut
 
     # Reviews #
     Route::post('reviews/update/{company}', 'Admin\ReviewsController@updateAction');
+    
 });
 
 /**

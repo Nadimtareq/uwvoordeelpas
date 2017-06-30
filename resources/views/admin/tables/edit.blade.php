@@ -35,19 +35,19 @@
             {!! Form::hidden("id", null, ["class" => "form-control"]) !!}
 
             <div class="form-group">
-                {!! Form::label("table_number", "TABLE NUMBER", ["class" => "control-label"]) !!}
+                {!! Form::label("table_number", "tafelnummer", ["class" => "control-label"]) !!}
                 {!! Form::text("table_number", null, ["class" => "form-control"]) !!}
             </div>
         </div>
         <div class='col-lg-3'>
             <div class="form-group">
-                {!! Form::label("seating", "SEATING ( No of persons )", ["class" => "control-label"]) !!}
+                {!! Form::label("seating", "personen ( No of persons )", ["class" => "control-label"]) !!}
                 {!! Form::text("seating", null, ["class" => "form-control"]) !!}
             </div>
         </div>
         <div class='col-lg-3'>
             <div class="form-group">
-                {!! Form::label("priority", "PRIORITY ( less number has high priority )", ["class" => "control-label"]) !!}
+                {!! Form::label("priority", "Prioriteit ( less number has high priority )", ["class" => "control-label"]) !!}
                 {!! Form::text("priority", null, ["class" => "form-control"]) !!}
             </div>
         </div>
@@ -59,18 +59,18 @@
         </div>
         <div class='col-lg-4'>
             <div class="form-group">
-                {!! Form::label("duration", "DURATION ( In Minutes )", ["class" => "control-label"]) !!}
+                {!! Form::label("duration", "duur in min ( In Minutes )", ["class" => "control-label"]) !!}
                 {!! Form::text("duration", null, ["class" => "form-control"]) !!}
             </div>
         </div>
         <div class='col-lg-8'>
             <div class="form-group">
-                {!! Form::label("description", "DESCRIPTION", ["class" => "control-label"]) !!}
+                {!! Form::label("description", "omschrijving", ["class" => "control-label"]) !!}
                 {!! Form::text("description", null, ["class" => "form-control"]) !!}
             </div>
         </div>
         <div class='col-lg-12'>
-            <div class="form-group">{!! Form::submit('Update Table', ['class' => 'btn btn-primary']) !!}
+            <div class="form-group">{!! Form::submit('Aanpassen', ['class' => 'btn btn-primary']) !!}
             </div>
         </div>
     </div>

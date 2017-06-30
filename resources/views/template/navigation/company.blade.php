@@ -15,6 +15,7 @@
 
 		<li><a href="{{ url('admin/invoices/overview/'.$company->slug) }}" ><i class="material-icons">check_box_outline_blank</i> Facturen</a></li>
 		<li><a href="{{ url('admin/barcodes/'.$company->slug) }}" ><i class="material-icons">check_box_outline_blank</i> Barcodes</a></li>
+		<li><a href="{{ url('admin/giftcards/'.$company->slug) }}" ><i class="material-icons">check_box_outline_blank</i> Giftcards</a></li>
 		<li><a href="{{ url('admin/reviews/'.$company->slug) }}" ><i class="material-icons">check_box_outline_blank</i> Recensies</a></li>
 		<li><a href="{{ url('admin/news/'.$company->slug) }}" ><i class="material-icons">check_box_outline_blank</i> Nieuwsberichten</a></li>
 		<li><a href="{{ url('admin/mailtemplates/'.$company->slug) }}" class="item"><i class="material-icons">check_box_outline_blank</i> Meldingen</a></li>

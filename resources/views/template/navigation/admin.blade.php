@@ -15,10 +15,14 @@
     <li><a href="{{ url('admin/bans') }}" ><i class="material-icons">signal_cellular_no_sim</i> Waarschuwingen</a></li>
     <li><a href="{{ url('admin/roles') }}" ><i class="material-icons">dvr</i> Rollen</a></li>
     <li><a href="{{ url('admin/barcodes') }}" ><i class="material-icons">crop_landscape</i> Barcodes</a></li>
+    <li><a href="{{ url('admin/giftcards') }}" ><i class="material-icons">crop_landscape</i> Giftcards</a></li>
     <li><a href="{{ url('admin/services') }}" ><i class="material-icons">room_service</i> Diensten</a></li>
     <li><a href="{{ url('admin/preferences') }}" ><i class="material-icons">assignment_turned_in</i> Voorkeuren</a></li>
     <li><a href="{{ url('admin/reviews') }}" ><i class="material-icons">plus_one</i> Recensies</a></li>
     <li><a href="{{ url('admin/widgets') }}" ><i class="material-icons">pages</i> Widgets</a></li>
+    <li><a href="{{ url('admin/all-future-deals') }}" ><i class="material-icons">face</i> Alle Feature Deals</a></li>
+    <li><a href="{{ url('admin/contact') }}" ><i class="material-icons">phone</i> Contact Formulier Lijst</a></li>
+    <li><a href="{{ url('admin/unwanted') }}" ><i class="material-icons">remove</i> Ongewenste Woord</a></li>
 
     <li class="fixed-row"><a class="item "> Reserveringen</a></li>
     <li><a href="{{ url('admin/reservations/clients') }}"><i class="material-icons">restaurant</i> Bedrijven</a></li>
