@@ -501,8 +501,7 @@ while ($st->lte($dt)) {
 								{{ Form::hidden('food', 1) }}
 								{{ Form::hidden('service', 1) }}
 								{{ Form::hidden('decor', 1) }}
-									{{--<input type="hidden" name="_token"  value="{{ Session::token() }}"/>--}}
-									<input type="hidden" name="_token" id="csrf-token" value="{{ csrf_token() }}">
+									<input type="hidden"  id="csrf-token" value="{{ csrf_token() }}">
 
 									<div>
 								  <h5>SCHRIJF EEN BEOORDELING</h5>
@@ -581,7 +580,6 @@ while ($st->lte($dt)) {
 //            var words = $(this).val().split(' ');
             var data = $(this).serializeArray();
             var token = $('#csrf-token').val();
-            alert(token);
 
 //            $.each(words, function(i, v) {
                 $.ajax({
@@ -589,9 +587,7 @@ while ($st->lte($dt)) {
 
                     {{--data: {"value":  new FormData(this) ,"_token": "{{ csrf_token() }}"},--}}
                     type: 'post',
-                    data: {"value": data },
-                    contentType: false,
-                    cache: false,
+                    data: data,
                     url: "restaurant/getUnwantedWords",
                     success: function(result){
                         alert(result);
@@ -612,15 +608,7 @@ while ($st->lte($dt)) {
 //            });
             e.preventDefault();
 		});
-        $("#idcontent").keydown(function() {
-            function badFilter() {
-                $typedText = $('#idcontent').val();
-                $typedText.profanityFilter({
-                    customSwears: ['ass']
-                });
-                $('#idcontent').val($typedText);
-            }
-        });
+
 	</script>
 
 @stop

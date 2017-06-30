@@ -798,4 +798,12 @@ class CompanyReservation extends Model {
         return ReservationOption::where('company_id',$id)->get()->first();
     }
 
+    static function getUnwantedWords($word){
+        return  DB::table('unwanted_word')->select('word')->where('word',$word)->get()->first();
+    }
+
+    static function getWords(){
+        return  DB::table('unwanted_word')->get();
+    }
+
 }

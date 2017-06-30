@@ -292,7 +292,6 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', '
     Route::group(array('prefix' => 'statistics'), function () {
         Route::get('reservations', 'Admin\StatisticsController@reservations');
         Route::get('search', 'Admin\StatisticsController@search');
-        Route::get('contact','Admin\ContactController@index');
     });
 
     Route::group(array('prefix' => 'bans'), function () {
@@ -676,6 +675,23 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('adminowner', 'aut
         Route::post('crop/image/{slug}/{image}', 'Admin\CompaniesController@cropImageAction');
         Route::post('update/{id}/{slug}', 'Admin\CompaniesController@updateAction');
     });
+    #contact crud#
+    Route::group(array('prefix' => 'contact'), function () {
+
+        Route::get('/','Admin\ContactController@index');
+        Route::post('delete', 'Admin\ContactController@deleteAction');
+    });
+    Route::group(array('prefix' => 'unwanted'), function () {
+
+        Route::get('/','Admin\UnwantedController@index');
+        Route::get('create', 'Admin\UnwantedController@create');
+        Route::get('update/{id}', 'Admin\UnwantedController@update');
+
+        Route::post('create', 'Admin\UnwantedController@createAction');
+        Route::post('delete', 'Admin\UnwantedController@deleteAction');
+        Route::post('update/{id}', 'Admin\UnwantedController@updateAction');
+    });
+
 
     # Widgets #
     Route::get('widgets/{slug}', 'Admin\CompaniesController@widgets');
