@@ -1,5 +1,7 @@
 <?php
+
 use App\Models\MailTemplate;
+
 /**
  * General
  */
@@ -45,7 +47,6 @@ Route::group(array('prefix' => 'compare', 'middleware' => 'userInfo'), function 
     Route::get('law', 'CompareController@law');
     Route::get('travel', 'CompareController@travel');
     Route::get('care', 'CompareController@care');
-
 });
 /**
  * Voordeelpas
@@ -130,7 +131,7 @@ Route::group(array('prefix' => 'ajax', 'middleware' => 'userInfo'), function() {
 /**
  * Cashback
  */
-Route::group(array('prefix' => 'tegoed-sparen',  'middleware' => 'userInfo'), function() {
+Route::group(array('prefix' => 'tegoed-sparen', 'middleware' => 'userInfo'), function() {
     Route::get('/', 'CashbackController@index');
     Route::get('company/{slug}', 'CashbackController@company');
     Route::get('category/{id}/{slug}', 'CashbackController@category');
@@ -155,7 +156,7 @@ Route::group(array('middleware' => 'userInfo'), function() {
     Route::post('restaurant/reservation/{slug}', 'ReservationController@reservationAction');
     Route::post('restaurant/{slug}', 'ReservationController@reservationStepOne');
     Route::post('restaurant/reviews/{slug}', 'RestaurantController@reviewsAction')->middleware(['auth']);
-    Route::post('restaurant/getUnwantedWords','RestaurantController@getUnwantedWords');
+    Route::post('restaurant/getUnwantedWords', 'RestaurantController@getUnwantedWords');
 });
 
 /**
@@ -288,7 +289,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', '
     Route::group(array('prefix' => 'statistics'), function () {
         Route::get('reservations', 'Admin\StatisticsController@reservations');
         Route::get('search', 'Admin\StatisticsController@search');
-        Route::get('contact','Admin\ContactController@index');
+        Route::get('contact', 'Admin\ContactController@index');
     });
 
     Route::group(array('prefix' => 'bans'), function () {
@@ -356,7 +357,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', '
         Route::resource('eetnu', 'Admin\SettingsController@eetnuAction');
         Route::resource('cronjobs', 'Admin\SettingsController@cronjobsAction');
         Route::resource('invoices', 'Admin\SettingsController@invoicesAction');
-		Route::resource('newsletter', 'Admin\SettingsController@newsletterAction');
+        Route::resource('newsletter', 'Admin\SettingsController@newsletterAction');
     });
 
     # Transactions #
@@ -516,6 +517,8 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', '
         Route::post('delete', 'Admin\BarcodesController@deleteAction');
     });
 
+
+
     # Content blocks #
     Route::group(array('prefix' => 'contents'), function () {
         Route::get('/', 'Admin\ContentsController@index');
@@ -526,6 +529,15 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', '
         Route::post('update/{id}', 'Admin\ContentsController@updateAction');
         Route::post('delete', 'Admin\ContentsController@deleteAction');
     });
+
+    # Tables #
+    Route::get('/tables', 'Admin\TablesController@index');
+    Route::get('/tables/create', 'Admin\TablesController@create');
+    Route::post('/tables/store', 'Admin\TablesController@store');
+    Route::get('/tables/edit/{id}', 'Admin\TablesController@edit');
+    Route::get('/tables/show/{id}', 'Admin\TablesController@show');
+    Route::post('/tables/update/{id}', 'Admin\TablesController@update');
+    Route::get('/tables/destroy/{id}', 'Admin\TablesController@destroy');
 
     # FAQ #
     Route::group(array('prefix' => 'faq'), function () {
