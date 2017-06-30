@@ -52097,7 +52097,7 @@ var injectedHTML =
 "<div class=\"sa-error-container\">\n      <div class=\"icon\">!</div>\n      <p>Not valid!</p>\n    </div>" +
 
 // Cancel and confirm buttons
-"<div class=\"sa-button-container\">\n      <button class=\"cancel\" tabIndex=\"2\">Cancel</button>\n      <div class=\"sa-confirm-button-container\" style=\"display:block;float:left;\">\n        <button class=\"confirm\" tabIndex=\"1\">OK</button>" +
+"<div class=\"sa-button-container\">\n      <button class=\"cancel\" tabIndex=\"2\">Cancel</button>\n      <div class=\"sa-confirm-button-container\" style=\"display:block;\">\n        <button class=\"confirm\" tabIndex=\"1\">OK</button>" +
 
 // Loading animation
 "<div class=\"la-ball-fall\">\n          <div></div>\n          <div></div>\n          <div></div>\n        </div>\n      </div>\n    </div>" +
