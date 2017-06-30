@@ -28,7 +28,7 @@ select.option-white-bg option {
 }
 
 
-@media screen and ( min-height: 720px ){
+@media screen and ( min-height: 620px ){
    .space-header{
        min-height: 750px;
    }

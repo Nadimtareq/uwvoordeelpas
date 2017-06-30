@@ -157,6 +157,7 @@ Route::group(array('middleware' => 'userInfo'), function() {
     Route::post('restaurant/reservation/{slug}', 'ReservationController@reservationAction');
     Route::post('restaurant/{slug}', 'ReservationController@reservationStepOne');
     Route::post('restaurant/reviews/{slug}', 'RestaurantController@reviewsAction')->middleware(['auth']);
+    Route::post('restaurant/getUnwantedWords','RestaurantController@getUnwantedWords');
 });
 
 /**
@@ -216,6 +217,7 @@ Route::group(array('middleware' => array('auth', 'userInfo')), function () {
         Route::get('reservations/{companySlug}/user/{userId}', 'AccountController@reservationsByCompany');
         Route::get('reservations/saldo/{userId?}', 'AccountController@saldo');
         Route::get('future-deals', 'AccountController@futuredeals');
+        Route::get('all-future-deals', 'AccountController@getAllfuturedeals');
 
         ## Post routes - Account ##
         Route::post('delete', 'AccountController@deleteAccount');
@@ -287,6 +289,9 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('callcenter', 'aut
  *  Admin
  */
 Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', 'userInfo')), function () {
+
+     Route::get('all-future-deals', 'AccountController@getAllfuturedeals');
+     
     # Ban #
     Route::group(array('prefix' => 'statistics'), function () {
         Route::get('reservations', 'Admin\StatisticsController@reservations');
@@ -692,6 +697,23 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('adminowner', 'aut
         Route::post('crop/image/{slug}/{image}', 'Admin\CompaniesController@cropImageAction');
         Route::post('update/{id}/{slug}', 'Admin\CompaniesController@updateAction');
     });
+    #contact crud#
+    Route::group(array('prefix' => 'contact'), function () {
+
+        Route::get('/','Admin\ContactController@index');
+        Route::post('delete', 'Admin\ContactController@deleteAction');
+    });
+    Route::group(array('prefix' => 'unwanted'), function () {
+
+        Route::get('/','Admin\UnwantedController@index');
+        Route::get('create', 'Admin\UnwantedController@create');
+        Route::get('update/{id}', 'Admin\UnwantedController@update');
+
+        Route::post('create', 'Admin\UnwantedController@createAction');
+        Route::post('delete', 'Admin\UnwantedController@deleteAction');
+        Route::post('update/{id}', 'Admin\UnwantedController@updateAction');
+    });
+
 
     # Widgets #
     Route::get('widgets/{slug}', 'Admin\CompaniesController@widgets');

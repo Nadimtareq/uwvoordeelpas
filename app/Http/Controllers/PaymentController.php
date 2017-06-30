@@ -53,7 +53,7 @@ class PaymentController extends Controller {
         $this->validate($request, [
             'amount' => 'required'
         ]);
-        
+
         if ($request->amount <= 0.1) {
             alert()->error('', 'Het bedrag is te laag om verder te gaan')->persistent('Sluiten');
             return Redirect::to('payment/charge');
@@ -280,56 +280,56 @@ class PaymentController extends Controller {
                             $allergies = json_decode($data->allergies);
                             $preferences = json_decode($data->preferences);
 
-                             $mailtemplate = new MailTemplate();
-                              $mailtemplate->sendMail(array(
-                              'email' => $company->email,
-                              'reservation_id' => $data->id,
-                              'template_id' => 'new-reservation-company',
-                              'company_id' => $company->id,
-                              'manual' => $reservationTimes[$time][$company->id]['isManual'],
-                              'replacements' => array(
-                              '%name%' => $data->name,
-                              '%cname%' => $company->contact_name,
-                              '%saldo%' => $data->saldo,
-                              '%phone%' => $data->phone,
-                              '%email%' => $data->email,
-                              '%date%' => date('d-m-Y', strtotime($data->date)),
-                              '%time%' => date('H:i', strtotime($data->time)),
-                              '%persons%' => $data->persons,
-                              '%comment%' => $data->comment,
-                              '%discount%' => isset($discount[0]) ? $discount[0] : '',
-                              '%discount_comment%' => $company->discount_comment,
-                              '%days%' => isset($day) ? $day : '',
-                              '%allergies%' => ($allergies === null) ? '' : implode(",", $allergies),
-                              '%preferences%' => ($preferences === null) ? '' : implode(",", $preferences),
-                              )
-                              ));
+                            $mailtemplate = new MailTemplate();
+                            $mailtemplate->sendMail(array(
+                                'email' => $company->email,
+                                'reservation_id' => $data->id,
+                                'template_id' => 'new-reservation-company',
+                                'company_id' => $company->id,
+                                'manual' => $reservationTimes[$time][$company->id]['isManual'],
+                                'replacements' => array(
+                                    '%name%' => $data->name,
+                                    '%cname%' => $company->contact_name,
+                                    '%saldo%' => $data->saldo,
+                                    '%phone%' => $data->phone,
+                                    '%email%' => $data->email,
+                                    '%date%' => date('d-m-Y', strtotime($data->date)),
+                                    '%time%' => date('H:i', strtotime($data->time)),
+                                    '%persons%' => $data->persons,
+                                    '%comment%' => $data->comment,
+                                    '%discount%' => isset($discount[0]) ? $discount[0] : '',
+                                    '%discount_comment%' => $company->discount_comment,
+                                    '%days%' => isset($day) ? $day : '',
+                                    '%allergies%' => ($allergies === null) ? '' : implode(",", $allergies),
+                                    '%preferences%' => ($preferences === null) ? '' : implode(",", $preferences),
+                                )
+                            ));
 
 
-                              // Send to client
-                              $mailtemplate->sendMail(array(
-                              'email' => $data->email,
-                              'reservation_id' => $data->id,
-                              'template_id' => 'reservation-pending-client',
-                              'company_id' => $company->id,
-                              'fromEmail' => $company->email,
-                              'replacements' => array(
-                              '%name%' => $data->name,
-                              '%cname%' => $company->contact_name,
-                              '%saldo%' => $data->saldo,
-                              '%phone%' => $data->phone,
-                              '%email%' => $data->email,
-                              '%date%' => date('d-m-Y', strtotime($data->date)),
-                              '%time%' => date('H:i', strtotime($data->time)),
-                              '%persons%' => $data->persons,
-                              '%comment%' => $data->comment,
-                              '%discount%' => isset($discount[0]) ? $discount[0] : '',
-                              '%discount_comment%' => $company->discount_comment,
-                              '%days%' => isset($day) ? $day : '',
-                              '%allergies%' => ($allergies === null) ? '' : implode(",", $allergies),
-                              '%preferences%' => ($preferences === null) ? '' : implode(",", $preferences),
-                              )
-                              )); 
+                            // Send to client
+                            $mailtemplate->sendMail(array(
+                                'email' => $data->email,
+                                'reservation_id' => $data->id,
+                                'template_id' => 'reservation-pending-client',
+                                'company_id' => $company->id,
+                                'fromEmail' => $company->email,
+                                'replacements' => array(
+                                    '%name%' => $data->name,
+                                    '%cname%' => $company->contact_name,
+                                    '%saldo%' => $data->saldo,
+                                    '%phone%' => $data->phone,
+                                    '%email%' => $data->email,
+                                    '%date%' => date('d-m-Y', strtotime($data->date)),
+                                    '%time%' => date('H:i', strtotime($data->time)),
+                                    '%persons%' => $data->persons,
+                                    '%comment%' => $data->comment,
+                                    '%discount%' => isset($discount[0]) ? $discount[0] : '',
+                                    '%discount_comment%' => $company->discount_comment,
+                                    '%days%' => isset($day) ? $day : '',
+                                    '%allergies%' => ($allergies === null) ? '' : implode(",", $allergies),
+                                    '%preferences%' => ($preferences === null) ? '' : implode(",", $preferences),
+                                )
+                            ));
 
                             if ($deal) {
                                 Alert::success(
@@ -344,18 +344,35 @@ class PaymentController extends Controller {
                         }
                     }
                 } elseif ($future_deal) {
-                    $future_deal->status = 'purchased';
-                    $future_deal->save();
-                    if($future_deal->user_discount){
-                        $oUser->saldo = (float)$oUser->saldo - (float)$future_deal->user_discount;
+
+                    if ($future_deal->user_discount) {
+                        $oUser->saldo = (float) $oUser->saldo - (float) $future_deal->user_discount;
                         $oUser->save();
-                    }                    
+                    }
+
+                    $fd_exists = FutureDeal::where('deal_id', $future_deal->deal_id)->where('status', 'purchased')->where('user_id', $future_deal->user_id)->first();
+
+                    if ($fd_exists) {
+
+                        $person = $future_deal->persons;
+
+                        $future_deal->delete();
+
+                        $future_deal = FutureDeal::find($fd_exists->id);
+                        $future_deal->persons = $person + $fd_exists->persons;
+                        $future_deal->persons_remain = $person + $fd_exists->persons;
+                        $future_deal->save();
+                    } else {
+                        $future_deal->status = 'purchased';
+                        $future_deal->save();
+                    }
+
                     if ($future_deal->deal_id) {
                         $deal = DB::table('reservations_options')->where('id', '=', $future_deal->deal_id)->first();
                     }
                     $persons = $future_deal->persons;
-                    $link = '<a href = "'. URL::to('account/future-deals') . '" target="_blank">Klik hier</a>';
-                    Alert::success('U heeft succesvol ' . $persons . 'x de deal: ' . $deal->name . ' gekocht voor een prijs van &euro;' . $future_deal->deal_price . ' <br /><br /> '.$link.' als u direct een reservering wilt maken. <br /><br />' . '<span class=\'addthis_sharing_toolbox\'></span>', 'Bedankt ' . $oUser->name
+                    $link = '<a href = "' . URL::to('account/future-deals') . '" target="_blank">Klik hier</a>';
+                    Alert::success('U heeft succesvol ' . $persons . 'x de deal: ' . $deal->name . ' gekocht voor een prijs van &euro;' . $future_deal->deal_price . ' <br /><br /> ' . $link . ' als u direct een reservering wilt maken. <br /><br />' . '<span class=\'addthis_sharing_toolbox\'></span>', 'Bedankt ' . $oUser->name
                     )->html()->persistent('Sluiten');
                     $company = Company::find($deal->company_id);
                     return Redirect::to('restaurant/' . $company->slug);

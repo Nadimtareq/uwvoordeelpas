@@ -35,7 +35,7 @@ class RestaurantController extends Controller {
                 ->where('no_show', 0)
                 ->where('slug', $slug)
                 ->first();
- 
+
         if ($company) {
             // Add Click
             $companyClick = new Company;
@@ -386,8 +386,8 @@ class RestaurantController extends Controller {
         if ($company) {
             if ($deal_id) {
                 $deal = ReservationOption::where([['id', '=', $deal_id], ['company_id', '=', $company->id]])->first();
-               /* echo "<pre>";
-                print_r($deal);exit;*/
+                /* echo "<pre>";
+                  print_r($deal);exit; */
                 if (!$deal) {
                     alert()->error('', 'Het is niet mogelijk om op dit tijdstip te reserveren of er zijn geen plaatsen beschikbaar.')->html()->persistent('Sluiten');
                     return Redirect::to('/');
@@ -408,7 +408,7 @@ class RestaurantController extends Controller {
                                 'persons.required' => 'Het aantal personen moet minimaal 1 persoon zijn',
                                 'persons.numeric' => 'Het aantal personen moet numeriek zijn.',
                                 'persons.min' => 'Het aantal personen moet minimaal 1 persoon zijn.',
-                                'av.accepted'=>'HELAAS, U bent vergeten om de algemene voorwaarden te accepteren',
+                                'av.accepted' => 'HELAAS, U bent vergeten om de algemene voorwaarden te accepteren',
                     ]);
                 } else {
                     $validator = Validator::make($request->all(), [
@@ -446,10 +446,10 @@ class RestaurantController extends Controller {
                     return redirect('future-deal/' . $slug . '?deal=' . $deal_id);
                 }
 
-              $persons=$request->input('persons');
+                $persons = $request->input('persons');
 
                 //$deal_saldo = (float) MoneyHelper::getAmount($request->input('saldo'));
-                $deal_saldo=(float)MoneyHelper::getAmount($persons*$deal->price);
+                $deal_saldo = (float) MoneyHelper::getAmount($persons * $deal->price);
                 if ($user) {
 
                     $user_saldo = (float) MoneyHelper::getAmount($user->saldo);
@@ -461,7 +461,6 @@ class RestaurantController extends Controller {
                         $enough_balance = true;
                         $user->saldo = $user_saldo - $deal_saldo;
                     }
-
                 } elseif ($request->input('email')) {
                     $randomPassword = str_random(20);
 
@@ -483,28 +482,65 @@ class RestaurantController extends Controller {
                     $user->newsletter = 1;
                 }
                 $user->save();
-                if (Sentinel::check() == FALSE) {                    
+                if (Sentinel::check() == FALSE) {
                     Sentinel::login($user);
                 }
 
-                $future_deal = new FutureDeal();
-                $future_deal->deal_id = $deal_id;
-                $future_deal->user_id = $user->id;
-                $future_deal->persons = $persons;
-                $future_deal->persons_remain = $persons;
-                $future_deal->deal_price = $deal_saldo;
-                $future_deal->deal_base_price = $deal->price;
-                $future_deal->user_discount = $user_saldo;
-                $future_deal->extra_pay = $rest_amount;
-                $future_deal->purchased_date = $current_date;
-                $future_deal->expired_at = date('Y-m-d', strtotime($current_date . ' + ' . $future_expire_days . ' days'));
-                if (!$enough_balance && $rest_amount) {
-                    $future_deal->status = "pending";
+                if ($enough_balance && !$rest_amount) {
+
+                    $fd_exists = FutureDeal::where('deal_id', $deal_id)->where('status', 'purchased')->where('user_id', $user->id)->first();
+
+                    if ($fd_exists) {
+
+                        $future_deal = FutureDeal::find($fd_exists->id);
+                        $future_deal->persons = $persons + $fd_exists->persons;
+                        $future_deal->persons_remain = $persons + $fd_exists->persons;
+                        $future_deal->save();
+                    } else {
+
+                        $future_deal = new FutureDeal();
+                        $future_deal->deal_id = $deal_id;
+                        $future_deal->user_id = $user->id;
+                        $future_deal->persons = $persons;
+                        $future_deal->persons_remain = $persons;
+                        $future_deal->deal_price = $deal_saldo;
+                        $future_deal->deal_base_price = $deal->price;
+                        $future_deal->user_discount = $user_saldo;
+                        $future_deal->extra_pay = $rest_amount;
+                        $future_deal->purchased_date = $current_date;
+                        $future_deal->expired_at = date('Y-m-d', strtotime($current_date . ' + ' . $future_expire_days . ' days'));
+
+                        if (!$enough_balance && $rest_amount) {
+                            $future_deal->status = "pending";
+                        } else {
+                            $future_deal->status = "purchased";
+                        }
+
+                        $future_deal->save();
+                    }
                 } else {
-                    $future_deal->status = "purchased";
+                    $future_deal = new FutureDeal();
+                    $future_deal->deal_id = $deal_id;
+                    $future_deal->user_id = $user->id;
+                    $future_deal->persons = $persons;
+                    $future_deal->persons_remain = $persons;
+                    $future_deal->deal_price = $deal_saldo;
+                    $future_deal->deal_base_price = $deal->price;
+                    $future_deal->user_discount = $user_saldo;
+                    $future_deal->extra_pay = $rest_amount;
+                    $future_deal->purchased_date = $current_date;
+                    $future_deal->expired_at = date('Y-m-d', strtotime($current_date . ' + ' . $future_expire_days . ' days'));
+
+                    if (!$enough_balance && $rest_amount) {
+                        $future_deal->status = "pending";
+                    } else {
+                        $future_deal->status = "purchased";
+                    }
+
+                    $future_deal->save();
                 }
-                $future_deal->save();
-                
+
+
                 if (!$enough_balance && $rest_amount) {
 
                     return view('pages/discount/extra-pay', array(
@@ -549,6 +585,22 @@ class RestaurantController extends Controller {
         } else {
             App::abort(404);
         }
+    }
+
+    public function getUnwantedWords(Request $request){
+        $words = explode(" ",$request->content);
+        foreach ($words as $word) {
+            $unwanted[] = CompanyReservation::getUnwantedWords($word);
+        }
+
+//        $unwanted = CompanyReservation::getWords();
+//        $result=array_intersect($unwanted,$request->value);
+        echo json_encode($unwanted);
+//        if(!empty($unwanted)) {
+//            return $unwanted;
+//        }else{
+//            return '';
+//        }
     }
 
 }
