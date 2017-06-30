@@ -92,8 +92,8 @@ class TablesController extends Controller
 
         $data->fill($input)->save();
 
-        Session::flash("flash_message", "Tables successfully updated!");
-          Alert::success("Table Updated successfully");
+        Session::flash("flash_message", "Deze tafel is succesvol aangepast!");
+          Alert::success("Deze tafel is succesvol aangepast");
         return redirect()->back();
     }
 
