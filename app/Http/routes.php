@@ -214,6 +214,7 @@ Route::group(array('middleware' => array('auth', 'userInfo')), function () {
         Route::get('reservations/{companySlug}/user/{userId}', 'AccountController@reservationsByCompany');
         Route::get('reservations/saldo/{userId?}', 'AccountController@saldo');
         Route::get('future-deals', 'AccountController@futuredeals');
+        Route::get('all-future-deals', 'AccountController@getAllfuturedeals');
 
         ## Post routes - Account ##
         Route::post('delete', 'AccountController@deleteAccount');
@@ -284,6 +285,9 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('callcenter', 'aut
  *  Admin
  */
 Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', 'userInfo')), function () {
+
+     Route::get('all-future-deals', 'AccountController@getAllfuturedeals');
+     
     # Ban #
     Route::group(array('prefix' => 'statistics'), function () {
         Route::get('reservations', 'Admin\StatisticsController@reservations');
