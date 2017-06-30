@@ -83,6 +83,8 @@ Route::group(array('prefix' => 'payment', 'middleware' => array('userInfo')), fu
     Route::post('pay', 'PaymentController@initiateIdealPayment');
     Route::get('rest-pay', 'PaymentController@initiateIdealPayment');
     Route::post('pay-invoice/pay', 'PaymentController@directInvoiceToPayment')->middleware(['auth']);
+    Route::post('paygiftcard', 'PaymentController@paygiftcard')->middleware(['auth']);
+    Route::get('giftcode', 'PaymentController@giftcode')->middleware(['auth']);
 });
 
 /**
@@ -204,6 +206,7 @@ Route::group(array('middleware' => array('auth', 'userInfo')), function () {
     Route::group(array('prefix' => 'account'), function () {
         Route::get('/', 'AccountController@settings');
         Route::get('barcodes', 'AccountController@barcodes');
+        Route::get('giftcards', 'AccountController@giftcards');
         Route::get('activate-email/{code}', 'AccountController@activateEmail');
 
         Route::get('reviews', 'AccountController@reviews');
@@ -218,6 +221,7 @@ Route::group(array('middleware' => array('auth', 'userInfo')), function () {
         Route::post('delete', 'AccountController@deleteAccount');
         Route::post('/', 'AccountController@settingsAction');
         Route::post('barcodes', 'AccountController@barcodeAction');
+        Route::post('giftcards', 'AccountController@buyGiftcard');
         Route::post('reservations', 'AccountController@reservationsAction');
         Route::get('reserve-futuredeal/{deal_id}', 'AccountController@reserveFutureDeal');
         Route::post('reserve-futuredeal/{deal_id}', 'AccountController@processReserveFutureDeal');
@@ -591,6 +595,20 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', '
         Route::post('action', 'Admin\InvoicesController@invoicesAction');
         Route::post('create', 'Admin\InvoicesController@createAction');
     });
+    
+    /*Pallavi - Giftcard*/
+    # Giftcards #
+    Route::group(array('prefix' => 'giftcards'), function () {
+        Route::get('/', 'Admin\GiftcardController@index');
+        Route::get('create', 'Admin\GiftcardController@create');
+        Route::get('update/{id}', 'Admin\GiftcardController@update');
+
+        Route::post('create', 'Admin\GiftcardController@createAction');
+        Route::post('update/{id}', 'Admin\GiftcardController@updateAction');
+        Route::post('delete', 'Admin\GiftcardController@deleteAction');
+    });
+
+    /*Pallavi - Giftcard*/
 });
 
 /**
@@ -653,6 +671,10 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('adminowner', 'aut
     Route::group(array('prefix' => 'barcodes'), function () {
         Route::get('{slug}', 'Admin\BarcodesController@company');
     });
+    # Giftcards #
+    Route::group(array('prefix' => 'giftcards'), function () {
+        Route::get('{slug}', 'Admin\GiftcardController@company');
+    });
 
     # Invoices #
     Route::group(array('prefix' => 'invoices'), function () {
@@ -699,6 +721,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('adminowner', 'aut
 
     # Reviews #
     Route::post('reviews/update/{company}', 'Admin\ReviewsController@updateAction');
+    
 });
 
 /**

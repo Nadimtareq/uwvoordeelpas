@@ -11,6 +11,7 @@ use App\Models\TempReservation;
 use App\Models\Company;
 use App\Models\CompanyReservation;
 use App\Helpers\CalendarHelper;
+use App\Models\Giftcard;
 use App\Models\FutureDeal;
 use Carbon\Carbon;
 use Cartalyst\Sentinel\Checkpoints\ThrottlingException;
@@ -403,7 +404,11 @@ class PaymentController extends Controller {
     public function charge(Request $request) {
         if ($request->input('buy') == 'voordeelpas') {
             $error = 'Uw saldo is te laag om een voordeelpas te kopen. Waardeer uw saldo op om verder te gaan met het aanschaffen van een voordeelpas.';
-            $restAmount = (Sentinel::getUser()->saldo < '14.95' ? (14.95 - Sentinel::getUser()->saldo) : 14.95);
+            if ($request->input('pay')) {
+                $restAmount = (Sentinel::getUser()->saldo < $request->input('pay') ? ($request->input('pay') - Sentinel::getUser()->saldo) : $request->input('pay'));
+            }else{
+                $restAmount = (Sentinel::getUser()->saldo < '14.95' ? (14.95 - Sentinel::getUser()->saldo) : 14.95);
+            }
         }
 
         return view('pages/payments/charge', array(
@@ -519,6 +524,43 @@ class PaymentController extends Controller {
             return Redirect::to($payment->links->paymentUrl);
         } else {
             return Redirect::to('/');
+        }
+    }
+    
+    public function giftcode(){
+        return view('pages/payments/giftcard');
+    }
+    public function paygiftcard(Request $request){
+        $this->validate($request, [
+            'giftcard' => 'required'
+        ]);
+        $code = Giftcard::where(['code' => $request->giftcard])->where('is_active', 1)->whereRaw('used_no < max_usage')->first();
+        if ($code) {
+            $oPayment = new Payment();
+            $oPayment->mollie_id = "";
+            $oPayment->user_id = Sentinel::getUser()->id;
+            $oPayment->status = "received";
+            $oPayment->amount = $code->amount;
+            $oPayment->type = 'Cadeaubon voordeel';
+            $oPayment->payment_type = 'giftcard';
+            if($oPayment->save()){
+                $balance = Sentinel::getUser()->saldo + $code->amount;
+                $oUser = Sentinel::getUserRepository()->findById(Sentinel::getUser()->id);
+                $oUser->saldo = $balance;
+                $code->used_no = $code->used_no + 1;
+                $code->save();
+                Alert::success('U heeft succesvol uw saldo opgewaardeerd.')->persistent('Sluiten');
+                return Redirect::to('account/reservations/saldo');
+            }else{
+                Alert::error('Er is een fout opgetreden, probeert u het alstublieft opnieuw')
+                    ->persistent('Sluiten');
+                return Redirect::to('payment/giftcode');
+            }
+            
+        }else{
+            Alert::error('Ongeldig giftcard nummer')
+                    ->persistent('Sluiten');
+                return Redirect::to('payment/giftcode');
         }
     }
 
