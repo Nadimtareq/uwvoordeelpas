@@ -288,7 +288,8 @@ $compatible_browser_array = array('Chrome', 'Firefox', 'Opera');
                 });
             }
             else {
-                sweetAlert(" ", "Sorry momenteel ondersteunen we alleen de browsers: Chrome, Firefox en Opera.");
+                sweetAlert(" ", "Sorry, momenteel ondersteunen we alleen de browsers: Chrome ( PC ), Firefox en Opera. Overige browsers volgen snel.");
+                updateDownloadStatus();
             }
             e.preventDefault();
         });
@@ -297,11 +298,11 @@ $compatible_browser_array = array('Chrome', 'Firefox', 'Opera');
         }
         
         $('#incompatible_browser_ext, .incompatible_browser_ext').click(function () {
-            sweetAlert(" ", "Sorry momenteel ondersteunen we alleen de browsers: Chrome, Firefox en Opera.");
+            sweetAlert(" ", "Sorry, momenteel ondersteunen we alleen de browsers: Chrome ( PC ), Firefox en Opera. Overige browsers volgen snel.");
             updateDownloadStatus();
         });
         $(document).on('click', '#incompatible_browser_ext', function (event) {
-            sweetAlert(" ", "Sorry momenteel ondersteunen we alleen de browsers: Chrome, Firefox en Opera.");
+            sweetAlert(" ", "Sorry, momenteel ondersteunen we alleen de browsers: Chrome ( PC ), Firefox en Opera. Overige browsers volgen snel.");
            updateDownloadStatus();
             event.stopImmediatePropagation();
         })
