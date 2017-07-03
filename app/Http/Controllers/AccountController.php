@@ -244,7 +244,7 @@ class AccountController extends Controller {
                         DB::raw('"" AS restaurant_is_paid'), 'users.name AS userName', 'payments.created_at as date', 'payments.created_at as time', 'payments.status AS name', 'payments.amount AS amount', 'payments.status AS status', DB::raw('IF(payments.type = "voordeelpas", "Voordeelpas gekocht", "Opwaardering") as type'), DB::raw('"UwVoordeelpas" as company'), DB::raw('date(date_add(payments.created_at, interval 90 day)) as expired_date')
                 )
                 ->leftJoin('users', 'users.id', '=', 'payments.user_id')
-                ->whereIn('payments.type', array('mollie', 'voordeelpas'))
+                ->whereIn('payments.type', array('mollie', 'voordeelpas','Cadeaubon voordeel'))
                 ->where('payments.user_id', Sentinel::inRole('admin') && $userId != null ? $userId : Sentinel::getUser()->id)
         ;
 

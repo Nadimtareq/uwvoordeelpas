@@ -564,6 +564,7 @@ class PaymentController extends Controller {
                 $balance = Sentinel::getUser()->saldo + $code->amount;
                 $oUser = Sentinel::getUserRepository()->findById(Sentinel::getUser()->id);
                 $oUser->saldo = $balance;
+                $oUser->save();
                 $code->used_no = $code->used_no + 1;
                 $code->save();
                 Alert::success('U heeft succesvol uw saldo opgewaardeerd.')->persistent('Sluiten');
