@@ -101,6 +101,7 @@ Route::group(array('prefix' => 'ajax', 'middleware' => 'userInfo'), function() {
     Route::get('available/dates', 'AjaxController@availableDates');
     Route::get('available/reservation', 'AjaxController@availableReservation');
     Route::get('appointments/companies', 'AjaxController@appointmentCompanies');
+    Route::get('users/extensiondownloadStatus', 'AjaxController@extensiondownloadStatus');
     Route::get('faqs', 'AjaxController@faq');
     Route::get('faq/subcategories', 'AjaxController@faqSubCategories');
     Route::get('affiliates', 'AjaxController@affiliates');

@@ -26,7 +26,10 @@ use anlutro\cURL\cURL;
 
 class AjaxController extends Controller 
 {
+    public function extensiondownloadStatus(Request $request) {
 
+    }
+    
     public function usersSetRegio(Request $request) 
     { 
         $preferences = new Preference;

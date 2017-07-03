@@ -295,17 +295,27 @@ $compatible_browser_array = array('Chrome', 'Firefox', 'Opera');
         if ((is_download_ext == '1') && ($('#section_extension_button').length > 0)) {
             $('#section_extension_button').trigger("click");
         }
-        $('.incompatible_browser_ext').click(function () {
+        
+        $('#incompatible_browser_ext, .incompatible_browser_ext').click(function () {
             sweetAlert(" ", "Sorry momenteel ondersteunen we alleen de browsers: Chrome, Firefox en Opera.");
-        });
-        $('#incompatible_browser_ext').click(function () {
-            sweetAlert(" ", "Sorry momenteel ondersteunen we alleen de browsers: Chrome, Firefox en Opera.");
+            updateDownloadStatus();
         });
         $(document).on('click', '#incompatible_browser_ext', function (event) {
             sweetAlert(" ", "Sorry momenteel ondersteunen we alleen de browsers: Chrome, Firefox en Opera.");
+           updateDownloadStatus();
             event.stopImmediatePropagation();
         })
     });
+    function updateDownloadStatus(){
+        alert(baseUrl);
+        $.ajax({
+                url: baseUrl + 'ajax/users/extensiondownloadStatus',
+                method: 'GET',
+                success: function(response) {
+                    alert("Status updated");
+                }
+            });
+    }
     $(document).ready(function () {
         var ua = navigator.userAgent;
         if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(ua)) {
