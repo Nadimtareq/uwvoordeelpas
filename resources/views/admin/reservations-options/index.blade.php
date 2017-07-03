@@ -48,15 +48,15 @@
         </th>
         <th data-slug="name" class="three wide">Plaats</th>
         <th data-slug="name" class="three wide">Naam</th>
-        <th data-slug="total_amount" class="four wide">Aantal plaatsen</th>
-        <th data-slug="total_res" class="four wide">Aantal gasten</th>
+        <th data-slug="total_amount" class="four wide">beschikbaar</th>
+        <th data-slug="total_res" class="four wide">verkocht</th>
         <th data-slug="date_from" class="four wide">Online van</th>
         <th data-slug="date_to" class="four wide">Online tot</th>
         <th data-slug="price_from" class="four wide">prijs van</th>
         <th data-slug="price" class="four wide">prijs voor</th>
-        <th data-slug="total_res" class="four wide">Staat</th>
-        <th data-slug="news_letter" class="four wide">Nieuwsbrief</th>
-        <th data-slug="gasten" class="four wide">Gasten</th>
+        <th data-slug="total_res" class="four wide">Online</th>
+        <th data-slug="newsletter" class="four wide">Nieuwsbrief</th>
+        <!-- <th data-slug="gasten" class="four wide">Gasten</th> -->
         <th data-slug="disabled">online</th>
         </tr>
         </thead>
@@ -126,11 +126,11 @@
                     }
                     ?>
                 </td>
-                 <td>
+                 <!-- <td>
                    <?php
                     echo $result->reservated;
                     ?>
-                </td>
+                </td> -->
                 <td>
                     <a href="{{ url('admin/'.$slugController.'/update/'.$result->id) }}" class="ui icon tiny button">
                         <i class="pencil icon"></i>

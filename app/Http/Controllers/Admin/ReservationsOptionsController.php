@@ -77,8 +77,11 @@ class ReservationsOptionsController extends Controller
         }
 
         if ($request->has('sort') && $request->has('order')) {
-            $data = $data->orderBy($request->input('sort'), $request->input('order'));
-
+            if($request->input('sort')=="total_res"){
+             $data = $data->orderBy('total_res', $request->input('order'));
+            }else{
+            $data = $data->orderBy('reservations_options.'.$request->input('sort'), $request->input('order'));
+            }
             session(['sort' => $request->input('sort'), 'order' => $request->input('order')]);
         } else {
             $data = $data->orderBy('reservations_options.id', 'desc');
@@ -244,6 +247,9 @@ class ReservationsOptionsController extends Controller
                     'company' => $this->isCompanyOwner($data->slug),
                     'slug' => $data->slug,
                     'data' => $data,
+                    /*'logoItem'=>array(),
+                    'documentItems'=>array(),
+                    'media'=>array(), */
                     ]);
             } else {
                 App::abort(404);
