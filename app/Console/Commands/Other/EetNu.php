@@ -10,7 +10,7 @@ use Exception;
 use URL;
 use Setting;
 use Mail;
-
+use DB;
 class EetNU extends Command
 {
     /**

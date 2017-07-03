@@ -9,6 +9,7 @@ use App\Models\MailTemplate;
 use App\Models\Payment;
 use Exception;
 use URL;
+use DB;
 use Mollie_API_Client;
 use Setting;
 use Mail;

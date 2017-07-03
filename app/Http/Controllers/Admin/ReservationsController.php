@@ -184,9 +184,10 @@ class ReservationsController extends Controller
             'reservations.time',
             'reservations_options.price as deal_price',
             'reservations_options.name as deal_name',
-            'reservations_options.price_per_guest as price_per_guest',
+          //  'reservations_options.price_per_guest as price_per_guest',
             'companies.slug as companySlug',
-            'companies.name as companyName'
+            'companies.name as companyName',
+            'companies.price_per_guest as price_per_guest'
         )
             ->leftJoin('users', 'reservations.user_id', '=', 'users.id')
             ->leftJoin('reservations_options','reservations.option_id', '=', 'reservations_options.id')

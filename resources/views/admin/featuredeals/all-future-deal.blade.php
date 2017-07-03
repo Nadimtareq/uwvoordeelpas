@@ -8,6 +8,46 @@
 
 <div class="content">
     @include('admin.template.breadcrumb')
+    <div class="buttonToolbar">  
+        <div class="ui grid">
+            <div class="left floated nine wide computer sixteen wide mobile column">
+                <?php echo Form::open(array('method' => 'GET', 'class' => 'ui form')); ?>
+                <div class="three fields">
+                    <div class="field">
+                        <?php 
+                        echo Form::select(
+                            'month', 
+                            array_unique($months), 
+                            Request::has('month') ? Request::has('month') : date('m'), 
+                            array(
+                                'class' => 'multipleSelect', 
+                                'data-placeholder' => 'Maand'
+                                )
+                            ); 
+                            ?>
+                        </div>
+
+                        <div class="field">
+                           <?php echo Form::select('year', array_unique($years), (Request::has('year') ? Request::get('year') : date('Y')), array('class' => 'multipleSelect', 'data-placeholder' => 'Jaar')); ?>
+                       </div>
+
+                       <div class="field">
+                        <input type="submit" class="ui blue fluid filter button" value="Filteren" />
+                    </div>
+                </div>
+                <?php echo Form::close(); ?>
+            </div>
+            <div class="right floated sixteen wide mobile seven wide computer column">
+               <div class="ui grid">
+                <div class="three column row">
+                    <div class="sixteen wide mobile five wide computer column">
+                        @include('admin.template.limit')
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
 <?php echo Form::open(array('id' => 'formList', 'method' => 'post')) ?>
 <button id="removeButton" type="submit" name="action" value="remove" class="ui disabled icon grey button">
     <i class="trash icon"></i> Verwijderen

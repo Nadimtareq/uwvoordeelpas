@@ -11,6 +11,7 @@ use Exception;
 use URL;
 use Setting;
 use Mail;
+use DB;
 
 class Sitemap extends Command
 {
