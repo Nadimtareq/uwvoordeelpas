@@ -1,5 +1,7 @@
 <?php
+
 use App\Models\MailTemplate;
+
 /**
  * General
  */
@@ -45,7 +47,6 @@ Route::group(array('prefix' => 'compare', 'middleware' => 'userInfo'), function 
     Route::get('law', 'CompareController@law');
     Route::get('travel', 'CompareController@travel');
     Route::get('care', 'CompareController@care');
-
 });
 /**
  * Voordeelpas
@@ -83,6 +84,8 @@ Route::group(array('prefix' => 'payment', 'middleware' => array('userInfo')), fu
     Route::post('pay', 'PaymentController@initiateIdealPayment');
     Route::get('rest-pay', 'PaymentController@initiateIdealPayment');
     Route::post('pay-invoice/pay', 'PaymentController@directInvoiceToPayment')->middleware(['auth']);
+    Route::post('paygiftcard', 'PaymentController@paygiftcard')->middleware(['auth']);
+    Route::get('giftcode', 'PaymentController@giftcode')->middleware(['auth']);
 });
 
 /**
@@ -130,7 +133,7 @@ Route::group(array('prefix' => 'ajax', 'middleware' => 'userInfo'), function() {
 /**
  * Cashback
  */
-Route::group(array('prefix' => 'tegoed-sparen',  'middleware' => 'userInfo'), function() {
+Route::group(array('prefix' => 'tegoed-sparen', 'middleware' => 'userInfo'), function() {
     Route::get('/', 'CashbackController@index');
     Route::get('company/{slug}', 'CashbackController@company');
     Route::get('category/{id}/{slug}', 'CashbackController@category');
@@ -155,7 +158,7 @@ Route::group(array('middleware' => 'userInfo'), function() {
     Route::post('restaurant/reservation/{slug}', 'ReservationController@reservationAction');
     Route::post('restaurant/{slug}', 'ReservationController@reservationStepOne');
     Route::post('restaurant/reviews/{slug}', 'RestaurantController@reviewsAction')->middleware(['auth']);
-    Route::post('restaurant/getUnwantedWords','RestaurantController@getUnwantedWords');
+    Route::post('restaurant/getUnwantedWords', 'RestaurantController@getUnwantedWords');
 });
 
 /**
@@ -205,6 +208,7 @@ Route::group(array('middleware' => array('auth', 'userInfo')), function () {
     Route::group(array('prefix' => 'account'), function () {
         Route::get('/', 'AccountController@settings');
         Route::get('barcodes', 'AccountController@barcodes');
+        Route::get('giftcards', 'AccountController@giftcards');
         Route::get('activate-email/{code}', 'AccountController@activateEmail');
 
         Route::get('reviews', 'AccountController@reviews');
@@ -220,6 +224,7 @@ Route::group(array('middleware' => array('auth', 'userInfo')), function () {
         Route::post('delete', 'AccountController@deleteAccount');
         Route::post('/', 'AccountController@settingsAction');
         Route::post('barcodes', 'AccountController@barcodeAction');
+        Route::post('giftcards', 'AccountController@buyGiftcard');
         Route::post('reservations', 'AccountController@reservationsAction');
         Route::get('reserve-futuredeal/{deal_id}', 'AccountController@reserveFutureDeal');
         Route::post('reserve-futuredeal/{deal_id}', 'AccountController@processReserveFutureDeal');
@@ -292,6 +297,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', '
     Route::group(array('prefix' => 'statistics'), function () {
         Route::get('reservations', 'Admin\StatisticsController@reservations');
         Route::get('search', 'Admin\StatisticsController@search');
+        Route::get('contact', 'Admin\ContactController@index');
     });
 
     Route::group(array('prefix' => 'bans'), function () {
@@ -359,7 +365,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', '
         Route::resource('eetnu', 'Admin\SettingsController@eetnuAction');
         Route::resource('cronjobs', 'Admin\SettingsController@cronjobsAction');
         Route::resource('invoices', 'Admin\SettingsController@invoicesAction');
-		Route::resource('newsletter', 'Admin\SettingsController@newsletterAction');
+        Route::resource('newsletter', 'Admin\SettingsController@newsletterAction');
     });
 
     # Transactions #
@@ -519,6 +525,8 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', '
         Route::post('delete', 'Admin\BarcodesController@deleteAction');
     });
 
+
+
     # Content blocks #
     Route::group(array('prefix' => 'contents'), function () {
         Route::get('/', 'Admin\ContentsController@index');
@@ -529,6 +537,15 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', '
         Route::post('update/{id}', 'Admin\ContentsController@updateAction');
         Route::post('delete', 'Admin\ContentsController@deleteAction');
     });
+
+    # Tables #
+    Route::get('/tables', 'Admin\TablesController@index');
+    Route::get('/tables/create', 'Admin\TablesController@create');
+    Route::post('/tables/store', 'Admin\TablesController@store');
+    Route::get('/tables/edit/{id}', 'Admin\TablesController@edit');
+    Route::get('/tables/show/{id}', 'Admin\TablesController@show');
+    Route::post('/tables/update/{id}', 'Admin\TablesController@update');
+    Route::get('/tables/destroy/{id}', 'Admin\TablesController@destroy');
 
     # FAQ #
     Route::group(array('prefix' => 'faq'), function () {
@@ -596,6 +613,20 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', '
         Route::post('action', 'Admin\InvoicesController@invoicesAction');
         Route::post('create', 'Admin\InvoicesController@createAction');
     });
+    
+    /*Pallavi - Giftcard*/
+    # Giftcards #
+    Route::group(array('prefix' => 'giftcards'), function () {
+        Route::get('/', 'Admin\GiftcardController@index');
+        Route::get('create', 'Admin\GiftcardController@create');
+        Route::get('update/{id}', 'Admin\GiftcardController@update');
+
+        Route::post('create', 'Admin\GiftcardController@createAction');
+        Route::post('update/{id}', 'Admin\GiftcardController@updateAction');
+        Route::post('delete', 'Admin\GiftcardController@deleteAction');
+    });
+
+    /*Pallavi - Giftcard*/
 });
 
 /**
@@ -657,6 +688,10 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('adminowner', 'aut
     # Barcodes #
     Route::group(array('prefix' => 'barcodes'), function () {
         Route::get('{slug}', 'Admin\BarcodesController@company');
+    });
+    # Giftcards #
+    Route::group(array('prefix' => 'giftcards'), function () {
+        Route::get('{slug}', 'Admin\GiftcardController@company');
     });
 
     # Invoices #
@@ -721,6 +756,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('adminowner', 'aut
 
     # Reviews #
     Route::post('reviews/update/{company}', 'Admin\ReviewsController@updateAction');
+    
 });
 
 /**
