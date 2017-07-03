@@ -313,6 +313,7 @@ $compatible_browser_array = array('Chrome', 'Firefox', 'Opera');
                 url: baseUrl + 'ajax/users/extensiondownloadStatus',
                 method: 'GET',
                 success: function(response) {
+                    console.log(response);
                 }
             });
     }

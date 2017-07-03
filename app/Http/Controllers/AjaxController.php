@@ -23,14 +23,16 @@ use Illuminate\Http\Request;
 use Sentinel;
 use URL;
 use anlutro\cURL\cURL;
-
+use DB;
 class AjaxController extends Controller 
 {
     public function extensiondownloadStatus(Request $request) {
             $user = Sentinel::getUser();
-            if($user){
+            if(isset($user->id)){
                 DB::update('update users set extension_downloaded = 2 where id = ? and extension_downloaded=0', [$user->id]);
+                return $user->id;
             }
+            return 0;
     }
 
     public function usersSetRegio(Request $request) 
