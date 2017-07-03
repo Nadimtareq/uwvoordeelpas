@@ -484,29 +484,7 @@ class AccountController extends Controller {
     public function getAllfuturedeals(Request $request) {
         $data = array();
         $user = (Sentinel::check()) ? Sentinel::getUser() : NULL;
-        $data = DB::table('future_deals')->select(
-<<<<<<< HEAD
-                        'future_deals.id as future_deal_id', 'future_deals.user_id as user_id', 'future_deals.deal_price as future_deal_price', 'future_deals.persons as total_persons', 'future_deals.persons_remain as remain_persons', 'future_deals.expired_at as expired_at'
-                )
-                ->addSelect('companies.id as company_id', 'companies.name as company_name', 'companies.slug as company_slug', 'companies.description as company_disc', 'companies.city')
-                ->addSelect('reservations_options.name as deal_name')
-                ->addSelect('users.name as user_name')
-                ->addSelect('media.id as media_id', 'media.file_name', 'media.disk', 'media.name as media_name')
-                ->leftJoin('reservations_options', 'future_deals.deal_id', '=', 'reservations_options.id')
-                ->leftJoin('users', 'users.id', '=', 'future_deals.user_id')
-                ->leftJoin('companies', 'reservations_options.company_id', '=', 'companies.id')
-                ->leftJoin('media', function ($join) {
-                    $join->on('companies.id', '=', 'media.model_id')
-                    ->where('media.model_type', '=', 'App\Models\Company')
-                    ->where('media.collection_name', '=', 'default');
-                })
-                ->where('future_deals.user_id', $user->id)
-                ->groupby('future_deals.id')->orderBy('future_deals.created_at', 'desc')
-                ->get()
-        ;
-=======
-                            'future_deals.id as future_deal_id','future_deals.user_id as user_id','future_deals.deal_price as future_deal_price', 'future_deals.persons as total_persons', 'future_deals.persons_remain as remain_persons', 'future_deals.expired_at as expired_at'
-                    )
+        $data = DB::table('future_deals')->select('future_deals.id as future_deal_id','future_deals.user_id as user_id','future_deals.deal_price as future_deal_price', 'future_deals.persons as total_persons', 'future_deals.persons_remain as remain_persons', 'future_deals.expired_at as expired_at')
                     ->addSelect('companies.id as company_id', 'companies.name as company_name', 'companies.slug as company_slug', 'companies.description as company_disc', 'companies.city')
                     ->addSelect('reservations_options.name as deal_name')
                     ->addSelect('users.name as user_name')
@@ -526,16 +504,9 @@ class AccountController extends Controller {
                         ->whereYear('future_deals.expired_at', '=', $request->input('year'))
                         ;
                     }
-            $data=$data->groupby('future_deals.id')->orderBy('future_deals.expired_at','desc')
+                    $data=$data->groupby('future_deals.id')->orderBy('future_deals.expired_at','desc')
                     ->paginate($this->limit);
-                     # Redirect to last page when page don't exist
-                  /*  if ($request->input('page') > $data->lastPage()) { 
-                        $lastPageQueryString = json_decode(json_encode($request->query()), true);
-                        $lastPageQueryString['page'] = $data->lastPage();
-
-                        return Redirect::to($request->url().'?'.http_build_query($lastPageQueryString));
-                    } */
-
+                    
                     $monthsYears = FutureDeal::select(
                         DB::raw('month(expired_at) as months, year(expired_at) as years')
                     )
@@ -557,8 +528,6 @@ class AccountController extends Controller {
 
                     $queryString = $request->query();
                     unset($queryString['limit']);
-
->>>>>>> 497d9f9b98a529c88002281156656a0c46fc05b3
         return view('admin/featuredeals/all-future-deal', [
             'futureDeals' => $data,
             'currentPage'=>'All Feature deals',
@@ -706,10 +675,6 @@ class AccountController extends Controller {
         }
     }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 497d9f9b98a529c88002281156656a0c46fc05b3
     public function giftcards() {
         $data = Giftcard::where(['company_id' => 0])
                 ->whereRaw('used_no < max_usage')
