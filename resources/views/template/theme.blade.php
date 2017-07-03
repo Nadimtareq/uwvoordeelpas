@@ -45,7 +45,7 @@
     <meta name="theme-color" content="#ffffff">
     <meta name="description" content="{{ isset($metaDescription) ? strip_tags($metaDescription) : 'Reserveer in enkele stappen met uw spaartegoed!' }}">
 	<meta http-equiv="Cache-control" content="max-age=2592000, public">
-
+	<script src="{{ asset('js/jquery-1.11.3.min.js') }} "></script>
 	<script>
 	  var baseUrl = {!! json_encode(url('/')."/") !!};
 
@@ -171,7 +171,7 @@
 	<!-- Load Javscript Section -->
 	<!-- <script  src="{{ asset('js/app.js?rand='.str_random(40)) }}"></script> 		 -->
 	<!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAjrbVJMJKWzCl8JZWV3_5Jy5P4CTITznU"></script>    -->
-	<script src="{{ asset('js/jquery-1.11.3.min.js') }} "></script>
+
     <script src="{{ asset('js/jquery.serialize-object.js') }} "></script>
 	<script src="{{ asset('js/app.js?version=1') }}"></script>
 	<script src="{{ asset('js/jquery-1.11.3.min.js') }} "></script>

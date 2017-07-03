@@ -1,7 +1,11 @@
 @extends('template.theme')
 
 @section('content')
+<?php
 
+use App\Models\Company;
+
+?>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
 <div class='container'>
@@ -39,6 +43,10 @@
                 <tr>
                     <th>DESCRIPTION</th>
                     <td>{{$model->duration}} Mins</td>
+                </tr>
+                <tr>
+                    <th>COMPANY</th>
+                    <td>{{Company::find($model->comp_id)->name}}</td>
                 </tr>
             </table>
         </div>

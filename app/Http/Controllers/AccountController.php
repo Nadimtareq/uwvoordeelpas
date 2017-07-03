@@ -21,6 +21,7 @@ use App\Models\FavoriteCompany;
 use App\Models\FutureDeal;
 use App\Models\MailTemplate;
 use App\Models\Transaction;
+use App\Models\Table;
 use App\Models\ReservationOption;
 use App\User;
 use App\Http\Controllers\Controller;
@@ -483,29 +484,28 @@ class AccountController extends Controller {
         $data = array();
         $user = (Sentinel::check()) ? Sentinel::getUser() : NULL;
         $data = DB::table('future_deals')->select(
-                            'future_deals.id as future_deal_id','future_deals.user_id as user_id','future_deals.deal_price as future_deal_price', 'future_deals.persons as total_persons', 'future_deals.persons_remain as remain_persons', 'future_deals.expired_at as expired_at'
-                    )
-                    ->addSelect('companies.id as company_id', 'companies.name as company_name', 'companies.slug as company_slug', 'companies.description as company_disc', 'companies.city')
-                    ->addSelect('reservations_options.name as deal_name')
-                    ->addSelect('users.name as user_name')
-                    ->addSelect('media.id as media_id', 'media.file_name', 'media.disk', 'media.name as media_name')
-                    ->leftJoin('reservations_options', 'future_deals.deal_id', '=', 'reservations_options.id')
-                    ->leftJoin('users', 'users.id', '=', 'future_deals.user_id')
-                    ->leftJoin('companies', 'reservations_options.company_id', '=', 'companies.id')
-                    ->leftJoin('media', function ($join) {
-                        $join->on('companies.id', '=', 'media.model_id')
-                        ->where('media.model_type', '=', 'App\Models\Company')
-                        ->where('media.collection_name', '=', 'default');
-                    })
-                    ->where('future_deals.user_id', $user->id)
-                    ->groupby('future_deals.id')->orderBy('future_deals.created_at','desc')
-                    ->get()
-            ;
+                        'future_deals.id as future_deal_id', 'future_deals.user_id as user_id', 'future_deals.deal_price as future_deal_price', 'future_deals.persons as total_persons', 'future_deals.persons_remain as remain_persons', 'future_deals.expired_at as expired_at'
+                )
+                ->addSelect('companies.id as company_id', 'companies.name as company_name', 'companies.slug as company_slug', 'companies.description as company_disc', 'companies.city')
+                ->addSelect('reservations_options.name as deal_name')
+                ->addSelect('users.name as user_name')
+                ->addSelect('media.id as media_id', 'media.file_name', 'media.disk', 'media.name as media_name')
+                ->leftJoin('reservations_options', 'future_deals.deal_id', '=', 'reservations_options.id')
+                ->leftJoin('users', 'users.id', '=', 'future_deals.user_id')
+                ->leftJoin('companies', 'reservations_options.company_id', '=', 'companies.id')
+                ->leftJoin('media', function ($join) {
+                    $join->on('companies.id', '=', 'media.model_id')
+                    ->where('media.model_type', '=', 'App\Models\Company')
+                    ->where('media.collection_name', '=', 'default');
+                })
+                ->where('future_deals.user_id', $user->id)
+                ->groupby('future_deals.id')->orderBy('future_deals.created_at', 'desc')
+                ->get()
+        ;
         return view('admin/featuredeals/all-future-deal', [
             'futureDeals' => $data,
         ]);
     }
-
 
     public function futuredeals(Request $request) {
         $data = array();
@@ -526,7 +526,7 @@ class AccountController extends Controller {
                         ->where('media.collection_name', '=', 'default');
                     })
                     ->where('future_deals.user_id', $user->id)
-                    ->groupby('future_deals.id')->orderBy('future_deals.created_at','desc')
+                    ->groupby('future_deals.id')->orderBy('future_deals.created_at', 'desc')
                     ->get()
             ;
         }
@@ -569,7 +569,7 @@ class AccountController extends Controller {
             $deal = ReservationOption::find($futureDeal->deal_id);
             $company = Company::find($deal->company_id);
             if ($input_persons <= $futureDeal->persons_remain) {
-                
+
                 $reservationTimes = CompanyReservation::getReservationTimesArray(
                                 array(
                                     'company_id' => array($company->id),
@@ -578,8 +578,13 @@ class AccountController extends Controller {
                                     'groupReservations' => ($request->has('group_reservation') ? 1 : NULL)
                                 )
                 );
-            
+
                 if (isset($reservationTimes[$time])) {
+
+
+                    $tables = Table::where('comp_id', $company->id);
+
+
                     $data = new Reservation;
                     $data->date = date('Y-m-d', strtotime($request->input('date')));
                     $data->time = date('H:i', strtotime($request->input('time'))) . ':00';
@@ -603,7 +608,7 @@ class AccountController extends Controller {
                     $futureDeal->persons_reserved = $total_reserved_persons;
                     $futureDeal->persons_remain = $total_remain_persons;
                     if ($total_remain_persons == 0) {
-                        $futureDeal->status = 'full_reserved';                        
+                        $futureDeal->status = 'full_reserved';
                     } else {
                         $futureDeal->status = 'partially_reserved';
                     }
@@ -635,7 +640,7 @@ class AccountController extends Controller {
             App::abort(404);
         }
     }
-    
+
     public function giftcards() {
         $data = Giftcard::where(['company_id' => 0])
                 ->whereRaw('used_no < max_usage')
@@ -645,40 +650,37 @@ class AccountController extends Controller {
             'data' => $data
         ]);
     }
-    
-    public function buyGiftcard(Request $request) 
-    {
-        $code = Giftcard::where('id',$request->input('code'))->first();
+
+    public function buyGiftcard(Request $request) {
+        $code = Giftcard::where('id', $request->input('code'))->first();
         if (Sentinel::getUser()->saldo >= $code->amount) {
-                $company = Company::where(['user_id' => Sentinel::getUser()->id])->first();
-                if(count($company) > 0){
-                    $code->company_id = $company['id'];
-                }
-                $code->buy_date = date('d-m-Y');
-                $code->save();
-                $payment = new Payment();
-                $payment->status = 'paid';
-                $payment->type = 'Cadeaubon aankoop';
-                $payment->user_id = Sentinel::getUser()->id;
-                $payment->amount = $code->amount;
-                $payment->save();
+            $company = Company::where(['user_id' => Sentinel::getUser()->id])->first();
+            if (count($company) > 0) {
+                $code->company_id = $company['id'];
+            }
+            $code->buy_date = date('d-m-Y');
+            $code->save();
+            $payment = new Payment();
+            $payment->status = 'paid';
+            $payment->type = 'Cadeaubon aankoop';
+            $payment->user_id = Sentinel::getUser()->id;
+            $payment->amount = $code->amount;
+            $payment->save();
 
-                $user = Sentinel::getUser();
-                $user->saldo = $user->saldo - $code->amount;
-                $user->terms_active = 1;
-                $user->save();
-                
-                Mail::send('emails.send-giftcard', ['user' => Sentinel::getUser()->name, 'code' => $code], function($message) use ($user, $request) {
-                    $message->to(Sentinel::getUser()->email)->subject('Cadeaubon');
-                });
-                Alert::success('U heeft succesvol een giftcard.')->persistent('Sluiten');
+            $user = Sentinel::getUser();
+            $user->saldo = $user->saldo - $code->amount;
+            $user->terms_active = 1;
+            $user->save();
 
-                return Redirect::to(($request->has('redirect_to') ? urldecode($request->input('redirect_to')) : 'account/giftcards'));
+            Mail::send('emails.send-giftcard', ['user' => Sentinel::getUser()->name, 'code' => $code], function($message) use ($user, $request) {
+                $message->to(Sentinel::getUser()->email)->subject('Cadeaubon');
+            });
+            Alert::success('U heeft succesvol een giftcard.')->persistent('Sluiten');
 
+            return Redirect::to(($request->has('redirect_to') ? urldecode($request->input('redirect_to')) : 'account/giftcards'));
         } else {
             return Redirect::to('payment/charge');
         }
-        
     }
 
 }
