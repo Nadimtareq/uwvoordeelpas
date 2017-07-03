@@ -12,6 +12,7 @@ use Exception;
 use SoapClient;
 use Setting;
 use Mail;
+use DB;
 
 class Affilinet extends Command
 {

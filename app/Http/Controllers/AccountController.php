@@ -8,7 +8,6 @@ use App\Http\Requests\AccountUpdateRequest;
 use App\Http\Requests\BarcodeRequest;
 use App\Http\Requests\ReviewRequest;
 use App\Models\Barcode;
-use App\Models\Giftcard;
 use App\Models\Company;
 use App\Models\CompanyReservation;
 use App\Models\BarcodeUser;
@@ -48,7 +47,8 @@ class AccountController extends Controller {
         if (isset($this->queryString['type'])) {
             unset($this->queryString['type']);
         }
-
+        $this->slugController = 'all-future-deals';
+        $this->limit = $request->input('limit', 5);
         unset($this->queryString['limit']);
     }
 
@@ -496,13 +496,56 @@ class AccountController extends Controller {
                         $join->on('companies.id', '=', 'media.model_id')
                         ->where('media.model_type', '=', 'App\Models\Company')
                         ->where('media.collection_name', '=', 'default');
-                    })
-                    ->where('future_deals.user_id', $user->id)
-                    ->groupby('future_deals.id')->orderBy('future_deals.created_at','desc')
+                    });
+                    
+                     # Filter by month and year
+                    if ($request->has('month') && $request->has('year')) {  
+                        $data = $data->whereMonth('future_deals.expired_at', '=', $request->input('month'))
+                        ->whereYear('future_deals.expired_at', '=', $request->input('year'))
+                        ;
+                    }
+            $data=$data->groupby('future_deals.id')->orderBy('future_deals.expired_at','desc')
+                    ->paginate($this->limit);
+                     # Redirect to last page when page don't exist
+                  /*  if ($request->input('page') > $data->lastPage()) { 
+                        $lastPageQueryString = json_decode(json_encode($request->query()), true);
+                        $lastPageQueryString['page'] = $data->lastPage();
+
+                        return Redirect::to($request->url().'?'.http_build_query($lastPageQueryString));
+                    } */
+
+                    $monthsYears = FutureDeal::select(
+                        DB::raw('month(expired_at) as months, year(expired_at) as years')
+                    )
+                    ->groupBy('years', 'months')
+                    ->orderBy('months', 'asc')
                     ->get()
-            ;
+                    ->toArray()
+                    ;
+
+                //    dd($monthsYears);
+                    $month = array();
+                    $years = array();
+                    $monthConvert = Config::get('preferences.months');
+
+                    foreach($monthsYears as $key => $monthYear) {
+                        $month[$monthYear['months']] = $monthConvert[$monthYear['months']];
+                        $years[$monthYear['years']] = $monthYear['years'];
+                    }
+
+                    $queryString = $request->query();
+                    unset($queryString['limit']);
+
         return view('admin/featuredeals/all-future-deal', [
             'futureDeals' => $data,
+            'currentPage'=>'All Feature deals',
+            'months' => isset($month) ? $month : '',
+            'years' => isset($years) ? $years : '',
+            'monthsYears' => $monthsYears,
+            'paginationQueryString' => $request->query(),
+            'queryString'=> $queryString,
+            'limit' => $this->limit,
+            'slugController' => $this->slugController
         ]);
     }
 
@@ -634,51 +677,6 @@ class AccountController extends Controller {
         } else {
             App::abort(404);
         }
-    }
-    
-    public function giftcards() {
-        $data = Giftcard::where(['company_id' => 0])
-                ->whereRaw('used_no < max_usage')
-                ->where('is_active', 1)
-                ->lists('amount', 'id');
-        return view('account/giftcards', [
-            'data' => $data
-        ]);
-    }
-    
-    public function buyGiftcard(Request $request) 
-    {
-        $code = Giftcard::where('id',$request->input('code'))->first();
-        if (Sentinel::getUser()->saldo >= $code->amount) {
-                $company = Company::where(['user_id' => Sentinel::getUser()->id])->first();
-                if(count($company) > 0){
-                    $code->company_id = $company['id'];
-                }
-                $code->buy_date = date('d-m-Y');
-                $code->save();
-                $payment = new Payment();
-                $payment->status = 'paid';
-                $payment->type = 'Cadeaubon aankoop';
-                $payment->user_id = Sentinel::getUser()->id;
-                $payment->amount = $code->amount;
-                $payment->save();
-
-                $user = Sentinel::getUser();
-                $user->saldo = $user->saldo - $code->amount;
-                $user->terms_active = 1;
-                $user->save();
-                
-                Mail::send('emails.send-giftcard', ['user' => Sentinel::getUser()->name, 'code' => $code], function($message) use ($user, $request) {
-                    $message->to(Sentinel::getUser()->email)->subject('Cadeaubon');
-                });
-                Alert::success('U heeft succesvol een giftcard.')->persistent('Sluiten');
-
-                return Redirect::to(($request->has('redirect_to') ? urldecode($request->input('redirect_to')) : 'account/giftcards'));
-
-        } else {
-            return Redirect::to('payment/charge');
-        }
-        
     }
 
 }

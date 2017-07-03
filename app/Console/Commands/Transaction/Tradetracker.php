@@ -9,6 +9,7 @@ use Config;
 use Setting;
 use Exception;
 use Mail;
+use DB;
 
 class Tradetracker extends Command
 {

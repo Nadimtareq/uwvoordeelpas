@@ -8,6 +8,7 @@ use App\Models\BarcodeUser;
 use Exception;
 use Setitng;
 use Mail;
+use DB;
 
 class Expired extends Command
 {

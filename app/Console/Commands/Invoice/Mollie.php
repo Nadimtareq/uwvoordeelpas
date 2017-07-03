@@ -16,6 +16,7 @@ use anlutro\cURL\cURL;
 use Setting;
 use Sentinel;
 use URL;
+use DB;
 
 class Mollie extends Command
 {

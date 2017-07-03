@@ -10,7 +10,7 @@
 @section('content')
 <div class="content">
     <div class="ui breadcrumb">
-        <a href="{{ url('/') }}" class="section">Home</a>
+        <a href="{{ url('/') }}" class="section">Home1</a>
         <i class="right chevron icon divider"></i>
 
         <a href="#" class="sidebar open">Menu</a>

@@ -10,6 +10,7 @@ use App\Models\WifiGuest;
 use Sentinel;
 use Setting;
 use Mail;
+use DB;
 
 class Wifi extends Command
 {

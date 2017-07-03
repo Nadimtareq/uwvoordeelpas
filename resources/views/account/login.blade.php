@@ -36,6 +36,9 @@
 	<input type="hidden" name="password" id="pass_new">
 </div>
  <div class="field">
+ <?php 
+ $flag=0;
+ ?>
 @if($flag==1)
          <div class="g-recaptcha" data-sitekey="{{getenv('CAPTCHA_FRONT')}}" ></div><div style="float: right;"></div>
      @else

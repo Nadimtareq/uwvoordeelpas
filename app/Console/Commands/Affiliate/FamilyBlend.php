@@ -11,6 +11,7 @@ use Exception;
 use Intervention\Image\ImageManagerStatic;
 use Intervention\Image\Exception\NotReadableException;
 use Mail;
+use DB;
 use SoapClient;
 use SoapFault;
 use Request;

@@ -7512,6 +7512,9 @@ to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
         .ui.grid > .row > [class*="fourteen wide mobile"].column, .ui.grid > .column.row > [class*="fourteen wide mobile"].column, .ui.grid > [class*="fourteen wide mobile"].column, .ui.column.grid > [class*="fourteen wide mobile"].column { width: 87.5% !important; }
         .ui.grid > .row > [class*="fifteen wide mobile"].column, .ui.grid > .column.row > [class*="fifteen wide mobile"].column, .ui.grid > [class*="fifteen wide mobile"].column, .ui.column.grid > [class*="fifteen wide mobile"].column { width: 93.75% !important; }
         .ui.grid > .row > [class*="sixteen wide mobile"].column, .ui.grid > .column.row > [class*="sixteen wide mobile"].column, .ui.grid > [class*="sixteen wide mobile"].column, .ui.column.grid > [class*="sixteen wide mobile"].column { width: 100% !important; }
+        .ui.grid.custom-reserve-future-deal > .row > [class*="six wide"].column, .ui.grid.custom-reserve-future-deal > .row > [class*="five wide"].column{width: 100% !important;margin-bottom: 10px;}
+        .column.custom-comment {margin-bottom: 10px !important;}
+        .ui.grid.custom-reserve-future-deal > .row{padding: 0px;}
     }
 
     /* Tablet Sizing Combinations */

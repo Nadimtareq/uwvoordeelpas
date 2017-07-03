@@ -9,6 +9,7 @@ use Mail;
 use Illuminate\Console\Command;
 use Exception;
 use Setting;
+use DB;
 
 class NewsletterEmail extends Command
 {
@@ -49,7 +50,7 @@ class NewsletterEmail extends Command
     public function handle()
     {
         $commandName = 'newsletter_dealmail';
-         $dateTime=date('Y-m-d H:i:s');
+        $dateTime=date('Y-m-d H:i:s');
         DB::table('crons_log')->insert(['cron_name' => $commandName, 'date_time' => $dateTime]);
         Setting::set('cronjobs.active.'.$commandName, 0);
         if (Setting::get('cronjobs.'.$commandName) == NULL) {

@@ -8,6 +8,7 @@ use App\Models\Reservation;
 use Exception;
 use Storage;
 use Mail;
+use DB;
 use Illuminate\Console\Command;
 use Vsmoraes\Pdf\Pdf;
 

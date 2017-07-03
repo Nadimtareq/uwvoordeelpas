@@ -7,6 +7,7 @@ use App\Models\Transaction;
 use Exception;
 use Setting;
 use Mail;
+use DB;
 
 class Expired extends Command
 {

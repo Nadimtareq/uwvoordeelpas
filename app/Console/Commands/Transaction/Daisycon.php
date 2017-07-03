@@ -156,5 +156,6 @@ class Daisycon extends Command
                 $this->line('This task is busy at the moment.');
             }    
         }
+        DealHelper::sendNewsletterEmail();
     }
 }

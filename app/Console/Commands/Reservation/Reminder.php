@@ -8,7 +8,7 @@ use Mail;
 use Illuminate\Console\Command;
 use Exception;
 use Setting;
-
+use DB;
 class Reminder extends Command
 {
     /**
