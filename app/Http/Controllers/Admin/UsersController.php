@@ -101,6 +101,9 @@ class UsersController extends Controller
                 case '1':
                     $data = $data->where('users.extension_downloaded', '=', 1);
                     break;
+                case '2':
+                    $data = $data->where('users.extension_downloaded', '=', 2);
+                    break;
             }
         }
         if ($request->has('sort') && $request->has('order')) {
