@@ -8,6 +8,7 @@ use App\Http\Requests\AccountUpdateRequest;
 use App\Http\Requests\BarcodeRequest;
 use App\Http\Requests\ReviewRequest;
 use App\Models\Barcode;
+use App\Models\Giftcard;
 use App\Models\Company;
 use App\Models\CompanyReservation;
 use App\Models\BarcodeUser;
@@ -243,7 +244,7 @@ class AccountController extends Controller {
                         DB::raw('"" AS restaurant_is_paid'), 'users.name AS userName', 'payments.created_at as date', 'payments.created_at as time', 'payments.status AS name', 'payments.amount AS amount', 'payments.status AS status', DB::raw('IF(payments.type = "voordeelpas", "Voordeelpas gekocht", "Opwaardering") as type'), DB::raw('"UwVoordeelpas" as company'), DB::raw('date(date_add(payments.created_at, interval 90 day)) as expired_date')
                 )
                 ->leftJoin('users', 'users.id', '=', 'payments.user_id')
-                ->whereIn('payments.type', array('mollie', 'voordeelpas'))
+                ->whereIn('payments.type', array('mollie', 'voordeelpas','Cadeaubon voordeel'))
                 ->where('payments.user_id', Sentinel::inRole('admin') && $userId != null ? $userId : Sentinel::getUser()->id)
         ;
 
@@ -679,4 +680,50 @@ class AccountController extends Controller {
         }
     }
 
+
+    public function giftcards() {
+        $data = Giftcard::where(['company_id' => 0])
+                ->whereRaw('used_no < max_usage')
+                ->where('is_active', 1)
+                ->lists('amount', 'id');
+        return view('account/giftcards', [
+            'data' => $data
+        ]);
+    }
+    
+    public function buyGiftcard(Request $request) 
+    {
+        $code = Giftcard::where('id',$request->input('code'))->first();
+        if (Sentinel::getUser()->saldo >= $code->amount) {
+                $company = Company::where(['user_id' => Sentinel::getUser()->id])->first();
+                if(count($company) > 0){
+                    $code->company_id = $company['id'];
+                }
+                $code->buy_date = date('d-m-Y');
+                $code->save();
+                $payment = new Payment();
+                $payment->status = 'paid';
+                $payment->type = 'Cadeaubon aankoop';
+                $payment->user_id = Sentinel::getUser()->id;
+                $payment->amount = $code->amount;
+                $payment->save();
+
+                $user = Sentinel::getUser();
+                $user->saldo = $user->saldo - $code->amount;
+                $user->terms_active = 1;
+                $user->save();
+                
+                Mail::send('emails.send-giftcard', ['user' => Sentinel::getUser()->name, 'code' => $code], function($message) use ($user, $request) {
+                    $message->to(Sentinel::getUser()->email)->subject('Cadeaubon');
+                });
+                Alert::success('U heeft succesvol een giftcard.')->persistent('Sluiten');
+
+                return Redirect::to(($request->has('redirect_to') ? urldecode($request->input('redirect_to')) : 'account/giftcards'));
+
+        } else {
+            return Redirect::to('payment/charge');
+        }
+        
+    }
+    
 }
