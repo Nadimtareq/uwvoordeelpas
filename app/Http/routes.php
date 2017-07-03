@@ -540,13 +540,14 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', '
     });
 
     # Tables #
-    Route::get('/tables', 'Admin\TablesController@index');
-    Route::get('/tables/create', 'Admin\TablesController@create');
-    Route::post('/tables/store', 'Admin\TablesController@store');
-    Route::get('/tables/edit/{id}', 'Admin\TablesController@edit');
-    Route::get('/tables/show/{id}', 'Admin\TablesController@show');
-    Route::post('/tables/update/{id}', 'Admin\TablesController@update');
-    Route::get('/tables/destroy/{id}', 'Admin\TablesController@destroy');
+    Route::get('tables', 'Admin\TablesController@index');
+    Route::get('tables/create', 'Admin\TablesController@create');
+    Route::post('tables/store', 'Admin\TablesController@store');
+    Route::get('tables/edit/{id}', 'Admin\TablesController@edit');
+    Route::get('tables/show/{id}', 'Admin\TablesController@show');
+    Route::post('tables/update/{id}', 'Admin\TablesController@update');
+    Route::get('tables/destroy/{id}', 'Admin\TablesController@destroy');
+    Route::post('tables/setpriority','Admin\TablesController@setpriority');
 
     # FAQ #
     Route::group(array('prefix' => 'faq'), function () {
