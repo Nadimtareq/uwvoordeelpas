@@ -10,6 +10,7 @@ use Config;
 use Setting;
 use DateTime;
 use Mail;
+use DB;
 use Exception;
 
 class Tradedoubler extends Command

@@ -27,7 +27,7 @@ while ($st->lte($dt)) {
         <a href="#" class="sidebar open">Menu</a>
         <i class="right chevron icon divider"></i>
 
-        <div class="active section">Resturants</div>
+        <div class="active section">Restaurants</div>
     </div></div>
 @inject('discountHelper', 'App\Helpers\DiscountHelper')
 	<div class="tabss">

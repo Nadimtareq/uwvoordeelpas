@@ -14,6 +14,7 @@ use URL;
 use Setting;
 use Sentinel;
 use Mail;
+use DB;
 
 class ThirdParty extends Command
 {
