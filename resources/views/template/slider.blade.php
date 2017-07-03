@@ -306,16 +306,16 @@ $compatible_browser_array = array('Chrome', 'Firefox', 'Opera');
             event.stopImmediatePropagation();
         })
     });
+
     function updateDownloadStatus(){
-        alert(baseUrl);
         $.ajax({
                 url: baseUrl + 'ajax/users/extensiondownloadStatus',
                 method: 'GET',
                 success: function(response) {
-                    alert("Status updated");
                 }
             });
     }
+    
     $(document).ready(function () {
         var ua = navigator.userAgent;
         if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(ua)) {

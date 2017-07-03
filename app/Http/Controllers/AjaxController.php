@@ -27,9 +27,12 @@ use anlutro\cURL\cURL;
 class AjaxController extends Controller 
 {
     public function extensiondownloadStatus(Request $request) {
-
+            $user = Sentinel::getUser();
+            if($user){
+                DB::update('update users set extension_downloaded = 2 where id = ? and extension_downloaded=0', [$user->id]);
+            }
     }
-    
+
     public function usersSetRegio(Request $request) 
     { 
         $preferences = new Preference;
