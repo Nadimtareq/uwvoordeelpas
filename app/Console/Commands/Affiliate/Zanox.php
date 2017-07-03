@@ -15,6 +15,7 @@ use SoapClient;
 use SoapFault;
 use Request;
 use Lang;
+use DB;
 use Zanox\ApiClient;
 use Zanox\Api\Constants;
 use Setting;

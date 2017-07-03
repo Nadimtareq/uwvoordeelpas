@@ -288,24 +288,36 @@ $compatible_browser_array = array('Chrome', 'Firefox', 'Opera');
                 });
             }
             else {
-                sweetAlert(" ", "Sorry momenteel ondersteunen we alleen de browsers: Chrome, Firefox en Opera.");
+                sweetAlert(" ", "Sorry, momenteel ondersteunen we alleen de browsers: Chrome ( PC ), Firefox en Opera. Overige browsers volgen snel.");
+                updateDownloadStatus();
             }
             e.preventDefault();
         });
         if ((is_download_ext == '1') && ($('#section_extension_button').length > 0)) {
             $('#section_extension_button').trigger("click");
         }
-        $('.incompatible_browser_ext').click(function () {
-            sweetAlert(" ", "Sorry momenteel ondersteunen we alleen de browsers: Chrome, Firefox en Opera.");
-        });
-        $('#incompatible_browser_ext').click(function () {
-            sweetAlert(" ", "Sorry momenteel ondersteunen we alleen de browsers: Chrome, Firefox en Opera.");
+        
+        $('#incompatible_browser_ext, .incompatible_browser_ext').click(function () {
+            sweetAlert(" ", "Sorry, momenteel ondersteunen we alleen de browsers: Chrome ( PC ), Firefox en Opera. Overige browsers volgen snel.");
+            updateDownloadStatus();
         });
         $(document).on('click', '#incompatible_browser_ext', function (event) {
-            sweetAlert(" ", "Sorry momenteel ondersteunen we alleen de browsers: Chrome, Firefox en Opera.");
+            sweetAlert(" ", "Sorry, momenteel ondersteunen we alleen de browsers: Chrome ( PC ), Firefox en Opera. Overige browsers volgen snel.");
+           updateDownloadStatus();
             event.stopImmediatePropagation();
         })
     });
+
+    function updateDownloadStatus(){
+        $.ajax({
+                url: baseUrl + 'ajax/users/extensiondownloadStatus',
+                method: 'GET',
+                success: function(response) {
+                    console.log(response);
+                }
+            });
+    }
+    
     $(document).ready(function () {
         var ua = navigator.userAgent;
         if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|mobile|CriOS/i.test(ua)) {

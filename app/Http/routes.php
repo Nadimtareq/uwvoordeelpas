@@ -101,6 +101,7 @@ Route::group(array('prefix' => 'ajax', 'middleware' => 'userInfo'), function() {
     Route::get('available/dates', 'AjaxController@availableDates');
     Route::get('available/reservation', 'AjaxController@availableReservation');
     Route::get('appointments/companies', 'AjaxController@appointmentCompanies');
+    Route::get('users/extensiondownloadStatus', 'AjaxController@extensiondownloadStatus');
     Route::get('faqs', 'AjaxController@faq');
     Route::get('faq/subcategories', 'AjaxController@faqSubCategories');
     Route::get('affiliates', 'AjaxController@affiliates');
@@ -625,6 +626,9 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', '
         Route::post('create', 'Admin\GiftcardController@createAction');
         Route::post('update/{id}', 'Admin\GiftcardController@updateAction');
         Route::post('delete', 'Admin\GiftcardController@deleteAction');
+        Route::get('export', 'Admin\GiftcardController@export');
+        Route::get('import', 'Admin\GiftcardController@import');
+        Route::post('import', 'Admin\GiftcardController@importAction');
     });
 
     /*Pallavi - Giftcard*/

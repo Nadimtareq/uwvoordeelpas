@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Exception;
 use Setting;
 use Mail;
+use DB;
 
 class Reminder extends Command
 {

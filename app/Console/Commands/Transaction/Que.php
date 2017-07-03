@@ -9,6 +9,7 @@ use App\User;
 use Sentinel;
 use Exception;
 use Mail;
+use DB;
 use Setting;
 
 class Que extends Command

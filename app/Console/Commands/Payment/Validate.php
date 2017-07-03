@@ -8,6 +8,7 @@ use App\Models\Payment;
 use Exception;
 use Sentinel;
 use Mail;
+use DB;
 use Mollie_API_Client;
 use App\Models\MailTemplate;
 use Setting;

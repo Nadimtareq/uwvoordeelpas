@@ -13,6 +13,7 @@ use Exception;
 use URL;
 use Setting;
 use Mail;
+use DB;
 
 class DirectDebit extends Command
 {

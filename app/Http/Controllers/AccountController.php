@@ -49,7 +49,8 @@ class AccountController extends Controller {
         if (isset($this->queryString['type'])) {
             unset($this->queryString['type']);
         }
-
+        $this->slugController = 'all-future-deals';
+        $this->limit = $request->input('limit', 5);
         unset($this->queryString['limit']);
     }
 
@@ -244,7 +245,7 @@ class AccountController extends Controller {
                         DB::raw('"" AS restaurant_is_paid'), 'users.name AS userName', 'payments.created_at as date', 'payments.created_at as time', 'payments.status AS name', 'payments.amount AS amount', 'payments.status AS status', DB::raw('IF(payments.type = "voordeelpas", "Voordeelpas gekocht", "Opwaardering") as type'), DB::raw('"UwVoordeelpas" as company'), DB::raw('date(date_add(payments.created_at, interval 90 day)) as expired_date')
                 )
                 ->leftJoin('users', 'users.id', '=', 'payments.user_id')
-                ->whereIn('payments.type', array('mollie', 'voordeelpas'))
+                ->whereIn('payments.type', array('mollie', 'voordeelpas','Cadeaubon voordeel'))
                 ->where('payments.user_id', Sentinel::inRole('admin') && $userId != null ? $userId : Sentinel::getUser()->id)
         ;
 
@@ -484,6 +485,7 @@ class AccountController extends Controller {
         $data = array();
         $user = (Sentinel::check()) ? Sentinel::getUser() : NULL;
         $data = DB::table('future_deals')->select(
+<<<<<<< HEAD
                         'future_deals.id as future_deal_id', 'future_deals.user_id as user_id', 'future_deals.deal_price as future_deal_price', 'future_deals.persons as total_persons', 'future_deals.persons_remain as remain_persons', 'future_deals.expired_at as expired_at'
                 )
                 ->addSelect('companies.id as company_id', 'companies.name as company_name', 'companies.slug as company_slug', 'companies.description as company_disc', 'companies.city')
@@ -502,8 +504,71 @@ class AccountController extends Controller {
                 ->groupby('future_deals.id')->orderBy('future_deals.created_at', 'desc')
                 ->get()
         ;
+=======
+                            'future_deals.id as future_deal_id','future_deals.user_id as user_id','future_deals.deal_price as future_deal_price', 'future_deals.persons as total_persons', 'future_deals.persons_remain as remain_persons', 'future_deals.expired_at as expired_at'
+                    )
+                    ->addSelect('companies.id as company_id', 'companies.name as company_name', 'companies.slug as company_slug', 'companies.description as company_disc', 'companies.city')
+                    ->addSelect('reservations_options.name as deal_name')
+                    ->addSelect('users.name as user_name')
+                    ->addSelect('media.id as media_id', 'media.file_name', 'media.disk', 'media.name as media_name')
+                    ->leftJoin('reservations_options', 'future_deals.deal_id', '=', 'reservations_options.id')
+                    ->leftJoin('users', 'users.id', '=', 'future_deals.user_id')
+                    ->leftJoin('companies', 'reservations_options.company_id', '=', 'companies.id')
+                    ->leftJoin('media', function ($join) {
+                        $join->on('companies.id', '=', 'media.model_id')
+                        ->where('media.model_type', '=', 'App\Models\Company')
+                        ->where('media.collection_name', '=', 'default');
+                    });
+                    
+                     # Filter by month and year
+                    if ($request->has('month') && $request->has('year')) {  
+                        $data = $data->whereMonth('future_deals.expired_at', '=', $request->input('month'))
+                        ->whereYear('future_deals.expired_at', '=', $request->input('year'))
+                        ;
+                    }
+            $data=$data->groupby('future_deals.id')->orderBy('future_deals.expired_at','desc')
+                    ->paginate($this->limit);
+                     # Redirect to last page when page don't exist
+                  /*  if ($request->input('page') > $data->lastPage()) { 
+                        $lastPageQueryString = json_decode(json_encode($request->query()), true);
+                        $lastPageQueryString['page'] = $data->lastPage();
+
+                        return Redirect::to($request->url().'?'.http_build_query($lastPageQueryString));
+                    } */
+
+                    $monthsYears = FutureDeal::select(
+                        DB::raw('month(expired_at) as months, year(expired_at) as years')
+                    )
+                    ->groupBy('years', 'months')
+                    ->orderBy('months', 'asc')
+                    ->get()
+                    ->toArray()
+                    ;
+
+                //    dd($monthsYears);
+                    $month = array();
+                    $years = array();
+                    $monthConvert = Config::get('preferences.months');
+
+                    foreach($monthsYears as $key => $monthYear) {
+                        $month[$monthYear['months']] = $monthConvert[$monthYear['months']];
+                        $years[$monthYear['years']] = $monthYear['years'];
+                    }
+
+                    $queryString = $request->query();
+                    unset($queryString['limit']);
+
+>>>>>>> 497d9f9b98a529c88002281156656a0c46fc05b3
         return view('admin/featuredeals/all-future-deal', [
             'futureDeals' => $data,
+            'currentPage'=>'All Feature deals',
+            'months' => isset($month) ? $month : '',
+            'years' => isset($years) ? $years : '',
+            'monthsYears' => $monthsYears,
+            'paginationQueryString' => $request->query(),
+            'queryString'=> $queryString,
+            'limit' => $this->limit,
+            'slugController' => $this->slugController
         ]);
     }
 
@@ -641,6 +706,10 @@ class AccountController extends Controller {
         }
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 497d9f9b98a529c88002281156656a0c46fc05b3
     public function giftcards() {
         $data = Giftcard::where(['company_id' => 0])
                 ->whereRaw('used_no < max_usage')
@@ -682,5 +751,5 @@ class AccountController extends Controller {
             return Redirect::to('payment/charge');
         }
     }
-
+    
 }

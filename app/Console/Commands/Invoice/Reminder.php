@@ -8,6 +8,7 @@ use App\User;
 use DateTime;
 use DatePeriod;
 use DateInterval;
+use DB;
 
 class Reminder extends Command
 {

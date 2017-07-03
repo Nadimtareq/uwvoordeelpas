@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use Redirect;
 use Sentinel;
+use Validator;
 
 class GiftcardController extends Controller 
 {
@@ -233,7 +234,7 @@ class GiftcardController extends Controller
     }
 
     public function deleteAction(Request $request)
-    {
+    {//print_r($request);die;
         if ($request->has('id')) {
             
 
@@ -256,5 +257,83 @@ class GiftcardController extends Controller
         Alert::success('De gekozen selectie is succesvol verwijderd.')->persistent("Sluiten");
 
         return Redirect::to('admin/'.$this->slugController);
+    }
+    
+    public function export(Request $request)
+    {
+        $data = Giftcard::select(
+            'giftcards.code',
+            'giftcards.amount',
+            'giftcards.max_usage'
+        )
+            ->get()
+        ;
+
+        $excel = App::make('excel');
+        $excel
+            ->create('export-giftcards', function($excel) use($data) {
+                $excel->sheet('Bedrijven UwVoordeelpas', function($sheet) use($data) {
+                    $sheet->fromArray($data);
+                });
+            })
+            ->export('csv')
+        ;
+    }
+
+    public function import()
+    {
+        return view('admin/'.$this->slugController.'/import', [
+            'section' => $this->section, 
+            'slugController' => $this->slugController,
+            'currentPage' => 'Importeer'
+        ]);
+    }
+
+    public function importAction(Request $request)
+    {
+        //echo "Welcome";exit;
+        $fail = false;
+        $giftcards = Giftcard::select(
+            'code'
+        )->get();
+
+        $codes = $giftcards
+            ->map(function ($giftcard) {
+                return $giftcard->code;
+            })->toArray();
+
+        $excel = App::make('excel');
+        $excel
+            ->load($request->file('csv')->getRealPath(), function($reader) use($codes) {
+                $reader->each(function($sheet) use($codes) {
+                    $sheet->each(function($row, $keys) use($codes) {
+                        $data = new Giftcard();
+
+                        if (!in_array($row->code, $codes) && trim($row->code) != '') {
+                            $rules = array(
+                                'code' => 'required|unique:giftcards',
+                                'amount' => 'required|numeric',
+                                'max_usage' => 'required|numeric'
+                            );
+
+                            $validator = Validator::make((array)$row, $rules);
+//                            if ($validator->fails()) {
+//                                $fail = true;
+//                                return redirect()->back()->withInput()->withErrors($validator->errors());
+//                            }else{
+                                $data->code = $row->code;
+                                $data->amount = $row->amount;
+                                $data->max_usage = $row->max_usage;
+                                $data->is_active = 1;
+                                $data->save();
+//                            }
+                        }
+                    });
+                });
+            })
+        ;
+        alert()->success('', 'Uw opdracht is succesvol uitgevoerd.')->persistent('Sluiten');
+        return Redirect::to('admin/giftcards');
+        
     }
 }

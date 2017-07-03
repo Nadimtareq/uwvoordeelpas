@@ -46,14 +46,14 @@
             <label></label>
         </div>
         </th>
-        <th data-slug="name" class="three wide">Position</th>
+        <th data-slug="name" class="three wide">Plaats</th>
         <th data-slug="name" class="three wide">Naam</th>
         <th data-slug="total_amount" class="four wide">Aantal plaatsen</th>
         <th data-slug="total_res" class="four wide">Aantal gasten</th>
         <th data-slug="date_from" class="four wide">Online van</th>
         <th data-slug="date_to" class="four wide">Online tot</th>
         <th data-slug="price_from" class="four wide">prijs van</th>
-        <th data-slug="price" class="four wide">prijs tot</th>
+        <th data-slug="price" class="four wide">prijs voor</th>
         <th data-slug="total_res" class="four wide">Staat</th>
         <th data-slug="news_letter" class="four wide">Nieuwsbrief</th>
         <th data-slug="gasten" class="four wide">Gasten</th>
@@ -83,10 +83,19 @@
                     {{ ($result->total_res)?$result->total_res:0 }}
                 </td>
                 <td>
-                    {{ ($result->date_from)?$result->date_from:'' }}
+                    <?php 
+                    if(isset($result->date_from)){
+                     echo date('d-m-Y', strtotime($result->date_from));
+                    }
+                    ?>
+                    
                 </td>
                 <td>
-                    {{ ($result->date_to)?$result->date_to:'' }}
+                    <?php 
+                    if(isset($result->date_to)){
+                        echo date('d-m-Y', strtotime($result->date_to));
+                    }
+                    ?>                    
                 </td>
                 <td>
                     {{ ($result->price_from)?$result->price_from:'' }}
@@ -103,9 +112,9 @@
                     $contractDateEnd = date('Y-m-d H:i:s', strtotime($result->date_to));
                     $result->date_from . '-' . $result->date_to;
                     if (($currentDate >= $contractDateBegin) && ($currentDate <= $contractDateEnd)) {
-                        echo "Actief";
+                        echo '<i class="icon green checkmark"></i>';
                     } else {
-                        echo "Deactiveren";
+                        echo '<i class="icon red remove"></i>';
                     }
                     ?>
                 </td>

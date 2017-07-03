@@ -15,8 +15,8 @@
                 <button id="removeButton" type="submit" name="action" value="remove" class="ui disabled icon grey button">
                     <i class="trash icon"></i> Verwijderen
                 </button>
+                
             </div>
-
             <div class="sixteen wide mobile eleven wide computer column">
                 <div class="ui grid">
                     <div class="four column row">
@@ -67,7 +67,10 @@
         </div>
     </div>
 
-
+     @if ($userAdmin)
+        <a href="{{ url('admin/giftcards/export') }}" class="ui icon button"><i class="download icon"></i> Exporteer</a>
+        <a href="{{ url('admin/giftcards/import') }}" class="ui icon button"><i class="plus icon"></i> Importeer</a>
+    @endif
     <?php echo Form::open(array('id' => 'formList', 'url' => 'admin/'.$slugController.'/delete', 'method' => 'post')) ?>
         <table class="ui sortable very basic collapsing celled table list" style="width: 100%;">
             <thead>

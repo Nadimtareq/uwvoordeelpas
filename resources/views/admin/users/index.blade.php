@@ -84,6 +84,7 @@
                         <div class="menu">                            
                             <a href="{{ url('admin/users?'.http_build_query(array_add($queryString, 'has_saving', '1'))) }}" data-value="1" class="item">Ja</a>
                             <a href="{{ url('admin/users?'.http_build_query(array_add($queryString, 'has_saving', '0'))) }}" data-value="0" class="item">Nee</a>
+                            <a href="{{ url('admin/users?'.http_build_query(array_add($queryString, 'has_saving', '2'))) }}" data-value="2" class="item">Mislukt</a>
                         </div>
                     </div>
                 </div>

@@ -19,5 +19,6 @@ class TestcronjobController extends Controller
     	mail("rushabhmadhu@gmail.com","croncalled","newslater cron");
     	DealHelper::sendNewsletterEmail();
     	echo "test";
+    	exit;
     }
 }

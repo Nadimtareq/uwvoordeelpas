@@ -8,7 +8,7 @@ use Illuminate\Console\Command;
 use Exception;
 use Setting;
 use Mail;
-
+use DB;
 class Pay extends Command
 {
     /**
