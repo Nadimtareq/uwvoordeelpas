@@ -87,8 +87,7 @@
                     if(isset($result->date_from)){
                      echo date('d-m-Y', strtotime($result->date_from));
                     }
-                    ?>
-                    
+                    ?>                    
                 </td>
                 <td>
                     <?php 
@@ -119,11 +118,13 @@
                     ?>
                 </td>
                 <td>
-                    @if($result->newsletter==0)
-                        {{ "niet toevoegen" }}
-                        @else
-                        {{ "toevoegen" }}
-                    @endif
+                    <?php 
+                    if ($result->newsletter==0) {
+                        echo '<i class="icon green checkmark"></i>';
+                    } else {
+                        echo '<i class="icon red remove"></i>';
+                    }
+                    ?>
                 </td>
                  <td>
                    <?php
