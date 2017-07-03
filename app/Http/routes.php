@@ -297,10 +297,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', '
     Route::group(array('prefix' => 'statistics'), function () {
         Route::get('reservations', 'Admin\StatisticsController@reservations');
         Route::get('search', 'Admin\StatisticsController@search');
-<<<<<<< HEAD
         Route::get('contact', 'Admin\ContactController@index');
-=======
->>>>>>> cf205831833a8dfb30673be3cd7449f4b5e7de2b
     });
 
     Route::group(array('prefix' => 'bans'), function () {
