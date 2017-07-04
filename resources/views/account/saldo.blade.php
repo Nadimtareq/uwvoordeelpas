@@ -123,6 +123,8 @@
                                 Goedgekeurd
                             @elseif ($fetch['restaurant_is_paid'] == 1 OR $fetch['amount'] == 0)
                             Afgehandeld
+                            @elseif ($fetch['status'] == "received")
+                            Ontvangen
                             @else
                             In behandeling
                             @endif
