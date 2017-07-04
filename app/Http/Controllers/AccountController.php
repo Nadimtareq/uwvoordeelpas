@@ -279,7 +279,7 @@ class AccountController extends Controller {
                 )
                 ->leftJoin('users', 'users.id', '=', 'payments.user_id')
                 ->whereIn('payments.type',
-                        array('mollie', 'voordeelpas', 'Cadeaubon voordeel'))
+                        array('mollie', 'voordeelpas', 'Cadeaubon voordeel','Cadeaubon aankoop'))
                 ->where('payments.user_id',
                 Sentinel::inRole('admin') && $userId != null ? $userId : Sentinel::getUser()->id)
         ;

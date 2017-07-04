@@ -5,6 +5,7 @@ use Alert;
 use App;
 use App\Http\Controllers\Controller;
 use App\Models\Giftcard;
+use App\Models\GiftcardUse;
 use App\Models\Company;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
@@ -123,7 +124,6 @@ class GiftcardController extends Controller
         }
         $dataCount = $data->count();
         $data = $data->paginate($request->input('limit', 15));
-        $data->setPath('giftcards');
 
         # Redirect to last page when page don't exist
         if ($request->input('page') > $data->lastPage()) { 
@@ -335,5 +335,35 @@ class GiftcardController extends Controller
         alert()->success('', 'Uw opdracht is succesvol uitgevoerd.')->persistent('Sluiten');
         return Redirect::to('admin/giftcards');
         
+    }
+    
+    public function used(Request $request,$id) {
+        $data = GiftcardUse::select('giftcard_use.created_at','giftcards.code','giftcards.amount','users.name')
+                ->leftjoin('giftcards','giftcards.id', '=', 'giftcard_use.giftcard_id')
+                ->leftjoin('users','users.id', '=', 'giftcard_use.user_id')
+                ->where(['giftcard_id' => $id]);
+        
+        $data = $data->paginate($request->input('limit', 15));
+
+        # Redirect to last page when page don't exist
+        if ($request->input('page') > $data->lastPage()) { 
+            $lastPageQueryString = json_decode(json_encode($request->query()), true);
+            $lastPageQueryString['page'] = $data->lastPage();
+
+            return Redirect::to($request->url().'?'.http_build_query($lastPageQueryString));
+        }
+
+        $queryString = $request->query();
+        unset($queryString['limit']);
+
+        return view('admin/'.$this->slugController.'/used', [
+            'data' => $data, 
+            'slugController' => $this->slugController,
+            'queryString' => $queryString,
+            'paginationQueryString' => $request->query(),
+            'limit' => $request->input('limit', 15),
+            'section' => $this->section, 
+            'currentPage' => 'Gebruik giftcard'
+        ]);
     }
 }
