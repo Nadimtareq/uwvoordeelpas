@@ -507,6 +507,7 @@
                         <label>Logo</label>
                         <?php echo Form::file('logo'); ?><br /><br />
                         <div class="ui one cards">
+                            @if(isset($logoItem) && $logoItem != "")
                             @foreach($logoItem as $id => $images)
                                 <div class="card">
                                     <div class="image">
@@ -527,6 +528,7 @@
                                     </div>
                                 </div>
                             @endforeach
+                            @endif
                         </div>
                     </div>
                     <div class="ui divider"></div>
@@ -537,6 +539,7 @@
                             <?php echo Form::file('pdf[]', array('multiple' => true)); ?><br /><br />
 
                             <div class="ui one cards">
+                                @if(isset($logoItem) && $logoItem != "")
                                 @foreach($documentItems as $id => $doc)
                                     <div class="card">
                                         <div class="content">
@@ -550,6 +553,7 @@
                                         </div>
                                     </div>
                                 @endforeach
+                                @endif
                             </div>
                         </div>
 
@@ -563,6 +567,7 @@
                         <?php echo Form::file('images[]', array('multiple' => true, 'class' => 'multi with-preview')); ?><br /><br />
 
                         <ol class="serialization">
+                            @if(isset($logoItem) && $logoItem != "")
                             @foreach($media as $id => $images)
                                 <li class="ui segment" data-id="{{ $images->id }}">
                                     <img src="{{ url($images->getUrl('thumb')) }}" class="ui image"><br>
@@ -578,6 +583,7 @@
 
                                 </li>
                             @endforeach
+                            @endif
                         </ol>
                     </div>
                 </div>
