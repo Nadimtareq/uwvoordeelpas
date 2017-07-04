@@ -139,7 +139,7 @@
 					@endif
 				@endif
 
-              <p>{!!  $deal->description !!}</p>
+              <p class="hidden-xs">{!!  $deal->description !!}</p>
               @if($count_persons < $deal->total_amount)
 			  <div class="wr">
 			  <?php 
