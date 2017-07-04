@@ -12,6 +12,7 @@ use App\Models\Company;
 use App\Models\CompanyReservation;
 use App\Helpers\CalendarHelper;
 use App\Models\Giftcard;
+use App\Models\GiftcardUse;
 use App\Models\FutureDeal;
 use Carbon\Carbon;
 use Cartalyst\Sentinel\Checkpoints\ThrottlingException;
@@ -561,12 +562,22 @@ class PaymentController extends Controller {
             $oPayment->type = 'Cadeaubon voordeel';
             $oPayment->payment_type = 'giftcard';
             if($oPayment->save()){
+                /*update user balance*/
                 $balance = Sentinel::getUser()->saldo + $code->amount;
                 $oUser = Sentinel::getUserRepository()->findById(Sentinel::getUser()->id);
                 $oUser->saldo = $balance;
                 $oUser->save();
+                /*end update user balance*/
+                /*update used count*/
                 $code->used_no = $code->used_no + 1;
                 $code->save();
+                /*update used count*/
+                /*entry in giftcard_use*/
+                $use = new GiftcardUse();
+                $use->giftcard_id  = $code->id;
+                $use->user_id  = Sentinel::getUser()->id;
+                $use->save();
+                /*entry in giftcard_use*/
                 Alert::success('U heeft succesvol uw saldo opgewaardeerd.')->persistent('Sluiten');
                 return Redirect::to('account/reservations/saldo');
             }else{

@@ -813,7 +813,7 @@ class AccountController extends Controller {
                         ));
                         return Redirect::to('account/reservations');
                     } else {
-                        Alert::warning("Sorry no table availbale right now, please wait a while!!")->persistent('Sluiten');
+                        Alert::warning("Sorry no table available right now, please wait a while!!")->persistent('Sluiten');
                         return back()->withInput();
                     }
                 }
@@ -838,7 +838,7 @@ class AccountController extends Controller {
             'code' => 'required'
         ]);
         $code = Giftcard::where('id', $request->input('code'))->first();
-        
+
         if (Sentinel::getUser()->saldo >= $code->amount) {
             $company = Company::where(['user_id' => Sentinel::getUser()->id])->first();
             if (count($company) > 0) {
