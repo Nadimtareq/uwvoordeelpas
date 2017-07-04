@@ -579,7 +579,7 @@ class RestaurantController extends Controller {
                     $mailtemplate = new MailTemplate();
                     $mailtemplate->sendMail(array(
                         'email' => Sentinel::getUser()->email,
-                        'template_id' => 'new-review-client',
+                        'template_id' => 'new-reservation-client',
                         'company_id' => $company->id,
                         'replacements' => array(
                             '%name%' => Sentinel::getUser()->name,
@@ -595,7 +595,8 @@ class RestaurantController extends Controller {
                         )
                     ));
                     $deal = ReservationOption::find($future_deal->deal_id);
-                    Alert::success('U heeft succesvol 2x de deal: ' . $deal->name . ' gekocht voor een prijs van &euro;' . $future_deal->deal_price . ' <br /><br /> Klik hier als u direct een reservering wilt maken. <br /><br />' . '<span class=\'addthis_sharing_toolbox\'></span>',
+                    $url = URL::to('/account/future-deals');
+                    Alert::success('U heeft succesvol 2x de deal: ' . $deal->name . ' gekocht voor een prijs van &euro;' . $future_deal->deal_price . ' <br /><br /> <a href="'.$url.'">Klik hier als u direct een reservering wilt maken. </a> <br /><br />' . '<span class=\'addthis_sharing_toolbox\'></span>',
                             'Bedankt ' . $user->name
                     )->html()->persistent('Sluiten');
                     $company = Company::find($deal->company_id);
