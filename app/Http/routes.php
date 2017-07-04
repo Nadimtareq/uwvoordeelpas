@@ -629,6 +629,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', '
         Route::get('export', 'Admin\GiftcardController@export');
         Route::get('import', 'Admin\GiftcardController@import');
         Route::post('import', 'Admin\GiftcardController@importAction');
+        Route::get('used/{id}', 'Admin\GiftcardController@used');
     });
 
     /*Pallavi - Giftcard*/
