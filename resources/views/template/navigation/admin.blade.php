@@ -16,6 +16,7 @@
     <li><a href="{{ url('admin/roles') }}" ><i class="material-icons">dvr</i> Rollen</a></li>
     <li><a href="{{ url('admin/barcodes') }}" ><i class="material-icons">crop_landscape</i> Barcodes</a></li>
     <li><a href="{{ url('admin/giftcards') }}" ><i class="material-icons">crop_landscape</i> Giftcards</a></li>
+    <li><a href="{{ url('admin/tables') }}" ><i class="material-icons">crop_landscape</i> Tafelbeheer</a></li>
     <li><a href="{{ url('admin/services') }}" ><i class="material-icons">room_service</i> Diensten</a></li>
     <li><a href="{{ url('admin/preferences') }}" ><i class="material-icons">assignment_turned_in</i> Voorkeuren</a></li>
     <li><a href="{{ url('admin/reviews') }}" ><i class="material-icons">plus_one</i> Recensies</a></li>
