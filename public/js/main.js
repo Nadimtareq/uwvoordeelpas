@@ -12,6 +12,10 @@ $(document).ready(function ($) {
         $('#closeMenu').on('click',function(){   
          $('#slide-out').css('right','-300px');
          $('#sidenav-overlay').css('opacity','0');
+         $(".drag-target").attr('right','0');
+         $(".drag-target").removeAttr('left');
+         $(".drag-target").attr('width','10px');
+         $(".drag-target").attr('height','0px');
      });
 
 
