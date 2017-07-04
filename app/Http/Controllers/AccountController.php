@@ -686,7 +686,11 @@ class AccountController extends Controller {
     }
 
     public function buyGiftcard(Request $request) {
+        $this->validate($request, [
+            'code' => 'required'
+        ]);
         $code = Giftcard::where('id', $request->input('code'))->first();
+        
         if (Sentinel::getUser()->saldo >= $code->amount) {
             $company = Company::where(['user_id' => Sentinel::getUser()->id])->first();
             if (count($company) > 0) {
