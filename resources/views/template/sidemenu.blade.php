@@ -2,7 +2,6 @@
 
 <ul id="slide-out" class="side-nav2 right-aligned" style="overflow:auto" >
 		<li><a href="{{ url('news') }}"><i class="material-icons">assignment</i> Nieuws</a></li>
-		<li><a href="{{ url('account/giftcards') }}"><i class="material-icons">assignment</i> Koop een cadeaubon</a></li>
 		<li><a href="{{ url('tegoed-sparen') }}"><i class="material-icons">monetization_on</i> Tegoed sparen</a></li>
 		<li><a href="{{ url('voordeelpas/buy') }}"><i class="material-icons">credit_card</i> Voordeelpas</a></li>
 		 @if($userCompany OR $userWaiter)
@@ -12,6 +11,7 @@
 		@endif
 
 		<li><a href="#" class="item search-full-open"><i class="material-icons">search</i> Zoeken</a></li>
+		<li><a href="{{ url('account/giftcards') }}"><i class="material-icons">assignment</i> Koop een cadeaubon</a></li>
 		@if($userAuth)
 
 			@if( $userCompany != 1 && $userWaiter != 1 )

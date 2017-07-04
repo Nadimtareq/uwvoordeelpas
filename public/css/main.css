@@ -809,6 +809,14 @@ header.nav li a:hover {
 
 
 }
+@media only screen and (min-width : 320px) and (max-width : 767px) {
+p.hidden-xs + p {
+    display: none;
+}
+.title {
+    white-space: inherit !important;
+}
+}
 
 @media only screen and (min-width: 768px){
 	.container {
@@ -4316,7 +4324,6 @@ img.thumbnails{
 @media(min-width: 320px) and (max-width: 800px){
     .left_side .bx-wrapper img{
         width: 100%;
-
     }
     .bx-viewport{
         height: 210px !important;

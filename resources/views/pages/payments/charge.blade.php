@@ -65,10 +65,10 @@
         <div class="two field">
     <button class="ui button" type="submit">Saldo opwaarderen</button>
         </div>
-    <?php echo Form::close(); ?>
         <div class="two field">
     <a href="{{ url('payment/giftcode')}}"><button class="ui button" type="button">Verzilver kadokaart</button></a>
         </div>
     </div>
+    <?php echo Form::close(); ?>
 </div>
 @stop
