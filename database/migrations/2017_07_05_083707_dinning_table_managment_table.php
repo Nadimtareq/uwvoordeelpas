@@ -11,7 +11,7 @@ class DinningTableManagmentTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::table('dinning_tables',
+        Schema::create('dinning_tables',
                 function (Blueprint $table) {
             $table->increments('id');
             $table->string('table_number');
