@@ -62,7 +62,7 @@
 						<?php
 						echo Form::text(
 							'date_from',
-							$data->date_from,
+							date('d M,Y',strtotime($data->date_from)),
 							array(
 								'class' => 'datepicker',
 								'placeholder' => 'Selecteer een datum'
@@ -80,7 +80,7 @@
 							<?php
 							echo Form::text(
 								'date_to',
-								$data->date_to,
+								date('d M,Y',strtotime($data->date_to)),
 								array(
 									'class' => 'datepicker',
 									'placeholder' => 'Selecteer een datum'
@@ -100,7 +100,7 @@
 								<?php
 								echo Form::text(
 									'time_from',
-									$data->time_from,
+									date('H:i',strtotime($data->time_from)),
 									array(
 										'class' => 'timepicker',
 										'placeholder' => 'Selecteer een tijd'
@@ -118,7 +118,7 @@
 									<?php
 									echo Form::text(
 										'time_to',
-										$data->time_to,
+										date('H:i',strtotime($data->time_to)),
 										array(
 											'class' => 'timepicker',
 											'placeholder' => 'Selecteer een tijd'
