@@ -1,3 +1,4 @@
+
 @foreach($data as $data)
 <tr>
     <td>
@@ -12,4 +13,5 @@
     <td>{{ $data->content }}</td>
     {{--<td><a href="{{ url('admin/'.$slugController.'/update/'.$data->id) }}" class="ui label"><i class="pencil icon"></i> Bewerk</a></td>--}}
 </tr>
+
 @endforeach

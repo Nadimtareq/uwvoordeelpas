@@ -1,6 +1,7 @@
 <?php namespace App\Presenter;
 
-use Illuminate\Pagination\BootstrapThreePresenter;
+//use Illuminate\Pagination\BootstrapThreePresenter;
+use Illuminate\Contracts\Pagination\Presenter
 
 class Pagination extends BootstrapThreePresenter
 {
