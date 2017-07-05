@@ -22,7 +22,7 @@ class CreateGiftcardTable extends Migration {
             $table->integer('used_no');
             $table->integer('company_id');
             $table->integer('is_active');
-            $table->integer('buy_date',25);
+            $table->string('buy_date',25);
             $table->timestamps();
         });
         }
