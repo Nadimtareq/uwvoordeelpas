@@ -25,7 +25,7 @@
 
     <div class="ui divider"></div>
 
-    <p>Hier kunt u uw saldo opwaarderen, bij het klikken op 'Saldo opwaarderen' wordt u doorgeleid naar de betaalpagina.</p>
+    <p>Hier kunt u uw giftcard verzilveren. Voer uw code in en klik op de Verzilveren knop.</p>
     
 
     <?php echo Form::open(array('id' => 'formList', 'url' => 'payment/paygiftcard', 'method' => 'post', 'class' => 'ui form')) ?>
@@ -42,7 +42,7 @@
         </div>
     </div>
 
-    <button class="ui button" type="submit">Saldo opwaarderen</button>
+    <button class="ui button" type="submit">Verzilveren</button>
     <?php echo Form::close(); ?>
 </div>
 @stop
