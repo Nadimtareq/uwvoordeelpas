@@ -16,7 +16,7 @@ class DinningTableManagmentTable extends Migration {
             Schema::table('dinning_tables',
                     function (Blueprint $table) {
                 $table->increments('id');
-                $table->string('table_number')->unsigned();
+                $table->string('table_number');
                 $table->integer('comp_id')->unsigned();
                 $table->integer('seating')->unsigned();
                 $table->string('description');
