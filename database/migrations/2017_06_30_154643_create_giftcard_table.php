@@ -3,26 +3,28 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGiftcardTable extends Migration
-{
+class CreateGiftcardTable extends Migration {
+
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
-        Schema::create('giftcards', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('code',255);
-            $table->integer('amount',5);
-            $table->integer('max_usage');
-            $table->integer('used_no');
-            $table->integer('company_id');
-            $table->integer('is_active');
-            $table->integer('buy_date',25);
-            $table->timestamps();
-        });
+    public function up() {
+        if (!Schema::hasTable('giftcards')) {
+            Schema::create('giftcards',
+                    function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('code', 255);
+                $table->integer('amount', 5);
+                $table->integer('max_usage');
+                $table->integer('used_no');
+                $table->integer('company_id');
+                $table->integer('is_active');
+                $table->integer('buy_date', 25);
+                $table->timestamps();
+            });
+        }
     }
 
     /**
@@ -30,8 +32,8 @@ class CreateGiftcardTable extends Migration
      *
      * @return void
      */
-    public function down()
-    {
+    public function down() {
         Schema::dropIfExists('giftcards');
     }
+
 }
