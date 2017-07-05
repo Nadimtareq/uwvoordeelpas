@@ -20,6 +20,7 @@ class DinningTableManagmentTable extends Migration {
                 $table->integer('comp_id')->unsigned();
                 $table->integer('seating')->unsigned();
                 $table->string('description');
+                $table->string('release_time')->nullable();
                 $table->integer('priority')->unsigned();
                 $table->integer('duration')->unsigned();
                 $table->integer('status')->unsigned();
