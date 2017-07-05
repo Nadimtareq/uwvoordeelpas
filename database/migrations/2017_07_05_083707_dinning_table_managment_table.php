@@ -11,19 +11,23 @@ class DinningTableManagmentTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::table('dinning_tables',
-                function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('table_number');
-            $table->integer('comp_id');
-            $table->integer('seating');
-            $table->string('description');
-            $table->integer('priority');
-            $table->integer('duration');
-            $table->integer('status');
-            $table->timestamp('created_at');
-            $table->string('updated_at');
-        });
+
+        if (!Schema::hasTable('dinning_tables')) {
+            Schema::table('dinning_tables',
+                    function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('table_number');
+                $table->integer('comp_id');
+                $table->integer('seating');
+                $table->string('description');
+                $table->integer('priority');
+                $table->integer('duration');
+                $table->integer('status');
+                $table->timestamp('created_at');
+                $table->string('updated_at');
+            });
+        }
+
     }
 
     /**
