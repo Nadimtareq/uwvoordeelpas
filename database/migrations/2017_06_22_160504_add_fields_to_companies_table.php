@@ -13,7 +13,9 @@ class AddFieldsToCompaniesTable extends Migration
     public function up()
     {
         Schema::table('companies',function(Blueprint $table){
-            $table->integer('price_per_guest');
+            if(!Schema::hasColumn('companies', 'price_per_guest')){
+                $table->double('price_per_guest');
+            } 
         });
     }
 
@@ -25,7 +27,9 @@ class AddFieldsToCompaniesTable extends Migration
     public function down()
     {
         Schema::table('companies',function($table){
-            $table->dropColumn('price_per_guest');
+            if(Schema::hasColumn('companies', 'price_per_guest')){
+                $table->double('price_per_guest');
+            } 
         });
     }
 }

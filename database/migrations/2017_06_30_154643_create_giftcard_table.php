@@ -12,6 +12,7 @@ class CreateGiftcardTable extends Migration
      */
     public function up()
     {
+        if (!Schema::hasTable('giftcard_use')) {
         Schema::create('giftcards', function (Blueprint $table) {
             $table->increments('id');
             $table->string('code',255);
@@ -23,6 +24,7 @@ class CreateGiftcardTable extends Migration
             $table->integer('buy_date',25);
             $table->timestamps();
         });
+        }
     }
 
     /**

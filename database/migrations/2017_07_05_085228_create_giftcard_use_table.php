@@ -12,13 +12,15 @@ class CreateGiftcardUseTable extends Migration
      */
     public function up()
     {
-        Schema::create('giftcard_use', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('giftcard_id');
-            $table->integer('user_id');
-            $table->integer('is_active');
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('giftcard_use')) {
+            Schema::create('giftcard_use', function (Blueprint $table) {
+                $table->increments('id');
+                $table->integer('giftcard_id');
+                $table->integer('user_id');
+                $table->integer('is_active');
+                $table->timestamps();
+            });
+        }
     }
 
     /**
@@ -28,6 +30,6 @@ class CreateGiftcardUseTable extends Migration
      */
     public function down()
     {
-        Schema::drop('giftcard_use');
+        Schema::dropIfExists('giftcard_use');
     }
 }
