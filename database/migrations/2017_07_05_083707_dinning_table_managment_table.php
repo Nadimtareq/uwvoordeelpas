@@ -13,7 +13,7 @@ class DinningTableManagmentTable extends Migration {
     public function up() {
 
         if (!Schema::hasTable('dinning_tables')) {
-            Schema::table('dinning_tables',
+            Schema::create('dinning_tables',
                     function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('table_number');
