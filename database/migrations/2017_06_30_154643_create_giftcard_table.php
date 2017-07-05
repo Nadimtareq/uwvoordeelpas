@@ -17,7 +17,7 @@ class CreateGiftcardTable extends Migration {
         Schema::create('giftcards', function (Blueprint $table) {
             $table->increments('id');
             $table->string('code',255);
-            $table->integer('amount',5)->unsigned();
+            $table->integer('amount')->unsigned();
             $table->integer('max_usage')->unsigned();
             $table->integer('used_no')->unsigned();
             $table->integer('company_id')->unsigned();
