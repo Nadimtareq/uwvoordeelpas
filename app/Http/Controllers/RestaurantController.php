@@ -65,16 +65,14 @@ class RestaurantController extends Controller {
                                 if ($key == 0) {
                                     $query->where(function ($subQuery) use($regio) {
                                         $subQuery
-                                        ->where('regio', 'REGEXP',
-                                                '"[[:<:]]' . $regio . '[[:>:]]"')
+                                        ->where('regio', 'REGEXP', '"[[:<:]]' . $regio . '[[:>:]]"')
                                         ->orWhere('regio', '=', $regio)
                                         ;
                                     });
                                 } else {
                                     $query->orWhere(function ($subQuery) use($regio) {
                                         $subQuery
-                                        ->where('regio', 'REGEXP',
-                                                '"[[:<:]]' . $regio . '[[:>:]]"')
+                                        ->where('regio', 'REGEXP', '"[[:<:]]' . $regio . '[[:>:]]"')
                                         ->orWhere('regio', '=', $regio)
                                         ;
                                     });
@@ -82,8 +80,7 @@ class RestaurantController extends Controller {
                             }
                         } else {
                             $query
-                            ->where('regio', 'REGEXP',
-                                    '"[[:<:]]' . $company->regio . '[[:>:]]"')
+                            ->where('regio', 'REGEXP', '"[[:<:]]' . $company->regio . '[[:>:]]"')
                             ->orWhere('regio', '=', $company->regio)
                             ;
                         }
@@ -127,8 +124,7 @@ class RestaurantController extends Controller {
                 'data-type' => 'audio',
             ];
 
-            return view('pages/restaurant',
-                    [
+            return view('pages/restaurant', [
                 'attributes' => $attributes,
                 'companies' => $companies,
                 'preferences' => $preferences,
@@ -137,8 +133,7 @@ class RestaurantController extends Controller {
                 'deals' => $deals,
                 'news' => $news,
                 'iframe' => $request->has('iframe'),
-                'reservationTimesArray' => (isset($reservationTimesArray) ? $reservationTimesArray
-                            : array()),
+                'reservationTimesArray' => (isset($reservationTimesArray) ? $reservationTimesArray : array()),
                 'tomorrowArray' => (isset($tomorrowArray) ? $tomorrowArray : array()),
                 'reviews' => $reviews,
                 'reviewModel' => new Review,
@@ -160,11 +155,9 @@ class RestaurantController extends Controller {
         ;
 
         if ($company) {
-            $websiteSettings = json_decode(json_encode(Setting::get('website')),
-                    true);
+            $websiteSettings = json_decode(json_encode(Setting::get('website')), true);
 
-            return view('pages/restaurant/landingpage',
-                    [
+            return view('pages/restaurant/landingpage', [
                 'websiteSettings' => $websiteSettings,
                 'company' => $company,
                 'restaurantUrl' => URL::to('restaurant/' . $company['slug'] . '?open_popup_res=1'),
@@ -184,18 +177,15 @@ class RestaurantController extends Controller {
             $this->validate($request, []);
 
             $request->session()->flash('contact', 1);
-            $request->session()->flash('success_message',
-                    'Uw bericht is succesvol verzonden.  Wij hopen u zo snel mogelijk antwoord te kunnen geven.');
+            $request->session()->flash('success_message', 'Uw bericht is succesvol verzonden.  Wij hopen u zo snel mogelijk antwoord te kunnen geven.');
 
             $data = array(
                 'request' => $request,
                 'company' => $company
             );
 
-            Mail::send('emails.contact', $data,
-                    function ($message) use ($company, $request) {
-                $message->to((trim($company->contact_email) == '' ? $company->email
-                                    : $company->contact_email))->subject($request->input('subject'));
+            Mail::send('emails.contact', $data, function ($message) use ($company, $request) {
+                $message->to((trim($company->contact_email) == '' ? $company->email : $company->contact_email))->subject($request->input('subject'));
             });
 
             return Redirect::to('restaurant/' . $slug);
@@ -231,8 +221,7 @@ class RestaurantController extends Controller {
                                  <span class=\'ui star disabled no-rating rating\' data-rating=\'' . $request->input('decor') . '\'></span><br /><br />
                                  Klopt dit niet? <a href=\'' . url('account/reviews/edit/' . $data->id) . '\'>Klik hier om uw recensie aan te passen.</a>';
 
-            Alert::success(preg_replace('/[\n\r]/', '', $successMessage),
-                    'Bedankt')->html()->persistent('Sluiten');
+            Alert::success(preg_replace('/[\n\r]/', '', $successMessage), 'Bedankt')->html()->persistent('Sluiten');
 
             $mailtemplate = new MailTemplate();
 
@@ -294,15 +283,13 @@ class RestaurantController extends Controller {
                             )
             );
 
-            return view('pages/restaurant/widgets/calendar',
-                    [
+            return view('pages/restaurant/widgets/calendar', [
                 'company' => $company,
                 'reservationTimesArray' => $reservationTimesArray,
             ]);
         } else {
             if (Sentinel::check() && (Sentinel::inRole('admin') OR Sentinel::inRole('bedrijf'))) {
-                return view('pages/restaurant/widgets/error',
-                        [
+                return view('pages/restaurant/widgets/error', [
                     'id' => $company->id,
                     'slug' => $slug
                 ]);
@@ -318,8 +305,7 @@ class RestaurantController extends Controller {
 
         $mediaItems = NULL;
         $company = Company::with('media')->select(
-                        'id', 'slug', 'name', 'kitchens', 'days', 'discount',
-                        'preferences', 'allergies'
+                        'id', 'slug', 'name', 'kitchens', 'days', 'discount', 'preferences', 'allergies'
                 )
                 ->where('slug', '=', $slug)
                 ->where('no_show', '=', 0)
@@ -330,13 +316,11 @@ class RestaurantController extends Controller {
                 if ($deal) {
                     $mediaItems = $company->getMedia('default');
                 } else {
-                    alert()->error('',
-                            'Het is niet mogelijk om op dit tijdstip te reserveren of er zijn geen plaatsen beschikbaar.')->html()->persistent('Sluiten');
+                    alert()->error('', 'Het is niet mogelijk om op dit tijdstip te reserveren of er zijn geen plaatsen beschikbaar.')->html()->persistent('Sluiten');
                     return Redirect::to('/');
                 }
             } else {
-                alert()->error('',
-                        'Het is niet mogelijk om op dit tijdstip te reserveren of er zijn geen plaatsen beschikbaar.')->html()->persistent('Sluiten');
+                alert()->error('', 'Het is niet mogelijk om op dit tijdstip te reserveren of er zijn geen plaatsen beschikbaar.')->html()->persistent('Sluiten');
                 return Redirect::to('/');
             }
             if ($request->isMethod('post')) {
@@ -374,8 +358,7 @@ class RestaurantController extends Controller {
                     }
                 }
             }
-            return view('pages/restaurant/future-deal',
-                    [
+            return view('pages/restaurant/future-deal', [
                 'company' => $company,
                 'deal' => $deal,
                 'mediaItems' => $mediaItems,
@@ -402,18 +385,15 @@ class RestaurantController extends Controller {
                 ->first();
         if ($company) {
             if ($deal_id) {
-                $deal = ReservationOption::where([['id', '=', $deal_id], ['company_id',
-                                '=', $company->id]])->first();
+                $deal = ReservationOption::where([['id', '=', $deal_id], ['company_id', '=', $company->id]])->first();
                 /* echo "<pre>";
                   print_r($deal);exit; */
                 if (!$deal) {
-                    alert()->error('',
-                            'Het is niet mogelijk om op dit tijdstip te reserveren of er zijn geen plaatsen beschikbaar.')->html()->persistent('Sluiten');
+                    alert()->error('', 'Het is niet mogelijk om op dit tijdstip te reserveren of er zijn geen plaatsen beschikbaar.')->html()->persistent('Sluiten');
                     return Redirect::to('/');
                 }
             } else {
-                alert()->error('',
-                        'Het is niet mogelijk om op dit tijdstip te reserveren of er zijn geen plaatsen beschikbaar.')->html()->persistent('Sluiten');
+                alert()->error('', 'Het is niet mogelijk om op dit tijdstip te reserveren of er zijn geen plaatsen beschikbaar.')->html()->persistent('Sluiten');
                 return Redirect::to('/');
             }
 
@@ -421,27 +401,23 @@ class RestaurantController extends Controller {
 
                 if (Sentinel::check()) {
                     $user = Sentinel::getUser();
-                    $validator = Validator::make($request->all(),
-                                    [
+                    $validator = Validator::make($request->all(), [
                                 'persons' => 'required',
                                 'av' => 'accepted'
-                                    ],
-                                    [
+                                    ], [
                                 'persons.required' => 'Het aantal personen moet minimaal 1 persoon zijn',
                                 'persons.numeric' => 'Het aantal personen moet numeriek zijn.',
                                 'persons.min' => 'Het aantal personen moet minimaal 1 persoon zijn.',
                                 'av.accepted' => 'HELAAS, U bent vergeten om de algemene voorwaarden te accepteren',
                     ]);
                 } else {
-                    $validator = Validator::make($request->all(),
-                                    [
+                    $validator = Validator::make($request->all(), [
                                 'persons' => 'required',
                                 'email' => 'required|email',
                                 'name' => 'required',
                                 'phone' => 'required|min:10',
                                 'av' => 'accepted'
-                                    ],
-                                    [
+                                    ], [
                                 'email.required' => 'U bent vergeten om een e-mailadres in te vullen.',
                                 'email.email' => 'Uw opgegeven e-mailadres is ongeldig.',
                                 'phone.required' => 'U bent vergeten om een telefoonnummer in te vullen.',
@@ -512,8 +488,7 @@ class RestaurantController extends Controller {
 
                 if ($enough_balance && !$rest_amount) {
 
-                    $fd_exists = FutureDeal::where('deal_id', $deal_id)->where('status',
-                                    'purchased')->where('user_id', $user->id)->first();
+                    $fd_exists = FutureDeal::where('deal_id', $deal_id)->where('status', 'purchased')->where('user_id', $user->id)->first();
 
                     if ($fd_exists) {
 
@@ -533,8 +508,7 @@ class RestaurantController extends Controller {
                         $future_deal->user_discount = $user_saldo;
                         $future_deal->extra_pay = $rest_amount;
                         $future_deal->purchased_date = $current_date;
-                        $future_deal->expired_at = date('Y-m-d',
-                                strtotime($current_date . ' + ' . $future_expire_days . ' days'));
+                        $future_deal->expired_at = date('Y-m-d', strtotime($current_date . ' + ' . $future_expire_days . ' days'));
 
                         if (!$enough_balance && $rest_amount) {
                             $future_deal->status = "pending";
@@ -555,8 +529,7 @@ class RestaurantController extends Controller {
                     $future_deal->user_discount = $user_saldo;
                     $future_deal->extra_pay = $rest_amount;
                     $future_deal->purchased_date = $current_date;
-                    $future_deal->expired_at = date('Y-m-d',
-                            strtotime($current_date . ' + ' . $future_expire_days . ' days'));
+                    $future_deal->expired_at = date('Y-m-d', strtotime($current_date . ' + ' . $future_expire_days . ' days'));
 
                     if (!$enough_balance && $rest_amount) {
                         $future_deal->status = "pending";
@@ -570,8 +543,7 @@ class RestaurantController extends Controller {
 
                 if (!$enough_balance && $rest_amount) {
 
-                    return view('pages/discount/extra-pay',
-                            array(
+                    return view('pages/discount/extra-pay', array(
                         'amount' => $rest_amount,
                         'future_deal_id' => $future_deal->id
                     ));
@@ -595,8 +567,7 @@ class RestaurantController extends Controller {
                         )
                     ));
                     $deal = ReservationOption::find($future_deal->deal_id);
-                    Alert::success('U heeft succesvol 2x de deal: ' . $deal->name . ' gekocht voor een prijs van &euro;' . $future_deal->deal_price . ' <br /><br /> Klik hier als u direct een reservering wilt maken. <br /><br />' . '<span class=\'addthis_sharing_toolbox\'></span>',
-                            'Bedankt ' . $user->name
+                    Alert::success('U heeft succesvol 2x de deal: ' . $deal->name . ' gekocht voor een prijs van &euro;' . $future_deal->deal_price . ' <br /><br /> Klik hier als u direct een reservering wilt maken. <br /><br />' . '<span class=\'addthis_sharing_toolbox\'></span>', 'Bedankt ' . $user->name
                     )->html()->persistent('Sluiten');
                     $company = Company::find($deal->company_id);
                     return Redirect::to('restaurant/' . $company->slug);
@@ -616,8 +587,8 @@ class RestaurantController extends Controller {
         }
     }
 
-    public function getUnwantedWords(Request $request) {
-        $words = explode(" ", $request->content);
+    public function getUnwantedWords(Request $request){
+        $words = explode(" ",$request->content);
         foreach ($words as $word) {
             $unwanted[] = CompanyReservation::getUnwantedWords($word);
         }
