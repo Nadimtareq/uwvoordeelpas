@@ -160,6 +160,7 @@
                     $getRec        = HomeController::getPersons($deal->id);
                     $count_persons = $getRec[0]->total_persons;
                 ?>
+                
 			   @if($deal->price_from >= 1)
 			   <span class="price">			    
 			     &euro; {{ $deal->price_from }}
