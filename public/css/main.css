@@ -3853,9 +3853,9 @@ ul.side-nav2{
 	 position:relative;
     /*display: none;*/
 }
-.menu .left_m{
+.menu .right_m, .menu .left_m{
     float: none;
-    width: 100%;
+    width: 100% !important;
     margin: 0;
 }
 .menu .left_m img{
