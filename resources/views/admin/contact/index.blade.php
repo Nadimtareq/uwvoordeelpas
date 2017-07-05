@@ -1,4 +1,3 @@
-
 @extends('template.theme')
 
 @section('scripts')
