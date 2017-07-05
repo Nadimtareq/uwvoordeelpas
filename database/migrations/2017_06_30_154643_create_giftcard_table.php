@@ -15,13 +15,13 @@ class CreateGiftcardTable extends Migration {
     {
         if (!Schema::hasTable('giftcards')) {
         Schema::create('giftcards', function (Blueprint $table) {
-            $table->integer('id')->unsigned();
+            $table->increments('id');
             $table->string('code',255);
-            $table->integer('amount',5);
-            $table->integer('max_usage');
-            $table->integer('used_no');
-            $table->integer('company_id');
-            $table->integer('is_active');
+            $table->integer('amount',5)->unsigned();
+            $table->integer('max_usage')->unsigned();
+            $table->integer('used_no')->unsigned();
+            $table->integer('company_id')->unsigned();
+            $table->integer('is_active')->unsigned();
             $table->string('buy_date',25);
             $table->timestamps();
         });

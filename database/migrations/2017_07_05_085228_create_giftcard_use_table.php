@@ -15,9 +15,9 @@ class CreateGiftcardUseTable extends Migration
         if (!Schema::hasTable('giftcard_use')) {
             Schema::create('giftcard_use', function (Blueprint $table) {
                 $table->increments('id');
-                $table->integer('giftcard_id');
-                $table->integer('user_id');
-                $table->integer('is_active');
+                $table->integer('giftcard_id')->unsigned();
+                $table->integer('user_id')->unsigned();
+                $table->integer('is_active')->unsigned();
                 $table->timestamps();
             });
         }
