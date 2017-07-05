@@ -59,13 +59,13 @@
             <th data-slug="disabled" class="disabled">
                 <div class="ui master checkbox"><input type="checkbox"></div>
             </th>
-            <th data-slug="created_at" class="four wide">Gebruikersnaam</th>
-            <th data-slug="amount" class="two wide">Deal naam</th>
-            <th data-slug="name" class="three wide">Bedrijfsnaam</th>
-            <th data-slug="name" class="three wide">Deal bedrag</th>
+            <th data-slug="user_name" class="four wide">Gebruikersnaam</th>
+            <th data-slug="company_name" class="two wide">Deal naam</th>
+            <th data-slug="future_deal_price" class="three wide">Bedrijfsnaam</th>
+            <th data-slug="expired_at" class="three wide">Deal bedrag</th>
             <th data-slug="mollie_id" class="two wide">Vervaldatum</th>
-            <th data-slug="mollie_id" class="two wide">Totaal persoon</th>
-            <th data-slug="payment_type" class="two wide">Blijf persoon</th>
+            <th data-slug="total_persons" class="two wide">Totaal persoon</th>
+            <!-- <th data-slug="payment_type" class="two wide">Blijf persoon</th> -->
         </tr>
     </thead>
     <tbody class="list search">
@@ -84,7 +84,7 @@
         <td>&euro; {{ $futureDeal->future_deal_price }}</td>
         <td>{{ date('d-m-Y', strtotime($futureDeal->expired_at)) }}</td>
         <td>{{ $futureDeal->total_persons }}</td>
-        <td>{{ $futureDeal->remain_persons }}</td>        
+        <!-- <td>{{ $futureDeal->remain_persons }}</td>        -->
     </tr>
     @endforeach
     @else

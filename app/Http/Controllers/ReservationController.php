@@ -246,6 +246,9 @@ class ReservationController extends Controller {
 
                 if ($tblNo) {
 
+                    $resTime = date('H:i', strtotime($request->input('time'))) . ':00';
+                    $resDate = date('Y-m-d', strtotime($request->input('date')));
+
                     // Add a reservation
                     if ($enough_balance) {
                         $data = new Reservation;
@@ -253,9 +256,9 @@ class ReservationController extends Controller {
                         $data = new TempReservation;
                         $data->rest_pay = $rest_amount;
                     }
-                    $data->date = date('Y-m-d',
-                            strtotime($request->input('date')));
-                    $data->time = date('H:i', strtotime($request->input('time'))) . ':00';
+
+                    $data->date = $resDate;
+                    $data->time = $resTime;
                     $data->persons = $persons;
                     $data->company_id = $company->id;
                     $data->user_id = $user->id;
@@ -280,9 +283,16 @@ class ReservationController extends Controller {
                             1 ? 'reserved-pending' : 'reserved');
                     $data->save();
 
+                    $checkInTime = strtotime($resDate . " " . $resTime);
+
+                    $checkOutTime = $checkInTime + ($tblNo['duration']*60);
+                    $release_time = date("Y-m-d H:i:s", $checkOutTime);
+
                     $table = Table::find($tblNo['id']);
                     $table->status = '1';
+                    $table->release_time = $release_time;
                     $table->save();
+                    
                 } else {
 
                     Alert::warning("Sorry no table available right now, please wait a while!!")->persistent('Sluiten');
