@@ -2,7 +2,12 @@
 
 @section('scripts')
 @include('admin.template.editor')
-
+<style>
+    .user-image{
+        width: 120px;
+        height: 100px;
+    }
+</style>
 <script type="text/javascript">
 	$(document).ready(function() {
 		closeBrowser();
@@ -28,7 +33,7 @@
 					<label>Image</label>
 					{{ Form::file('image',['class'=>'btn btn-file']) }}
                                         @if($data->image != '')
-                                        <div class="image">
+                                        <div class="user-image">
                                             <img src="{{ url('images/deals/'.$data->image) }}">
                                         </div>
                                         @endif
