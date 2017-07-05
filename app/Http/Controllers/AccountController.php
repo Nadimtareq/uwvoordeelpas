@@ -279,7 +279,7 @@ class AccountController extends Controller {
                 )
                 ->leftJoin('users', 'users.id', '=', 'payments.user_id')
                 ->whereIn('payments.type',
-                        array('mollie', 'voordeelpas', 'Cadeaubon voordeel','Cadeaubon aankoop'))
+                        array('mollie', 'voordeelpas', 'Cadeaubon voordeel', 'Cadeaubon aankoop'))
                 ->where('payments.user_id',
                 Sentinel::inRole('admin') && $userId != null ? $userId : Sentinel::getUser()->id)
         ;
@@ -754,11 +754,15 @@ class AccountController extends Controller {
 
                     if ($tblNo) {
 
-                        $data = new Reservation;
-                        $data->date = date('Y-m-d',
-                                strtotime($request->input('date')));
-                        $data->time = date('H:i',
+                        $resTime = date('H:i',
                                         strtotime($request->input('time'))) . ':00';
+
+                        $resDate = date('Y-m-d',
+                                strtotime($request->input('date')));
+
+                        $data = new Reservation;
+                        $data->date = $resDate;
+                        $data->time = $resTime;
                         $data->persons = $persons;
                         $data->company_id = $company->id;
                         $data->user_id = $user->id;
@@ -775,8 +779,14 @@ class AccountController extends Controller {
                         $data->table_nr = $tblNo['id'];
                         $data->save();
 
+                        $checkInTime = strtotime($resDate . " " . $resTime);
+
+                        $checkOutTime = $checkInTime + ($tblNo['duration']*60);
+                        $release_time = date("Y-m-d H:i:s", $checkOutTime);
+
                         $table = Table::find($tblNo['id']);
                         $table->status = '1';
+                        $table->release_time=$release_time;
                         $table->save();
 
 
