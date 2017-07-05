@@ -15,7 +15,7 @@ class CreateGiftcardTable extends Migration {
     {
         if (!Schema::hasTable('giftcards')) {
         Schema::create('giftcards', function (Blueprint $table) {
-            $table->increments('id');
+            $table->integer('id')->unsigned();
             $table->string('code',255);
             $table->integer('amount',5);
             $table->integer('max_usage');
