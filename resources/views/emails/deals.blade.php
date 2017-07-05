@@ -119,7 +119,7 @@
    <tbody>
    <tr>
     <td bgcolor="#283593" align="center">
-     <table class="table-container" border="0" width="600" cellspacing="0" cellpadding="0">
+     <table class="table-container" border="0" width="700" cellspacing="0" cellpadding="0">
       <tbody>
 	  <tr>
        <td height="15"></td>
@@ -129,7 +129,7 @@
         <table class="full-width" style="border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;" border="0" width="150" cellspacing="0" cellpadding="0" align="left">
 			<tbody>
 			 <tr>
-			  <td width="26" align="center"><img src="{{asset('images/logo.png')}}" style="margin-top:5px;" alt="Logo"></td>
+			  <td width="24" align="center"><img src="{{asset('images/logo.png')}}" style="margin-top:5px;" alt="Logo"></td>
 			 </tr>
 			</tbody>
 		</table>
@@ -295,7 +295,7 @@
 		            <tbody><tr>
 		             <td><img src="{{asset('images/recommends-icon-pricetag.png')}}" alt="Price-tag"></td>
 		             <td width="5"></td>
-		             <td style="font-family: 'Poppins', sans-serif; font-size:14px; font-weight:700; color:#283593;"><a href="{{ url('auth/set/'.$deal['deal_url']) }}"><strike><small style="color:red">€{{$deal['price_from']}}</small></strike> &nbsp; €{{$deal['price']}}</a></td>
+		             <td style="font-family: 'Poppins', sans-serif; font-size:14px; font-weight:700; color:#283593;"><a href="{{ url('auth/set/'.$deal['deal_url']) }}"><strike><small style="color:gray;">€{{$deal['price_from']}}</small></strike> &nbsp; €{{$deal['price']}}</a></td>
 		            </tr>
 		           </tbody></table>
 		          </td>
@@ -325,7 +325,7 @@
 		            <tbody><tr>
 		             <td><img src="{{asset('images/recommends-icon-pricetag.png')}}" alt="Price-tag"></td>
 		             <td width="5"></td>
-		             <td style="font-family: 'Poppins', sans-serif; font-size:14px; font-weight:700; color:#283593;"><a href="{{ url('auth/set/'.$deal['deal_url']) }}"><strike><small style="color:red">€{{$deal['price_from']}}</small></strike> &nbsp; €{{$deal['price']}}</a></td>
+		             <td style="font-family: 'Poppins', sans-serif; font-size:14px; font-weight:700; color:#283593;"><a href="{{ url('auth/set/'.$deal['deal_url']) }}"><strike><small style="color:gray;">€{{$deal['price_from']}}</small></strike> &nbsp; €{{$deal['price']}}</a></td>
 		            </tr>
 		           </tbody></table>
 		          </td>

@@ -816,6 +816,9 @@ p.hidden-xs + p {
 .title {
     white-space: inherit !important;
 }
+.ui.grid {
+    margin: 0px;
+}
 }
 
 @media only screen and (min-width: 768px){
@@ -3850,9 +3853,9 @@ ul.side-nav2{
 	 position:relative;
     /*display: none;*/
 }
-.menu .left_m{
+.menu .right_m, .menu .left_m{
     float: none;
-    width: 100%;
+    width: 100% !important;
     margin: 0;
 }
 .menu .left_m img{

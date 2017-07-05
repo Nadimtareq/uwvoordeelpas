@@ -1,6 +1,7 @@
 <a href="#" data-activates="slide-out" class="button-collapse2"><i class="material-icons material-icons2">menu</i></a>
 
 <ul id="slide-out" class="side-nav2 right-aligned" style="overflow:auto" >
+		<li><a href="javascript:void(0);" id="closeMenu"><i class="material-icons">close</i> Sluiten</a></li>
 		<li><a href="{{ url('news') }}"><i class="material-icons">assignment</i> Nieuws</a></li>
 		<li><a href="{{ url('tegoed-sparen') }}"><i class="material-icons">monetization_on</i> Tegoed sparen</a></li>
 		<li><a href="{{ url('voordeelpas/buy') }}"><i class="material-icons">credit_card</i> Voordeelpas</a></li>
@@ -51,6 +52,4 @@
 			<li><a href="{{ url('hoe-werkt-het') }}"><i class="material-icons">description</i> Hoe werkt het?</a></li>
 			<li><a href="{{ url('algemene-voorwaarden') }}"><i class="material-icons">book</i> Voorwaarden</a></li>
 		@endif
-
-
 </ul>
