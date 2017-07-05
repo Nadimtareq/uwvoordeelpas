@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGiftcardTable extends Migration
+class CreateGiftcardUseTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,15 +12,11 @@ class CreateGiftcardTable extends Migration
      */
     public function up()
     {
-        Schema::create('giftcards', function (Blueprint $table) {
+        Schema::create('giftcard_use', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('code',255);
-            $table->integer('amount',5);
-            $table->integer('max_usage');
-            $table->integer('used_no');
-            $table->integer('company_id');
+            $table->integer('giftcard_id');
+            $table->integer('user_id');
             $table->integer('is_active');
-            $table->integer('buy_date',25);
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ class CreateGiftcardTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('giftcards');
+        Schema::drop('giftcard_use');
     }
 }

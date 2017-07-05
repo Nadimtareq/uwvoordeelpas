@@ -274,7 +274,8 @@ class ReservationsOptionsController extends Controller
                 'reservations_options.short_description',
                 'reservations_options.name',
                 'reservations_options.newsletter',
-                'companies.slug'
+                'companies.slug',
+                'reservations_options.image'
                 )
             ->leftJoin('companies', 'reservations_options.company_id', '=', 'companies.id')
             ->where('reservations_options.id', $id)
@@ -301,7 +302,7 @@ class ReservationsOptionsController extends Controller
                     $destinationPath = 'images/deals/'; // upload path
                     $extension = Input::file('image')->getClientOriginalExtension(); // getting image extension
                     $fileName = 'deal_' . $data->id . '.' . $extension; // renameing image
-                    File::delete($fileName);
+                    File::delete($destinationPath.$data->image);
                     Input::file('image')->move($destinationPath, $fileName);
                     chmod($destinationPath.$fileName,0777);
 

@@ -11,6 +11,7 @@ class DinningTableManagmentTable extends Migration {
      * @return void
      */
     public function up() {
+
         if (!Schema::hasTable('dinning_tables')) {
             Schema::table('dinning_tables',
                     function (Blueprint $table) {
@@ -26,6 +27,7 @@ class DinningTableManagmentTable extends Migration {
                 $table->string('updated_at');
             });
         }
+
     }
 
     /**
