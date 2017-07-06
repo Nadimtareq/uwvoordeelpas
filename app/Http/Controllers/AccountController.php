@@ -662,7 +662,8 @@ class AccountController extends Controller {
                             'future_deals.deal_price as future_deal_price',
                             'future_deals.persons as total_persons',
                             'future_deals.persons_remain as remain_persons',
-                            'future_deals.expired_at as expired_at'
+                            'future_deals.expired_at as expired_at',
+                            'reservations_options.date_to as date_to'
                     )
                     ->addSelect('companies.id as company_id',
                             'companies.name as company_name',
@@ -753,79 +754,77 @@ class AccountController extends Controller {
 
 
                     if ($tblNo) {
+                        $tableNumber = $tblNo['id'];
+                    } else {
+                        $tableNumber = 0;
+                    }
+                    $resTime = date('H:i', strtotime($request->input('time'))) . ':00';
 
-                        $resTime = date('H:i',
-                                        strtotime($request->input('time'))) . ':00';
+                    $resDate = date('Y-m-d', strtotime($request->input('date')));
 
-                        $resDate = date('Y-m-d',
-                                strtotime($request->input('date')));
+                    $data = new Reservation;
+                    $data->date = $resDate;
+                    $data->time = $resTime;
+                    $data->persons = $persons;
+                    $data->company_id = $company->id;
+                    $data->user_id = $user->id;
+                    $data->reservation_id = $reservationTimes[$time][$company->id]['reservationId'];
+                    $data->name = $request->input('name');
+                    $data->email = $request->input('email');
+                    $data->phone = $request->input('phone');
+                    $data->option_id = $deal->id;
+                    $data->comment = $request->input('comment');
+                    $data->saldo = (float) ($futureDeal->deal_base_price * $input_persons);
+                    $data->allergies = json_encode($request->input('allergies'));
+                    $data->preferences = json_encode($request->input('preferences'));
+                    $data->status = 'reserved';
+                    $data->table_nr = $tableNumber;
+                    $data->save();
 
-                        $data = new Reservation;
-                        $data->date = $resDate;
-                        $data->time = $resTime;
-                        $data->persons = $persons;
-                        $data->company_id = $company->id;
-                        $data->user_id = $user->id;
-                        $data->reservation_id = $reservationTimes[$time][$company->id]['reservationId'];
-                        $data->name = $request->input('name');
-                        $data->email = $request->input('email');
-                        $data->phone = $request->input('phone');
-                        $data->option_id = $deal->id;
-                        $data->comment = $request->input('comment');
-                        $data->saldo = (float) ($futureDeal->deal_base_price * $input_persons);
-                        $data->allergies = json_encode($request->input('allergies'));
-                        $data->preferences = json_encode($request->input('preferences'));
-                        $data->status = 'reserved';
-                        $data->table_nr = $tblNo['id'];
-                        $data->save();
-
+                    if ($tblNo) {
                         $checkInTime = strtotime($resDate . " " . $resTime);
 
-                        $checkOutTime = $checkInTime + ($tblNo['duration']*60);
+                        $checkOutTime = $checkInTime + ($tblNo['duration'] * 60);
                         $release_time = date("Y-m-d H:i:s", $checkOutTime);
 
                         $table = Table::find($tblNo['id']);
                         $table->status = '1';
-                        $table->release_time=$release_time;
+                        $table->release_time = $release_time;
                         $table->save();
-
-
-                        $total_reserved_persons = (int) ($futureDeal->persons_reserved +
-                                $input_persons);
-                        $total_remain_persons = (int) ($futureDeal->persons - $total_reserved_persons);
-                        $futureDeal->persons_reserved = $total_reserved_persons;
-                        $futureDeal->persons_remain = $total_remain_persons;
-                        if ($total_remain_persons == 0) {
-                            $futureDeal->status = 'full_reserved';
-                        } else {
-                            $futureDeal->status = 'partially_reserved';
-                        }
-                        $futureDeal->save();
-
-                        $mailtemplate = new MailTemplate();
-
-                        $mailtemplate->sendMail(array(
-                            'email' => Sentinel::getUser()->email,
-                            'template_id' => 'new-review-client',
-                            'company_id' => $company->id,
-                            'replacements' => array(
-                                '%name%' => Sentinel::getUser()->name,
-                                '%saldo%' => '',
-                                '%phone%' => Sentinel::getUser()->phone,
-                                '%email%' => Sentinel::getUser()->email,
-                                '%date%' => date('d-m-Y', strtotime($data->date)),
-                                '%time%' => date('H:i', strtotime($data->time)),
-                                '%persons%' => '',
-                                '%comment%' => '',
-                                '%allergies%' => '',
-                                '%preferences%' => ''
-                            )
-                        ));
-                        return Redirect::to('account/reservations');
-                    } else {
-                        Alert::warning("Sorry no table available right now, please wait a while!!")->persistent('Sluiten');
-                        return back()->withInput();
                     }
+
+                    $total_reserved_persons = (int) ($futureDeal->persons_reserved +
+                            $input_persons);
+                    $total_remain_persons = (int) ($futureDeal->persons - $total_reserved_persons);
+                    $futureDeal->persons_reserved = $total_reserved_persons;
+                    $futureDeal->persons_remain = $total_remain_persons;
+                    if ($total_remain_persons == 0) {
+                        $futureDeal->status = 'full_reserved';
+                    } else {
+                        $futureDeal->status = 'partially_reserved';
+                    }
+                    $futureDeal->save();
+
+                    $mailtemplate = new MailTemplate();
+
+                    $mailtemplate->sendMail(array(
+                        'email' => Sentinel::getUser()->email,
+                        'template_id' => 'new-review-client',
+                        'company_id' => $company->id,
+                        'replacements' => array(
+                            '%name%' => Sentinel::getUser()->name,
+                            '%saldo%' => '',
+                            '%phone%' => Sentinel::getUser()->phone,
+                            '%email%' => Sentinel::getUser()->email,
+                            '%date%' => date('d-m-Y', strtotime($data->date)),
+                            '%time%' => date('H:i', strtotime($data->time)),
+                            '%persons%' => '',
+                            '%comment%' => '',
+                            '%allergies%' => '',
+                            '%preferences%' => ''
+                        )
+                    ));
+                    return Redirect::to('account/reservations');
                 }
             }
         } else {

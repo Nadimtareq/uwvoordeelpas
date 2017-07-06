@@ -58,7 +58,7 @@
                         </div>
                         <div>
                             <b style="max-width: 250px;">
-                                vervaldatum: {{ Carbon\Carbon::parse($futureDeal->expired_at)->formatLocalized('%d %B %Y') }}
+                                vervaldatum: {{ Carbon\Carbon::parse($futureDeal->date_to)->formatLocalized('%d %B %Y') }}
                             </b>
                         </div>
                         <br />

@@ -143,7 +143,7 @@
                     @endif
                 </td>
                 <td>{{ ($result->gender == 1 ? 'Man' : 'Vrouw') }}</td>
-                <td>{{ $result->phone }}</td>
+                <td><p style="display:none;font-size:12px;" onmouseout="$(this).parent().find('span').show();$(this).hide();">{{ $result->phone }}</p><span style="font-size:12px;" onmouseover="$(this).parent().find('p').show();$(this).hide();">{{ substr($result->phone,0,10) }}</span></td>
                 <td>{{ $result->email }}</td>
                 <td class="text-center"><i class="icon checkmark {{ $result->newsletter == 1 ? 'green' : 'red' }}"></i></td>
                 <td>

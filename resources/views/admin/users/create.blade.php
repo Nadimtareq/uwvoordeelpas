@@ -60,7 +60,7 @@
 			</div>
 		</div>
 		
-		<h4 class="ui dividing header">Voorkeuren</h4>
+		<h4 class="ui dividing header  no_blue">Voorkeuren</h4>
 			<div class="field">
 				<label>Nieuwsbrief</label>
 				<?php
@@ -122,7 +122,7 @@
 					<?php echo Form::select('price[]', (isset($preference[4]) ? $preference[4] : array()), '', array('multiple' => true, 'class' => 'multipleSelect')); ?>
 				</div>		  		  	
 			</div>
-		<h4 class="ui dividing header">Wachtwoord</h4>
+		<h4 class="ui dividing header  no_blue">Wachtwoord</h4>
 
 		<div class="field">
 		    <label>Wachtwoord</label>
