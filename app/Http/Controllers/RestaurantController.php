@@ -494,7 +494,7 @@ class RestaurantController extends Controller {
 
                         $future_deal = FutureDeal::find($fd_exists->id);
                         $future_deal->persons = $persons + $fd_exists->persons;
-                        $future_deal->persons_remain = $persons + $fd_exists->persons;
+                        $future_deal->persons_remain = $persons;
                         $future_deal->save();
                     } else {
 
