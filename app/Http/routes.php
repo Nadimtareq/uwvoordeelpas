@@ -159,7 +159,7 @@ Route::group(array('middleware' => 'userInfo'), function() {
     Route::post('restaurant/reservation/{slug}', 'ReservationController@reservationAction');
     Route::post('restaurant/{slug}', 'ReservationController@reservationStepOne');
     Route::post('restaurant/reviews/{slug}', 'RestaurantController@reviewsAction')->middleware(['auth']);
-    Route::post('restaurant/getUnwantedWords', 'RestaurantController@getUnwantedWords');
+    Route::post('restaurant/unwanted/getUnwantedWords', 'RestaurantController@getUnwantedWords');
 });
 
 /**

@@ -262,7 +262,7 @@ class RestaurantController extends Controller {
                 )
             ));
 
-            return Redirect::to('restaurant/' . $slug . '#reviews');
+            return Redirect::to('restaurant/' . $slug . '?deal='.$request->input('dealId'));
         } else {
             App::abort(404);
         }
@@ -592,9 +592,16 @@ class RestaurantController extends Controller {
     }
 
     public function getUnwantedWords(Request $request){
+        
+        $unwanted = array();
         $words = explode(" ",$request->content);
-        foreach ($words as $word) {
-            $unwanted[] = CompanyReservation::getUnwantedWords($word);
+        if($request->content != ""){
+            foreach ($words as $word) {
+                $result = CompanyReservation::getUnwantedWords($word);
+                if($result){
+                    $unwanted[] = $result;
+                }
+            }
         }
 
 //        $unwanted = CompanyReservation::getWords();

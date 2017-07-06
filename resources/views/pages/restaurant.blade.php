@@ -498,9 +498,8 @@ while ($st->lte($dt)) {
 							 @if($user)
 								{{ Form::open(array('url' => 'restaurant/reviews/'.$company->slug, 'method' => 'post','id' => 'reviews', 'class' => 'form')) }}
 
-								{{ Form::hidden('food', 1) }}
-								{{ Form::hidden('service', 1) }}
-								{{ Form::hidden('decor', 1) }}
+								
+								{{ Form::hidden('dealId', $_GET['deal']) }}
 									<input type="hidden"  id="csrf-token" value="{{ csrf_token() }}">
 
 									<div>
@@ -510,15 +509,27 @@ while ($st->lte($dt)) {
 								<div>
 									<div>
 										Eten
-										<i id="food" class="ui star rating" data-rating="1"></i>
+                                                                                <select name="food" style="display:block">
+                                                                                        <?php for($i =1;  $i < 11; $i++){?>
+                                                                                        <option value="{{$i}}">{{$i}}</option>
+                                                                                        <?php }?>
+                                                                                </select>
 									</div>
 									<div>
 										Service
-										<i id="service" class="ui star rating" data-rating="1"></i>
+										<select name="service"  style="display:block">
+                                                                                        <?php for($i =1 ; $i < 11; $i++){?>
+                                                                                        <option value="{{$i}}">{{$i}}</option>
+                                                                                        <?php }?>
+                                                                                </select>
 									</div>
 									<div>
 										Decor
-										<i id="decor" class="ui star rating" data-rating="1"></i>
+										<select name="decor" style="display:block">
+                                                                                        <?php for($i =1 ; $i < 11; $i++){?>
+                                                                                        <option value="{{$i}}">{{$i}}</option>
+                                                                                        <?php }?>
+                                                                                </select>
 									</div>
 								</div>
 
@@ -588,25 +599,21 @@ while ($st->lte($dt)) {
                     {{--data: {"value":  new FormData(this) ,"_token": "{{ csrf_token() }}"},--}}
                     type: 'post',
                     data: data,
-                    url: "restaurant/getUnwantedWords",
+                    url: "{{ url('restaurant/unwanted/getUnwantedWords') }}",
+                    dataType: "json",
                     success: function(result){
-                        alert(result);
-                        if(result !='') {
+                        console.log(result);
+                        if(result.length > 0) {
                             $('#msg').html('Please Remove the unwanted words');
                             $(this).css('color', 'red');
                             e.preventDefault();
-                        }else{
-                            $('#msg').html('Please Remove the unwanted words');
-                            $(this).css('color', '#DBDCE1');
+                        }
+                        else {
+                            $('#msg').html('');
                         }
                     }
                 });
-//            });
-            e.preventDefault()
-//            $("#idcontent").each(function() {
-//
-//            });
-            e.preventDefault();
+
 		});
 
 	</script>
