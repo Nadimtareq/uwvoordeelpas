@@ -4421,3 +4421,18 @@ img.thumbnails{
 div#affiliateSearch-4 {
     width: 100%;
 }
+
+input#search::-webkit-input-placeholder {
+    color: #FFF;
+}
+input#search::-moz-placeholder {
+    color: #FFF;
+}
+input#search::-ms-input-placeholder { /* IE 10+ */
+  color: pink;
+}
+input#search::-moz-placeholder { /* Firefox 18- */
+  color: pink;
+}
+
+
