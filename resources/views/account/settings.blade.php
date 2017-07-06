@@ -99,8 +99,8 @@ $(document).ready(function() {
 				foreach($preference->where('category_id', 9)->get() as $data) {
 					$regio[$data->id] = $data->name;
 				}
-
-				echo Form::select('regio[]', $regio, json_decode(Sentinel::getUser()->city), array('multiple' => true, 'class' => 'ui normal fluid search dropdown')); ?>
+				$city=json_decode(Sentinel::getUser()->city,1);
+				echo Form::select('regio[]', $regio, $city[0], array('multiple' => true, 'class' => 'ui normal fluid search dropdown')); ?>
 			</div>
 
 			<div class="two fields">
