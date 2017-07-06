@@ -15,35 +15,19 @@
 									@else
 										<a href="{{ url('/') }}" class="brand-logo">
 									@endif
-									
-										<!--<div style="background-image=url({{ asset('images/logo.png') }})" class="responsive-img">-->
-										<img src="{{ (($isGrey) ) ? asset('images/logo_grey.png') : asset('images/logo.png') }}" alt="" class="responsive-img">
+									<img src="{{ (($isGrey) ) ? asset('images/logo_grey.png') : asset('images/logo.png') }}" alt="" class="responsive-img">
 									</a>
-									<!--
-									<a href="{{ url('/') }}" class="left brand-logo menu-smooth-scroll pp-container" data-section="#home">
-										<img src="{{ url('images/logo.png') }}">
-									</a>
-									
-									<div class="mobile-profile pp-container">
-										<img src="{{ asset('images/logo.png') }}" alt="">
-									</div> -->
-									
-									 <!-- <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="mdi-navigation-menu"></i></a>-->
-								
-
 									<ul class="inline-menu side-nav" id="mobile-demo">
-										
-
 										 @if($userAuth)
-
-											<li><a href="{{ url('account/reservations/saldo') }}" class="">Uw saldo: &euro; {{$userInfo->saldo }} </a></li>
+									<li><a href="{{ url('account/reservations/saldo') }}" class="">Uw saldo: &euro; {{$userInfo->saldo }} </a></li>
 											<li data-content="Uitloggen"><a href="{{ url('logout') }}"><i class="sign out icon"></i>Uitloggen</a></li>
 										@else
-											<li><a id="registerButton" class="register button item" href="#">Aanmelden</a></li>
-											<li><a class="login button" data-type="login" href="#" >Inloggen</a></li>
+											<li><a id="registerButton" class="register button item" href="#"><div class="header_icons"><img src="{{ asset('images/register_icon.png') }}" alt="question"></div></a>
+											</li>
+											<li><a class="login button" data-type="login" href="#" ><div class="header_icons"><img src="{{ asset('images/login_icon.png') }}" alt="question"></div> </a></li>
 										@endif 
 										<li>
-										  <a href="#" class="question">Help <div class="question2"><img src="{{ asset('images/question.png') }}" alt="question"></div> <i class="fa fa-question-circle-o" aria-hidden="true"></i></a>
+										  <a href="#" class="question"><div class="header_icons"><img src="{{ asset('images/help_icon.png') }}" alt="question"></div> </a>
 										</li>
 										<li>
 											<a class="dropdown-button blog-submenu-init" id="language" href="#!" data-activates="dropdown1">
