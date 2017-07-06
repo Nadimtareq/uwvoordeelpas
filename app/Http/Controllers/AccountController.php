@@ -662,7 +662,8 @@ class AccountController extends Controller {
                             'future_deals.deal_price as future_deal_price',
                             'future_deals.persons as total_persons',
                             'future_deals.persons_remain as remain_persons',
-                            'future_deals.expired_at as expired_at'
+                            'future_deals.expired_at as expired_at',
+                            'reservations_options.date_to as date_to'
                     )
                     ->addSelect('companies.id as company_id',
                             'companies.name as company_name',
