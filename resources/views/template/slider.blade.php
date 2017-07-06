@@ -136,14 +136,7 @@ $compatible_browser_array = array('Chrome', 'Firefox', 'Opera');
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="col-sm-6 col2">
-                            <img src="{{ asset('images/laptop.png') }}" alt="laptop" class="laptop">
-                            <div class="text">
-                                <span class="start">Start nu en otvang!</span>
-                                <strong class="bax">€
-                                    <strong class="number">5.-</strong></strong>
-                                <p>90 dagen geldig op alle menu’s van </p>
-                                <!-- <span class='crop'>UWvoordeelpas!</span> -->
-                            </div>
+                            <img src="{{ asset('images/laptop-text.png') }}" alt="laptop" class="laptop">
                         </div>
                         <div class="col-sm-6">
 

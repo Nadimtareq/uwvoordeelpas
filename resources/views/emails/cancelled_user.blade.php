@@ -5,7 +5,7 @@
 	<img align="left" 
 		 alt="Uw Voordeelpas" 
 		 class="mcnImage" 
-		 src="{{ url('public/images/vplogo.png') }}" 
+		 src="{{ url('images/vplogo.png') }}" 
 		 style="max-width: 133px;padding-bottom: 0;display: inline !important;vertical-align: bottom;border: 0;height: auto;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;" width="190">
 </a>
 @endsection
