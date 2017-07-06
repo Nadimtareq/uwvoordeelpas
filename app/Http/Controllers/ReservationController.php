@@ -245,58 +245,60 @@ class ReservationController extends Controller {
 
 
                 if ($tblNo) {
+                    $tableNumber = $tblNo['id'];
+                } else {
+                    $tableNumber = 0;
+                }
 
-                    $resTime = date('H:i', strtotime($request->input('time'))) . ':00';
-                    $resDate = date('Y-m-d', strtotime($request->input('date')));
+                $resTime = date('H:i', strtotime($request->input('time'))) . ':00';
+                $resDate = date('Y-m-d', strtotime($request->input('date')));
 
-                    // Add a reservation
-                    if ($enough_balance) {
-                        $data = new Reservation;
-                    } else {
-                        $data = new TempReservation;
-                        $data->rest_pay = $rest_amount;
-                    }
+                // Add a reservation
+                if ($enough_balance) {
+                    $data = new Reservation;
+                } else {
+                    $data = new TempReservation;
+                    $data->rest_pay = $rest_amount;
+                }
 
-                    $data->date = $resDate;
-                    $data->time = $resTime;
-                    $data->persons = $persons;
-                    $data->company_id = $company->id;
-                    $data->user_id = $user->id;
-                    $data->reservation_id = $reservationTimes[$time][$company->id]['reservationId'];
-                    $data->name = $request->input('name');
-                    $data->email = $request->input('email');
-                    $data->phone = $request->input('phone');
+                $data->date = $resDate;
+                $data->time = $resTime;
+                $data->persons = $persons;
+                $data->company_id = $company->id;
+                $data->user_id = $user->id;
+                $data->reservation_id = $reservationTimes[$time][$company->id]['reservationId'];
+                $data->name = $request->input('name');
+                $data->email = $request->input('email');
+                $data->phone = $request->input('phone');
 
-                    if ($request->has('reservations_options')) {
-                        $data->option_id = $request->input('reservations_options');
-                    }
+                $data->table_nr = $tableNumber;
+                
+                if ($request->has('reservations_options')) {
+                    $data->option_id = $request->input('reservations_options');
+                }
 
-                    $data->comment = $request->input('comment');
-                    $data->saldo = $request->has('saldo') ? MoneyHelper::getAmount($request->input('saldo'))
-                                : 0;
-                    $data->newsletter_company = $request->input('newsletter') ==
-                            '' ? 0 : 1;
-                    $data->allergies = json_encode($request->input('allergies'));
-                    $data->preferences = json_encode($request->input('preferences'));
-                    $data->status = $request->input('iframe') == 1 ? ($reservationTimes[$time][$company->id]['isManual'] ==
-                            1 ? 'iframe-pending' : 'iframe') : ($reservationTimes[$time][$company->id]['isManual'] ==
-                            1 ? 'reserved-pending' : 'reserved');
-                    $data->save();
+                $data->comment = $request->input('comment');
+                $data->saldo = $request->has('saldo') ? MoneyHelper::getAmount($request->input('saldo'))
+                            : 0;
+                $data->newsletter_company = $request->input('newsletter') == '' ? 0
+                            : 1;
+                $data->allergies = json_encode($request->input('allergies'));
+                $data->preferences = json_encode($request->input('preferences'));
+                $data->status = $request->input('iframe') == 1 ? ($reservationTimes[$time][$company->id]['isManual'] ==
+                        1 ? 'iframe-pending' : 'iframe') : ($reservationTimes[$time][$company->id]['isManual'] ==
+                        1 ? 'reserved-pending' : 'reserved');
+                $data->save();
 
-                    $checkInTime = strtotime($resDate . " " . $resTime);
+                $checkInTime = strtotime($resDate . " " . $resTime);
 
-                    $checkOutTime = $checkInTime + ($tblNo['duration']*60);
-                    $release_time = date("Y-m-d H:i:s", $checkOutTime);
-
+                $checkOutTime = $checkInTime + ($tblNo['duration'] * 60);
+                $release_time = date("Y-m-d H:i:s", $checkOutTime);
+                
+                if ($tblNo) {
                     $table = Table::find($tblNo['id']);
                     $table->status = '1';
                     $table->release_time = $release_time;
                     $table->save();
-                    
-                } else {
-
-                    Alert::warning("Sorry no table available right now, please wait a while!!")->persistent('Sluiten');
-                    return back()->withInput();
                 }
 
                 if (!$enough_balance && $rest_amount) {

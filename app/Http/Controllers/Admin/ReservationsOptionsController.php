@@ -23,6 +23,7 @@ class ReservationsOptionsController extends Controller
         $this->slugController = 'reservations-options';
         $this->limit = $request->input('limit', 15);
         $this->companies = Company::orderBy('id', 'asc')->lists('name', 'id');
+        $this->companiesList = Company::all();
     }
 
     public function isCompanyOwner($slug)
@@ -59,6 +60,8 @@ class ReservationsOptionsController extends Controller
             'reservations_options.time_to',
             'reservations_options.time_to',
             'reservations_options.newsletter',
+            'companies.name as company_name',
+            'companies.city',
             DB::raw('sum(reservations.persons) as total_res'),
             DB::raw('sum(reservations.id) as reservated')
             )->leftJoin('companies', 'companies.id', '=', 'reservations_options.company_id')
@@ -71,9 +74,37 @@ class ReservationsOptionsController extends Controller
         if ($request->has('q')) {
             $data = $data->where('reservations_options.name', 'LIKE', '%'.$request->input('q').'%');
         }
-
-        if ($slug != null) {
-            $data = $data->where('companies.slug', '=', $slug);
+//
+//        if ($slug != null) {
+//            $data = $data->where('companies.slug', '=', $slug);
+//        }
+        
+        if ($request->has('company')) {
+            $data = $data->where('reservations_options.company_id', '=', $request->input('company'));
+        }
+        if ($request->has('newsletter')) {
+            $data = $data->where('reservations_options.newsletter', '=', $request->input('newsletter'));
+        }
+        if ($request->has('city')) {
+            $data = $data->where('companies.city', 'LIKE', '%'.$request->input('city').'%');
+        }
+        if ($request->has('online')) {
+            $currentDate = date('Y-m-d');
+            if($request->input('online') == 1){
+                $data = $data->where('reservations_options.date_from', '<=', $currentDate);
+                $data = $data->where('reservations_options.date_to', '>=', $currentDate);
+            }else{
+                $data = $data->where('reservations_options.date_from', '>', $currentDate);
+                $data = $data->orWhere('reservations_options.date_to', '<', $currentDate);
+            }
+        }
+        if ($request->has('from') && $request->has('to')) {
+            if($request->input('from') != ""){
+                $data = $data->where('reservations_options.date_from', '>=', $request->input('from'));
+            }
+            if($request->input('to') != ''){
+                $data = $data->where('reservations_options.date_to', '<=', $request->input('to'));
+            }
         }
 
         if ($request->has('sort') && $request->has('order')) {
@@ -104,7 +135,7 @@ class ReservationsOptionsController extends Controller
         unset($queryString['limit']);
 
         return view('admin/'.$this->slugController.'/index', [
-            'slugController' => $this->slugController.(trim($slug) != '' ? '/'.$slug : ''),
+            'slugController' => $this->slugController,
             'section' => 'Aanbiedingen',
             'currentPage' => 'Overzicht',
             'slug' => $slug,
@@ -112,6 +143,7 @@ class ReservationsOptionsController extends Controller
             'queryString' => $queryString,
             'paginationQueryString' => $request->query(),
             'limit' => $this->limit,
+            'companies' => $this->companiesList,
             ]);
     }
 
@@ -151,7 +183,7 @@ class ReservationsOptionsController extends Controller
         }
 
         return view('admin/'.$this->slugController.'/create', [
-            'slugController' => $this->slugController.(trim($slug) != '' ? '/'.$slug : ''),
+            'slugController' => $this->slugController,
             'section' => 'Aanbiedingen',
             'currentPage' => 'Nieuw',
             'companies' => $this->companies,
@@ -240,7 +272,7 @@ class ReservationsOptionsController extends Controller
                 }
 
                 return view('admin/'.$this->slugController.'/update', [
-                    'slugController' => $this->slugController.(trim($data->slug) != '' ? '/'.$data->slug : ''),
+                    'slugController' => $this->slugController,
                     'section' => 'Aanbiedingen',
                     'currentPage' => 'Wijzigen',
                     'companies' => $this->companies,
@@ -325,12 +357,9 @@ class ReservationsOptionsController extends Controller
                 $data->save();
                 Alert::success('U heeft deze aanbieding veranderd')->html()->persistent('Sluiten');
 
-                if ($request->has('step')) {
-                    echo 'ok';die;
-                    return Redirect::to('faq/4/restaurateurs?step=4&slug='.$slug);
-                } else {
-                    return Redirect::to('admin/'.$this->slugController.'/update/'.$id);
-                }
+                
+                return Redirect::to('admin/'.$this->slugController.'/update/'.$id);
+                
             }
 
         }
