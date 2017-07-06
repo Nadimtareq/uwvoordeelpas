@@ -17,7 +17,7 @@
         </ul>
     </div>
     @endif
-    <div class="ui grid custom-reserve-future-deal ">
+    <div class="ui grid custom-reserve-future-deal">
         <div class="row">
             <div class="six wide column mobile"> 
                 <div class="field">

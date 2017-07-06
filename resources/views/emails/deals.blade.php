@@ -325,7 +325,7 @@
 		            <tbody><tr>
 		             <td></td>
 		             <td width="5"></td>
-		             <td style="font-family: 'Poppins', sans-serif; font-size:14px; font-weight:700; color:#283593;"><a href="{{ url('auth/set/'.$deal['deal_url']) }}"><strike><small style="color:gray;">€{{$deal['price_from']}}</small></strike> &nbsp; <big>€{{$deal['price']}}</big></a></td>
+		             <td style="font-family: 'Poppins', sans-serif; font-size:14px; font-weight:700; color:#283593;"><a href="{{ url('auth/set/'.$deal['deal_url']) }}"><strike><small style="color:gray;">€{{$deal['price_from']}}</small></strike> &nbsp;€{{$deal['price']}}</a></td>
 		            </tr>
 		           </tbody></table>
 		          </td>

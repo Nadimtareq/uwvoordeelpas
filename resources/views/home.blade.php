@@ -62,7 +62,7 @@ $arrayMerge = array_filter(array_merge($breadcrumbArray1, $breadcrumbArray2, $br
     <div class="container">
         <div class="row">
             <div class="col-sm-12 col-xs-12">
-                <h1>spaar NU order andere bij</h1>
+                <h1>SPAAR TOT WEL 10% BIJ 2000+ WEBSHOPS, O.A:</h1>
                 @foreach ($affiliates as $data)
                 <div class="col-md-2 col-sm-4 col-xs-12">
                     <div class="partner">
