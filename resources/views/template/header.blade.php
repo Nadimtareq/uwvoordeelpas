@@ -27,7 +27,7 @@
 											<li><a class="login button" data-type="login" href="#" ><div class="header_icons"><img src="{{ asset('images/login_icon.png') }}" alt="question"></div> </a></li>
 										@endif 
 										<li>
-										  <a href="#" class="question"><div class="header_icons"><img src="{{ asset('images/help_icon.png') }}" alt="question"></div> </a>
+										  <a href="{{ url('/faq') }}" class="question"><div class="header_icons"><img src="{{ asset('images/help_icon.png') }}" alt="question"></div> </a>
 										</li>
 										<li>
 											<a class="dropdown-button blog-submenu-init" id="language" href="#!" data-activates="dropdown1">
