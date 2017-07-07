@@ -499,6 +499,9 @@ while ($st->lte($dt)) {
 								{{ Form::open(array('url' => 'restaurant/reviews/'.$company->slug, 'method' => 'post','id' => 'reviews', 'class' => 'form')) }}
 
 								
+								{{ Form::hidden('food', 1,array('id' => 'food')) }}
+								{{ Form::hidden('service', 1,array('id' => 'service')) }}
+								{{ Form::hidden('decor', 1,array('id' => 'decor')) }}
 								{{ Form::hidden('dealId', $_GET['deal']) }}
 									<input type="hidden"  id="csrf-token" value="{{ csrf_token() }}">
 
@@ -509,27 +512,48 @@ while ($st->lte($dt)) {
 								<div>
 									<div>
 										Eten
-                                                                                <select name="food" style="display:block">
-                                                                                        <?php for($i =1;  $i < 11; $i++){?>
-                                                                                        <option value="{{$i}}">{{$i}}</option>
-                                                                                        <?php }?>
-                                                                                </select>
+                                                                                <div class="ui star medium  rating" data-rating="1">
+                                                                                    <i class="icon active food"></i>
+                                                                                    <i class="icon food"></i>
+                                                                                    <i class="icon food"></i>
+                                                                                    <i class="icon food"></i>
+                                                                                    <i class="icon food"></i>
+                                                                                    <i class="icon food"></i>
+                                                                                    <i class="icon food"></i>
+                                                                                    <i class="icon food"></i>
+                                                                                    <i class="icon food"></i>
+                                                                                    <i class="icon food"></i>
+                                                                                </div>
 									</div>
 									<div>
 										Service
-										<select name="service"  style="display:block">
-                                                                                        <?php for($i =1 ; $i < 11; $i++){?>
-                                                                                        <option value="{{$i}}">{{$i}}</option>
-                                                                                        <?php }?>
-                                                                                </select>
+										<div class="ui star medium  rating" data-rating="1">
+                                                                                    <i class="icon active service"></i>
+                                                                                    <i class="icon service"></i>
+                                                                                    <i class="icon service"></i>
+                                                                                    <i class="icon service"></i>
+                                                                                    <i class="icon service"></i>
+                                                                                    <i class="icon service"></i>
+                                                                                    <i class="icon service"></i>
+                                                                                    <i class="icon service"></i>
+                                                                                    <i class="icon service"></i>
+                                                                                    <i class="icon service"></i>
+                                                                                </div>
 									</div>
 									<div>
 										Decor
-										<select name="decor" style="display:block">
-                                                                                        <?php for($i =1 ; $i < 11; $i++){?>
-                                                                                        <option value="{{$i}}">{{$i}}</option>
-                                                                                        <?php }?>
-                                                                                </select>
+										<div class="ui star medium  rating" data-rating="1">
+                                                                                    <i class="icon active decor"></i>
+                                                                                    <i class="icon decor"></i>
+                                                                                    <i class="icon decor"></i>
+                                                                                    <i class="icon decor"></i>
+                                                                                    <i class="icon decor"></i>
+                                                                                    <i class="icon decor"></i>
+                                                                                    <i class="icon decor"></i>
+                                                                                    <i class="icon decor"></i>
+                                                                                    <i class="icon decor"></i>
+                                                                                    <i class="icon decor"></i>
+                                                                                </div>
 									</div>
 								</div>
 
@@ -617,7 +641,41 @@ while ($st->lte($dt)) {
 		});
 
 	</script>
-
+<script>
+    $(".food").click(function(){
+        var count = $("#food").val();
+        if($(this).hasClass('active')){
+            $(this).removeClass('active');
+            count = parseInt(count) -1;
+        }else{
+            $(this).addClass('active');
+            count = parseInt(count)+1;
+        }
+        $("#food").val(count);
+    });
+    $(".service").click(function(){
+        var count = $("#service").val();
+        if($(this).hasClass('active')){
+            $(this).removeClass('active');
+            count = parseInt(count) -1;
+        }else{
+            $(this).addClass('active');
+            count = parseInt(count)+1;
+        }
+        $("#service").val(count);
+    });
+    $(".decor").click(function(){
+        var count = $("#decor").val();
+        if($(this).hasClass('active')){
+            $(this).removeClass('active');
+            count = parseInt(count) -1;
+        }else{
+            $(this).addClass('active');
+            count = parseInt(count)+1;
+        }
+        $("#decor").val(count);
+    });
+</script>
 @stop
 
 @section('scripts')
