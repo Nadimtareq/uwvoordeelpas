@@ -496,7 +496,11 @@ header.nav li a:hover {
     width: 17px;
     height: 13px;
 }
-
+.header_icons{
+    display: inline-block;
+    width: 25px;
+    height: 22px;  
+}
 .static-menu {
     margin-left: 50px !important;
 }
@@ -1737,7 +1741,7 @@ p.hidden-xs + p {
         background: #3366cc;
     }
     .header{
-        background: #333399 !important;
+      /*  background: #333399 !important; */
     }
     .header .right-no{
         float: left !important;
@@ -2899,6 +2903,10 @@ p.hidden-xs + p {
 }
 .shop .goods .right-content .sort{
     background: #efefef;
+        min-height: 35px;
+}
+.shop .goods .right-content .tabs-content {
+    padding-top: 15px;
 }
 .shop .goods .right-content .sort .r{
     float: right;
@@ -4409,3 +4417,22 @@ img.thumbnails{
     font-size: 16px !important;
     color: #555 !important;
 }
+
+div#affiliateSearch-4 {
+    width: 100%;
+}
+
+input#search::-webkit-input-placeholder {
+    color: #FFF;
+}
+input#search::-moz-placeholder {
+    color: #FFF;
+}
+input#search::-ms-input-placeholder { /* IE 10+ */
+  color: pink;
+}
+input#search::-moz-placeholder { /* Firefox 18- */
+  color: pink;
+}
+
+

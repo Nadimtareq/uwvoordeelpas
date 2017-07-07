@@ -799,7 +799,7 @@ class CompanyReservation extends Model {
     }
 
     static function getUnwantedWords($word){
-        return  DB::table('unwanted_word')->select('word')->where('word',$word)->get()->first();
+        return  DB::table('unwanted_word')->select('word')->where('word',$word)->get();
     }
 
     static function getWords(){

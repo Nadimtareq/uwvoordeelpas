@@ -498,9 +498,11 @@ while ($st->lte($dt)) {
 							 @if($user)
 								{{ Form::open(array('url' => 'restaurant/reviews/'.$company->slug, 'method' => 'post','id' => 'reviews', 'class' => 'form')) }}
 
-								{{ Form::hidden('food', 1) }}
-								{{ Form::hidden('service', 1) }}
-								{{ Form::hidden('decor', 1) }}
+								
+								{{ Form::hidden('food', 1,array('id' => 'food')) }}
+								{{ Form::hidden('service', 1,array('id' => 'service')) }}
+								{{ Form::hidden('decor', 1,array('id' => 'decor')) }}
+								{{ Form::hidden('dealId', $_GET['deal']) }}
 									<input type="hidden"  id="csrf-token" value="{{ csrf_token() }}">
 
 									<div>
@@ -510,15 +512,48 @@ while ($st->lte($dt)) {
 								<div>
 									<div>
 										Eten
-										<i id="food" class="ui star rating" data-rating="1"></i>
+                                                                                <div class="ui star medium  rating" data-rating="1">
+                                                                                    <i class="icon active food"></i>
+                                                                                    <i class="icon food"></i>
+                                                                                    <i class="icon food"></i>
+                                                                                    <i class="icon food"></i>
+                                                                                    <i class="icon food"></i>
+                                                                                    <i class="icon food"></i>
+                                                                                    <i class="icon food"></i>
+                                                                                    <i class="icon food"></i>
+                                                                                    <i class="icon food"></i>
+                                                                                    <i class="icon food"></i>
+                                                                                </div>
 									</div>
 									<div>
 										Service
-										<i id="service" class="ui star rating" data-rating="1"></i>
+										<div class="ui star medium  rating" data-rating="1">
+                                                                                    <i class="icon active service"></i>
+                                                                                    <i class="icon service"></i>
+                                                                                    <i class="icon service"></i>
+                                                                                    <i class="icon service"></i>
+                                                                                    <i class="icon service"></i>
+                                                                                    <i class="icon service"></i>
+                                                                                    <i class="icon service"></i>
+                                                                                    <i class="icon service"></i>
+                                                                                    <i class="icon service"></i>
+                                                                                    <i class="icon service"></i>
+                                                                                </div>
 									</div>
 									<div>
 										Decor
-										<i id="decor" class="ui star rating" data-rating="1"></i>
+										<div class="ui star medium  rating" data-rating="1">
+                                                                                    <i class="icon active decor"></i>
+                                                                                    <i class="icon decor"></i>
+                                                                                    <i class="icon decor"></i>
+                                                                                    <i class="icon decor"></i>
+                                                                                    <i class="icon decor"></i>
+                                                                                    <i class="icon decor"></i>
+                                                                                    <i class="icon decor"></i>
+                                                                                    <i class="icon decor"></i>
+                                                                                    <i class="icon decor"></i>
+                                                                                    <i class="icon decor"></i>
+                                                                                </div>
 									</div>
 								</div>
 
@@ -588,29 +623,59 @@ while ($st->lte($dt)) {
                     {{--data: {"value":  new FormData(this) ,"_token": "{{ csrf_token() }}"},--}}
                     type: 'post',
                     data: data,
-                    url: "restaurant/getUnwantedWords",
+                    url: "{{ url('restaurant/unwanted/getUnwantedWords') }}",
+                    dataType: "json",
                     success: function(result){
-                        alert(result);
-                        if(result !='') {
+                        console.log(result);
+                        if(result.length > 0) {
                             $('#msg').html('Please Remove the unwanted words');
                             $(this).css('color', 'red');
                             e.preventDefault();
-                        }else{
-                            $('#msg').html('Please Remove the unwanted words');
-                            $(this).css('color', '#DBDCE1');
+                        }
+                        else {
+                            $('#msg').html('');
                         }
                     }
                 });
-//            });
-            e.preventDefault()
-//            $("#idcontent").each(function() {
-//
-//            });
-            e.preventDefault();
+
 		});
 
 	</script>
-
+<script>
+    $(".food").click(function(){
+        var count = $("#food").val();
+        if($(this).hasClass('active')){
+            $(this).removeClass('active');
+            count = parseInt(count) -1;
+        }else{
+            $(this).addClass('active');
+            count = parseInt(count)+1;
+        }
+        $("#food").val(count);
+    });
+    $(".service").click(function(){
+        var count = $("#service").val();
+        if($(this).hasClass('active')){
+            $(this).removeClass('active');
+            count = parseInt(count) -1;
+        }else{
+            $(this).addClass('active');
+            count = parseInt(count)+1;
+        }
+        $("#service").val(count);
+    });
+    $(".decor").click(function(){
+        var count = $("#decor").val();
+        if($(this).hasClass('active')){
+            $(this).removeClass('active');
+            count = parseInt(count) -1;
+        }else{
+            $(this).addClass('active');
+            count = parseInt(count)+1;
+        }
+        $("#decor").val(count);
+    });
+</script>
 @stop
 
 @section('scripts')

@@ -26,7 +26,7 @@ class DealHelper
   /**
    * Gets the newsleter to be sent on current day and time.
    * @return newsletterArray.
-   */
+   
   private function getNewsletter()
   {
     $newsletterJobs = NewsletterJob::all()->where('status',1);
@@ -41,6 +41,19 @@ class DealHelper
       }
     }
   }
+  */
+   private function getNewsletter()
+  {
+    $newsletterJobs = NewsletterJob::all()->where('status',1);
+    $newsletters = [];
+    mail('rushabhmadhu@gmail.com','Deal Email','Deal email is called'.date('Y-m-d H:i:s'));
+    foreach ($newsletterJobs as $job) {
+        $deals = $this->getDeals($job->city_id);
+        $users = $this->getSubscribedUsers($job->city_id);
+        if(count($deals)>0 && count($users)>0) $this->sendDealsToUser($deals,$users);
+    }
+  }
+  
 
   /**
    * Gets the date and time of the newsletter.
@@ -76,6 +89,7 @@ class DealHelper
   private function getDeals($city_id)
   {
     # code...
+    $deals = array();
     $data = Company::where('regio','LIKE','%"'.$city_id.'"%')->get(['id','name','slug','regio']);
     foreach ($data as $company) {
       # code...
