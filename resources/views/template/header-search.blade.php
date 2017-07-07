@@ -88,6 +88,17 @@
 													  @endfor
 												</select>												
 											</li>
+										@if($userAuth)
+										<li><a href="{{ url('account/reservations/saldo') }}" class="">Uw saldo: &euro; {{$userInfo->saldo }} </a></li>
+												<li data-content="Uitloggen"><a href="{{ url('logout') }}"><i class="sign out icon"></i>Uitloggen</a></li>
+											@else
+												<li><a id="registerButton" class="register button item" href="#"><div class="header_icons"><img src="{{ asset('images/register_icon.png') }}" alt="question"></div></a>
+												</li>
+												<li><a class="login button" data-type="login" href="#" ><div class="header_icons"><img src="{{ asset('images/login_icon.png') }}" alt="question"></div> </a></li>
+											@endif 
+											<li>
+											  <a href="{{ url('/faq') }}" class="question"><div class="header_icons"><img src="{{ asset('images/help_icon.png') }}" alt="question"></div> </a>
+											</li>
 											<li class="mobile-center">
 											    <button class="zoek" id ="searchDesktop" type="submit">zoek</button>
 											</li>
