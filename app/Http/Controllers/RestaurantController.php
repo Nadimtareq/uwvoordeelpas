@@ -516,10 +516,11 @@ class RestaurantController extends Controller {
                                     'purchased')->where('user_id', $user->id)->first();
 
                     if ($fd_exists) {
-
+                        
                         $future_deal = FutureDeal::find($fd_exists->id);
                         $future_deal->persons = $persons + $fd_exists->persons;
-                        $future_deal->persons_remain = $persons;
+                        $future_deal->persons_remain = $fd_exists->persons_remain -
+                                $persons;
                         $future_deal->save();
                     } else {
 
@@ -577,23 +578,23 @@ class RestaurantController extends Controller {
                     ));
                 } else {
                     $mailtemplate = new MailTemplate();
-                    $mailtemplate->sendMail(array(
-                        'email' => Sentinel::getUser()->email,
-                        'template_id' => 'new-reservation-client',
-                        'company_id' => $company->id,
-                        'replacements' => array(
-                            '%name%' => Sentinel::getUser()->name,
-                            '%saldo%' => '',
-                            '%phone%' => Sentinel::getUser()->phone,
-                            '%email%' => Sentinel::getUser()->email,
-                            '%date%' => date('d-m-Y', strtotime($current_date)),
-                            //'%time%' => date('H:i', strtotime($data->time)),
-                            '%persons%' => '',
-                            '%comment%' => '',
-                            '%allergies%' => '',
-                            '%preferences%' => ''
-                        )
-                    ));
+                    /* $mailtemplate->sendMail(array(
+                      'email' => Sentinel::getUser()->email,
+                      'template_id' => 'new-reservation-client',
+                      'company_id' => $company->id,
+                      'replacements' => array(
+                      '%name%' => Sentinel::getUser()->name,
+                      '%saldo%' => '',
+                      '%phone%' => Sentinel::getUser()->phone,
+                      '%email%' => Sentinel::getUser()->email,
+                      '%date%' => date('d-m-Y', strtotime($current_date)),
+                      //'%time%' => date('H:i', strtotime($data->time)),
+                      '%persons%' => '',
+                      '%comment%' => '',
+                      '%allergies%' => '',
+                      '%preferences%' => ''
+                      )
+                      )); */
                     $deal = ReservationOption::find($future_deal->deal_id);
 
                     $url = URL::to('/account/future-deals');
