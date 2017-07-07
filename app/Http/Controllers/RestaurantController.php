@@ -578,7 +578,7 @@ class RestaurantController extends Controller {
                     ));
                 } else {
                     $mailtemplate = new MailTemplate();
-                    /* $mailtemplate->sendMail(array(
+                     $mailtemplate->sendMail(array(
                       'email' => Sentinel::getUser()->email,
                       'template_id' => 'new-reservation-client',
                       'company_id' => $company->id,
@@ -594,7 +594,7 @@ class RestaurantController extends Controller {
                       '%allergies%' => '',
                       '%preferences%' => ''
                       )
-                      )); */
+                      )); 
                     $deal = ReservationOption::find($future_deal->deal_id);
 
                     $url = URL::to('/account/future-deals');
