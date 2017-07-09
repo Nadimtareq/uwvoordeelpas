@@ -90,3 +90,5 @@ nbproject
 nbproject
 /env
 /env
+!/storage/
+!/storage/logs/
