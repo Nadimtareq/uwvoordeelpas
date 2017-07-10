@@ -6,7 +6,6 @@
 
  <ul>
 
- 
 <?php foreach($companies as $data): ?>
  
     <?php foreach($data->ReservationOptions2()->get() as $deal): ?>
@@ -42,12 +41,12 @@
 
 
 					<?php if($count_persons >= $deal->total_amount): ?>
-						<img src="<?php echo e(url('images/placeholdimagerest.png')); ?>" alt="<?php echo e($data->name); ?>" class="thumbnails"  />
-
+						<img src="<?php echo e(url('images/placeholdimagerest.png')); ?>" alt="<?php echo e($data->name); ?>" class="thumbnails"/>
 					<?php else: ?>
                         <a href="<?php echo e(url('restaurant/'.$data->slug).'?deal='.$deal->id); ?>" title="<?php echo e($data->name); ?>" data-url="">
                             <img src="<?php echo e(url('images/placeholdimagerest.png')); ?>" alt="<?php echo e($data->name); ?>" class="thumbnails"  />
-                        </a>
+							<span style="position: static; color: gray; margin-left: -50%; font-weight: 700;"><?php echo e(strtoupper('Uitverkocht')); ?></span>
+						</a>
 						<?php endif; ?>
                     <?php endif; ?>
 
@@ -170,7 +169,7 @@
 
 			  </span>
 				<?php if($count_persons >= $deal->total_amount): ?>
-					<a class="more"  href="javascript:void(0)">Uitverkocht</a>
+					<a class="more" href="javascript:void(0)">Uitverkocht</a>
 				<?php else: ?>
 				<?php if($returnval != '<div class="ui tiny text-danger"> <i class="clock icon"></i> Helaas, er zijn momenteel geen plaatsen beschikbaar.</div>'): ?>
 					<div class="d-inline-block">

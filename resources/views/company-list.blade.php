@@ -6,7 +6,6 @@
 
  <ul>
 
- 
 @foreach ($companies as $data)
  
     @foreach ($data->ReservationOptions2()->get() as $deal)
@@ -42,12 +41,12 @@
 
 
 					@if($count_persons >= $deal->total_amount)
-						<img src="{{ url('images/placeholdimagerest.png') }}" alt="{{ $data->name }}" class="thumbnails"  />
-
+						<img src="{{ url('images/placeholdimagerest.png') }}" alt="{{ $data->name }}" class="thumbnails"/>
 					@else
                         <a href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}" title="{{ $data->name }}" data-url="">
                             <img src="{{ url('images/placeholdimagerest.png') }}" alt="{{ $data->name }}" class="thumbnails"  />
-                        </a>
+							<span style="position: static; color: gray; margin-left: -50%; font-weight: 700;">{{ strtoupper('Uitverkocht') }}</span>
+						</a>
 						@endif
                     @endif
 
@@ -166,7 +165,7 @@
 			     &euro; {{ $deal->price }}
 			  </span>
 				@if($count_persons >= $deal->total_amount)
-					<a class="more"  href="javascript:void(0)">Uitverkocht</a>
+					<a class="more" href="javascript:void(0)">Uitverkocht</a>
 				@else
 				@if($returnval != '<div class="ui tiny text-danger"> <i class="clock icon"></i> Helaas, er zijn momenteel geen plaatsen beschikbaar.</div>')
 					<div class="d-inline-block">
