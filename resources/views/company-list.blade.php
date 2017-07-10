@@ -6,6 +6,7 @@
 
  <ul>
 
+
 @foreach ($companies as $data)
  
     @foreach ($data->ReservationOptions2()->get() as $deal)
