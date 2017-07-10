@@ -41,10 +41,11 @@
 
 
 					@if($count_persons >= $deal->total_amount)
-						<img src="{{ url('images/placeholdimagerest.png') }}" alt="{{ $data->name }}" class="thumbnails"/>
+						<img src="{{ url('images/placeholdimagerest.png') }}" alt="{{ $data->name }}" class="thumbnails" style="opacity: 0.7;"/>
+						<span style="position: static; color: #808080; margin-left: -50%; font-weight: 700; text-transform: uppercase;">Uitverkocht</span>
 					@else
                         <a href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}" title="{{ $data->name }}" data-url="">
-                            <img src="{{ url('images/placeholdimagerest.png') }}" alt="{{ $data->name }}" class="thumbnails"  />
+                            <img src="{{ url('images/placeholdimagerest.png') }}" alt="{{ $data->name }}" class="thumbnails" style="opacity: 0.7;"/>
 							<span style="position: static; color: gray; margin-left: -50%; font-weight: 700;">{{ strtoupper('Uitverkocht') }}</span>
 						</a>
 						@endif
