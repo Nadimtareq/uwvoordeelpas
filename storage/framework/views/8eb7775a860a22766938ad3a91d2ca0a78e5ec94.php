@@ -41,11 +41,11 @@
 
 
 					<?php if($count_persons >= $deal->total_amount): ?>
-						<img src="<?php echo e(url('images/placeholdimagerest.png')); ?>" alt="<?php echo e($data->name); ?>" class="thumbnails"/>
+						<img src="<?php echo e(url('images/placeholdimagerest.png')); ?>" alt="<?php echo e($data->name); ?>" class="thumbnails" style="opacity: 0.7;"/>
+						<span style="position: static; color: #808080; margin-left: -50%; font-weight: 700; text-transform: uppercase;">Uitverkocht</span>
 					<?php else: ?>
                         <a href="<?php echo e(url('restaurant/'.$data->slug).'?deal='.$deal->id); ?>" title="<?php echo e($data->name); ?>" data-url="">
-                            <img src="<?php echo e(url('images/placeholdimagerest.png')); ?>" alt="<?php echo e($data->name); ?>" class="thumbnails"  />
-							<span style="position: static; color: gray; margin-left: -50%; font-weight: 700;"><?php echo e(strtoupper('Uitverkocht')); ?></span>
+                            <img src="<?php echo e(url('images/placeholdimagerest.png')); ?>" alt="<?php echo e($data->name); ?>" class="thumbnails" style="opacity: 0.7;"/>
 						</a>
 						<?php endif; ?>
                     <?php endif; ?>
