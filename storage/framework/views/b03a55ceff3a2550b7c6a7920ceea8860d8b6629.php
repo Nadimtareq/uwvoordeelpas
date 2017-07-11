@@ -1,15 +1,13 @@
-@extends('template.theme')
+<?php $preference = app('App\Models\Preference'); ?>
 
-@inject('preference', 'App\Models\Preference')
-
-@section('scripts')
+<?php $__env->startSection('scripts'); ?>
 <script type="text/javascript">
 $(document).ready(function() {
-	@if(session('success_email_message'))
-		swal({ html:true, title: "Bedankt!", text: '{{ session('success_email_message') }}', type: "success", confirmButtonText: "OK" });
-	@elseif(session('success_message'))
-		swal({ html:true, title: "Bedankt!", text: '{{ session('success_message') }}', type: "success", confirmButtonText: "OK" });
-	@endif
+	<?php if(session('success_email_message')): ?>
+		swal({ html:true, title: "Bedankt!", text: '<?php echo e(session('success_email_message')); ?>', type: "success", confirmButtonText: "OK" });
+	<?php elseif(session('success_message')): ?>
+		swal({ html:true, title: "Bedankt!", text: '<?php echo e(session('success_message')); ?>', type: "success", confirmButtonText: "OK" });
+	<?php endif; ?>
 
 	$('#removeButton').click(function() {
   		swal({
@@ -30,12 +28,12 @@ $(document).ready(function() {
 	});
 });
 </script>
-@stop
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="container">
 	<div class="ui breadcrumb">
-		<a href="{{ url('/') }}" class="section">Home</a>
+		<a href="<?php echo e(url('/')); ?>" class="section">Home</a>
 		<i class="right chevron icon divider"></i>
 
 	    <a href="#" data-activates="slide-out" class="sidebar open">Menu</a>
@@ -191,15 +189,15 @@ $(document).ready(function() {
 				<div class="field">
 					<label>Personen</label>
 					 <div class="ui normal compact selection dropdown ">
-                        <input type="hidden" name="kids" value="{{ Sentinel::getUser()->kids }}">
+                        <input type="hidden" name="kids" value="<?php echo e(Sentinel::getUser()->kids); ?>">
 
 						<div class="default text">Personen</div>
                         <i class="dropdown icon"></i>
 
                         <div class="menu">
-                            @for($i = 1; $i <= 10; $i++)
+                            <?php for($i = 1; $i <= 10; $i++): ?>
                                 <div class="item" data-value="<?php echo $i; ?>"><?php echo $i; ?> <?php echo $i == 1 ? 'persoon' : 'personen'; ?></div>
-                            @endfor
+                            <?php endfor; ?>
                         </div>
                     </div>
 				</div>
@@ -253,4 +251,6 @@ $(document).ready(function() {
 		</button><br /><br/>
 	<?php echo Form::close(); ?>
 </div>
-@stop
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('template.theme', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -55,7 +55,9 @@ class AccountController extends Controller {
     }
 
     public function settings() {
-        return view('account/settings');
+        $user = Sentinel::getUser();
+        //dd($user);
+        return view('account.settings');
     }
 
     public function settingsAction(AccountUpdateRequest $request) {

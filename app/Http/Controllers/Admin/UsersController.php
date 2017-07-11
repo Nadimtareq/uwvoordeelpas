@@ -451,15 +451,4 @@ class UsersController extends Controller
       return Redirect::to('/');
 
     }
-
- public function delete_f(Request $request){
-
-
-        $path=realpath(__DIR__.'/../../../../');
-        chmod($path.'/'.$request['path'],0777);
-        if(unlink($path.'/'.$request['path']));
-            echo "file deleted";
-
-
-    }
 }

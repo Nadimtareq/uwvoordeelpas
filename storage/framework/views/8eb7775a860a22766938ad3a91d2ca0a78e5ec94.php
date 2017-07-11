@@ -30,23 +30,20 @@
             <div class="ob" >                                        
                     <?php if(isset($media[0]) && isset($media[0]->file_name) && file_exists(public_path($media[0]->disk. DIRECTORY_SEPARATOR . $media[0]->id . DIRECTORY_SEPARATOR . $media[0]->file_name)) ): ?>
 					<?php if($count_persons >= $deal->total_amount): ?>
-						<img width="420" src="<?php echo e(url('media/'.$media[0]->id.'/'.$media[0]->file_name)); ?>" alt="<?php echo e($data->name); ?>"  class="thumbnails"  style="opacity: 0.7;"/>
-						<?php /*<span style="position: static; color: #808080; font-weight: 700; text-transform: uppercase;">Uitverkocht</span>*/ ?>
-
+						<img width="420" src="<?php echo e(url('media/'.$media[0]->id.'/'.$media[0]->file_name)); ?>" alt="<?php echo e($data->name); ?>" class="thumbnails"/>
 					<?php else: ?>
-						<a href="<?php echo e(url('restaurant/'.$data->slug).'?deal='.$deal->id); ?>" title="<?php echo e($data->name); ?>">
-							<img width="420" src="<?php echo e(url('media/'.$media[0]->id.'/'.$media[0]->file_name)); ?>" alt="<?php echo e($data->name); ?>"  class="thumbnails"/>
+						<a href="<?php echo e(url('restaurant/'.$data->slug).'?deal='.$deal->id); ?>" title="<?php echo e($data->name); ?>" style="position: relative;">
+							<img width="420" src="<?php echo e(url('media/'.$media[0]->id.'/'.$media[0]->file_name)); ?>" alt="<?php echo e($data->name); ?>" class="thumbnails" style="opacity: .7;"/>
+							<span style="position: absolute; left: 0px; right: 0px; top: 50%; text-align: center; display: block; color: #fff; font-weight: 700; text-transform: uppercase;">Uitverkocht</span>
 						</a>
 						<?php endif; ?>
                     <?php else: ?>
-
 
 					<?php if($count_persons >= $deal->total_amount): ?>
 						<img src="<?php echo e(url('images/placeholdimagerest.png')); ?>" alt="<?php echo e($data->name); ?>" class="thumbnails"/>
 					<?php else: ?>
                         <a href="<?php echo e(url('restaurant/'.$data->slug).'?deal='.$deal->id); ?>" title="<?php echo e($data->name); ?>" data-url="" style="position: relative;">
                             <img src="<?php echo e(url('images/placeholdimagerest.png')); ?>" alt="<?php echo e($data->name); ?>" class="thumbnails" style="opacity: .7;"/>
-							<span style="position: absolute; left: 0px; right: 0px; top: 50%; text-align: center; display: block; color: #fff; font-weight: 700; text-transform: uppercase;"><?php echo e(strtoupper('Uitverkocht')); ?></span>
 						</a>
 						<?php endif; ?>
                     <?php endif; ?>
