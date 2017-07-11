@@ -40,10 +40,12 @@
                     <?php else: ?>
 
 					<?php if($count_persons >= $deal->total_amount): ?>
-						<img src="<?php echo e(url('images/placeholdimagerest.png')); ?>" alt="<?php echo e($data->name); ?>" class="thumbnails"/>
+						<img src="<?php echo e(url('images/placeholdimagerest.png')); ?>" alt="<?php echo e($data->name); ?>" class="thumbnails" style="opacity: .7;"/>
+						<span style="position: absolute; left: 0px; right: 0px; top: 50%; text-align: center; display: block; color: #fff; font-weight: 700; text-transform: uppercase;">Uitverkocht</span>
 					<?php else: ?>
                         <a href="<?php echo e(url('restaurant/'.$data->slug).'?deal='.$deal->id); ?>" title="<?php echo e($data->name); ?>" data-url="" style="position: relative;">
                             <img src="<?php echo e(url('images/placeholdimagerest.png')); ?>" alt="<?php echo e($data->name); ?>" class="thumbnails" style="opacity: .7;"/>
+							<span style="position: absolute; left: 0px; right: 0px; top: 50%; text-align: center; display: block; color: #fff; font-weight: 700; text-transform: uppercase;">Uitverkocht</span>
 						</a>
 						<?php endif; ?>
                     <?php endif; ?>
