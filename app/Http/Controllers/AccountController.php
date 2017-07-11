@@ -55,7 +55,9 @@ class AccountController extends Controller {
     }
 
     public function settings() {
-        return view('account/settings');
+        $user = Sentinel::getUser();
+        //dd($user);
+        return view('account.settings');
     }
 
     public function settingsAction(AccountUpdateRequest $request) {
@@ -662,6 +664,7 @@ class AccountController extends Controller {
                             'future_deals.deal_price as future_deal_price',
                             'future_deals.persons as total_persons',
                             'future_deals.persons_remain as remain_persons',
+                            'future_deals.persons as persons',
                             'future_deals.expired_at as expired_at',
                             'reservations_options.date_to as date_to'
                     )

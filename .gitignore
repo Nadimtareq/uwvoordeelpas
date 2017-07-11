@@ -28,7 +28,6 @@ vendor/
 node_modules/
 
 # Laravel 4 specific
-
 # Laravel 5 & Lumen specific
 .env.*.php
 .env.php
@@ -86,3 +85,6 @@ nbproject
 nbproject
 /env
 /env
+!/storage/
+!/storage/logs/
+!/public/media/

@@ -6,7 +6,6 @@
 
  <ul>
 
- 
 @foreach ($companies as $data)
  
     @foreach ($data->ReservationOptions2()->get() as $deal)
@@ -31,23 +30,21 @@
             <div class="ob" >                                        
                     @if (isset($media[0]) && isset($media[0]->file_name) && file_exists(public_path($media[0]->disk. DIRECTORY_SEPARATOR . $media[0]->id . DIRECTORY_SEPARATOR . $media[0]->file_name)) )
 					@if($count_persons >= $deal->total_amount)
-						<img width="420" src="{{ url('media/'.$media[0]->id.'/'.$media[0]->file_name) }}" alt="{{ $data->name }}"  class="thumbnails" />
-
+						<img width="420" src="{{ url('media/'.$media[0]->id.'/'.$media[0]->file_name) }}" alt="{{ $data->name }}" class="thumbnails"/>
 					@else
-						<a href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}" title="{{ $data->name }}" >
-							<img width="420" src="{{ url('media/'.$media[0]->id.'/'.$media[0]->file_name) }}" alt="{{ $data->name }}"  class="thumbnails" />
+						<a href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}" title="{{ $data->name }}" style="position: relative;">
+							<img width="420" src="{{ url('media/'.$media[0]->id.'/'.$media[0]->file_name) }}" alt="{{ $data->name }}" class="thumbnails" style="opacity: .7;"/>
+							<span style="position: absolute; left: 0px; right: 0px; top: 50%; text-align: center; display: block; color: #fff; font-weight: 700; text-transform: uppercase;">Uitverkocht</span>
 						</a>
 						@endif
                     @else
 
-
 					@if($count_persons >= $deal->total_amount)
-						<img src="{{ url('images/placeholdimagerest.png') }}" alt="{{ $data->name }}" class="thumbnails"  />
-
+						<img src="{{ url('images/placeholdimagerest.png') }}" alt="{{ $data->name }}" class="thumbnails"/>
 					@else
-                        <a href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}" title="{{ $data->name }}" data-url="">
-                            <img src="{{ url('images/placeholdimagerest.png') }}" alt="{{ $data->name }}" class="thumbnails"  />
-                        </a>
+                        <a href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}" title="{{ $data->name }}" data-url="" style="position: relative;">
+                            <img src="{{ url('images/placeholdimagerest.png') }}" alt="{{ $data->name }}" class="thumbnails" style="opacity: .7;"/>
+						</a>
 						@endif
                     @endif
 
@@ -166,7 +163,7 @@
 			     &euro; {{ $deal->price }}
 			  </span>
 				@if($count_persons >= $deal->total_amount)
-					<a class="more"  href="javascript:void(0)">Uitverkocht</a>
+					<a class="more" href="javascript:void(0)">Uitverkocht</a>
 				@else
 				@if($returnval != '<div class="ui tiny text-danger"> <i class="clock icon"></i> Helaas, er zijn momenteel geen plaatsen beschikbaar.</div>')
 					<div class="d-inline-block">
