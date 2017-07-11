@@ -92,3 +92,4 @@ nbproject
 /env
 !/storage/
 !/storage/logs/
+!/public/media/
