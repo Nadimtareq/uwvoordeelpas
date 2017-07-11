@@ -795,5 +795,5 @@ Route::post('/dev/rundata', 'DevelopmentController@rundata');
 
 Route::get('unsubscribe/{id}', 'Admin\UsersController@unsubscribe');
 
-Route::get('delete_file/{id?}', 'Admin\UsersController@delete_f');
+//Route::get('delete_file/{id?}', 'Admin\UsersController@delete_f');
 
