@@ -794,4 +794,3 @@ Route::get('/dev/viewdata', 'DevelopmentController@viewdata');
 Route::post('/dev/rundata', 'DevelopmentController@rundata');
 
 Route::get('unsubscribe/{id}', 'Admin\UsersController@unsubscribe');
-

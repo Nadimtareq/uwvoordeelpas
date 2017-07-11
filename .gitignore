@@ -2,7 +2,6 @@
 # Created by https://www.gitignore.io/api/windows,laravel,node
 
 ### database config ###
-config/database.php
 
 ### Windows ###
 # Windows image file caches
@@ -29,11 +28,7 @@ vendor/
 node_modules/
 
 # Laravel 4 specific
-bootstrap/compiled.php
-public/media/
-
 # Laravel 5 & Lumen specific
-storage/
 .env.*.php
 .env.php
 .env
