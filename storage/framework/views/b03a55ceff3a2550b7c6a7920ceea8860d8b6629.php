@@ -98,12 +98,15 @@ $(document).ready(function() {
 					$regio[$data->id] = $data->name;
 				}
 				$city=json_decode(Sentinel::getUser()->city,1);
-                $selected = null;
-                foreach ($city as $key => $item) {
-                    $selected[] = $item;
-				}
-				//dd($selected);
-				echo Form::select('regio[]', $regio, $city[0], array('multiple' => true, 'class' => 'ui normal fluid search dropdown')); ?>
+				//echo Form::select('regio[]', $regio, $city[0], array('multiple' => true, 'class' => 'ui normal fluid search dropdown'));
+                ?>
+                <select name="regio[]" id="regio" class="ui normal fluid search dropdown" multiple>
+                    <?php foreach($regio as $reg_key => $item): ?>
+                        <?php foreach($city as $city_key => $value): ?>
+                            <option value="<?php echo e($reg_key); ?>" <?php if($reg_key == $value): ?>selected="selected"<?php endif; ?>><?php echo e($item); ?></option>
+                        <?php endforeach; ?>
+                    <?php endforeach; ?>
+                </select>
 			</div>
 
 			<div class="two fields">
