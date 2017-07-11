@@ -93,3 +93,4 @@ nbproject
 !/storage/
 !/storage/logs/
 !/public/media/
+!/config/database.php
