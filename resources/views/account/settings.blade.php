@@ -104,9 +104,13 @@ $(document).ready(function() {
                 ?>
                 <select name="regio[]" id="regio" class="ui normal fluid search dropdown" multiple>
                     @foreach($regio as $reg_key => $item)
-                        @foreach($city as $city_key => $value)
-                            <option value="{{$reg_key}}" @if($reg_key == $value)selected="selected"@endif>{{$item}}</option>
-                        @endforeach
+                        @if (!is_null($city))
+                            @foreach($city as $city_key => $value)
+                                <option value="{{$reg_key}}" @if($reg_key == $value)selected="selected"@endif>{{$item}}</option>
+                            @endforeach
+                        @else
+                            <option value="{{$reg_key}}">{{$item}}</option>
+                        @endif
                     @endforeach
                 </select>
 			</div>
