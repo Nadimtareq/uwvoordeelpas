@@ -56,15 +56,15 @@
 <table class="ui sortable very basic collapsing celled unstackable table" style="width: 100%;">
     <thead>
         <tr>
-            <th data-slug="disabled" class="disabled" width="10%">
+            <th data-slug="disabled" class="disabled" width="5%">
                 <div class="ui master checkbox"><input type="checkbox"></div>
             </th>
-            <th data-slug="user_name" class="four wide" width="30%">Gebruikersnaam</th>
-            <th data-slug="company_name" class="two wide" width="30%">Deal naam</th>
+            <th data-slug="user_name" class="two wide" width="30%">Gebruikersnaam</th>
+            <th data-slug="company_name" class="seven wide" width="30%">Deal naam</th>
             <th data-slug="future_deal_price" class="three wide" width="10%">Bedrijfsnaam</th>
-            <th data-slug="expired_at" class="three wide" width="10%">Deal bedrag</th>
-            <th data-slug="mollie_id" class="two wide""width="10%">Vervaldatum</th>
-            <th data-slug="total_persons" class="two wide" width="10%">aantal</th>
+            <th data-slug="expired_at" class="one wide" width="10%">Deal bedrag</th>
+            <th data-slug="mollie_id" class="two wide" width="10%">Vervaldatum</th>
+            <th data-slug="total_persons" class="two wide" width="5%">aantal</th>
             <!-- <th data-slug="payment_type" class="two wide">Blijf persoon</th> -->
         </tr>
     </thead>
