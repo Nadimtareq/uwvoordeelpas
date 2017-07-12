@@ -42,11 +42,12 @@
 					<?php if($count_persons >= $deal->total_amount): ?>
 						<a href="<?php echo e(url('restaurant/'.$data->slug).'?deal='.$deal->id); ?>" title="<?php echo e($data->name); ?>" data-url="" style="position: relative;">
 							<img src="<?php echo e(url('images/placeholdimagerest.png')); ?>" alt="<?php echo e($data->name); ?>" class="thumbnails" style="opacity: .7;"/>
-							<span style="position: absolute; left: 0px; right: 0px; top: 50%; text-align: center; display: block; color: #fff; font-weight: 700; text-transform: uppercase;">Uitverkocht</span>
+							<span style="position: absolute; left: 0px; right: 0px; top: 50%; text-align: center; display: block; color: #fff; font-weight: 500; text-transform: uppercase; font-family: 'Open Sans', sans-serif!important;">Uitverkocht</span>
 						</a>
 					<?php else: ?>
                         <a href="<?php echo e(url('restaurant/'.$data->slug).'?deal='.$deal->id); ?>" title="<?php echo e($data->name); ?>" data-url="" style="position: relative;">
                             <img src="<?php echo e(url('images/placeholdimagerest.png')); ?>" alt="<?php echo e($data->name); ?>" class="thumbnails"/>
+							<span style="position: absolute; left: 0px; right: 0px; top: 50%; text-align: center; display: block; color: #fff; font-size: 19px; font-weight: 500; text-transform: uppercase; font-family: 'Open Sans', sans-serif!important;">Uitverkocht</span>
 						</a>
 						<?php endif; ?>
                     <?php endif; ?>
