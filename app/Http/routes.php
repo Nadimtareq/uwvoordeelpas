@@ -264,7 +264,6 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('callcenter', 'aut
         Route::post('create/{slug?}', 'Admin\AppointmentController@createAction');
         Route::post('/', 'Admin\AppointmentController@indexAction');
     });
-
     # Reservations #
     Route::group(array('prefix' => 'reservations'), function () {
         Route::get('saldo', 'Admin\ReservationsController@listSaldo');
@@ -442,6 +441,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', '
 
         Route::post('create', 'Admin\UsersController@createAction');
         Route::post('update/{id}', 'Admin\UsersController@updateAction');
+        Route::get('newsletter', 'Admin\UsersController@newsletter');
         Route::post('delete', 'Admin\UsersController@deleteAction');
     });
 

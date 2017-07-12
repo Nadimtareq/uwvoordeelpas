@@ -57,8 +57,7 @@ class UsersController extends Controller
             'users.city',
             'preferences.name as cityName'
         )
-            ->leftJoin('preferences', 'users.city', '=', 'preferences.id')
-        ;
+            ->leftJoin('preferences', 'users.city', '=', 'preferences.id');
 
         if ($request->has('q')) {
             $data = $data->where(
@@ -241,6 +240,22 @@ class UsersController extends Controller
         return Redirect::to('admin/'.$this->slugController.'/update/'.$user->id);
     }
 
+    /**
+     * This function is used for activating deactivating newsletters
+     * @param Request $request
+     * @return mixed
+     */
+    public function newsletter(Request $request)
+    {
+        $user = Sentinel::findById($request->get('id'));
+
+        $user->newsletter = $request->get('status');
+        $user->save();
+
+        Alert::success('Deze gebruiker is succesvol aangepast.')->persistent('Sluiten');
+        return redirect()->back();
+
+    }
     public function updateAction($id, Request $request)
     {
        	$this->validate($request, [
