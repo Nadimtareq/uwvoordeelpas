@@ -359,8 +359,7 @@ class AccountController extends Controller {
                 ->where('reservations.user_id',
                         Sentinel::inRole('admin') && $userId != null ? $userId : Sentinel::getUser()->id)
                 ->unionALL($payments)
-                ->unionALL($transactions)
-        ;
+                ->unionALL($transactions);
 
         if ($request->has('month') && $request->has('year')) {
             $items = $items
@@ -433,7 +432,7 @@ class AccountController extends Controller {
         $pagination = new LengthAwarePaginator($slice, count($items),
                 $request->input('limit', 15));
         $pagination->setPath(URL::to('/account/reservations/saldo'));
-
+        //dd($pagination);
         return view('account/saldo',
                 [
             'data' => $pagination,

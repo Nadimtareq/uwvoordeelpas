@@ -1,12 +1,12 @@
-@extends('template.theme')
 
-@section('scripts')
-@include('admin.template.remove_alert')
-@stop
 
-@section('content')
+<?php $__env->startSection('scripts'); ?>
+<?php echo $__env->make('admin.template.remove_alert', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
 <div class="content">
-    @include('admin.template.breadcrumb')
+    <?php echo $__env->make('admin.template.breadcrumb', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
     
     <div class="buttonToolbar">  
         <div class="ui grid">
@@ -42,7 +42,7 @@
                <div class="ui grid">
                 <div class="three column row">
                     <div class="sixteen wide mobile four wide computer column">
-                        @include('admin.template.limit')
+                        <?php echo $__env->make('admin.template.limit', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
                     </div>
 
                     <div class="sixteen wide mobile eight wide computer column">
@@ -61,33 +61,33 @@
 
                                 <div class="scrolling menu">
                                     <a class="item" 
-                                    href="{{ url('admin/'.$slugController.'?'.http_build_query(array_add($queryString, 'status', 'paid'))) }}" 
+                                    href="<?php echo e(url('admin/'.$slugController.'?'.http_build_query(array_add($queryString, 'status', 'paid')))); ?>" 
                                     data-value="Betaald">
                                     <div class="ui green empty circular label"></div>
                                     Betaald
                                 </a>
 
                                 <a class="item" 
-                                href="{{ url('admin/'.$slugController.'?'.http_build_query(array_add($queryString, 'status', 'pending'))) }}" 
+                                href="<?php echo e(url('admin/'.$slugController.'?'.http_build_query(array_add($queryString, 'status', 'pending')))); ?>" 
                                 data-value="In behandeling">
                                 <div class="ui orange empty circular label"></div>
                                 In behandeling
                             </a>
 
                             <a class="item" 
-                            href="{{ url('admin/'.$slugController.'?'.http_build_query(array_add($queryString, 'status', 'open'))) }}" 
+                            href="<?php echo e(url('admin/'.$slugController.'?'.http_build_query(array_add($queryString, 'status', 'open')))); ?>" 
                             data-value="Open">
                             <div class="ui blue empty circular label"></div>
                             Open
                         </a>
                         <a class="item" 
-                            href="{{ url('admin/'.$slugController.'?'.http_build_query(array_add($queryString, 'status', 'cancelled'))) }}"
+                            href="<?php echo e(url('admin/'.$slugController.'?'.http_build_query(array_add($queryString, 'status', 'cancelled')))); ?>"
                             data-value="Cancelled">
                             <div class="ui red empty circular label"></div>
                             Geannuleerd
                         </a>
                     <a class="item" 
-                    href="{{ url('admin/'.$slugController.'?'.http_build_query(array_add($queryString, 'status', 'expired'))) }}" 
+                    href="<?php echo e(url('admin/'.$slugController.'?'.http_build_query(array_add($queryString, 'status', 'expired')))); ?>" 
                     data-value="Expired">
                     <div class="ui light-red empty circular label"></div>
                     Verlopen
@@ -98,7 +98,7 @@
 </div>
 
 <div class="sixteen wide mobile four wide computer column">
-    @include('admin.template.search.form')
+    <?php echo $__env->make('admin.template.search.form', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 </div>
 </div>
 </div>
@@ -108,16 +108,16 @@
 <div class="ui grid">
     <div class="five wide column">
         <div class="ui normal icon selection fluid dropdown">
-            <input type="hidden" name="source" value="{{ Request::input('source') }}">
+            <input type="hidden" name="source" value="<?php echo e(Request::input('source')); ?>">
 
             <div class="text">Partij</div>
             <i class="dropdown icon"></i>
 
             <div class="menu">
-                <a href="{{ url('admin/payments?'.http_build_query(array_add($queryString, 'source', 'seatme'))) }}" data-value="seatme" class="item">SeatMe</a>
-                <a href="{{ url('admin/payments?'.http_build_query(array_add($queryString, 'source', 'eetnu'))) }}" data-value="eetnu" class="item">EetNU</a>
-                <a href="{{ url('admin/payments?'.http_build_query(array_add($queryString, 'source', 'couverts'))) }}" data-value="couverts" class="item">Couverts</a>
-                <a href="{{ url('admin/payments?'.http_build_query(array_add($queryString, 'source', 'wifi'))) }}" data-value="wifi" class="item">Wi-Fi</a>
+                <a href="<?php echo e(url('admin/payments?'.http_build_query(array_add($queryString, 'source', 'seatme')))); ?>" data-value="seatme" class="item">SeatMe</a>
+                <a href="<?php echo e(url('admin/payments?'.http_build_query(array_add($queryString, 'source', 'eetnu')))); ?>" data-value="eetnu" class="item">EetNU</a>
+                <a href="<?php echo e(url('admin/payments?'.http_build_query(array_add($queryString, 'source', 'couverts')))); ?>" data-value="couverts" class="item">Couverts</a>
+                <a href="<?php echo e(url('admin/payments?'.http_build_query(array_add($queryString, 'source', 'wifi')))); ?>" data-value="wifi" class="item">Wi-Fi</a>
             </div>
         </div>
     </div>
@@ -151,68 +151,70 @@
         </tr>
     </thead>
     <tbody class="list search">
-        @if(count($payments) >= 1)
-        @foreach($payments as $payment)
+        <?php if(count($payments) >= 1): ?>
+        <?php foreach($payments as $payment): ?>
         <tr>
          <td>
             <div class="ui child checkbox">
-                <input type="checkbox" name="id[]" value="{{ $payment->id }}">
+                <input type="checkbox" name="id[]" value="<?php echo e($payment->id); ?>">
                 <label></label>
             </div>
         </td>
-        <td>{{ date('d-m-Y', strtotime($payment->created_at)) }} om {{ date('H:i', strtotime($payment->created_at)) }}</td>
-        <td>&euro; {{ $payment->amount }}</td>
-        <td><a href="{{ url('admin/users/update/'.$payment->user_id) }}">{{ $payment->name }}</a></td>
-        <td><a href="{{ url('admin/users/update/'.$payment->user_id) }}">{{ $payment->email }}</a></td>
-        <td>{{ $payment->type }}</td>
-        <td>{{ $payment->mollie_id }}</td>
+        <td><?php echo e(date('d-m-Y', strtotime($payment->created_at))); ?> om <?php echo e(date('H:i', strtotime($payment->created_at))); ?></td>
+        <td>&euro; <?php echo e($payment->amount); ?></td>
+        <td><a href="<?php echo e(url('admin/users/update/'.$payment->user_id)); ?>"><?php echo e($payment->name); ?></a></td>
+        <td><a href="<?php echo e(url('admin/users/update/'.$payment->user_id)); ?>"><?php echo e($payment->email); ?></a></td>
+        <td><?php echo e($payment->type); ?></td>
+        <td><?php echo e($payment->mollie_id); ?></td>
         <td>
-            <span class="method-icon micon" data-method="{{ $payment->payment_type }}"></span> 
-            {{ ucfirst($payment->payment_type) }}
+            <span class="method-icon micon" data-method="<?php echo e($payment->payment_type); ?>"></span> 
+            <?php echo e(ucfirst($payment->payment_type)); ?>
+
         </td>
         <td>
-            @if($payment->status == 'paid')
+            <?php if($payment->status == 'paid'): ?>
             <div class="ui green empty circular label"></div>
-            @elseif($payment->status == 'open')
+            <?php elseif($payment->status == 'open'): ?>
             <div class="ui blue empty circular label"></div>
-            @elseif($payment->status == 'pending')
+            <?php elseif($payment->status == 'pending'): ?>
             <div class="ui orange empty circular label"></div>
-            @elseif($payment->status == 'cancelled')
+            <?php elseif($payment->status == 'cancelled'): ?>
             <div class="ui red empty circular label"></div> 
-            @elseif($payment->status == 'expired')
+            <?php elseif($payment->status == 'expired'): ?>
             <div class="ui light-red empty circular label"></div>
-            @endif
+            <?php endif; ?>
         </td>
         <td>
-            <a href="{{ url('admin/payments/update/'.$payment->id) }}" class="ui small icon button">
+            <a href="<?php echo e(url('admin/payments/update/'.$payment->id)); ?>" class="ui small icon button">
                 <i class="pencil icon"></i>
             </a>
         </td>
     </tr>
-    @endforeach
-    @else
+    <?php endforeach; ?>
+    <?php else: ?>
     <tr>
         <td colspan="2"><div class="ui error message">Er is geen data gevonden.</div></td>
     </tr>
-    @endif
+    <?php endif; ?>
 </tbody>
 </table>
 <?php echo Form::close(); ?>
-@if($totalAmountForQuery)
+<?php if($totalAmountForQuery): ?>
     <div class="clearfix">&nbsp;</div>
     <div class="ui grid">
         <div class="row">
             <div class="four wide column">
                 <div class="ui red segment">
-                    <strong class="">Totaal bedrag: &euro;{{$totalAmountForQuery}}</strong><br>
+                    <strong class="">Totaal bedrag: &euro;<?php echo e($totalAmountForQuery); ?></strong><br>
                 </div>
             </div>
         </div>
     </div>
     <div class="clearfix">&nbsp;</div>
-@endif
+<?php endif; ?>
 
-{!! with(new \App\Presenter\Pagination($payments->appends($paginationQueryString)))->render() !!}<br><br>
+<?php echo with(new \App\Presenter\Pagination($payments->appends($paginationQueryString)))->render(); ?><br><br>
 
 </div>
-@stop
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('template.theme', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
