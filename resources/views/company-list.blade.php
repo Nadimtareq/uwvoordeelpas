@@ -46,7 +46,7 @@
 						</a>
 					@else
                         <a href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}" title="{{ $data->name }}" data-url="" style="position: relative;">
-                            <img src="{{ url('images/placeholdimagerest.png') }}" alt="{{ $data->name }}" class="thumbnails" style="opacity: .7;"/>
+                            <img src="{{ url('images/placeholdimagerest.png') }}" alt="{{ $data->name }}" class="thumbnails"/>
 						</a>
 						@endif
                     @endif
