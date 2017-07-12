@@ -1,12 +1,10 @@
-@extends('template.theme')
+<?php $cityPref = app('App\Models\Preference'); ?>
 
-@inject('cityPref', 'App\Models\Preference')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="content">
 
-    @if (isset($data))
-    @include('admin.template.breadcrumb')
+    <?php if(isset($data)): ?>
+    <?php echo $__env->make('admin.template.breadcrumb', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 	<?php echo Form::open(array('url' => 'admin/'.$slugController.'/update/'.$data->id, 'method' => 'post', 'class' => 'ui edit-changes form')) ?>
 		<div class="field">
 			<label>Rol</label>
@@ -74,15 +72,15 @@
 			//echo Form::select('city[]', $city, json_decode($data->city), array('multiple' => true, 'class' => 'ui normal fluid search dropdown'));
 			?>
 			<select name="city[]" id="city" class="ui normal fluid search dropdown" multiple>
-				@foreach($city as $city_key => $item)
-					@if (!is_null(json_decode($data->city)))
-						@foreach(json_decode($data->city) as $sel_key => $selected)
-							<option value="{{$city_key}}" @if($city_key == $selected)selected="selected"@endif>{{$item}}</option>
-						@endforeach
-					@else
-						<option value="{{$city_key}}">{{$item}}</option>
-					@endif
-				@endforeach
+				<?php foreach($city as $city_key => $item): ?>
+					<?php if(!is_null(json_decode($data->city))): ?>
+						<?php foreach(json_decode($data->city) as $sel_key => $selected): ?>
+							<option value="<?php echo e($city_key); ?>" <?php if($city_key == $selected): ?>selected="selected"<?php endif; ?>><?php echo e($item); ?></option>
+						<?php endforeach; ?>
+					<?php else: ?>
+						<option value="<?php echo e($city_key); ?>"><?php echo e($item); ?></option>
+					<?php endif; ?>
+				<?php endforeach; ?>
 			</select>
 		</div>
 
@@ -163,9 +161,11 @@
 		</div>
 
 		 <button class="ui tiny button" type="submit"><i class="pencil icon"></i> Wijzigen</button>
-		 <a href="{{ url('admin/ban/create/'.$data->id) }}" class="ui tiny red button" type="submit"><i class="ban icon"></i> Verbannen</a>
+		 <a href="<?php echo e(url('admin/ban/create/'.$data->id)); ?>" class="ui tiny red button" type="submit"><i class="ban icon"></i> Verbannen</a>
 	<?php echo Form::close(); ?>
-	@endif
+	<?php endif; ?>
 </div>
 <div class="clear"></div>
-@stop
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('template.theme', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
