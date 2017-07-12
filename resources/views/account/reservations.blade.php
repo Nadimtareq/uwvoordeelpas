@@ -121,7 +121,7 @@ $(document).ready(function() {
 								<i class="phone icon"></i> {{ $data->phone }}
 							</td>
 							<td {!! $data->is_cancelled ? 'class="disabled"' : '' !!}>
-								<i class="euro icon"></i>{{ $data->saldo }} korting
+								<i class="euro icon"></i>{{ $data->saldo }} betaald
 							</td>
 							<td {!! $data->is_cancelled ? 'class="disabled"' : '' !!}>
 								@if ($data->barcode == 1) 
