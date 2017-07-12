@@ -346,7 +346,7 @@ class AccountController extends Controller {
         $items = Reservation::select(
                         'reservations.restaurant_is_paid AS restaurant_is_paid',
                         'users.name AS userName',
-                        'reservations.created_at as date',
+                        DB::raw('CONCAT(reservations.date, " ", reservations.time) AS date'),
                         'reservations.time as time', 'companies.name AS name',
                         'reservations.saldo AS amount', DB::raw('"" AS status'),
                         DB::raw('"Reservering" as type'),
