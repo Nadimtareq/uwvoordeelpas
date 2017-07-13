@@ -146,8 +146,8 @@
                 <td><p style="display:none;font-size:12px;" onmouseout="$(this).parent().find('span').show();$(this).hide();">{{ $result->phone }}</p><span style="font-size:12px;" onmouseover="$(this).parent().find('p').show();$(this).hide();">{{ substr($result->phone,0,10) }}</span></td>
                 <td>{{ $result->email }}</td>
                 <td class="text-center">
-                    <i class="icon checkmark {{ $result->newsletter == 1 ? 'green' : 'red' }}"></i>
-                    <!--<div class="ui normal search selection fluid dropdown">
+                    {{--<i class="icon checkmark {{ $result->newsletter == 1 ? 'green' : 'red' }}"></i>--}}
+                    <div class="ui normal search selection fluid dropdown">
                         <input type="hidden" name="companiesId">
 
                         <i class="dropdown icon"></i>
@@ -155,7 +155,7 @@
                             <a class="item" href="{{ url("admin/$slugController/newsletter?id=$result->id&status=1") }}">ja</a>
                             <a class="item" href="{{ url("admin/$slugController/newsletter?id=$result->id&status=0") }}">nee</a>
                         </div>
-                    </div> -->
+                    </div>
                 </td>
                 <td>
                     <a href="{{ url('account/reservations/saldo/'.$result->id) }}" class="ui fluid text1 aligned center label">&euro;{{ $result->saldo }}</a>
