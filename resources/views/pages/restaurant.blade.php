@@ -271,8 +271,13 @@ while ($st->lte($dt)) {
                                                         @endforeach
                                                     </strong>
                                                     @endif
-<?php $discount = json_decode($company->discount); ?>
-                                                    @if (isset($discount))
+                                                    <?php $discount = json_decode($company->discount);
+                                                    foreach($discount as $key=>$value)
+                                                    {
+                                                        if(is_null($value) || $value == 'NULL')
+                                                            unset($discount[$key]);
+                                                    }?>
+                                                    @if (!empty($discount))
                                                     <span>Korting</span>
                                                     <strong>
                                                         {{ $company->discount_comment }}
@@ -423,7 +428,7 @@ while ($st->lte($dt)) {
 
                                                     </label>
 
-                                                    bel for="time-dropdown">
+                                                    <label for="time-dropdown">
                                                     <span>Tijm</span>
                                                     <div class="details">
                                                         {{ Form::select("time",[],Request::get('time'),[ 'class' => 'quantity2', 'id' => 'time-dropdown']) }}
@@ -455,7 +460,7 @@ while ($st->lte($dt)) {
                                                     </label>
 
 
-                                                    label for="comment">
+                                                    <label for="comment">
                                                     <span>Opmerking</span>
                                                     {!! Form::textarea('comment') !!}
                                                     </label>
