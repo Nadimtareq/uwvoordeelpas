@@ -18,7 +18,7 @@
     <?php endif; ?>
     <div class="ui grid custom-reserve-future-deal">
         <div class="row">
-            <div class="six wide column"> 
+            <div class="six wide column mobile"> 
                 <div class="field">
                     <label>Datum</label>
                     <?php echo Form::text('date', '', array('class' => 'reservationDatepicker')); ?>
@@ -113,7 +113,7 @@
             </div>
         </div>
         <div class="row"> 
-            <div class="column">
+            <div class="column custom-comment">
                 <div class="field">
                     <label>Opmerking</label>
                     <?php echo Form::textarea('comment', (isset($company->lastComment) ? $company->lastComment : ''), array('rows' => 2)); ?>

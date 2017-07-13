@@ -121,7 +121,7 @@ $(document).ready(function() {
 
 							</td>
 							<td <?php echo $data->is_cancelled ? 'class="disabled"' : ''; ?>>
-								<i class="euro icon"></i><?php echo e($data->saldo); ?> korting
+								<i class="euro icon"></i><?php echo e($data->saldo); ?> betaald
 							</td>
 							<td <?php echo $data->is_cancelled ? 'class="disabled"' : ''; ?>>
 								<?php if($data->barcode == 1): ?> 

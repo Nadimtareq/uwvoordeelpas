@@ -22,7 +22,7 @@ class ReservationOption extends Model {
 
     public function reservationCount() {
         return $this->reservation()
-                        ->selectRaw('option_id, count(*) as total_reservation');
+            ->selectRaw('option_id, count(*) as total_reservation');
     }
 
 }

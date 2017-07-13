@@ -50,15 +50,16 @@
                         <div>
                             <b style="max-width: 250px;">
                                 <?php if($futureDeal->remain_persons > 0): ?>
-                                    Beschikbaar voor <?php echo e($futureDeal->remain_persons); ?> personen
+                                    Beschikbaar voor <?php echo e($futureDeal->persons); ?> personen
                                 <?php else: ?>
-                                    Alles is verzilverd
+                                    Beschikbaar voor <?php echo e($futureDeal->persons); ?> personen
+                                    <?php /*Alles is verzilverd*/ ?>
                                 <?php endif; ?>
                             </b>
                         </div>
                         <div>
                             <b style="max-width: 250px;">
-                                vervaldatum: <?php echo e(Carbon\Carbon::parse($futureDeal->expired_at)->formatLocalized('%d %B %Y')); ?>
+                                vervaldatum: <?php echo e(Carbon\Carbon::parse($futureDeal->date_to)->formatLocalized('%d %B %Y')); ?>
 
                             </b>
                         </div>

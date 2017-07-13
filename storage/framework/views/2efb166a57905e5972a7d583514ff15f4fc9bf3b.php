@@ -54,16 +54,16 @@
 <table class="ui sortable very basic collapsing celled unstackable table" style="width: 100%;">
     <thead>
         <tr>
-            <th data-slug="disabled" class="disabled">
+            <th data-slug="disabled" class="disabled" width="5%">
                 <div class="ui master checkbox"><input type="checkbox"></div>
             </th>
-            <th data-slug="created_at" class="four wide">Gebruikersnaam</th>
-            <th data-slug="amount" class="two wide">Deal naam</th>
-            <th data-slug="name" class="three wide">Bedrijfsnaam</th>
-            <th data-slug="name" class="three wide">Deal bedrag</th>
-            <th data-slug="mollie_id" class="two wide">Vervaldatum</th>
-            <th data-slug="mollie_id" class="two wide">Totaal persoon</th>
-            <th data-slug="payment_type" class="two wide">Blijf persoon</th>
+            <th data-slug="user_name" class="two wide" width="30%">Gebruikersnaam</th>
+            <th data-slug="company_name" class="seven wide" width="30%">Deal naam</th>
+            <th data-slug="future_deal_price" class="three wide" width="10%">Bedrijfsnaam</th>
+            <th data-slug="expired_at" class="one wide" width="10%">Deal bedrag</th>
+            <th data-slug="mollie_id" class="two wide" width="10%">Vervaldatum</th>
+            <th data-slug="total_persons" class="two wide" width="5%">aantal</th>
+            <!-- <th data-slug="payment_type" class="two wide">Blijf persoon</th> -->
         </tr>
     </thead>
     <tbody class="list search">
@@ -82,7 +82,7 @@
         <td>&euro; <?php echo e($futureDeal->future_deal_price); ?></td>
         <td><?php echo e(date('d-m-Y', strtotime($futureDeal->expired_at))); ?></td>
         <td><?php echo e($futureDeal->total_persons); ?></td>
-        <td><?php echo e($futureDeal->remain_persons); ?></td>        
+        <!-- <td><?php echo e($futureDeal->remain_persons); ?></td>        -->
     </tr>
     <?php endforeach; ?>
     <?php else: ?>

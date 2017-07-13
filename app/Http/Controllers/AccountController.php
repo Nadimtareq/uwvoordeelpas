@@ -56,13 +56,12 @@ class AccountController extends Controller {
 
     public function settings() {
         $user = Sentinel::getUser();
-        //dd($user);
         return view('account.settings');
     }
 
     public function settingsAction(AccountUpdateRequest $request) {
-        $this->validate($request, []);
 
+        $this->validate($request, []);
         $user = Sentinel::getUser();
         $user->name = $request->input('name');
         $user->phone = $request->input('phone');
@@ -74,6 +73,7 @@ class AccountController extends Controller {
         $user->allergies = json_encode($request->input('allergies'));
         $user->sustainability = json_encode($request->input('sustainability'));
         $user->kids = $request->input('kids');
+        $user->newsletter = $request->get('letter');
         $user->price = json_encode($request->input('price'));
         $user->preferences = json_encode($request->input('preferences'));
         $user->discount = json_encode($request->input('discount'));
@@ -691,8 +691,6 @@ class AccountController extends Controller {
                     ->get()
             ;
         }
-//        print_r($data);
-//        exit;
         return view('account/future-deal',
                 [
             'futureDeals' => $data,
@@ -720,8 +718,7 @@ class AccountController extends Controller {
         }
     }
 
-    public function processReserveFutureDeal(FutureDealReserve $request,
-            $deal_id) {
+    public function processReserveFutureDeal(FutureDealReserve $request, $deal_id) {
         setlocale(LC_ALL, 'nl_NL', 'Dutch');
         $this->validate($request, []);
         $input_persons = $request->input('persons');
@@ -729,21 +726,19 @@ class AccountController extends Controller {
         $date = date('Y-m-d', strtotime($request->input('date')));
         $user = (Sentinel::check()) ? Sentinel::getUser() : NULL;
         $futureDeal = FutureDeal::where('id', $deal_id)->where('user_id',
-                        $user->id)->where('expired_at', '>=', date('Y-m-d'))->first();
-
+        $user->id)->where('expired_at', '>=', date('Y-m-d'))->first();
+        
         if ($futureDeal) {
             $deal = ReservationOption::find($futureDeal->deal_id);
             $company = Company::find($deal->company_id);
             if ($input_persons <= $futureDeal->persons_remain) {
-
                 $reservationTimes = CompanyReservation::getReservationTimesArray(
-                                array(
-                                    'company_id' => array($company->id),
-                                    'date' => $date,
-                                    'selectPersons' => $input_persons,
-                                    'groupReservations' => ($request->has('group_reservation')
-                                                ? 1 : NULL)
-                                )
+                    [
+                        'company_id' => array($company->id),
+                        'date' => $date,
+                        'selectPersons' => $input_persons,
+                        'groupReservations' => ($request->has('group_reservation') ? 1 : NULL)
+                    ]
                 );
 
                 if (isset($reservationTimes[$time])) {
@@ -795,11 +790,12 @@ class AccountController extends Controller {
                         $table->save();
                     }
 
-                    $total_reserved_persons = (int) ($futureDeal->persons_reserved +
-                            $input_persons);
+                    $total_reserved_persons = (int) ($futureDeal->persons_reserved + $input_persons);
                     $total_remain_persons = (int) ($futureDeal->persons - $total_reserved_persons);
+
                     $futureDeal->persons_reserved = $total_reserved_persons;
                     $futureDeal->persons_remain = $total_remain_persons;
+
                     if ($total_remain_persons == 0) {
                         $futureDeal->status = 'full_reserved';
                     } else {
@@ -826,7 +822,7 @@ class AccountController extends Controller {
                             '%preferences%' => ''
                         )
                     ));
-                    return Redirect::to('account/reservations');
+                    return redirect('account/reservations');
                 }
             }
         } else {
