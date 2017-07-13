@@ -56,13 +56,12 @@ class AccountController extends Controller {
 
     public function settings() {
         $user = Sentinel::getUser();
-        //dd($user);
         return view('account.settings');
     }
 
     public function settingsAction(AccountUpdateRequest $request) {
-        $this->validate($request, []);
 
+        $this->validate($request, []);
         $user = Sentinel::getUser();
         $user->name = $request->input('name');
         $user->phone = $request->input('phone');
@@ -74,6 +73,7 @@ class AccountController extends Controller {
         $user->allergies = json_encode($request->input('allergies'));
         $user->sustainability = json_encode($request->input('sustainability'));
         $user->kids = $request->input('kids');
+        $user->newsletter = $request->get('newsletter');
         $user->price = json_encode($request->input('price'));
         $user->preferences = json_encode($request->input('preferences'));
         $user->discount = json_encode($request->input('discount'));
