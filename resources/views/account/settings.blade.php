@@ -250,7 +250,7 @@ $(document).ready(function() {
                 ];
                 ?>
 				<label>Aktivieren Nieuwsbrief</label>
-				<select name="newsletter" id="newsletter" class="ui normal fluid search dropdown">
+				<select name="letter" class="ui normal fluid search dropdown">
 					@foreach($newsletter as $key => $item)
 						<option value="{{$key}}" @if($key == Sentinel::getUser()->newsletter)selected="selected"@endif>{{$item}}</option>
 					@endforeach

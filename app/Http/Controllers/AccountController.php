@@ -73,7 +73,7 @@ class AccountController extends Controller {
         $user->allergies = json_encode($request->input('allergies'));
         $user->sustainability = json_encode($request->input('sustainability'));
         $user->kids = $request->input('kids');
-        $user->newsletter = $request->get('newsletter');
+        $user->newsletter = $request->get('letter');
         $user->price = json_encode($request->input('price'));
         $user->preferences = json_encode($request->input('preferences'));
         $user->discount = json_encode($request->input('discount'));
