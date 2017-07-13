@@ -1,19 +1,16 @@
-@extends('template.theme')
+<?php $__env->startSection('scripts'); ?>
+<?php echo $__env->make('admin.template.remove_alert', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->stopSection(); ?>
 
-
-@section('scripts')
-@include('admin.template.remove_alert')
-@stop
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="content">
-    @include('admin.template.breadcrumb')
+    <?php echo $__env->make('admin.template.breadcrumb', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
     <div class="buttonToolbar">  
         <div class="ui grid">
             <div class="row">                
                 <div class="sixteen wide mobile four wide computer column">
-                    <a href="{{ url('admin/'.$slugController.'/create') }}" class="ui icon blue button"><i class="plus icon"></i> Nieuw</a>
+                    <a href="<?php echo e(url('admin/'.$slugController.'/create')); ?>" class="ui icon blue button"><i class="plus icon"></i> Nieuw</a>
 
                     <button id="removeButton" type="submit" name="action" value="remove" class="ui disabled icon grey button">
                         <i class="trash icon"></i> Verwijderen
@@ -33,11 +30,12 @@
                                     <i class="dropdown icon"></i>
 
                                     <div class="menu">
-                                        @foreach ($companies as $company)
-                                        <a class="item" href="{{ url('admin/guests/'.$company->slug) }}" data-value="{{ $company->id }}">
-                                            {{ $company->name }}
+                                        <?php foreach($companies as $company): ?>
+                                        <a class="item" href="<?php echo e(url('admin/guests/'.$company->slug)); ?>" data-value="<?php echo e($company->id); ?>">
+                                            <?php echo e($company->name); ?>
+
                                         </a>
-                                        @endforeach
+                                        <?php endforeach; ?>
                                     </div>
                                 </div>
                             </div>
@@ -48,26 +46,26 @@
 
                             <div class="sixteen wide mobile four wide computer column">
                                 <div class="ui normal floating basic search selection dropdown">
-                                    <input type="hidden" name="source" value="{{ Request::input('source') }}">
+                                    <input type="hidden" name="source" value="<?php echo e(Request::input('source')); ?>">
 
                                     <div class="text">Partij</div>
                                     <i class="dropdown icon"></i>
 
                                     <div class="menu">
-                                        <a href="{{ url('admin/users?'.http_build_query(array_add($queryString, 'source', 'seatme'))) }}" data-value="seatme" class="item">SeatMe</a>
-                                        <a href="{{ url('admin/users?'.http_build_query(array_add($queryString, 'source', 'eetnu'))) }}" data-value="eetnu" class="item">EetNU</a>
-                                        <a href="{{ url('admin/users?'.http_build_query(array_add($queryString, 'source', 'couverts'))) }}" data-value="couverts" class="item">Couverts</a>
-                                        <a href="{{ url('admin/users?'.http_build_query(array_add($queryString, 'source', 'wifi'))) }}" data-value="wifi" class="item">Wi-Fi</a>
+                                        <a href="<?php echo e(url('admin/users?'.http_build_query(array_add($queryString, 'source', 'seatme')))); ?>" data-value="seatme" class="item">SeatMe</a>
+                                        <a href="<?php echo e(url('admin/users?'.http_build_query(array_add($queryString, 'source', 'eetnu')))); ?>" data-value="eetnu" class="item">EetNU</a>
+                                        <a href="<?php echo e(url('admin/users?'.http_build_query(array_add($queryString, 'source', 'couverts')))); ?>" data-value="couverts" class="item">Couverts</a>
+                                        <a href="<?php echo e(url('admin/users?'.http_build_query(array_add($queryString, 'source', 'wifi')))); ?>" data-value="wifi" class="item">Wi-Fi</a>
                                     </div>
                                 </div>
                             </div>
                             
                             <div class="sixteen wide mobile three wide computer column">
-                                @include('admin.template.limit')
+                                <?php echo $__env->make('admin.template.limit', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
                             </div>
 
                             <div class="sixteen wide mobile one wide computer column">
-                                @include('admin.template.search.form')
+                                <?php echo $__env->make('admin.template.search.form', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
                             </div>
                         </div>
                     </div>
@@ -76,16 +74,16 @@
             <div class="row">                
                 <div class="sixteen wide mobile four wide computer column">
                     <div class="ui normal floating basic search selection dropdown">
-                        <input type="hidden" name="has_saving" value="{{ Request::input('has_saving') }}">
+                        <input type="hidden" name="has_saving" value="<?php echo e(Request::input('has_saving')); ?>">
 
                         <div class="text">Spaarhulp</div>
                         <i class="dropdown icon"></i>
 
                         <div class="menu">                            
-                            <a href="{{ url('admin/users?'.http_build_query(array_add($queryString, 'has_saving', '1'))) }}" data-value="1" class="item">Ja</a>
-                            <a href="{{ url('admin/users?'.http_build_query(array_add($queryString, 'has_saving', '0'))) }}" data-value="0" class="item">Nee</a>
+                            <a href="<?php echo e(url('admin/users?'.http_build_query(array_add($queryString, 'has_saving', '1')))); ?>" data-value="1" class="item">Ja</a>
+                            <a href="<?php echo e(url('admin/users?'.http_build_query(array_add($queryString, 'has_saving', '0')))); ?>" data-value="0" class="item">Nee</a>
                             
-                            <a href="{{ url('admin/users?'.http_build_query(array_add($queryString, 'has_saving', '2'))) }}" data-value="2" class="item">Mislukt</a>
+                            <a href="<?php echo e(url('admin/users?'.http_build_query(array_add($queryString, 'has_saving', '2')))); ?>" data-value="2" class="item">Mislukt</a>
                         </div>
                     </div>
                 </div>
@@ -116,80 +114,85 @@
         </tr>
         </thead>
         <tbody class="list">
-            @if(count($data) >= 1)
-            @foreach($data as $result)
+            <?php if(count($data) >= 1): ?>
+            <?php foreach($data as $result): ?>
             <tr>
                 <td>
                     <div class="ui child checkbox">
-                        <input type="checkbox" name="id[]" value="{{ $result->id }}">
+                        <input type="checkbox" name="id[]" value="<?php echo e($result->id); ?>">
                         <label></label>
                     </div>
                 </td>
                 <td>
 
-                    <a href="{{ url('admin/'.$slugController.'/update/'.$result->id) }}">
-                        {{ $result->name?$result->name:'' }}
+                    <a href="<?php echo e(url('admin/'.$slugController.'/update/'.$result->id)); ?>">
+                        <?php echo e($result->name?$result->name:''); ?>
+
                     </a>
                 </td>
                 <td>
-                    @if(is_array(json_decode($result->city)) >= 1)
-                    @foreach(json_decode($result->city) as $city)
-                    @if(isset($regio[$city]))
-                    {{ $regio[$city] }}
-                    @endif
-                    @endforeach
-                    @else
+                    <?php if(is_array(json_decode($result->city)) >= 1): ?>
+                    <?php foreach(json_decode($result->city) as $city): ?>
+                    <?php if(isset($regio[$city])): ?>
+                    <?php echo e($regio[$city]); ?>
+
+                    <?php endif; ?>
+                    <?php endforeach; ?>
+                    <?php else: ?>
                     Geen stad opgegeven
-                    @endif
+                    <?php endif; ?>
                 </td>
-                <td>{{ ($result->gender == 1 ? 'Man' : 'Vrouw') }}</td>
+                <td><?php echo e(($result->gender == 1 ? 'Man' : 'Vrouw')); ?></td>
                 <td>
                     <p style="display:none;font-size:12px;" class="less-phone" onmouseout="$(this).parent().find('span').show();$(this).hide();">
-                        {{ $result->phone }}</p>
+                        <?php echo e($result->phone); ?></p>
                     <span style="font-size:12px;" class="full-phone" onmouseover="$(this).parent().find('p').show();$(this).hide();">
-                        {{ substr($result->phone,0,10) }}
+                        <?php echo e(substr($result->phone,0,10)); ?>
+
                     </span>
                 </td>
-                <td>{{ $result->email }}</td>
+                <td><?php echo e($result->email); ?></td>
                 <td class="text-center">
                     <div class="ui normal search selection fluid dropdown">
-                        <i class="icon checkmark {{ $result->newsletter == 1 ? 'green' : 'red' }}"></i>
+                        <i class="icon checkmark <?php echo e($result->newsletter == 1 ? 'green' : 'red'); ?>"></i>
                         <i class="dropdown icon"></i>
                         <div class="menu">
-                            <a class="item" href="{{ url("admin/$slugController/newsletter?id=$result->id&status=1") }}">ja</a>
-                            <a class="item" href="{{ url("admin/$slugController/newsletter?id=$result->id&status=0") }}">nee</a>
+                            <a class="item" href="<?php echo e(url("admin/$slugController/newsletter?id=$result->id&status=1")); ?>">ja</a>
+                            <a class="item" href="<?php echo e(url("admin/$slugController/newsletter?id=$result->id&status=0")); ?>">nee</a>
                         </div>
                     </div>
                 </td>
                 <td>
-                    <a href="{{ url('account/reservations/saldo/'.$result->id) }}" class="ui fluid text1 aligned center label">&euro;{{ $result->saldo }}</a>
+                    <a href="<?php echo e(url('account/reservations/saldo/'.$result->id)); ?>" class="ui fluid text1 aligned center label">&euro;<?php echo e($result->saldo); ?></a>
 
-                    <a href="{{ url('admin/users/saldo/reset/'.$result->id) }}" class="ui mini blue fluid button">Reset</a>
+                    <a href="<?php echo e(url('admin/users/saldo/reset/'.$result->id)); ?>" class="ui mini blue fluid button">Reset</a>
                 </td>
-                <td>{{ date('d-m-Y H:i', strtotime($result->created_at)) }}</td>
-                <td>{{ date('d-m-Y H:i', strtotime($result->updated_at)) }}</td>
+                <td><?php echo e(date('d-m-Y H:i', strtotime($result->created_at))); ?></td>
+                <td><?php echo e(date('d-m-Y H:i', strtotime($result->updated_at))); ?></td>
                 <td>
-                    <a href="{{ url('admin/'.$slugController.'/update/'.$result->id) }}" class="ui icon tiny button">
+                    <a href="<?php echo e(url('admin/'.$slugController.'/update/'.$result->id)); ?>" class="ui icon tiny button">
                         <i class="pencil icon"></i>
                     </a>
 
-                    <a href="{{ url('admin/'.$slugController.'/login/'.$result->id) }}" class="ui icon tiny orange button loginAs" data-content="Inloggen als {{ $result->name }}">
+                    <a href="<?php echo e(url('admin/'.$slugController.'/login/'.$result->id)); ?>" class="ui icon tiny orange button loginAs" data-content="Inloggen als <?php echo e($result->name); ?>">
                         <i class="key icon"></i>
                     </a>
                 </td>
                 </td>
             </tr>
-            @endforeach
-            @else
+            <?php endforeach; ?>
+            <?php else: ?>
             <tr>
                 <td colspan="2"><div class="ui error message">Er is geen data gevonden.</div></td>
             </tr>
-            @endif
+            <?php endif; ?>
         </tbody>
     </table>
     <?php echo Form::close(); ?>
 
-    {!! with(new \App\Presenter\Pagination($data->appends($paginationQueryString)))->render() !!}
+    <?php echo with(new \App\Presenter\Pagination($data->appends($paginationQueryString)))->render(); ?>
+
 </div>
 <div class="clear"></div>
-@stop
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('template.theme', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
