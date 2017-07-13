@@ -691,7 +691,6 @@ class AccountController extends Controller {
                     ->get()
             ;
         }
-
         return view('account/future-deal',
                 [
             'futureDeals' => $data,
@@ -823,7 +822,7 @@ class AccountController extends Controller {
                             '%preferences%' => ''
                         )
                     ));
-                    return redirect("admin/all-future-deals");
+                    return redirect('account/reservations');
                 }
             }
         } else {

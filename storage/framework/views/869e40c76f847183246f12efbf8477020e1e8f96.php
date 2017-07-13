@@ -52,7 +52,8 @@
                                 <?php if($futureDeal->remain_persons > 0): ?>
                                     Beschikbaar voor <?php echo e($futureDeal->persons); ?> personen
                                 <?php else: ?>
-                                    Alles is verzilverd
+                                    Beschikbaar voor <?php echo e($futureDeal->persons); ?> personen
+                                    <?php /*Alles is verzilverd*/ ?>
                                 <?php endif; ?>
                             </b>
                         </div>
