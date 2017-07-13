@@ -508,7 +508,7 @@ while ($st->lte($dt)) {
                                                     {{ Form::hidden('food', 1) }}
                                                     {{ Form::hidden('service', 1) }}
                                                     {{ Form::hidden('decor', 1) }}
-                                                    {{ Form::hidden('dealId', $_GET['deal']) }}
+                                                    {{ Form::hidden('dealId', !empty($_GET['deal']) ? $_GET['deal'] : '') }}
                                                     <input type="hidden"  id="csrf-token" value="{{ csrf_token() }}">
 
                                                     <div>
