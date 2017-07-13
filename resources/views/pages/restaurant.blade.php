@@ -423,7 +423,7 @@ while ($st->lte($dt)) {
 
                                                     </label>
 
-                                                    bel for="time-dropdown">
+                                                    <label for="time-dropdown">
                                                     <span>Tijm</span>
                                                     <div class="details">
                                                         {{ Form::select("time",[],Request::get('time'),[ 'class' => 'quantity2', 'id' => 'time-dropdown']) }}
@@ -455,7 +455,7 @@ while ($st->lte($dt)) {
                                                     </label>
 
 
-                                                    label for="comment">
+                                                    <label for="comment">
                                                     <span>Opmerking</span>
                                                     {!! Form::textarea('comment') !!}
                                                     </label>
