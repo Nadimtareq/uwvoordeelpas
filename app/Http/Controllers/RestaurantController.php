@@ -48,9 +48,7 @@ class RestaurantController extends Controller {
                     ->where('is_published', 1)
                     ->paginate(15);
 
-            $reviews = Review::select(
-                            'reviews.*', 'users.name'
-                    )
+            $reviews = Review::select('reviews.*', 'users.name')
                     ->leftJoin('users', 'users.id', '=', 'reviews.user_id')
                     ->where('reviews.company_id', $company->id)
                     ->where('reviews.is_approved', 1)
@@ -205,11 +203,12 @@ class RestaurantController extends Controller {
     }
 
     public function reviewsAction(ReviewRequest $request, $slug) {
+
+        $deal_id = $request->input('dealId');
+
         $company = Company::where('slug', $slug)
                 ->where('no_show', 0)
-                ->first()
-        ;
-
+                ->first();
         if ($company) {
             $this->validate($request, []);
 
@@ -219,6 +218,7 @@ class RestaurantController extends Controller {
             $data->service = $request->input('service');
             $data->decor = $request->input('decor');
             $data->company_id = $company->id;
+            $data->deal_id = $deal_id;
             $data->user_id = Sentinel::getUser()->id;
             $data->save();
 
@@ -272,8 +272,7 @@ class RestaurantController extends Controller {
                     '%preferences%' => ''
                 )
             ));
-
-            return Redirect::to('restaurant/' . $slug . '?deal='.$request->input('dealId'));
+            return redirect("restaurant/$slug?deal=$deal_id");
         } else {
             App::abort(404);
         }

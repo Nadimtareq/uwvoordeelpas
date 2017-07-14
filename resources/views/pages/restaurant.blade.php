@@ -204,11 +204,33 @@ while ($st->lte($dt)) {
                                             <div class="right_m">
                                                 <span>&euro; {{ $deal->price_from }}<strong>&euro; {{ $deal->price }}</strong></span>
                                                 <b class="up">{!! strip_tags( $deal->description ) !!}</b>
-                                            </div>							
+                                            </div>
+
+                                            {{--{{  }}--}}
+                                            @if(!is_null($deal->getApprovedReviews))
+                                                <?php
+                                                $count = 1;
+                                                $total = 0;
+                                                ?>
+                                                @foreach($deal->getApprovedReviews as $review)
+                                                <?php
+                                                    $avg = floor(($review->food + $review->service + $review->decor)/3);
+                                                    $total += $avg;
+                                                ?>
+                                                <div style="float: left;">
+                                                    <div class="score">
+                                                        Recencies:
+                                                        <div class="ui star tiny rating no-rating disabled" data-rating="{{ $total/$count }}">
+                                                            <i class="icon-star active"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                    <?php $count++; ?>
+                                                @endforeach
+                                            @endif
                                             @if(count($deals)==1)
                                             <div id="koop">
                                                 <a class="more"  href="{{ url('future-deal/'.$company->slug).'?deal='.$deal->id }}">KOOP DEAL</a>
-                                            </div>
                                             @else
                                             <a class="more"  href="{{ url('future-deal/'.$company->slug).'?deal='.$deal->id }}">KOOP DEAL</a>
                                             @endif
@@ -373,7 +395,7 @@ while ($st->lte($dt)) {
                                             <div id="t5" style="display: none;">
                                                 @if($news->count() >= 1)
                                                 @foreach($news as $article)
-<?php $newsMedia = $article->getMedia(); ?>
+                                                    <?php $newsMedia = $article->getMedia(); ?>
                                                 <!-- News -->
                                                 <div class="news">
                                                     <div class="ob">

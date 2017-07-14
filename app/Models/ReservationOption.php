@@ -25,4 +25,14 @@ class ReservationOption extends Model {
             ->selectRaw('option_id, count(*) as total_reservation');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function reviews(){
+        return $this->hasMany('App\Models\Review', 'deal_id');
+    }
+
+    public function getApprovedReviews(){
+        return $this->hasMany('App\Models\Review', 'deal_id')->where('is_approved', 1);
+    }
 }

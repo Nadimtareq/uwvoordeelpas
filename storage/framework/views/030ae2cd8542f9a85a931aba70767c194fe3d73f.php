@@ -213,11 +213,33 @@ while ($st->lte($dt)) {
                                             <div class="right_m">
                                                 <span>&euro; <?php echo e($deal->price_from); ?><strong>&euro; <?php echo e($deal->price); ?></strong></span>
                                                 <b class="up"><?php echo strip_tags( $deal->description ); ?></b>
-                                            </div>							
+                                            </div>
+
+                                            <?php /*<?php echo e( ); ?>*/ ?>
+                                            <?php if(!is_null($deal->getApprovedReviews)): ?>
+                                                <?php
+                                                $count = 1;
+                                                $total = 0;
+                                                ?>
+                                                <?php foreach($deal->getApprovedReviews as $review): ?>
+                                                <?php
+                                                    $avg = floor(($review->food + $review->service + $review->decor)/3);
+                                                    $total += $avg;
+                                                ?>
+                                                <div style="float: left;">
+                                                    <div class="score">
+                                                        Recencies:
+                                                        <div class="ui star tiny rating no-rating disabled" data-rating="<?php echo e($total/$count); ?>">
+                                                            <i class="icon-star active"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                    <?php $count++; ?>
+                                                <?php endforeach; ?>
+                                            <?php endif; ?>
                                             <?php if(count($deals)==1): ?>
                                             <div id="koop">
                                                 <a class="more"  href="<?php echo e(url('future-deal/'.$company->slug).'?deal='.$deal->id); ?>">KOOP DEAL</a>
-                                            </div>
                                             <?php else: ?>
                                             <a class="more"  href="<?php echo e(url('future-deal/'.$company->slug).'?deal='.$deal->id); ?>">KOOP DEAL</a>
                                             <?php endif; ?>
@@ -393,7 +415,7 @@ while ($st->lte($dt)) {
                                             <div id="t5" style="display: none;">
                                                 <?php if($news->count() >= 1): ?>
                                                 <?php foreach($news as $article): ?>
-<?php $newsMedia = $article->getMedia(); ?>
+                                                    <?php $newsMedia = $article->getMedia(); ?>
                                                 <!-- News -->
                                                 <div class="news">
                                                     <div class="ob">
@@ -547,7 +569,7 @@ while ($st->lte($dt)) {
 
                                                     <?php echo e(Form::hidden('decor', 1)); ?>
 
-                                                    <?php echo e(Form::hidden('dealId', $_GET['deal'])); ?>
+                                                    <?php echo e(Form::hidden('dealId', !empty($_GET['deal']) ? $_GET['deal'] : '')); ?>
 
                                                     <input type="hidden"  id="csrf-token" value="<?php echo e(csrf_token()); ?>">
 

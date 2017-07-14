@@ -2262,7 +2262,7 @@ p.hidden-xs + p {
 .tabs-content a.more{
     font: 18px 'LatoRegular';
     color: #fff;
-    margin-top: 31px;
+    margin-top: 0px;
     border-radius: 5px;
     background: #333399;
     display: inline-block;
