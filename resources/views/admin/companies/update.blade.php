@@ -428,16 +428,15 @@
 		<div class="two fields">
 			<div class="field">
 				<label>Regio</label>
-				<?php
-				$regio = array();
-				$regio[''] = 'Regio';
-
-				foreach ($preference->where('category_id', 9)->get() as $prefData) {
-					$regio[$prefData->id] = $prefData->name;
-				}
-
-				echo Form::select('regio[]', $regio, $companyHelper->regioArray($data->regio), array('multiple' => 'multiple', 'class' => 'ui normal search multiple dropdown'));
-				?>
+				<select name="regio[]" multiple="" class="ui normal search multiple dropdown">
+                                    <option value="">Regio</option>
+                                    <?php 
+                                    foreach ($preference->where('category_id', 9)->get() as $prefData) {
+                                        $selected = in_array($prefData->id,json_decode($data->regio)) ? "selected" : "";
+                                        echo "<option value='".$prefData->id."' $selected>".$prefData->name."</option>";    
+                                    }
+                                    ?>
+                                </select>
 			</div>
 
 			<div class="field">
