@@ -46,7 +46,7 @@ class DealHelper
   {
     $newsletterJobs = NewsletterJob::all()->where('status',1);
     $newsletters = [];
-    //mail('rushabhmadhu@gmail.com','Deal Email','Deal email is called'.date('Y-m-d H:i:s'));
+    mail('rushabhmadhu@gmail.com','Deal Email','Deal email is called'.date('Y-m-d H:i:s'));
     foreach ($newsletterJobs as $job) {
         $deals = $this->getDeals($job->city_id);
         $users = $this->getSubscribedUsers($job->city_id);
