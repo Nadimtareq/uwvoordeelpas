@@ -29,6 +29,7 @@ use Redirect;
 use Socialite;
 use Carbon;
 use App\Models\UserIp;
+use Setting;
 
 
 class AuthController extends Controller
@@ -607,10 +608,12 @@ class AuthController extends Controller
                         $data->source = 'google';
                         break;
                 }
-
+                //Get Default city from admin settings
+                $websiteSettings = json_decode(json_encode(Setting::get('website')), true);
                 $data->name = $user->getName();
                 $data->expire_code = str_random(64);
                 $data->expired_at = date('Y-m-d H:i', strtotime('+2 hours')).':00';
+                $data->city = !empty($websiteSettings['city']) ? $websiteSettings['city'] : 0;
                 $data->save();
 
                 $temporaryAuth = new TemporaryAuth();

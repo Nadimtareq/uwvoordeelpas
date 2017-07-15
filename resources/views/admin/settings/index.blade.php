@@ -25,6 +25,19 @@
 			<label>Bronnen (Elke nieuwe bron op een nieuwe regel)</label>
 			<?php echo Form::textarea('source', isset($websiteSettings['source']) ? $websiteSettings['source'] : ''); ?>
 		</div>
+                <div class="field">
+			<label>Default City</label>
+                        <select name="regio"  class="ui normal search dropdown">
+                            <option value="">Regio</option>
+                            <?php 
+                            foreach ($citiesData as $data) {
+                                $selected = (isset($websiteSettings['regio']) && $websiteSettings['regio'] == $data->id) ? "selected" : "";
+                                echo "<option value='".$data->id."' $selected>".$data->name."</option>";    
+                            }
+                            ?>
+                        </select>
+			
+		</div>
 
 		<button class="ui tiny button" type="submit"><i class="plus icon"></i> Opslaan</button>
 		<?php echo Form::close() ?>

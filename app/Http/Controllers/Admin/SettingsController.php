@@ -154,6 +154,7 @@ class SettingsController extends Controller
 
             Setting::set('website.facebook', $request->input('facebook'));
             Setting::set('website.source', $request->input('source'));
+            Setting::set('website.regio', $request->input('regio'));
 
             Alert::success('De instellingen zijn succesvol aangepast.')->persistent('Sluiten');
 
