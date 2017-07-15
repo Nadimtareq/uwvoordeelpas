@@ -46,7 +46,7 @@ class DealHelper
   {
     $newsletterJobs = NewsletterJob::all()->where('status',1);
     $newsletters = [];
-    mail('rushabhmadhu@gmail.com','Deal Email','Deal email is called'.date('Y-m-d H:i:s'));
+    //mail('rushabhmadhu@gmail.com','Deal Email','Deal email is called'.date('Y-m-d H:i:s'));
     foreach ($newsletterJobs as $job) {
         $deals = $this->getDeals($job->city_id);
         $users = $this->getSubscribedUsers($job->city_id);
@@ -90,7 +90,8 @@ class DealHelper
   {
     # code...
     $deals = array();
-    $data = Company::where('regio','LIKE','%"'.$city_id.'"%')->get(['id','name','slug','regio']);
+    //$data = Company::where('regio','LIKE','%"'.$city_id.'"%')->get(['id','name','slug','regio']);
+    $data = DB::table('companies')->select('companies.*')->join('users','companies.user_id','=','users.id')->where('users.city','LIKE','%"'.$city_id.'"%')->get();
     foreach ($data as $company) {
       # code...
       $deals[$company->slug] = DB::table('reservations_options')->where([['company_id',$company->id],['newsletter', 1]])->get();
@@ -141,7 +142,6 @@ class DealHelper
       $user->{'saldo_url'}=$tempAuth->createCode($user->id,'account/reservations/saldo');
       $user->{'unsubscribe_url'}=$tempAuth->createCode($user->id,'unsubscribe/'.$user->id);
       $user->{'extension_download_url'}=$tempAuth->createCode($user->id,'?extension_download_btn=1');
-
       foreach ($deals as $key => $restaurant) {
         # code...
         foreach ($restaurant as $index => $deal) {

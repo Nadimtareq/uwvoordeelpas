@@ -26,6 +26,7 @@ class RegisterRequest extends Request {
 		    'email'    => 'required|email|unique:users',
 		    'password' => 'required|min:8|confirmed',
 		   	'name'     => 'required',
+                        'city'    => 'required'
 	    ];
 	}	
 
@@ -47,6 +48,7 @@ class RegisterRequest extends Request {
 	        'phone.required'    => 'U bent vergeten om een telefoonnummer in te vullen.',
 
 	        'av.accepted'    => 'U bent vergeten om de Algemene Voorwaarden te accepteren.',
+                'city.required'    => 'U bent vergeten om een Nieuwsbrief in te vullen.'
 	    ];
 	}
 }

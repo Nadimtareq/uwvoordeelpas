@@ -27,6 +27,7 @@ class AccountUpdateRequest extends Request {
 		 	'gender'   => 'required',
 			'phone'    => 'required',
 			'email'    => 'required|email|unique:users,email,'.Sentinel::getUser()->id,
+                        'regio'    => 'required'
 		];
 	}	
 
@@ -45,6 +46,7 @@ class AccountUpdateRequest extends Request {
 	        'email.unique'      => 'Dit e-mailadres is al in gebruik.',
 
 	        'phone.required'    => 'U bent vergeten om een telefoonnummer in te vullen.',
+                'regio.required'    => 'U bent vergeten om een regio in te vullen.'
 	    ];
 	}
 }
