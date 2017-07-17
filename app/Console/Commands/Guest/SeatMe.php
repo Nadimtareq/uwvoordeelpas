@@ -14,6 +14,9 @@ use Sunra\PhpSimple\HtmlDomParser;
 use Config;
 use DB;
 use Request;
+use App\User;
+use Sentinel;
+use Setting;
 
 class SeatMe extends Command
 {
@@ -90,7 +93,7 @@ class SeatMe extends Command
         $reservationExists = array();
         $connection = imap_open($this->hostname, $this->username, $this->password) or die('Cannot connect to Gmail: ' . imap_last_error());
         $emailList = imap_search($connection, 'UNSEEN FROM "seatme.nl"');
-
+        $default_city = array(Setting::get('website.regio'));
         if ($emailList) {
             session(array('offset_add_seatme_command' => count(session('offset_add_seatme_command')) == 0 ? 0 : session('offset_add_seatme_command') + 41));
 
@@ -176,6 +179,25 @@ class SeatMe extends Command
                             'network' => 'seatme',
                             'mail_id' => $emailNumber
                         ); 
+                        //CODE FOR Save Guest user to users table
+                        $email = isset($emailMatches[2][0]) ? strtolower($emailMatches[2][0]) : NULL;
+                        if(!empty($email)) {
+                            $check_user_exists = User::where('email', $email)->exists();
+                            if(empty($check_user_exists)) {
+                                $data = Sentinel::registerAndActivate(array(
+                                    'email' => $email,
+                                    'password' =>  123456
+                                ));
+                                $data->name = isset($nameMatches[3][0]) ? $this->removeGender(ucwords($nameMatches[3][0])) : NULL;
+                                $data->phone = isset($phoneMatches[2][0]) ? $phoneMatches[2][0] : NULL;
+                                $data->city = json_encode($default_city);
+                                $data->expire_code = str_random(64);
+                                $data->expired_at = date('Y-m-d H:i', strtotime('+2 hours')).':00';
+                                $data->terms_active = 1;
+                                $data->save();
+                            }
+
+                        }
                     }
                 }
             }

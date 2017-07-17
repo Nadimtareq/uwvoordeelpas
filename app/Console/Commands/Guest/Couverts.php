@@ -13,6 +13,9 @@ use Exception;
 use Sunra\PhpSimple\HtmlDomParser;
 use Config;
 use DB;
+use App\User;
+use Sentinel;
+use Setting;
 
 class Couverts extends Command
 {
@@ -121,6 +124,7 @@ class Couverts extends Command
     public function addGuests()
     {
         $reservationExists = array();
+        $default_city = array(Setting::get('website.regio'));
 
         $companiesArray = $this->companies
             ->keyBy(function ($company) {
@@ -155,7 +159,10 @@ class Couverts extends Command
 
                     // Name
                     preg_match('/(Beste|Geachte|Hallo) ?((heer|meneer|mevrouw))? (.*?),/i', $message2, $nameMatches, PREG_OFFSET_CAPTURE);
-
+                    
+                    // Email
+                    preg_match('/E-mailadres: ((((\w+)(_|\.))+)?(\w+)(@)(\w+\.)((\w+\.)+)?\w+)/im', $messageBody, $emailMatches, PREG_OFFSET_CAPTURE);
+                    
                     // Persons
                     preg_match('/Aantal personen:(\d+)/i', $message2, $personsMatches, PREG_OFFSET_CAPTURE);
 
@@ -247,6 +254,7 @@ class Couverts extends Command
                                     'reservation_number' => isset($reservationNumber[$emailNumber]) ? $reservationNumber[$emailNumber] : NULL,
                                     'reservation_date' => (isset($dateMatches[1][0]) ? $dates[2].'-'.$this->convertMonth($dates[1]).'-'.($dates[0] < 10 ? 0 : '').$dates[0] : '').' '.(isset($timeMatches[1][0]) ? $timeMatches[1][0].':00' : ''),
                                     'name' => isset($nameMatches[4][0]) ? ucwords($nameMatches[4][0]) : NULL,
+                                    'email' => isset($emailMatches[1][0]) ? strtolower($emailMatches[1][0]) : NULL,   
                                     'persons' => isset($personsMatches[1][0]) ? $personsMatches[1][0] : NULL,
                                     'restaurant_id' => isset($companiesArray[$zipcode]) ? $companiesArray[$zipcode] : NULL,
                                     'restaurant_name' => isset($restaurantMatch[1][0]) ? $restaurantMatch[1][0] : NULL,
@@ -256,6 +264,24 @@ class Couverts extends Command
                                     'network' => 'couverts',
                                     'mail_id' => $emailNumber
                                 ); 
+                                //CODE FOR Save Guest user to users table
+                                $email = isset($emailMatches[1][0]) ? strtolower($emailMatches[1][0]) : NULL;
+                                if(!empty($email)) {
+                                    $check_user_exists = User::where('email', $email)->exists();
+                                    if(empty($check_user_exists)) {
+                                        $data = Sentinel::registerAndActivate(array(
+                                            'email' => $email,
+                                            'password' =>  123456
+                                        ));
+                                        $data->name = isset($nameMatches[4][0]) ? ucwords($nameMatches[4][0]) : NULL;
+                                        $data->city = json_encode($default_city);
+                                        $data->expire_code = str_random(64);
+                                        $data->expired_at = date('Y-m-d H:i', strtotime('+2 hours')).':00';
+                                        $data->terms_active = 1;
+                                        $data->save();
+                                    }
+
+                                }
                             }
                         }
                     }

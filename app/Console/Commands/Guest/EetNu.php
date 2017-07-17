@@ -11,6 +11,9 @@ use Illuminate\Console\Command;
 use Exception;
 use Config;
 use DB;
+use App\User;
+use Sentinel;
+use Setting;
 
 class EetNu extends Command
 {
@@ -132,7 +135,7 @@ class EetNu extends Command
 
         $connection = imap_open($this->hostname, $this->username, $this->password) or die('Cannot connect to Gmail: ' . imap_last_error());
         $emailList = imap_search($connection, 'ALL');
-
+        $default_city = array(Setting::get('website.regio'));
         if ($emailList) {
             foreach ($emailList as $emailNumber) {
                 $messageHeader = imap_headerinfo($connection, $emailNumber);
@@ -201,7 +204,27 @@ class EetNu extends Command
                             'network' => 'eetnu',
                             'mail_id' => $emailNumber
                         ); 
+                        //CODE FOR Save Guest user to users table
+                        $email = isset($emailMatches[1][0]) ? strtolower($emailMatches[1][0]) : NULL;
+                        if(!empty($email)) {
+                            $check_user_exists = User::where('email', $email)->exists();
+                            if(empty($check_user_exists)) {
+                                $data = Sentinel::registerAndActivate(array(
+                                    'email' => $email,
+                                    'password' =>  123456
+                                ));
+                                $data->name = isset($nameMatches[2][0]) ? ucwords($nameMatches[2][0]) : NULL;
+                                $data->phone = isset($phoneMatches[2][0]) ? strtolower($phoneMatches[2][0]) : NULL;
+                                $data->city = json_encode($default_city);
+                                $data->expire_code = str_random(64);
+                                $data->expired_at = date('Y-m-d H:i', strtotime('+2 hours')).':00';
+                                $data->terms_active = 1;
+                                $data->save();
+                            }
+                            
+                        }
                     }
+                        
                 }
             }
             
