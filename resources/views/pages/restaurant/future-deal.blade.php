@@ -72,7 +72,7 @@
                 @if ($userAuth == FALSE)
                     <div class="column" style="position: relative; left: -14px;">
                         <div class="field">
-                            <label>Nieuwsbrief1</label>
+                            <label>Uw regio</label>
                             <?php echo Form::select('city[]', (isset($regio) && !empty($regio)) ? $regio : [], '', array('class' => 'regionSelect regionSelectResponse', 'multiple' => 'multiple', 'data-placeholder' => 'Maak uw keuze')); ?>
                         </div>
                     </div>

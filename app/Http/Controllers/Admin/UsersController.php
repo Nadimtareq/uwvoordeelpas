@@ -86,12 +86,14 @@ class UsersController extends Controller
                 default:
                      $data = $data
                         ->leftJoin('reservations', 'reservations.user_id', '=', 'users.id')
-                        ->where('reservations.source', '=', $request->input('source'))
+                        ->join('guests_third_party', 'guests_third_party.email','=','users.email')
+                        ->where('guests_third_party.network', '=', $request->input('source'))
                         ->groupBy('users.id')
                     ;
                     break;
             }
         }
+        echo $request->input('source');
         if ($request->has('has_saving')) {
             switch ($request->input('has_saving')) {
                 case '0':
