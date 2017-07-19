@@ -706,11 +706,14 @@ class AccountController extends Controller {
             if ($futureDeal) {
                 $deal = ReservationOption::find($futureDeal->deal_id);
                 $company = Company::find($deal->company_id);
+                $mediaItems = $company->getMedia('default');
                 return view('account/reserve-future-deal',
                         [
                     'company' => $company,
                     'user' => $user,
-                    'futureDeal' => $futureDeal
+                    'futureDeal' => $futureDeal,
+                    'deal' => $deal,
+                    'mediaItems' => $mediaItems        
                 ]);
             } else {
                 App::abort(404);

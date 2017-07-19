@@ -211,12 +211,16 @@ class MailTemplate extends Model {
                         array(
                         ), $options
         ));
-
         $mailTemplate = MailTemplate::getTemplate($options['template_id'], $options['company_id']);
 
         if (isset($options['reservation_id'])) {
             $reservation = Reservation::find($options['reservation_id']);
-        }
+        } else {
+            $reservation = (object) array();
+            $reservation->date = $options['date'];
+            $reservation->time = $options['date'];
+            $reservation->persons = $options['persons'];
+        } 
 
         $user = Sentinel::findByCredentials(array(
                     'login' => $options['email']
@@ -275,7 +279,8 @@ class MailTemplate extends Model {
                 'reservationId' => isset($options['reservation_id']) ? $options['reservation_id'] : '',
                 'reservation' => isset($reservation) ? $reservation : '',
                 'manual' => isset($options['manual']) ? $options['manual'] : '',
-                'logo' => Company::getLogo($options['company_id'])
+                'logo' => Company::getLogo($options['company_id']),
+                
             );
 
             if (trim($options['email']) != '' && isset($options['email'])) {
