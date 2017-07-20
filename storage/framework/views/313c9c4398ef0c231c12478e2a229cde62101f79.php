@@ -22,12 +22,12 @@
 									<li><a href="<?php echo e(url('account/reservations/saldo')); ?>" class="">Uw saldo: &euro; <?php echo e($userInfo->saldo); ?> </a></li>
 											<li data-content="Uitloggen"><a href="<?php echo e(url('logout')); ?>"><i class="sign out icon"></i>Uitloggen</a></li>
 										<?php else: ?>
-											<li><a id="registerButton" class="register button item" href="#"><div class="header_icons"><img src="<?php echo e(asset('images/register_icon.png')); ?>" alt="question"></div></a>
+											<li><a id="registerButton" class="register button item" href="#" title="Aanmelden"><div class="header_icons"><img src="<?php echo e(asset('images/register_icon.png')); ?>" alt="question"></div></a>
 											</li>
-											<li><a class="login button" data-type="login" href="#" ><div class="header_icons"><img src="<?php echo e(asset('images/login_icon.png')); ?>" alt="question"></div> </a></li>
+											<li><a class="login button" data-type="login" href="#" title="Inloggen"><div class="header_icons"><img src="<?php echo e(asset('images/login_icon.png')); ?>" alt="question"></div> </a></li>
 										<?php endif; ?> 
 										<li>
-										  <a href="<?php echo e(url('/faq')); ?>" class="question"><div class="header_icons"><img src="<?php echo e(asset('images/help_icon.png')); ?>" alt="question"></div> </a>
+										  <a href="<?php echo e(url('/faq')); ?>" class="question" title="Help"><div class="header_icons"><img src="<?php echo e(asset('images/help_icon.png')); ?>" alt="question"></div> </a>
 										</li>
 										<li>
 											<a class="dropdown-button blog-submenu-init" id="language" href="#!" data-activates="dropdown1">

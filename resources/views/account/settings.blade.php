@@ -100,17 +100,10 @@ $(document).ready(function() {
 				$regio[$data->id] = $data->name;
 			}
 			$city=json_decode(Sentinel::getUser()->city,1);
-			//echo Form::select('regio[]', $regio, $city[0], array('multiple' => true, 'class' => 'ui normal fluid search dropdown'));
 			?>
-			<select name="regio[]" id="regio" class="ui normal fluid search dropdown" multiple>
-				@foreach($regio as $reg_key => $item)
-					@if (!is_null($city))
-						@foreach($city as $city_key => $value)
-							<option value="{{$reg_key}}" @if($reg_key == $value)selected="selected"@endif>{{$item}}</option>
-						@endforeach
-					@else
-						<option value="{{$reg_key}}">{{$item}}</option>
-					@endif
+            <select name="regio[]" id="regio" class="ui normal fluid search dropdown" multiple="multiple">
+                @foreach($regio as $reg_key => $item)
+                    <option value="{{$reg_key}}" @if(in_array($reg_key,$city))selected="selected"@endif>{{$item}}</option>
 				@endforeach
 			</select>
 		</div>

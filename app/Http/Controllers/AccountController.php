@@ -60,7 +60,6 @@ class AccountController extends Controller {
     }
 
     public function settingsAction(AccountUpdateRequest $request) {
-
         $this->validate($request, []);
         $user = Sentinel::getUser();
         $user->name = $request->input('name');
