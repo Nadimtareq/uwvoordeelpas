@@ -249,7 +249,7 @@ $(document).ready(function() {
                     1 => 'ja'
                 ];
                 ?>
-				<label>Aktivieren Nieuwsbrief</label>
+				<label>WIlt u de nieuwsbrief?</label>
 				<select name="letter" class="ui normal fluid search dropdown">
 					@foreach($newsletter as $key => $item)
 						<option value="{{$key}}" @if($key == Sentinel::getUser()->newsletter)selected="selected"@endif>{{$item}}</option>
