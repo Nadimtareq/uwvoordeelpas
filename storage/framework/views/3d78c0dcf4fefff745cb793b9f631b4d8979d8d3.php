@@ -97,21 +97,11 @@ $(document).ready(function() {
 			foreach($preference->where('category_id', 9)->get() as $data) {
 				$regio[$data->id] = $data->name;
 			}
-
 			$city=json_decode(Sentinel::getUser()->city,1);
-			//dd($regio, $city);
-//			echo Form::select('regio[]', $regio, $city[0], array('multiple' => true, 'class' => 'ui normal fluid search dropdown'));
 			?>
-            <?php /*<?php echo e(Form::select('regio[]', $regio, $city, array('multiple' => true, 'class' => 'ui normal fluid search dropdown'))); ?>*/ ?>
             <select name="regio[]" id="regio" class="ui normal fluid search dropdown" multiple="multiple">
                 <?php foreach($regio as $reg_key => $item): ?>
-                    <?php /*<?php if(!is_null($city)): ?>
-                        <?php foreach($city as $city_key => $value): ?>
-                            <option value="<?php echo e($reg_key); ?>" <?php if($reg_key == $value): ?>selected="selected"<?php endif; ?>><?php echo e($item); ?></option>
-						<?php endforeach; ?>
-					<?php else: ?>*/ ?>
-						<option value="<?php echo e($reg_key); ?>" <?php if(in_array($reg_key,$city)): ?>selected="selected"<?php endif; ?>><?php echo e($item); ?></option>
-					<?php /*<?php endif; ?>*/ ?>
+                    <option value="<?php echo e($reg_key); ?>" <?php if(in_array($reg_key,$city)): ?>selected="selected"<?php endif; ?>><?php echo e($item); ?></option>
 				<?php endforeach; ?>
 			</select>
 		</div>
