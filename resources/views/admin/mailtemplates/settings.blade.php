@@ -16,7 +16,8 @@
 				  	<a class="item" data-tab="second">Account</a>
 				  	<a class="item" data-tab="admin">Admin</a>
 				  	<a class="item" data-tab="third">Transactie</a>
-				  	<a class="item" data-tab="fourth">Bedrijf</a>
+				  	<a class="item" data-tab="fourth">Bedrijf</a><br/>
+                                        <a class="item" data-tab="fifth">Reserving</a>
 				</div>
 
 				<div class="ui bottom attached active tab segment" data-tab="first">
@@ -144,6 +145,19 @@
 					<div class="field">
 						<label>Bericht</label>
 						<?php echo Form::textarea('welcome_mail_content', (isset($settings['welcome_mail_content']) ? $settings['welcome_mail_content'] : ''), array('class' => 'editor', 'rows' => '0.5')); ?>
+					</div>	
+				</div>
+                                <div class="ui bottom attached tab segment" data-tab="fifth">
+					<h5>Welkomstmail (na Reserving)</h5>
+
+					<div class="field">
+						<label>Titel</label>
+						<?php echo Form::text('reserving_title', (isset($settings['reserving_title']) ? $settings['reserving_title'] : '')); ?>
+					</div>	
+
+					<div class="field">
+						<label>Bericht</label>
+						<?php echo Form::textarea('reserving_content', (isset($settings['reserving_content']) ? $settings['reserving_content'] : ''), array('class' => 'editor', 'rows' => '0.5')); ?>
 					</div>	
 				</div>
 

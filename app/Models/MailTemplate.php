@@ -369,6 +369,10 @@ class MailTemplate extends Model {
             'appointment_reminder_mail' => array(
                 'subject' => isset($allSettings['callcenter_reminder_title']) ? $allSettings['callcenter_reminder_title'] : '',
                 'content' => isset($allSettings['callcenter_reminder_content']) ? $allSettings['callcenter_reminder_content'] : ''
+            ),
+            'reserving' => array(
+                'subject' => isset($allSettings['reserving_title']) ? $allSettings['reserving_title'] : '',
+                'content' => isset($allSettings['reserving_content']) ? $allSettings['reserving_content'] : ''
             )
         );
 

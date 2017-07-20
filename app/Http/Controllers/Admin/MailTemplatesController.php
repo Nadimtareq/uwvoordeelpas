@@ -301,7 +301,9 @@ class MailTemplatesController extends Controller
                 'transaction_open_title' => $request->input('transaction_open_title'),
                 'transaction_open_content' => $request->input('transaction_open_content'),
                 'transaction_rejected_title' => $request->input('transaction_rejected_title'),
-                'transaction_rejected_content'=> $request->input('transaction_rejected_content')
+                'transaction_rejected_content'=> $request->input('transaction_rejected_content'),
+                'reserving_title' => $request->input('reserving_title'),
+                'reserving_content'=> $request->input('reserving_content')
             )
         );
 
