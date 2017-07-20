@@ -606,7 +606,7 @@ class RestaurantController extends Controller {
                     $deal = ReservationOption::find($future_deal->deal_id);
 
                     $url = URL::to('/account/future-deals');
-                    Alert::success('U heeft succesvol '.$request->get('persons').'x de deal: ' . $deal->name . ' in uw account. <br />* Deze zijn pas geldig na reservering vanuit uw account. <br /><br /> <a href="' . $url . '">Klik hier als u direct een reservering wilt maken. </a> <br /><br />' . '<span class=\'addthis_sharing_toolbox\'></span>', 'Bedankt ' . $user->name)->html()->persistent('Sluiten');
+                    Alert::success('U heeft succesvol '.$request->get('persons').'x de deal: ' . $deal->name . ' in uw account. <br /><br /><span class="text-center"><small>* Deze zijn pas geldig na reservering vanuit uw account.</small></span> <br /><br /> <a href="' . $url . '">Klik hier als u direct een reservering wilt maken. </a> <br /><br />' . '<span class=\'addthis_sharing_toolbox\'></span>', 'Bedankt ' . $user->name)->html()->persistent('Sluiten');
                     $company = Company::find($deal->company_id);
                     return Redirect::to('restaurant/' . $company->slug);
                 }
