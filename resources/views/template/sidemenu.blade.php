@@ -6,11 +6,10 @@
     <li><a href="{{ url('tegoed-sparen') }}"><i class="material-icons">monetization_on</i> Tegoed sparen</a></li>
     <li><a href="{{ url('voordeelpas/buy') }}"><i class="material-icons">credit_card</i> Voordeelpas</a></li>
      @if($userCompany OR $userWaiter)
-     <li><a href="{{ url('faq/3/restaurateurs') }}"><i class="material-icons">help</i> Veelgestelde vragen</a></li>
+        <li><a href="{{ url('faq/3/restaurateurs') }}"><i class="material-icons">help</i> Veelgestelde vragen</a></li>
     @else
-     <li><a href="{{ url('faq/2/restaurateurs') }}"><i class="material-icons">help</i> Veelgestelde vragen</a></li>
+        <li><a href="{{ url('faq/2/restaurateurs') }}"><i class="material-icons">help</i> Veelgestelde vragen</a></li>
     @endif
-
     <li><a href="#" class="item search-full-open"><i class="material-icons">search</i> Zoeken</a></li>
     <li><a href="{{ url('account/giftcards') }}"><i class="material-icons">assignment</i> Koop een cadeaubon</a></li>
     @if($userAuth)
