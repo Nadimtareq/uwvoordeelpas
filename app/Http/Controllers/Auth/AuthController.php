@@ -480,6 +480,7 @@ class AuthController extends Controller
         $data->name = $request->input('name');
         $data->gender = $request->input('gender');
         $data->phone = $request->input('phone');
+        $data->city = json_encode($request->input('city'));
         $data->expire_code = str_random(64);
         $data->expired_at = date('Y-m-d H:i', strtotime('+2 hours')).':00';
         $data->terms_active = 1;

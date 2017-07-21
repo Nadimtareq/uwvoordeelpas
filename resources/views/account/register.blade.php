@@ -1,4 +1,5 @@
 @inject('preferenceCity', 'App\Models\Preference')
+@inject('preference', 'App\Models\Preference')
 <input type="hidden" name="state" id="state" value="1">
 <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 
@@ -82,7 +83,19 @@ $(document).ready(function() {
 
 	<div class="field">
 		<label>Nieuwsbrief</label>
-		<?php echo Form::select('city[]', (isset($preference[9]) ? $preference[9] : []), '',  array('class' => 'registerSelect', 'multiple' => 'multiple', 'data-placeholder' => 'Maak uw keuze')); ?>
+                <?php
+			$regio = array();
+			$regio[''] = 'Maak uw keuze';
+			foreach($preference->where('category_id', 9)->get() as $data) {
+				$regio[$data->id] = $data->name;
+			}
+			?>
+                <select name="city[]" id="city" class="registerSelect" multiple="multiple" data-placeholder="Maak uw keuze">
+                @foreach($regio as $reg_key => $item)
+                    <option value="{{$reg_key}}">{{$item}}</option>
+				@endforeach
+			</select>
+		<?php //echo Form::select('city[]', (isset($preference[9]) ? $preference[9] : []), '',  array('class' => 'registerSelect', 'multiple' => 'multiple', 'data-placeholder' => 'Maak uw keuze')); ?>
 	</div>
 
 	<div class="two fields">
