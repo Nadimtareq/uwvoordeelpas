@@ -6,11 +6,10 @@
     <li><a href="{{ url('tegoed-sparen') }}"><i class="material-icons">monetization_on</i> Tegoed sparen</a></li>
     <li><a href="{{ url('voordeelpas/buy') }}"><i class="material-icons">credit_card</i> Voordeelpas</a></li>
      @if($userCompany OR $userWaiter)
-     <li><a href="{{ url('faq/3/restaurateurs') }}"><i class="material-icons">help</i> Veelgestelde vragen</a></li>
+        <li><a href="{{ url('faq/3/restaurateurs') }}"><i class="material-icons">help</i> Veelgestelde vragen</a></li>
     @else
-     <li><a href="{{ url('faq/2/restaurateurs') }}"><i class="material-icons">help</i> Veelgestelde vragen</a></li>
+        <li><a href="{{ url('faq/2/restaurateurs') }}"><i class="material-icons">help</i> Veelgestelde vragen</a></li>
     @endif
-
     <li><a href="#" class="item search-full-open"><i class="material-icons">search</i> Zoeken</a></li>
     <li><a href="{{ url('account/giftcards') }}"><i class="material-icons">assignment</i> Koop een cadeaubon</a></li>
     @if($userAuth)
@@ -35,7 +34,7 @@
         <li><a href="{{ url('account/reviews') }}" ><i class="material-icons">thumb_up</i> Mijn recensies</a></li>
         <li><a href="{{ url('account/reservations') }}" ><i class="material-icons">local_dining</i> Mijn reserveringen</a></li>
         <li><a href="{{ url('account/future-deals') }}" ><i class="material-icons">reorder</i> Mijn vouchers</a></li>
-        <li><a href="{{ url('?extension_download_btn=1') }}"><i class="material-icons">hulp</i>Installeer spaarhulp</a></li>
+        <li><a href="{{ url('?extension_download_btn=1') }}"><i class="material-icons">star</i>Installeer spaarhulp</a></li>
         <li><a href="{{ url('account/barcodes') }}" ><i class="material-icons">reorder</i> Mijn voordeelpas</a></li>
         <li><a href="{{ url('account/favorite/companies') }}" ><i class="material-icons">favorite_border</i> Mijn favoriete restaurants</a></li>
         <li><a href="{{ url('logout') }}" ><i class="material-icons">touch_app</i> Uitloggen</a></li>
