@@ -1,4 +1,4 @@
-<a href="{{ url(isset($discountSettings['discount_url']) ? 'redirect_to?to='.App\Helpers\StrHelper::addScheme($discountSettings['discount_url']) : 'voordeelpas/buy') }}" 
+<a href="{{ url(isset($discountSettings['discount_url']) ? 'redirect_to?to='.App\Helpers\StrHelper::addScheme($discountSettings['discount_url']) : 'voordeelpas/buy') }}"
     {{ isset($discountSettings['discount_url']) ? 'target="_blank"' : '' }} class="discount-card">
     @if (isset($discountSettings['discount_image']))
         <img src="{{ asset($discountSettings['discount_image']) }}"
