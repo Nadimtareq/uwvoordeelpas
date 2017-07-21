@@ -810,6 +810,7 @@ class AccountController extends Controller {
                     $mailtemplate->sendMail(array(
                         'email' => Sentinel::getUser()->email,
                         'date' => date('d-m-Y', strtotime($data->date)),
+                        'persons' => $persons,
                         'template_id' => 'new-review-client',
                         'company_id' => $company->id,
                         'replacements' => array(
