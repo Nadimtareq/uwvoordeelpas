@@ -6,11 +6,10 @@
     <li><a href="<?php echo e(url('tegoed-sparen')); ?>"><i class="material-icons">monetization_on</i> Tegoed sparen</a></li>
     <li><a href="<?php echo e(url('voordeelpas/buy')); ?>"><i class="material-icons">credit_card</i> Voordeelpas</a></li>
      <?php if($userCompany OR $userWaiter): ?>
-     <li><a href="<?php echo e(url('faq/3/restaurateurs')); ?>"><i class="material-icons">help</i> Veelgestelde vragen</a></li>
+        <li><a href="<?php echo e(url('faq/3/restaurateurs')); ?>"><i class="material-icons">help</i> Veelgestelde vragen</a></li>
     <?php else: ?>
-     <li><a href="<?php echo e(url('faq/2/restaurateurs')); ?>"><i class="material-icons">help</i> Veelgestelde vragen</a></li>
+        <li><a href="<?php echo e(url('faq/2/restaurateurs')); ?>"><i class="material-icons">help</i> Veelgestelde vragen</a></li>
     <?php endif; ?>
-
     <li><a href="#" class="item search-full-open"><i class="material-icons">search</i> Zoeken</a></li>
     <li><a href="<?php echo e(url('account/giftcards')); ?>"><i class="material-icons">assignment</i> Koop een cadeaubon</a></li>
     <?php if($userAuth): ?>

@@ -41,7 +41,6 @@
                                             </div>
                                         </div>
                                     </li>
-
                                     <li>
                                         <label for="datepicker" style="color:#ffffff;">
                                         <!--<img src="{{asset('images/m2.png') }}" alt="m2">-->
