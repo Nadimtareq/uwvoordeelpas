@@ -50,9 +50,9 @@
                         <div>
                             <b style="max-width: 250px;">
                                 @if($futureDeal->remain_persons > 0)
-                                    Beschikbaar voor {{$futureDeal->persons}} personen
+                                    Beschikbaar voor {{$futureDeal->remain_persons}} personen
                                 @else
-                                    Beschikbaar voor {{$futureDeal->persons}} personen
+                                    Not available
                                     {{--Alles is verzilverd--}}
                                 @endif
                             </b>
