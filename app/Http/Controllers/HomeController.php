@@ -122,7 +122,6 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         $deals = App\Models\ReservationOption::all();
-
         // Preferences cities
         $cities = Preference::where('category_id', 9)
             ->where('no_frontpage', 0)
@@ -1353,4 +1352,32 @@ class HomeController extends Controller
          
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function buyDealByReference(Request $request)
+    {
+        $user = App\User::where('reference_code', $request->get('reference'))->first();
+        if ($user)
+        {
+            session(['reference' => $request->get('reference'), 'referer' => $user->id]);
+            return redirect('/');
+        }else {
+            return redirect('/');
+        }
+    }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function referenceCode()
+    {
+        $reference = Sentinel::getUser();
+        if (is_null($reference->reference_code)) {
+            $reference->reference_code = str_random(17);
+            $reference->save();
+        }
+        return view('reference-code', compact('reference'));
+    }
 }

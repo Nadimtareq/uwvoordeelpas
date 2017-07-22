@@ -38,6 +38,7 @@
         <li><a href="<?php echo e(url('account/reservations')); ?>" ><i class="material-icons">local_dining</i> Mijn reserveringen</a></li>
         <li><a href="<?php echo e(url('account/future-deals')); ?>" ><i class="material-icons">reorder</i> Mijn vouchers</a></li>
         <li><a href="<?php echo e(url('?extension_download_btn=1')); ?>"><i class="material-icons">star</i>Installeer spaarhulp</a></li>
+        <li><a href="<?php echo e(url('reference_code')); ?>"><i class="material-icons">code</i>Geld verdienen</a></li>
         <li><a href="<?php echo e(url('account/barcodes')); ?>" ><i class="material-icons">reorder</i> Mijn voordeelpas</a></li>
         <li><a href="<?php echo e(url('account/favorite/companies')); ?>" ><i class="material-icons">favorite_border</i> Mijn favoriete restaurants</a></li>
         <li><a href="<?php echo e(url('logout')); ?>" ><i class="material-icons">touch_app</i> Uitloggen</a></li>

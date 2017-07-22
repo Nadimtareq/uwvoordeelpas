@@ -31,6 +31,9 @@ Route::group(array('middleware' => 'userInfo'), function () {
     Route::post('preferences', 'HomeController@preferences');
     Route::post('contact', 'HomeController@contactAction');
     Route::post('search-redirect', 'HomeController@searchRedirect');
+
+    Route::get('reference_code', 'HomeController@referenceCode');
+    Route::get('source', 'HomeController@buyDealByReference');
 });
 
 Route::get('foor', function() {

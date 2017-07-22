@@ -396,9 +396,9 @@ class RestaurantController extends Controller {
         $enough_balance = false;
         $mediaItems = NULL;
         $company = Company::query()
-                ->where('slug', '=', $slug)
-                ->where('no_show', '=', 0)
-                ->first();
+            ->where('slug', '=', $slug)
+            ->where('no_show', '=', 0)->first();
+
         if ($company) {
             if ($deal_id) {
                 $deal = ReservationOption::where([['id', '=', $deal_id], ['company_id',
@@ -417,40 +417,37 @@ class RestaurantController extends Controller {
             }
 
             if ($request->isMethod('post')) {
-
                 if (Sentinel::check()) {
                     $user = Sentinel::getUser();
                     $validator = Validator::make($request->all(),
-                                    [
-                                'persons' => 'required',
-                                'av' => 'accepted'
-                                    ],
-                                    [
-                                'persons.required' => 'Het aantal personen moet minimaal 1 persoon zijn',
-                                'persons.numeric' => 'Het aantal personen moet numeriek zijn.',
-                                'persons.min' => 'Het aantal personen moet minimaal 1 persoon zijn.',
-                                'av.accepted' => 'HELAAS, U bent vergeten om de algemene voorwaarden te accepteren',
-                    ]);
+                        [
+                            'persons' => 'required',
+                            'av' => 'accepted'
+                        ], [
+                            'persons.required' => 'Het aantal personen moet minimaal 1 persoon zijn',
+                            'persons.numeric' => 'Het aantal personen moet numeriek zijn.',
+                            'persons.min' => 'Het aantal personen moet minimaal 1 persoon zijn.',
+                            'av.accepted' => 'HELAAS, U bent vergeten om de algemene voorwaarden te accepteren',
+                        ]);
                 } else {
                     $validator = Validator::make($request->all(),
-                                    [
-                                'persons' => 'required',
-                                'email' => 'required|email',
-                                'name' => 'required',
-                                'phone' => 'required|min:10',
-                                'av' => 'accepted'
-                                    ],
-                                    [
-                                'email.required' => 'U bent vergeten om een e-mailadres in te vullen.',
-                                'email.email' => 'Uw opgegeven e-mailadres is ongeldig.',
-                                'phone.required' => 'U bent vergeten om een telefoonnummer in te vullen.',
-                                'phone.min' => 'Uw telefoonnummer is te kort (minimaal 10 cijfers).',
-                                'name.required' => 'U bent vergeten om een naam in te vullen.',
-                                'persons.required' => 'Het aantal personen moet minimaal 1 persoon zijn',
-                                'persons.numeric' => 'Het aantal personen moet numeriek zijn.',
-                                'persons.min' => 'Het aantal personen moet minimaal 1 persoon zijn.',
-                                'av.accepted' => 'U bent vergeten om de Algemene Voorwaarden te accepteren.',
-                    ]);
+                        [
+                            'persons' => 'required',
+                            'email' => 'required|email',
+                            'name' => 'required',
+                            'phone' => 'required|min:10',
+                            'av' => 'accepted'
+                        ], [
+                            'email.required' => 'U bent vergeten om een e-mailadres in te vullen.',
+                            'email.email' => 'Uw opgegeven e-mailadres is ongeldig.',
+                            'phone.required' => 'U bent vergeten om een telefoonnummer in te vullen.',
+                            'phone.min' => 'Uw telefoonnummer is te kort (minimaal 10 cijfers).',
+                            'name.required' => 'U bent vergeten om een naam in te vullen.',
+                            'persons.required' => 'Het aantal personen moet minimaal 1 persoon zijn',
+                            'persons.numeric' => 'Het aantal personen moet numeriek zijn.',
+                            'persons.min' => 'Het aantal personen moet minimaal 1 persoon zijn.',
+                            'av.accepted' => 'U bent vergeten om de Algemene Voorwaarden te accepteren.',
+                        ]);
                     if ($request->input('email')) {
                         $user = Sentinel::findByCredentials(array(
                                     'login' => $request->input('email')
@@ -474,9 +471,7 @@ class RestaurantController extends Controller {
                 //$deal_saldo = (float) MoneyHelper::getAmount($request->input('saldo'));
                 $deal_saldo = (float) MoneyHelper::getAmount($persons * $deal->price);
                 if ($user) {
-
                     $user_saldo = (float) MoneyHelper::getAmount($user->saldo);
-
                     if ($deal_saldo > $user_saldo) {
                         $enough_balance = false;
                         $rest_amount = $deal_saldo - $user_saldo;
@@ -505,23 +500,25 @@ class RestaurantController extends Controller {
                     $user->newsletter = 1;
                 }
                 $user->save();
+
                 if (Sentinel::check() == FALSE) {
                     Sentinel::login($user);
                 }
 
+                $referred = FutureDeal::where('reference_id', session('referer'))->first();
+                $ref_id = !is_null($referred) ? NULL : session('referer');
+                $reference = ($persons >= 2) ? session('referer') != Sentinel::getUser()->id ? $ref_id : NULL : NULL;
+
                 if ($enough_balance && !$rest_amount) {
 
-                    $fd_exists = FutureDeal::where('deal_id', $deal_id)->where('status',
-                                    'purchased')->where('user_id', $user->id)->first();
+                    $fd_exists = FutureDeal::where('deal_id', $deal_id)->where('status', 'purchased')->where('user_id', $user->id)->first();
                     if ($fd_exists) {
-                        
                         $future_deal = FutureDeal::find($fd_exists->id);
                         $future_deal->persons = $persons + $fd_exists->persons;
-                        $future_deal->persons_remain = $fd_exists->persons_remain -
-                                $persons;
+                        $future_deal->persons_remain = $fd_exists->persons_remain - $persons;
+                        $future_deal->reference_id = $reference;
                         $future_deal->save();
                     } else {
-
                         $future_deal = new FutureDeal();
                         $future_deal->deal_id = $deal_id;
                         $future_deal->user_id = $user->id;
@@ -532,9 +529,8 @@ class RestaurantController extends Controller {
                         $future_deal->user_discount = $user_saldo;
                         $future_deal->extra_pay = $rest_amount;
                         $future_deal->purchased_date = $current_date;
-                        $future_deal->expired_at = date('Y-m-d',
-                                strtotime($current_date . ' + ' . $future_expire_days . ' days'));
-
+                        $future_deal->expired_at = date('Y-m-d', strtotime($current_date . ' + ' . $future_expire_days . ' days'));
+                        $future_deal->reference_id = $reference;
                         if (!$enough_balance && $rest_amount) {
                             $future_deal->status = "pending";
                         } else {
@@ -542,6 +538,8 @@ class RestaurantController extends Controller {
                         }
 
                         $future_deal->save();
+                        $request->session()->pull('reference');
+                        $request->session()->pull('referer');
                     }
                 } else {
                     $future_deal = new FutureDeal();
@@ -554,9 +552,8 @@ class RestaurantController extends Controller {
                     $future_deal->user_discount = $user_saldo;
                     $future_deal->extra_pay = $rest_amount;
                     $future_deal->purchased_date = $current_date;
-                    $future_deal->expired_at = date('Y-m-d',
-                            strtotime($current_date . ' + ' . $future_expire_days . ' days'));
-
+                    $future_deal->expired_at = date('Y-m-d', strtotime($current_date . ' + ' . $future_expire_days . ' days'));
+                    $future_deal->reference_id = $reference;
                     if (!$enough_balance && $rest_amount) {
                         $future_deal->status = "pending";
                     } else {
@@ -568,7 +565,6 @@ class RestaurantController extends Controller {
 
 
                 if (!$enough_balance && $rest_amount) {
-
                     return view('pages/discount/extra-pay',
                             array(
                         'amount' => $rest_amount,
