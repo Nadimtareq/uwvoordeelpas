@@ -1374,10 +1374,19 @@ class HomeController extends Controller
     public function referenceCode()
     {
         $reference = Sentinel::getUser();
+        if (!$reference) {
+            return redirect('/');
+        }
         if (is_null($reference->reference_code)) {
             $reference->reference_code = str_random(17);
             $reference->save();
         }
-        return view('reference-code', compact('reference'));
+
+        if (isset($reference->roles[0]->slug) && $reference->roles[0]->slug === "admin") {
+            $friends = App\Models\FutureDeal::where('reference_id', '!=', null)->get();
+        } else {
+            $friends = App\Models\FutureDeal::where('user_id', $reference->id)->get();
+        }
+        return view('reference-code', compact('reference', 'friends'));
     }
 }

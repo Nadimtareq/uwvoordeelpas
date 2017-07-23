@@ -48,4 +48,11 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return $banned;
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function deals(){
+        return $this->hasMany('App\Models\FutureDeal');
+    }
+
 }

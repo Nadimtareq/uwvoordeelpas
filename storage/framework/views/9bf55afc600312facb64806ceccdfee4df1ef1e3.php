@@ -23,7 +23,6 @@
 	<link rel="stylesheet" href="<?php echo e(asset('css/flexslider.css')); ?>">
 	<link rel="stylesheet" href="<?php echo e(asset('css/responsive.css')); ?>">
 
-
 <!--	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
 	<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" href="<?php echo e(asset('css/material.indigo-pink.min.css')); ?>">
@@ -196,6 +195,7 @@
     <script  src="<?php echo e(asset('js/materialize.min.js')); ?>"></script>
 	<script  src="<?php echo e(asset('js/common.js')); ?>"></script>
 	<script  src="<?php echo e(asset('js/main.js')); ?>"></script>
+	<script src="<?php echo e(asset('js/clipboard/dist/clipboard.js')); ?>"></script>
 
 	<?php echo $__env->yieldContent('scripts'); ?>
 	<?php echo $__env->make('sweet::alert', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

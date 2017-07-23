@@ -23,7 +23,6 @@
 	<link rel="stylesheet" href="{{ asset('css/flexslider.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
 
-
 <!--	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
 	<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" href="{{ asset('css/material.indigo-pink.min.css') }}">
@@ -195,6 +194,7 @@
     <script  src="{{ asset('js/materialize.min.js') }}"></script>
 	<script  src="{{ asset('js/common.js') }}"></script>
 	<script  src="{{ asset('js/main.js') }}"></script>
+	<script src="{{ asset('js/clipboard/dist/clipboard.js') }}"></script>
 
 	@yield('scripts')
 	@include('sweet::alert')

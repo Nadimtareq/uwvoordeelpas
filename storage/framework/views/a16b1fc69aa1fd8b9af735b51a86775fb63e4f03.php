@@ -37,7 +37,7 @@
 </div>
  <div class="field">
  <?php 
- $flag=0;
+ //$flag=0;
  ?>
 <?php if($flag==1): ?>
          <div class="g-recaptcha" data-sitekey="<?php echo e(getenv('CAPTCHA_FRONT')); ?>" ></div><div style="float: right;"></div>

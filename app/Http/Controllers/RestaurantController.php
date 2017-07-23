@@ -499,6 +499,7 @@ class RestaurantController extends Controller {
                 if ($request->input('newsletter') == 1) {
                     $user->newsletter = 1;
                 }
+                $user->reference_code = session('reference');
                 $user->save();
 
                 if (Sentinel::check() == FALSE) {
