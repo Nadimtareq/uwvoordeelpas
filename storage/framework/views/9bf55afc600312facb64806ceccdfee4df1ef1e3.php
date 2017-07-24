@@ -175,8 +175,8 @@
     <script src="<?php echo e(asset('js/jquery.serialize-object.js')); ?> "></script>
 	<script src="<?php echo e(asset('js/app.js?version=1')); ?>"></script>
 	<script src="<?php echo e(asset('js/jquery-1.11.3.min.js')); ?> "></script>
+    <?php /*<script src="<?php echo e(asset('js/bootstrap.min.js')); ?> "></script>*/ ?>
     <script src="<?php echo e(asset('js/jquery.serialize-object.js')); ?> "></script>
-
 
 	<?php if(!Request::has('iframe') ): ?>
        <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyAjrbVJMJKWzCl8JZWV3_5Jy5P4CTITznU&callback=initMap&force=lite" ></script>

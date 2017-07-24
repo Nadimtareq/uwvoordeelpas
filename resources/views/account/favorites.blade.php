@@ -5,10 +5,8 @@
     <div class="ui breadcrumb">
         <a href="{{ url('/') }}" class="section">Home</a>
         <i class="right chevron icon divider"></i>
-
-        <a href="#" data-activates="slide-out" class="sidebar open">Menu</a>
+        <a href="#" class="sidebar open" data-activates="slide-out">Menu</a>
         <i class="right chevron icon divider"></i>
-
         <div class="active section">Mijn favoriete restaurants</div>
     </div>
 

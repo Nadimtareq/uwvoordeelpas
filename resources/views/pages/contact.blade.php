@@ -7,7 +7,6 @@
 	<div class="ui breadcrumb">
 		<a href="{{ url('/') }}" class="section">Home</a>
 		<i class="right chevron icon divider"></i>
-
 		<span class="active section"><h1>Contact</h1></span>
 	</div>
 

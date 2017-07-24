@@ -19,7 +19,7 @@ $(document).ready(function() {
 		<a href="{{ url('/') }}" class="section">Home</a>
 		<i class="right chevron icon divider"></i>
 
-		<a href="#" class="sidebar open">Menu</a>
+		<a href="#" class="sidebar open" data-activates="slide-out">Menu</a>
 	    <i class="right chevron icon divider"></i>
 
 		<div class="active section">Kopen Giftcard</div>
