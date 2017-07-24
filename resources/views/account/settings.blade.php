@@ -99,7 +99,11 @@ $(document).ready(function() {
 			foreach($preference->where('category_id', 9)->get() as $data) {
 				$regio[$data->id] = $data->name;
 			}
-			$city=json_decode(Sentinel::getUser()->city,1);
+			$city = [];
+			$cityExist = json_decode(Sentinel::getUser()->city,1);
+			if ($cityExist) {
+                $city = $cityExist;
+            }
 			?>
             <select name="regio[]" id="regio" class="ui normal fluid search dropdown" multiple="multiple">
                 @foreach($regio as $reg_key => $item)
