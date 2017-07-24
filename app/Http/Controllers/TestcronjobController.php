@@ -71,7 +71,7 @@ class TestcronjobController extends Controller
         echo "Report of All the Records<br/>New Records : $new_record<br/>Existing Records : $existing_record";exit;
     }
     public function updateWifiUser(Request $request){
-        ini_set('max_execution_time', -1);
+        ini_set('max_execution_time', '800');
         if($request->has('source') && $request->has('city')) {
             $regioName = strtolower($request->input('city'));
             $source = strtolower($request->input('source'));
