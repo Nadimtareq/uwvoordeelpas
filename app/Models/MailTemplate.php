@@ -217,9 +217,9 @@ class MailTemplate extends Model {
             $reservation = Reservation::find($options['reservation_id']);
         } else {
             $reservation = (object) array();
-            $reservation->date = $options['date'];
-            $reservation->time = $options['date'];
-            $reservation->persons = $options['persons'];
+            $reservation->date = @$options['date'];
+            $reservation->time = @$options['date'];
+            $reservation->persons = @$options['persons'];
         } 
 
         $user = Sentinel::findByCredentials(array(
