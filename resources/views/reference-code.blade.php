@@ -19,14 +19,14 @@
             <div class="center floated sixteen wide mobile ten wide computer column">
                 uw persoonlijke link&nbsp;
                 <div class="ui label">
-                    <a href="{{url("source?reference={$reference->reference_code}")}}" id="reference-code">
+                    <a href="{{url("source?reference={$reference->reference_code}")}}" id="reference-code" style="opacity: 1;">
                         {{ url("source?reference={$reference->reference_code}") }}
                     </a>
-                    <a href="javascript:;" class="ui green button mini" data-clipboard-target="#reference-code" id="clipboard">
-                        <i class="clipboard icon"></i>
-                        kopieer link
-                    </a>
                 </div>
+                <a href="javascript:;" class="ui green button mini" data-clipboard-target="#reference-code" id="clipboard">
+                    <i class="clipboard icon"></i>
+                    kopieer link
+                </a>
             </div>
         </div>
         <div class="ui grid container">
