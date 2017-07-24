@@ -71,6 +71,13 @@
             var clipboard = new Clipboard('#clipboard');
             clipboard.on('success', function(e) {
                 e.clearSelection();
+                swal({
+                    title: "link gekopieerd",
+                    text: "Uw link is succesvol gekopieerd",
+                    type: "success",
+                    confirmButtonColor: "#6498eb",
+                    closeOnConfirm: true
+                });
             });
         });
     </script>

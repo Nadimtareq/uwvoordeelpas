@@ -68,13 +68,18 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('scripts'); ?>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.15/datatables.min.css"/>
-    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.15/datatables.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             var clipboard = new Clipboard('#clipboard');
             clipboard.on('success', function(e) {
                 e.clearSelection();
+                swal({
+                    title: "link gekopieerd",
+                    text: "Uw link is succesvol gekopieerd",
+                    type: "success",
+                    confirmButtonColor: "#6498eb",
+                    closeOnConfirm: true
+                });
             });
         });
     </script>
