@@ -25,6 +25,7 @@ Route::group(array('middleware' => 'userInfo'), function () {
     Route::get('captcha-handler', 'LaravelCaptcha\Controllers\CaptchaHandlerController@index');
     Route::get('a', 'HomeController@sourceRedirect');
     Route::get('/guestmigrate', 'TestcronjobController@guestMigrate');
+    Route::get('/update-wifi-user/', 'TestcronjobController@updateWifiUser');
 
     ## Post routes - Preferences ##
     Route::post('aansluiten/callmeback', 'Admin\CompaniesCallcenterController@callMeBackAction');
