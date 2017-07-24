@@ -86,7 +86,8 @@ img { border: 0; }
 .container .up .start h2{ font: 24px 'LatoRegular'; color: #000; text-align: center; margin: 0; }
 .container .up .start ul.list{ margin-top: 43px;margin-left: -32px; }
 .container .up ul.list li{ display: inline-block; vertical-align: top; width: 29%; margin-left: 29px; }
-.container .up .start ul.list li p{ font: 14px 'LatoRegular'; color: #231e1e; padding: 20px 0 0px 60px; padding-top: 20px; line-height: 19px; }
+.container .up .start ul.list li p{ font: 14px 'LatoRegular'; font-size: 17px !important;
+    color: #3e3232 !important; padding: 20px 0 0px 60px; padding-top: 20px; line-height: 19px; }
 .container .up .start ul.list li .wrap{ overflow: hidden; display: block; border-radius: 50%; float: right; width: 111px; height: 111px; }
 .shop { padding-top: 118px; padding-bottom: 75px; }
 .shop .up{ overflow: visible; height: auto; }
