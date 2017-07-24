@@ -52,8 +52,7 @@
                                 @if($futureDeal->remain_persons > 0)
                                     Beschikbaar voor {{$futureDeal->remain_persons}} personen
                                 @else
-                                    Not available
-                                    {{--Alles is verzilverd--}}
+                                    {{ 'Ales is verzilverd' }}
                                 @endif
                             </b>
                         </div>
