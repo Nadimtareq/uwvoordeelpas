@@ -1382,7 +1382,7 @@ class HomeController extends Controller
             $reference->save();
         }
 
-        if (isset($reference->roles[0]->slug) && $reference->roles[0]->slug === "admin") {
+        if (Sentinel::inRole('admin') != FALSE) {
             $friends = App\Models\FutureDeal::where('reference_id', '!=', null)->get();
         } else {
             $friends = App\Models\FutureDeal::where('user_id', $reference->id)->get();
