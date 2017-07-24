@@ -70,7 +70,11 @@
 			foreach($cityPref->where('category_id', 9)->get() as $result) {
                 $regio[$result->id] = $result->name;
 			}
-			$city = json_decode($data->city);
+            $city = [];
+            $cityExist = json_decode($data->city);
+            if ($cityExist) {
+                $city = $cityExist;
+            }
 			?>
 
 			<select name="city[]" id="city" class="ui normal fluid search dropdown" multiple>
