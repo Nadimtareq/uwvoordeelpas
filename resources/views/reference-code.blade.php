@@ -51,7 +51,7 @@
                                 <td>{{ @$friend->user->created_at->format('d/m/Y h:i A') }}</td>
                             </tr>
                         @endforeach
-                        @if(count($friends) >1 )
+                        @if(count($friends) == 0 )
                             <tr>
                                 <td colspan="5">
                                     Helaas er zijn nog geen personen welke via uw link gekocht hebben.
