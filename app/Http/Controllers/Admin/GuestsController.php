@@ -309,7 +309,6 @@ class GuestsController extends Controller
             ->where('slug', $slug)
             ->first()
         ;
-
         return view('admin/'.$this->slugController.'/index', [
             'companyInfo' => $companyInfo, 
             'data' => $data, 
