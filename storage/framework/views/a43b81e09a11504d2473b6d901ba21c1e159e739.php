@@ -5,7 +5,7 @@
         <a href="<?php echo e(url('/')); ?>" class="section">Home</a>
         <i class="right chevron icon divider"></i>
 
-        <a href="#" class="sidebar open">Menu</a>
+        <a href="#" class="sidebar open" data-activates="slide-out">Menu</a>
         <i class="right chevron icon divider"></i>
 
         <div class="active section">Future Deals</div>
@@ -52,8 +52,8 @@
                                 <?php if($futureDeal->remain_persons > 0): ?>
                                     Beschikbaar voor <?php echo e($futureDeal->remain_persons); ?> personen
                                 <?php else: ?>
-                                    Not available
-                                    <?php /*Alles is verzilverd*/ ?>
+                                    <?php echo e('Ales is verzilverd'); ?>
+
                                 <?php endif; ?>
                             </b>
                         </div>

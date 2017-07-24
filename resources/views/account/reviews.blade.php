@@ -102,7 +102,7 @@ use App\Models\Company;
         <div class="step">
             <i class="save icon"></i>
             <div class="content">
-                <div class="title">KTevreden of ontevreden?</div>
+                <div class="title">Tevreden of ontevreden?</div>
             </div>
         </div>
 
