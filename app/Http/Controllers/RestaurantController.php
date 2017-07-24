@@ -30,7 +30,6 @@ use App\Models\FutureDeal;
 class RestaurantController extends Controller {
 
     public function index($slug, Request $request) {
-
         $company = Company::with('media')
                 ->where('no_show', 0)
                 ->where('slug', $slug)

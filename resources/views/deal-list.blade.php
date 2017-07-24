@@ -8,13 +8,8 @@ dd($deal2->company());
 
 @foreach ($deals as $deal)
     <?php
-
-            $data = $deal->company();
-
-
-
+    $data = $deal->company();
     $media = $data->getMedia('default');
-
     ?>
     <div class="company hidden"
         data-kitchen="{{ is_array(json_decode($data->kitchens)) ? str_slug(json_decode($data->kitchens)[0]) : '' }}" 
@@ -34,10 +29,7 @@ dd($deal2->company());
                     <img src="{{ url('images/placeholdimage.png') }}" alt="{{ $data->name }}" style="width: 175px; height: 135px" />
                 </a>
                 @endif
-
-                {!! $discountHelper->replaceKeys(
-                        $data, 
-                        $data->days, 
+                {!! $discountHelper->replaceKeys($data, $data->days,
                         (isset($contentBlock[44]) ? $contentBlock[44] : ''),
                         'ui green label'
                     ) 

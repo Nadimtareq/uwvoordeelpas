@@ -14,28 +14,27 @@
 		<div class="active section"> Mijn vouchers</div>
     </div>
     <div class="ui grid">
-
-            <div class="row">
-                <div class="col-md-3 col-md-12">
-                    @if(!empty($mediaItems) && isset($mediaItems[0]))
-                        <img id="image" src="{{ url('images/deals/'.$deal->image) }}" class="img-responsive1 img_responsive image_rest" alt="" />
-                    @endif
-                </div>
-                <?php if ($deal): ?>
-                <div class="col-md-9 col-md-12">
-                    <h4 style="color: #333399;">{{$deal->name}}
-                        <div class="mdg_price">
-                        <span>
-                            &euro; <span id="deal_amount">{{ $deal->price }}</span>
-                        </span>
-                        </div>
-                    </h4>
-                    <div style="color:#999999;"><?php echo html_entity_decode($deal->description); ?></div>
-                </div>
-
-                <?php endif; ?>
+        <div class="row">
+            <div class="col-md-3 col-md-12">
+                @if(!empty($mediaItems) && isset($mediaItems[0]))
+                    <img id="image" src="{{ url('images/deals/'.$deal->image) }}" class="img-responsive1 img_responsive image_rest" alt="" />
+                @endif
             </div>
+            <?php if ($deal): ?>
+            <div class="col-md-9 col-md-12">
+                <h4 style="color: #333399;">{{$deal->name}}
+                    <div class="mdg_price">
+                    <span>
+                        &euro; <span id="deal_amount">{{ $deal->price }}</span>
+                    </span>
+                    </div>
+                </h4>
+                <div style="color:#999999;"><?php echo html_entity_decode($deal->description); ?></div>
+            </div>
+
+            <?php endif; ?>
         </div>
+    </div>
     <div class="clear" style="height: 80px;">&nbsp;</div>
     <?php echo Form::open(array('id' => 'reservationForm', 'url' => URL::full(), 'method' => 'post', 'class' => 'ui form')) ?>
     <?php echo Form::hidden('date_hidden', date('Y-m-d')); ?>
@@ -154,8 +153,6 @@
             </div>
         </div>
 
-
-
         <div class="row">
             <div class="six wide column"> 
                 <div class="field">
@@ -167,9 +164,3 @@
     <?php echo Form::close(); ?>
 </div>
 @stop
-@push('inner_scripts')
-<script type="text/javascript">
-
-
-</script>
-@endpush

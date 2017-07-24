@@ -3,8 +3,6 @@
 {{--*/ $pageTitle = 'Reserveren bij '.$company->name /*--}}
 
 @section('content')
-
-
     <div class="container mdg">
         <div class="ui breadcrumb">
             <a href="{{ url('/') }}" class="section">Home</a>
