@@ -15,19 +15,19 @@
         <div class="ui divider"></div>
         <div class="up">
             <div class="start">
-                <h2>Spaart u mee voor een gratis 3 gangenmenu?</h2>
+                <h2>Promoot ons nu! U gaat toch ook liever volledig gratis uiteten?</h2>
                 <ul class="list">
                     <li>
                         <div class="wrap"><img src="{{asset('images/l1.png')}}" alt="l" /></div>
-                        <p>1: Klik op een webshop hieronder, log in en u gaat naar de gekozen webshop.</p>
+                        <p>1: Klik op de groene knop en plak de link op uw Social-Media, denk aan Facebook of WhatsApp!</p>
                     </li>
                     <li>
                         <div class="wrap"><img src="{{asset('images/l2.png')}}" alt="l" /></div>
-                        <p>2: Doe daar uw aankoop en wij krijgen automatisch een signaal als de aankoop voltooid is</p>
+                        <p>2: Klikt er iemand op uw link en hij koopt 2 of meer deals zonder te annuleren, dan ontvangt u €5.- tegoed!</p>
                     </li>
                     <li>
                         <div class="wrap"><img src="{{asset('images/l3.png')}}" alt="l" /></div>
-                        <p>3: Voldoet u aan de voorwaarden? Dan wordt het saldo z.s.m. op uw account gestort.</p>
+                        <p>3: Er zit geen limiet aan het aantal nieuwe kopers, €5.- betalen we na 14 dgn. i.v.m. retourrecht! U krijgt eindeloos €5.- tegoed voor iedere nieuwe koper van 2 deals of meer!</p>
                     </li>
                 </ul>
             </div>

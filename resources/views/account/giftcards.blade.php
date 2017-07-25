@@ -26,19 +26,19 @@ $(document).ready(function() {
         <div class="ui divider"></div>
         <div class="up">
             <div class="start">
-                <h2>Spaart u mee voor een gratis 3 gangenmenu?</h2>
+                <h2>Verras uw partner of jarige met een cadeaubon van UWvoordeelpas!</h2>
                 <ul class="list">
                     <li>
                         <div class="wrap"><img src="{{asset('images/l1.png')}}" alt="l" /></div>
-                        <p>1: Klik op een webshop hieronder, log in en u gaat naar de gekozen webshop.</p>
+                        <p>1: Iemand verrassen met een cadeaubon? Bestel hem nu direct, keuze vanaf €5.</p>
                     </li>
                     <li>
                         <div class="wrap"><img src="{{asset('images/l2.png')}}" alt="l" /></div>
-                        <p>2: Doe daar uw aankoop en wij krijgen automatisch een signaal als de aankoop voltooid is</p>
+                        <p>2: Kies hieronder uw gewenste bedrag en klik op de groene knop. U betaald snel en veilig online!</p>
                     </li>
                     <li>
                         <div class="wrap"><img src="{{asset('images/l3.png')}}" alt="l" /></div>
-                        <p>3: Voldoet u aan de voorwaarden? Dan wordt het saldo z.s.m. op uw account gestort.</p>
+                        <p>3: U ontvangt de code in uw account en op uw mail uw ontvanger activeert deze simpel <a href="{{ url('payment/giftcode') }}">hier</a>.</p>
                     </li>
                 </ul>
             </div>
