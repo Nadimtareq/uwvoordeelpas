@@ -848,6 +848,10 @@ class AccountController extends Controller {
         ]);
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function buyGiftcard(Request $request) {
         $this->validate($request, [
             'code' => 'required'
