@@ -23,6 +23,7 @@ $(document).ready(function() {
 
             <div class="active section">Kopen Giftcard</div>
         </div>
+        <div class="ui divider"></div>
         <div class="up">
             <div class="start">
                 <h2>Spaart u mee voor een gratis 3 gangenmenu?</h2>

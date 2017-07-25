@@ -834,7 +834,11 @@ class AccountController extends Controller {
         }
     }
 
-    public function giftcards() {
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function giftcards(Request $request) {
         $data = Giftcard::where(['company_id' => 0])
                 ->whereRaw('used_no < max_usage')
                 ->where('is_active', 1)

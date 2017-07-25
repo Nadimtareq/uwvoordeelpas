@@ -12,6 +12,7 @@
 
             <div class="active section">Mijn voordeelpas</div>
         </div>
+        <div class="ui divider"></div>
         <div class="up">
             <div class="start">
                 <h2>Spaart u mee voor een gratis 3 gangenmenu?</h2>
@@ -31,6 +32,7 @@
                 </ul>
             </div>
         </div>
+        <div class="ui divider"></div>
         <div class="ui grid container">
             <span></span>
             <div class="center floated sixteen wide mobile ten wide computer column">
@@ -90,7 +92,7 @@
                 e.clearSelection();
                 swal({
                     title: "link gekopieerd",
-                    text: "Uw link is succesvol gekopieerd",
+                    text: "Uw link is succesvol gekopieerd.",
                     type: "success",
                     confirmButtonColor: "#6498eb",
                     closeOnConfirm: true
