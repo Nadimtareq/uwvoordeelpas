@@ -1,13 +1,26 @@
 <?php $preference = app('App\Models\Preference'); ?>
 
-<?php /**/ $pageTitle = 'Tegoed sparen' /**/ ?>
-
-<?php $__env->startSection('slider'); ?>
-<br>
+<?php $__env->startSection('scripts'); ?>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#barcode").barcode(
+		$("#barcode").data('code'), // Value barcode (dependent on the type of barcode)
+		"code128" // type (string)
+	);
+});
+</script>
 <?php $__env->stopSection(); ?>
-
 <div class="shop">
-    <div class="container">
+	<div class="container">
+        <div class="ui breadcrumb">
+            <a href="<?php echo e(url('/')); ?>" class="section">Home</a>
+            <i class="right chevron icon divider"></i>
+
+            <a href="#" class="sidebar open" data-activates="slide-out">Menu</a>
+            <i class="right chevron icon divider"></i>
+
+            <div class="active section">Kopen Giftcard</div>
+        </div>
         <div class="up">
             <div class="start">
                 <h2>Spaart u mee voor een gratis 3 gangenmenu?</h2>
@@ -27,9 +40,21 @@
                 </ul>
             </div>
         </div>
-    </div>
-    <?php echo $__env->make('pages/cashback/companies', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+	</div>
 </div>
+<div class="container">
+    <?php echo Form::open(array('url' => 'account/giftcards', 'method' => 'post', 'class' => 'ui form')) ?>
 
+    <div class="field">
+        <label>Selecteer hier uw giftcard in:</label>
+        <?php echo Form::select('code', $data, 0, array('class' => 'ui normal search dropdown')); ?>
+    </div>
+
+    <button class="ui green button" name="action" value="update" type="submit">
+        <i class="check mark icon"></i> Kopen Giftcard
+    </button>
+
+    <?php echo Form::close(); ?>
+</div>
 
 <?php echo $__env->make('template.theme', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
