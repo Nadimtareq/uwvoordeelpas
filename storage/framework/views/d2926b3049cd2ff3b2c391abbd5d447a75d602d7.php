@@ -47,7 +47,7 @@ $(document).ready(function() {
     <?php echo Form::open(array('url' => 'account/giftcards', 'method' => 'post', 'class' => 'ui form')) ?>
 
     <div class="field">
-        <label>Selecteer hier uw giftcard in:</label>
+        <label>Selecteer de waarde van uw cadeaubon:</label>
         <?php echo Form::select('code', $data, 0, array('class' => 'ui normal search dropdown')); ?>
     </div>
 
