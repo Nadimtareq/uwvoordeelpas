@@ -874,7 +874,7 @@ class AccountController extends Controller {
                     function($message) use ($user, $request) {
                 $message->to(Sentinel::getUser()->email)->subject('Cadeaubon');
             });
-            Alert::success('U heeft succesvol een giftcard.')->persistent('Sluiten');
+            Alert::success('U heeft succesvol een giftcard besteld.')->persistent('Sluiten');
 
             return Redirect::to(($request->has('redirect_to') ? urldecode($request->input('redirect_to'))
                                         : 'account/giftcards'));
