@@ -5,13 +5,10 @@
     <div class="ui breadcrumb">
         <a href="{{ url('/') }}" class="section">Home</a>
         <i class="right chevron icon divider"></i>
-
         <a href="#" class="sidebar open" data-activates="slide-out">Menu</a>
         <i class="right chevron icon divider"></i>
-
         <div class="active section">Future Deals</div>
     </div>
-    <div class="ui divider"></div>
     <div class="ui divider"></div>
     <div class="col-sm-12 col-ms1">
         <div class="col-sm-3 col5">
@@ -69,11 +66,10 @@
                 </li>
                 @endforeach
             </ul>
-                @else
-                <a href="{{url('/')}}">Helaas, u heeft nog geen vouchers gekocht klik hier om uw eerste voucher aan te schaffen</a>
-                @endif
+            @else
+            <a href="{{url('/')}}">Helaas, u heeft nog geen vouchers gekocht klik hier om uw eerste voucher aan te schaffen</a>
+            @endif
         </div>
     </div>
 </div>
-
 @stop

@@ -690,10 +690,7 @@ class AccountController extends Controller {
                     ->get()
             ;
         }
-        return view('account/future-deal',
-                [
-            'futureDeals' => $data,
-        ]);
+        return view('account/future-deal', ['futureDeals' => $data,]);
     }
 
     public function reserveFutureDeal(Request $request, $deal_id) {

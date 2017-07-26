@@ -1635,8 +1635,10 @@ p.hidden-xs + p {
     }
     .col5 .text3 p{
         font: 14px 'LatoItalic';
-        color: #999999;
         margin: 9px 0px 15px 0;
+        color: #333333;
+        font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+        font-size: 16px;
     }
     .col5 .text3 b{
         font: 14px Tahoma;

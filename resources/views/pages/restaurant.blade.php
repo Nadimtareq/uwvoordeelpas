@@ -42,7 +42,6 @@ while ($st->lte($dt)) {
                                     <ul id="bxslider"
                                         style="width: 615%; position: relative; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
                                         @if($media != '[]')
-
                                             @foreach($media as $mediaItem)
                                                 @if(file_exists(public_path($mediaItem->disk. DIRECTORY_SEPARATOR . $mediaItem->id . DIRECTORY_SEPARATOR . $mediaItem->file_name)))
                                                     <li style="float: left; list-style: outside none none; position: relative; width: 674px;">
@@ -333,12 +332,15 @@ while ($st->lte($dt)) {
                                             <span>Korting</span>
                                             <strong>
                                             {{ $company->discount_comment }}
-                                            @foreach (json_decode($company->discount) as $id => $discount)
-                                                {{ $discount }}
-                                                <!-- 	@if (isset($preferences[5][$discount]))
-                                                    {{ ucfirst($preferences[5][$discount]) }}%
-                                                        @endif -->
-                                                @endforeach
+                                            <?php $discounts = json_decode($company->discount); ?>
+                                            @if(!is_null($discounts))
+                                                @foreach ($discounts as $id => $discount)
+                                                    {{ $discount }}
+                                                    <!-- 	@if (isset($preferences[5][$discount]))
+                                                        {{ ucfirst($preferences[5][$discount]) }}%
+                                                            @endif -->
+                                                    @endforeach
+                                                @endif
                                             </strong>
 
                                             <span>Kortingsdagen</span>

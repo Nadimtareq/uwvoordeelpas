@@ -944,7 +944,6 @@ class HomeController extends Controller
 
     public function search(Request $request)
     {
-        // Add to Search History
         $searchHistory = new SearchHistory();
         $searchHistory->addTerm($request->input('q'), '/search');
 
