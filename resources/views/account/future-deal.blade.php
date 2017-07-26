@@ -28,7 +28,7 @@
                                 </a>
                             @endif
                         </div>
-                        <div class="text3" style="min-height: 280px;">
+                        <div class="text3" style="min-height: 310px;">
                             <strong>{{$futureDeal->deal_name}}</strong>
                             <span class="city">
 
