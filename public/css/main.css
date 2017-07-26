@@ -4164,6 +4164,13 @@ img.thumbnails{
     max-height: 278px;
 }
 
+.ob img.thumbnails{
+    max-height: 100%;
+    width: auto;
+    max-width: 100%;
+    min-height: auto;
+}
+
 @media (max-width: 550px){
     .tabs-content .col4 {
 		width: inherit !important;
