@@ -15,8 +15,7 @@
             @if(count($futureDeals)>0)
             <ul>
                 @foreach($futureDeals as $futureDeal)
-                <li style="float: left; width: 100%;">
-
+                <li>
                     <div class="row">
                         <div class="col-sm-4 col-md-4 ob">
                             @if (isset($futureDeal->file_name) && file_exists(public_path($futureDeal->disk. DIRECTORY_SEPARATOR . $futureDeal->media_id . DIRECTORY_SEPARATOR . $futureDeal->file_name)) )
