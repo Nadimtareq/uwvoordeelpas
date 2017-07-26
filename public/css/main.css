@@ -1581,12 +1581,12 @@ p.hidden-xs + p {
         width: 100%;
         padding: 0;
     }
-    /*.col5 .ob{
+    .col5 .ob{
         float: left;
         margin-right: 23px;
         position: relative;
 
-    }*/
+    }
    .row-list-search {
 	   margin-bottom:35px;
 	   background-color:white;
@@ -4162,13 +4162,6 @@ span.price.price_min_box {
 
 img.thumbnails{
     max-height: 278px;
-}
-
-.ob img.thumbnails{
-    max-height: 100%;
-    width: auto;
-    max-width: 100%;
-    min-height: auto;
 }
 
 @media (max-width: 550px){
