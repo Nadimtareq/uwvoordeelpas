@@ -36,6 +36,7 @@ use DB;
 use DateTime;
 use Mail;
 use Redirect;
+use App\Models\GiftcardUse;
 
 class AccountController extends Controller {
 
@@ -836,12 +837,52 @@ class AccountController extends Controller {
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function giftcards(Request $request) {
-        $data = Giftcard::where(['company_id' => 0])
+        $data_amount = Giftcard::where(['company_id' => 0])
                 ->whereRaw('used_no < max_usage')
                 ->where('is_active', 1)
                 ->lists('amount', 'id');
+		/** new listing code starts here 270717 **/
+		$data = Giftcard::select(
+            'giftcards.id',
+            'giftcards.code',
+            'giftcards.is_active',
+            'giftcards.amount',
+            'giftcards.max_usage',
+            'giftcards.used_no',
+            'giftcards.created_at as created',
+            'companies.name as companyName'
+        )
+            ->leftJoin('companies', 'companies.id', '=', 'giftcards.company_id')
+        ;
+		//$data->where('companies.user_id', '=', Sentinel::getUser()->id);
+
+        if ($request->has('status')) {
+            $data->where('giftcards.is_active', '=', $request->input('status'));
+        }
+
+        if ($request->has('q')) {
+            $data = $data->where('giftcards.code', 'LIKE', '%'.$request->input('q').'%');
+        }
+
+        if ($request->has('sort') && $request->has('order')) {
+            $data = $data->orderBy($request->input('sort'), $request->input('order'));
+
+            session(['sort' => $request->input('sort'), 'order' => $request->input('order')]);
+        } else {
+            $data = $data->orderBy('giftcards.id', 'desc');
+        }
+        
+        if ($request->has('company')) {
+            $data = $data->where('companies.slug', '=', $request->input('company'));
+        }
+
+        $data = $data->paginate($request->input('limit', 15));
+        $data->setPath('giftcards');
+		/** new listing code starts ends 270717 **/
+		
         return view('account/giftcards', [
-            'data' => $data
+            'data' => $data_amount,
+			'listing' => $data
         ]);
     }
 
@@ -887,5 +928,69 @@ class AccountController extends Controller {
             return Redirect::to('payment/charge');
         }
     }
+	
+	public function usedGiftCard(Request $request,$id) {
+        $data = GiftcardUse::select('giftcard_use.created_at','giftcards.code','giftcards.amount','users.name')
+                ->leftjoin('giftcards','giftcards.id', '=', 'giftcard_use.giftcard_id')
+                ->leftjoin('users','users.id', '=', 'giftcard_use.user_id')
+                ->where(['giftcard_id' => $id]);
+        
+        $data = $data->paginate($request->input('limit', 15));
 
+        # Redirect to last page when page don't exist
+        if ($request->input('page') > $data->lastPage()) { 
+            $lastPageQueryString = json_decode(json_encode($request->query()), true);
+            $lastPageQueryString['page'] = $data->lastPage();
+
+            return Redirect::to($request->url().'?'.http_build_query($lastPageQueryString));
+        }
+
+        $queryString = $request->query();
+        unset($queryString['limit']);
+
+        return view('account/used', [
+            'data' => $data, 
+            'slugController' => 'giftcards',
+            'queryString' => $queryString,
+            'paginationQueryString' => $request->query(),
+            'limit' => $request->input('limit', 15),
+            'section' => 'Giftcards', 
+            'currentPage' => 'Gebruik giftcard'
+        ]);
+    }
+	
+	public function updateGiftCard($id)
+    {
+        $data = Giftcard::leftJoin('companies', 'companies.id', '=', 'giftcards.company_id');
+
+        //$data = $data->where('companies.user_id', Sentinel::getUser()->id);
+
+        $data = $data->find($id);
+
+        return view('account/update', [
+            'data' => $data,
+            'companies' => Company::lists('name', 'id'),
+            'slugController' => 'giftcards',
+            'section' => 'Giftcards', 
+            'currentPage' => 'Wijzig giftcard'
+        ]);
+    }
+	public function updateGiftCardAction(Request $request, $id)
+    {
+        $this->validate($request, [
+            'code' => 'required|unique:giftcards,code,'.$id,
+        ]);
+
+        $data = Giftcard::find($id);
+        $data->code = $request->input('code');
+        $data->company_id = $request->input('company');
+        $data->is_active = $request->input('is_active');
+        $data->max_usage = $request->input('max_usage'); 
+        $data->amount = $request->input('amount'); 
+        $data->save();
+
+        Alert::success('Deze giftcard is succesvol gewijzigd.')->persistent('Sluiten');
+
+        return Redirect::to('account/giftcards/updateGiftCard/'.$data->id);
+    }
 }

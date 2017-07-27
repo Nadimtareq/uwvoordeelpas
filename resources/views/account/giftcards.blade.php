@@ -58,4 +58,53 @@ $(document).ready(function() {
     </button>
 
     <?php echo Form::close(); ?>
+	
+	<table class="ui sortable very basic collapsing celled table list" style="width: 100%;">
+            <thead>
+            	<tr>
+            		<th data-slug="disabled" class="disabled one wide">
+            			<div class="ui master checkbox">
+    					  	<input type="checkbox">
+    					  	<label></label>
+    					</div>
+    				</th>
+                    <th data-slug="is_active">Status</th>
+                    <th data-slug="code">Code</th>
+                    <th data-slug="amount">Saldo</th>
+                    <th data-slug="max_usage">Maximale gebruik</th>
+                    <th data-slug="used">Gebruikt</th>
+                    <th data-slug="companyName">Bedrijf</th>
+                    <th data-slug="created_at">Geactiveerd op</th>
+                    <th data-slug="disabled" class="disabled"></th>
+            	</tr>
+            </thead>
+            <tbody class="list search">
+                @if(count($listing) >= 1)
+                	@foreach($listing as $fetch)
+						<tr>
+							<td>
+								<div class="ui child checkbox">
+									<input type="checkbox" name="id[]" value="{{ $fetch->id }}">
+									<label></label>
+								</div>
+							</td>
+							<td>{{ $fetch->is_active == 1 ? 'Geactiveerd' : 'Niet geactiveerd' }}</td>
+							<td>{{ $fetch->code }}</td>
+							<td>{{ $fetch->amount }}</td>
+							<td>{{ $fetch->max_usage }}</td>
+							<td>{{ $fetch->used_no }}</td>
+							<td>{{ trim($fetch->companyName) == '' ? 'UwVoordeelpas' : $fetch->companyName }}</td>
+							<td>{{ date('d-m-Y', strtotime($fetch->created)) }}</td>
+							<td><a href="{{ url('account/giftcards/updateGiftCard/'.$fetch->id) }}" class="ui label"><i class="pencil icon"></i> Bewerk</a>
+								<a href="{{ url('account/giftcards/usedGiftCard/'.$fetch->id) }}" class="ui label"><i class="eye icon"></i> Gebruik</a>
+							</td>
+						</tr>
+					@endforeach
+                @else
+                    <tr>
+                        <td colspan="2"><div class="ui error message">Er is geen data gevonden.</div></td>
+                    </tr>
+            	@endif
+            </tbody>
+   		</table>
 </div>

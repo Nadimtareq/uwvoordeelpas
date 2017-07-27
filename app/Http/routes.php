@@ -244,6 +244,11 @@ Route::group(array('middleware' => array('auth', 'userInfo')), function () {
             Route::get('companies/add/{id}/{slug}', 'FavoriteCompaniesController@add');
             Route::get('companies/remove/{id}/{slug}', 'FavoriteCompaniesController@remove');
         });
+		
+		# Gifcards 2707 #
+		Route::get('giftcards/usedGiftCard/{id}', 'AccountController@usedGiftCard');
+		Route::get('giftcards/updateGiftCard/{id}', 'AccountController@updateGiftCard');
+		Route::post('giftcards/updateGiftCard/{id}', 'AccountController@updateGiftCardAction');
     });
 
     # Reservations #

@@ -41,7 +41,7 @@
                     @if(isset($limit))
                     <div class="menu">
                          <a class="item" href="{{ url('account/reservations/saldo?'.http_build_query(array_add($queryString, 'type', 'transactions'))) }}">Transactie</a>
-                         <a class="item" href="{{ url('account/reservations/saldo?'.http_build_query(array_add($queryString, 'type', 'payments'))) }}">Opwaardering</a>
+                         <a class="item" href="{{ url('account/reservations/saldo?'.http_build_query(array_add($queryString, 'type', 'payments'))) }}">Giftcard gekocht</a>
                          <a class="item" href="{{ url('account/reservations/saldo?'.http_build_query(array_add($queryString, 'type', 'reservations'))) }}">Reservering</a>
                     </div>
                     @endif

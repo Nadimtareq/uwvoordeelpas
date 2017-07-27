@@ -11,6 +11,9 @@
                 $media = $data->getMedia('default');
                 $getRec = HomeController::getPersons($deal->id);
                 $count_persons = $getRec[0]->total_persons;
+				/** 270717 **/
+				if($count_persons >= $deal->total_amount)
+					continue;
                 ?>
                 <div class="company"
                      data-kitchen="{{ is_array(json_decode($data->kitchens)) ? str_slug(json_decode($data->kitchens)[0]) : '' }}"
