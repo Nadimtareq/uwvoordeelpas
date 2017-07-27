@@ -6,6 +6,7 @@ use App\Models\ReservationOption;
 use App\Models\Company;
 use App\User;
 use Alert;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Input;
 use Mail;
 use App;
@@ -290,6 +291,7 @@ class ReservationsOptionsController extends Controller
 
         public function updateAction(Request $request, $id,$slug=null)
         {
+
             //Added price_per_person by Ocean
             $data = ReservationOption::select(
                 'reservations_options.id',
@@ -349,8 +351,8 @@ class ReservationsOptionsController extends Controller
                 $data->price_per_guest = $request->input('price_per_guest');
                 $data->time_to = $request->input('time_to');
                 $data->time_from = $request->input('time_from');
-                $data->date_from = $request->input('date_from');
-                $data->date_to = $request->input('date_to');
+                $data->date_from = Carbon::parse($request->input('date_from'));
+                $data->date_to = Carbon::parse($request->input('date_to'));
                 $data->newsletter = $request->input('newsletter');
                 $data->company_id = $request->input('company_id');
                 $data->image = $fileName;
