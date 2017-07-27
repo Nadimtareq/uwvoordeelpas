@@ -62,7 +62,7 @@
 						<?php
 						echo Form::text(
 							'date_from',
-							date('d M,Y',strtotime($data->date_from)),
+							Carbon\Carbon::parse($data->date_from)->format('d-m-Y'),
 							array(
 								'class' => 'datepicker',
 								'placeholder' => 'Selecteer een datum'
@@ -80,7 +80,8 @@
 							<?php
 							echo Form::text(
 								'date_to',
-								date('d M,Y',strtotime($data->date_to)),
+                                Carbon\Carbon::parse($data->date_to)->format('d-m-Y'),
+//								date('d M,Y',strtotime($data->date_to)),
 								array(
 									'class' => 'datepicker',
 									'placeholder' => 'Selecteer een datum'
