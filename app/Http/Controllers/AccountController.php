@@ -854,7 +854,7 @@ class AccountController extends Controller {
         )
             ->leftJoin('companies', 'companies.id', '=', 'giftcards.company_id')
         ;
-		//$data->where('companies.user_id', '=', Sentinel::getUser()->id);
+		$data->where('companies.user_id', '=', Sentinel::getUser()->id);
 
         if ($request->has('status')) {
             $data->where('giftcards.is_active', '=', $request->input('status'));
