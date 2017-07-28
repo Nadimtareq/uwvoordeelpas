@@ -7,7 +7,6 @@
 @section('content')
 <div class="content">
     @include('admin.template.breadcrumb')
-
     <div class="buttonToolbar">  
         <div class="ui grid">
             <div class="sixteen wide computer sixteen wide mobile column">
@@ -72,6 +71,7 @@
                                         </a>
                                     </div>
                                 </div>
+                                
                             </div>
                         </div>
 
@@ -146,6 +146,23 @@
                         </div>
                     </div>
                 </div>
+                <div class="five column row">
+                        <div class="sixteen wide mobile two wide computer column">
+                            <div class="ui normal icon selection fluid dropdown">
+                                <input type="hidden" name="aff" value="{{ Request::input('aff') }}">
+
+                                <div class="text">Reference</div>
+                                <i class="dropdown icon"></i>
+
+                                <div class="menu">
+                                    <a href="{{ url('admin/transactions?'.http_build_query(array_add($queryString, 'aff', 'BULL'))) }}" data-value="Extern" class="item">Extern</a>
+                                    <a href="{{ url('admin/transactions?'.http_build_query(array_add($queryString, 'aff', 'NULL'))) }}" data-value="Eigen" class="item">Eigen</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                    </div>
             </div>
         </div>
     </div><br>
@@ -249,6 +266,7 @@
                         {{ $transaction->affiliate_network }}
                     </a>
                 </td>
+
                 <td>
                     @if($transaction->status == 'accepted')
                     <div class="ui green empty circular label"></div> Goedgekeurd
