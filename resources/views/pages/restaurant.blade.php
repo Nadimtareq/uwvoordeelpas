@@ -200,7 +200,6 @@ while ($st->lte($dt)) {
                     <li><a href="#t7" class="">Reviews</a></li>
                 </ul>
                 <div class="tabs-content">
-
                     <div id="t1" style="display: block;">
                         <div class="text3">
                             <strong>{!! $company->name !!}</strong>
@@ -209,13 +208,11 @@ while ($st->lte($dt)) {
                             <p>    {!! $company->about_us !!}</p>
                         </div>
                     </div>
-
                     <div id="t2" style="display: none;">
-
-                    @if(isset($deals) && count($deals))
-                        @foreach($deals as $deal)
-                            <!-- Menu -->
-                            <div class="menu deals-list-page">
+                        @if(isset($deals) && count($deals))
+                            @foreach($deals as $deal)
+                        <!-- Menu -->
+                        <div class="menu deals-list-page">
                                 <div class="left_m">
                                     <h2>{{ $deal->name }}</h2>
                                     @if($deal->image!='')
@@ -281,7 +278,6 @@ while ($st->lte($dt)) {
                         @endforeach
                     @endif
                             </div>
-
                     </div>
                     <div id="t3" style="display: none;">
                         <div class="info">
@@ -419,7 +415,6 @@ while ($st->lte($dt)) {
                             </div>
                         </div>
                     </div>
-                    <!-- News -->
                     <div id="t5" style="display: none;">
                     @if($news->count() >= 1)
                         @foreach($news as $article)
@@ -463,7 +458,6 @@ while ($st->lte($dt)) {
                             <span>Er zijn geen nieuwsberichten gevonden.</span>
                         @endif
                     </div>
-                    <!-- Send -->
                     <div id="t6" style="display: none;">
                         <div class="send">
 
@@ -524,7 +518,6 @@ while ($st->lte($dt)) {
 
                         </div>
                     </div>
-                    <!-- Reviews -->
                     <div id="t7" style="display: none;">
                         @if(count($reviews) >= 1)
                             @foreach($reviews as $review)
