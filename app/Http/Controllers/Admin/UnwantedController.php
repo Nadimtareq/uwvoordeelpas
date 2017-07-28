@@ -73,7 +73,7 @@ class UnwantedController extends Controller
         $data->save();
 
 
-        Alert::success('Dit bedrijf is succesvol aangemaakt.')->persistent('Sluiten');
+        Alert::success('Dit verboden woord is succesvol aangemaakt.')->persistent('Sluiten');
         return Redirect::to('admin/'.$this->slugController);
 
     }
