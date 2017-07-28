@@ -7309,11 +7309,12 @@ to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
         ---------------------*/
 
         /* Standard */
+        .ui.grid.cstm {    width: 100%;}
 
         .ui.small.form { font-size: 0.92857143rem; }
         /* Medium */
 
-        .ui.form { font-size: 1rem; }
+        .ui.form { font-size: 1rem;}
         /* Large */
 
         .ui.large.form { font-size: 1.14285714rem; }
