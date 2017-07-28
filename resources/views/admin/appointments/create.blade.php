@@ -29,8 +29,8 @@
 	  	</div>
 	 </div>
 
-	<?php echo Form::open(array('method' => 'post', 'id' => 'appointmentCreate', 'class' => 'ui edit-changes form')) ?>
-	<div class="ui grid">
+	<?php echo Form::open(array('method' => 'post', 'id' => 'appointmentCreate', 'class' => 'ui edit-changes form cstm')) ?>
+	<div class="ui grid cstm">
 		<div class="column">
 			<div class="two fields">
 			    <div class="field">
@@ -104,10 +104,9 @@
 				<label>Opmerkingen</label>
 				<?php echo Form::textarea('comment', '', array('id' => 'appointmentComment')); ?>
 			</div>	
+			<button class="ui button" type="submit"><i class="plus icon"></i> Aanmaken</button>
 		</div>
-	</div><br />
-
-	<button class="ui button" type="submit"><i class="plus icon"></i> Aanmaken</button>
+	</div>	
 	<?php echo Form::close(); ?>
 </div>
 <div class="clear"></div>
