@@ -233,7 +233,7 @@ while ($st->lte($dt)) {
                                 <div class="right_m">
                                     <span>&euro; {{ $deal->price_from }}
                                         <strong>&euro; {{ $deal->price }}</strong></span>
-                                    <b class="up">{!! strip_tags( $deal->description ) !!}</b>
+                                    <b class="up">{!! $deal->description !!}</b>
                                 </div>
 
                                 {{--{{  }}--}}

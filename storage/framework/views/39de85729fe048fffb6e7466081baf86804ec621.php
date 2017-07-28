@@ -11,6 +11,9 @@
                 $media = $data->getMedia('default');
                 $getRec = HomeController::getPersons($deal->id);
                 $count_persons = $getRec[0]->total_persons;
+				/** 270717 **/
+				if($count_persons >= $deal->total_amount)
+					continue;
                 ?>
                 <div class="company"
                      data-kitchen="<?php echo e(is_array(json_decode($data->kitchens)) ? str_slug(json_decode($data->kitchens)[0]) : ''); ?>"
@@ -33,7 +36,6 @@
                                 </a>
                             <?php endif; ?>
                         <?php else: ?>
-
                             <?php if($count_persons >= $deal->total_amount): ?>
                                 <a href="<?php echo e(url('restaurant/'.$data->slug).'?deal='.$deal->id); ?>"
                                    title="<?php echo e($data->name); ?>" data-url="" style="position: relative;">

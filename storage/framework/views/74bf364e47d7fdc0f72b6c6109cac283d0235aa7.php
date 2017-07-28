@@ -217,8 +217,13 @@ while ($st->lte($dt)) {
                     <div id="t2" style="display: none;">
                         <?php if(isset($deals) && count($deals)): ?>
                             <?php foreach($deals as $deal): ?>
+<<<<<<< HEAD
                         <!-- Menu -->
                         <div class="menu deals-list-page">
+=======
+                            <!-- Menu -->
+                            <div class="menu deals-list-page">
+>>>>>>> 0721ce7... REstaurant bug
                                 <div class="left_m">
                                     <h2><?php echo e($deal->name); ?></h2>
                                     <?php if($deal->image!=''): ?>
@@ -243,10 +248,15 @@ while ($st->lte($dt)) {
                                     <span>&euro; <?php echo e($deal->price_from); ?>
 
                                         <strong>&euro; <?php echo e($deal->price); ?></strong></span>
+<<<<<<< HEAD
                                     <b class="up"><?php echo strip_tags( $deal->description ); ?></b>
                                 </div>
 
                                 <?php /*<?php echo e( ); ?>*/ ?>
+=======
+                                    <b class="up"><?php echo $deal->description; ?></b>
+                                </div>
+>>>>>>> 0721ce7... REstaurant bug
                                 <?php if(!is_null($deal->getApprovedReviews)): ?>
                                     <?php
                                     $count = 1;
@@ -272,6 +282,7 @@ while ($st->lte($dt)) {
                                 <?php if(count($deals)==1): ?>
                                 <div id="koop">
                                     <a class="more"
+<<<<<<< HEAD
                                        href="<?php echo e(url('future-deal/'.$company->slug).'?deal='.$deal->id); ?>">KOOP
                                         DEAL
                                     </a>
@@ -279,6 +290,15 @@ while ($st->lte($dt)) {
                                     <a class="more"
                                        href="<?php echo e(url('future-deal/'.$company->slug).'?deal='.$deal->id); ?>">KOOP
                                         DEAL
+=======
+                                       href="<?php echo e(url('future-deal/'.$company->slug).'?deal='.$deal->id); ?>">
+                                        Koop nu, reserveer later.
+                                    </a>
+                                <?php else: ?>
+                                    <a class="more"
+                                       href="<?php echo e(url('future-deal/'.$company->slug).'?deal='.$deal->id); ?>">
+                                        Koop nu, reserveer later.
+>>>>>>> 0721ce7... REstaurant bug
                                     </a>
                                 <?php endif; ?>
                                 </div>
@@ -696,10 +716,15 @@ while ($st->lte($dt)) {
             }
         </script>
 <?php $__env->stopSection(); ?>
+<<<<<<< HEAD
     <?php $__env->startSection('scripts'); ?>
         <script type="text/javascript"
                 src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5751e9a264890504">
         </script>
+=======
+<?php $__env->startSection('scripts'); ?>
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5751e9a264890504"></script>
+>>>>>>> 0721ce7... REstaurant bug
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('template.theme', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
