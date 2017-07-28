@@ -260,13 +260,13 @@ while ($st->lte($dt)) {
                                 @if(count($deals)==1)
                                 <div id="koop">
                                     <a class="more"
-                                       href="{{ url('future-deal/'.$company->slug).'?deal='.$deal->id }}">KOOP
-                                        DEAL
+                                       href="{{ url('future-deal/'.$company->slug).'?deal='.$deal->id }}">
+                                        Koop nu, reserveer later.
                                     </a>
                                 @else
                                     <a class="more"
-                                       href="{{ url('future-deal/'.$company->slug).'?deal='.$deal->id }}">KOOP
-                                        DEAL
+                                       href="{{ url('future-deal/'.$company->slug).'?deal='.$deal->id }}">
+                                        Koop nu, reserveer later.
                                     </a>
                                 @endif
                                 </div>
