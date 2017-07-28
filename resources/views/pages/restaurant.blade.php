@@ -208,8 +208,8 @@ while ($st->lte($dt)) {
                     <div id="t2" style="display: none;">
                         @if(isset($deals) && count($deals))
                             @foreach($deals as $deal)
-                        <!-- Menu -->
-                        <div class="menu deals-list-page">
+                            <!-- Menu -->
+                            <div class="menu deals-list-page">
                                 <div class="left_m">
                                     <h2>{{ $deal->name }}</h2>
                                     @if($deal->image!='')
@@ -235,8 +235,6 @@ while ($st->lte($dt)) {
                                         <strong>&euro; {{ $deal->price }}</strong></span>
                                     <b class="up">{!! $deal->description !!}</b>
                                 </div>
-
-                                {{--{{  }}--}}
                                 @if(!is_null($deal->getApprovedReviews))
                                     <?php
                                     $count = 1;
