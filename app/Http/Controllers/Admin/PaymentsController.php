@@ -40,7 +40,7 @@ class PaymentsController extends Controller
 
         $totalAmountForQuery = 0;
 
-       /* $paymentsCount = $payments->count();
+        $paymentsCount = $payments->count();
         if ($paymentsCount > 0) {
             $records_for_cnt_amounts = $payments->get();
             foreach ($records_for_cnt_amounts as $pay) {
@@ -48,7 +48,7 @@ class PaymentsController extends Controller
                     $totalAmountForQuery += $pay['amount'];
                 }
             }
-        }*/
+        }
 
 
         # Filter by column
@@ -224,6 +224,7 @@ class PaymentsController extends Controller
 
             Alert::success('Deze betaling is succesvol aangepast.')->persistent('Sluiten');   
             return Redirect::to('admin/'.$this->slugController.'/update/'.$data->id);
+
         }
     }
 }

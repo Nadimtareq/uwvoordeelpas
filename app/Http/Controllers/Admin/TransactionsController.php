@@ -73,7 +73,7 @@ class TransactionsController extends Controller {
                 ;
             }
         }
-
+	
         if ($request->has('shop')) {
             $data = $data->where('affiliates.slug', '=', $request->input('shop'));
         }
@@ -92,7 +92,14 @@ class TransactionsController extends Controller {
                     ->orWhere('transactions.affiliate_network', 'LIKE', '%' . $request->input('q') . '%')
             ;
         }
-
+/*Edited By Team AIT */
+	if ($request->has('aff') && $request->input('NULL')) {
+		$data = $data->where('transactions.external_id', '=', $request->input('NULL'));
+        }else
+    if ($request->has('aff') && $request->input('BULL')) {
+		$data = $data->where('transactions.external_id', '!=', $request->input('NULL'));
+        }    
+/*Edited By Team AIT */
         if ($request->has('sort') && $request->has('order')) {
             $companiesColumn = array(
                 'program_id',
