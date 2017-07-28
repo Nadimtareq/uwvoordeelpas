@@ -106,6 +106,21 @@ return [
         'signature' => [
             'required' => 'U heeft nog geen handtekening opgegeven.',
         ],
+		'email' => [
+            'email' => 'Het emailadres is een ongeldig adres.',
+        ],
+		'price_per_guest' => [
+            'required' => 'Prijs per gast is niet ingevoerd.',
+        ],
+		'contact_name' => [
+            'required' => 'Het veld voor contactnaam is verplicht',
+        ],
+		'contact_email' => [
+            'email' => 'Het contact emailadres is een ongeldig adres.',
+        ],
+		'financial_email' => [
+            'email' => 'Het financieel emailadres is een ongeldig adres.',
+        ],
     ],
 
     /*
