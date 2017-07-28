@@ -42,6 +42,7 @@ while ($st->lte($dt)) {
                                     <ul id="bxslider"
                                         style="width: 615%; position: relative; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
                                         @if($media != '[]')
+
                                             @foreach($media as $mediaItem)
                                                 @if(file_exists(public_path($mediaItem->disk. DIRECTORY_SEPARATOR . $mediaItem->id . DIRECTORY_SEPARATOR . $mediaItem->file_name)))
                                                     <li style="float: left; list-style: outside none none; position: relative; width: 674px;">
@@ -52,7 +53,9 @@ while ($st->lte($dt)) {
                                                         </a>
                                                 @else
                                                     <li style="float: left; list-style: outside none none; position: relative; width: 674px;">
-                                                        <img src="{{ asset('images/s.jpg') }}" alt="s"
+                                                        <!--Edited by Team AIT -->
+                                                        <img src="{{ asset('images/r.png') }}" alt="s"
+
                                                              class="materialboxed">
                                                         @endif
 
@@ -107,14 +110,21 @@ while ($st->lte($dt)) {
                                                 </a>
                                             </li>
                                         @else
-                                            <li data-slideindex="{{ $key }}" style="width: 140px;height:78px"><a
-                                                        href="#"><img src="{{ asset('images/s.png')}} " alt="Alternate"></a>
+                                            <li data-slideindex="{{ $key }}" style="width: 140px;height:78px">
+                                            <!--Edited By Team AIT 28/0/2017-->
+                                            <a
+
+                                                        href="#"><img src="{{ asset('images/r.png')}} " alt="Alternate"></a>
+                                            <!--Edited By Team AIT 28/0/2017-->            
                                             </li>
                                         @endif
                                     @endforeach
                                 @else
-                                    <li data-slideindex="0" style="width: 140px;height:78px"><a href="#"><img
-                                                    src="{{ asset('images/s.png')}} " alt="Alt"></a></li>
+                                    <li data-slideindex="0" style="width: 140px;height:78px"><a href="#">
+                                        <!--Edited By Team AIT 28/0/2017-->
+                                    <img
+                                                    src="{{ asset('images/r.png')}} " alt="Alt"></a></li>
+                                        <!--Edited By Team AIT 28/0/2017-->            
                                 @endif
                             </ul>
                         </div>
@@ -332,15 +342,12 @@ while ($st->lte($dt)) {
                                             <span>Korting</span>
                                             <strong>
                                             {{ $company->discount_comment }}
-                                            <?php $discounts = json_decode($company->discount); ?>
-                                            @if(!is_null($discounts))
-                                                @foreach ($discounts as $id => $discount)
-                                                    {{ $discount }}
-                                                    <!-- 	@if (isset($preferences[5][$discount]))
-                                                        {{ ucfirst($preferences[5][$discount]) }}%
-                                                            @endif -->
-                                                    @endforeach
-                                                @endif
+                                            @foreach (json_decode($company->discount) as $id => $discount)
+                                                {{ $discount }}
+                                                <!-- 	@if (isset($preferences[5][$discount]))
+                                                    {{ ucfirst($preferences[5][$discount]) }}%
+                                                        @endif -->
+                                                @endforeach
                                             </strong>
 
                                             <span>Kortingsdagen</span>
