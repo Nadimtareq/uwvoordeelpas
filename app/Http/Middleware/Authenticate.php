@@ -41,8 +41,7 @@ class Authenticate
         if (!Sentinel::check()) {
             if (!$request->ajax()) {
                 if ($request->is('/') == FALSE) {
-					//echo "<pre>";print_r($_SERVER);print_r($request);die;
-                    alert()->error('', 'U heeft geen toegang tot deze pagina.')->persistent('Sluiten');
+					//alert()->error('', 'U heeft geen toegang tot deze pagina.')->persistent('Sluiten');
                     //return Redirect::to('/');
 					$request->session()->flash('redirectTo', Redirect::back());
 					return Redirect::to('/?n=open');

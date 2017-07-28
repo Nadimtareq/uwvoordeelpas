@@ -82,6 +82,7 @@
 		<!-- ./container end-->
 	</footer>
 <!--Start of Tawk.to Script-->
+
 <script type="text/javascript">
     var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
     (function(){
@@ -92,5 +93,12 @@
         s1.setAttribute('crossorigin','*');
         s0.parentNode.insertBefore(s1,s0);
     })();
+	
+	var open = "<?php echo isset($_GET['n']) ? $_GET['n'] : '';?>";
+	if(open == 'open') {
+		setTimeout(function(){
+			jQuery('a.login')[0].click();
+		}, 500);
+	}
 </script>
 <!--End of Tawk.to Script-->
