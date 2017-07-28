@@ -22,8 +22,9 @@
 	    <div class="two fields">
 		    <div class="field">
 			  	<textarea><iframe src="{{ url('widget/calendar/restaurant/'.$company->slug) }}" width="500" height="550" frameborder="0"></iframe></textarea><br />
-			  	<h5>Voorbeel</h5>
-
+			  	<!--Change By Team AIT Date -28/07/2017 -->
+			  	<h5>Voorbeeld</h5>
+			  	<!--Change By Team AIT Date -28/07/2017 -->
 				<iframe src="{{ url('widget/calendar/restaurant/'.$company->slug) }}"
 						width="100%"
 						height="650"
