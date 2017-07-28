@@ -1376,15 +1376,18 @@ class HomeController extends Controller
         if (!$reference) {
             return redirect('/');
         }
+
         if (is_null($reference->reference_code)) {
             $reference->reference_code = str_random(17);
             $reference->save();
         }
 
         if (Sentinel::inRole('admin') != FALSE) {
-            $friends = App\Models\FutureDeal::where('reference_id', '!=', null)->get();
+            $friends = App\Models\FutureDeal::where('reference_id', '!=', null)
+                ->where('user_id', '!=', Sentinel::getUSer()->id)->get();
         } else {
-            $friends = App\Models\FutureDeal::where('user_id', $reference->id)->get();
+            $friends = App\Models\FutureDeal::where('user_id', $reference->id)
+                ->groupBy('user_id')->distinct()->get();
         }
         return view('reference-code', compact('reference', 'friends'));
     }
