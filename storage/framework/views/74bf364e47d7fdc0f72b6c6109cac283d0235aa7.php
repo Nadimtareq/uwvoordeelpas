@@ -42,7 +42,6 @@ while ($st->lte($dt)) {
                                     <ul id="bxslider"
                                         style="width: 615%; position: relative; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
                                         <?php if($media != '[]'): ?>
-
                                             <?php foreach($media as $mediaItem): ?>
                                                 <?php if(file_exists(public_path($mediaItem->disk. DIRECTORY_SEPARATOR . $mediaItem->id . DIRECTORY_SEPARATOR . $mediaItem->file_name))): ?>
                                                     <li style="float: left; list-style: outside none none; position: relative; width: 674px;">
@@ -134,7 +133,6 @@ while ($st->lte($dt)) {
                         </div>
                     </div>
                 </div>
-
                 <div class="right_details calendar-ajax">
                     <?php echo Form::open(['url' => 'restaurant/'.$company->slug, 'id' => 'reservationForm', 'class' => 'ui form']); ?>
 
@@ -197,7 +195,6 @@ while ($st->lte($dt)) {
 
                 </div>
             </div>
-
             <div class="tabs-all">
                 <ul class="tabs-link">
                     <li><a href="#t1" class="">Over ons</a></li>
@@ -209,7 +206,6 @@ while ($st->lte($dt)) {
                     <li><a href="#t7" class="">Reviews</a></li>
                 </ul>
                 <div class="tabs-content">
-
                     <div id="t1" style="display: block;">
                         <div class="text3">
                             <strong><?php echo $company->name; ?></strong>
@@ -218,13 +214,11 @@ while ($st->lte($dt)) {
                             <p>    <?php echo $company->about_us; ?></p>
                         </div>
                     </div>
-
                     <div id="t2" style="display: none;">
-
-                    <?php if(isset($deals) && count($deals)): ?>
-                        <?php foreach($deals as $deal): ?>
-                            <!-- Menu -->
-                            <div class="menu deals-list-page">
+                        <?php if(isset($deals) && count($deals)): ?>
+                            <?php foreach($deals as $deal): ?>
+                        <!-- Menu -->
+                        <div class="menu deals-list-page">
                                 <div class="left_m">
                                     <h2><?php echo e($deal->name); ?></h2>
                                     <?php if($deal->image!=''): ?>
@@ -291,7 +285,6 @@ while ($st->lte($dt)) {
                         <?php endforeach; ?>
                     <?php endif; ?>
                             </div>
-
                     </div>
                     <div id="t3" style="display: none;">
                         <div class="info">
@@ -440,7 +433,6 @@ while ($st->lte($dt)) {
                             </div>
                         </div>
                     </div>
-                    <!-- News -->
                     <div id="t5" style="display: none;">
                     <?php if($news->count() >= 1): ?>
                         <?php foreach($news as $article): ?>
@@ -486,7 +478,6 @@ while ($st->lte($dt)) {
                             <span>Er zijn geen nieuwsberichten gevonden.</span>
                         <?php endif; ?>
                     </div>
-                    <!-- Send -->
                     <div id="t6" style="display: none;">
                         <div class="send">
 
@@ -561,7 +552,6 @@ while ($st->lte($dt)) {
 
                         </div>
                     </div>
-                    <!-- Reviews -->
                     <div id="t7" style="display: none;">
                         <?php if(count($reviews) >= 1): ?>
                             <?php foreach($reviews as $review): ?>
@@ -678,17 +668,16 @@ while ($st->lte($dt)) {
                 color: red;
             }
         </style>
-
-        <div class="clear"></div>
-        <script>
+        <div class="clear">
+        </div>
+    </div>
+    <script>
             var activateAjax = 'restaurant';
-
             //		$('body').on('keydown','#idcontent',function(){
             function checkWords() {
                 var data = $('#reviews').serializeArray();
                 console.log(data);
                 var token = $('#csrf-token').val();
-
                 $.ajax({
                     type: 'post',
                     data: data,
@@ -703,19 +692,14 @@ while ($st->lte($dt)) {
                         $('#reviews').submit();
                     }
                 }).fail(function () {
-
                 });
-
             }
-
         </script>
-
-        <?php $__env->stopSection(); ?>
-
-        <?php $__env->startSection('scripts'); ?>
-            <script type="text/javascript"
-                    src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5751e9a264890504"></script>
-
+<?php $__env->stopSection(); ?>
+    <?php $__env->startSection('scripts'); ?>
+        <script type="text/javascript"
+                src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5751e9a264890504">
+        </script>
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('template.theme', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
