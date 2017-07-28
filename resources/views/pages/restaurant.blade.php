@@ -42,7 +42,6 @@ while ($st->lte($dt)) {
                                     <ul id="bxslider"
                                         style="width: 615%; position: relative; transition-duration: 0s; transform: translate3d(0px, 0px, 0px);">
                                         @if($media != '[]')
-
                                             @foreach($media as $mediaItem)
                                                 @if(file_exists(public_path($mediaItem->disk. DIRECTORY_SEPARATOR . $mediaItem->id . DIRECTORY_SEPARATOR . $mediaItem->file_name)))
                                                     <li style="float: left; list-style: outside none none; position: relative; width: 674px;">
@@ -134,7 +133,6 @@ while ($st->lte($dt)) {
                         </div>
                     </div>
                 </div>
-
                 <div class="right_details calendar-ajax">
                     {!! Form::open(['url' => 'restaurant/'.$company->slug, 'id' => 'reservationForm', 'class' => 'ui form']) !!}
                     {{ Form::hidden('date_hidden') }}
@@ -188,7 +186,6 @@ while ($st->lte($dt)) {
                     {!! Form::close() !!}
                 </div>
             </div>
-
             <div class="tabs-all">
                 <ul class="tabs-link">
                     <li><a href="#t1" class="">Over ons</a></li>
@@ -627,17 +624,16 @@ while ($st->lte($dt)) {
                 color: red;
             }
         </style>
-
-        <div class="clear"></div>
-        <script>
+        <div class="clear">
+        </div>
+    </div>
+    <script>
             var activateAjax = 'restaurant';
-
             //		$('body').on('keydown','#idcontent',function(){
             function checkWords() {
                 var data = $('#reviews').serializeArray();
                 console.log(data);
                 var token = $('#csrf-token').val();
-
                 $.ajax({
                     type: 'post',
                     data: data,
@@ -652,17 +648,10 @@ while ($st->lte($dt)) {
                         $('#reviews').submit();
                     }
                 }).fail(function () {
-
                 });
-
             }
-
         </script>
-
-        @stop
-
-        @section('scripts')
-            <script type="text/javascript"
-                    src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5751e9a264890504"></script>
-
+@stop
+@section('scripts')
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5751e9a264890504"></script>
 @stop
