@@ -260,10 +260,8 @@ class AuthController extends Controller
         $attempts = App\Models\UsersIp::select('attempts')->where('user_ip',$ip)->first();
         $flag=0;
         if($attempts) {
-            if ($attempts->attempts >= 3)
-                $flag = 1;
+            ($attempts->attempts >= 3) ? $flag = 1: $flag = 0;
         }
-
         $loginView = array(
             'view' => view('account/login')->with('flag',$flag)->render(),
             'success' => true
@@ -275,7 +273,6 @@ class AuthController extends Controller
 
     public function loginAction(LoginRequest $request)
     {
-
     $userAgent = $request->server('HTTP_USER_AGENT');
        // $this->validate($request, []);
      $pass=$this->dcrypt($request->input('password'));
@@ -291,8 +288,8 @@ class AuthController extends Controller
         if($attempts) {
             if ($attempts->attempts < 10 || $attempts->attempts == '') {
                 $data = array(
-                    'secret' => getenv('CAPTCHA_SECRET'),
-                    'response' => $request->input("g-recaptcha-response")
+                    'secret' => env('CAPTCHA_SECRET'),
+                    'response' => $request->input("recaptcha-response")
                 );
 
                 try {
@@ -308,16 +305,16 @@ class AuthController extends Controller
                     $attempts_ip = App\Models\UsersIp::select('attempts')->where('user_ip',$ip)->first();
                    
                  if($attempts_ip) {
-                            if($attempts_ip->attempts>=3) {
-                                $verify = curl_init();
+                            if($attempts_ip->attempts >= 3) {
+                                /*$verify = curl_init();
                                 curl_setopt($verify, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify");
                                 curl_setopt($verify, CURLOPT_POST, true);
                                 curl_setopt($verify, CURLOPT_POSTFIELDS, http_build_query($data));
                                 curl_setopt($verify, CURLOPT_SSL_VERIFYPEER, false);
                                 curl_setopt($verify, CURLOPT_RETURNTRANSFER, true);
                                 $response = curl_exec($verify);
-                                $response = json_decode($response);
-                                if ($response->success == true) {
+                                $response = json_decode($response);*/
+                                //if ($response->success == true) {
                                     DB::table('users')
                                         ->where('email', $email)
                                         ->update(['attempts' => 0]);
@@ -326,18 +323,17 @@ class AuthController extends Controller
                                         ->where('user_ip', $ip)
                                         ->update(['attempts' => 0]);
 
-                                    DB::table('users_ip')->insert(['ip' => $ip, 'attempts' => 1,'user_agent'=>$userAgent]);
-
+                                    DB::table('users_ip')->insert(['user_ip' => $ip, 'attempts' => 1]);
 
                                     return Response::json(array('success' => 1, 'err_code' => 200));
 
-                                } else {
+                                /*} else {
                                     Sentinel::logout();
                                     return Response::json(array(
                                         'name' => 'Captcha komt niet overeen',
                                         'err_code' => 400
                                     ));
-                                }
+                                }*/
                             }else {
                                DB::table('users')
                                     ->where('email', $email)
