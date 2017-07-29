@@ -231,7 +231,17 @@ while ($st->lte($dt)) {
                                                     </ul>--}}
                                 </div>
                                 <div class="right_m">
-                                    <span>&euro; {{ $deal->price_from }}
+                                    <span>
+                                    &euro; 
+                                     <?php
+                                       $prc=$deal->price_from;
+                                       if($prc==0)
+                                       {
+
+                                       }else{
+                                     ?>
+                                    {{ $deal->price_from }}
+                                    }
                                         <strong>&euro; {{ $deal->price }}</strong></span>
                                     <b class="up">{!! $deal->description !!}</b>
                                 </div>

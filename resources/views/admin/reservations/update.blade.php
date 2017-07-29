@@ -96,8 +96,8 @@
 	    </div>
 
     	<div class="ui divider"></div>
-
-		<?php echo Form::open(array('method' => 'post','url' => '{!! url('') !!}', 'class' => 'ui edit-changes form')) ?>
+<!-----ait team 29-7-17-->
+		<?php //echo Form::open(array('method' => 'post','url' => '', 'class' => 'ui edit-changes form')) ?>
 			@if (Request::has('add'))
 			<h4>Welke dagen / tijden wilt u toevoegen?</h4>
 			Let op: Bij het toevoegen van nieuwe reserveringsdagen worden de oude reserverings dagen verwijderd.<br>
