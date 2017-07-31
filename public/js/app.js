@@ -53914,21 +53914,22 @@ $(document).ready(function() {
 					$('#reservationForm').submit();
 				}
 			});
-
+            var countErr = 0;
 			$('.jqibuttons').api({
 				url: baseUrl + 'login',
 				method: 'POST',
 				serializeForm: true,
 				onComplete: function(response) {
-				    
                    // $('.login').trigger('click');
-                    if (response['err_code'] == 100)
-     $(".g-recaptcha").css('display','block');
+                    if (response['err_code'] == 100) {
+                        countErr++;
+                        if (countErr >= 3 ) {
+                            $(".g-recaptcha").css('display','block');
+                        }
+                    }
 
                     if (response['err_code'] == 400) {
                         var output = '<div class="header1">u bent vergeten om de beveiliging aan te vinken</div><ul class="list">';
-
-
                             output += '<li>' + response['name'] + '</li>';
 
                             output += '</ul>';

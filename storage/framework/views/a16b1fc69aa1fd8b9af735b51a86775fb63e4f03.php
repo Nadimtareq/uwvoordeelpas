@@ -8,12 +8,12 @@
 </script>
 <script src='https://www.google.com/recaptcha/api.js'></script>
 <div class="ui buttons fluid">
-    <a href="{{ url('social/login/facebook') }}" target="_blank" id="facebookButton" class="ui facebook icon button">
+    <a href="<?php echo e(url('social/login/facebook')); ?>" target="_blank" id="facebookButton" class="ui facebook icon button">
         <i class="facebook icon"></i>
         Facebook
     </a>
 
-    <a href="{{ url('social/login/google') }}" target="_blank" id="googleButton" class="ui icon google plus button">
+    <a href="<?php echo e(url('social/login/google')); ?>" target="_blank" id="googleButton" class="ui icon google plus button">
         <i class="google plus icon"></i>
         Google+
     </a>
@@ -39,13 +39,13 @@
     <input type="hidden" name="password" id="pass_new">
 </div>
 <div class="field">
-    @if($flag==1)
-        <div class="g-recaptcha" data-sitekey="{{env('CAPTCHA_SITEKEY')}}" data-callback='onSubmit'></div>
+    <?php if($flag==1): ?>
+        <div class="g-recaptcha" data-sitekey="<?php echo e(env('CAPTCHA_SITEKEY')); ?>" data-callback='onSubmit'></div>
         <div style="float: right;"></div>
-    @else
-        <div class="g-recaptcha" data-sitekey="{{env('CAPTCHA_SITEKEY')}}" data-callback='onSubmit' style="display:none;"></div>
+    <?php else: ?>
+        <div class="g-recaptcha" data-sitekey="<?php echo e(env('CAPTCHA_SITEKEY')); ?>" data-callback='onSubmit' style="display:none;"></div>
         <div style="float: right;"></div>
-    @endif
+    <?php endif; ?>
 
     <div style="float: left; width: 200px;">
         <div class="ui checkbox">
@@ -56,4 +56,5 @@
     <a href="#" id="registerButton3" data-redirect="">Nog geen lid?</a>
 </div>
 
-{{csrf_field()}}
+<?php echo e(csrf_field()); ?>
+
