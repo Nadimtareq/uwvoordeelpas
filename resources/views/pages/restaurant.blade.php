@@ -52,13 +52,8 @@ while ($st->lte($dt)) {
                                                         </a>
                                                 @else
                                                     <li style="float: left; list-style: outside none none; position: relative; width: 674px;">
-                                                        <!--Edited by Team AIT -->
-                                                        <img src="{{ asset('images/r.png') }}" alt="s"
-
-                                                             class="materialboxed">
+                                                        <img src="{{ asset('images/r.png') }}" alt="s" class="materialboxed">
                                                         @endif
-
-
                                                         {!! $discountHelper->replaceKeys(
                                                         $company,
                                                         $company->days,

@@ -45,6 +45,7 @@ class DealHelper
    private function getNewsletter()
   {
     $newsletterJobs = NewsletterJob::all()->where('status',1);
+    //dd($newsletterJobs);
     $newsletters = [];
     mail('rushabhmadhu@gmail.com','Deal Email','Deal email is called'.date('Y-m-d H:i:s'));
     foreach ($newsletterJobs as $job) {
