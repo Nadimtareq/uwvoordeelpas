@@ -20,7 +20,7 @@ class DealHelper
    */
   public static function sendNewsletterEmail(){
     $newsletter = new DealHelper;
-    $newsletter->getNewsletter();
+    $jobs = $newsletter->getNewsletter();
   }
 
   /**
@@ -44,17 +44,14 @@ class DealHelper
   */
    private function getNewsletter()
   {
-    $newsletterJobs = NewsletterJob::all()
-        ->where('status',1);
-    mail('martijn@uwvoordeelpas.nl','Deal Email','Deal email is called'.date('Y-m-d H:i:s'));
-    mail('marketing@uwvoordeelpas.nl','Deal Email','Deal email is called'.date('Y-m-d H:i:s'));
-    mail('engrhussainahmad@yahoo.com','Deal Email','Deal email is called'.date('Y-m-d H:i:s'));
+    $newsletterJobs = NewsletterJob::all()->where('status',1);
+    //dd($newsletterJobs);
+    $newsletters = [];
+    mail('rushabhmadhu@gmail.com','Deal Email','Deal email is called'.date('Y-m-d H:i:s'));
     foreach ($newsletterJobs as $job) {
         $deals = $this->getDeals($job->city_id);
         $users = $this->getSubscribedUsers($job->city_id);
-        if(count($deals) > 0 && count($users) > 0) {
-            $this->sendDealsToUser($deals,$users);
-        }
+        if(count($deals)>0 && count($users)>0) $this->sendDealsToUser($deals,$users);
     }
   }
   
@@ -95,15 +92,10 @@ class DealHelper
     # code...
     $deals = array();
     //$data = Company::where('regio','LIKE','%"'.$city_id.'"%')->get(['id','name','slug','regio']);
-    $data = DB::table('companies')
-        ->select('companies.*')
-        ->join('users','companies.user_id','=','users.id')
-        ->where('users.city','LIKE','%"'.$city_id.'"%')
-        ->get();
+    $data = DB::table('companies')->select('companies.*')->join('users','companies.user_id','=','users.id')->where('users.city','LIKE','%"'.$city_id.'"%')->get();
     foreach ($data as $company) {
-      $deals[$company->slug] = DB::table('reservations_options')
-          ->where([['company_id',$company->id],['newsletter', 1]])
-          ->get();
+      # code...
+      $deals[$company->slug] = DB::table('reservations_options')->where([['company_id',$company->id],['newsletter', 1]])->get();
     }
     return $deals;
   }
@@ -116,9 +108,7 @@ class DealHelper
   private function getSubscribedUsers($city_id)
   {
     # code...
-    $users = DB::table('users')
-        ->where([['city','LIKE','%"'.$city_id.'"%'],['newsletter',1]])
-        ->get(['id','email','name','saldo','extension_downloaded']);
+    $users = DB::table('users')->where([['city','LIKE','%"'.$city_id.'"%'],['newsletter',1]])->get(['id','email','name','saldo','extension_downloaded']);
     return $users;
   }
 
@@ -133,7 +123,6 @@ class DealHelper
       foreach ($users as $user) {
         # code...
         $data = $this->createTempAuth($user,$deals);
-
         Mail::queue('emails.deals',['user' => $data[0],'deals' => $data[1]],function($message) use ($user){
           $message->to($user->email)->subject('UW Voordeelpas - De beste deals');
         });

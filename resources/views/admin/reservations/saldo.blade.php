@@ -166,8 +166,9 @@
     @endif
 
     <?php echo Form::open(array('id' => 'formList')) ?>
-    <table class="ui sortable very basic collapsing celled unstackable table" style="width: 100%;">
-        <thead>
+    @if(Sentinel::inRole('admin'))
+        <table class="ui sortable very basic collapsing celled unstackable table" style="width: 100%;">
+            <thead>
             <tr>
                 <th data-slug="date" data-column-order="desc" class="three wide">Datum en tijd</th>
                 <th data-slug="companyName" data-column-order="desc" class="two wide">Bedrijf</th>
@@ -178,9 +179,9 @@
                 <th data-slug="disabled" class="disabled one wide">Betaald</th>
                 <th data-slug="saldo" class="three wide">Saldo</th>
             </tr>
-        </thead>
-        <tbody class="list search">
-             @if(count($data) >= 1)
+            </thead>
+            <tbody class="list search">
+            @if(count($data) >= 1)
                 @include('admin/reservations.list-saldo')
                 <tr>
                     <td colspan="4">Totaal</td>
@@ -199,8 +200,48 @@
                     <td colspan="2"><div class="ui error message">Er is geen data gevonden.</div></td>
                 </tr>
             @endif
+            </tbody>
+        </table>
+
+
+
+    @else
+
+    <table class="ui sortable very basic collapsing celled unstackable table" style="width: 100%;">
+        <thead>
+            <tr>
+                <th data-slug="date" data-column-order="desc" class="three wide">Datum en tijd</th>
+                <th data-slug="name" data-column-order="desc" class="two wide">Gereserveerd als</th>
+                <th data-slug="phone" data-column-order="desc" class="ten wide">Omschrijving</th>
+                <th data-slug="persons" data-column-order="desc" class="one wide">Personen</th>
+                <th data-slug="saldo" class="three wide">Kosten</th>
+                <th data-slug="disabled" class="disabled one wide">Betaald</th>
+                <th data-slug="saldo" class="three wide">Saldo</th>
+            </tr>
+        </thead>
+        <tbody class="list search">
+             @if(count($data) >= 1)
+                @include('admin/reservations.list-saldo')
+                <tr>
+                    <td colspan="3">Totaal</td>
+                    <td > {{ $totalPersons }} </td>
+                    <td colspan="1" ><i class="euro icon"></i> {{ $totalKosten }}</td>
+                    <td></td>
+                    <td colspan="5"><i class="euro icon"></i> {{ number_format($totalSaldo, 2, '.', '') }}</td>
+                </tr>
+                <tr>
+                    <td colspan="6">Totaal bedrag</td>
+
+                    <td><i class="euro icon"></i> {{ number_format($totalSaldo - $totalKosten, 2, '.', '') }}</td>
+                </tr>
+            @else
+                <tr>
+                    <td colspan="2"><div class="ui error message">Er is geen data gevonden.</div></td>
+                </tr>
+            @endif
         </tbody>
    	</table>
+    @endif
     <?php echo Form::close(); ?>
     @include('admin.template.limit')
 

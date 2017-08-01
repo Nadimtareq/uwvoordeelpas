@@ -16,9 +16,11 @@ $date = \Carbon\Carbon::create(date('Y', strtotime($result->date)), date('m', st
         <i class="clock icon"></i>
         {{ date('H:i', strtotime($result->time)) }} 
     </td>
+    @if(Sentinel::inRole('admin'))
     <td>
         {{ $result->companyName }}
     </td>
+    @endif
     <td>
         <a href="{{ url('account/reservations/'.$result->companySlug.'/user/'.$result->user_id) }}">
             {{ $result->name }}

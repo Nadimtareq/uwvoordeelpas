@@ -14,10 +14,13 @@
                 <a href="{{ url('admin/'.$slugController.'/create'.(isset($companyParam) ? '/'.$companyParam : '')) }}" class="ui icon blue button">
                     <i class="plus icon"></i> Nieuw
                 </a>
-                    
+
+                @if (Sentinel::inRole('admin'))
                 <button id="removeButton" type="submit" name="action" value="remove" class="ui disabled icon grey button">
                     <i class="trash icon"></i> Verwijderen
                 </button>
+                @endif
+
             </div>
 
             <div class="right floated sixteen wide mobile six wide computer column">

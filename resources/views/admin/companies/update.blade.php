@@ -274,24 +274,24 @@
                         <?php echo Form::text('contact_role', $data->contact_role) ?>
                     </div>
 
-                    <div class="field {{ Request::has('step') OR $userAdmin ? '' : 'disabled' }}">
+                    <div class="field {{ Request::has('step') || $admin ? '' : 'disabled' }}">
                         <label>KVK</label>
                         <?php echo Form::text('kvk', $data->kvk) ?>
                     </div>
 
-                    <div class="field {{ Request::has('step') OR $userAdmin ? '' : 'disabled' }}">
+                    <div class="field {{ Request::has('step') || $admin ? '' : 'disabled' }}">
                         <label>BTW</label>
                         <?php echo Form::text('btw', $data->btw) ?>
                     </div>
                 </div>
 
                 <div class="three fields">
-                    <div class="field {{ Request::has('step') OR $userAdmin ? '' : 'disabled' }}">
+                    <div class="field {{ Request::has('step')  || $admin ? '' : 'disabled' }}">
                         <label>IBAN Nummer</label>
                         <?php echo Form::text('financial_iban', $data->financial_iban) ?>
                     </div>
 
-                    <div class="field {{ Request::has('step') OR $userAdmin ? '' : 'disabled' }}">
+                    <div class="field {{ Request::has('step') || $admin ? '' : 'disabled' }}">
                         <label>IBAN tnv</label>
                         <?php echo Form::text('financial_iban_tnv', $data->financial_iban_tnv) ?>
                     </div>
@@ -395,7 +395,7 @@
                 </div>
 
                 <div class="two fields">
-                    @if ($userAdmin)
+                    @if ($admin)
                         <div class="field">
                             <label>Korting</label>
                             <?php
@@ -462,10 +462,14 @@
                     </div>
 
                 </div>
-                <div class="field">
-                    <label>Prijs per persoon</label>
-                    <?php echo Form::text('price_per_guest', $data->price_per_guest) ?>
-                </div>
+
+                @if(Request::has('step') || $admin)
+                    <div class="field">
+                        <label>Prijs per persoon</label>
+                        <?php echo Form::text('price_per_guest', $data->price_per_guest) ?>
+                    </div>
+                @endif
+
                 @if (Request::has('step'))
                     <div id="privacy-terms">
                         <div id="privacy-wrapper">
@@ -539,7 +543,7 @@
                     </div>
                     <div class="ui divider"></div>
 
-                    @if($userAdmin && !Request::has('step'))
+                    @if($admin && !Request::has('step'))
                         <div class="field">
                             <label>Documenten</label>
                             <?php echo Form::file('pdf[]', array('multiple' => true)); ?><br/><br/>

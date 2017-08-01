@@ -386,7 +386,6 @@ public function updateAction(Request $request, $id, $slug)
                 $data->description = $request->input('description');
                 $data->contact = $request->input('contact');
                 $data->details = $request->input('details');
-                $data->price_per_guest = $request->input('price_per_guest');
                 $data->about_us = $request->input('about_us');
                 $data->discount_comment = $request->input('discount_comment');
                 $data->facebook = $request->input('facebook');
@@ -397,7 +396,15 @@ public function updateAction(Request $request, $id, $slug)
                 if (Sentinel::inRole('admin')) {
                     $data->user_id = $request->input('owner');
                     $data->clicks = $request->input('clicks');
+                    $data->financial_iban = $request->input('financial_iban');
+                    $data->financial_iban_tnv = $request->input('financial_iban_tnv');
+                    $data->kvk = $request->input('kvk');
+                    $data->btw = $request->input('btw');
+                    $data->price_per_guest = $request->input('price_per_guest');
                 }
+
+
+
 
                 if ($request->has('serialize')) {
                     $asAssociativeArray = json_decode($request->input('serialize'), true);
@@ -424,11 +431,7 @@ public function updateAction(Request $request, $id, $slug)
                 $data->city = $request->input('city');
                 $data->regio = json_encode($request->input('regio'));
                 $data->days = json_encode($request->input('days'));
-                $data->financial_iban = $request->input('financial_iban');
-                $data->financial_iban_tnv  = $request->input('financial_iban_tnv');
                 $data->financial_email = $request->input('financial_email');
-                $data->kvk = $request->input('kvk');
-                $data->btw = $request->input('btw');
                 $data->website = $request->input('website');
                 $data->facilities = json_encode($request->input('facilities'));
                 $data->kitchens = json_encode($request->input('kitchens'));

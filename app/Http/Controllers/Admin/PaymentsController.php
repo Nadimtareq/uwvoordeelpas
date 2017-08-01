@@ -77,6 +77,19 @@ class PaymentsController extends Controller
                 ;
                 break;
             }
+
+
+            $totalAmountForQuery = 0;
+
+            $paymentsCount = $payments->count();
+            if ($paymentsCount > 0) {
+                $records_for_cnt_amounts = $payments->get();
+                foreach ($records_for_cnt_amounts as $pay) {
+                    if(isset($pay['amount']) && !empty($pay['amount'])){
+                        $totalAmountForQuery += $pay['amount'];
+                    }
+                }
+            }
         }
 
         # Filter by search term
@@ -90,6 +103,19 @@ class PaymentsController extends Controller
                 ->orWhere('users.name', 'LIKE', '%'.$request->input('q').'%')
                 ;
             });
+
+
+            $totalAmountForQuery = 0;
+
+            $paymentsCount = $payments->count();
+            if ($paymentsCount > 0) {
+                $records_for_cnt_amounts = $payments->get();
+                foreach ($records_for_cnt_amounts as $pay) {
+                    if(isset($pay['amount']) && !empty($pay['amount'])){
+                        $totalAmountForQuery += $pay['amount'];
+                    }
+                }
+            }
         }
 
         if ($request->has('city')) {
@@ -123,13 +149,37 @@ class PaymentsController extends Controller
         if ($request->has('month') && $request->has('year')) {  
             $payments = $payments
             ->whereMonth('payments.created_at', '=', $request->input('month'))
-            ->whereYear('payments.created_at', '=', $request->input('year'))
-            ;
+            ->whereYear('payments.created_at', '=', $request->input('year'));
+
+            $totalAmountForQuery = 0;
+
+            $paymentsCount = $payments->count();
+            if ($paymentsCount > 0) {
+                $records_for_cnt_amounts = $payments->get();
+                foreach ($records_for_cnt_amounts as $pay) {
+                    if(isset($pay['amount']) && !empty($pay['amount'])){
+                        $totalAmountForQuery += $pay['amount'];
+                    }
+                }
+            }
         }
 
         # Filter by ststus
         if ($request->has('status')) {  
             $payments = $payments->where('payments.status', '=', $request->input('status'));
+
+
+            $totalAmountForQuery = 0;
+
+            $paymentsCount = $payments->count();
+            if ($paymentsCount > 0) {
+                $records_for_cnt_amounts = $payments->get();
+                foreach ($records_for_cnt_amounts as $pay) {
+                    if(isset($pay['amount']) && !empty($pay['amount'])){
+                        $totalAmountForQuery += $pay['amount'];
+                    }
+                }
+            }
         }
 
         $payments = $payments

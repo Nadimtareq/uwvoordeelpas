@@ -15,16 +15,18 @@
                     <i class="plus icon"></i> Nieuw
                 </a>
 
+                @if($admin)
                 <button id="removeButton" type="submit" name="action" value="remove" class="ui disabled icon grey button">
                     <i class="trash icon"></i> Verwijderen
                 </button>
+                @endif
             </div>
 
             <div class="right floated sixteen wide mobile eleven wide computer column">
                 <div class="ui grid">
                     <div class="five column row">
                         <div class="column">
-                            @if ($userAdmin)
+                            @if ($admin)
                             <div class="ui normal icon search selection fluid dropdown">
                                 <i class="filter icon"></i>
 
@@ -50,8 +52,8 @@
                                 <i class="dropdown icon"></i>
 
                                 <div class="menu">
-                                    <a class="item" href="{{ url('admin/reservations-options?newsletter=1') }}">Yes</a>
-                                    <a class="item" href="{{ url('admin/reservations-options?newsletter=0') }}">No</a>
+                                    <a class="item" href="{{ url('admin/reservations-options?newsletter=1') }}">Ja</a>
+                                    <a class="item" href="{{ url('admin/reservations-options?newsletter=0') }}">Nee</a>
                                 </div>
                             </div>
                         </div>
@@ -127,9 +129,13 @@
             <label></label>
         </div>
         </th>
-        <th data-slug="name" class="three wide">Plaats</th>
-        <th data-slug="name" class="three wide">Naam</th>
-        <th data-slug="company_id" class="three wide">Bedrijf</th>
+        @if($admin)
+            <th data-slug="name" class="three wide">Plaats</th>
+        @endif
+        <th data-slug="name" class="ten wide">Naam</th>
+        @if($admin)
+            <th data-slug="company_id" class="three wide">Bedrijf</th>
+        @endif
         <th data-slug="city" class="three wide">City</th>
         <th data-slug="total_amount" class="four wide">beschikbaar</th>
         <th data-slug="total_res" class="four wide">verkocht</th>
@@ -155,13 +161,21 @@
                         <label></label>
                     </div>
                 </td>
-                <td>{{$i++}}</td>
+
+                @if($admin)
+                    <td>{{$i++}}</td>
+                @endif
+
                 <td>
                     {{ $result->name }}
                 </td>
-                <td>
-                    {{ $result->company_name }}
-                </td>
+
+                @if($admin)
+                    <td>
+                        {{ $result->company_name }}
+                     </td>
+                @endif
+
                 <td>
                     {{ $result->city }}
                 </td>

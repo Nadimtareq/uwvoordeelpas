@@ -140,6 +140,7 @@ class ReservationsOptionsController extends Controller
             'section' => 'Aanbiedingen',
             'currentPage' => 'Overzicht',
             'slug' => $slug,
+            'admin' => Sentinel::inRole('admin'),
             'data' => $data,
             'queryString' => $queryString,
             'paginationQueryString' => $request->query(),

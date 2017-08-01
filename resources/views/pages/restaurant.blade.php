@@ -226,7 +226,9 @@ while ($st->lte($dt)) {
                                                         </ul>--}}
                                     </div>
                                     <div class="right_m">
-                                    <span>&euro; {{ $deal->price_from }}
+                                        @if($deal->price_from > 0.00)
+                                            <span>&euro; {{ $deal->price_from }}
+                                        @endif
                                         <strong>&euro; {{ $deal->price }}</strong></span>
                                         <b class="up">{!! $deal->description !!}</b>
                                     </div>
