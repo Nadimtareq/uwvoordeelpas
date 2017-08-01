@@ -23,10 +23,8 @@ class TestcronjobController extends Controller
     }
 
     public function test() {
-    	mail("rushabhmadhu@gmail.com","croncalled","newslater cron");
     	DealHelper::sendNewsletterEmail();
-    	echo "test";
-    	exit;
+    	return redirect()->back();
     }
     public function guestMigrate(){
         $thirdParty = GuestThirdParty::select()
