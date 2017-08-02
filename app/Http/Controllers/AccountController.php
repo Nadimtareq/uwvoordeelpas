@@ -275,7 +275,8 @@ class AccountController extends Controller {
                         'payments.created_at as time',
                         'payments.status AS name', 'payments.amount AS amount',
                         'payments.status AS status',
-                        DB::raw('IF(payments.type = "voordeelpas", "Voordeelpas gekocht", "Opwaardering") as type'),
+                        'payments.type AS type',
+                        //DB::raw('IF(payments.type = "voordeelpas", "Voordeelpas gekocht", "Opwaardering") as type'),
                         DB::raw('"UwVoordeelpas" as company'),
                         DB::raw('date(date_add(payments.created_at, interval 90 day)) as expired_date')
                 )

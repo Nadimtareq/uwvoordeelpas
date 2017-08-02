@@ -677,8 +677,6 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('waiter', 'auth', 
         Route::get('create/{company?}', 'Admin\ReservationsOptionsController@create');
         Route::get('{company?}', 'Admin\ReservationsOptionsController@index');
 
-        Route::get('show/status', 'Admin\ReservationsOptionsController@status');
-
         Route::post('update/{id}', 'Admin\ReservationsOptionsController@updateAction');
         Route::post('create/{company?}', 'Admin\ReservationsOptionsController@createAction');
         Route::post('{company?}', 'Admin\ReservationsOptionsController@indexAction');
