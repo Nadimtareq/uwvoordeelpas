@@ -1,32 +1,30 @@
-@extends('template.theme')
+<?php $__env->startSection('scripts'); ?>
+<?php echo $__env->make('admin.template.remove_alert', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->stopSection(); ?>
 
-@section('scripts')
-@include('admin.template.remove_alert')
-@stop
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="content">
-    @include('admin.template.breadcrumb')
+    <?php echo $__env->make('admin.template.breadcrumb', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
     <div class="buttonToolbar">  
         <div class="ui grid">
             <div class="left floated sixteen wide mobile five wide computer column">
-                <a href="{{ url('admin/reservations-options/create'.($slug != NULL ? '/'.$slug : '')) }}" class="ui icon blue button">
+                <a href="<?php echo e(url('admin/reservations-options/create'.($slug != NULL ? '/'.$slug : ''))); ?>" class="ui icon blue button">
                     <i class="plus icon"></i> Nieuw
                 </a>
 
-                @if($admin)
+                <?php if($admin): ?>
                 <button id="removeButton" type="submit" name="action" value="remove" class="ui disabled icon grey button">
                     <i class="trash icon"></i> Verwijderen
                 </button>
-                @endif
+                <?php endif; ?>
             </div>
 
             <div class="right floated sixteen wide mobile eleven wide computer column">
                 <div class="ui grid">
                     <div class="five column row">
                         <div class="column">
-                            @if ($admin)
+                            <?php if($admin): ?>
                             <div class="ui normal icon search selection fluid dropdown">
                                 <i class="filter icon"></i>
 
@@ -34,14 +32,14 @@
 
                                 <i class="dropdown icon"></i>
                                 <div class="menu">
-                                    @if (count($companies) >= 1)
-                                        @foreach ($companies as $company)
-                                        <a class="item" href="{{ url('admin/reservations-options?company=').$company->id  }}">{{ $company->name }}</a>
-                                        @endforeach
-                                    @endif
+                                    <?php if(count($companies) >= 1): ?>
+                                        <?php foreach($companies as $company): ?>
+                                        <a class="item" href="<?php echo e(url('admin/reservations-options?company=').$company->id); ?>"><?php echo e($company->name); ?></a>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
                                 </div>
                             </div>
-                            @endif
+                            <?php endif; ?>
                         </div>
                         <div class="column">
                             <div class="ui normal icon search selection fluid dropdown">
@@ -52,8 +50,8 @@
                                 <i class="dropdown icon"></i>
 
                                 <div class="menu">
-                                    <a class="item" href="{{ url('admin/reservations-options?newsletter=1') }}">Ja</a>
-                                    <a class="item" href="{{ url('admin/reservations-options?newsletter=0') }}">Nee</a>
+                                    <a class="item" href="<?php echo e(url('admin/reservations-options?newsletter=1')); ?>">Ja</a>
+                                    <a class="item" href="<?php echo e(url('admin/reservations-options?newsletter=0')); ?>">Nee</a>
                                 </div>
                             </div>
                         </div>
@@ -66,23 +64,23 @@
                                 <i class="dropdown icon"></i>
 
                                 <div class="menu">
-                                    <a class="item" href="{{ url('admin/reservations-options?online=1') }}">Yes</a>
-                                    <a class="item" href="{{ url('admin/reservations-options?online=0') }}">No</a>
+                                    <a class="item" href="<?php echo e(url('admin/reservations-options?online=1')); ?>">Yes</a>
+                                    <a class="item" href="<?php echo e(url('admin/reservations-options?online=0')); ?>">No</a>
                                 </div>
                             </div>
                         </div>
                         <div class="column">
-                            @include('admin.template.limit')
+                            <?php echo $__env->make('admin.template.limit', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
                         </div>
 
                         <div class="column">
-                            @include('admin.template.search.form')
+                            <?php echo $__env->make('admin.template.search.form', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="sixteen wide mobile sixteen wide computer column">
-            <form method="get" action="{{ url('admin/'.$slugController.'?'.http_build_query($queryString)) }}">
+            <form method="get" action="<?php echo e(url('admin/'.$slugController.'?'.http_build_query($queryString))); ?>">
                 <div class="ui input">
                     <?php
                     echo Form::text(
@@ -129,13 +127,13 @@
             <label></label>
         </div>
         </th>
-        @if($admin)
+        <?php if($admin): ?>
             <th data-slug="name" class="three wide">Plaats</th>
-        @endif
+        <?php endif; ?>
         <th data-slug="name" class="ten wide">Naam</th>
-        @if($admin)
+        <?php if($admin): ?>
             <th data-slug="company_id" class="three wide">Bedrijf</th>
-        @endif
+        <?php endif; ?>
         <th data-slug="city" class="three wide">City</th>
         <th data-slug="total_amount" class="four wide">beschikbaar</th>
         <th data-slug="total_res" class="four wide">verkocht</th>
@@ -145,48 +143,53 @@
         <th data-slug="price" class="four wide">prijs voor</th>
         <th data-slug="total_res" class="four wide">Online</th>
         <th data-slug="newsletter" class="four wide">Nieuwsbrief</th>
-        @if(Sentinel::inRole('admin'))
+        <?php if(Sentinel::inRole('admin')): ?>
             <th data-slug="status" class="four wide">Status</th>
-        @endif
+        <?php endif; ?>
         <!-- <th data-slug="gasten" class="four wide">Gasten</th> -->
         <th data-slug="disabled"></th>
         </tr>
         </thead>
         <tbody class="list">
-            @if(count($data) >= 1)
+            <?php if(count($data) >= 1): ?>
                 <?php $i=1;?>
-            @foreach($data as $result)
+            <?php foreach($data as $result): ?>
         
             <tr>
                 <td>
                     <div class="ui child checkbox">
-                        <input type="checkbox" name="id[]" value="{{ $result->id }}">
+                        <input type="checkbox" name="id[]" value="<?php echo e($result->id); ?>">
                         <label></label>
                     </div>
                 </td>
 
-                @if($admin)
-                    <td>{{$i++}}</td>
-                @endif
+                <?php if($admin): ?>
+                    <td><?php echo e($i++); ?></td>
+                <?php endif; ?>
 
                 <td>
-                    {{ $result->name }}
+                    <?php echo e($result->name); ?>
+
                 </td>
 
-                @if($admin)
+                <?php if($admin): ?>
                     <td>
-                        {{ $result->company_name }}
+                        <?php echo e($result->company_name); ?>
+
                      </td>
-                @endif
+                <?php endif; ?>
 
                 <td>
-                    {{ $result->city }}
+                    <?php echo e($result->city); ?>
+
                 </td>
                 <td>
-                    {{ $result->total_amount }}
+                    <?php echo e($result->total_amount); ?>
+
                 </td>
                 <td>
-                    {{ ($result->total_res)?$result->total_res:0 }}
+                    <?php echo e(($result->total_res)?$result->total_res:0); ?>
+
                 </td>
                 <td>
                     <?php 
@@ -203,10 +206,12 @@
                     ?>                    
                 </td>
                 <td>
-                    {{ ($result->price_from)?$result->price_from:'' }}
+                    <?php echo e(($result->price_from)?$result->price_from:''); ?>
+
                 </td>
                 <td>
-                    {{ ($result->price)?$result->price:'' }}
+                    <?php echo e(($result->price)?$result->price:''); ?>
+
                 </td>
                 <td>
                     <?php
@@ -232,37 +237,40 @@
                     }
                     ?>
                 </td>
-                @if(Sentinel::inRole('admin'))
+                <?php if(Sentinel::inRole('admin')): ?>
 
                         <td class="text-center">
                             <div class="ui normal search selection fluid dropdown">
-                                <i class="icon checkmark {{ $result->no_show == 1 ? 'green' : 'red' }}"></i>
+                                <i class="icon checkmark <?php echo e($result->no_show == 1 ? 'green' : 'red'); ?>"></i>
                                 <i class="dropdown icon"></i>
                                 <div class="menu">
-                                    <a class="item" href="{{ url("admin/$slugController/show/status?id=$result->id&status=1") }}">ja</a>
-                                    <a class="item" href="{{ url("admin/$slugController/show/status?id=$result->id&status=0") }}">nee</a>
+                                    <a class="item" href="<?php echo e(url("admin/$slugController/show/status?id=$result->id&status=1")); ?>">ja</a>
+                                    <a class="item" href="<?php echo e(url("admin/$slugController/show/status?id=$result->id&status=0")); ?>">nee</a>
                                 </div>
                             </div>
                         </td>
 
-                @endif
+                <?php endif; ?>
                 <td>
-                    <a href="{{ url('admin/'.$slugController.'/update/'.$result->id) }}" class="ui icon tiny button">
+                    <a href="<?php echo e(url('admin/'.$slugController.'/update/'.$result->id)); ?>" class="ui icon tiny button">
                         <i class="pencil icon"></i>
                     </a>
                 </td>
             </tr>
-            @endforeach
-            @else
+            <?php endforeach; ?>
+            <?php else: ?>
             <tr>
                 <td colspan="13"><div class="ui error message">Er is geen data gevonden.</div></td>
             </tr>
-            @endif
+            <?php endif; ?>
         </tbody>
     </table>
 <?php echo Form::close(); ?>
 
-    {!! with(new \App\Presenter\Pagination($data->appends($paginationQueryString)))->render() !!}
+    <?php echo with(new \App\Presenter\Pagination($data->appends($paginationQueryString)))->render(); ?>
+
 </div>
 <div class="clear"></div>
-@stop
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('template.theme', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

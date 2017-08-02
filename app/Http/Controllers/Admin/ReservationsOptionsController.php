@@ -30,14 +30,14 @@ class ReservationsOptionsController extends Controller
     public function isCompanyOwner($slug)
     {
         $myCompany = Company::where('user_id', Sentinel::getUser()->id)
-        ->where('slug', $slug)
-        ->first()
+            ->where('slug', $slug)
+            ->first()
         ;
 
         return array(
             'exist' => count($myCompany),
             'id' => (isset($myCompany->id) ? $myCompany->id : 0),
-            );
+        );
     }
 
     public function index(Request $request, $slug = NULL)
@@ -47,8 +47,8 @@ class ReservationsOptionsController extends Controller
             User::getRoleErrorPopup();
             return Redirect::to('/');
         }
-    // $data= ReservationOption::with('reservationCount')
-     //               ->select('id','name','total_amount','date_from','date_to','time_from','time_to');
+        // $data= ReservationOption::with('reservationCount')
+        //               ->select('id','name','total_amount','date_from','date_to','time_from','time_to');
         $data = ReservationOption::select(
             'reservations_options.id',
             'reservations_options.name',
@@ -61,17 +61,18 @@ class ReservationsOptionsController extends Controller
             'reservations_options.time_to',
             'reservations_options.time_to',
             'reservations_options.newsletter',
+            'reservations_options.no_show',
             'companies.name as company_name',
             'companies.city',
             DB::raw('sum(reservations.persons) as total_res'),
             DB::raw('sum(reservations.id) as reservated')
-            )->leftJoin('companies', 'companies.id', '=', 'reservations_options.company_id')
-        ->leftJoin('reservations', function ($join) {
-            $join
-            ->on('reservations.company_id', '=', 'reservations_options.company_id')
-            ->on('reservations.option_id', '=', 'reservations_options.id')
-            ;
-        });
+        )->leftJoin('companies', 'companies.id', '=', 'reservations_options.company_id')
+            ->leftJoin('reservations', function ($join) {
+                $join
+                    ->on('reservations.company_id', '=', 'reservations_options.company_id')
+                    ->on('reservations.option_id', '=', 'reservations_options.id')
+                ;
+            });
 
 
 
@@ -91,7 +92,7 @@ class ReservationsOptionsController extends Controller
 //        if ($slug != null) {
 //            $data = $data->where('companies.slug', '=', $slug);
 //        }
-        
+
         if ($request->has('company')) {
             $data = $data->where('reservations_options.company_id', '=', $request->input('company'));
         }
@@ -122,9 +123,9 @@ class ReservationsOptionsController extends Controller
 
         if ($request->has('sort') && $request->has('order')) {
             if($request->input('sort')=="total_res"){
-             $data = $data->orderBy('total_res', $request->input('order'));
+                $data = $data->orderBy('total_res', $request->input('order'));
             }else{
-            $data = $data->orderBy('reservations_options.'.$request->input('sort'), $request->input('order'));
+                $data = $data->orderBy('reservations_options.'.$request->input('sort'), $request->input('order'));
             }
             session(['sort' => $request->input('sort'), 'order' => $request->input('order')]);
         } else {
@@ -134,16 +135,16 @@ class ReservationsOptionsController extends Controller
         $data = $data->groupBy('reservations_options.id')->paginate($this->limit);
         $data->setPath($this->slugController.(trim($slug) != '' ? '/'.$slug : ''));
 
-            # Redirect to last page when page don't exist
+        # Redirect to last page when page don't exist
         if ($request->input('page') > $data->lastPage()) {
             $lastPageQueryString = json_decode(json_encode($request->query()), true);
             $lastPageQueryString['page'] = $data->lastPage();
 
             return Redirect::to($request->url().'?'.http_build_query($lastPageQueryString));
         }
-           // echo "<pre>";
-          // print_r($data->toArray());
-          //  die();
+        // echo "<pre>";
+        // print_r($data->toArray());
+        //  die();
         $queryString = $request->query();
         unset($queryString['limit']);
 
@@ -158,7 +159,7 @@ class ReservationsOptionsController extends Controller
             'paginationQueryString' => $request->query(),
             'limit' => $this->limit,
             'companies' => $this->companiesList,
-            ]);
+        ]);
     }
 
     public function indexAction(Request $request, $slug = NULL)
@@ -173,8 +174,8 @@ class ReservationsOptionsController extends Controller
 
             if (Sentinel::inRole('admin') == FALSE) {
                 $data = $data
-                ->where('companies.user_id', Sentinel::getUser()->id)
-                ->where('companies.slug', $slug)
+                    ->where('companies.user_id', Sentinel::getUser()->id)
+                    ->where('companies.slug', $slug)
                 ;
             }
 
@@ -203,7 +204,7 @@ class ReservationsOptionsController extends Controller
             'companies' => $this->companies,
             'company' => $this->isCompanyOwner($slug),
             'slug' => $slug,
-            ]);
+        ]);
     }
 
     public function createAction(Request $request, $slug = NULL)
@@ -219,11 +220,10 @@ class ReservationsOptionsController extends Controller
             'date_to' => 'required',
             'time_to' => 'required',
             'time_from' => 'required',
-            'newsletter' => 'required',
             'price_per_guest' => 'required',
             'image'       => 'required|mimes:jpeg,bmp,png|max:10000'
 
-            ]);
+        ]);
 
 
         $data = new ReservationOption();
@@ -236,147 +236,164 @@ class ReservationsOptionsController extends Controller
         $data->time_to = $request->input('time_to');
         $data->time_from = $request->input('time_from');
         $data->date_from = $request->input('date_from');
-        $data->newsletter = $request->input('newsletter');
+        $data->newsletter = Sentinel::inRole('admin') == true ? $request->input('newsletter') : 0;
         $data->price_per_guest = $request->input('price_per_guest');
         $data->date_to = $request->input('date_to');
         $data->company_id = ($slug != NULL ? $this->isCompanyOwner($slug)['id'] : $request->input('company_id'));
-        $data->company_id = ($slug != NULL ? $this->isCompanyOwner($slug)['id'] : $request->input('company_id'));
+        $data->no_show = Sentinel::inRole('admin') == true ? 1 : 0;
         $data->save();
 
         $data_id = $data->id;
-            $destinationPath = 'images/deals/'; // upload path
-            $extension = Input::file('image')->getClientOriginalExtension(); // getting image extension
-            $fileName = 'deal_'.$data_id.'.'.$extension; // renameing image
-            Input::file('image')->move($destinationPath, $fileName);
+        $destinationPath = 'images/deals/'; // upload path
+        $extension = Input::file('image')->getClientOriginalExtension(); // getting image extension
+        $fileName = 'deal_'.$data_id.'.'.$extension; // renameing image
+        Input::file('image')->move($destinationPath, $fileName);
 
-            Alert::success('U heeft succesvol een nieuwe reserverings optie aangemaakt.')->html()->persistent('Sluiten');
+        Alert::success('U heeft succesvol een nieuwe reserverings optie aangemaakt.')->html()->persistent('Sluiten');
 
-            return Redirect::to('admin/'.$this->slugController.'/create');
-        }
+        return Redirect::to('admin/'.$this->slugController.'/create');
+    }
 
-        public function update(Request $request, $id,$slug=null)
-        {
-            $data = ReservationOption::select(
-                'reservations_options.id',
-                'reservations_options.company_id',
-                'reservations_options.total_amount',
-                'reservations_options.price_from',
-                'reservations_options.price',
-                'reservations_options.price_per_guest',
-                'reservations_options.time_from',
-                'reservations_options.time_to',
-                'reservations_options.date_to',
-                'reservations_options.date_from',
-                'reservations_options.description',
-                'reservations_options.short_description',
-                'reservations_options.name',
-                'reservations_options.image',
-                'reservations_options.newsletter',
-                'companies.slug'
-                )
+    public function update(Request $request, $id,$slug=null)
+    {
+        $data = ReservationOption::select(
+            'reservations_options.id',
+            'reservations_options.company_id',
+            'reservations_options.total_amount',
+            'reservations_options.price_from',
+            'reservations_options.price',
+            'reservations_options.price_per_guest',
+            'reservations_options.time_from',
+            'reservations_options.time_to',
+            'reservations_options.date_to',
+            'reservations_options.date_from',
+            'reservations_options.description',
+            'reservations_options.short_description',
+            'reservations_options.name',
+            'reservations_options.image',
+            'reservations_options.newsletter',
+            'companies.slug'
+        )
             ->leftJoin('companies', 'reservations_options.company_id', '=', 'companies.id')
             ->where('reservations_options.id', $id)
             ->first()
-            ;
+        ;
 
-            if ($data) {
-                if ($this->isCompanyOwner($data->slug)['exist'] == 0 && Sentinel::inRole('admin') == fALSE) {
-                    User::getRoleErrorPopup();
-                    return Redirect::to('/');
-                }
-
-                return view('admin/'.$this->slugController.'/update', [
-                    'slugController' => $this->slugController,
-                    'section' => 'Aanbiedingen',
-                    'currentPage' => 'Wijzigen',
-                    'companies' => $this->companies,
-                    'company' => $this->isCompanyOwner($data->slug),
-                    'slug' => $data->slug,
-                    'data' => $data,
-                    /*'logoItem'=>array(),
-                    'documentItems'=>array(),
-                    'media'=>array(), */
-                    ]);
-            } else {
-                App::abort(404);
+        if ($data) {
+            if ($this->isCompanyOwner($data->slug)['exist'] == 0 && Sentinel::inRole('admin') == fALSE) {
+                User::getRoleErrorPopup();
+                return Redirect::to('/');
             }
+
+            return view('admin/'.$this->slugController.'/update', [
+                'slugController' => $this->slugController,
+                'section' => 'Aanbiedingen',
+                'currentPage' => 'Wijzigen',
+                'companies' => $this->companies,
+                'company' => $this->isCompanyOwner($data->slug),
+                'slug' => $data->slug,
+                'data' => $data,
+                /*'logoItem'=>array(),
+                'documentItems'=>array(),
+                'media'=>array(), */
+            ]);
+        } else {
+            App::abort(404);
         }
+    }
 
-        public function updateAction(Request $request, $id,$slug=null)
-        {
+    public function updateAction(Request $request, $id,$slug=null)
+    {
 
-            //Added price_per_person by Ocean
-            $data = ReservationOption::select(
-                'reservations_options.id',
-                'reservations_options.company_id',
-                'reservations_options.total_amount',
-                'reservations_options.price_from',
-                'reservations_options.price',
-                'reservations_options.price_per_guest',
-                'reservations_options.time_from',
-                'reservations_options.time_to',
-                'reservations_options.date_to',
-                'reservations_options.date_from',
-                'reservations_options.description',
-                'reservations_options.short_description',
-                'reservations_options.name',
-                'reservations_options.newsletter',
-                'companies.slug',
-                'reservations_options.image'
-                )
+        //Added price_per_person by Ocean
+        $data = ReservationOption::select(
+            'reservations_options.id',
+            'reservations_options.company_id',
+            'reservations_options.total_amount',
+            'reservations_options.price_from',
+            'reservations_options.price',
+            'reservations_options.price_per_guest',
+            'reservations_options.time_from',
+            'reservations_options.time_to',
+            'reservations_options.date_to',
+            'reservations_options.date_from',
+            'reservations_options.description',
+            'reservations_options.short_description',
+            'reservations_options.name',
+            'reservations_options.newsletter',
+            'companies.slug',
+            'reservations_options.image'
+        )
             ->leftJoin('companies', 'reservations_options.company_id', '=', 'companies.id')
             ->where('reservations_options.id', $id)
             ->first()
-            ;
+        ;
 
-            $this->validate($request, [
-                'name' => 'required',
-                'date_from' => 'required',
-                'date_to' => 'required',
-                'time_to' => 'required',
-                'time_from' => 'required',
-                'newsletter' => 'required',
-                'image'       => 'mimes:jpeg,bmp,png|max:10000'
-                ]);
+        $this->validate($request, [
+            'name' => 'required',
+            'date_from' => 'required',
+            'date_to' => 'required',
+            'time_to' => 'required',
+            'time_from' => 'required',
+            'newsletter' => 'required',
+            'image'       => 'mimes:jpeg,bmp,png|max:10000'
+        ]);
 
-            if ($data) {
-                if ($this->isCompanyOwner($data->slug)['exist'] == 0 && Sentinel::inRole('admin') == fALSE) {
-                    User::getRoleErrorPopup();
-                    return Redirect::to('/');
-                }
-                $fileName='';
-                if(Input::file('image')) {
-                    $destinationPath = 'images/deals/'; // upload path
-                    $extension = Input::file('image')->getClientOriginalExtension(); // getting image extension
-                    $fileName = 'deal_' . $data->id . '.' . $extension; // renameing image
-                    File::delete($destinationPath.$data->image);
-                    Input::file('image')->move($destinationPath, $fileName);
-                    chmod($destinationPath.$fileName,0777);
-
-                }
-
-                $data->name = $request->input('name');
-                $data->description = $request->input('content');
-                $data->short_description = $request->input('short_content');
-                $data->total_amount = $request->input('total_amount');
-                $data->price_from = $request->input('price_from');
-                $data->price = $request->input('price');
-                $data->price_per_guest = $request->input('price_per_guest');
-                $data->time_to = $request->input('time_to');
-                $data->time_from = $request->input('time_from');
-                $data->date_from = Carbon::parse($request->input('date_from'));
-                $data->date_to = Carbon::parse($request->input('date_to'));
-                $data->newsletter = $request->input('newsletter');
-                $data->company_id = $request->input('company_id');
-                $data->image = $fileName;
-                $data->save();
-                Alert::success('U heeft deze aanbieding veranderd')->html()->persistent('Sluiten');
-
-                
-                return Redirect::to('admin/'.$this->slugController.'/update/'.$id);
-                
+        if ($data) {
+            if ($this->isCompanyOwner($data->slug)['exist'] == 0 && Sentinel::inRole('admin') == fALSE) {
+                User::getRoleErrorPopup();
+                return Redirect::to('/');
             }
+            $fileName='';
+            if(Input::file('image')) {
+                $destinationPath = 'images/deals/'; // upload path
+                $extension = Input::file('image')->getClientOriginalExtension(); // getting image extension
+                $fileName = 'deal_' . $data->id . '.' . $extension; // renameing image
+                File::delete($destinationPath.$data->image);
+                Input::file('image')->move($destinationPath, $fileName);
+                chmod($destinationPath.$fileName,0777);
+
+            }
+
+            $data->name = $request->input('name');
+            $data->description = $request->input('content');
+            $data->short_description = $request->input('short_content');
+            $data->total_amount = $request->input('total_amount');
+            $data->price_from = $request->input('price_from');
+            $data->price = $request->input('price');
+            $data->price_per_guest = $request->input('price_per_guest');
+            $data->time_to = $request->input('time_to');
+            $data->time_from = $request->input('time_from');
+            $data->date_from = Carbon::parse($request->input('date_from'));
+            $data->date_to = Carbon::parse($request->input('date_to'));
+            $data->newsletter = $request->input('newsletter');
+            $data->company_id = $request->input('company_id');
+            $data->image = $fileName;
+            $data->save();
+            Alert::success('U heeft deze aanbieding veranderd')->html()->persistent('Sluiten');
+
+
+            return Redirect::to('admin/'.$this->slugController.'/update/'.$id);
 
         }
 
     }
+
+
+
+
+    public function status(Request $request)
+    {
+
+        $reservationOption = ReservationOption::find($request->get('id'));
+
+
+        $reservationOption->no_show = $request->get('status');
+        $reservationOption->save();
+
+        Alert::success(' Aanbiedingen is succesvol aangepast.')->persistent('Sluiten');
+        return redirect()->back();
+
+    }
+
+}
