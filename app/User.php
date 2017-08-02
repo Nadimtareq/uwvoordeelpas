@@ -55,4 +55,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return $this->hasMany('App\Models\FutureDeal');
     }
 
+    public function roles()
+    {
+        return $this->belongsToMany('App\Role', 'role_users');
+    }
 }

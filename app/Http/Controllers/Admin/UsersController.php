@@ -9,6 +9,8 @@ use App\Models\Transaction;
 use App\Models\Payment;
 use App\Models\Reservation;
 use App\Models\Company;
+use App\Role;
+use App\User;
 use Sentinel;
 use DB;
 use Illuminate\Support\Facades\Response;
@@ -127,6 +129,15 @@ class UsersController extends Controller
             }
         }
 
+        if($request->has('role')){
+            $role= $request->input('role');
+
+            $data=User::whereHas('roles', function ($q) use ($role){
+                $q->where('name', $role);
+            });
+
+        }
+
         $dataCount = $data->count();
 
         $data = $data->paginate($request->input('limit', 15));
@@ -155,7 +166,7 @@ class UsersController extends Controller
             'limit' => $request->input('limit', 15),
             'section' => $this->section,
             'currentPage' => 'Overzicht',
-            'companies' => $this->companies
+            'companies' => $this->companies,
         ]);
     }
 
@@ -174,11 +185,12 @@ class UsersController extends Controller
     {
         $data = Sentinel::findById($id);
 
+        //removed the section duplicate key
+
         return view('admin/'.$this->slugController.'/update', [
             'data' => $data,
             'section' => $this->section,
             'slugController' => $this->slugController,
-            'section' => $this->section,
             'currentPage' => 'Wijzig gebruiker',
             'roles' => $this->roles
         ]);
@@ -263,12 +275,13 @@ class UsersController extends Controller
        	$this->validate($request, [
             'name' => 'required',
             'password' => 'min:8|confirmed',
-            'email' => 'required|email|unique:users,email,'.$id
+            'email' => 'required|email|unique:users,email,'.$id,
   	    ]);
 
        	$user = Sentinel::findById($id);
         $user->name = $request->input('name');
         $user->phone = $request->input('phone');
+        $user->attempts=$request->input('attempts');
         $user->gender = $request->input('gender');
         $user->saldo = $request->input('saldo');
         $user->birthday_at = $request->input('birthday_at');

@@ -61,7 +61,24 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
+                            <div class="sixteen wide mobile four wide computer column">
+                                <div class="ui normal floating basic search selection dropdown">
+                                    <input type="hidden" name="role" value="{{ Request::input('role') }}">
+
+                                    <div class="text">Soort</div>
+                                    <i class="dropdown icon"></i>
+
+                                    <div class="menu">
+                                        <a href="{{ url('admin/users?role=admin') }}" data-value="admin" class="item">Admin</a>
+                                        <a href="{{ url('admin/users?role=bedrijf') }}" data-value="bedrijf" class="item">Bedrijf</a>
+                                        <a href="{{ url('admin/users?role=barcode_user') }}" data-value="barcode_user" class="item">Barcode</a>
+                                        <a href="{{ url('admin/users?role=bediening') }}" data-value="bediening" class="item">Bediening</a>
+                                        <a href="{{ url('admin/users?role=callcenter') }}" data-value="callcenter" class="item">Call Center</a>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="sixteen wide mobile three wide computer column">
                                 @include('admin.template.limit')
                             </div>

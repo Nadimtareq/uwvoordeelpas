@@ -27,7 +27,8 @@ use App\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FutureDealReserve;
 use Config;
-use Sentinel;
+use Cartalyst\Sentinel\Laravel\Facades\Sentinel;
+//use Sentinel;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -925,7 +926,14 @@ class AccountController extends Controller {
             return Redirect::to(($request->has('redirect_to') ? urldecode($request->input('redirect_to'))
                                         : 'account/giftcards'));
         } else {
-            return Redirect::to('payment/charge');
+            //Amount that should be charged to the user
+
+            $remaining_amount=$code->amount - Sentinel::getUser()->saldo;
+            Sentinel::update(Sentinel::getUser(), ['saldo' => 0]);
+
+
+//            return Redirect::to('payment/charge');
+            return redirect()->action('PaymentController@initiateIdealPayment')->with('amount', $remaining_amount);
         }
     }
 	
