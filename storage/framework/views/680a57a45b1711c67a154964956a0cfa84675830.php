@@ -1,20 +1,18 @@
-@extends('template.theme')
-
-@section('fixedMenu')
-<a href="{{ url('faq/8/reserveren') }}" class="ui black icon big launch right attached fixed button">
+<?php $__env->startSection('fixedMenu'); ?>
+<a href="<?php echo e(url('faq/8/reserveren')); ?>" class="ui black icon big launch right attached fixed button">
     <i class="question mark icon"></i>
     <span class="text">Veelgestelde vragen</span>
 </a><br />
-@stop
+<?php $__env->stopSection(); ?>
 
-@section('scripts')
+<?php $__env->startSection('scripts'); ?>
 	<script type="text/javascript">
 		$(document).ready(function() {
 		    closeBrowser();  
 		});
 	</script>
 	
-	@if (Request::has('add'))
+	<?php if(Request::has('add')): ?>
 	<script>
 	var i  = 0;
 
@@ -52,53 +50,16 @@
 		}
 	});
 	</script>
-	@endif
-@stop
+	<?php endif; ?>
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="content">
-    @if($data != '')
-	    @if (isset($success))
-	    <div class="ui success message">{{ $success }}</div>
-	    @elseif (count($errors) > 0)
-		<div class="ui error message">
-			<div class="header">Er zijn fouten opgetreden</div>
-
-			<ul class="list">
-			    @foreach ($errors->all() as $error)
-			    <li>{{ $error }}</li>
-			    @endforeach
-			</ul>
-		</div>
-		@endif
-
-		<div class="ui breadcrumb">
-        	<a href="#" class="sidebar open">Admin</a>
-	        <i class="right chevron icon divider"></i>
-
-	        <a href="{{ url('admin/reservations/'.$data->slug) }}" class="section">Reserveringen - {{ $data->companyName }}</a>
-
-			<i class="right arrow icon divider"></i>
-
-			<a href="" class="active section">
-	            <div class="ui normal scrolling bread pointing dropdown item">
-	                <div class="text">Instellingen</div>
-
-	                <div class="menu">
-	                    @if($userCompanies)
-	                         @include('template/navigation/company')
-	                    @endif
-
-	                    @include('template/navigation/admin')
-	                </div>
-	            </div>
-	        </a>
-	    </div>
 
     	<div class="ui divider"></div>
 <!-----ait team 29-7-17-->
 		<?php //echo Form::open(array('method' => 'post','url' => '', 'class' => 'ui edit-changes form')) ?>
-			@if (Request::has('add'))
+			<?php if(Request::has('add')): ?>
 			<h4>Welke dagen / tijden wilt u toevoegen?</h4>
 			Let op: Bij het toevoegen van nieuwe reserveringsdagen worden de oude reserverings dagen verwijderd.<br>
 
@@ -108,7 +69,7 @@
 			<?php echo Form::hidden('per_time', 15); ?>
 
 			<div id="dateAppend">
-				@for ($i = 0; $i < 1; $i++)
+				<?php for($i = 0; $i < 1; $i++): ?>
 				<div class="r-group four fields">
 					<div class="field">
 						<label>Dag(en)</label>
@@ -156,14 +117,14 @@
 						</div>
 					</div>
 				</div>
-				@endfor
+				<?php endfor; ?>
 			</div>
 
 			<div class="field">
 				<label>Aantal plekken beschikbaar</label>
 				<?php echo Form::number('available_persons', 1, array('min' => 2)) ?>
 			</div>
-			@else
+
 			<h4>Instellingen</h4>
 			<div class="two fields">
 				<div class="field">
@@ -306,14 +267,14 @@
 					<?php echo Form::text('min_saldo', $data->min_saldo) ?>
 				</div>
 			</div>
-			@endif
 
 			<button class="ui tiny button" type="submit"><i class="pencil icon"></i> Wijzigen</button>
 
 		<?php echo Form::close(); ?>
-	@else
-		<div class="ui error message">Het formulier met record ID <strong>{{ Request::segment(4) }}</strong> is niet gevonden.</div>
-	@endif
+	<?php else: ?>
+		<div class="ui error message">Het formulier met record ID <strong><?php echo e(Request::segment(4)); ?></strong> is niet gevonden.</div>
+	<?php endif; ?>
 </div>
 <div class="clear"></div>
-@stop
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('template.theme', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

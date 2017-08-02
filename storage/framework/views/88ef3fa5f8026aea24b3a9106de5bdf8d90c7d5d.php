@@ -29,13 +29,13 @@
 
 <div class="field">
     <label>E-mail</label>
-    <input type="text" name="email" id="email_old" onchange="myFunction('email')">
+    <input type="text" name="email" id="email_old" onkeydown="if (event.keyCode==13) myFunction('email')"  onchange="myFunction('email')">
     <input type="hidden" name="recaptcha-response" id="recaptcha-response">
 </div>
 
 <div class="field">
     <label>Wachtwoord <a href="#" class="ui recover password basic primary button">Wachtwoord vergeten?</a></label>
-    <input type="password" id="pass_old" onchange="myFunction('pass')">
+    <input type="password" id="pass_old" onkeydown="if (event.keyCode==13) myFunction('pass')"   onchange="myFunction('pass')">
     <input type="hidden" name="password" id="pass_new">
 </div>
 <div class="field">
