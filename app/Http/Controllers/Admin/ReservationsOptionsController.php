@@ -65,6 +65,7 @@ class ReservationsOptionsController extends Controller
             'companies.city',
             DB::raw('sum(reservations.persons) as total_res'),
             DB::raw('sum(reservations.id) as reservated')
+<<<<<<< HEAD
             )->leftJoin('companies', 'companies.id', '=', 'reservations_options.company_id')
         ->leftJoin('reservations', function ($join) {
             $join
@@ -72,6 +73,35 @@ class ReservationsOptionsController extends Controller
             ->on('reservations.option_id', '=', 'reservations_options.id')
             ;
         });
+=======
+        )->leftJoin('companies', 'companies.id', '=', 'reservations_options.company_id')
+            ->leftJoin('reservations', function ($join) {
+                $join
+                    ->on('reservations.company_id', '=', 'reservations_options.company_id')
+                    ->on('reservations.option_id', '=', 'reservations_options.id')
+                ;
+            });
+
+
+
+
+
+        if (Sentinel::inRole('bedrijf')) {
+            $data = $data->where('companies.user_id', Sentinel::getUser()->id);
+        }
+
+
+
+
+        if ($request->has('regio')) {
+            $data = $data
+                ->whereRaw('reservations_options.id REGEXP "[[:<:]]'.$request->input('regio').'[[:>:]]"')
+                ->orWhere('reservations_options.id', '=', $request->input('regio'));
+        }
+
+
+
+>>>>>>> 9a3397e... add admin/reservations-options search
         if ($request->has('q')) {
             $data = $data->where('reservations_options.name', 'LIKE', '%'.$request->input('q').'%');
         }

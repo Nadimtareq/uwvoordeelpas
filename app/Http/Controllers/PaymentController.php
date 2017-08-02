@@ -51,20 +51,26 @@ class PaymentController extends Controller {
     }
 
     public function initiateIdealPayment(Request $request) {
-        $this->validate($request, [
-            'amount' => 'required'
-        ]);
+        if($request->session()->has('amount')){
+            $amount=$request->session()->get('amount');
+        }else{
+            $this->validate($request, [
+                'amount' => 'required'
+            ]);
+            $amount=$request->amount;
+        }
 
-        if ($request->amount <= 0.1) {
+
+        if ($amount <= 0.1) {
             alert()->error('', 'Het bedrag is te laag om verder te gaan')->persistent('Sluiten');
             return Redirect::to('payment/charge');
         }
 
-        if (!is_numeric($request->amount)) {
-            if (preg_match('/[0-9]{1,3},[0-9]{1,2}/', $request->amount) || preg_match('/[0-9]{1,3}.[0-9]{1,2}/', $request->amount)
+        if (!is_numeric($amount)) {
+            if (preg_match('/[0-9]{1,3},[0-9]{1,2}/', $amount) || preg_match('/[0-9]{1,3}.[0-9]{1,2}/', $amount)
             ) {
-                if (preg_match('/[0-9]{1,3},[0-9]{1,2}/', $request->amount)) {
-                    $request->amount = preg_replace('/,/', '.', $request->amount);
+                if (preg_match('/[0-9]{1,3},[0-9]{1,2}/', $amount)) {
+                    $amount = preg_replace('/,/', '.', $amount);
                 }
             } else {
                 return view('payments/charge')->with('error', 'Graag een geldig bedrag invoeren');
@@ -94,8 +100,8 @@ class PaymentController extends Controller {
             $redirection_url = URL::to('payment/success?future_deal_id=' . base64_encode($future_deal_id) . '&future_deal=1');
         }
         $payment = $this->mollie->payments->create(array(
-            'amount' => $request->amount,
-            'description' => 'Saldo ophogen uwvoordeelpas met ' . $request->amount,
+            'amount' => $amount,
+            'description' => 'Saldo ophogen uwvoordeelpas met ' . $amount,
             'redirectUrl' => $redirection_url
         ));
 
@@ -104,7 +110,7 @@ class PaymentController extends Controller {
         $oPayment->mollie_id = $payment->id;
         $oPayment->user_id = $payment_user_id;
         $oPayment->status = $payment->status;
-        $oPayment->amount = $request->amount;
+        $oPayment->amount = $amount;
         $oPayment->save();
 
         return Redirect::to($payment->links->paymentUrl);

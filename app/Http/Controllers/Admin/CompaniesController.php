@@ -72,9 +72,8 @@ class CompaniesController extends Controller
 
         if ($request->has('regio')) {
             $data = $data
-            ->whereRaw('companies.regio REGEXP "[[:<:]]'.$request->input('regio').'[[:>:]]"')
-            ->orWhere('companies.regio', '=', $request->input('regio'))
-            ;
+            ->whereRaw('companies.id REGEXP "[[:<:]]'.$request->input('regio').'[[:>:]]"')
+            ->orWhere('companies.id', '=', $request->input('regio'));
         }
 
         if ($request->has('city')) {
