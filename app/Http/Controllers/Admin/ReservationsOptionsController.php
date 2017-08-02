@@ -72,6 +72,18 @@ class ReservationsOptionsController extends Controller
             ->on('reservations.option_id', '=', 'reservations_options.id')
             ;
         });
+
+
+
+
+
+        if (Sentinel::inRole('bedrijf')) {
+            $data = $data->where('companies.user_id', Sentinel::getUser()->id);
+        }
+
+
+
+
         if ($request->has('q')) {
             $data = $data->where('reservations_options.name', 'LIKE', '%'.$request->input('q').'%');
         }
