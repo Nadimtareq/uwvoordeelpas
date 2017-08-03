@@ -131,11 +131,10 @@ class UsersController extends Controller
 
         if($request->has('role')){
             $role= $request->input('role');
-
+            $data=User::hasRole($data, $role);
             $data=User::whereHas('roles', function ($q) use ($role){
                 $q->where('name', $role);
             });
-
         }
 
         $dataCount = $data->count();
