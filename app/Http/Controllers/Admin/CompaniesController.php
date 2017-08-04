@@ -807,9 +807,8 @@ public function updateAction(Request $request, $id, $slug)
         $data = $data->first();
 
         if (count($data) == 1) {
-//            $attachment_location =
-//            $company = new Company();
-//            return $company->createContract($id);
+            $company = new Company();
+            return $company->createContract($id);
         } else {
             Alert::error('Dit bedrijf bestaat helaas niet of u heeft niet genoeg rechten.')->persistent("Sluiten");
             return Redirect::to('/');
