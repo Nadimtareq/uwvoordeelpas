@@ -1,17 +1,15 @@
-@extends('template.theme')
+<?php $__env->startSection('scripts'); ?>
+    <?php echo $__env->make('admin.template.remove_alert', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->stopSection(); ?>
 
-@section('scripts')
-    @include('admin.template.remove_alert')
-@stop
-
-@section('fixedMenu')
-<a href="{{ url('faq/8/reserveren') }}" class="ui black icon big launch right attached fixed button">
+<?php $__env->startSection('fixedMenu'); ?>
+<a href="<?php echo e(url('faq/8/reserveren')); ?>" class="ui black icon big launch right attached fixed button">
     <i class="question mark icon"></i>
     <span class="text">Veelgestelde vragen</span>
 </a><br />
-@stop
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="content">
     <div class="ui breadcrumb">
         <a href="#" class="sidebar open">Admin</a>
@@ -25,7 +23,7 @@
     <div class="ui grid">
         <div class="five wide column">
             <div class="ui normal icon selection fluid dropdown">
-                <input type="hidden" name="filters" value="{{ Request::input('network') }}">
+                <input type="hidden" name="filters" value="<?php echo e(Request::input('network')); ?>">
                 <i class="filter icon"></i>
 
                 <span class="text">Netwerk</span>
@@ -39,19 +37,19 @@
 
                     <div class="scrolling menu">
                         <a class="item" 
-                            href="{{ url('admin/reservations/emails?'.http_build_query(array_add($queryString, 'network', 'couverts'))) }}"
+                            href="<?php echo e(url('admin/reservations/emails?'.http_build_query(array_add($queryString, 'network', 'couverts')))); ?>"
                             data-value="couverts">
                         Couverts
                         </a>
 
                         <a class="item" 
-                            href="{{ url('admin/reservations/emails?'.http_build_query(array_add($queryString, 'network', 'eetnu'))) }}"
+                            href="<?php echo e(url('admin/reservations/emails?'.http_build_query(array_add($queryString, 'network', 'eetnu')))); ?>"
                             data-value="eetnu">
                         Eet.nu
                         </a>
 
                         <a class="item" 
-                            href="{{ url('admin/reservations/emails?'.http_build_query(array_add($queryString, 'network', 'seatme'))) }}"
+                            href="<?php echo e(url('admin/reservations/emails?'.http_build_query(array_add($queryString, 'network', 'seatme')))); ?>"
                             data-value="seatme">
                         SeatMe
                         </a>
@@ -61,7 +59,7 @@
         </div>
 
         <div class="five wide column">
-            @include('admin.template.limit')
+            <?php echo $__env->make('admin.template.limit', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
         </div>
     </div>
 
@@ -73,8 +71,8 @@
             <button name="status" value="decline" class="ui red button">Afkeuren</button>
         </div><br><br>
 
-        <label class="ui label blue">{{ ($guestThirdPartyData['pending'] > 0 ? $guestThirdPartyData['pending'] - $guestThirdPartyData['success'] : 0) }}</label> openstaande reserveringen &nbsp;
-        <label class="ui label green">{{ $guestThirdPartyData['success'] }}</label> goedgekeurde reserveringen
+        <label class="ui label blue"><?php echo e(($guestThirdPartyData['pending'] > 0 ? $guestThirdPartyData['pending'] - $guestThirdPartyData['success'] : 0)); ?></label> openstaande reserveringen &nbsp;
+        <label class="ui label green"><?php echo e($guestThirdPartyData['success']); ?></label> goedgekeurde reserveringen
 
         <table class="ui sortable very basic collapsing celled unstackable table" style="width: 100%;">
             <thead>
@@ -92,7 +90,7 @@
                 </tr>
             </thead>
             <tbody class="list search">
-                @foreach($data as $reservation)
+                <?php foreach($data as $reservation): ?>
                     <?php 
                     $resDate = $carbon->create(
                           date('Y', strtotime($reservation->reservation_date)), 
@@ -115,31 +113,34 @@
                 <tr>
                     <td>
                         <div class="ui child checkbox">
-                            <input type="checkbox" name="id[{{ $reservation->id }}]" value="{{ $reservation->id }}">
+                            <input type="checkbox" name="id[<?php echo e($reservation->id); ?>]" value="<?php echo e($reservation->id); ?>">
                             <label></label>
                         </div>
                     </td>
                     <td>
-                        {{ $createdDate->formatLocalized('%d %b %Y') }} {{ date('H:i', strtotime($reservation->created_at)) }}
+                        <?php echo e($createdDate->formatLocalized('%d %b %Y')); ?> <?php echo e(date('H:i', strtotime($reservation->created_at))); ?>
+
                     </td>
                     <td>
-                        {{ $resDate->formatLocalized('%d %b %Y') }} {{ date('H:i', strtotime($reservation->reservation_date)) }}
+                        <?php echo e($resDate->formatLocalized('%d %b %Y')); ?> <?php echo e(date('H:i', strtotime($reservation->reservation_date))); ?>
+
                     </td>
                     <td>
-                        @if ($reservation->network_status == 'confirmed')
+                        <?php if($reservation->network_status == 'confirmed'): ?>
                         <span class="ui green fluid label">Reservering</span>
-                        @elseif ($reservation->network_status == 'updated')
+                        <?php elseif($reservation->network_status == 'updated'): ?>
                         <span class="ui blue fluid label">Wijziging</span>
-                        @elseif ($reservation->network_status == 'cancelled')
+                        <?php elseif($reservation->network_status == 'cancelled'): ?>
                         <span class="ui red fluid label">Annulering</span>
-                        @endif
+                        <?php endif; ?>
                     </td>
                     <td>
                         <strong>Naam</strong><br>
-                        {{ $reservation->name }}<br>
+                        <?php echo e($reservation->name); ?><br>
 
                         <strong>Personen</strong><br>
-                        {{ $reservation->persons }}
+                        <?php echo e($reservation->persons); ?>
+
                     </td>
                     <td>
                         <?php 
@@ -152,23 +153,26 @@
                         ?>
 
                         <strong>Bedrijfsnaam in mail:</strong><br>
-                        {{ $reservation->restaurant_name }}
+                        <?php echo e($reservation->restaurant_name); ?>
+
                     </td>
                     <td>
                         <div class="ui small input field">
                             <?php echo Form::text('reservation['.$reservation->id.'][reservation_number]', $reservation->reservation_number); ?>
                         </div>
                     </td>
-                    <td>{{ $reservation->network }}</td>
+                    <td><?php echo e($reservation->network); ?></td>
                 </tr>
-                @endforeach
+                <?php endforeach; ?>
             </tbody>
         </table>
     <?php echo Form::close(); ?>
 
-    {!! with(new \App\Presenter\Pagination($data->appends($paginationQueryString)))->render() !!}
+    <?php echo with(new \App\Presenter\Pagination($data->appends($paginationQueryString)))->render(); ?>
+
 
     <div class="clear"></div><br />
 </div>
 <div class="clear"></div>
-@stop
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('template.theme', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -252,10 +252,15 @@ class ReservationsOptionsController extends Controller
         $data->price = $request->input('price');
         $data->time_to = $request->input('time_to');
         $data->time_from = $request->input('time_from');
+<<<<<<< HEAD
         $data->date_from = $request->input('date_from');
         $data->newsletter = $request->input('newsletter');
+=======
+        $data->date_from = Carbon::parse($request->input('date_from'));
+        $data->date_to = Carbon::parse($request->input('date_to'));
+        $data->newsletter = Sentinel::inRole('admin') == true ? $request->input('newsletter') : 0;
+>>>>>>> f678d5c... fix date bug when create reservations-options
         $data->price_per_guest = $request->input('price_per_guest');
-        $data->date_to = $request->input('date_to');
         $data->company_id = ($slug != NULL ? $this->isCompanyOwner($slug)['id'] : $request->input('company_id'));
         $data->company_id = ($slug != NULL ? $this->isCompanyOwner($slug)['id'] : $request->input('company_id'));
         $data->save();
