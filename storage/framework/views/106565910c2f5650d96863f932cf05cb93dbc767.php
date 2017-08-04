@@ -1,10 +1,8 @@
-@extends('template.theme')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 
     <div class="content">
-        @include('admin.template.breadcrumb')
+        <?php echo $__env->make('admin.template.breadcrumb', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
 
         <div class="skill-blog">
@@ -398,4 +396,5 @@
 
 
 
-@stop
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('template.theme', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
