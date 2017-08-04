@@ -53,7 +53,7 @@
                     @else
 
 
-					@if($count_persons >= $deal->total_amount)
+{{--					@if($count_persons >= $deal->total_amount)
 
 						<img src="{{ url('images/placeholdimagerest.png') }}" alt="{{ $data->name }}" class="thumbnails"  />
 
@@ -63,7 +63,27 @@
                             <img src="{{ url('images/placeholdimagerest.png') }}" alt="{{ $data->name }}" class="thumbnails"  />
                         </a>
 						@endif
-                    @endif
+                    @endif--}}
+
+
+						@if($deal->image != null  &&  file_exists(public_path('images/deals/'  . $deal->image)))
+							<a href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}"
+							   title="{{ $data->name }}" data-url="" style="position: relative;">
+								<img src="{{ url('images/deals/' . $deal->image) }}" alt="{{ $data->name }}" class="thumbnails" />
+
+							</a>
+						@else
+							<a href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}"
+							   title="{{ $data->name }}" data-url="" style="position: relative;">
+								<img src="{{ url('images/placeholdimagerest.png') }}" alt="{{ $data->name }}"
+									 class="thumbnails"/>
+							</a>
+					@endif
+					@endif
+
+
+
+
 
                     {!! $discountHelper->replaceKeys(
                             $data,
