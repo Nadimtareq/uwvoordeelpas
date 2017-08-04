@@ -154,7 +154,7 @@ $arrayMerge = array_filter(array_merge($breadcrumbArray1, $breadcrumbArray2, $br
                                         (Request::has('price') ? Request::get('price') : ($user && $user->price != NULL ? json_decode($user->price) : '')),
                                         array('class' => 'multipleSelect', 'data-placeholder' => 'Soort', 'multiple' => 'multiple')) }}
             </div>
-            <!-- 
+            <!--
             <div class="jsearch col-md-2 col-sm-2 col-xs-6">
                 {{ Form::select('discount[]',
                                         (isset($preference[5]) ? $preference[5] : array()),

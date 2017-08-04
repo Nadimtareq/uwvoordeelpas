@@ -41,6 +41,8 @@
 
             <div class="ob">
                     <?php if(isset($media[0]) && isset($media[0]->file_name) && file_exists(public_path($media[0]->disk. DIRECTORY_SEPARATOR . $media[0]->id . DIRECTORY_SEPARATOR . $media[0]->file_name)) ): ?>
+
+
 					<?php if($count_persons >= $deal->total_amount): ?>
 						<img width="420" src="<?php echo e(url('media/'.$media[0]->id.'/'.$media[0]->file_name)); ?>" alt="<?php echo e($data->name); ?>"  class="thumbnails" />
 
@@ -52,15 +54,20 @@
                     <?php else: ?>
 
 
-					<?php if($count_persons >= $deal->total_amount): ?>
-						<img src="<?php echo e(url('images/placeholdimagerest.png')); ?>" alt="<?php echo e($data->name); ?>" class="thumbnails"  />
+					<?php /*<?php if($count_persons >= $deal->total_amount): ?>*/ ?>
+
+
+					<?php if($deal->image != null && file_exists(public_path('images/deals/' . $deal->image))): ?>
+						<img src="<?php echo e(url('images/deals/' . $deal->image)); ?>" alt="<?php echo e($data->name); ?>" class="thumbnails"  />
 
 					<?php else: ?>
-                        <a href="<?php echo e(url('restaurant/'.$data->slug).'?deal='.$deal->id); ?>" title="<?php echo e($data->name); ?>" data-url="">
-                            <img src="<?php echo e(url('images/placeholdimagerest.png')); ?>" alt="<?php echo e($data->name); ?>" class="thumbnails"  />
+
+						<a href="<?php echo e(url('restaurant/'.$data->slug).'?deal='.$deal->id); ?>" title="<?php echo e($data->name); ?>" data-url="">
+                            <img src="<?php echo e(url('images/deals/deal_8.jpg')); ?>" alt="<?php echo e($data->name); ?>" class="thumbnails"  />
                         </a>
 						<?php endif; ?>
                     <?php endif; ?>
+
 
                     <?php echo $discountHelper->replaceKeys(
                             $data,

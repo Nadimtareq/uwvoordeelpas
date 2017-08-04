@@ -1194,6 +1194,7 @@ class HomeController extends Controller
 
         return view('pages/search', [
             'companies' => $companies,
+            'affiliates' => $this->affiliates,
             'countCompanies' => $countCompanies,
             'recommended' => isset($recommended) ? $recommended : array(),
             'news' => $this->news,

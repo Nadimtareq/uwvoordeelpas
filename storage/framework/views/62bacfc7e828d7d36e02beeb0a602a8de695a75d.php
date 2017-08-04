@@ -155,7 +155,7 @@ $arrayMerge = array_filter(array_merge($breadcrumbArray1, $breadcrumbArray2, $br
                                         array('class' => 'multipleSelect', 'data-placeholder' => 'Soort', 'multiple' => 'multiple'))); ?>
 
             </div>
-            <!-- 
+            <!--
             <div class="jsearch col-md-2 col-sm-2 col-xs-6">
                 <?php echo e(Form::select('discount[]',
                                         (isset($preference[5]) ? $preference[5] : array()),
