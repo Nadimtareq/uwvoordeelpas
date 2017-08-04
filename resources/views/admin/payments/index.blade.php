@@ -80,16 +80,16 @@
                             <div class="ui blue empty circular label"></div>
                             Open
                         </a>
-                        <a class="item" 
+                        <a class="item"
                             href="{{ url('admin/'.$slugController.'?'.http_build_query(array_add($queryString, 'status', 'cancelled'))) }}"
                             data-value="Cancelled">
-                            <div class="ui red empty circular label"></div>
+                            <div class="ui red empty circular label "></div>
                             Geannuleerd
                         </a>
                     <a class="item" 
-                    href="{{ url('admin/'.$slugController.'?'.http_build_query(array_add($queryString, 'status', 'expired'))) }}" 
+                    href="{{ url('admin/'.$slugController.'?'.http_build_query(array_add($queryString, 'status', 'expired'))) }}"
                     data-value="Expired">
-                    <div class="ui light-red empty circular label"></div>
+                    <div class="ui light-red empty circular label "></div>
                     Verlopen
                 </a>
             </div>
