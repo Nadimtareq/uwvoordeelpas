@@ -96,7 +96,7 @@ class ReservationsOptionsController extends Controller
         if ($request->has('regio')) {
             $data = $data
                 ->whereRaw('reservations_options.id REGEXP "[[:<:]]'.$request->input('regio').'[[:>:]]"')
-                ->orWhere('reservations_options.id', '=', $request->input('regio'));
+                ->orWhere('reservations_options.regio', '=', $request->input('regio'));
         }
 
 
