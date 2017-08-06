@@ -77,7 +77,7 @@
 			<div class="field">
 				<label>Bestaande gast</label>
 
-				<div id="guestsSearch" class="ui guests search">
+				<div id="guestsSearch" style="width: auto" class="ui guests search">
 				  	<div class="ui icon input">
 				    	<input class="prompt" type="text" placeholder="Typ een naam in..">
 				    	<i class="search icon"></i>
