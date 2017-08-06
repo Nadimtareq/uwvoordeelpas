@@ -1,31 +1,29 @@
-@extends('template.theme')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="content">
-    @include('admin.template.breadcrumb')
+    <?php echo $__env->make('admin.template.breadcrumb', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
-    @if($userAdmin)
+    <?php if($userAdmin): ?>
 	<div class="ui normal icon search selection fluid dropdown">
        	<div class="text">Filter op bedrijf</div>
         <i class="dropdown icon"></i>
 
 		<div class="menu">
-            @foreach($companies as $data)
-            <a class="item" href="{{ url('admin/widgets/'.$data->slug) }}">{{ $data->name }}</a>
-            @endforeach
+            <?php foreach($companies as $data): ?>
+            <a class="item" href="<?php echo e(url('admin/widgets/'.$data->slug)); ?>"><?php echo e($data->name); ?></a>
+            <?php endforeach; ?>
        </div>
     </div>
-    @endif
+    <?php endif; ?>
 
     <h3>Reserveer kalender</h3>
     <div class="ui form">
 	    <div class="two fields">
 		    <div class="field">
-			  	<textarea><iframe src="{{ url('widget/calendar/restaurant/'.$company->slug) }}" width="500" height="550" frameborder="0"></iframe></textarea><br />
+			  	<textarea><iframe src="<?php echo e(url('widget/calendar/restaurant/'.$company->slug)); ?>" width="500" height="550" frameborder="0"></iframe></textarea><br />
 			  	<!--Change By Team AIT Date -28/07/2017 -->
 			  	<h5>Voorbeeld</h5>
 			  	<!--Change By Team AIT Date -28/07/2017 -->
-				<iframe src="{{ url('widget/calendar/restaurant/'.$company->slug) }}"
+				<iframe src="<?php echo e(url('widget/calendar/restaurant/'.$company->slug)); ?>"
 						width="100%"
 						height="650"
 						frameborder="0">
@@ -62,11 +60,11 @@
 	<div class="ui form">
 		<div class="two fields">
 			<div class="field">
-				<textarea><iframe src="{{ url('widget/calendar2/restaurant/'.$company->slug) }}" width="500" height="550" frameborder="0"></iframe></textarea><br />
+				<textarea><iframe src="<?php echo e(url('widget/calendar2/restaurant/'.$company->slug)); ?>" width="500" height="550" frameborder="0"></iframe></textarea><br />
 				<!--Change By Team AIT Date -28/07/2017 -->
 				<h5>Voorbeeld</h5>
 				<!--Change By Team AIT Date -28/07/2017 -->
-				<iframe src="{{ url('widget/calendar2/restaurant/'.$company->slug) }}"
+				<iframe src="<?php echo e(url('widget/calendar2/restaurant/'.$company->slug)); ?>"
 						width="100%"
 						height="650"
 						frameborder="0">
@@ -96,4 +94,6 @@
 	</div>
 </div>
 <div class="clear"></div>
-@stop
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('template.theme', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

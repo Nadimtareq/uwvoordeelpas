@@ -205,6 +205,7 @@ Route::group(array('middleware' => 'userInfo'), function() {
     Route::get('future-deal/{slug}', 'RestaurantController@futureDeal');
     Route::post('future-deal/{slug}', 'RestaurantController@processFutureDeal');
     Route::get('widget/calendar/restaurant/{slug}', 'RestaurantController@widgetCalendar');
+    Route::get('widget/calendar2/restaurant/{slug}', 'RestaurantController@widgetCalendar2');
 });
 
 /**

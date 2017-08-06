@@ -308,6 +308,41 @@ class RestaurantController extends Controller {
         }
     }
 
+
+
+
+
+    public function widgetCalendar2($slug) {
+        $company = Company::where('slug', $slug)
+            ->where('no_show', 0)
+            ->first()
+        ;
+
+        if ($company) {
+            $reservationTimesArray = CompanyReservation::getReservationDealsArray(
+                array(
+                    'company_id' => array($company->id),
+                    'date' => date('Y-m-d'),
+                    'selectPersons' => NULL
+                )
+            );
+
+            return view('pages/restaurant/widgets/calendar2',
+                [
+                    'company' => $company,
+                    'reservationTimesArray' => $reservationTimesArray,
+                ]);
+        } else {
+            if (Sentinel::check() && (Sentinel::inRole('admin') OR Sentinel::inRole('bedrijf'))) {
+                return view('pages/restaurant/widgets/error',
+                    [
+                        'id' => $company->id,
+                        'slug' => $slug
+                    ]);
+            }
+        }
+    }
+
     public function futureDeal($slug, Request $request) {
         setlocale(LC_ALL, 'nl_NL', 'Dutch');
         $preferences = new Preference();

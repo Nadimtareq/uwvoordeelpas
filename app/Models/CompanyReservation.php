@@ -480,6 +480,200 @@ class CompanyReservation extends Model {
         return array_filter($timeResult);
     }
 
+
+
+    public static function getReservationDealsArray($options) {
+        $reservedQuery = Reservation::select(
+                        DB::raw('sum(persons) as persons'), 'company_id', 'time'
+                )
+                ->where('date', $options['date'])
+                ->whereIn('company_id', $options['company_id'])
+                ->where('is_cancelled', 0)
+                ->whereIn('status', array('reserved', 'reserved-pending', 'reserved-present', 'present', 'iframe', 'iframe-pending', 'iframe-reserved', 'iframe-present'))
+                ->groupBy('date', 'company_id', 'time')
+                ->get();
+
+        foreach ($reservedQuery as $reservedFetch) {
+            $time = date('H:i', strtotime($reservedFetch->time));
+            $reservation[$reservedFetch->company_id][$time] = $reservedFetch->persons;
+        }
+
+        $data = CompanyReservation::select(
+                        'company_reservations.company_id as companyId', 'company_reservations.date', 'company_reservations.is_manual', 'company_reservations.per_time', 'company_reservations.start_time', 'company_reservations.end_time', 'company_reservations.locked_times', 'company_reservations.available_deals', 'company_reservations.id as company_reservation_id', 'company_reservations.max_persons', 'company_reservations.extra_reservations', 'company_reservations.closed_before_time'
+                )
+                ->where('company_reservations.date', $options['date'])
+                ->whereIn('company_reservations.company_id', $options['company_id'])
+                ->where('company_reservations.is_locked', 0)
+                ->get();
+
+        $datesArray = array();
+        $timeArray = array();
+        $timeResult = array();
+        $availablePersonsArray = array();
+
+        foreach ($data as $result) {
+            $datesArray[$result->company_reservation_id] = array(
+                $result->date => array(
+                    'startTime' => $result->start_time,
+                    'endTime' => $result->end_time,
+                    'intervalTime' => $result->per_time,
+                    'availablePersons' => $result->available_deals,
+                    'maxPersons' => $result->max_persons,
+                    'companyId' => $result->companyId,
+                    'lockedTimes' => $result->locked_times,
+                    'closedBeforeTime' => $result->closed_before_time,
+                    'reservationId' => $result->company_reservation_id,
+                    'extraReservations' => $result->extra_reservations,
+                    'isManual' => $result->is_manual
+                )
+            );
+        }
+
+        foreach ($datesArray as $reservationId => $datesFetch) {
+            foreach ($datesFetch as $dateFetch) {
+                $dataAvailablePersons = json_decode($dateFetch['availablePersons']);
+
+                foreach ($dataAvailablePersons as $key => $persons) {
+                    $availablePersonsArray[$key][$dateFetch['companyId']] = $persons;
+                }
+
+                $startTime = strtotime($dateFetch['startTime']);
+                $endTime = strtotime($dateFetch['endTime']);
+                $convertedTime = date('H:i', $startTime);
+
+                $availablePersonsTime = (isset($availablePersonsArray[$convertedTime][$dateFetch['companyId']]) ? $availablePersonsArray[$convertedTime][$dateFetch['companyId']] : '');
+                $personsTime = (isset($reservation[$dateFetch['companyId']][$convertedTime]) ? $reservation[$dateFetch['companyId']][$convertedTime] : 0);
+
+                if (isset($options['groupReservations'])) {
+                    $isManual = 1;
+                } elseif ($dateFetch['extraReservations'] == 1 && $personsTime == $availablePersonsTime) {
+                    $isManual = 1;
+                } else {
+                    $isManual = $dateFetch['isManual'];
+                }
+
+                $timeResult[$convertedTime][$dateFetch['companyId']] = array(
+                    'availablePersons' => $availablePersonsTime,
+                    'persons' => $personsTime,
+                    'maxPersons' => $dateFetch['maxPersons'],
+                    'reservationId' => $dateFetch['reservationId'],
+                    'closedBeforeTime' => $dateFetch['closedBeforeTime'],
+                    'extraReservations' => $dateFetch['extraReservations'],
+                    'isManual' => $isManual
+                );
+
+                while ($startTime < $endTime) {
+                    $startTime = strtotime('+' . self::$per_time[$dateFetch['intervalTime']], $startTime);
+
+                    if ($endTime >= $startTime) {
+                        $convertedTime = date('H:i', $startTime);
+
+                        $availablePersonsTime = (isset($availablePersonsArray[$convertedTime][$dateFetch['companyId']]) ? $availablePersonsArray[$convertedTime][$dateFetch['companyId']] : '');
+                        $personsTime = (isset($reservation[$dateFetch['companyId']][$convertedTime]) ? $reservation[$dateFetch['companyId']][$convertedTime] : 0);
+
+                        if (isset($options['groupReservations'])) {
+                            $isManual = 1;
+                        } elseif ($dateFetch['extraReservations'] == 1 && $personsTime == $availablePersonsTime) {
+                            $isManual = 1;
+                        } else {
+                            $isManual = $dateFetch['isManual'];
+                        }
+
+                        $timeResult[$convertedTime][$dateFetch['companyId']] = array(
+                            'availablePersons' => $availablePersonsTime,
+                            'persons' => $personsTime,
+                            'maxPersons' => $dateFetch['maxPersons'],
+                            'reservationId' => $dateFetch['reservationId'],
+                            'closedBeforeTime' => $dateFetch['closedBeforeTime'],
+                            'extraReservations' => $dateFetch['extraReservations'],
+                            'isManual' => $isManual
+                        );
+                    }
+                }
+
+                // Remove a time when it's locked
+                if (!isset($options['groupReservations'])) {
+                    if (count($dateFetch['lockedTimes']) >= 1 && trim($dateFetch['lockedTimes']) != '') {
+                        foreach (json_decode($dateFetch['lockedTimes']) as $lockedTimes) {
+                            if (isset($timeResult[$lockedTimes][$dateFetch['companyId']])) {
+                                unset($timeResult[$lockedTimes]);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        foreach ($timeResult as $timeKey => $times) {
+            foreach ($times as $companyId => $time) {
+
+                if (isset($timeResult[$timeKey][$companyId])) {
+
+                    $carbonDates = Carbon::create(
+                                    date('Y', strtotime($options['date'])), date('m', strtotime($options['date'])), date('d', strtotime($options['date'])), date('H', strtotime($timeKey)), date('i', strtotime($timeKey)), 0
+                    );
+
+                    $closedDates = Carbon::create(
+                                    date('Y', strtotime($options['date'])), date('m', strtotime($options['date'])), date('d', strtotime($options['date'])), date('H', strtotime($timeKey)), date('i', strtotime($timeKey)), 0
+                    );
+
+                    $timeNumber = explode(':', $timeKey);
+
+                    $timeNumberArray[$timeNumber[0]][] = $timeResult[$timeKey][$companyId]['persons'];
+
+                    $closedBeforeTime = $timeResult[$timeKey][$companyId]['closedBeforeTime'];
+                    $reservationsAvailable = $timeResult[$timeKey][$companyId]['availablePersons'];
+                    $reservationsReserved = $timeResult[$timeKey][$companyId]['persons'];
+
+                    if (!isset($options['groupReservations'])) {
+                        if ($closedDates->subMinutes($closedBeforeTime)->isPast()) {
+                            unset($timeResult[$timeKey][$companyId]);
+                        }
+                    }
+
+                    if ($carbonDates->isPast()) {
+                        unset($timeResult[$timeKey]);
+                    }
+
+                    // There is no limited amount of persons when the Extra Reservations option is selected
+                    if (
+                            !isset($options['groupReservations']) && isset($timeResult[$timeKey][$companyId]['extraReservations']) && $timeResult[$timeKey][$companyId]['extraReservations'] == 0
+                    ) {
+                        if ($reservationsAvailable <= $reservationsReserved) {
+                            unset($timeResult[$timeKey][$companyId]);
+                        }
+
+                        if (trim($options['selectPersons']) != null) {
+                            $availablePlaces = $reservationsAvailable - $reservationsReserved;
+
+                            if ($options['selectPersons'] > $availablePlaces) {
+                                unset($timeResult[$timeKey][$companyId]);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        foreach ($timeResult as $timeKey => $times) {
+            foreach ($times as $companyId => $time) {
+                $timeNumber = explode(':', $timeKey);
+
+                if (isset($timeNumberArray[$timeNumber[0]])) {
+                    if (isset($timeResult[$timeKey][$companyId]) && $timeResult[$timeKey][$companyId]['maxPersons'] >= 1) {
+                        if ($timeResult[$timeKey][$companyId]['maxPersons'] - array_sum($timeNumberArray[$timeNumber[0]]) == 0) {
+                            unset($timeResult[$timeKey]);
+                        }
+                    }
+                }
+            }
+        }
+
+        # Order by time
+        ksort($timeResult);
+
+        return array_filter($timeResult);
+    }
+
     public static function getReservationsCompaniesArray($companies) {
         $reservedQuery = Reservation::select(
                         DB::raw('sum(persons) as persons'), 'date', 'company_id', 'time'

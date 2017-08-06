@@ -242,7 +242,6 @@ while ($st->lte($dt)) {
                                         <strong>&euro; <?php echo e($deal->price); ?></strong></span>
                                         <b class="up">
                                             <?php echo html_entity_decode($deal->description); ?>
-
                                         </b>
                                     </div>
                                     <?php if(!is_null($deal->getApprovedReviews)): ?>
