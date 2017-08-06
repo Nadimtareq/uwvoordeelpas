@@ -1648,12 +1648,6 @@ class ReservationsController extends Controller
             ->where('created_at', '!=', '0000-00-00 00:00:00')
         ;
 
-        $data = $data->where(function ($query) use($request) {
-            $query
-                ->where('restaurant_zipcode', '=', '')
-                ->orWhereNull('restaurant_zipcode')
-            ;
-        });
 
         $data=  $data
             ->orderBy('created_at', 'desc')

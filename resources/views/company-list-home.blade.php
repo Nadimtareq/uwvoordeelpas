@@ -165,7 +165,7 @@
               <p class="hidden-xs">{!!  $deal->description !!}</p>
               @if($count_persons < $deal->total_amount)
 			  <div class="wr">
-			  <?php 
+			  <?php
              	  $returnval = $companyReservation->getTimeCarouselHTML(
                         isset($reservationDate) ? $reservationDate : NULL,
                         $data,
@@ -183,17 +183,17 @@
                     $getRec        = HomeController::getPersons($deal->id);
                     $count_persons = $getRec[0]->total_persons;
                 ?>
-                
+
 			   @if($deal->price_from >= 1)
-			   <span class="price">			    
+			   <span class="price">
 			     &euro; {{ $deal->price_from }}
 			   </span>
 			    @else
-			    <span class="price price_min_box">			    
-			     
+			    <span class="price price_min_box">
+
 			    </span>
 			    @endif
-			  
+
 
 			  <span class="price2">
 			     &euro; {{ $deal->price }}
@@ -206,7 +206,7 @@
 							<a class="more"  href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}">MEER INFO</a>&nbsp;
 							<a class="more"  href="{{ url('future-deal/'.$data->slug).'?deal='.$deal->id }}">KOOP DEAL</a>
 						</div>
-					@endif					
+					@endif
 				@endif
 
            </div>

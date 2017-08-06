@@ -230,7 +230,9 @@ while ($st->lte($dt)) {
                                             <span>&euro; {{ $deal->price_from }}
                                         @endif
                                         <strong>&euro; {{ $deal->price }}</strong></span>
-                                        <b class="up">{!! $deal->description !!}</b>
+                                        <b class="up">
+                                            <?php echo html_entity_decode($deal->description); ?>
+                                        </b>
                                     </div>
                                     @if(!is_null($deal->getApprovedReviews))
                                         <?php

@@ -124,7 +124,7 @@
                     </td>
                     <td>
                         {{ $resDate->formatLocalized('%d %b %Y') }} {{ date('H:i', strtotime($reservation->reservation_date)) }}
-                    </td>
+                    </td>z
                     <td>
                         @if ($reservation->network_status == 'confirmed')
                         <span class="ui green fluid label">Reservering</span>

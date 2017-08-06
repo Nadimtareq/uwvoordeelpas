@@ -10,7 +10,7 @@
     </div>-->
 
     <div class="col-md-6">
-      
+
             <div class="text">
                 <h2>{{ $deal->name }}</h2>
                 <p><?php echo html_entity_decode($deal->description); ?></p>

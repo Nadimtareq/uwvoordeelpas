@@ -26,15 +26,15 @@
 
 		<div class="ui grid">
 			<div class="four wide computer sixteen wide mobile column" style="text-align: center;">
-				<a href="{{ url($restaurantUrl) }}"> 
-					<img src="https://cdn1.iconfinder.com/data/icons/marketing-outlined/60/shop-trolly-cart-store-128.png"> 
+				<a href="{{ url($restaurantUrl) }}">
+					<img src="https://cdn1.iconfinder.com/data/icons/marketing-outlined/60/shop-trolly-cart-store-128.png">
 				</a>
 				<h5>1. Shopt u ook online?</h5>
 			</div>
 
 			<div class="four wide computer sixteen wide mobile column" style="text-align: center;">
 				<a href="{{ url($restaurantUrl) }}">
-					<img src="https://cdn1.iconfinder.com/data/icons/marketing-outlined/60/euro-paper-money-cash-128.png"> 
+					<img src="https://cdn1.iconfinder.com/data/icons/marketing-outlined/60/euro-paper-money-cash-128.png">
 				</a>
 
 				<h5>2. Spaar bij 1500+ Webshops!</h5>
@@ -48,13 +48,13 @@
 				<h5>4. Geniet van uw spaartegoed!</h5>
 			</div>
 		</div>
-		
+
 		<div style="width: 500px; margin: 40px auto;">
-			<div class="fb-page" 
-				 data-href="{{ trim($company['facebook']) != '' ? $company['facebook'] : (isset($websiteSettings['facebook']) ? $websiteSettings['facebook'] : 'https://www.facebook.com/Uwvoordeelpas-321703168185624/?fref=ts') }}" 
-				 data-small-header="false" 
-				 data-adapt-container-width="true" 
-				 data-hide-cover="false" 
+			<div class="fb-page"
+				 data-href="{{ trim($company['facebook']) != '' ? $company['facebook'] : (isset($websiteSettings['facebook']) ? $websiteSettings['facebook'] : 'https://www.facebook.com/Uwvoordeelpas-321703168185624/?fref=ts') }}"
+				 data-small-header="false"
+				 data-adapt-container-width="true"
+				 data-hide-cover="false"
 				 data-show-facepile="false">
 				 <blockquote cite="{{ trim($company['facebook']) != '' ? $company['facebook'] : (isset($websiteSettings['facebook']) ? $websiteSettings['facebook'] : 'https://www.facebook.com/Uwvoordeelpas-321703168185624/?fref=ts') }}" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/Uwvoordeelpas-321703168185624/?fref=ts">Uwvoordeelpas</a></blockquote>
 			</div>

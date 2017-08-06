@@ -80,13 +80,13 @@
                         </a>
                         <a class="item"
                             href="<?php echo e(url('admin/'.$slugController.'?'.http_build_query(array_add($queryString, 'status', 'cancelled')))); ?>"
-                            data-value="SS">
-                            <div class="ui red empty circular label"></div>
-                            SS
+                            data-value="Cancelled">
+                            <div class="ui red empty circular label "></div>
+                            Geannuleerd
                         </a>
                     <a class="item" 
                     href="<?php echo e(url('admin/'.$slugController.'?'.http_build_query(array_add($queryString, 'status', 'expired')))); ?>"
-                    data-value="Verlopen">
+                    data-value="Expired">
                     <div class="ui light-red empty circular label"></div>
                     Verlopen
                 </a>

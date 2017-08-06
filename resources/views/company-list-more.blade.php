@@ -25,11 +25,11 @@
                 @endif
 
                 {!! $discountHelper->replaceKeys(
-                        $data, 
-                        $data->days, 
+                        $data,
+                        $data->days,
                         (isset($contentBlock[44]) ? $contentBlock[44] : ''),
                         'ui green label'
-                    ) 
+                    )
                 !!}
             </div>
 
@@ -44,11 +44,11 @@
                 </a>
 
                 {!! $discountHelper->replaceKeys(
-                        $data, 
-                        $data->days, 
+                        $data,
+                        $data->days,
                         (isset($contentBlock[44]) ? $contentBlock[44] : ''),
                         'ribbon-wrapper thumb-discount-label'
-                    ) 
+                    )
                 !!}
             </div>
 
@@ -141,7 +141,7 @@
 
             <p>{{ str_limit($data->description, (isset($limitChar) ? $limitChar : 210)) }}</p>
 
-            {!! 
+            {!!
                 $companyReservation->getTimeCarousel(
                     isset($reservationDate) ? $reservationDate : NULL,
                     $data,

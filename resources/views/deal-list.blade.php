@@ -12,11 +12,11 @@ dd($deal2->company());
     $media = $data->getMedia('default');
     ?>
     <div class="company hidden"
-        data-kitchen="{{ is_array(json_decode($data->kitchens)) ? str_slug(json_decode($data->kitchens)[0]) : '' }}" 
-        data-url="{{ url('restaurant/'.$data->slug) }}" 
-        data-name="{{ $data->name }}" 
-        data-address="{{ $data->address }}" 
-        data-city="{{ $data->city }}" 
+        data-kitchen="{{ is_array(json_decode($data->kitchens)) ? str_slug(json_decode($data->kitchens)[0]) : '' }}"
+        data-url="{{ url('restaurant/'.$data->slug) }}"
+        data-name="{{ $data->name }}"
+        data-address="{{ $data->address }}"
+        data-city="{{ $data->city }}"
         data-zipcode="{{ $data->zipcode }}">
         <div class="image">
             <div title="{{ $data->name }}" class="computerImage">
@@ -32,7 +32,7 @@ dd($deal2->company());
                 {!! $discountHelper->replaceKeys($data, $data->days,
                         (isset($contentBlock[44]) ? $contentBlock[44] : ''),
                         'ui green label'
-                    ) 
+                    )
                 !!}
             </div>
 
@@ -44,17 +44,17 @@ dd($deal2->company());
                     @else
                     <img src="{{ url('images/placeholdimage.png') }}" />
                     @endif
-                </a> 
-                
+                </a>
+
                 {!! $discountHelper->replaceKeys(
-                        $data, 
-                        $data->days, 
+                        $data,
+                        $data->days,
                         (isset($contentBlock[44]) ? $contentBlock[44] : ''),
                         'ribbon-wrapper thumb-discount-label'
-                    ) 
+                    )
                 !!}
             </div>
-            
+
             <div class="mobileInfo">
                 <div class="right">
                     <a href="{{ url('restaurant/'.$data->slug) }}" title="{{ $data->name }}">
@@ -67,12 +67,12 @@ dd($deal2->company());
 
                     <?php
                     if(
-                        $data->kitchens != 'null' 
-                        && $data->kitchens != NULL 
+                        $data->kitchens != 'null'
+                        && $data->kitchens != NULL
                         && $data->kitchens != '[""]'
                     ) {
                         $kitchens = json_decode($data->kitchens);
-                        echo '<a href="'.url('search?q='.$kitchens[0]).'"><i class="food icon"></i> '.ucfirst($kitchens[0]).'</a>';                
+                        echo '<a href="'.url('search?q='.$kitchens[0]).'"><i class="food icon"></i> '.ucfirst($kitchens[0]).'</a>';
                     }
                     ?>
 
@@ -86,7 +86,7 @@ dd($deal2->company());
                             <span><i class="save icon"></i> Bewaren</span>
                         </a>
                         @else
-                        <a class="login button" 
+                        <a class="login button"
                            href="{{ url('account/favorite/companies/add/'.$data->id.'/'.$data->slug) }}"
                            data-type-redirect="1"
                            data-type="login"
@@ -107,15 +107,15 @@ dd($deal2->company());
             {{--<span> Van: <strike>{{ $data->price_from }}</strike> | Voor: {{ $data->price }}</span>--}}
             <div class="info">
                 <a href="{{ url('search?q='.$data->city) }}"><span><i class="marker icon"></i> {{ $data->city }}&nbsp;</span></a>
-               
+
                     <?php
                     if(
-                        $data->kitchens != 'null' 
-                        && $data->kitchens != NULL 
+                        $data->kitchens != 'null'
+                        && $data->kitchens != NULL
                         && $data->kitchens != '[""]'
                     ) {
                         $kitchens = json_decode($data->kitchens);
-                        echo '<a href="'.url('search?q='.$kitchens[0]).'"><i class="food icon"></i> '.ucfirst($kitchens[0]).'</a>';                
+                        echo '<a href="'.url('search?q='.$kitchens[0]).'"><i class="food icon"></i> '.ucfirst($kitchens[0]).'</a>';
                     }
                     ?>
 
@@ -129,7 +129,7 @@ dd($deal2->company());
                         <span><i class="save icon"></i> Bewaren</span>
                     </a>
                     @else
-                    <a class="login save button" 
+                    <a class="login save button"
                        href="{{ url('account/favorite/companies/add/'.$data->id.'/'.$data->slug) }}"
                        data-type-redirect="1"
                        data-type="login"
@@ -139,10 +139,10 @@ dd($deal2->company());
                     @endif
                 @endif
             </div>
-            
+
             <p>{{ str_limit($data->description, (isset($limitChar) ? $limitChar : 210)) }}</p>
 
-            {!! 
+            {!!
                 $companyReservation->getTimeCarousel(
                     isset($reservationDate) ? $reservationDate : NULL,
                     $data,
