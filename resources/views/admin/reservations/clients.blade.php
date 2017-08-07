@@ -81,7 +81,7 @@
 
                 <div class="right floated sixteen wide mobile six wide computer column">
                      <div class="ui icon input">
-                        <input type="text" class="ajax-datepicker" placeholder="Datum">
+                        <input type="text" class="ajax-datepicker" placeholder="Datum" data-value="{{ $date }}">
                         <i class="calendar icon"></i>
                     </div>
 

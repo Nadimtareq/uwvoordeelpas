@@ -510,6 +510,8 @@ class ReservationsController extends Controller
             session(['sort' => $request->input('sort'), 'order' => $request->input('order')]);
         } else {
             if ($request->has('date')) {
+                $d = Carbon::parse('20170812');
+                $date = date('Y-m-d', strtotime($request->input('date')));
                 $data = $data
                     ->where('reservations.date', date('Y-m-d', strtotime($request->input('date'))))
                     ->orderBy('reservations.time', 'asc')
