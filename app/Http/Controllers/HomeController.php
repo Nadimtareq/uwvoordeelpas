@@ -38,25 +38,25 @@ class HomeController extends Controller
 
     public function __construct() 
     {  
-        
-       $browser = new BrowerHelper(); 
+
+       $browser = new BrowerHelper();
        Session::set('browser',$browser->detect()->getInfo());
        $affiliateHelper = new AffiliateHelper();
-      
+
         $this->user = Sentinel::getUser();
-        
+
         $this->news  = News::select(
-            'news.slug', 
-            'news.title', 
+            'news.slug',
+            'news.title',
             'news.created_at'
         )
             ->join('companies', 'news.company_id', '=', 'companies.id')
         ;
 
         if (
-            Sentinel::check() 
-            && trim($this->user->city) != '' 
-            && $this->user->city != NULL 
+            Sentinel::check()
+            && trim($this->user->city) != ''
+            && $this->user->city != NULL
             && $this->user->city != 'null'
         ) {
             if (is_array(json_decode($this->user->city))) {
@@ -77,7 +77,7 @@ class HomeController extends Controller
             ->get()
         ;
 
-        # Affiliates 
+        # Affiliates
         $this->affiliates = Affiliate::select(
             '*'
         )
@@ -86,7 +86,7 @@ class HomeController extends Controller
             ->limit(18)
             ->get()
         ;
-        
+
         foreach ($this->affiliates as $i => $affiliatesFetch) {
             $this->affiliates[$i]['comissions'] = $affiliateHelper->commissionMaxValue($affiliatesFetch->compensations);
         }
@@ -121,7 +121,7 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {
-        $deals = App\Models\ReservationOption::all();
+//        $deals = App\Models\ReservationOption::all();
         // Preferences cities
         $cities = Preference::where('category_id', 9)
             ->where('no_frontpage', 0)
@@ -133,7 +133,7 @@ class HomeController extends Controller
         } else {
             $cities = $cities->orderByRaw('id');
         }
-        
+
 
         $cities = $cities->get();
         // Companies
@@ -349,7 +349,7 @@ class HomeController extends Controller
             ->where('no_show', 0)
             ->with('media')
         ;
-        
+
         $countCompanies = $companies->count();
         $companies = $companies->paginate($request->input('limit', 15));
         
@@ -385,10 +385,20 @@ class HomeController extends Controller
             alert()->error('', 'Er zijn geen zoekresultaten gevonden met uw selectiecriteria.<br /> <br /><small>Klik <a href=\''.URL::to('account').'\'> hier</a> om uw criteria aan te passen.</small>')->html()->persistent('Sluiten');
 
             return Redirect::to('/?no_filter=1'.($request->has('mobilefilter') ? '&mobilefilter=1' : ''));
-        }   
+        }
 
         $queryString = $request->query();
         unset($queryString['limit']);
+
+        foreach ($cities as $city) {
+            $media = $city->getMedia();
+
+            //Check of file exits with file_exits() against using CURL in app/Helpers/FileHelper.php
+            if (isset($media[0]) && file_exists($media[0]->getUrl('thumb')))
+                $city->media = url(''.$media[0]->getUrl('thumb'));
+            else
+                $city->media = url('images/placeholdimage.png');
+        }
 
         return view('pages/home', [
             'user' => $this->user,
