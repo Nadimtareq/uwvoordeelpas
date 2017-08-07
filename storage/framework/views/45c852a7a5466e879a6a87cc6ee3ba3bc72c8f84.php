@@ -149,7 +149,7 @@
                             <?php endif; ?>
                         <?php endif; ?>
 
-                        <p class="hidden-xs"><?php echo $deal->description; ?></p>
+                        <p class="hidden-xs"><b><?php echo strip_tags($deal->description); ?></b></p>
                         <?php if($count_persons < $deal->total_amount): ?>
                             <div class="wr">
                                 <?php
