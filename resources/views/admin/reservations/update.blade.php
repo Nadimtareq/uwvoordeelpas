@@ -109,59 +109,49 @@
 
 			<div id="dateAppend">
 				@for ($i = 0; $i < 1; $i++)
-				<div class="r-group form-horizontal">
+				<div class="r-group form-vertical">
 				<br>
-				<div class="row">
-					<div class="form-group">
-						<label class="col-sm-2">Dag(en)</label>
-						<div class="col-sm-5">
-						<?php
-						echo Form::select(
-							'days[0][]',
-							Config::get('preferences.days'),
-							'',
-							array(
-								'multiple' => true,
-								'class' => 'multipleSelect',
-								'id' => 'days_0',
-								'data-pattern-name' => 'days[++][]',
-								'data-pattern-id' => 'days++'
-							)
-						) ?>
-						</div>
-					</div>
-				</div>
-				<br>
-				<div class="row">
-
-					<div class="form-group">
-						<label class="col-sm-2">Begin tijd</label>
-						<div class="col-sm-5">
-							<div class="ui icon input">
-								<?php echo Form::text('start_time[0]', '', array('class' => 'timepicker', 'placeholder' => 'Selecteer een tijd', 'data-pattern-name' => 'start_time[++]','data-pattern-id' => 'start_time++')); ?>
-								<i class="clock icon"></i>
+				<div class="row">					
+						<div class="col-sm-3" style="margin-right: 10px;">
+							<label>Dag(en)</label>
+							<br>
+							<div>
+							<?php
+							echo Form::select(
+								'days[0][]',
+								Config::get('preferences.days'),
+								'',
+								array(
+									'multiple' => true,
+									'class' => 'multipleSelect',
+									'id' => 'days_0',
+									'data-pattern-name' => 'days[++][]',
+									'data-pattern-id' => 'days++'
+								)
+							) ?>
 							</div>
 						</div>
+						
+				
+					<div class="col-sm-3">
+						<label>Begin tijd</label>		
+						<br>				
+						<div class="ui icon input">
+							<?php echo Form::text('start_time[0]', '', array('class' => 'timepicker', 'placeholder' => 'Selecteer een tijd', 'data-pattern-name' => 'start_time[++]','data-pattern-id' => 'start_time++')); ?>
+							<i class="clock icon"></i>
+						</div>						
 					</div>
-				</div>
-				<br>
-				<div class="row">
-					<div class="form-group">
-						<label class="col-sm-2">Eind tijd</label>
-						<div class="col-sm-5">
-							<div class="ui icon input">
-								<?php echo Form::text('end_time[0]', '', array('class' => 'timepicker', 'placeholder' => 'Selecteer een tijd', 'data-pattern-name' => 'end_time[++]','data-pattern-id' => 'end_time++')); ?>
-								<i class="clock icon"></i>
-							</div>
-						</div>
+					<div class="col-sm-3">
+						<label>Eind tijd</label>
+						<br>					
+						<div class="ui icon input">
+							<?php echo Form::text('end_time[0]', '', array('class' => 'timepicker', 'placeholder' => 'Selecteer een tijd', 'data-pattern-name' => 'end_time[++]','data-pattern-id' => 'end_time++')); ?>
+							<i class="clock icon"></i>
+						</div>						
 					</div>
-				</div>
-				<br>
-				<div class="row">
-
-					<div class="form-group">
-						<label class="col-sm-2">Opties</label>
-						<div class="col-sm-5">
+					<div class="col-sm-1">
+						<label>Opties</label>	
+						<br>				
 							<div class="ui buttons">
 								<button type="button" class="r-btnAdd ui icon button">
 									<i class="add icon"></i>
@@ -170,10 +160,10 @@
 								<button type="button" class="r-btnRemove ui red button icon">
 									<i class="trash icon"></i>
 								</button>
-							</div>
-						</div>
+							</div>						
 					</div>
-					</div>
+				</div>
+			
 				</div>
 				@endfor
 			</div>
@@ -256,13 +246,8 @@
 			<div class="two fields">
 				<div class="field">
 					<label>Plaatsen per tijd</label>
-<<<<<<< HEAD
 					<?php echo Form::select('per_time',  array(60 => 'Per uur', 30 => 'Per halfuur', 15 => 'Per kwartier'), 15, array('class' => 'ui normal search dropdown selection fluid visible')) ?>
 				</div>	
-=======
-					<?php echo Form::select('per_time',  array(60 => 'Per uur', 30 => 'Per halfuur', 15 => 'Per kwartier'), 15, array('class' => 'ui normal search dropdown')) ?>
-				</div>
->>>>>>> e4df194619d90fbdf622d0aef887d751225ac64a
 
 				<div class="field">
 					<label>Aantal actie plaatsen</label>
@@ -310,13 +295,8 @@
 				<div class="clearfix"></div>
 
 				<div class="field">
-<<<<<<< HEAD
 					<label style="display:block">Dagelijks reserveren kan tot:</label>
 					<div class="ui icon input normal visible">
-=======
-					<label>Dagelijks reserveren kan tot:</label>
-					<div class="ui icon input">
->>>>>>> e4df194619d90fbdf622d0aef887d751225ac64a
 						<?php
 						echo Form::text(
 							'closed_at_time',
@@ -330,11 +310,7 @@
 						<i class="clock icon"></i>
 					</div>
 				</div>
-<<<<<<< HEAD
 				<div class="clearfix"></div>
-=======
-
->>>>>>> e4df194619d90fbdf622d0aef887d751225ac64a
 				<div class="field">
 					<label>Minimum spaartegoed</label>
 					<?php echo Form::text('min_saldo', $data->min_saldo) ?>

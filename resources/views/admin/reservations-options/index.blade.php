@@ -136,15 +136,16 @@
         @if($admin)
             <th data-slug="company_id" class="three wide">Bedrijf</th>
         @endif
-        <th data-slug="city" class="three wide">City</th>
+        {{--  <th data-slug="city" class="three wide">City</th>  --}}
         <th data-slug="total_amount" class="four wide">beschikbaar</th>
         <th data-slug="total_res" class="four wide">verkocht</th>
         <th data-slug="date_from" class="four wide">Online van</th>
         <th data-slug="date_to" class="four wide">Online tot</th>
         <th data-slug="price_from" class="four wide">prijs van</th>
         <th data-slug="price" class="four wide">prijs voor</th>
-        <th data-slug="total_res" class="four wide">Online</th>
+        <th data-slug="total_res" class="three wide">Online</th>
         <th data-slug="newsletter" class="four wide">Nieuwsbrief</th>
+        <th data-slug="no_show" class="three wide">Show</th>
         @if(Sentinel::inRole('admin'))
             <th data-slug="status" class="four wide">Status</th>
         @endif
@@ -179,9 +180,9 @@
                      </td>
                 @endif
 
-                <td>
+                {{--  <td>
                     {{ $result->city }}
-                </td>
+                </td>  --}}
                 <td>
                     {{ $result->total_amount }}
                 </td>
@@ -226,6 +227,15 @@
                 <td>
                     <?php 
                     if ($result->newsletter != 0) {
+                        echo '<i class="icon green checkmark"></i>';
+                    } else {
+                        echo '<i class="icon red remove"></i>';
+                    }
+                    ?>
+                </td>
+                <td>
+                    <?php 
+                    if ($result->no_show != 0) {
                         echo '<i class="icon green checkmark"></i>';
                     } else {
                         echo '<i class="icon red remove"></i>';

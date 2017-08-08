@@ -73,7 +73,7 @@
             </div>
             <div class="five wide column"> 
                 <div class="field">
-                    <label>Personen {{$futureDeal->persons_remain }}</label>
+                    <label>Personen }</label>
 
                     
 
