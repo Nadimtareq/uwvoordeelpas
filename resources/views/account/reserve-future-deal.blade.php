@@ -73,24 +73,30 @@
             </div>
             <div class="five wide column"> 
                 <div class="field">
-                    <label>Personen</label>
+                    <label>Personen {{$futureDeal->persons_remain }}</label>
+
+                    
 
                     <div id="personsField" class="ui normal compact selection dropdown persons searchReservation">
                         <input type="hidden" name="persons" value="<?php echo Request::get('persons'); ?>">
 
                         <i class="male icon"></i>
                         <div class="default text">Personen</div>
-                        <i class="dropdown icon"></i>
-                        <div class="menu">
+                        
+                         <i class="dropdown icon"></i> 
+                         <div class="menu"> 
+                            {{--  @for($j=1; $j <= 30; $j++)
+                                <div class="item" data-value="{{$j}}"> {{$j}}</div>
+                                @endfor  --}}
                             <?php
-                            for ($i = 1; $i <= $futureDeal->persons_remain; $i++) {
+                             for ($i = 1; $i < $futureDeal->persons_remain; $i++) {
                                 ?>
                                 <div class="item" data-value="<?php echo $i; ?>"><?php echo $i; ?></div>
                                 <?php
-                            }
+                            }  
                             ?>
-                        </div>
-                    </div>
+                         </div> 
+                     </div> 
                 </div>	
             </div>
         </div>

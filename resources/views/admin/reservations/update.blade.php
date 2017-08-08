@@ -109,9 +109,12 @@
 
 			<div id="dateAppend">
 				@for ($i = 0; $i < 1; $i++)
-				<div class="r-group four fields">
-					<div class="field">
-						<label>Dag(en)</label>
+				<div class="r-group form-horizontal">
+				<br>
+				<div class="row">
+					<div class="form-group">
+						<label class="col-sm-2">Dag(en)</label>
+						<div class="col-sm-5">
 						<?php
 						echo Form::select(
 							'days[0][]',
@@ -125,40 +128,56 @@
 								'data-pattern-id' => 'days++'
 							)
 						) ?>
-					</div>
-
-					<div class="field">
-						<label>Begin tijd</label>
-						<div class="ui icon input">
-							<?php echo Form::text('start_time[0]', '', array('class' => 'timepicker', 'placeholder' => 'Selecteer een tijd', 'data-pattern-name' => 'start_time[++]','data-pattern-id' => 'start_time++')); ?>
-							<i class="clock icon"></i>
 						</div>
 					</div>
+				</div>
+				<br>
+				<div class="row">
 
-					<div class="field">
-						<label>Eind tijd</label>
-						<div class="ui icon input">
-							<?php echo Form::text('end_time[0]', '', array('class' => 'timepicker', 'placeholder' => 'Selecteer een tijd', 'data-pattern-name' => 'end_time[++]','data-pattern-id' => 'end_time++')); ?>
-							<i class="clock icon"></i>
+					<div class="form-group">
+						<label class="col-sm-2">Begin tijd</label>
+						<div class="col-sm-5">
+							<div class="ui icon input">
+								<?php echo Form::text('start_time[0]', '', array('class' => 'timepicker', 'placeholder' => 'Selecteer een tijd', 'data-pattern-name' => 'start_time[++]','data-pattern-id' => 'start_time++')); ?>
+								<i class="clock icon"></i>
+							</div>
 						</div>
 					</div>
-
-					<div class="field">
-						<label>Opties</label>
-						<div class="ui buttons">
-							<button type="button" class="r-btnAdd ui icon button">
-								<i class="add icon"></i>
-							</button>
-
-							<button type="button" class="r-btnRemove ui red button icon">
-								<i class="trash icon"></i>
-							</button>
+				</div>
+				<br>
+				<div class="row">
+					<div class="form-group">
+						<label class="col-sm-2">Eind tijd</label>
+						<div class="col-sm-5">
+							<div class="ui icon input">
+								<?php echo Form::text('end_time[0]', '', array('class' => 'timepicker', 'placeholder' => 'Selecteer een tijd', 'data-pattern-name' => 'end_time[++]','data-pattern-id' => 'end_time++')); ?>
+								<i class="clock icon"></i>
+							</div>
 						</div>
+					</div>
+				</div>
+				<br>
+				<div class="row">
+
+					<div class="form-group">
+						<label class="col-sm-2">Opties</label>
+						<div class="col-sm-5">
+							<div class="ui buttons">
+								<button type="button" class="r-btnAdd ui icon button">
+									<i class="add icon"></i>
+								</button>
+
+								<button type="button" class="r-btnRemove ui red button icon">
+									<i class="trash icon"></i>
+								</button>
+							</div>
+						</div>
+					</div>
 					</div>
 				</div>
 				@endfor
 			</div>
-
+			<br>
 			<div class="field">
 				<label>Aantal plekken beschikbaar</label>
 				<?php echo Form::number('available_persons', 1, array('min' => 2)) ?>
