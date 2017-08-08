@@ -95,7 +95,7 @@ class UsersController extends Controller
                     break;
             }
         }
-        echo $request->input('source');
+//        echo $request->input('source');
         if ($request->has('has_saving')) {
             switch ($request->input('has_saving')) {
                 case '0':
@@ -130,10 +130,9 @@ class UsersController extends Controller
         }
 
         if($request->has('role')){
-            $role= $request->input('role');
-            $data=User::hasRole($data, $role);
-            $data=User::whereHas('roles', function ($q) use ($role){
-                $q->where('name', $role);
+            $role = $request->input('role');
+            $data = User::whereHas('roles', function ($q) use ($role){
+                $q->where('name', "LIKE", $role);
             });
         }
 
