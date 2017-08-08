@@ -111,7 +111,7 @@
                                     Goedgekeurd
                                 @elseif ($fetch['status'] == 'open')
                                     In behandeling
-                                @elseif ($fetch['status'] == 'open')
+                                @elseif ($fetch['status'] == 'expired')
                                    Verlopen
                                 @elseif ($fetch['status'] == 'rejected')
                                     Afgekeurd
