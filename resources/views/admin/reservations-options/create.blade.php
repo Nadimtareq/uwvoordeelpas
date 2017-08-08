@@ -29,9 +29,15 @@
 				</div>
 
 				@if ($userAdmin)
-				<div class="field">
-					<label for="newsletter">{{trans('app.newsletter')}}</label>
-					{{Form::select("newsletter", array('' => 'Not selected', '0' => 'niet toevoegen', '1' => 'toevoegen'), null, ['class' => 'ui normal icon search selection fluid dropdown margin-0','required' => 'required'])}}
+				<div class="two fields">
+					<div class="field">
+						<label for="newsletter">{{trans('app.newsletter')}}</label>
+						{{Form::select("newsletter", array('' => 'Not selected', '0' => 'niet toevoegen', '1' => 'toevoegen'), null, ['class' => 'ui normal icon search selection fluid dropdown margin-0','required' => 'required'])}}
+					</div>
+					<div class="field">
+						<label for="no_show">Weergeven op site</label>
+						{{Form::select("no_show", array('' => 'Not selected', '0' => 'Nee', '1' => 'Ja'), null, ['class' => 'ui normal icon search selection fluid dropdown margin-0','required' => 'required'])}}
+					</div>
 				</div>
 				@endif
 			</div>

@@ -246,6 +246,7 @@ class ReservationsOptionsController extends Controller
         $data->date_from = Carbon::parse($request->input('date_from'));
         $data->date_to = Carbon::parse($request->input('date_to'));
         $data->newsletter = Sentinel::inRole('admin') == true ? $request->input('newsletter') : 0;
+        $data->no_show = Sentinel::inRole('admin') == true ? $request->input('no_show') : 0;
         $data->price_per_guest = $request->input('price_per_guest');
         $data->company_id = ($slug != NULL ? $this->isCompanyOwner($slug)['id'] : $request->input('company_id'));
         $data->no_show = Sentinel::inRole('admin') == true ? 1 : 0;
@@ -280,6 +281,7 @@ class ReservationsOptionsController extends Controller
             'reservations_options.name',
             'reservations_options.image',
             'reservations_options.newsletter',
+            'reservations_options.no_show',
             'companies.slug'
         )
             ->leftJoin('companies', 'reservations_options.company_id', '=', 'companies.id')
@@ -329,6 +331,7 @@ class ReservationsOptionsController extends Controller
             'reservations_options.short_description',
             'reservations_options.name',
             'reservations_options.newsletter',
+            'reservations_options.no_show',
             'companies.slug',
             'reservations_options.image'
         )
@@ -344,6 +347,7 @@ class ReservationsOptionsController extends Controller
             'time_to' => 'required',
             'time_from' => 'required',
             'newsletter' => 'required',
+            'no_show' =>'required',
             'image'       => 'mimes:jpeg,bmp,png|max:10000'
         ]);
 
@@ -375,6 +379,7 @@ class ReservationsOptionsController extends Controller
             $data->date_from = Carbon::parse($request->input('date_from'));
             $data->date_to = Carbon::parse($request->input('date_to'));
             $data->newsletter = $request->input('newsletter');
+            $data->no_show = $request->input('no_show');
             $data->company_id = $request->input('company_id');
             $data->image = $fileName;
             $data->save();

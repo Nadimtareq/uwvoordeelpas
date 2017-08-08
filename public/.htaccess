@@ -4,7 +4,7 @@
     </IfModule>
 
     RewriteEngine On
-    RewriteCond %{HTTP_HOST} !=localhost
+    RewriteCond %{HTTP_HOST} !=uwvoordeelpas.dev
 
     RewriteCond %{HTTP_HOST} !^$
     RewriteCond %{HTTP_HOST} !^www\. [NC]
