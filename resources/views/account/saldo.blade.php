@@ -66,7 +66,7 @@
     <?php echo Form::close(); ?><br />
 
     <div id="formList">
-        <table class="ui very basic collapsing sortable celled table list" style="width: 100%;">
+        <table class="ui collapsing sortable celled table list" style="width: 100%;">
             <thead>
                 <tr>
                     <th data-slug="date" class="three wide">Datum</th>
