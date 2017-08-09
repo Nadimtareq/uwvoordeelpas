@@ -22,10 +22,12 @@
 	<link rel="stylesheet" href="{{ asset('css/main.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/flexslider.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/stat-styles.css') }}">
 
 <!--	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
 	<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" href="{{ asset('css/material.indigo-pink.min.css') }}">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
 
     <link rel="stylesheet" href="{{ captcha_layout_stylesheet_url() }}" >
