@@ -135,7 +135,7 @@
     <div class="col-sm-12 col-ms1">
         <div class="col-sm-3 col5">
             @if (count($companies) >= 1)
-                @include('company-list')
+                 @include('company-list') 
 
                 @if (count($recommended) >= 1)
                     <h3 class="ui header">Zie ook</h3>

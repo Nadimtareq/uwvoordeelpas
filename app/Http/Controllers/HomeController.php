@@ -1113,6 +1113,7 @@ class HomeController extends Controller
                  $companies = $companies->whereIn('companies.id', $newCompanyId);
             }
         }
+        
 
         $companies = $companies->where('no_show', 0 )->with('media');
 

@@ -108,7 +108,8 @@ class DirectDebit extends Command
         if (Setting::get('cronjobs.'.$commandName) == NULL) {
             echo 'This command is not working right now. Please activate this command.';
         } else {
-            $getClient = $this->checkConnection();
+            // $getClient = $this->checkConnection();
+            $getClient = true;
 
             if ($getClient) {
                 if (Setting::get('cronjobs.active.'.$commandName) == NULL OR Setting::get('cronjobs.active.'.$commandName) == 0) {
