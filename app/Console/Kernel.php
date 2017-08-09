@@ -4,6 +4,7 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Psy\Command\Command;
 
 class Kernel extends ConsoleKernel
 {
@@ -46,6 +47,7 @@ class Kernel extends ConsoleKernel
         Commands\Transaction\Zanox::class,
         Commands\Transaction\Que::class,
         Commands\Newsletter\NewsletterEmail::class,
+        Commands\Payment\UpdatePaymentTypes::class,
     ];
 
     protected function schedule(Schedule $schedule)
@@ -221,5 +223,9 @@ class Kernel extends ConsoleKernel
           ->hourly()
         ;
 
+        $schedule
+            ->command('payments:update')
+            ->daily()
+        ;
     }
 }

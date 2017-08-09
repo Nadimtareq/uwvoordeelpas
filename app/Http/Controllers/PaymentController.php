@@ -106,7 +106,7 @@ class PaymentController extends Controller {
         ));
 
         $oPayment = new Payment();
-        $oPayment->type = 'mollie';
+        $oPayment->type = 'opwaardering';
         $oPayment->mollie_id = $payment->id;
         $oPayment->user_id = $payment_user_id;
         $oPayment->status = $payment->status;
