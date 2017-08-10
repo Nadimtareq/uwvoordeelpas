@@ -17,15 +17,20 @@
     <link rel="stylesheet" href="{{ asset('css/ui-lightness/jquery-ui-1.9.2.custom.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/materialize.min.css') }}" />
 
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/animate.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/flexslider.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}" />
+	<link rel="stylesheet" href="{{ asset('css/animate.min.css') }}" />
+	<link rel="stylesheet" href="{{ asset('css/main.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/flexslider.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/stat-styles.css') }}">
 
-    <!--	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
-    <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="{{ asset('css/material.indigo-pink.min.css') }}">
+<!--	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">-->
+	<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="{{ asset('css/material.indigo-pink.min.css') }}">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <style>
+        .goog-te-banner-frame.skiptranslate{display:none!important;}
+    </style>
 
 
     <link rel="stylesheet" href="{{ captcha_layout_stylesheet_url() }}" >
@@ -43,10 +48,11 @@
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
     <meta name="description" content="{{ isset($metaDescription) ? strip_tags($metaDescription) : 'Reserveer in enkele stappen met uw spaartegoed!' }}">
-    <meta http-equiv="Cache-control" content="max-age=2592000, public">
-    <script src="{{ asset('js/jquery-2-2-4.js') }} "></script>
-    <script>
-        var baseUrl = {!! json_encode(url('/')."/") !!};
+	<meta http-equiv="Cache-control" content="max-age=2592000, public">
+	<script src="{{ asset('js/jquery-2-2-4.js') }} "></script>
+    <script src="{{ asset('js/jquery.cookie.min.js') }} "></script>
+	<script>
+	  var baseUrl = {!! json_encode(url('/')."/") !!};
 
         // Script to load fonts async
 
@@ -67,9 +73,13 @@
 
 <body {{ (Route::getCurrentRoute()->uri() == '/') ? 'class="index"' : '' }} id="app">
 
-<div id="searchFull" style="display: none;">
-    <?php echo Form::open(array('url' => 'search-redirect', 'class' => 'ui form', 'method' => 'post')) ?>
-    <div class="fields">
+    {{--Language Converter--}}
+    @include('template.google-translate')
+
+
+    <div id="searchFull" style="display: none;">
+        <?php echo Form::open(array('url' => 'search-redirect', 'class' => 'ui form', 'method' => 'post')) ?>
+        <div class="fields">
 
         <div id="searchInput" class="eleven wide field">
             <div id="affiliateSearch-4" class="ui search form">
@@ -381,7 +391,26 @@
         }
 
     });
-</script>
+    </script>
+    <script>
+        $('.change-login-user-language').click(function(e){
+            e.preventDefault();
+            var link = $(this).attr('href');
+
+            swal({
+                    title: "",
+                    text: "Wil je deze taal als je standaardtaal?",
+                    type: "info",
+                    showCancelButton: true,
+                    cancelButtonText: 'Nee',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'Ja'
+                },
+                function(){
+                    window.location.href = link;
+                });
+        });
+    </script>
 
 @yield("after_scripts")
 

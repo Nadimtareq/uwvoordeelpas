@@ -78,6 +78,7 @@ class AccountController extends Controller {
         $user->price = json_encode($request->input('price'));
         $user->preferences = json_encode($request->input('preferences'));
         $user->discount = json_encode($request->input('discount'));
+        $user->lang = $request->input('lang');
 
         if ($request->input('email') != Sentinel::getUser()->email) {
             $code = str_random(10);

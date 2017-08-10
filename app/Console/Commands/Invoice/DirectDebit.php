@@ -110,6 +110,7 @@ class DirectDebit extends Command
         } else {
             $getClient = $this->checkConnection();
 
+
             if ($getClient) {
                 if (Setting::get('cronjobs.active.'.$commandName) == NULL OR Setting::get('cronjobs.active.'.$commandName) == 0) {
                     // Start cronjob
