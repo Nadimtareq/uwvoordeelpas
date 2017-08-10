@@ -16,7 +16,7 @@
 										 </a>
 									 </div> -->
                             <a href="#" data-activates="mobile-top" class="button-collapse"> <i
-                                        class="material-icons material-icons2">menu</i></a>
+                                        class="material-icons notranslate material-icons2">menu</i></a>
                             <div class="brand-logo">
                                 @if($userAuth)
                                     <a href="{{ url('/home') }}">
@@ -33,7 +33,7 @@
                                         <div class="input-field">
                                             <div id="usersCompaniesSearch2" class="search form focus">
                                                 <label class="label-icon" for="search" style="color:#ffffff;"><i
-                                                            class="material-icons">pin_drop</i></label>
+                                                            class="material-icons notranslate">pin_drop</i></label>
                                                 <input id="search" name="q" type="search"
                                                        value="{{ Request::segment(1) == 'search' ? Request::get('q') : '' }}"
                                                        placeholder="{{ trans('app.keyword') }}" class="prompt"
@@ -44,7 +44,7 @@
                                     <li>
                                         <label for="datepicker" style="color:#ffffff;">
                                         <!--<img src="{{asset('images/m2.png') }}" alt="m2">-->
-                                            <i class="material-icons">date_range</i>
+                                            <i class="material-icons notranslate">date_range</i>
                                             <input id="datepicker" placeholder="Datum" name="date"
                                                    class="datepicker1 quantity" data-filter-todate="yes"
                                                    data-time="#sltime"
@@ -53,7 +53,7 @@
                                     </li>
                                     <li>
                                         <!--<img src="images/m3.png" alt="m3">-->
-                                        <i class="material-icons">watch_later</i>
+                                        <i class="material-icons notranslate">watch_later</i>
                                         <select id="sltime" name="sltime" class="quantity option-white-bg">
                                             @php
                                                 // Check time
@@ -82,7 +82,7 @@
                                     </li>
                                     <li>
                                         <!--<img src="images/m4.png" alt="m4">-->
-                                        <i class="material-icons">person</i>
+                                        <i class="material-icons notranslate">person</i>
                                         @php
                                             $current_p = ((Request::get('persons') != '') ? Request::get('persons') : (($userAuth && $userInfo->kids != 'null' && $userInfo->kids != NULL && $userInfo->kids != '[""]') ? $userInfo->kids : 2))
                                         @endphp

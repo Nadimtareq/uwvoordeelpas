@@ -792,11 +792,16 @@ class HomeController extends Controller
         }
     }
 
-    public function setLang(Request $request, $locale) 
+    public function setLang(Request $request, $locale)
     {
-        $request->session()->put('locale', $locale);
-
-        App::setLocale($locale);
+//        $request->session()->put('locale', $locale);
+//
+//        App::setLocale($locale);
+        if(isset($request->user()->id)){
+            $user = App\User::find($request->user()->id);
+            $user->update(['lang' => $locale]);
+        }
+        session(['language' => $locale]);
 
         return Redirect::to($request->has('redirect') ? $request->input('redirect') : '/');
     }
@@ -1202,9 +1207,15 @@ class HomeController extends Controller
             alert()->error('', 'Er zijn geen zoekresultaten gevonden met uw selectiecriteria.')->persistent('Sluiten');
 
             return Redirect::to('/index');
-        }   
+        }
 
-        return view('pages/search', [
+
+        if (request()->has("layout") && request()->get("layout") === "grid")
+            $searchPage = "pages/search-grid";
+        else
+            $searchPage = "pages/search";
+
+        return view($searchPage, [
             'companies' => $companies,
             'affiliates' => $this->affiliates,
             'countCompanies' => $countCompanies,
