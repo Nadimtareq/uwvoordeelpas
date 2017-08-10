@@ -1,7 +1,8 @@
- @php
-   $isGrey = ( Route::getCurrentRoute()->uri() != '/')
+ <?php
+   $isGrey = ( Route::getCurrentRoute()->uri() != '/');
    $headerImg = request()->has("layout") && request()->get("layout") === "grid";
- @endphp
+
+ ?>
  @if(isset($userAuth->lang) && !empty($userAuth->lang))
 	 {{-- */$lang=$userAuth->lang;/* --}}
  @elseif(Session::has('language'))
@@ -9,7 +10,7 @@
  @else
 	 {{-- */$lang='nl';/* --}}
  @endif
- <header id="navigation" class="{{ $headerImg ? "" : "root-sec white nav" .  (($isGrey) ) ? 'header_grey' : '' }} "> <!--   -->
+ <header id="navigation" class="{{ $headerImg ? '' : 'root-sec white nav' .  (($isGrey) ) ? 'header_grey' : '' }} "> <!--   -->
 			<div class="container">
 				<div class="row">
 					<div class="col-sm-12">
