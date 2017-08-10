@@ -251,6 +251,24 @@ $(document).ready(function() {
 					@endforeach
 				</select>
 			</div>
+			<div class="field">
+                <?php
+                $languages = [
+                    'nl' => 'NL',
+                    'en' => 'EN',
+                    'be' => 'BE',
+                    'de' => 'DE',
+                    'fr' => 'FR'
+                ];
+                ?>
+				<label>Wil je de taal veranderen?</label>
+				<select name="lang" class="ui normal fluid search dropdown notranslate">
+					<option value="" selected="selected" >Language</option>
+					@foreach($languages as $key => $item)
+						<option value="{{$key}}" @if($key == Sentinel::getUser()->lang)selected="selected"@endif >{{$item}}</option>
+					@endforeach
+				</select>
+			</div>
 		</div>
 
 		<div class="field">

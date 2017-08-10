@@ -794,11 +794,16 @@ class HomeController extends Controller
         }
     }
 
-    public function setLang(Request $request, $locale) 
+    public function setLang(Request $request, $locale)
     {
-        $request->session()->put('locale', $locale);
-
-        App::setLocale($locale);
+//        $request->session()->put('locale', $locale);
+//
+//        App::setLocale($locale);
+        if(isset($request->user()->id)){
+            $user = App\User::find($request->user()->id);
+            $user->update(['lang' => $locale]);
+        }
+        session(['language' => $locale]);
 
         return Redirect::to($request->has('redirect') ? $request->input('redirect') : '/');
     }

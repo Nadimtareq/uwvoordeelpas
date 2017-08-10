@@ -28,6 +28,9 @@
 	<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" href="{{ asset('css/material.indigo-pink.min.css') }}">
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <style>
+        .goog-te-banner-frame.skiptranslate{display:none!important;}
+    </style>
 
 
     <link rel="stylesheet" href="{{ captcha_layout_stylesheet_url() }}" >
@@ -47,6 +50,7 @@
     <meta name="description" content="{{ isset($metaDescription) ? strip_tags($metaDescription) : 'Reserveer in enkele stappen met uw spaartegoed!' }}">
 	<meta http-equiv="Cache-control" content="max-age=2592000, public">
 	<script src="{{ asset('js/jquery-2-2-4.js') }} "></script>
+    <script src="{{ asset('js/jquery.cookie.min.js') }} "></script>
 	<script>
 	  var baseUrl = {!! json_encode(url('/')."/") !!};
 
@@ -67,6 +71,10 @@
 
 
 <body {{ (Route::getCurrentRoute()->uri() == '/') ? 'class="index"' : '' }} id="app">
+
+    {{--Language Converter--}}
+    @include('template.google-translate')
+
 
     <div id="searchFull" style="display: none;">
         <?php echo Form::open(array('url' => 'search-redirect', 'class' => 'ui form', 'method' => 'post')) ?>
@@ -382,6 +390,25 @@
 	}
 
     });
+    </script>
+    <script>
+        $('.change-login-user-language').click(function(e){
+            e.preventDefault();
+            var link = $(this).attr('href');
+
+            swal({
+                    title: "",
+                    text: "Wil je deze taal als je standaardtaal?",
+                    type: "info",
+                    showCancelButton: true,
+                    cancelButtonText: 'Nee',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'Ja'
+                },
+                function(){
+                    window.location.href = link;
+                });
+        });
     </script>
 
      @stack('inner_scripts')

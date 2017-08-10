@@ -1,6 +1,13 @@
  @php
    $isGrey = ( Route::getCurrentRoute()->uri() != '/')
  @endphp
+ @if(isset($userAuth->lang) && !empty($userAuth->lang))
+	 {{-- */$lang=$userAuth->lang;/* --}}
+ @elseif(Session::has('language'))
+	 {{-- */$lang=Session::get('language');/* --}}
+ @else
+	 {{-- */$lang='nl';/* --}}
+ @endif
  <header id="navigation" class="root-sec white nav {{ (($isGrey) ) ? 'header_grey' : '' }} "> <!--   -->
 			<div class="container">
 				<div class="row">
@@ -30,15 +37,15 @@
 										  <a href="{{ url('/faq') }}" class="question" title="Help"><div class="header_icons"><img src="{{ asset('images/help_icon.png') }}" alt="question"></div> </a>
 										</li>
 										<li>
-											<a class="dropdown-button blog-submenu-init" id="language" href="#!" data-activates="dropdown1">
-												<img src="{{ asset('images/flag.png') }}" alt="flag"> NL <i class="fa fa-angle-down" aria-hidden="true"></i>
+											<a class="dropdown-button blog-submenu-init notranslate" id="language" href="#!" data-activates="dropdown1">
+												<img src="{{ asset('images/flags/') }}/{{ $lang }}.png" alt="flag"> {{ strtoupper($lang) }} <i class="fa fa-angle-down" aria-hidden="true"></i>
 											</a>
-											<ul id="dropdown1" class="inline-menu submenu-ul dropdown-content">
-												 <li><a href="{{ url('setlang/nl?redirect='.Request::url()) }}" data-value="nl" class="item"><i class="nl flag"></i> NL</a></li>
-												 <li><a href="{{ url('setlang/en?redirect='.Request::url()) }}" data-value="en" class="item"><i class="gb flag"></i> EN</a></li>
-												 <li><a href="{{ url('setlang/be?redirect='.Request::url()) }}" data-value="be" class="item"><i class="be flag"></i> BE</a></li>
-												 <li><a href="{{ url('setlang/de?redirect='.Request::url()) }}" data-value="de" class="item"><i class="de flag"></i> DE</a></li>
-												 <li><a href="{{ url('setlang/fr?redirect='.Request::url()) }}" data-value="fr" class="item"><i class="fr flag"></i> FR</a></li>
+											<ul id="dropdown1" class="inline-menu submenu-ul dropdown-content notranslate">
+												 <li><a href="{{ url('setlang/nl?redirect='.Request::url()) }}" data-value="nl" class="item {{ isset($userInfo->id) ? 'change-login-user-language' : '' }}"><i class="nl flag"></i> NL</a></li>
+												 <li><a href="{{ url('setlang/en?redirect='.Request::url()) }}" data-value="en" class="item {{ isset($userInfo->id) ? 'change-login-user-language' : '' }}"><i class="gb flag"></i> EN</a></li>
+												 <li><a href="{{ url('setlang/be?redirect='.Request::url()) }}" data-value="be" class="item {{ isset($userInfo->id) ? 'change-login-user-language' : '' }}"><i class="be flag"></i> BE</a></li>
+												 <li><a href="{{ url('setlang/de?redirect='.Request::url()) }}" data-value="de" class="item {{ isset($userInfo->id) ? 'change-login-user-language' : '' }}"><i class="de flag"></i> DE</a></li>
+												 <li><a href="{{ url('setlang/fr?redirect='.Request::url()) }}" data-value="fr" class="item {{ isset($userInfo->id) ? 'change-login-user-language' : '' }}"><i class="fr flag"></i> FR</a></li>
 											</ul>
 										</li>
 										<li>
