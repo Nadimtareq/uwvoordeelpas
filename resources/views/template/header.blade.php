@@ -1,6 +1,6 @@
  @php
    $isGrey = ( Route::getCurrentRoute()->uri() != '/');
-   $headerImg = request()->has("layout") && request()->get("layout") === "grid";
+   $headerImg = (request()->has("layout") && request()->get("layout") == "grid") ? true : false;
  @endphp
  @if(isset($userAuth->lang) && !empty($userAuth->lang))
 	 {{-- */$lang=$userAuth->lang;/* --}}
