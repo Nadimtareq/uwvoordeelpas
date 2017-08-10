@@ -153,7 +153,7 @@
                             @endif
                         @endif
 
-                        <p class="hidden-xs">{!! strip_tags($deal->description, '<b>')!!}</p>
+                        <p class="hidden-xs">{!! strip_tags($deal->description, '<b><font>')!!}</p>
                         @if($count_persons < $deal->total_amount)
                             <div class="wr">
                                 <?php

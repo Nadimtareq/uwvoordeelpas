@@ -140,7 +140,7 @@ dd($deal2->company());
                 @endif
             </div>
 
-            <p>{{ str_limit($data->description, (isset($limitChar) ? $limitChar : 210)) }}</p>
+            <p>{{ str_limit(strip_tags($data->description,'<br>'), (isset($limitChar) ? $limitChar : 210)) }}</p>
 
             {!!
                 $companyReservation->getTimeCarousel(

@@ -1,4 +1,4 @@
-html {
+﻿html {
     font-size: 1em;
 }
 
@@ -2398,7 +2398,7 @@ ul.side-nav2 li:hover {
 
 .menu {
     border-bottom: 1px solid #ccccff;
-    padding-bottom: 10px;
+    padding-bottom: 35px;
     display: inline-block;
     width: 100%;
 }
@@ -2413,7 +2413,7 @@ ul.side-nav2 li:hover {
 h2.title {
     font: 24px 'LatoRegular';
     color: #333399;
-    margin: 10px 0 18px 0;
+    margin: 0 0 18px 0;
 }
 
 .menu .left_m .price {
@@ -2447,7 +2447,7 @@ h2.title {
 }
 
 .menu .right_m {
-    margin: 1px 0 28px 0;
+    margin: 31px 0 28px 0;
 }
 
 .menu .right_m span.old {
@@ -5159,15 +5159,13 @@ img.thumbnails {
 }
 
 .deals-list-page .left_m {
-    /* width: 48%; */
+    width: 48%;
     float: left;
-    margin-top: 20px;
 }
 
 .deals-list-page .right_m {
-    /* width: 48%; */
+    width: 48%;
     float: left;
-    margin-top: 20px;
 }
 
 .shop .up .start ul.list li p {

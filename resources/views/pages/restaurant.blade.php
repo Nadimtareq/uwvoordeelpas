@@ -203,20 +203,24 @@ while ($st->lte($dt)) {
                     <div id="t2" style="display: none;">
                     @if(isset($deals) && count($deals))
                         @foreach($deals as $deal)
+                        <div class="row">
                             <!-- Menu -->
+                                <div class="col-sm-12">
                                 <div class="menu deals-list-page">
+                                 {{--  <h2 class="title">{{ $deal->name }}</h2>  --}}
+                                  <div class="col-sm-5">
                                     <div class="left_m">
-                                        <h2>{{ $deal->name }}</h2>
+                                       
                                         @if($deal->image!='')
                                             <a href="{{ url('future-deal/'.$company->slug).'?deal='.$deal->id }}"> <img
                                                         src="{{ asset('images/deals/'.$deal->image) }}"
-                                                        alt="No Image Found" width="400px">
+                                                        alt="No Image Found" class="img-responsive">
                                             </a>
 
                                         @else
                                             <a href="{{ url('future-deal/'.$company->slug).'?deal='.$deal->id }}"> <img
                                                         src="{{ asset('images/deals/no-img.jpg') }}"
-                                                        alt="No Image Found" width="400px">
+                                                        alt="No Image Found" class="img-responsive">
                                             </a>
 
                                         @endif
@@ -225,14 +229,20 @@ while ($st->lte($dt)) {
                                                     <li><span>Korting<i>50%</i></span></li>
                                                         </ul>--}}
                                     </div>
+                                    </div>
+                                <div class="col-sm-7">
+                                <div class="row">
+                                <div class="col-xs-12">
                                     <div class="right_m">
+                                    <div style="display: block">
                                         @if($deal->price_from > 0.00)
-                                            <span>&euro; {{ $deal->price_from }}
+                                          <span class="old">  &euro; {{ $deal->price_from }}</span>
                                         @endif
-                                        <strong>&euro; {{ $deal->price }}</strong></span>
-                                        <b class="up">
-                                            <?php echo html_entity_decode($deal->description); ?>
-                                        </b>
+                                        <strong class="new">&euro; {{ $deal->price }}</strong>
+                                        </div>
+                                        <p class="up" style="color: #666 !important;">
+                                            <?php echo strip_tags($deal->description); ?>
+                                        </p>
                                     </div>
                                     @if(!is_null($deal->getApprovedReviews))
                                         <?php
@@ -253,9 +263,14 @@ while ($st->lte($dt)) {
                                                     </div>
                                                 </div>
                                             </div>
+                                    
                                             <?php $count++; ?>
                                         @endforeach
                                     @endif
+                                    </div>
+                                    </div>
+                                    <div class="row">
+                                    <div class="col-xs-12">
                                     @if(count($deals)==1)
                                         <div id="koop">
                                             <a class="more"
@@ -269,6 +284,11 @@ while ($st->lte($dt)) {
                                                 </a>
                                             @endif
                                         </div>
+                                        </div>
+                                </div>
+                                </div>
+                                </div>
+                                </div><!-- End of ROw -->
                                         @endforeach
                                     @endif
                                 </div>
