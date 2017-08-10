@@ -73,7 +73,7 @@
             </div>
             <div class="five wide column"> 
                 <div class="field">
-                    <label>Personen }</label>
+                    <label>Personen</label>
 
                     
 
@@ -89,7 +89,7 @@
                                 <div class="item" data-value="{{$j}}"> {{$j}}</div>
                                 @endfor  --}}
                             <?php
-                             for ($i = 1; $i < $futureDeal->persons_remain; $i++) {
+                             for ($i = 1; $i <= $futureDeal->persons_remain; $i++) {
                                 ?>
                                 <div class="item" data-value="<?php echo $i; ?>"><?php echo $i; ?></div>
                                 <?php
