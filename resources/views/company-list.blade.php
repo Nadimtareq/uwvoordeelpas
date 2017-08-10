@@ -1,4 +1,9 @@
 <?php use App\Http\Controllers\HomeController; $i = 0; ?>
+<style>
+.thumbnails{
+		width: 300px !important;
+	}
+</style>
 
 @inject('discountHelper', 'App\Helpers\DiscountHelper')
 @inject('companyReservation', 'App\Models\companyReservation')
