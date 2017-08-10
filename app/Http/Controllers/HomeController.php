@@ -394,13 +394,11 @@ class HomeController extends Controller
             $media = $city->getMedia();
 
             //Check of file exits with file_exits() against using CURL in app/Helpers/FileHelper.php
-            // if (isset($media[0]))
-            //     if(file_exists($media[0]->getUrl('thumb')))
-            //         $city->media = url(''.$media[0]->getUrl('thumb'));
-            //     else
-            //         $city->media = url('images/placeholdimage.png');
-            // else
-                $city->media = url('images/placeholdimage.png');
+            if (isset($media[0]) && file_exists($media[0]->getUrl('thumb')))
+                    $city->media = url(''.$media[0]->getUrl('thumb'));                
+            else
+                $city->media = "No Image";
+                // $city->media = url('images/placeholdimage.png');
         }
 
         return view('pages/home', [
