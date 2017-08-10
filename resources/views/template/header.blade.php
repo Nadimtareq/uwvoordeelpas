@@ -1,4 +1,8 @@
+<<<<<<< HEAD
  <?php
+=======
+ @php
+>>>>>>> 5442328aa39ceed8e8cdd5c50aeb82ff234eae5a
    $isGrey = ( Route::getCurrentRoute()->uri() != '/');
    $headerImg = request()->has("layout") && request()->get("layout") === "grid";
 
@@ -10,7 +14,12 @@
  @else
 	 {{-- */$lang='nl';/* --}}
  @endif
+<<<<<<< HEAD
  <header id="navigation" class="{{ $headerImg ? '' : 'root-sec white nav' .  (($isGrey) ) ? 'header_grey' : '' }} "> <!--   -->
+=======
+ <header id="navigation" class="{{ $headerImg ? "" : "root-sec white nav" .  (($isGrey) ) ? 'header_grey' : '' }} "> <!--   -->
+     <div class="{{ $headerImg ? "header" : "" }}">
+>>>>>>> 5442328aa39ceed8e8cdd5c50aeb82ff234eae5a
 			<div class="container">
 				<div class="row">
 					<div class="col-sm-12">
