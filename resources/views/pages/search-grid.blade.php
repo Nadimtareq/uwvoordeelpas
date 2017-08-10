@@ -175,9 +175,9 @@
                                                     <button type="button" class="price_rate">
 
                                                         @if($deal->price_from >= 1)
-                                                            <span class="price">
+                                                            <del class="price">
                                                                 &euro; {{ $deal->price_from }}
-                                                            </span>
+                                                            </del> &nbsp; &nbsp;
                                                         @else
                                                             <span class="price price_min_box"></span>
                                                         @endif
