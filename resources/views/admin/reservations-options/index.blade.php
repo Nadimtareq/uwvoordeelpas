@@ -24,7 +24,7 @@
 
             <div class="right floated sixteen wide mobile eleven wide computer column">
                 <div class="ui grid">
-                    <div class="five column row">
+                    <div class="five column row" id="reservation-option-dropdown">
                         <div class="column">
                             @if ($admin)
                             <div class="ui normal icon search selection fluid dropdown">
@@ -81,7 +81,7 @@
                     </div>
                 </div>
             </div>
-            <div class="sixteen wide mobile sixteen wide computer column">
+            <div class="sixteen wide mobile sixteen wide computer column" id="reservation-option-search-form">
             <form method="get" action="{{ url('admin/'.$slugController.'?'.http_build_query($queryString)) }}">
                 <div class="ui input">
                     <?php
@@ -115,7 +115,7 @@
                 </div>
                 <button class="ui button" type="submit"><i class="search icon"></i></button>
             </form>
-        </div>
+            </div>
         </div>
     </div>
 

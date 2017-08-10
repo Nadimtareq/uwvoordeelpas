@@ -15088,3 +15088,10 @@ button.btn-success.pull-right span i { color: #fff; font-size: 15px; }
 
         a #registerButton3  { color: #4183c4 !important; text-decoration: none; }
         a#registerButton3:hover { color: #1e70bf !important; text-decoration: none; }
+
+
+@media only screen and (max-width: 767px){
+    #reservation-option-dropdown .column, #reservation-option-search-form .input{
+        width: 100% !important;
+    }
+}
