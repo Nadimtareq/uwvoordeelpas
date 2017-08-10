@@ -1203,9 +1203,15 @@ class HomeController extends Controller
             alert()->error('', 'Er zijn geen zoekresultaten gevonden met uw selectiecriteria.')->persistent('Sluiten');
 
             return Redirect::to('/index');
-        }   
+        }
 
-        return view('pages/search', [
+
+        if (request()->has("layout") && request()->get("layout") === "grid")
+            $searchPage = "pages/search-grid";
+        else
+            $searchPage = "pages/search";
+
+        return view($searchPage, [
             'companies' => $companies,
             'affiliates' => $this->affiliates,
             'countCompanies' => $countCompanies,
