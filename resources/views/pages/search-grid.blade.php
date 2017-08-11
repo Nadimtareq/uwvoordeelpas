@@ -4,9 +4,9 @@
 @inject('discountHelper', 'App\Helpers\DiscountHelper')
 @inject('companyReservation', 'App\Models\companyReservation')
 @inject('FileHelper', 'App\Helpers\FileHelper')
-<?php use App\Http\Controllers\HomeController; $i = 0; ?>
 
-@section("header_picture")
+<?php use App\Http\Controllers\HomeController; $i = 0; ?>
+ @section("header_picture")
     <div class="back_slideer_mnu">
         <div class="container">
             <div class="row">
@@ -25,82 +25,12 @@
             </div>
         </div>
     </div>
-@endsection
+@endsection 
 @section('content')
     <section>
         <div class="filter_sec">
             <div class="container">
-                <div class="row">
-                    <div class="col-md-12 text-center">
-                        <div class="filter_main_inner">
-                            <?php echo Form::open(array('url' => 'preferences', 'method' => 'post', 'class' => 'ui form')); ?>
-
-                            @if(Request::has('date'))
-                                <input type="hidden" name="date" value="<?php echo Request::get('date'); ?>" />
-                            @endif
-
-                            @if(Request::has('time'))
-                                <input type="hidden" name="time" value="<?php echo Request::get('time'); ?>" />
-                            @endif
-
-                            @if(Request::has('time'))
-                                <input type="hidden" name="time_format" value="<?php echo date('Hi', strtotime(Request::get('time'))); ?>" />
-                            @endif
-                            <input type="hidden" id="typePage" name="typePage" value="1" />
-                            <input type="hidden" name="q" value="<?php echo Request::get('q'); ?>" />
-                            @if(Request::has('persons'))
-                                <input type="hidden" name="persons" value="<?php echo Request::get('persons'); ?>" />
-                            @endif
-
-
-                            <div class="drop-menu">
-                                {{ Form::select('preference[]',
-                                   (isset($preference[1]) ? $preference[1] : array()),
-                                   (Request::has('preference') ? Request::get('preference') : ''),
-                                   array('class' => 'multipleSelect', 'data-placeholder' => 'Voorkeuren', 'multiple' => 'multiple')) }}
-                            </div>
-                            <div class="drop-menu">
-                                {{  Form::select('kitchen[]',
-                                                (isset($preference[2]) ? $preference[2] : array()),
-                                                (Request::has('kitchen') ? Request::get('kitchen') : ''),
-                                                array('class' => 'multipleSelect', 'data-placeholder' => 'Keuken', 'multiple' => 'multiple')) }}
-                            </div>
-                            <div class="drop-menu">
-                                {{ Form::select('price[]',
-                                                        (isset($preference[4]) ? $preference[4] : array()),
-                                                        (Request::has('price') ? Request::get('price') : ''),
-                                                        array('class' => 'multipleSelect', 'data-placeholder' => 'Soort', 'multiple' => 'multiple')) }}
-                            </div>
-                            <div class="drop-menu">
-                                {{ Form::select('discount[]',
-                                                       (isset($preference[5]) ? $preference[5] : array()),
-                                                       (Request::has('discount') ? Request::get('discount') : ''),
-                                                       array('class' => 'multipleSelect', 'data-placeholder' => 'Korting', 'multiple' => 'multiple')) }}
-                            </div>
-                            <div class="drop-menu">
-
-                                {{ Form::select('allergies[]',
-                                                                (isset($preference[3]) ? $preference[3] : array()),
-                                                                (Request::has('allergies') ? Request::get('allergies') : ''),
-                                                                array('class' => 'multipleSelect', 'data-placeholder' => 'Allergieen', 'multiple' => 'multiple')) }}
-                                {{--<div class="select">--}}
-                                    {{--<span>Allergies</span>--}}
-                                    {{--<i class="fa fa-chevron-down"></i>--}}
-                                {{--</div>--}}
-                                {{--<input type="hidden" name="gender">--}}
-                                {{--<ul class="dropeddown">--}}
-                                    {{--<li id="male">1 Allergies</li>--}}
-                                    {{--<li id="female">2 Allergies</li>--}}
-                                {{--</ul>--}}
-                            </div>
-                            <button class="btn btn-link btn-filter">
-                                <img src="images/filter_img.png" class="filter_img" alt="img">
-                            </button>
-
-                            <?php echo Form::close() ?>
-                        </div>
-                    </div>
-                </div>
+                @include('pages.search-filter')
             </div>
         </div>
     </section>
@@ -126,7 +56,7 @@
                                 <div class="col-md-12">
                                     @endif
 
-                                    <div class="col-md-4 wow fadeInLeft">
+                                    <div class="col-md-4 col-xs-12 wow fadeInLeft">
                                         <div class="back_pric_ground company"
                                              data-kitchen="{{ is_array(json_decode($data->kitchens)) ? str_slug(json_decode($data->kitchens)[0]) : '' }}"
                                              data-url="{{ url('restaurant/'.$data->slug) }}"
@@ -352,7 +282,7 @@
             top: 0;
         }
         .back_slideer_mnu {
-            margin-top: 40px;
+            margin-top: 0px;
         }
     </style>
 @endsection

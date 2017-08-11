@@ -1997,10 +1997,11 @@ ul.side-nav2 li:hover {
     text-transform: uppercase;
     text-align: center;
     color: #fff;
-    font: 24px 'LatoRegular';
+    font: 12px 'LatoRegular';
     display: inline-block;
     vertical-align: top;
-    padding: 15px 35px;
+    padding: 21px 5px;
+    /* padding-top: 21px; */
     margin: 0 0 0 -2px;
     background-color: transparent;
     border: none;
@@ -2065,12 +2066,12 @@ ul.side-nav2 li:hover {
     border: none;
     height: auto;
     border-radius: 0px;
-    padding: 21px 0;
+    padding-top: 21px;
     width: 60px;
 }
 
 .quantity-expand {
-    width: 95px;
+    width: 105px;
 }
 
 .quantity:focus {
@@ -2405,7 +2406,7 @@ ul.side-nav2 li:hover {
 
 .menu .left_m {
     float: left;
-    margin: 0 21px 0 0;
+    margin: 0;
     position: relative;
 }
 
@@ -2413,7 +2414,7 @@ ul.side-nav2 li:hover {
 h2.title {
     font: 24px 'LatoRegular';
     color: #333399;
-    margin: 10px 0 18px 0;
+    margin: 10px 20px 8px 20px;
 }
 
 .menu .left_m .price {
@@ -2447,7 +2448,7 @@ h2.title {
 }
 
 .menu .right_m {
-    margin: 1px 0 28px 0;
+    margin: 0px 0 28px 0;
 }
 
 .menu .right_m span.old {
@@ -2470,6 +2471,8 @@ h2.title {
 .menu .right_m b.up {
     font: 14px 'LatoRegular';
     display: inline;
+    color: #333;
+    text-align: justify !important;
 }
 
 .menu .right_m b {
@@ -2480,7 +2483,7 @@ h2.title {
 }
 
 .menu .right_m p {
-    color: #cccccc;
+    color: #666;
     font: 14px 'LatoLight';
 }
 
@@ -5060,7 +5063,7 @@ img.thumbnails {
 }
 
 .space-header {
-    padding-top: 70px;
+    padding-top: 0px;
     padding-bottom: 50px;
 }
 
@@ -5496,16 +5499,20 @@ tbody tr td {
     margin-bottom: 15px;
 }
 
-.search-layout a, .search-layout span {
+.search-layout a,
+.search-layout span {
     padding: 0 5px;
     color: #787878;
 }
+
 .drop-menu:focus {
     outline: none;
 }
+
 .jquery-select-trigger {
     padding: 6px;
 }
+
 button.btn.btn-link.btn-filter {
     padding: 0;
     box-shadow: none;

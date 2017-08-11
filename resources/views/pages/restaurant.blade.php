@@ -207,7 +207,7 @@ while ($st->lte($dt)) {
                             <!-- Menu -->
                                 <div class="col-sm-12">
                                 <div class="menu deals-list-page">
-                                 {{--  <h2 class="title">{{ $deal->name }}</h2>  --}}
+                                  <h2 class="title">{{ $deal->name }}</h2> 
                                   <div class="col-sm-5">
                                     <div class="left_m">
                                        
@@ -233,17 +233,17 @@ while ($st->lte($dt)) {
                                 <div class="col-sm-7">
                                 <div class="row">
                                 <div class="col-xs-12">
-                                    <div class="right_m">
+                                    <b class="right_m">
                                     <div style="display: block">
                                         @if($deal->price_from > 0.00)
                                           <span class="old">  &euro; {{ $deal->price_from }}</span>
                                         @endif
                                         <strong class="new">&euro; {{ $deal->price }}</strong>
                                         </div>
-                                        <p class="up" style="color: #666 !important;">
+                                        <b class="up">
                                             <?php echo strip_tags($deal->description); ?>
-                                        </p>
-                                    </div>
+                                        </b>
+                                    
                                     @if(!is_null($deal->getApprovedReviews))
                                         <?php
                                         $count = 1;

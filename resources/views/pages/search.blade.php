@@ -3,82 +3,35 @@
 {{--*/ $pageTitle = 'Zoeken' /*--}}
 
 @section('content')
+    <div class="back_slideer_mnu">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="wow bounceInDown  text-center">
+                        <h1>Activeer de spaarhulp en ontvang direct €5.-</h1>
+                        <p class="text-center">Spaar nu automatisch bij wel 2000+ webshops.
+                            Deze betalen u tot wel 10% dinertegoed bij iedere aankoop!</p>
+                        <button type="button" class="want_to_save">Ja ik wil ook sparen!</button>
+                    </div>
+                    <div class="drop_icon_show">
+                        <a href=""><i class="fa fa-chevron-down"></i></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
     <script type="javascript">
         var searchPage = 1;
     </script>
     <div class="clearfix"></div>
     <div class="filter_sec">
         <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <div class="filter_main_inner">
-                        <?php echo Form::open(array('url' => 'preferences', 'method' => 'post', 'class' => 'ui form')); ?>
-
-                        @if(Request::has('date'))
-                            <input type="hidden" name="date" value="<?php echo Request::get('date'); ?>" />
-                        @endif
-
-                        @if(Request::has('time'))
-                            <input type="hidden" name="time" value="<?php echo Request::get('time'); ?>" />
-                        @endif
-
-                        @if(Request::has('time'))
-                            <input type="hidden" name="time_format" value="<?php echo date('Hi', strtotime(Request::get('time'))); ?>" />
-                        @endif
-                        <input type="hidden" id="typePage" name="typePage" value="1" />
-                        <input type="hidden" name="q" value="<?php echo Request::get('q'); ?>" />
-                        @if(Request::has('persons'))
-                            <input type="hidden" name="persons" value="<?php echo Request::get('persons'); ?>" />
-                        @endif
-
-
-                        <div class="drop-menu">
-                            {{ Form::select('preference[]',
-                               (isset($preference[1]) ? $preference[1] : array()),
-                               (Request::has('preference') ? Request::get('preference') : ''),
-                               array('class' => 'multipleSelect', 'data-placeholder' => 'Voorkeuren', 'multiple' => 'multiple')) }}
-                        </div>
-                        <div class="drop-menu">
-                            {{  Form::select('kitchen[]',
-                                            (isset($preference[2]) ? $preference[2] : array()),
-                                            (Request::has('kitchen') ? Request::get('kitchen') : ''),
-                                            array('class' => 'multipleSelect', 'data-placeholder' => 'Keuken', 'multiple' => 'multiple')) }}
-                        </div>
-                        <div class="drop-menu">
-                            {{ Form::select('price[]',
-                                                    (isset($preference[4]) ? $preference[4] : array()),
-                                                    (Request::has('price') ? Request::get('price') : ''),
-                                                    array('class' => 'multipleSelect', 'data-placeholder' => 'Soort', 'multiple' => 'multiple')) }}
-                        </div>
-                        <div class="drop-menu">
-                            {{ Form::select('discount[]',
-                                                   (isset($preference[5]) ? $preference[5] : array()),
-                                                   (Request::has('discount') ? Request::get('discount') : ''),
-                                                   array('class' => 'multipleSelect', 'data-placeholder' => 'Korting', 'multiple' => 'multiple')) }}
-                        </div>
-                        <div class="drop-menu">
-
-                            {{ Form::select('allergies[]',
-                                                            (isset($preference[3]) ? $preference[3] : array()),
-                                                            (Request::has('allergies') ? Request::get('allergies') : ''),
-                                                            array('class' => 'multipleSelect', 'data-placeholder' => 'Allergieen', 'multiple' => 'multiple')) }}
-                            {{--<div class="select">--}}
-                            {{--<span>Allergies</span>--}}
-                            {{--<i class="fa fa-chevron-down"></i>--}}
-                            {{--</div>--}}
-                            {{--<input type="hidden" name="gender">--}}
-                            {{--<ul class="dropeddown">--}}
-                            {{--<li id="male">1 Allergies</li>--}}
-                            {{--<li id="female">2 Allergies</li>--}}
-                            {{--</ul>--}}
-                        </div>
-                        <button class="btn btn-link btn-filter" style="background: transparent;">
-                            <img src="images/filter_img.png" class="filter_img" alt="img">
-                        </button>
-
-                        <?php echo Form::close() ?>
-                    </div>
-                </div>
+          
+                
+                    @include('pages.search-filter')
+                 
+              
             </div>
         </div>
     </div>
@@ -138,7 +91,7 @@
             <div class="col-sm-12 col-ms1">
                 <div class="col-sm-3 col5">
                     @if (count($companies) >= 1)
-
+{{--  
                         <div class="search-layout">
                             <div class="pull-right">
 
@@ -153,7 +106,7 @@
                                 </a>
 
                             </div>
-                        </div>
+                        </div>  --}}
 
                         @include('company-list')
 
