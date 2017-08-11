@@ -259,14 +259,14 @@ body {
     background-attachment: fixed;
     background-image: url("../images/home-bg-sq.png");
     background-repeat: no-repeat;
-    background-size: 100% auto;
+    background-size: cover;
     float: left;
     /* margin-top: 76px; */
     padding: 60px 0;
     width: 100%;
     margin-top: 0px;
     height: 400px;
-    padding-bottom: 50px;
+    padding-top: 100px;
 }
 
 .back_slideer_mnu h1 {
@@ -523,7 +523,7 @@ body {
 @media screen and (max-width:1088px) {
     .back_slideer_mnu {
         background-attachment: local;
-        margin-top: 76px;
+        /* margin-top: 76px; */
         padding: 60px 0;
         width: 100%;
     }
@@ -532,7 +532,7 @@ body {
 @media screen and (max-width:991px) {
     .back_slideer_mnu {
         background-attachment: local;
-        margin-top: 76px;
+        /* margin-top: 76px; */
         padding: 60px 0;
         width: 100%;
     }
@@ -547,7 +547,7 @@ body {
     }
     .back_slideer_mnu {
         background-attachment: local;
-        margin-top: 76px;
+        /* margin-top: 76px; */
         padding: 30px 0;
         width: 100%;
     }
@@ -578,7 +578,7 @@ body {
         background-attachment: local;
         background-size: cover;
         height: 100%;
-        margin-top: 76px;
+        /* margin-top: 76px; */
         padding: 30px 0;
         width: 100%;
     }
