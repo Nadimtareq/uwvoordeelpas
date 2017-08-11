@@ -1,6 +1,6 @@
  @php
    $isGrey = ( Route::getCurrentRoute()->uri() != '/'); 
-   $headerImg = (request()->has("layout") && request()->get("layout") == "grid") ? true : false;
+   $headerImg = request()->has("layout") ? true : false;
  @endphp
  @if(isset($userAuth->lang) && !empty($userAuth->lang))
 	 {{-- */$lang=$userAuth->lang;/* --}}
@@ -9,8 +9,14 @@
  @else
 	 {{-- */$lang='nl';/* --}}
  @endif
- <header id="navigation" class="root-sec white nav header"> <!--   -->
-     <div class="{{ $headerImg ? "header" : "" }}">
+ @if($headerImg)
+ 	<header> <!--   -->
+	 @else
+		 <header id=navigation" class="root-sec white nav header">
+	 @endif
+	 @if($headerImg)
+     	<div class="header">
+	 @endif
 			<div class="container">
 				<div class="row">
 					<div class="col-sm-12">
@@ -61,7 +67,9 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	@if($headerImg)
+		</div>
+ 	@endif
 @yield("header_picture")
 <!-- .container end -->
 </header>

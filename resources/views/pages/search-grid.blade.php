@@ -12,10 +12,10 @@
             <div class="row">
                 <div class="col-md-12 text-center">
                     <div class="wow bounceInDown">
-                        <h1>Activate the savings and get immediate $ 5.-</h1>
-                        <p>Save now at 2000+ webshops automatically.<br>
-                            These will pay you up to 10% dinner on each purchase!</p>
-                        <button type="button" class="want_to_save">Yes, I also want to save</button>
+                        <h1>Activeer de spaarhulp en ontvang direct €5.-</h1>
+                        <p>Spaar nu automatisch bij wel 2000+ webshops.
+                            Deze betalen u tot wel 10% dinertegoed bij iedere aankoop!</p>
+                        <button type="button" class="want_to_save">Ja ik wil ook sparen!</button>
                     </div>
                     <div class="drop_icon_show">
                         <a href=""><i class="fa fa-chevron-down"></i></a>
@@ -33,62 +33,71 @@
                 <div class="row">
                     <div class="col-md-12 text-center">
                         <div class="filter_main_inner">
+                            <?php echo Form::open(array('url' => 'preferences', 'method' => 'post', 'class' => 'ui form')); ?>
+
+                            @if(Request::has('date'))
+                                <input type="hidden" name="date" value="<?php echo Request::get('date'); ?>" />
+                            @endif
+
+                            @if(Request::has('time'))
+                                <input type="hidden" name="time" value="<?php echo Request::get('time'); ?>" />
+                            @endif
+
+                            @if(Request::has('time'))
+                                <input type="hidden" name="time_format" value="<?php echo date('Hi', strtotime(Request::get('time'))); ?>" />
+                            @endif
+                            <input type="hidden" id="typePage" name="typePage" value="1" />
+                            <input type="hidden" name="q" value="<?php echo Request::get('q'); ?>" />
+                            @if(Request::has('persons'))
+                                <input type="hidden" name="persons" value="<?php echo Request::get('persons'); ?>" />
+                            @endif
+
+
                             <div class="drop-menu">
-                                <div class="select">
-                                    <span>City</span>
-                                    <i class="fa fa-chevron-down"></i>
-                                </div>
-                                <input type="hidden" name="gender">
-                                <ul class="dropeddown">
-                                    <li id="male">1 city</li>
-                                    <li id="female">2 city</li>
-                                </ul>
+                                {{ Form::select('preference[]',
+                                   (isset($preference[1]) ? $preference[1] : array()),
+                                   (Request::has('preference') ? Request::get('preference') : ''),
+                                   array('class' => 'multipleSelect', 'data-placeholder' => 'Voorkeuren', 'multiple' => 'multiple')) }}
                             </div>
                             <div class="drop-menu">
-                                <div class="select">
-                                    <span>Preferences</span>
-                                    <i class="fa fa-chevron-down"></i>
-                                </div>
-                                <input type="hidden" name="gender">
-                                <ul class="dropeddown">
-                                    <li id="male">1 Preferences</li>
-                                    <li id="female">2 Preferences</li>
-                                </ul>
+                                {{  Form::select('kitchen[]',
+                                                (isset($preference[2]) ? $preference[2] : array()),
+                                                (Request::has('kitchen') ? Request::get('kitchen') : ''),
+                                                array('class' => 'multipleSelect', 'data-placeholder' => 'Keuken', 'multiple' => 'multiple')) }}
                             </div>
                             <div class="drop-menu">
-                                <div class="select">
-                                    <span>Kitchen</span>
-                                    <i class="fa fa-chevron-down"></i>
-                                </div>
-                                <input type="hidden" name="gender">
-                                <ul class="dropeddown">
-                                    <li id="male">1 Kitchen</li>
-                                    <li id="female">2 Kitchen</li>
-                                </ul>
+                                {{ Form::select('price[]',
+                                                        (isset($preference[4]) ? $preference[4] : array()),
+                                                        (Request::has('price') ? Request::get('price') : ''),
+                                                        array('class' => 'multipleSelect', 'data-placeholder' => 'Soort', 'multiple' => 'multiple')) }}
                             </div>
                             <div class="drop-menu">
-                                <div class="select">
-                                    <span>Type</span>
-                                    <i class="fa fa-chevron-down"></i>
-                                </div>
-                                <input type="hidden" name="gender">
-                                <ul class="dropeddown">
-                                    <li id="male">1 Type</li>
-                                    <li id="female">2 Type</li>
-                                </ul>
+                                {{ Form::select('discount[]',
+                                                       (isset($preference[5]) ? $preference[5] : array()),
+                                                       (Request::has('discount') ? Request::get('discount') : ''),
+                                                       array('class' => 'multipleSelect', 'data-placeholder' => 'Korting', 'multiple' => 'multiple')) }}
                             </div>
                             <div class="drop-menu">
-                                <div class="select">
-                                    <span>Allergies</span>
-                                    <i class="fa fa-chevron-down"></i>
-                                </div>
-                                <input type="hidden" name="gender">
-                                <ul class="dropeddown">
-                                    <li id="male">1 Allergies</li>
-                                    <li id="female">2 Allergies</li>
-                                </ul>
+
+                                {{ Form::select('allergies[]',
+                                                                (isset($preference[3]) ? $preference[3] : array()),
+                                                                (Request::has('allergies') ? Request::get('allergies') : ''),
+                                                                array('class' => 'multipleSelect', 'data-placeholder' => 'Allergieen', 'multiple' => 'multiple')) }}
+                                {{--<div class="select">--}}
+                                    {{--<span>Allergies</span>--}}
+                                    {{--<i class="fa fa-chevron-down"></i>--}}
+                                {{--</div>--}}
+                                {{--<input type="hidden" name="gender">--}}
+                                {{--<ul class="dropeddown">--}}
+                                    {{--<li id="male">1 Allergies</li>--}}
+                                    {{--<li id="female">2 Allergies</li>--}}
+                                {{--</ul>--}}
                             </div>
-                            <img src="images/filter_img.png" class="filter_img" alt="img">
+                            <button class="btn btn-link btn-filter">
+                                <img src="images/filter_img.png" class="filter_img" alt="img">
+                            </button>
+
+                            <?php echo Form::close() ?>
                         </div>
                     </div>
                 </div>
@@ -96,7 +105,7 @@
         </div>
     </section>
 
-
+    <div class="clearfix"></div>
     <section>
         <div class="booking_posting">
             <div class="container">
@@ -113,7 +122,7 @@
                                 continue;
                             ?>
 
-                            @if($index + 1 % 3 == 0)
+                            @if($index + 1 % 3 == 0 || $index == 0)
                                 <div class="col-md-12">
                                     @endif
 
@@ -243,8 +252,8 @@
                                                 {{--<button type="button" class="timing_buton">08:00</button>--}}
                                                 {{--<i class="fa fa-caret-right" aria-hidden="true"></i>--}}
                                                 {{--</div>--}}
-                                                <a href="#" class="more_info_buton">MORE INFO</a>
-                                                <a href="#" class="more_info_buton">BUY DEAL</a>
+                                                <a href="#" class="more_info_buton"><strong>Meer info</strong></a>
+                                                <a href="#" class="more_info_buton"><strong>Koop deal </strong></a>
                                             </div>
                                         </div>
                                     </div>
