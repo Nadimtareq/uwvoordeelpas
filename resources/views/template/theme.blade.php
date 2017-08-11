@@ -28,8 +28,21 @@
 	<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" href="{{ asset('css/material.indigo-pink.min.css') }}">
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
     <style>
+        /*Google translator*/
         .goog-te-banner-frame.skiptranslate{display:none!important;}
+        .goog-tooltip {
+            display: none !important;
+        }
+        .goog-tooltip:hover {
+            display: none !important;
+        }
+        .goog-text-highlight {
+            background-color: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
     </style>
 
 

@@ -61,10 +61,29 @@
 				?>
 			</div>
 		</div>
-
-		<div class="field">
-			<label>Geboortedatum</label>
-			<?php echo Form::text('birthday_at', '', array('class' => 'bdy-datepicker', 'data-value' => $data->birthday_at)); ?>
+		<div class="two fields">
+			<div class="field">
+				<label>Geboortedatum</label>
+				<?php echo Form::text('birthday_at', '', array('class' => 'bdy-datepicker', 'data-value' => $data->birthday_at)); ?>
+			</div>
+			<div class="field">
+                <?php
+                $languages = [
+                    'nl' => 'NL',
+                    'en' => 'EN',
+                    'be' => 'BE',
+                    'de' => 'DE',
+                    'fr' => 'FR'
+                ];
+                ?>
+				<label>Wil je de taal veranderen?</label>
+				<select name="lang" class="ui normal fluid search dropdown notranslate">
+					<option value="" selected="selected" >Language</option>
+					@foreach($languages as $key => $item)
+						<option value="{{$key}}" @if($key == $data->lang)selected="selected"@endif >{{$item}}</option>
+					@endforeach
+				</select>
+			</div>
 		</div>
 
 		<div class="field">
