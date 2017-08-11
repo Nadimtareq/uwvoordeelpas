@@ -148,10 +148,10 @@
 <div class="pusher">
     @if (!Request::has('iframe'))
 
-        @if(isset($search_header) && $search_header)
+        {{--  @if(isset($search_header) && $search_header)
             @include('template.header-search')
             @include('template.slider')
-        @else
+        @else  --}}
             @include('template.header')
             <section>
                 @if (isset($__env->getSections()['slider']))
@@ -160,7 +160,7 @@
                     @include('template.slider')
                 @endif
             </section>
-        @endif
+        {{--  @endif  --}}
 
     @endif
 
