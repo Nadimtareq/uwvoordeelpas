@@ -123,30 +123,31 @@
 				</span>
 
 
-                        <span class="stars"><img src="{{ asset('images/stars.png') }}" alt="stars">5.00</span>
+                        {{--<span class="stars"><img src="{{ asset('images/stars.png') }}" alt="stars">5.00</span>--}}
 
                         <?php
                         if ($data->kitchens != 'null' && $data->kitchens != NULL && $data->kitchens != '[""]') {
                             $kitchens = json_decode($data->kitchens);
-                            echo '<a href="' . url('search?q=' . $kitchens[0]) . '"><i class="food icon"></i> ' . ucfirst($kitchens[0]) . '</a>';
+                            echo '<a href="' . url('search?q=' . $kitchens[0]) . '" style="color: #000"><i class="food icon"></i> ' . ucfirst($kitchens[0]) . '</a>';
                         }
                         ?>
 
                         @if(isset($onFavoritePage))
                             <a href="{{ url('account/favorite/companies/remove/'.$data->id.'/'.$data->slug) }}">
-                                <span><i class="empty star red icon"></i> Verwijder van favorieten</span>
+                                <span style="color: #000"><i class="empty star red icon"></i> Verwijder van favorieten</span>
                             </a>
                         @else
                             @if($userAuth == TRUE)
                                 <a class="save button"
                                    href="{{ url('account/favorite/companies/add/'.$data->id.'/'.$data->slug) }}">
-                                    <span><i class="save icon"></i> Bewaren</span>
+                                    <span style="color: #000"><i class="save icon"></i> Bewaren</span>
                                 </a>
                             @else
                                 <a class="login save button"
                                    href="{{ url('account/favorite/companies/add/'.$data->id.'/'.$data->slug) }}"
                                    data-type-redirect="1"
                                    data-type="login"
+                                   style="color: #000"
                                    data-redirect="{{ url('account/favorite/companies/add/'.$data->id.'/'.$data->slug) }}">
                                     <span><i class="save icon"></i> Bewaren</span>
                                 </a>

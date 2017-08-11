@@ -5490,3 +5490,25 @@ tbody tr td {
 .table.table-bordred {
     margin: 0;
 }
+
+.search-layout {
+    height: 40px;
+    background: #f2f2f2;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.search-layout a, .search-layout span {
+    padding: 0 5px;
+    color: #787878;
+}
+.drop-menu:focus {
+    outline: none;
+}
+.jquery-select-trigger {
+    padding: 6px;
+}
+button.btn.btn-link.btn-filter {
+    padding: 0;
+    box-shadow: none;
+}

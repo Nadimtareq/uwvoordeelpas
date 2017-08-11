@@ -1,3 +1,10 @@
+@if(isset($userAuth->lang) && !empty($userAuth->lang))
+    {{-- */$lang=$userAuth->lang;/* --}}
+@elseif(Session::has('language'))
+    {{-- */$lang=Session::get('language');/* --}}
+@else
+    {{-- */$lang='nl';/* --}}
+@endif
 <a href="#" data-activates="slide-out" class="button-collapse2"><i class="material-icons notranslate material-icons2">menu</i></a>
 
 <ul id="slide-out" class="side-nav2 right-aligned" style="overflow:auto" >
@@ -52,4 +59,28 @@
         <li><a href="{{ url('hoe-werkt-het') }}"><i class="material-icons notranslate">description</i> Hoe werkt het?</a></li>
         <li><a href="{{ url('algemene-voorwaarden') }}"><i class="material-icons notranslate">book</i> Voorwaarden</a></li>
     @endif
+
+    <li class="sidebar-dropdown notranslate">
+        <a href="javascript:void(0)" class="dropbtn">
+            <img src="{{ asset('images/flags/') }}/{{ $lang }}.png" alt="flag"> {{ strtoupper($lang) }} <i class="fa fa-angle-down" aria-hidden="true"></i>
+        </a>
+        <div class="sidebar-dropdown-content">
+            <a href="{{ url('setlang/nl?redirect='.Request::url()) }}" data-value="nl" class="item {{ isset($userInfo->id) ? 'change-login-user-language' : '' }}"><i class="nl flag"></i> NL</a>
+            <a href="{{ url('setlang/en?redirect='.Request::url()) }}" data-value="en" class="item {{ isset($userInfo->id) ? 'change-login-user-language' : '' }}"><i class="gb flag"></i> EN</a>
+            <a href="{{ url('setlang/be?redirect='.Request::url()) }}" data-value="be" class="item {{ isset($userInfo->id) ? 'change-login-user-language' : '' }}"><i class="be flag"></i> BE</a>
+            <a href="{{ url('setlang/de?redirect='.Request::url()) }}" data-value="de" class="item {{ isset($userInfo->id) ? 'change-login-user-language' : '' }}"><i class="de flag"></i> DE</a>
+            <a href="{{ url('setlang/fr?redirect='.Request::url()) }}" data-value="fr" class="item {{ isset($userInfo->id) ? 'change-login-user-language' : '' }}"><i class="fr flag"></i> FR</a>
+        </div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+    </li>
+
 </ul>
+
