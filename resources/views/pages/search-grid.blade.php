@@ -53,7 +53,7 @@
                             ?>
 
                             @if($index + 1 % 3 == 0 || $index == 0)
-                                <div class="col-md-12">
+                                <div class="row">
                                     @endif
 
                                     <div class="col-md-4 col-xs-12 wow fadeInLeft">
@@ -171,7 +171,7 @@
 
                                                     @endif</h1>
 
-                                                <p class="hidden-xs0"><b>{!! substr(strip_tags($deal->description), 0, 107) !!}</b></p>
+                                                <p class="hidden-xs">{!! substr(strip_tags($deal->description), 0, 107) !!}</p>
 
                                                 {{--<div class="avilable_to_people">--}}
                                                 {{--<i class="fa fa-caret-left" aria-hidden="true"></i>--}}
@@ -182,8 +182,13 @@
                                                 {{--<button type="button" class="timing_buton">08:00</button>--}}
                                                 {{--<i class="fa fa-caret-right" aria-hidden="true"></i>--}}
                                                 {{--</div>--}}
-                                                <a href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}" class="more_info_buton"><strong>Meer info</strong></a>
-                                                <a href="{{ url('future-deal/'.$data->slug).'?deal='.$deal->id }}" class="more_info_buton"><strong>Koop deal </strong></a>
+
+                                                {{--  <div style="display: block; padding-top; 20px;">  --}}
+                                                <div class="row">
+
+                                                    <a href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}" class="more_info_buton"><strong>Meer info</strong></a>
+                                                    <a href="{{ url('future-deal/'.$data->slug).'?deal='.$deal->id }}" class="more_info_buton"><strong>Koop deal </strong></a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
