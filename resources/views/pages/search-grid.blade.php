@@ -39,7 +39,7 @@
     <section>
         <div class="booking_posting">
             <div class="container">
-                <div class="row">
+                <div class="ro">
                     @foreach ($companies as $data)
                         @foreach ($data->ReservationOptions2()->get() as $index => $deal)
 
@@ -53,10 +53,11 @@
                             ?>
 
                             @if($index + 1 % 3 == 0 || $index == 0)
+                            <div class="clearfix"></div>
                                 <div class="row">
                                     @endif
 
-                                    <div class="col-md-4 col-xs-12 wow fadeInLeft">
+                                    <div class="col-md-4 col-xs-12">
                                         <div class="back_pric_ground company"
                                              data-kitchen="{{ is_array(json_decode($data->kitchens)) ? str_slug(json_decode($data->kitchens)[0]) : '' }}"
                                              data-url="{{ url('restaurant/'.$data->slug) }}"
@@ -164,14 +165,14 @@
                                             </div>
                                             <div class="heading_price_sec">
                                                 <h1>@if($count_persons >= $deal->total_amount)
-                                                        {{ $deal->name }}
+                                                        {{ $deal->name }} 
                                                     @else
                                                         <a href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}"
                                                            title="{{ $data->name }}">{{ $deal->name }}</a>
 
                                                     @endif</h1>
 
-                                                <p class="hidden-xs">{!! substr(strip_tags($deal->description), 0, 107) !!}</p>
+                                                <p class="hidden-xs0" style="color: #666; min-height: 40px;"> <em>{!! substr(strip_tags($deal->description), 0, 107) !!}</em></p>
 
                                                 {{--<div class="avilable_to_people">--}}
                                                 {{--<i class="fa fa-caret-left" aria-hidden="true"></i>--}}
@@ -184,18 +185,19 @@
                                                 {{--</div>--}}
 
                                                 {{--  <div style="display: block; padding-top; 20px;">  --}}
-                                                <div class="row">
-
+                                                <br><br>
+                            
+                                                <div class="text-center">
                                                     <a href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}" class="more_info_buton"><strong>Meer info</strong></a>
                                                     <a href="{{ url('future-deal/'.$data->slug).'?deal='.$deal->id }}" class="more_info_buton"><strong>Koop deal </strong></a>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                     </div> 
 
-                                    @if($index + 1 % 3 === 0)
-                                </div>
-                            @endif
+                                    @if($index + 1 % 3 == 0)
+                                    </div>
+                                @endif
 
                         @endforeach
                     @endforeach
