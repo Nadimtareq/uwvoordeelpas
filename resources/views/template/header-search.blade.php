@@ -102,9 +102,9 @@
                                             @endfor
                                         </select>
                                     </li>
-                                    <li class="mobile-center">
-                                        <button class="zoek" id="searchDesktop" type="submit">zoek</button>
-                                    </li>
+                                     <li class="mobile-center">
+                                        <button class="zoek" id="searchDesktop" type="submit" style="font-weight: bold;">zoek</button>
+                                    </li> 
                                     @if($userAuth)
                                         <li>
                                             <a href="{{ url('account/reservations/saldo') }}" class="">Uw saldo:
