@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Reservation;
 use App\Models\ReservationOption;
 use App\Models\Company;
 use App\User;
@@ -63,6 +64,7 @@ class ReservationsOptionsController extends Controller
             'reservations_options.newsletter',
             'reservations_options.no_show',
             'companies.name as company_name',
+            'reservations_options.company_id',
             'companies.city',
             DB::raw('sum(reservations.persons) as total_res'),
             DB::raw('sum(reservations.id) as reservated')
@@ -150,6 +152,10 @@ class ReservationsOptionsController extends Controller
 
             return Redirect::to($request->url().'?'.http_build_query($lastPageQueryString));
         }
+
+        foreach ($data as $datum)
+            $datum->reservations = Reservation::where("company_id", $datum->company_id)->where("is_cancelled", 0)->pluck("persons")->sum();
+
         // echo "<pre>";
         // print_r($data->toArray());
         //  die();

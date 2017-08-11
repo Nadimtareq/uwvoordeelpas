@@ -146,6 +146,7 @@
         <th data-slug="total_res" class="three wide">Online</th>
         <th data-slug="newsletter" class="four wide">Nieuwsbrief</th>
         <th data-slug="no_show" class="three wide">Show</th>
+        <th data-slug="reservated" class="three wide">Gereserveerd</th>
         @if(Sentinel::inRole('admin'))
             <th data-slug="status" class="four wide">Status</th>
         @endif
@@ -242,6 +243,7 @@
                     }
                     ?>
                 </td>
+                <td>{{ $result->reservations }}</td>
                 @if(Sentinel::inRole('admin'))
 
                         <td class="text-center">
