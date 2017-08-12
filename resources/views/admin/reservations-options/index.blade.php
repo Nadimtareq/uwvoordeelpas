@@ -19,6 +19,14 @@
                 <button id="removeButton" type="submit" name="action" value="remove" class="ui disabled icon grey button">
                     <i class="trash icon"></i> Verwijderen
                 </button>
+
+                    <button id="deactivateButton" type="submit" name="action" value="deactivate" class="ui disabled icon red button">
+                        <i class="cancel icon"></i> Veactiveren
+                    </button>
+
+                <button id="activateButton" type="submit" name="action" value="activate" class="ui disabled icon green button">
+                    <i class="check icon"></i> Actief
+                </button>
                 @endif
             </div>
 
@@ -120,6 +128,7 @@
     </div>
 
     <?php echo Form::open(array('id' => 'formList', 'method' => 'post')) ?>
+    <input type="hidden" id="action" name="action">
     <table class="ui very basic sortable collapsing celled table list" style="width: 100%;">
         <thead>
             <tr>
@@ -278,3 +287,45 @@
 </div>
 <div class="clear"></div>
 @stop
+
+@section("after_scripts")
+    <script>
+        $(document).ready(function() {
+        $('.ui.child.checkbox').checkbox({
+            onChecked: function() {
+                $('#removeButton').removeClass("disabled");
+                $('#deactivateButton').removeClass("disabled");
+                $('#activateButton').removeClass("disabled");
+            }
+        });
+
+
+            $('#deactivateButton, #activateButton').click(function() {
+            $('#action').val($(this).val());
+            if ($('[name="id[]"]:checked').length == 0) {
+                swal({
+                    title: "Er is een fout opgetreden",
+                    text: "U bent vergeten om een optie te selecteren.",
+                    type: "warning"
+                });
+            } else {
+                swal({
+                    title: "Weet u het zeker?",
+                    text: "Weet u zeker dat u deze actie wilt uitvoeren?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    cancelButtonText: "Nee",
+                    confirmButtonText: "Ja, ik weet het zeker!",
+                    closeOnConfirm: false
+                }, function() {
+                    $('#formList').submit();
+                    return true;
+                });
+            }
+
+            return false;
+        });
+        });
+    </script>
+@endsection

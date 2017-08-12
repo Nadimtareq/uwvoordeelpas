@@ -196,11 +196,23 @@ class ReservationsOptionsController extends Controller
             $data = $data->whereIn('reservations_options.id', $request->input('id'));
 
             if ($data->count() >= 1) {
-                $data->delete();
+                if ($request->input("action") == "deactivate") {
+                    ReservationOption::whereIn('reservations_options.id', $request->input('id'))
+                        ->update(['no_show' => 0]);
+                    Alert::success('De geselecteerde selectie is succesvol gedeactiveerd.')->html()->persistent("Sluiten");
+                }
+                else if ($request->input("action") == "activate") {
+                    $data = ReservationOption::whereIn('reservations_options.id', $request->input('id'))
+                        ->update(['no_show' => 1]);
+                    Alert::success('De geselecteerde selectie is succesvol geactiveerd.')->html()->persistent("Sluiten");
+                }
+                else{
+                    $data->delete();
+                    Alert::success('De gekozen selectie is succesvol verwijderd.')->html()->persistent("Sluiten");
+                }
             }
         }
 
-        Alert::success('De gekozen selectie is succesvol verwijderd.')->html()->persistent("Sluiten");
         return Redirect::to('admin/'.$this->slugController);
     }
 
