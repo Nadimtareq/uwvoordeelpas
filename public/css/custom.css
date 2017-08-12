@@ -470,7 +470,15 @@ body {
     color: #fff;
     margin-right: 6px;
     margin-top: 20px;
+    margin-bottom: 20px;
     padding: 12px 43px;
+}
+
+.more_info_lg {
+    width: 100%;
+    display: block;
+    text-align: center;
+    font-weight: bold;
 }
 
 .more_info_buton:last-child {
@@ -602,5 +610,27 @@ body {
         padding: 12px 43px;
         width: 100%;
         margin-bottom: 8px;
+    }
+}
+
+.display {
+    padding: 0px 5px;
+}
+
+@media screen and (max-width:395px) {
+    .container {
+        padding: 0px;
+    }
+    .static-menu {
+        margin: 0px !important;
+    }
+    .filter-buttons {
+        /* background: #ccc; */
+        text-align: center;
+        padding: 10px;
+        width: 100%;
+        margin: auto;
+        float: right;
+        margin-left: -100px;
     }
 }

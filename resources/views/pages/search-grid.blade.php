@@ -11,13 +11,8 @@
 @endsection  
 
 @section('content')
-    <section>
-        <div class="filter_sec">
-            <div class="container">
-                @include('pages.search-filter')
-            </div>
-        </div>
-    </section>
+<div class="clearfix"></div>
+     @include('pages.search-filter')
 
     <div class="clearfix"></div>
     <section>
@@ -180,9 +175,19 @@
                                                 {{--  <div style="display: block; padding-top; 20px;">  --}}
                                                 <br><br>
                             
-                                                <div class="text-center">
-                                                    <a href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}" class="more_info_buton"><strong>Meer info</strong></a>
-                                                    <a href="{{ url('future-deal/'.$data->slug).'?deal='.$deal->id }}" class="more_info_buton"><strong>Koop deal </strong></a>
+                                                <div class="row">
+                                                    
+                                                        <div class="col-md-6 col-xs-12" style="margin-bottom: 10px;">
+                                                   
+                                                    <a href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}" class="more_info_buton more_info_lg">Meer info</a>
+                                                    
+                                                        </div>
+                                                        <div class="col-md-6 col-xs-12" style="margin-bottom: 10px;">
+                                                    
+                                                    <a href="{{ url('future-deal/'.$data->slug).'?deal='.$deal->id }}" class="more_info_buton more_info_lg">Koop deal </a>
+                                                    
+                                                        </div>
+                                                    
                                                 </div>
                                             </div>
                                         </div>

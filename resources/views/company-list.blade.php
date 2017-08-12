@@ -31,12 +31,12 @@
                     <div class="col-sm-6 col-xs-12">
                         @if (isset($media[0]) && isset($media[0]->file_name) && file_exists(public_path($media[0]->disk. DIRECTORY_SEPARATOR . $media[0]->id . DIRECTORY_SEPARATOR . $media[0]->file_name)) )
                             @if($count_persons >= $deal->total_amount)
-                                <img width="100%" src="{{ url('media/'.$media[0]->id.'/'.$media[0]->file_name) }}"
+                                <img width="420" src="{{ url('media/'.$media[0]->id.'/'.$media[0]->file_name) }}"
                                      alt="{{ $data->name }}" class="img-responsive"/>
                             @else
                                 <a href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}"
                                    title="{{ $data->name }}" style="position: relative;">
-                                    <img width="100%" src="{{ url('media/'.$media[0]->id.'/'.$media[0]->file_name) }}"
+                                    <img width="420" src="{{ url('media/'.$media[0]->id.'/'.$media[0]->file_name) }}"
                                          alt="{{ $data->name }}" class="img-responsive" style="opacity: .7;"/>
                                     <span style="position: absolute; left: 0px; right: 0px; top: 50%; text-align: center; display: block; color: #fff; font-weight: 700; text-transform: uppercase;">Uitverkocht</span>
                                 </a>
