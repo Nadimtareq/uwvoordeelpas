@@ -27,8 +27,8 @@
                      data-address="{{ $data->address }}"
                      data-city="{{ $data->city }}"
                      data-zipcode="{{ $data->zipcode }}">
-                    <div class="row"  style="background: white; padding: 10px; margin: 10px;">
-                    <div class="col-sm-6">
+                    <div class="row"  style="background: white; padding: 0px; margin: 10px;">
+                    <div class="col-sm-6 col-xs-12">
                         @if (isset($media[0]) && isset($media[0]->file_name) && file_exists(public_path($media[0]->disk. DIRECTORY_SEPARATOR . $media[0]->id . DIRECTORY_SEPARATOR . $media[0]->file_name)) )
                             @if($count_persons >= $deal->total_amount)
                                 <img width="100%" src="{{ url('media/'.$media[0]->id.'/'.$media[0]->file_name) }}"
@@ -105,8 +105,8 @@
                             @endif
                     @endif -->
                     </div>
-                    <div class="col-sm-6">
-                    <div class="text3" style="padding-left: 20px;">
+                    <div class="col-sm-6 col-xs-12">
+                    <div class="text3" style="padding: 20px;">
                         <strong>
                             @if($count_persons >= $deal->total_amount)
                                 {{ $deal->name }}
