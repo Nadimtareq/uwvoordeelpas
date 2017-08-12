@@ -6,26 +6,10 @@
 @inject('FileHelper', 'App\Helpers\FileHelper')
 
 <?php use App\Http\Controllers\HomeController; $i = 0; ?>
- @section("header_picture")
-    <div class="back_slideer_mnu">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <div class="wow bounceInDown">
-                        <h1>Activeer de spaarhulp en ontvang direct €5.-</h1>
-                        <p>Spaar nu automatisch bij wel 2000+ webshops.
-                            Deze betalen u tot wel 10% dinertegoed bij iedere aankoop!</p>
-                        <button type="button" class="want_to_save">Ja ik wil ook sparen!</button>
-                    </div>
-                    <div class="drop_icon_show">
-                        <a href=""><i class="fa fa-chevron-down"></i></a>
-                    </div>
-                </div>
+@section("header_picture")
+   @include('pages._search-slider')
+@endsection  
 
-            </div>
-        </div>
-    </div>
-@endsection 
 @section('content')
     <section>
         <div class="filter_sec">
@@ -52,12 +36,21 @@
                                 continue;
                             ?>
 
-                            @if($index + 1 % 3 == 0 || $index == 0)
-                            <div class="clearfix"></div>
-                                <div class="row">
-                                    @endif
-
+                             {{--  @if($index % 3 == 0 || $index == 0)
+                           {{$index}}
+                                {{--  <div class="row">  --}
+                                    @endif   --}}
+                                @if($index == 0)
+                                    {{--  @if($index == 0)
+                                       <div class="row">
+                                    @else
+                                        </div>
+                                        <div class="row">
+                                    @endif  --}}
+                                     <div class="row">
+                                @endif
                                     <div class="col-md-4 col-xs-12">
+                                     
                                         <div class="back_pric_ground company"
                                              data-kitchen="{{ is_array(json_decode($data->kitchens)) ? str_slug(json_decode($data->kitchens)[0]) : '' }}"
                                              data-url="{{ url('restaurant/'.$data->slug) }}"
@@ -172,7 +165,7 @@
 
                                                     @endif</h1>
 
-                                                <p class="hidden-xs0" style="color: #666; min-height: 40px;"> <em>{!! substr(strip_tags($deal->description), 0, 107) !!}</em></p>
+                                                <p class="hidden-xs0" style="color: #666; min-height: 40px;"> <em>{!! substr(strip_tags($deal->description,'<em>'), 0, 107) !!}</em></p>
 
                                                 {{--<div class="avilable_to_people">--}}
                                                 {{--<i class="fa fa-caret-left" aria-hidden="true"></i>--}}
@@ -194,10 +187,11 @@
                                             </div>
                                         </div>
                                      </div> 
-
-                                    @if($index + 1 % 3 == 0)
-                                    </div>
-                                @endif
+                                    <?php $items = $index + 1; ?>
+                                    @if($items % 3 == 0)
+                                        </div>
+                                        <div class="row">
+                                    @endif  
 
                         @endforeach
                     @endforeach

@@ -159,7 +159,8 @@
             </div>
         </div>
     </div>
-    <!-- .container end -->
+
+<!-- .container end -->
 </header>
-	
+ @yield("header_picture")
 	    
