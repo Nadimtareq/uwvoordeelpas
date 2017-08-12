@@ -168,13 +168,12 @@ img {
     max-width: 100%;
 }
 
-
-/* @media (max-width: 373px) {
+@media (max-width: 373px) {
     img {
         max-width: 70%;
         max-height: 70%;
     }
-} */
+}
 
 h1,
 h2,
@@ -415,11 +414,11 @@ body {
 .title {
     white-space: nowrap;
     /*    font-size: 48px;
-    line-height: 1.1;
-    font-weight: 700;
-    color: #333;
-    text-transform: uppercase;
-    margin-bottom: 35px;*/
+        line-height: 1.1;
+        font-weight: 700;
+        color: #333;
+        text-transform: uppercase;
+        margin-bottom: 35px;*/
 }
 
 .regular-text {
@@ -840,8 +839,8 @@ header.nav li a:hover {
 
 .footer {
     /*background: -webkit-linear-gradient(bottom, rgba(51,51,153,0.25), rgba(51,102,204,0.25)) !important;
-   background: -o-linear-gradient(bottom, rgba(51,51,153,0.25), rgba(51,102,204,0.25)) !important;
-   background: linear-gradient(bottom, rgba(51,51,153,0.25), rgba(51,102,204,0.25)) !important;*/
+    background: -o-linear-gradient(bottom, rgba(51,51,153,0.25), rgba(51,102,204,0.25)) !important;
+    background: linear-gradient(bottom, rgba(51,51,153,0.25), rgba(51,102,204,0.25)) !important;*/
 }
 
 #footer {
@@ -853,7 +852,7 @@ header.nav li a:hover {
 }
 
 .space-header {
-    /* min-height: 600px; */
+    min-height: 600px;
 }
 
 #footer h3 {
@@ -1665,7 +1664,7 @@ a.button-collapse2 {
     color: #fff;
     float: right;
     /*right: -39px;
-        position: absolute;*/
+    position: absolute;*/
     position: relative;
     margin-right: 19px;
     /*top: 25px;*/
@@ -1998,11 +1997,10 @@ ul.side-nav2 li:hover {
     text-transform: uppercase;
     text-align: center;
     color: #fff;
-    font: 12px 'LatoRegular';
+    font: 24px 'LatoRegular';
     display: inline-block;
     vertical-align: top;
-    padding: 21px 5px;
-    /* padding-top: 21px; */
+    padding: 15px 35px;
     margin: 0 0 0 -2px;
     background-color: transparent;
     border: none;
@@ -2067,12 +2065,12 @@ ul.side-nav2 li:hover {
     border: none;
     height: auto;
     border-radius: 0px;
-    padding-top: 21px;
+    padding: 21px 0;
     width: 60px;
 }
 
 .quantity-expand {
-    width: 105px;
+    width: 95px;
 }
 
 .quantity:focus {
@@ -2400,22 +2398,21 @@ ul.side-nav2 li:hover {
 
 .menu {
     border-bottom: 1px solid #ccccff;
-    padding-bottom: 10px;
+    padding-bottom: 35px;
     display: inline-block;
     width: 100%;
 }
 
 .menu .left_m {
     float: left;
-    margin: 0;
+    margin: 0 21px 0 0;
     position: relative;
 }
 
-.menu .left_m h2,
-h2.title {
+.menu .left_m h2 {
     font: 24px 'LatoRegular';
     color: #333399;
-    margin: 10px 20px 8px 20px;
+    margin: 0 0 18px 0;
 }
 
 .menu .left_m .price {
@@ -2449,19 +2446,18 @@ h2.title {
 }
 
 .menu .right_m {
-    margin: 0px 0 28px 0;
+    margin: 31px 0 28px 0;
 }
 
-.menu .right_m span.old {
+.menu .right_m span {
     font: 18px 'LatoBold';
     color: #cccccc;
-    display: inline-block;
+    display: block;
     text-decoration: line-through;
     margin-bottom: 16px;
-    max-width: 200px;
 }
 
-.menu .right_m strong.new {
+.menu .right_m strong {
     font: 24px 'LatoBlack';
     color: #3366cc;
     display: inline-block;
@@ -2472,8 +2468,6 @@ h2.title {
 .menu .right_m b.up {
     font: 14px 'LatoRegular';
     display: inline;
-    color: #333;
-    text-align: justify !important;
 }
 
 .menu .right_m b {
@@ -2484,7 +2478,7 @@ h2.title {
 }
 
 .menu .right_m p {
-    color: #666;
+    color: #cccccc;
     font: 14px 'LatoLight';
 }
 
@@ -4168,9 +4162,9 @@ h2.title {
         margin-right: 60px;
     }
     /*a.button-collapse2{
-    right: 20px;
-    top: 25px;
-}*/
+        right: 20px;
+        top: 25px;
+    }*/
     .header .right-no li {
         margin-left: 41px;
         margin-top: 6px;
@@ -4466,9 +4460,9 @@ h2.title {
         margin-right: 60px;
     }
     /*a.button-collapse2{
-    right: 28px;
-    top: 20px;
-}*/
+        right: 28px;
+        top: 20px;
+    }*/
     ul.side-nav2 {
         width: 230px;
     }
@@ -4481,10 +4475,10 @@ h2.title {
         top: 20px;
     }
     /*
-.header .zoek{
-    margin: 17px auto;
-    padding: 10px 8px;
-}*/
+    .header .zoek{
+        margin: 17px auto;
+        padding: 10px 8px;
+    }*/
     .header .center-menu li a:hover {
         border: none;
     }
@@ -4712,7 +4706,7 @@ h2.title {
 }
 
 .icon {
-    /*float: left;*/
+    float: left;
     /*margin: 15px;*/
 }
 
@@ -5064,7 +5058,7 @@ img.thumbnails {
 }
 
 .space-header {
-    padding-top: 0px;
+    padding-top: 70px;
     padding-bottom: 50px;
 }
 
@@ -5163,15 +5157,13 @@ img.thumbnails {
 }
 
 .deals-list-page .left_m {
-    /* width: 48%; */
+    width: 48%;
     float: left;
-    margin-top: 20px;
 }
 
 .deals-list-page .right_m {
-    /* width: 48%; */
+    width: 48%;
     float: left;
-    margin-top: 20px;
 }
 
 .shop .up .start ul.list li p {
@@ -5458,7 +5450,7 @@ ul#mobile-demo li {
 }
 
 thead tr {
-    background: #ffffff none repeat scroll 0 0;
+    background: #4a4979 none repeat scroll 0 0;
 }
 
 thead tr th {
@@ -5493,28 +5485,76 @@ tbody tr td {
     margin: 0;
 }
 
-.search-layout {
-    height: 40px;
-    background: #f2f2f2;
-    padding: 10px;
-    margin-bottom: 15px;
+.img-responsive {
+    display: block;
+    max-width: 100%;
+    height: auto;
 }
 
-.search-layout a,
-.search-layout span {
-    padding: 0 5px;
-    color: #787878;
+.blue-color {
+    color: #333399;
+    font-weight: bold;
 }
 
-.drop-menu:focus {
-    outline: none;
+.text-center {
+    text-align: center;
 }
 
-.jquery-select-trigger {
-    padding: 6px;
+.heading1 {
+    font-size: 3em;
+    font-weight: bold;
+    text-rendering: optimizelegibility;
+    text-align: center;
+    line-height: 1.1875em;
+    margin: 10px 0;
+    color: #333399;
 }
 
-button.btn.btn-link.btn-filter {
-    padding: 0;
-    box-shadow: none;
+.page-fixed-content h2 {
+    font-size: 2.5em;
+    font-weight: 600;
+    text-align: left;
+    color: #333399;
+}
+
+.page-fixed-content h2+p {
+    margin-left: 10px;
+}
+
+.page-fixed-content h3 {
+    font-size: 2em;
+    font-weight: 400;
+    text-align: left;
+    color: #333399;
+    margin-left: 10px;
+}
+
+.page-fixed-content h3+p {
+    margin-left: 20px;
+}
+
+.line-height h5 {
+    line-height: 1.1em;
+}
+
+.margin-top-20 {
+    margin-top: 20px !important;
+}
+
+.parallax-half {
+    height: 360px !important;
+}
+
+.parallax {
+    position: relative;
+    width: 100%;
+    height: 360px;
+    background: url("../images/home-bg-small.png") no-repeat fixed center;
+    background-size: cover;
+}
+
+.parallax .black-overlay {
+    background: rgba(0, 0, 0, .6);
+    width: 100%;
+    height: 100%;
 }
