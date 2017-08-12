@@ -66,4 +66,20 @@ class ContactController extends Controller
         }
     }
 
+    public function readAction($id)
+    {
+        $data = Contact::find($id);
+
+        if ($data) {
+            return view('admin/' . $this->slugController . '/read', [
+                'data' => $data,
+                'slugController' => $this->slugController,
+                'section' => $this->section,
+                'currentPage' => 'Contact List'
+            ]);
+        }
+        else
+            abort(404);
+    }
+
 }

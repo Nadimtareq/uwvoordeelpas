@@ -50,7 +50,7 @@
                     <th data-slug="categoryName">E-mail</th>
                     <th data-slug="subcategoryName">Onderwerp</th>
                     <th data-slug="clicks">Bericht</th>
-                    <th></th>
+                    <th>Read</th>
             	</tr>
             </thead>
             <tbody class="list search">

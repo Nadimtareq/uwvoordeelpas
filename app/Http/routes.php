@@ -731,6 +731,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('adminowner', 'aut
     Route::group(array('prefix' => 'contact'), function () {
 
         Route::get('/','Admin\ContactController@index');
+        Route::get('/read/{id}','Admin\ContactController@readAction');
         Route::post('delete', 'Admin\ContactController@deleteAction');
     });
     Route::group(array('prefix' => 'unwanted'), function () {
