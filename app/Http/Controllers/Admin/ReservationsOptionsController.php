@@ -202,12 +202,12 @@ class ReservationsOptionsController extends Controller
                     Alert::success('De geselecteerde selectie is succesvol gedeactiveerd.')->html()->persistent("Sluiten");
                 }
                 else if ($request->input("action") == "activate") {
-                    $data = ReservationOption::whereIn('reservations_options.id', $request->input('id'))
+                    ReservationOption::whereIn('reservations_options.id', $request->input('id'))
                         ->update(['no_show' => 1]);
                     Alert::success('De geselecteerde selectie is succesvol geactiveerd.')->html()->persistent("Sluiten");
                 }
                 else{
-                    $data->delete();
+                    ReservationOption::whereIn('reservations_options.id', $request->input('id'))->delete();
                     Alert::success('De gekozen selectie is succesvol verwijderd.')->html()->persistent("Sluiten");
                 }
             }
