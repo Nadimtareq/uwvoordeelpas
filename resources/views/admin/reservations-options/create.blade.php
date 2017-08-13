@@ -8,8 +8,23 @@
 		closeBrowser();
 	});
 </script>
-@stop
 
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#signature').jSignature();
+
+        $('#signature').bind('change', function (e) {
+            $('#signatureInput').val($(this).jSignature('getData', 'image'));
+            $('#resetSignature').removeClass('disabled');
+        });
+
+        $('#resetSignature').on('click', function (e) {
+            $('#signature').jSignature('reset');
+        });
+    });
+</script>
+@stop
 @section('content')
 <div class="content">
 	@include('admin.template.breadcrumb')
@@ -157,6 +172,18 @@
 								<label>Uitgebreide omschrijving</label>
 								<?php echo Form::textarea('short_content', null, ['class' => 'editor']); ?>
 							</div>
+
+			<div class="field">
+				Uw ip-adres <strong>{{ Request::getClientIp() }}</strong>
+			</div>
+
+				<h4>Vul hieronder uw handtekening in:</h4>
+				<div id="signature"></div>
+
+				<button id="resetSignature" class="ui small button disabled">Verwijder handtekening</button>
+				<br/><br/>
+            <?php echo Form::hidden('signature', $signature_url, array('id' => 'signatureInput')); ?>
+
 
 							<button class="ui button" type="submit"><i class="plus icon"></i> Aanmaken</button>
 						</div>

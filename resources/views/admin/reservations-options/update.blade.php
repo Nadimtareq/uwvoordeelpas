@@ -169,6 +169,23 @@
 								<?php echo Form::textarea('short_content', $data->short_description, ['class' => 'editor']); ?>
 							</div>
 
+			<div class="field">
+				Uw ip-adres <strong>{{ $data->ip_address }}</strong>
+			</div>
+
+
+			@if ($data->signature_url == NULL)
+				<h4>Vul hieronder uw handtekening in:</h4>
+				<div id="signature"></div>
+
+				<button id="resetSignature" class="ui small button disabled">Verwijder handtekening</button>
+				<br/><br/>
+			@else
+				<h4>Uw handtekening</h4>
+				<img src="data:{{ $data->signature_url }}"/><br/>
+			@endif
+
+
 							<button class="ui button" type="submit"><i class="pencil icon"></i> Wijzigen</button>
 						</div>
 					</div>

@@ -218,6 +218,7 @@ class ReservationsOptionsController extends Controller
 
     public function create(Request $request, $slug = NULL)
     {
+//        dd(($slug != NULL ? $this->isCompanyOwner($slug)['id'] : $request->input('company_id')));
         if ($this->isCompanyOwner($slug)['exist'] == 0 && $slug != NULL) {
             User::getRoleErrorPopup();
             return Redirect::to('/');
@@ -229,6 +230,7 @@ class ReservationsOptionsController extends Controller
             'currentPage' => 'Nieuw',
             'companies' => $this->companies,
             'company' => $this->isCompanyOwner($slug),
+            'signature_url' => Company::first()->signature_url,
             'slug' => $slug,
         ]);
     }
@@ -268,6 +270,13 @@ class ReservationsOptionsController extends Controller
         $data->price_per_guest = $request->input('price_per_guest');
         $data->company_id = ($slug != NULL ? $this->isCompanyOwner($slug)['id'] : $request->input('company_id'));
         $data->no_show = Sentinel::inRole('admin') == true ? 1 : 0;
+        $data->ip_address = $request->getClientIp();
+
+
+        if ($request->has('signature')) {
+            $data->signature_url = $request->input('signature');
+        }
+
         $data->save();
 
         $data_id = $data->id;
@@ -300,6 +309,8 @@ class ReservationsOptionsController extends Controller
             'reservations_options.image',
             'reservations_options.newsletter',
             'reservations_options.no_show',
+            'reservations_options.ip_address',
+            'reservations_options.signature_url',
             'companies.slug'
         )
             ->leftJoin('companies', 'reservations_options.company_id', '=', 'companies.id')
@@ -400,6 +411,13 @@ class ReservationsOptionsController extends Controller
             $data->no_show = $request->input('no_show');
             $data->company_id = $request->input('company_id');
             $data->image = $fileName;
+            $data->ip_address = $request->getClientIp();
+
+
+            if ($request->has('signature')) {
+                $data->signature_url = $request->input('signature');
+            }
+
             $data->save();
             Alert::success('U heeft deze aanbieding veranderd')->html()->persistent('Sluiten');
 
