@@ -34,8 +34,7 @@
         "cviebrock/image-validator": "^2.1",
         "barryvdh/laravel-translation-manager": "^0.2.3",
         "giggsey/libphonenumber-for-php": "^7.6",
-        "captcha-com/laravel-captcha": "^4.1",
-        "khill/lavacharts": "^3.1"
+        "captcha-com/laravel-captcha": "^4.1"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -54,7 +53,7 @@
         }
     },
     "autoload-dev": {
-       
+
     },
     "scripts": {
         "post-install-cmd": [
