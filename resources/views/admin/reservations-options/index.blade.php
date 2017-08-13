@@ -10,7 +10,7 @@
 
     <div class="buttonToolbar">  
         <div class="ui grid">
-            <div class="left floated sixteen wide mobile five wide computer column">
+            <div class="left floated sixteen wide mobile seven wide computer column">
                 <a href="{{ url('admin/reservations-options/create'.($slug != NULL ? '/'.$slug : '')) }}" class="ui icon blue button">
                     <i class="plus icon"></i> Nieuw
                 </a>
@@ -30,7 +30,7 @@
                 @endif
             </div>
 
-            <div class="right floated sixteen wide mobile eleven wide computer column">
+            <div class="right floated sixteen wide mobile nine wide computer column">
                 <div class="ui grid">
                     <div class="five column row" id="reservation-option-dropdown">
                         <div class="column">

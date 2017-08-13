@@ -1,64 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
+@extends("template.testy")
 
-	<style type="text/css">
-		body {
-			color: #000033;
-			font-family: "verdana", "sans-serif";
-			margin: 0px;
-			padding-top: 0px;
-			font-size: 0.8em;
-		}
-
-		.colHead {
-			font-weight: bold; 
-			padding-top: 15px;
-		}
-
-		   /* Footer
-    -----------------------------------------------------------------------*/
-    #footer {
-      color: #FFFFff;
-      border-top: 1px solid #000033;
-    }
-
-    #copyright { 
-      padding: 5px;
-      font-size: 0.6em;
-      background-color: #114C8D;
-    }
-
-    #footer_spacer_row {
-      border-spacing: 0;
-      width: 100%;
-    }
-    .footertwo { 
-      position: fixed; 
-      left: 0px; bottom: -150px; right: 0px; height: 150px; 
-    }
-
-    #footer_spacer_row td {
-      padding: 0px;
-      border-bottom: 1px solid #000033;
-      background-color: #F7CF07;
-      height: 2px;
-      font-size: 2px;
-      line-height: 2px;
-    }
-
-	</style>
-</head>
-<body>
-    <table style="width: 100%;">
-        <tbody>
-            <tr>
-                <td style="width: 500px;"><img src="{{ base_path().'images/logo.png' }}" width="150" /></td>
-            </tr>
-        </tbody>
-    </table>
-
+@section("content")
 	{!! isset($contentBlock[45]) ? $contentBlock[45] : '' !!}
 
 	<table>
@@ -165,9 +107,4 @@
 				<td style="width: 25px; font-weight: bold;">Handtekening:</td>
 			</tr>
 		</table>
-
-	<div class="footertwo">
-   		{!! isset($contentBlock[46]) ? $contentBlock[46] : '' !!}
-    </div>
-</body>
-</html>
+@endsection

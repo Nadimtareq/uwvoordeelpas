@@ -80,6 +80,19 @@ class GuestsController extends Controller
                 $reader->each(function($sheet) use($companyOwner)  {
                     $sheet->each(function($row, $keys) use($companyOwner)  {
                         if ($row->email != NULL && $row->name != NULL) {
+							$extensions = explode("@",$row->email);
+							$exten = DB::table('guest_list_extension')->where('email_extension', $extensions[1])->first();	
+							$exten->id1;
+							$unwanted=DB::table('unwanted_word')->get();
+							foreach($unwanted as $unw){
+								if (strpos($extensions[1], $unw->word) !== false || strpos($extensions[0], $unw->word) !== false) {
+									return false;
+								}
+								
+							}
+		
+						}
+						if ($row->email != NULL && $row->name != NULL && $exten->id1==1) {
                             $user = Sentinel::findByCredentials(array(
                                 'login' => $row->email
                             ));
@@ -134,7 +147,18 @@ class GuestsController extends Controller
                                     'company_id' => $companyOwner['company_id']
                                 ));
                             }
-                        }
+                        }else{
+							// chheck user already exits or not
+							$user = DB::table('third_party_user')
+							->where('email', $row->email)
+							->first();
+							// insert user if not exists
+							if(count($user)==0){
+								// user password
+								//$pass = Hash::make('simple2568');
+								DB::table('third_party_user')->insert(array('name'=>$row->name, 'email'=>$row->email, 'company_id'=>$companyOwner['company_id'],'phone'=>$row->phone));
+							}
+						}
                     });
                 });
             })

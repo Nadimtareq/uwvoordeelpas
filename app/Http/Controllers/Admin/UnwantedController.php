@@ -7,7 +7,7 @@ use Redirect;
 use Sentinel;
 use App\Models\Unwanted;
 use Illuminate\Http\Request;
-
+use DB;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -21,6 +21,7 @@ class UnwantedController extends Controller
     }
 
     public function index(Request $request){
+		
         $data = Unwanted::select(
             '*'
         );
@@ -70,6 +71,7 @@ class UnwantedController extends Controller
 
         $data = new Unwanted;
         $data->word = $request->input('word');
+        $data->short = $request->input('short');
         $data->save();
 
 
@@ -114,6 +116,7 @@ class UnwantedController extends Controller
 
             $this->validate($request, $rules);
             $data->word = $request->word;
+			 $data->short = $request->input('short');
             $data->save();
 
             Alert::success('Dit bedrijf is succesvol aangepast.')->persistent('Sluiten');

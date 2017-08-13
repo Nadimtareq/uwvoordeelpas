@@ -824,5 +824,4 @@ $('.dropeddown li').click(function () {
     $("#sidebar-wrapper").toggleClass("active");
   });
 
-
-
+  
