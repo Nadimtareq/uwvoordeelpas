@@ -38,9 +38,9 @@
 			 			<p>{{ $review->content }}</p>
 
 			 			<div class="score">
-			 				Eten <div class="ui star tiny orange rating no-rating" data-rating="{{ $review->food }}"></div><br />
-			 				Service <div class="ui star tiny orange rating no-rating" data-rating="{{ $review->service }}"></div><br />
-			 				decor <div class="ui star tiny orange rating no-rating" data-rating="{{ $review->decor }}"></div> 
+			 				Eten <div class="ui star tiny orange rating no-rating whitee" data-rating="{{ $review->food }}"></div><br />
+			 				Service <div class="ui star tiny orange rating no-rating whitee" data-rating="{{ $review->service }}"></div><br />
+			 				decor <div class="ui star tiny orange rating no-rating whitee" data-rating="{{ $review->decor }}"></div>
 			 			</div>
 			 		</div>
 			 	</div>
