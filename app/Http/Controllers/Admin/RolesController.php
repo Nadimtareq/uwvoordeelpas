@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Alert;
+use App\Models\SearchHistory;
 use App\Http\Controllers\Controller;
 use Sentinel;
 use Illuminate\Support\Facades\Response;
@@ -23,6 +24,9 @@ class RolesController extends Controller
         if($request->has('q'))
         {
             $data = $data->where('name', 'LIKE', '%'.$request->input('q').'%');
+
+            $searchHistory = new SearchHistory();
+            $searchHistory->addTerm($request->input('q'), '/roles');
         }
 
         if($request->has('sort') && $request->has('order'))

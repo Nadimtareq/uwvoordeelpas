@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Admin;
 
 use Alert;
 use App;
+use App\Models\SearchHistory;
 use App\Http\Controllers\Controller;
 use App\Models\Review;
 use App\Models\Company;
@@ -45,6 +46,9 @@ class ReviewsController extends Controller
 
         if ($request->has('q'))  {
             $data = $data->where('content', 'LIKE', '%'.$request->input('q').'%');
+
+            $searchHistory = new SearchHistory();
+            $searchHistory->addTerm($request->input('q'), '/reviews');
         }
 
         if ($request->has('sort') && $request->has('order')) {
