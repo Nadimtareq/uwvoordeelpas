@@ -53,7 +53,7 @@
         }
     },
     "autoload-dev": {
-       
+
     },
     "scripts": {
         "post-install-cmd": [

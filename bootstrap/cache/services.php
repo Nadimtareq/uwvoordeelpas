@@ -43,6 +43,7 @@
     39 => 'Cviebrock\\ImageValidator\\ImageValidatorServiceProvider',
     40 => 'Barryvdh\\TranslationManager\\ManagerServiceProvider',
     41 => 'LaravelCaptcha\\Providers\\LaravelCaptchaServiceProvider',
+    42 => 'Khill\\Lavacharts\\Laravel\\LavachartsServiceProvider',
   ),
   'eager' => 
   array (
@@ -167,6 +168,7 @@
     'Collective\\Html\\FormBuilder' => 'Collective\\Html\\HtmlServiceProvider',
     'anlutro\\LaravelSettings\\SettingsManager' => 'anlutro\\LaravelSettings\\ServiceProvider',
     'anlutro\\LaravelSettings\\SettingStore' => 'anlutro\\LaravelSettings\\ServiceProvider',
+    'lavacharts' => 'Khill\\Lavacharts\\Laravel\\LavachartsServiceProvider',
   ),
   'when' => 
   array (
@@ -216,6 +218,9 @@
     array (
     ),
     'anlutro\\LaravelSettings\\ServiceProvider' => 
+    array (
+    ),
+    'Khill\\Lavacharts\\Laravel\\LavachartsServiceProvider' => 
     array (
     ),
   ),
