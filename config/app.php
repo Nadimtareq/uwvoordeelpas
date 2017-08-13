@@ -162,7 +162,7 @@ return [
         'Cviebrock\ImageValidator\ImageValidatorServiceProvider',
         'Barryvdh\TranslationManager\ManagerServiceProvider',
         LaravelCaptcha\Providers\LaravelCaptchaServiceProvider::class,
-        Khill\Lavacharts\Laravel\LavachartsServiceProvider::class,
+        
 //        Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
 
     ],
@@ -224,6 +224,6 @@ return [
         'Bugsnag'     => Bugsnag\BugsnagLaravel\Facades\Bugsnag::class,
         'Account'     => App\Helpers\AccountHelper::class,
         'Newsletters' => App\Helpers\DealHelper::class,
-        'Lava'        => 'Khill\Lavacharts\Laravel\LavachartsFacade',
+        
     ],
 ];

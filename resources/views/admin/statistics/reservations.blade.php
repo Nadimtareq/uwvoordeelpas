@@ -230,22 +230,6 @@ if (count($topDays) >= 1):
 
 endif;
 
-
-$topDaysData = Lava::DataTable();
-$topDaysData->addStringColumn('Most reserved days in the week')
-        ->addNumberColumn('Percent')
-        ->addRows($topDaysList);
-
-Lava::PieChart('topDays', $topDaysData, [
-    'is3D'   => true,
-    'slices' => [
-        ['offset' => 0.2],
-        ['offset' => 0.25],
-        ['offset' => 0.3]
-    ]
-]);
-
-
 // Top times chart
 if (count($topTimes) >= 1):
     $topTimesList=[];
@@ -256,20 +240,6 @@ if (count($topTimes) >= 1):
 
 endif;
 
-
-$topTimesData = Lava::DataTable();
-$topTimesData->addStringColumn('Most reserved days in the week')
-        ->addNumberColumn('Percent')
-        ->addRows($topTimesList);
-
-Lava::PieChart('topTimes', $topTimesData, [
-    'is3D'   => true,
-    'slices' => [
-        ['offset' => 0.2],
-        ['offset' => 0.25],
-        ['offset' => 0.3]
-    ]
-]);
 
 // Top Persons chart
 if (count($topPersons) >= 1):
@@ -282,19 +252,7 @@ if (count($topPersons) >= 1):
 endif;
 
 
-$topPersonsData = Lava::DataTable();
-$topPersonsData->addStringColumn('Most reserved days in the week')
-        ->addNumberColumn('Percent')
-        ->addRows($topPersonsList);
 
-Lava::PieChart('topPersons', $topPersonsData, [
-    'is3D'   => true,
-    'slices' => [
-        ['offset' => 0.2],
-        ['offset' => 0.25],
-        ['offset' => 0.3]
-    ]
-]);
 ?>
         </div>
     </div>
@@ -303,6 +261,46 @@ Lava::PieChart('topPersons', $topPersonsData, [
             min-height: 300px;
         }
     </style>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load("current", {packages:["corechart"]});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Year');
+        data.addColumn('number', 'Balance');
+        data.addRows(<?= json_encode($topDaysList) ?>);
+
+        var options = {
+          is3D: true,
+          slices: {  0: {offset: 0.2},
+                    1: {offset: 0.25},
+                    2: {offset: 0.3},
+          },
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('topDaysChart'));
+        chart.draw(data, options);   
+
+         var dataTime = new google.visualization.DataTable();
+        dataTime.addColumn('string', 'Year');
+        dataTime.addColumn('number', 'Balance');
+        dataTime.addRows(<?= json_encode($topTimesList) ?>);
+        
+        var chartTime = new google.visualization.PieChart(document.getElementById('topTimesChart'));
+        chartTime.draw(dataTime, options);
+
+        var dataPerson = new google.visualization.DataTable();
+        dataPerson.addColumn('string', 'Year');
+        dataPerson.addColumn('number', 'Balance');
+        dataPerson.addRows(<?= json_encode($topPersonsList) ?>);
+        
+        var chartPerson = new google.visualization.PieChart(document.getElementById('topPersonsChart'));
+        chartPerson.draw(dataPerson, options);    
+      }
+
+      
+    </script>
     <div class="chart-panel">
         <div class="container">
             <div class="row">
@@ -313,10 +311,10 @@ Lava::PieChart('topPersons', $topPersonsData, [
                                 Top reservering: dagen
                             </h5>
                         </div>
+                        
                         <div id="donut-example" style="height: 250px;">
-                            <div id="topDaysChart-div">
-                            </div>
-                            <?= Lava::render('PieChart', 'topDays', 'topDaysChart-div') ?>
+                            <div id="topDaysChart"></div>
+                            
                         </div>
                     </div>
                 </div>
@@ -330,9 +328,8 @@ Lava::PieChart('topPersons', $topPersonsData, [
                         </div>
                         <div id="donut-example1">
                          <div id="donut-example" style="height: 250px;">
-                            <div id="topTimesChart-div">
+                            <div id="topTimesChart">
                             </div>
-                            <?= Lava::render('PieChart', 'topTimes', 'topTimesChart-div') ?>
                         </div>
                         </div>
                     </div>
@@ -346,9 +343,9 @@ Lava::PieChart('topPersons', $topPersonsData, [
                             
                         </div>
                         <div id="donut-example2">
-                        <div id="topPersonsChart-div">
+                        <div id="topPersonsChart">
                             </div>
-                            <?= Lava::render('PieChart', 'topPersons', 'topPersonsChart-div') ?>
+                           
                         </div>
                     </div>
                 </div>
