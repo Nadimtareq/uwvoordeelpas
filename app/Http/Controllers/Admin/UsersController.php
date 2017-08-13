@@ -42,100 +42,104 @@ class UsersController extends Controller
     }
 
     public function index(Request $request)
-    {
+    {	
+		
         $preferences = new Preference();
         $regio = $preferences->getRegio();
+		
+		
+		
+		
+			$data = Sentinel::getUserRepository()->select(
+				'users.id',
+				'users.name',
+				'users.email',
+				'users.phone',
+				'users.created_at',
+				'users.gender',
+				'users.updated_at',
+				'users.saldo',
+				'users.newsletter',
+				'users.city',
+				'preferences.name as cityName'
+			)
+				->leftJoin('preferences', 'users.city', '=', 'preferences.id');
+		
+			if ($request->has('q')) {
+				$data = $data->where(
+					'users.name', 'LIKE', '%'.$request->input('q').'%'
+				)
+				   ->orWhere('users.email', 'LIKE', '%'.$request->input('q').'%')
+				   ->orWhere('users.saldo', 'LIKE', '%'.$request->input('q').'%')
+				   ->orWhere('preferences.name', 'LIKE', '%'.$request->input('q').'%')
+				;
 
-        $data = Sentinel::getUserRepository()->select(
-            'users.id',
-            'users.name',
-            'users.email',
-            'users.phone',
-            'users.created_at',
-            'users.gender',
-            'users.updated_at',
-            'users.saldo',
-            'users.newsletter',
-            'users.city',
-            'preferences.name as cityName'
-        )
-            ->leftJoin('preferences', 'users.city', '=', 'preferences.id');
+				$regioName = $request->input('q');
 
-        if ($request->has('q')) {
-            $data = $data->where(
-                'users.name', 'LIKE', '%'.$request->input('q').'%'
-            )
-               ->orWhere('users.email', 'LIKE', '%'.$request->input('q').'%')
-               ->orWhere('users.saldo', 'LIKE', '%'.$request->input('q').'%')
-               ->orWhere('preferences.name', 'LIKE', '%'.$request->input('q').'%')
-            ;
+				if (isset($regio['regioNumber'][$regioName])) {
+					$data = $data->orWhere('users.city', 'REGEXP', '"([^"]*)'.$regio['regioNumber'][$regioName].'([^"]*)"');
+				}
+			}
 
-            $regioName = $request->input('q');
+			if ($request->has('source')) {
+				switch ($request->input('source')) {
+					case 'wifi':
+						$data = $data
+							->rightJoin('guests_wifi', 'guests_wifi.email', '=', 'users.email')
+						;
+						break;
 
-            if (isset($regio['regioNumber'][$regioName])) {
-                $data = $data->orWhere('users.city', 'REGEXP', '"([^"]*)'.$regio['regioNumber'][$regioName].'([^"]*)"');
-            }
-        }
+					default:
+						 $data = $data
+							->leftJoin('reservations', 'reservations.user_id', '=', 'users.id')
+							->join('guests_third_party', 'guests_third_party.email','=','users.email')
+							->where('guests_third_party.network', '=', $request->input('source'))
+							->groupBy('users.id')
+						;
+						break;
+				}
+			}
+	//        echo $request->input('source');
+			if ($request->has('has_saving')) {
+				switch ($request->input('has_saving')) {
+					case '0':
+						$data = $data->where('users.extension_downloaded', '=', 0);
+						break;
+					case '1':
+						$data = $data->where('users.extension_downloaded', '=', 1);
+						break;
+					case '2':
+						$data = $data->where('users.extension_downloaded', '=', 2);
+						break;
+						
+				}
+			}
+			if ($request->has('sort') && $request->has('order')) {
+				$data = $data->orderBy('users.'.$request->input('sort'), $request->input('order'));
+				session(['sort' => $request->input('sort'), 'order' => $request->input('order')]);
+			} else {
+				$data = $data->orderBy('users.id', 'desc');
+			}
 
-        if ($request->has('source')) {
-            switch ($request->input('source')) {
-                case 'wifi':
-                    $data = $data
-                        ->rightJoin('guests_wifi', 'guests_wifi.email', '=', 'users.email')
-                    ;
-                    break;
+			if ($request->has('city')) {
+				 $regioName = $request->input('city');
 
-                default:
-                     $data = $data
-                        ->leftJoin('reservations', 'reservations.user_id', '=', 'users.id')
-                        ->join('guests_third_party', 'guests_third_party.email','=','users.email')
-                        ->where('guests_third_party.network', '=', $request->input('source'))
-                        ->groupBy('users.id')
-                    ;
-                    break;
-            }
-        }
-//        echo $request->input('source');
-        if ($request->has('has_saving')) {
-            switch ($request->input('has_saving')) {
-                case '0':
-                    $data = $data->where('users.extension_downloaded', '=', 0);
-                    break;
-                case '1':
-                    $data = $data->where('users.extension_downloaded', '=', 1);
-                    break;
-                case '2':
-                    $data = $data->where('users.extension_downloaded', '=', 2);
-                    break;
-                    
-            }
-        }
-        if ($request->has('sort') && $request->has('order')) {
-            $data = $data->orderBy('users.'.$request->input('sort'), $request->input('order'));
-            session(['sort' => $request->input('sort'), 'order' => $request->input('order')]);
-        } else {
-            $data = $data->orderBy('users.id', 'desc');
-        }
+				if (isset($regio['regioNumber'][$regioName])) {
+					$data = $data->whereNotNull(
+						'users.city'
+					)
+						->where('users.city', 'REGEXP', '"([^"]*)'.$regio['regioNumber'][$regioName].'([^"]*)"')
+					;
+				}
+			}
 
-        if ($request->has('city')) {
-             $regioName = $request->input('city');
-
-            if (isset($regio['regioNumber'][$regioName])) {
-                $data = $data->whereNotNull(
-                    'users.city'
-                )
-                    ->where('users.city', 'REGEXP', '"([^"]*)'.$regio['regioNumber'][$regioName].'([^"]*)"')
-                ;
-            }
-        }
-
-        if($request->has('role')){
-            $role = $request->input('role');
-            $data = User::whereHas('roles', function ($q) use ($role){
-                $q->where('name', "LIKE", $role);
-            });
-        }
-
+			if($request->has('role')){
+				$role = $request->input('role');
+				$data = User::whereHas('roles', function ($q) use ($role){
+					$q->where('name', "LIKE", $role);
+				});
+			}
+		
         $dataCount = $data->count();
 
         $data = $data->paginate($request->input('limit', 15));
@@ -166,6 +170,7 @@ class UsersController extends Controller
             'currentPage' => 'Overzicht',
             'companies' => $this->companies,
         ]);
+		
     }
 
     public function create()
@@ -481,4 +486,221 @@ class UsersController extends Controller
       return Redirect::to('/');
 
     }
+	
+	public function extentionlist(Request $request)
+    {
+        $preferences = new Preference();
+        $regio = $preferences->getRegio();
+
+       
+		$data  = DB::select(DB::raw("SELECT lower(substring_index(email, '@', -1)) domain, COUNT(*) email_count FROM guests_wifi GROUP BY substring_index(email, '@', -1) HAVING domain NOT IN (SELECT email_extension FROM guest_list_extension ) ORDER BY email_count DESC, domain")
+		);
+		if(count($data)>0){
+			foreach($data as $d){
+				
+				DB::table('guest_list_extension')->insert(array('email_extension'   =>   $d->domain ));
+			}
+		}
+		
+		$data_ext  = DB::table("guest_list_extension");
+		
+		if ($request->has('q')) {
+            $data_ext = $data_ext->where(
+                'guest_list_extension.email_extension', 'LIKE', '%'.$request->input('q').'%'
+            );
+        }
+		
+		if ($request->has('sort') && $request->has('order')) {
+            $data_ext = $data_ext->orderBy('guest_list_extension.'.$request->input('sort'), $request->input('order'));
+            session(['sort' => $request->input('sort'), 'order' => $request->input('order')]);
+        } else {
+            $data_ext = $data_ext->orderBy('guest_list_extension.id', 'desc');
+        }
+        $dataCount = $data_ext->count();
+		$data_ext = $data_ext->paginate($request->input('limit', 15));
+        $data_ext->setPath('list');
+
+        # Redirect to last page when page don't exist
+        if ($request->input('page') > $data_ext->lastPage()) {
+            $lastPageQueryString = json_decode(json_encode($request->query()), true);
+            $lastPageQueryString['page'] = $data_ext->lastPage();
+
+            return Redirect::to($request->url().'?'.http_build_query($lastPageQueryString));
+        }
+
+        $queryString = $request->query();
+		
+        unset($queryString['source']);
+        unset($queryString['has_saving']);
+        unset($queryString['limit']);
+
+		// get total of emails
+		for($i=0; $i<count($data_ext); $i++){
+			$data  = DB::select(DB::raw("SELECT COUNT(*) AS total FROM guests_wifi WHERE lower(substring_index(email, '@', -1)) IN (SELECT email_extension FROM guest_list_extension WHERE id='{$data_ext[$i]->id}')"));
+			
+			$data_ext[$i]->total_email = $data[0]->total;
+		}
+        return view('admin/'.$this->slugController.'/extensionlist', [
+            'data' => $data_ext,
+            'regio' => $regio['regio'],
+            'countItems' => $dataCount,
+            'slugController' => $this->slugController,  
+			'queryString' => $queryString,			
+            'paginationQueryString' => $request->query(),
+            'limit' => $request->input('limit', 15),
+            'section' => $this->section,
+            'currentPage' => 'Overzicht',
+            'companies' => $this->companies,
+        ]);
+    }
+	public function extensioncreate()
+    {
+        return view('admin/'.$this->slugController.'/extensioncreate', [
+            'section' => $this->section,
+            'slugController' => $this->slugController,
+            'section' => $this->section,
+            'currentPage' => 'Nieuwe gebruiker',
+            'roles' => $this->roles
+        ]);
+    }
+	
+	 public function extensioncreateAction(Request $request)
+    {
+        $this->validate($request, [
+	         'extension' => 'required',
+        	 
+        ]);
+        $extension = $request->input('extension');
+        $status = $request->input('status');
+		
+		$data = DB::table('guest_list_extension')
+						->where('email_extension', $extension)
+						->first();
+		
+		if(count($data)==0){
+		$id = DB::table('guest_list_extension')-> insertGetId(array(
+				'email_extension' => $extension,        
+				'id1' => $status,        
+			));
+			Alert::success('Deze gebruiker is succesvol aangemaakt.')->persistent('Sluiten');
+        return Redirect::to('admin/'.$this->slugController.'/list/update/'.$id);
+		}
+
+         return Redirect::to('admin/'.$this->slugController.'/list/create/');
+    }
+	 public function extensionupdate($id)
+    {
+        
+		
+		$data = DB::table('guest_list_extension')
+						->where('id', $id)
+						->first();
+        //removed the section duplicate key
+
+        return view('admin/'.$this->slugController.'/extensionupdate', [
+            'data' => $data,
+            'section' => $this->section,
+            'slugController' => $this->slugController,
+            'currentPage' => 'Wijzig gebruiker',
+            'roles' => $this->roles
+        ]);
+    }
+	public function extensionupdateAction($id, Request $request)
+    {
+       
+
+        $this->validate($request, [
+	         'extension' => 'required',
+        	 
+        ]);
+        $extension = $request->input('extension');
+        $status = $request->input('status');
+		$data = DB::table('guest_list_extension')
+						->where('email_extension', $extension)
+						->first();
+		
+		if(count($data)==0){
+			DB::table('guest_list_extension')
+			->where('id', $id)  
+			->limit(1)  
+			->update(array('email_extension' => $extension,        
+				'id1' => $status));
+		}
+
+        Alert::success('Deze gebruiker is succesvol aangemaakt.')->persistent('Sluiten');
+        return Redirect::to('admin/'.$this->slugController.'/list/update/'.$id);
+    }
+	
+	public function guestwifi(Request $request)
+    {
+		
+		
+		$preferences = new Preference();
+        $regio = $preferences->getRegio();
+		$data  =DB::table('guests_wifi');
+			$dataCount = $data->count();
+
+			$data = $data->paginate($request->input('limit', 15));
+			$data->setPath($this->slugController);
+
+			
+			if ($request->input('page') > $data->lastPage()) {
+				$lastPageQueryString = json_decode(json_encode($request->query()), true);
+				$lastPageQueryString['page'] = $data->lastPage();
+
+				return Redirect::to($request->url().'?'.http_build_query($lastPageQueryString));
+			}
+
+			$queryString = $request->query();
+			unset($queryString['source']);
+			unset($queryString['has_saving']);
+			unset($queryString['limit']);
+			return view('admin/'.$this->slugController.'/guestwifi', [
+			'data' => $data,
+            'regio' => $regio['regio'],
+            'countItems' => $dataCount,
+            'slugController' => $this->slugController,
+            'queryString' => $queryString,
+			'paginationQueryString' => $request->query(),
+			'limit' => $request->input('limit', 15),
+			'section' => $this->section,
+            'currentPage' => 'Overzicht',
+           'companies' => $this->companies,
+        ]);
+	}
+	public function guestthirdparty(Request $request)
+    {
+		$preferences = new Preference();
+        $regio = $preferences->getRegio();
+		$data  =DB::table('third_party_user');
+			$dataCount = $data->count();
+
+			$data = $data->paginate($request->input('limit', 15));
+			$data->setPath($this->slugController);
+
+			
+			if ($request->input('page') > $data->lastPage()) {
+				$lastPageQueryString = json_decode(json_encode($request->query()), true);
+				$lastPageQueryString['page'] = $data->lastPage();
+
+				return Redirect::to($request->url().'?'.http_build_query($lastPageQueryString));
+			}
+
+			$queryString = $request->query();
+			unset($queryString['source']);
+			unset($queryString['has_saving']);
+			unset($queryString['limit']);
+			return view('admin/'.$this->slugController.'/guestwifi', [
+			'data' => $data,
+            'regio' => $regio['regio'],
+            'countItems' => $dataCount,
+            'slugController' => $this->slugController,
+            'queryString' => $queryString,
+			'paginationQueryString' => $request->query(),
+			'limit' => $request->input('limit', 15),
+			'section' => $this->section,
+            'currentPage' => 'Overzicht',
+           'companies' => $this->companies,
+        ]);
+	}
 }

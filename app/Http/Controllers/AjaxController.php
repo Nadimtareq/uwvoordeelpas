@@ -20,6 +20,7 @@ use App\Models\MailTemplate;
 use App\Models\NewsletterGuest;
 use App\Helpers\AffiliateHelper;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Sentinel;
 use URL;
 use anlutro\cURL\cURL;
@@ -902,5 +903,88 @@ class AjaxController extends Controller
             }
         }
     }
-
+	/**
+	* This function for update the extension
+	*/
+	public function updateExtension(Request $request){
+		if($request->has('extension_id')) { // extension_id
+            $extension_id = $request->input('extension_id');
+        }
+		if($request->has('ext_status')) { // ext_status
+            $ext_status = $request->input('ext_status');
+        }
+		// update extension
+		if(!empty($extension_id)){
+			DB::update("UPDATE guest_list_extension SET id1 = {$ext_status} WHERE id = {$extension_id}");
+			
+			// create users if status marked enabled
+			if($ext_status==1){
+				$data  = DB::select(DB::raw("SELECT email, name, company_id FROM guests_wifi WHERE lower(substring_index(email, '@', -1)) IN (SELECT email_extension FROM guest_list_extension WHERE id='{$extension_id}')"));
+				
+				if(count($data)>0){
+					$i=0;
+					foreach($data as $d){
+						// chheck user already exits or not
+						$user = DB::table('users')
+						->where('email', $d->email)
+						->first();
+						
+						// insert user if not exists
+						if(count($user)==0){
+							// user password
+							$extensions = explode("@",$d->email);						
+							$unwanted=DB::table('unwanted_word')->get();
+							foreach($unwanted as $unw){
+								if (strpos($extensions[1], $unw->word) !== false || strpos($extensions[0], $unw->word) !== false) {
+									return false;
+								}
+								
+							}
+							$pass = Hash::make('simple2568');
+							DB::table('users')->insert(array('name'=>$d->name, 'email'=>$d->email, 'from_company_id'=>$d->company_id, 'password'=>$pass));
+						}
+						$i++;
+					}
+				}
+			}
+			echo 'success';
+		}else{
+			
+			$data1  = DB::select(DB::raw("SELECT email, name, company_id,phone FROM guests_wifi WHERE lower(substring_index(email, '@', -1)) IN (SELECT email_extension FROM guest_list_extension WHERE id='{$extension_id}')"));
+				
+				if(count($data1)>0){
+					$i=0;
+					foreach($data1 as $d){
+						// chheck user already exits or not
+						$user = DB::table('third_party_user')
+						->where('email', $d->email)
+						->first();
+						// insert user if not exists
+						if(count($user)==0){
+							// user password
+							//$pass = Hash::make('simple2568');
+							$extensions = explode("@",$d->email);						
+							$unwanted=DB::table('unwanted_word')->get();
+							foreach($unwanted as $unw){
+								if (strpos($extensions[1], $unw->word) !== false || strpos($extensions[0], $unw->word) !== false) {
+									return false;
+								}
+								
+							}
+							DB::table('third_party_user')->insert(array('name'=>$d->name, 'email'=>$d->email, 'company_id'=>$d->company_id,'phone'=>$d->phone));
+						}
+						$i++;
+					}
+				}
+			echo 'fail';
+		}
+	}
+	
+	public function searchextension(Request $request){
+		if($request->has('extension_text')) { // extension_text
+            $extension_text = $request->input('extension_text');
+        }
+		
+		
+	}
 }

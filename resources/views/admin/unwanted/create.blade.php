@@ -17,6 +17,11 @@
         <label>woord</label>
         <?php echo Form::text('word') ?>
     </div>
+	<div class=" field">
+			   	<label>Word Kort</label>
+				<?php echo Form::select('short',  array(1 => 'E-mail', 2 => 'Website',3=>'Beide'), '', array('class' => 'multipleSelect')); ?>
+	</div>
+	<br><br><br>
 	<button class="ui button" type="submit"><i class="plus icon"></i> Aanmaken</button>
 	<?php echo Form::close(); ?>
 </div>

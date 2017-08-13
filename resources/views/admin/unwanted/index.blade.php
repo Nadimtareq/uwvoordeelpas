@@ -48,6 +48,7 @@
     					</div>
     				</th>
                     <th data-slug="title" class="six wide">woord</th>
+                    <th>Word Kort</th>
                     <th></th>
             	</tr>
             </thead>

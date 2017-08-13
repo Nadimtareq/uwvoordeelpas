@@ -416,6 +416,39 @@ $(document).ready(function ($) {
         });
     }
 
+	$('.extension_update').click(function () {
+		var extension_id = $(this).data('extension');
+		var ext_status =  $(this).data('status');
+	    var $this = $(this);
+		$.ajax({
+			data: {extension_id:extension_id,ext_status:ext_status},
+			url: baseUrl+"ajax/updateextension",
+			success: function (data) {
+				if(data=="success"){
+					if($this.hasClass('red')){
+						$this.removeClass('red');
+						$this.addClass('green');
+						$this.text('Enable');
+						$this.data('status', 1);
+						$this.attr('data-status', 1);
+					}else{
+						$this.removeClass('green');
+						$this.addClass('red');
+						$this.text('Disable');
+						$this.data('status', 0);
+						$this.attr('data-status', 0);
+					}
+				}
+			}
+		});
+	});
+	
+	// search extension
+	$('.extension_search').click(function () {
+		var extension_text = $('#ext_search_value').val();
+		var url = String(window.location.href).split("?");
+		window.location.href=url[0]+"?q="+extension_text;
+	});
 
 }(jQuery));
 
@@ -778,3 +811,4 @@ $(window).load(function ($) {
         });
     });
 });
+  
