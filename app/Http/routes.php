@@ -126,6 +126,8 @@ Route::group(array('prefix' => 'ajax', 'middleware' => 'userInfo'), function() {
     Route::get('querystring/reservations', 'AjaxController@adminReservationQuery')->middleware(['waiter']);
     Route::get('querystring/guests', 'AjaxController@adminGuestsQuery')->middleware(['adminowner', 'auth']);
     Route::get('services', 'AjaxController@adminCompaniesServices')->middleware(['admin']);
+	 Route::get('updateextension', 'AjaxController@updateExtension');
+	 Route::get('searchextension', 'AjaxController@searchextension');
 
     ## Post routes - Cookies ##
     Route::post('cashback/popup', 'AjaxController@cashbackPopup')->middleware(['auth']);
@@ -446,12 +448,19 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', '
         Route::get('/', 'Admin\UsersController@index');
         Route::get('create', 'Admin\UsersController@create');
         Route::get('update/{id}', 'Admin\UsersController@update');
+        Route::get('list/update/{id}', 'Admin\UsersController@extensionupdate');
         Route::get('login/{id}', 'Admin\UsersController@login');
         Route::get('saldo/reset/{id}', 'Admin\UsersController@resetSaldo');
-
+		Route::get('list', 'Admin\UsersController@extentionlist');
+		Route::get('list/create', 'Admin\UsersController@extensioncreate');
+		Route::get('guestwifi', 'Admin\UsersController@guestwifi');
+		Route::get('guestthirdparty', 'Admin\UsersController@guestthirdparty');
+		
 
         Route::post('create', 'Admin\UsersController@createAction');
+		Route::post('list/create', 'Admin\UsersController@extensioncreateAction');
         Route::post('update/{id}', 'Admin\UsersController@updateAction');
+        Route::post('list/update/{id}', 'Admin\UsersController@extensionupdateAction');
         Route::get('newsletter', 'Admin\UsersController@newsletter');
         Route::post('delete', 'Admin\UsersController@deleteAction');
     });

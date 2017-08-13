@@ -104,8 +104,26 @@
                             
                             <a href="{{ url('admin/users?'.http_build_query(array_add($queryString, 'has_saving', '2'))) }}" data-value="2" class="item">Mislukt</a>
                         </div>
+						 
                     </div>
                 </div>
+				 <div class="sixteen wide mobile four wide computer column">
+                    <div class="ui normal floating basic search selection dropdown">
+                        <input type="hidden" name="user_from" value="{{ Request::input('user_from') }}">
+
+                        <div class="text">Type gebruikers</div>
+                        <i class="dropdown icon"></i>
+
+                        <div class="menu">                            
+                            <a href="{{ url('admin/'.$slugController) }}" data-value="1" class="item">gebruikers</a>
+                            <a href="{{ url('admin/'.$slugController.'/guestwifi') }}" data-value="2" class="item">Gast wifi</a>
+                            
+                            <a href="{{ url('admin/'.$slugController.'/guestthirdparty') }}" data-value="3" class="item">Derde partij</a>
+                        </div>
+						 
+                    </div>
+                </div>
+				<a href="{{ url('admin/'.$slugController.'/list') }}" class="ui blue button"> Lijst</a>
             </div>
         </div>
     </div><br />
@@ -148,7 +166,7 @@
                         {{ $result->name?$result->name:'' }}
                     </a>
                 </td>
-                <td>
+               <td>
                     @if(is_array(json_decode($result->city)) >= 1)
                     @foreach(json_decode($result->city) as $city)
                     @if(isset($regio[$city]))
