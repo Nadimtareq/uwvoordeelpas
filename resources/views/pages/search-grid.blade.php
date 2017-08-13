@@ -4,103 +4,21 @@
 @inject('discountHelper', 'App\Helpers\DiscountHelper')
 @inject('companyReservation', 'App\Models\companyReservation')
 @inject('FileHelper', 'App\Helpers\FileHelper')
+
 <?php use App\Http\Controllers\HomeController; $i = 0; ?>
-
 @section("header_picture")
-    <div class="back_slideer_mnu">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <div class="wow bounceInDown">
-                        <h1>Activate the savings and get immediate $ 5.-</h1>
-                        <p>Save now at 2000+ webshops automatically.<br>
-                            These will pay you up to 10% dinner on each purchase!</p>
-                        <button type="button" class="want_to_save">Yes, I also want to save</button>
-                    </div>
-                    <div class="drop_icon_show">
-                        <a href=""><i class="fa fa-chevron-down"></i></a>
-                    </div>
-                </div>
+   @include('pages._search-slider')
+@endsection  
 
-            </div>
-        </div>
-    </div>
-@endsection
 @section('content')
-    <section>
-        <div class="filter_sec">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12 text-center">
-                        <div class="filter_main_inner">
-                            <div class="drop-menu">
-                                <div class="select">
-                                    <span>City</span>
-                                    <i class="fa fa-chevron-down"></i>
-                                </div>
-                                <input type="hidden" name="gender">
-                                <ul class="dropeddown">
-                                    <li id="male">1 city</li>
-                                    <li id="female">2 city</li>
-                                </ul>
-                            </div>
-                            <div class="drop-menu">
-                                <div class="select">
-                                    <span>Preferences</span>
-                                    <i class="fa fa-chevron-down"></i>
-                                </div>
-                                <input type="hidden" name="gender">
-                                <ul class="dropeddown">
-                                    <li id="male">1 Preferences</li>
-                                    <li id="female">2 Preferences</li>
-                                </ul>
-                            </div>
-                            <div class="drop-menu">
-                                <div class="select">
-                                    <span>Kitchen</span>
-                                    <i class="fa fa-chevron-down"></i>
-                                </div>
-                                <input type="hidden" name="gender">
-                                <ul class="dropeddown">
-                                    <li id="male">1 Kitchen</li>
-                                    <li id="female">2 Kitchen</li>
-                                </ul>
-                            </div>
-                            <div class="drop-menu">
-                                <div class="select">
-                                    <span>Type</span>
-                                    <i class="fa fa-chevron-down"></i>
-                                </div>
-                                <input type="hidden" name="gender">
-                                <ul class="dropeddown">
-                                    <li id="male">1 Type</li>
-                                    <li id="female">2 Type</li>
-                                </ul>
-                            </div>
-                            <div class="drop-menu">
-                                <div class="select">
-                                    <span>Allergies</span>
-                                    <i class="fa fa-chevron-down"></i>
-                                </div>
-                                <input type="hidden" name="gender">
-                                <ul class="dropeddown">
-                                    <li id="male">1 Allergies</li>
-                                    <li id="female">2 Allergies</li>
-                                </ul>
-                            </div>
-                            <img src="images/filter_img.png" class="filter_img" alt="img">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<div class="clearfix"></div>
+     @include('pages.search-filter')
 
-
+    <div class="clearfix"></div>
     <section>
         <div class="booking_posting">
             <div class="container">
-                <div class="row">
+                <div class="ro">
                     @foreach ($companies as $data)
                         @foreach ($data->ReservationOptions2()->get() as $index => $deal)
 
@@ -113,11 +31,21 @@
                                 continue;
                             ?>
 
-                            @if($index + 1 % 3 == 0)
-                                <div class="col-md-12">
-                                    @endif
-
-                                    <div class="col-md-4 wow fadeInLeft">
+                             {{--  @if($index % 3 == 0 || $index == 0)
+                           {{$index}}
+                                {{--  <div class="row">  --}
+                                    @endif   --}}
+                                @if($index == 0)
+                                    {{--  @if($index == 0)
+                                       <div class="row">
+                                    @else
+                                        </div>
+                                        <div class="row">
+                                    @endif  --}}
+                                     <div class="row">
+                                @endif
+                                    <div class="col-md-4 col-xs-12">
+                                     
                                         <div class="back_pric_ground company"
                                              data-kitchen="{{ is_array(json_decode($data->kitchens)) ? str_slug(json_decode($data->kitchens)[0]) : '' }}"
                                              data-url="{{ url('restaurant/'.$data->slug) }}"
@@ -225,14 +153,14 @@
                                             </div>
                                             <div class="heading_price_sec">
                                                 <h1>@if($count_persons >= $deal->total_amount)
-                                                        {{ $deal->name }}
+                                                        {{ $deal->name }} 
                                                     @else
                                                         <a href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}"
                                                            title="{{ $data->name }}">{{ $deal->name }}</a>
 
                                                     @endif</h1>
 
-                                                <p class="hidden-xs0"><b>{!! substr(strip_tags($deal->description), 0, 107) !!}</b></p>
+                                                <p class="hidden-xs0" style="color: #666; min-height: 40px;"> <em>{!! substr(strip_tags($deal->description,'<em>'), 0, 107) !!}</em></p>
 
                                                 {{--<div class="avilable_to_people">--}}
                                                 {{--<i class="fa fa-caret-left" aria-hidden="true"></i>--}}
@@ -243,15 +171,32 @@
                                                 {{--<button type="button" class="timing_buton">08:00</button>--}}
                                                 {{--<i class="fa fa-caret-right" aria-hidden="true"></i>--}}
                                                 {{--</div>--}}
-                                                <a href="#" class="more_info_buton">MORE INFO</a>
-                                                <a href="#" class="more_info_buton">BUY DEAL</a>
+
+                                                {{--  <div style="display: block; padding-top; 20px;">  --}}
+                                                <br><br>
+                            
+                                                <div class="row">
+                                                    
+                                                        <div class="col-md-6 col-xs-12" style="margin-bottom: 10px;">
+                                                   
+                                                    <a href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}" class="more_info_buton more_info_lg">Meer info</a>
+                                                    
+                                                        </div>
+                                                        <div class="col-md-6 col-xs-12" style="margin-bottom: 10px;">
+                                                    
+                                                    <a href="{{ url('future-deal/'.$data->slug).'?deal='.$deal->id }}" class="more_info_buton more_info_lg">Koop deal </a>
+                                                    
+                                                        </div>
+                                                    
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    @if($index + 1 % 3 === 0)
-                                </div>
-                            @endif
+                                     </div> 
+                                    <?php $items = $index + 1; ?>
+                                    @if($items % 3 == 0)
+                                        </div>
+                                        <div class="row">
+                                    @endif  
 
                         @endforeach
                     @endforeach
@@ -343,7 +288,7 @@
             top: 0;
         }
         .back_slideer_mnu {
-            margin-top: 40px;
+            margin-top: 0px;
         }
     </style>
 @endsection

@@ -1,85 +1,18 @@
 @extends('template.theme', ['search_header' => 'true'])
 
 {{--*/ $pageTitle = 'Zoeken' /*--}}
-
+@section("header_picture")
+   @include('pages._search-slider')
+@endsection 
 @section('content')
+    
     <script type="javascript">
         var searchPage = 1;
     </script>
-
-    <div class="side_menus">
-        <?php echo Form::open(array('url' => 'preferences', 'method' => 'post', 'class' => 'ui form')); ?>
-
-        @if(Request::has('date'))
-            <input type="hidden" name="date" value="<?php echo Request::get('date'); ?>" />
-        @endif
-
-        @if(Request::has('time'))
-            <input type="hidden" name="time" value="<?php echo Request::get('time'); ?>" />
-        @endif
-
-        @if(Request::has('time'))
-            <input type="hidden" name="time_format" value="<?php echo date('Hi', strtotime(Request::get('time'))); ?>" />
-        @endif
-        <input type="hidden" id="typePage" name="typePage" value="1" />
-        <input type="hidden" name="q" value="<?php echo Request::get('q'); ?>" />
-        @if(Request::has('persons'))
-            <input type="hidden" name="persons" value="<?php echo Request::get('persons'); ?>" />
-        @endif
-
-        <div class="content">
-            <div class="static-menu row">
-                <div class="jsearch col-md-2 col-sm-2 col-xs-6">
-                    <?php $data=''; ?>
-                    @if(isset($preference[9]))
-                        <select name="discount[]" class = 'multipleSelect' id='city' onchange="javascript:handleSelect(this)">
-                            <option value=""><a href="#" >Stad</a></option>
-                            @foreach ($preference[9] as $key=>$pre)
-                                <option value="{{$key}}"><a href="#" >{{$pre}}</a></option>
-                            @endforeach
-                        </select>
-                    @endif
-                </div>
-                <div class="jsearch col-md-2 col-sm-2 col-xs-6" >
-                    {{ Form::select('preference[]',
-                                   (isset($preference[1]) ? $preference[1] : array()),
-                                   (Request::has('preference') ? Request::get('preference') : ''),
-                                   array('class' => 'multipleSelect', 'data-placeholder' => 'Voorkeuren', 'multiple' => 'multiple')) }}
-
-                </div>
-                <div class="jsearch col-md-2 col-sm-2 col-xs-6">
-                    {{  Form::select('kitchen[]',
-                                    (isset($preference[2]) ? $preference[2] : array()),
-                                    (Request::has('kitchen') ? Request::get('kitchen') : ''),
-                                    array('class' => 'multipleSelect', 'data-placeholder' => 'Keuken', 'multiple' => 'multiple')) }}
-                </div>
-                <div class="jsearch col-md-2 col-sm-2 col-xs-6">
-                    {{ Form::select('price[]',
-                                            (isset($preference[4]) ? $preference[4] : array()),
-                                            (Request::has('price') ? Request::get('price') : ''),
-                                            array('class' => 'multipleSelect', 'data-placeholder' => 'Soort', 'multiple' => 'multiple')) }}
-                </div>
-            <!--<div class="jsearch col-md-2 col-sm-2 col-xs-6">
-				 {{ Form::select('discount[]',
-                                        (isset($preference[5]) ? $preference[5] : array()),
-                                        (Request::has('discount') ? Request::get('discount') : ''),
-                                        array('class' => 'multipleSelect', 'data-placeholder' => 'Korting', 'multiple' => 'multiple')) }}
-
-                    </div>-->
-                <div class="jsearch col-md-2 col-sm-2 col-xs-6">
-                    {{ Form::select('allergies[]',
-                                                    (isset($preference[3]) ? $preference[3] : array()),
-                                                    (Request::has('allergies') ? Request::get('allergies') : ''),
-                                                    array('class' => 'multipleSelect', 'data-placeholder' => 'Allergieen',  'multiple' => 'multiple')) }}
-                </div>
-                <div class="jsearch col-md-2 col-sm-2 col-xs-12">
-                    <input type="submit" class="ui bluelink fluid filter button" value="Filteren" />
-                </div>
-            </div>
-
-        </div>
-        <?php echo Form::close() ?>
-    </div>
+    <div class="clearfix"></div>
+     @include('pages.search-filter')
+   
+    <div class="clearfix"></div>
     <!--
     <section id="prices">
             <div class="container">
@@ -135,6 +68,23 @@
             <div class="col-sm-12 col-ms1">
                 <div class="col-sm-3 col5">
                     @if (count($companies) >= 1)
+{{--  
+                        <div class="search-layout">
+                            <div class="pull-right">
+
+                                <span class="rs">View</span>
+
+                                <a href="{{ url("search?regio=eindhoven&layout=grid") }}" class="active">
+                                    <img src="{{ url("images/one.png") }}" alt="one">
+                                </a>
+
+                                <a href="{{ url("search?regio=eindhoven") }}">
+                                    <img src="{{ url("images/two.png") }}" alt="two">
+                                </a>
+
+                            </div>
+                        </div>  --}}
+
                         @include('company-list')
 
                         @if (count($recommended) >= 1)
@@ -172,3 +122,7 @@
 
     <div class="clear"></div>
 @stop
+
+@section("after_styles")
+    <link href="{{ asset("css/custom.css") }}" rel="stylesheet">
+@endsection
