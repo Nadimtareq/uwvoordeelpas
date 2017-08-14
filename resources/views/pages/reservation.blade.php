@@ -38,7 +38,15 @@
     <div class="ui grid">
         <div class="row">
             <div class="col-md-3 col-md-12">
+
+                @if(!empty($mediaItems) && isset($mediaItems[0]))
+                @if($iframe!=1 && isset($iframe))
                 <img id="image" src="{{ url('images/deals/'.$deal->image) }}" class="img-responsive1 img_responsive image_rest" alt="" />
+                @endif
+                {{--
+                <img id="image" src="{{ url($mediaItems[0]->getUrl('175Thumb')) }}" class="img-responsive" alt="" />
+                --}}
+                @endif
             </div>
             <?php if ($deal): ?>
                 <div class="col-md-9 col-md-12">

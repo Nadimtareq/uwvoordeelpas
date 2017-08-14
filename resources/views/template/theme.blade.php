@@ -165,6 +165,7 @@
     @endif
 
     <section class="content space-header">
+     <h2 align="center">{{ json_encode(session('reference'))}}</h2> 
         @yield('content')
     </section>
 

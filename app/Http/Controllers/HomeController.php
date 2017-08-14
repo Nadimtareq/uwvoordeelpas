@@ -1390,7 +1390,7 @@ class HomeController extends Controller
         if ($user)
         {
             session(['reference' => $request->get('reference'), 'referer' => $user->id]);
-            return redirect('/');
+            return redirect('/home');
         }else {
             return redirect('/');
         }

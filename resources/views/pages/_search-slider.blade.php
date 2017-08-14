@@ -1,4 +1,5 @@
- <div class="back_slideer_mnu">
+ <div class="search_slider">
+    <div class="black-overlay">
         <div class="container">
             <div class="row">
                 <div class="col-md-12 text-center">
@@ -20,3 +21,4 @@
             </div>
         </div>
     </div>
+</div>
