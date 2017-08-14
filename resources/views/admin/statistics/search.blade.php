@@ -16,6 +16,10 @@
             <a href="{{ url('admin/statistics/search?'.http_build_query(array_add($queryString, 'section', 'search'))) }}" data-value="search" class="item">Zoekpagina</a>
             <a href="{{ url('admin/statistics/search?'.http_build_query(array_add($queryString, 'section', 'tegoed-sparen'))) }}" data-value="tegoed-sparen" class="item">Tegoed sparen</a>
             <a href="{{ url('admin/statistics/search?'.http_build_query(array_add($queryString, 'section', 'faq'))) }}" data-value="faq" class="item">Veelgestelde vragen</a>
+            <a href="{{ url('admin/statistics/search?'.http_build_query(array_add($queryString, 'section', 'contents'))) }}" data-value="contents" class="item">Contents</a>
+            <a href="{{ url('admin/statistics/search?'.http_build_query(array_add($queryString, 'section', 'reviews'))) }}" data-value="reviews" class="item">Reviews</a>
+            <a href="{{ url('admin/statistics/search?'.http_build_query(array_add($queryString, 'section', 'mailtemplates'))) }}" data-value="mailtemplates" class="item">Mail Templates</a>
+            <a href="{{ url('admin/statistics/search?'.http_build_query(array_add($queryString, 'section', 'roles'))) }}" data-value="roles" class="item">Roles</a>
         </div>
     </div>
     

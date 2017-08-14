@@ -5,6 +5,7 @@ use App\Http\Requests\Admin\MailtemplateRequest;
 use App;
 use Alert;
 use App\User;
+use App\Models\SearchHistory;
 use App\Http\Controllers\Controller;
 use App\Models\MailTemplate;
 use App\Models\Company;
@@ -43,6 +44,9 @@ class MailTemplatesController extends Controller
 
         if ($request->has('q')) {
             $data = $data->where('subject', 'LIKE', '%'.$request->input('q').'%');
+
+            $searchHistory = new SearchHistory();
+            $searchHistory->addTerm($request->input('q'), '/mailtemplates');
         }
 
         if ($request->has('sort') && $request->has('order')) {

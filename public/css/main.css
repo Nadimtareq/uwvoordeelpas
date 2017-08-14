@@ -1,13 +1,13 @@
-    html {
+html {
     font-size: 1em;
 }
 
-::-moz-selection {
+ ::-moz-selection {
     background: #b3d4fc;
     text-shadow: none;
 }
 
-::selection {
+ ::selection {
     background: #b3d4fc;
     text-shadow: none;
 }
@@ -849,6 +849,7 @@ header.nav li a:hover {
     background: linear-gradient(to top, #2c3ea0, #3350b9);
     color: white;
     padding-bottom: 62px;
+    margin-top: 20px;
 }
 
 .space-header {
@@ -1997,10 +1998,10 @@ ul.side-nav2 li:hover {
     text-transform: uppercase;
     text-align: center;
     color: #fff;
-    font: 24px 'LatoRegular';
+    font: 18px 'LatoRegular';
     display: inline-block;
     vertical-align: top;
-    padding: 15px 35px;
+    padding: 21px 5px;
     margin: 0 0 0 -2px;
     background-color: transparent;
     border: none;
@@ -2065,7 +2066,7 @@ ul.side-nav2 li:hover {
     border: none;
     height: auto;
     border-radius: 0px;
-    padding: 21px 0;
+    padding: 20px 0;
     width: 60px;
 }
 
@@ -5555,7 +5556,8 @@ tbody tr td {
 
 .parallax .black-overlay,
 .parallax-advert .black-overlay,
-.parallax-aansluiten .black-overlay {
+.parallax-aansluiten .black-overlay,
+.parallax-food .black-overlay {
     background: rgba(0, 0, 0, .6);
     width: 100%;
     height: 100%;
@@ -5580,6 +5582,13 @@ tbody tr td {
 .whitee {
     background: transparent !important;
 }
-.ui.basic.table th {
-    background: #f9f9f9 !important;
+
+.parallax-food {
+    position: relative;
+    background: url("../images/food.jpg") no-repeat fixed center / cover;
+    width: 100%;
+    height: 390px;
 }
+    .ui.basic.table th {
+        background: #f9f9f9 !important;
+    }
