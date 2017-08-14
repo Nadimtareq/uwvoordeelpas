@@ -19,6 +19,7 @@ use App\Models\CompanyCallcenter;
 use App\Models\MailTemplate;
 use App\Models\NewsletterGuest;
 use App\Helpers\AffiliateHelper;
+use App\Models\SearchHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Sentinel;
@@ -392,7 +393,20 @@ class AjaxController extends Controller
         foreach ($faqQuery as $key => $info) {
             $faq[$key]['name'] =  $info->title;
             $faq[$key]['link'] = URL::to('faq?q='.$request->input('q'));
-        }     
+        }
+
+        $searchHistory = SearchHistory::where("term", $request->input('q'))->first();
+        if($searchHistory) {
+            $searchHistory->count += 1;
+            $searchHistory->save();
+        }
+        else {
+            $searchHistory = new SearchHistory();
+            $searchHistory->term = $request->input('q');
+            $searchHistory->count = 1;
+            $searchHistory->page = $request->path();
+            $searchHistory->save();
+        }
 
         $faqJson['items'] = $faq;
 

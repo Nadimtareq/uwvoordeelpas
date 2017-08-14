@@ -40,7 +40,7 @@
         <div class="panel panel-default">
             <div class="panel-body">
 
-                <?php echo Form::open(array('id' => 'formList', 'url' => 'admin/'.$slugController.'/delete', 'method' => 'post')) ?>
+                <?php echo Form::open(array('id' => 'formList', 'url' => 'admin/'.$slugController.'/reply/' . $data->id, 'method' => 'post')) ?>
                 <h1>{{ $data->subject }}</h1>
                 <h3>{{ $data->name }} <small>({{ $data->email }})</small></h3>
                 <hr>
@@ -54,7 +54,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="reply-contact">Reply Contact</label>
-                                    <textarea name="reply-contact" id="reply-contact" rows="10" class="form-control"></textarea>
+                                    <textarea required name="reply" id="reply" rows="10" class="form-control"></textarea>
                                 </div>
                             </div>
                         </div>
