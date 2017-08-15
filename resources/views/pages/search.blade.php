@@ -1,4 +1,4 @@
-@extends('template.theme', ['search_header' => 'true'])
+@extends('template.theme')
 
 {{--*/ $pageTitle = 'Zoeken' /*--}}
 @section("header_picture")

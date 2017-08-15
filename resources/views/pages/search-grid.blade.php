@@ -7,13 +7,12 @@
 
 <?php use App\Http\Controllers\HomeController; $i = 0; ?>
 @section("header_picture")
-   @include('pages._search-slider')
+   {{--  @include('pages._search-slider')  --}}
 @endsection  
 
 @section('content')
 <div class="clearfix"></div>
      @include('pages.search-filter')
-
     <div class="clearfix"></div>
     <section>
         <div class="booking_posting">
@@ -279,7 +278,7 @@
 @endsection
 
 @section("after_styles")
-    <link href="{{ asset("css/bootstrap.min.css") }}" rel="stylesheet">
+
     <link href="{{ asset("css/custom.css") }}" rel="stylesheet">
     <link href="{{ asset("css/animate-min.css") }}" rel="stylesheet">
 

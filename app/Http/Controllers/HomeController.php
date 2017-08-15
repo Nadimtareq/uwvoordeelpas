@@ -32,6 +32,7 @@ use Carbon\Carbon;
 use League\Csv\Reader;
 use Session;
 use Setting;
+use Auth;
 
 class HomeController extends Controller 
 {
@@ -1386,12 +1387,31 @@ class HomeController extends Controller
      */
     public function buyDealByReference(Request $request)
     {
-        $user = App\User::where('reference_code', $request->get('reference'))->first();
-        if ($user)
+       if (Auth::guest())
         {
-            session(['reference' => $request->get('reference'), 'referer' => $user->id]);
-            return redirect('/home');
+            return redirect('/');
+        }
+        $referrer = App\User::where('reference_code', $request->get('reference'))->first();
+        $user = Sentinel::getUser();
+        
+        
+        if ($referrer && $user->reference_code != $request->get('reference'))
+        {
+            $referralExist = App\Models\Referral::exists($user->id, $referrer->id);
+            if(!$referralExist){
+                $referral = App\Models\Referral::create([
+                    'user_id' => $user->id,
+                    'referrer_id' => $referrer->id,
+                    'reference' =>$request->get('reference')
+                ]);                        
+                session(['reference' => $request->get('reference'), 'referer' => $referrer->id]);
+                return redirect('/home');
+            }else{
+                return redirect('/');
+            }
+                
         }else {
+            session(['reference' => null, 'referer' => null]);
             return redirect('/');
         }
     }
@@ -1401,21 +1421,24 @@ class HomeController extends Controller
      */
     public function referenceCode()
     {
+        if (Sentinel::check() == FALSE) {
+                    Sentinel::login($user);
+                }
         $reference = Sentinel::getUser();
         if (!$reference) {
             return redirect('/');
         }
 
-        if (is_null($reference->reference_code)) {
+        if (is_null($reference->reference_code) || $reference->reference_code =="") {
             $reference->reference_code = str_random(17);
             $reference->save();
         }
 
         if (Sentinel::inRole('admin') != FALSE) {
             $friends = App\Models\FutureDeal::where('reference_id', '!=', null)
-                ->where('user_id', '!=', Sentinel::getUSer()->id)->get();
+                ->where('user_id', '!=', Sentinel::getUser()->id)->get();
         } else {
-            $friends = App\Models\FutureDeal::where('user_id', $reference->id)
+            $friends = App\Models\FutureDeal::where('reference_id', $reference->id)
                 ->groupBy('user_id')->distinct()->get();
         }
         return view('reference-code', compact('reference', 'friends'));

@@ -150,22 +150,28 @@
 
          @if(isset($search_header) && $search_header)
             @include('template.header-search')
-            @include('template.slider')
+            {{--  @include('template.slider')  --}}
         @else 
-            @include('template.header')
+            @if(!Auth::guest() && Sentinel::inRole('admin') != FALSE)
+                @include('template.header-search')
+            @else
+                @include('template.header')
+            @endif
+{{--              
             <section>
                 @if (isset($__env->getSections()['slider']))
                     @yield('slider')
                 @else
                     @include('template.slider')
                 @endif
-            </section>
+            </section>  --}}
          @endif 
 
     @endif
 
-    <section class="content space-header">
-     <h2 align="center">{{ json_encode(session('reference'))}}</h2> 
+    <section class="content">
+  
+     
         @yield('content')
     </section>
 

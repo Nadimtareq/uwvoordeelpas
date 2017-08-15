@@ -52,7 +52,9 @@
             <div class="col-md-12">
                 <table class="ui very basic sortable collapsing celled table list" style="width: 100%;">
                     <thead>
-                        <tr><th>Naam</th><th>Geslacht</th><th>Telefoon</th><th>E-mailadres</th><th>Geregistreerd op</th></tr>
+                        <tr><th>Naam</th><th>Geslacht</th><th>Telefoon</th><th>E-mailadres</th><th>Geregistreerd op</th>
+                        <th>Ten gevolge</th>
+                        </tr>
                     </thead>
                     <tbody>
                         @foreach($friends as $friend)
@@ -68,6 +70,7 @@
                                 <td>{{ @$friend->user->phone }}</td>
                                 <td>{{ @$friend->user->email }}</td>
                                 <td>{{ @$friend->user->created_at->format('d/m/Y h:i A') }}</td>
+                                <td>{{ @$friend->referral() }}</td>
                             </tr>
                         @endforeach
                         @if(count($friends) == 0 )

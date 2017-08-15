@@ -70,6 +70,7 @@
 	@if($headerImg)
 		</div>
  	@endif
-@yield("header_picture")
+
 <!-- .container end -->
 </header>
+@yield("header_picture")
