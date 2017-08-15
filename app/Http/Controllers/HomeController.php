@@ -1387,7 +1387,7 @@ class HomeController extends Controller
      */
     public function buyDealByReference(Request $request)
     {
-       if (Auth::guest())
+       if (!Sentinel::check())
         {
             return redirect('/');
         }
@@ -1407,7 +1407,7 @@ class HomeController extends Controller
                 session(['reference' => $request->get('reference'), 'referer' => $referrer->id]);
                 return redirect('/home');
             }else{
-                return redirect('/');
+                return redirect('/reference_code');
             }
                 
         }else {
