@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="{{ asset('css/materialize.min.css') }}" />
 
 	<link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}" />
+	<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
 	<link rel="stylesheet" href="{{ asset('css/animate.min.css') }}" />
 	<link rel="stylesheet" href="{{ asset('css/main.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/flexslider.css') }}">
