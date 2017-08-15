@@ -14,6 +14,10 @@
 	.col5 .ob {
 		margin-top: 10px;
 	}
+
+	.thumbnails{
+		width: 300px !important;
+	}
 </style>
  <ul>
 
@@ -163,7 +167,7 @@
 					<?php endif; ?>
 				<?php endif; ?>
 
-              <p class="hidden-xs"><?php echo $deal->description; ?></p>
+              <p class="hidden-xs"><?php echo strip_tags($deal->description,'<br>'); ?></p>
               <?php if($count_persons < $deal->total_amount): ?>
 			  <div class="wr">
 			  <?php

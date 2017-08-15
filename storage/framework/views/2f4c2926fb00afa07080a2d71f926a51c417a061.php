@@ -144,43 +144,59 @@
 
                         </a>
                     </div>
+
                 </div>
             </div>
         </div>
     </div><br>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 offset-l">
+            <div class="table-responsive">
+                <div id="formList">
+                    <table id="tableClients" class="table table-striped table-hover table-bordered tables">
+                        <thead>
+                        <tr>
+                            <th data-slug="disabled" class="one wide">Tafel</th>
+                            <th data-slug="time" class="four wide">Datum reservering</th>
+                            <th data-slug="persons" class="one wide">Gasten</th>
+                            <th data-slug="name" class="four wide">Gereserveerd als</th>
+                            <th data-slug="deal" class="four wide">Gereserveerd Deal</th>
 
-    <div id="formList">
-        <table id="tableClients" class="ui sortable very basic collapsing celled unstackable table" style="width: 100%;">
-            <thead>
-                <tr>
-                    <th data-slug="disabled" class="one wide">Tafel</th>
-                    <th data-slug="time" class="four wide">Datum reservering</th>
-                    <th data-slug="persons" class="one wide">Gasten</th>
-                    <th data-slug="name" class="four wide">Gereserveerd als</th>
-                    <th data-slug="deal" class="four wide">Gereserveerd Deal</th>
-                    <th data-slug="allergies" class="one wide">Allergie&euml;n</th>
-                    <th data-slug="preferences" class="one wide">Voorkeuren</th>
-                    <th data-slug="comment" class="two wide">Opmerking</th>
-                    <th data-slug="saldo" class="one wide">Saldo</th>
-                    <th data-slug="discount" class="one wide">Korting</th>
-                    <th data-slug="restaurant_is_paid" class="one wide">Betaald</th>
-                    <?php if($company == NULL): ?>
-                    <th data-slug="name" class="two wide">Bedrijf</th>
-                    <?php endif; ?>
-                    <th data-slig="disabled" class="four wide" style="pointer-events: none;cursor: default;">Opties</th>
-                </tr>
-            </thead>
-            <tbody class="list search">
-                <?php if(count($data) >= 1): ?>
-                    <?php echo $__env->make('admin/reservations.list-clients', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-                <?php else: ?>
-                    <tr>
-                        <td colspan="2"><div class="ui error message">Er is geen data gevonden.</div></td>
-                    </tr>
-                <?php endif; ?>
-            </tbody>
-        </table><br /><br />
+                            <th data-slug="allergies" class="one wide">Allergie&euml;n</th>
+                            <th data-slug="preferences" class="one wide">Voorkeuren</th>
+                            <th data-slug="comment" class="two wide">Opmerking</th>
+
+                            <th data-slug="saldo" class="one wide">Saldo</th>
+                            <th data-slug="discount" class="one wide">Korting</th>
+                            <th data-slug="restaurant_is_paid" class="one wide">Betaald</th>
+                            <?php if($company == NULL): ?>
+                                <th data-slug="name" class="two wide">Bedrijf</th>
+                            <?php endif; ?>
+                            <th data-slig="disabled" class="four wide" style="pointer-events: none;cursor: default;">Opties</th>
+                        </tr>
+                        </thead>
+                        <tbody class="list search">
+                        <?php if(count($data) >= 1): ?>
+                            <?php echo $__env->make('admin/reservations.list-clients', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="2"><div class="ui error message">Er is geen data gevonden.</div></td>
+                            </tr>
+                        <?php endif; ?>
+                        </tbody>
+                    </table><br /><br />
+                </div>
+            </div>
+
+        </div>
     </div>
+
+</div>
+
+
+
 
     <div class="ui grid container">
         <div class="left floated sixteen wide mobile ten wide computer column">
@@ -192,7 +208,6 @@
             <?php echo $__env->make('admin.template.limit', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
         </div>
     </div>
-</div>
 <div class="clear"></div>
 
 <?php $__env->stopSection(); ?>

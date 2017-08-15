@@ -1656,8 +1656,13 @@ i.orange.icon {
 
 section .content {
     width: 1000px;
-    margin: 10px auto;
+    margin: 10px  auto;
+
 }
+.one wide{
+   background: #ffffff;
+}
+
 
 .results .content {
     width: 100%;
@@ -32778,7 +32783,8 @@ Floated Menu / Item
 }
 
 .ui.sortable.table thead th:hover {
-    background: rgba(0, 0, 0, 0.05);
+    /*background: rgba(0, 0, 0, 0.05);*/
+    background: #ffffff;
     color: rgba(0, 0, 0, 0.8);
 }
 
@@ -32786,7 +32792,8 @@ Floated Menu / Item
 /* Sorted */
 
 .ui.sortable.table thead th.sorted {
-    background: rgba(0, 0, 0, 0.05);
+    /*background: rgba(0, 0, 0, 0.05);*/
+    background: #ffffff;
     color: rgba(0, 0, 0, 0.95);
 }
 
@@ -32893,8 +32900,15 @@ Floated Menu / Item
 }
 
 .ui.basic.table th {
-    background: transparent;
+    /*background: transparent;*/
+    background: #ffffff;
     border-left: none;
+}
+.tables th{
+    background: #ffffff;
+    color: #000;
+    font-weight:bold;
+    text-align:center;
 }
 
 .ui.basic.table tbody tr {

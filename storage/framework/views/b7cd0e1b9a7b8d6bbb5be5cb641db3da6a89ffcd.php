@@ -31,7 +31,7 @@ $compatible_browser_array = array('Chrome', 'Firefox', 'Opera');
                                 <div class="center-align home-content">
                                     <?php if (($userAuth == FALSE) OR ($userAuth && $userInfo->extension_downloaded == 0)): ?>
                                     <h1 class="home-title">Activeer de spaarhulp en ontvang direct €5.- </h1>
-                                    <h2 class="home-subtitle">Spaar nu automatisch bij wel 2000+ webshops. <br>
+                                    <h2 class="home-subtitle">Spaar nu automatisch bij wel 2500+ webshops. <br>
                                         Deze betalen u tot wel 10% dinertegoed bij iedere aankoop!</h2>
                                     <?php if(in_array($browser['name'], $compatible_browser_array)):?>
                                     <?php if ($userAuth == FALSE): ?>
@@ -85,7 +85,7 @@ $compatible_browser_array = array('Chrome', 'Firefox', 'Opera');
                                         <div class="center-align home-content">
                                             <?php if (($userAuth == FALSE) OR ($userAuth && $userInfo->extension_downloaded == 0)): ?>
                                             <h1 class="home-title">Activeer de spaarhulp en ontvang direct €5.- </h1>
-                                            <h2 class="home-subtitle">Spaar nu automatisch bij wel 2000+ webshops. <br>
+                                            <h2 class="home-subtitle">Spaar nu automatisch bij wel 2500+ webshops. <br>
                                                 Deze betalen u tot wel 10% dinertegoed bij iedere aankoop!</h2>
                                             <?php if(in_array($browser['name'], $compatible_browser_array)):?>
                                             <?php if ($userAuth == FALSE): ?>
@@ -141,7 +141,7 @@ $compatible_browser_array = array('Chrome', 'Firefox', 'Opera');
                         <div class="col-sm-6">
 
                             <h1>Activeer de spaarhulp en ontvang direct €5.- </h1>
-                            <h4>Spaar nu automatisch bij wel 2000+ webshops. <br> Deze betalen u tot wel 10% dinertegoed
+                            <h4>Spaar nu automatisch bij wel 2500+ webshops. <br> Deze betalen u tot wel 10% dinertegoed
                                 bij iedere aankoop!</h4>
                             <br>
                             <?php if(in_array($browser['name'], $compatible_browser_array)):?>
@@ -189,7 +189,7 @@ $compatible_browser_array = array('Chrome', 'Firefox', 'Opera');
                             <a href="<?php echo e(url('tegoed-sparen')); ?>">
                                 <img src="<?php echo e(url('images/how_it_works_2.png')); ?>"
                                      alt="<?php echo e(isset($contentBlock[50]) ? strip_tags($contentBlock[50]) : '2. Spaar bij 1500+ Webshops!'); ?>">
-                            <?php echo isset($contentBlock[50]) ? $contentBlock[50] : '2. Spaar bij 2000+ Webshops!'; ?>
+                            <?php echo isset($contentBlock[50]) ? $contentBlock[50] : '2. Spaar bij 2500+ Webshops!'; ?>
 
                             <!-- <p>U spaart tot vel 10%<br>van uw aankoop</p> -->
                             </a>
@@ -231,7 +231,7 @@ $compatible_browser_array = array('Chrome', 'Firefox', 'Opera');
     if($userAuth && $userInfo->extension_downloaded == 0)
     <div class="homepage_block_2">
 
-            <h3 style="color: #808080; margin: 48px 29px 0px 0px; font-size: 1.9em; text-align: center;"><em>"Wilt u na 1 klik automatisch tot<br> wel 10% sparen bij 2000+ webshops?"</em></h3>
+            <h3 style="color: #808080; margin: 48px 29px 0px 0px; font-size: 1.9em; text-align: center;"><em>"Wilt u na 1 klik automatisch tot<br> wel 10% sparen bij 2500+ webshops?"</em></h3>
 
             if(strtolower($browser['name']) == 'chrome')
             <script type="text/javascript">
