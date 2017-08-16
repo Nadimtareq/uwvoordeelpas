@@ -242,7 +242,8 @@ while ($st->lte($dt)) {
                                         </div>
                                         <br>
                                         <b class="up">
-                                            <?php  echo strip_tags($deal->description); ?>
+                                            <?php  echo strip_tags($deal->short_description,'<p>'); ?>
+                                            
                                           
                                         </b>
                                 <div class="row">
