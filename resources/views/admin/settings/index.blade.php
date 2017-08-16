@@ -168,7 +168,18 @@
 			    <?php echo Form::text('hotspot_pw', isset($apiSettings['hotspot_pw']) ? $apiSettings['hotspot_pw'] : ''); ?>
 			</div>
 		</div>
+		<h4>Mailgun</h4>
+		<div class="fields">
+			<div class="two wide field">
+			   	<label>Uitvoeren</label>
+			   	<a href="{{ url('admin/settings/run/mailgun') }}" class="ui icon button"><i class="refresh icon"></i></a>
+			</div>
 
+			<div class="twelve wide field">
+			    <label>geheim (key)</label>
+			    <?php echo Form::text('mailgun_key', isset($apiSettings['mailgun_key']) ? $apiSettings['mailgun_key'] : ''); ?>
+			</div>
+		</div>
 		<br /><br />
 
 		<button class="ui tiny button" type="submit"><i class="plus icon"></i> Opslaan</button>

@@ -42,30 +42,6 @@
                 </div>
 				
             </div>
-			<div class="three column row">
-                            <div class="sixteen wide mobile four wide computer column">
-                                <div class="ui normal  search selection fluid dropdown"> <!-- icon class deleted-->
-                                    <input type="hidden" name="companiesId">
-                                    <i class="filter icon"></i>
-
-                                    <span class="text">Bedrijf</span>
-
-                                    <i class="dropdown icon"></i>
-
-                                    <div class="menu">
-                                        @foreach ($companies as $company)
-                                        <a class="item" href="{{ url('admin/users/guestwifi?company='.$company->slug) }}" data-value="{{ $company->id }}">
-                                            {{ $company->name }}
-                                        </a>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div>
-							
-                            <div class="sixteen wide mobile four wide computer column">
-                                <?php echo Form::select('city', (isset($preference[9]) ? $preference[9] : array()), Request::input('city'), array('id' => 'cityRedirect', 'class' => 'ui normal search fluid dropdown')); ?>
-                            </div>
-							</div>
         </div>
     </div><br />
 

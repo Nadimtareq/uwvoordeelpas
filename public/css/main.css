@@ -4708,7 +4708,7 @@ ul.side-nav2 li:hover {
 }
 
 .icon {
-    float: left;
+    /*float: center;*/
     /*margin: 15px;*/
 }
 

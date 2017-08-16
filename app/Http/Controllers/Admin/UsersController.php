@@ -637,9 +637,51 @@ class UsersController extends Controller
 		
 		$preferences = new Preference();
         $regio = $preferences->getRegio();
-		$data  =DB::table('guests_wifi');
+		$data  =DB::table('guests_wifi')->select(
+				'guests_wifi.id',
+				'guests_wifi.name',
+				'guests_wifi.email',
+				'guests_wifi.phone',
+				'guests_wifi.created_at',
+				'guests_wifi.updated_at',
+				'companies.name as companyName',
+				'companies.regio'
+			)->leftJoin('companies', 'guests_wifi.company_id', '=', 'companies.id');
+		
+		
 			$dataCount = $data->count();
+			$data->groupBy('guests_wifi.id');
+			
+			if ($request->has('city')) {
+				 $regioName = $request->input('city');
 
+				if (isset($regio['regioNumber'][$regioName])) {
+					$data = $data->whereNotNull(
+						'companies.regio'
+					)
+						->where('companies.regio', 'REGEXP', '"([^"]*)'.$regio['regioNumber'][$regioName].'([^"]*)"')
+					;
+				}
+			}
+			
+			if ($request->has('company')) {
+				$companyName = $request->input('company');
+				$data = $data->where('companies.slug', '=', $companyName);
+			}
+			
+			if ($request->has('sort') && $request->has('order')) {
+				if($request->input('sort')=="city"){
+					$data = $data->orderBy('companies.'.$request->input('sort'), $request->input('order'));
+				}else if($request->input('sort')=="company"){
+					$data = $data->orderBy('companies.name', $request->input('order'));
+				}else{
+					$data = $data->orderBy('guests_wifi.'.$request->input('sort'), $request->input('order'));
+				}
+				session(['sort' => $request->input('sort'), 'order' => $request->input('order')]);
+			} else {
+				$data = $data->orderBy('guests_wifi.id', 'desc');
+			}
+			
 			$data = $data->paginate($request->input('limit', 15));
 			$data->setPath($this->slugController);
 
@@ -672,7 +714,16 @@ class UsersController extends Controller
     {
 		$preferences = new Preference();
         $regio = $preferences->getRegio();
-		$data  =DB::table('third_party_user');
+		$data  =DB::table('guests_third_party')->select(
+				'guests_third_party.id',
+				'guests_third_party.name',
+				'guests_third_party.email',
+				'guests_third_party.phone',
+				'guests_third_party.created_at',
+				'guests_third_party.updated_at',
+				'companies.name as companyName',
+				'companies.regio'
+			)->leftJoin('companies', 'guests_third_party.restaurant_id', '=', 'companies.id');
 			$dataCount = $data->count();
 
 			$data = $data->paginate($request->input('limit', 15));
@@ -690,7 +741,7 @@ class UsersController extends Controller
 			unset($queryString['source']);
 			unset($queryString['has_saving']);
 			unset($queryString['limit']);
-			return view('admin/'.$this->slugController.'/guestwifi', [
+			return view('admin/'.$this->slugController.'/guestthirdparty', [
 			'data' => $data,
             'regio' => $regio['regio'],
             'countItems' => $dataCount,

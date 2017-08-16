@@ -141,13 +141,12 @@
                              {{ $statistics['thirdPartyReservations'] }}
                         </a>
                     </div>
-
                 </div>
             </div>
         </div>
     </div><br>
-</div>
-<div class="container">
+ </div>
+ <div class="container">
     <div class="row">
         <div class="col-lg-12 offset-l">
             <div class="table-responsive">
@@ -196,12 +195,17 @@
 
 
     <div class="ui grid container">
-        <div class="left floated sixteen wide mobile ten wide computer column">
-    {!! with(new \App\Presenter\Pagination($data->appends($paginationQueryString)))->render() !!}
-        </div>
-
-        <div class="right floated sixteen wide mobile sixteen wide tablet three wide computer column">
-            @include('admin.template.limit')
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="left floated sixteen wide mobile ten wide computer column">
+                    {!! with(new \App\Presenter\Pagination($data->appends($paginationQueryString)))->render() !!}
+                </div>
+                <div class="col-lg-4">
+                    <div class="right floated sixteen wide mobile sixteen wide tablet three wide computer column">
+                        @include('admin.template.limit')
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 <div class="clear"></div>

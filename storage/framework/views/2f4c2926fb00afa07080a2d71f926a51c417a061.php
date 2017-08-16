@@ -199,14 +199,21 @@
 
 
     <div class="ui grid container">
-        <div class="left floated sixteen wide mobile ten wide computer column">
-    <?php echo with(new \App\Presenter\Pagination($data->appends($paginationQueryString)))->render(); ?>
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="left floated sixteen wide mobile ten wide computer column">
+                    <?php echo with(new \App\Presenter\Pagination($data->appends($paginationQueryString)))->render(); ?>
 
+                </div>
+                <div class="col-lg-4">
+                    <div class="right floated sixteen wide mobile sixteen wide tablet three wide computer column">
+                        <?php echo $__env->make('admin.template.limit', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="right floated sixteen wide mobile sixteen wide tablet three wide computer column">
-            <?php echo $__env->make('admin.template.limit', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-        </div>
+
     </div>
 <div class="clear"></div>
 

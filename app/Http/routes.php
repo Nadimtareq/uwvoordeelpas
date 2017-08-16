@@ -456,7 +456,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', '
 		Route::get('list/create', 'Admin\UsersController@extensioncreate');
 		Route::get('guestwifi', 'Admin\UsersController@guestwifi');
 		Route::get('guestthirdparty', 'Admin\UsersController@guestthirdparty');
-		
+		 
 
         Route::post('create', 'Admin\UsersController@createAction');
 		Route::post('list/create', 'Admin\UsersController@extensioncreateAction');
