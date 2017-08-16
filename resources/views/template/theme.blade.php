@@ -158,14 +158,14 @@
             @else
                 @include('template.header')
             @endif
-{{--              
+             
             <section>
                 @if (isset($__env->getSections()['slider']))
                     @yield('slider')
                 @else
                     @include('template.slider')
                 @endif
-            </section>  --}}
+            </section> 
          @endif 
 
     @endif

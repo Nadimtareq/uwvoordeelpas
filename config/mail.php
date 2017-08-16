@@ -15,8 +15,8 @@ return [
     |
     */
 
-    'driver' => env('MAIL_DRIVER', 'mailgun'),
-    //'driver' => env('MAIL_DRIVER', 'smtp'),
+    //'driver' => env('MAIL_DRIVER', 'mailgun'),
+    'driver' => env('MAIL_DRIVER', 'smtp'),
 
     /*
     |--------------------------------------------------------------------------
@@ -86,8 +86,8 @@ return [
     */
 
     //'username' => env('postmaster@mail.uwvoordeelpas.nl'),
-    //'username' => env('MAIL_USERNAME'),
-    'username' => 'noreply@uwvoordeelpas.nl',
+    'username' => env('MAIL_USERNAME'),
+    //'username' => 'noreply@uwvoordeelpas.nl',
 
     /*
     |--------------------------------------------------------------------------
@@ -101,8 +101,8 @@ return [
     */
 
     //'password' => env('46aadf4ed277abbd3fe6cd68786705be'),
-    'password' => 'ZVC6WRKF',
-    //'password' => env('MAIL_PASSWORD'),
+    //'password' => 'ZVC6WRKF',
+    'password' => env('MAIL_PASSWORD'),
 
     /*
     |--------------------------------------------------------------------------
