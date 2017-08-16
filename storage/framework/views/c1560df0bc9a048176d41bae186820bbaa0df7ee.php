@@ -162,5 +162,5 @@
 
 <!-- .container end -->
 </header>
- <?php echo $__env->yieldContent("header_picture"); ?>
+ <?php /*  <?php echo $__env->yieldContent("header_picture"); ?>  */ ?>
 	    

@@ -70,6 +70,7 @@
 	<?php if($headerImg): ?>
 		</div>
  	<?php endif; ?>
-<?php echo $__env->yieldContent("header_picture"); ?>
+
 <!-- .container end -->
 </header>
+<?php echo $__env->yieldContent("header_picture"); ?>

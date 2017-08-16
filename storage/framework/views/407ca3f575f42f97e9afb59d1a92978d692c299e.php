@@ -152,22 +152,28 @@
 
          <?php if(isset($search_header) && $search_header): ?>
             <?php echo $__env->make('template.header-search', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-            <?php echo $__env->make('template.slider', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+            <?php /*  <?php echo $__env->make('template.slider', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>  */ ?>
         <?php else: ?> 
-            <?php echo $__env->make('template.header', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+            <?php if(!Auth::guest() && Sentinel::inRole('admin') != FALSE): ?>
+                <?php echo $__env->make('template.header-search', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+            <?php else: ?>
+                <?php echo $__env->make('template.header', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+            <?php endif; ?>
+<?php /*              
             <section>
                 <?php if(isset($__env->getSections()['slider'])): ?>
                     <?php echo $__env->yieldContent('slider'); ?>
                 <?php else: ?>
                     <?php echo $__env->make('template.slider', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
                 <?php endif; ?>
-            </section>
+            </section>  */ ?>
          <?php endif; ?> 
 
     <?php endif; ?>
 
     <section class="content space-header">
-     <h2 align="center"><?php echo e(json_encode(session('reference'))); ?></h2> 
+  
+     
         <?php echo $__env->yieldContent('content'); ?>
     </section>
 

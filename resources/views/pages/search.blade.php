@@ -11,7 +11,7 @@
     </script>
     <div class="clearfix"></div>
      @include('pages.search-filter')
-   
+
     <div class="clearfix"></div>
     <!--
     <section id="prices">

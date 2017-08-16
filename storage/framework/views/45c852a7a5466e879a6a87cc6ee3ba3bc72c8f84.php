@@ -1,4 +1,18 @@
 <?php use App\Http\Controllers\HomeController; $i = 0; ?>
+<style>
+.thumbnails{
+		width: 300px !important;
+	}
+    
+    .deal-img{
+            padding: 0px;
+        }
+    @media  screen and (min-width: 750px){
+        .deal-img{
+            padding: 30px 0px 0 20px;
+        }
+    }
+</style>
 
 <?php $discountHelper = app('App\Helpers\DiscountHelper'); ?>
 <?php $companyReservation = app('App\Models\companyReservation'); ?>
@@ -22,16 +36,17 @@
                      data-address="<?php echo e($data->address); ?>"
                      data-city="<?php echo e($data->city); ?>"
                      data-zipcode="<?php echo e($data->zipcode); ?>">
-                    <div class="ob">
+                    <div class="row"  style="background: white; padding: 0px; margin: 10px;">
+                    <div class="col-sm-5 col-xs-12 deal-img" >
                         <?php if(isset($media[0]) && isset($media[0]->file_name) && file_exists(public_path($media[0]->disk. DIRECTORY_SEPARATOR . $media[0]->id . DIRECTORY_SEPARATOR . $media[0]->file_name)) ): ?>
                             <?php if($count_persons >= $deal->total_amount): ?>
                                 <img width="420" src="<?php echo e(url('media/'.$media[0]->id.'/'.$media[0]->file_name)); ?>"
-                                     alt="<?php echo e($data->name); ?>" class="thumbnails"/>
+                                     alt="<?php echo e($data->name); ?>" class="img-responsive"/>
                             <?php else: ?>
                                 <a href="<?php echo e(url('restaurant/'.$data->slug).'?deal='.$deal->id); ?>"
                                    title="<?php echo e($data->name); ?>" style="position: relative;">
                                     <img width="420" src="<?php echo e(url('media/'.$media[0]->id.'/'.$media[0]->file_name)); ?>"
-                                         alt="<?php echo e($data->name); ?>" class="thumbnails" style="opacity: .7;"/>
+                                         alt="<?php echo e($data->name); ?>" class="img-responsive" style="opacity: .7;"/>
                                     <span style="position: absolute; left: 0px; right: 0px; top: 50%; text-align: center; display: block; color: #fff; font-weight: 700; text-transform: uppercase;">Uitverkocht</span>
                                 </a>
                             <?php endif; ?>
@@ -41,12 +56,12 @@
 
                             <?php /*					<?php if($count_persons >= $deal->total_amount): ?>
 
-                                                    <img src="<?php echo e(url('images/placeholdimagerest.png')); ?>" alt="<?php echo e($data->name); ?>" class="thumbnails"  />
+                                                    <img src="<?php echo e(url('images/placeholdimagerest.png')); ?>" alt="<?php echo e($data->name); ?>" class="img-responsive"  />
 
                                                 <?php else: ?>
 
                                                     <a href="<?php echo e(url('restaurant/'.$data->slug).'?deal='.$deal->id); ?>" title="<?php echo e($data->name); ?>" data-url="">
-                                                        <img src="<?php echo e(url('images/placeholdimagerest.png')); ?>" alt="<?php echo e($data->name); ?>" class="thumbnails"  />
+                                                        <img src="<?php echo e(url('images/placeholdimagerest.png')); ?>" alt="<?php echo e($data->name); ?>" class="img-responsive"  />
                                                     </a>
                                                     <?php endif; ?>
                                                 <?php endif; ?>*/ ?>
@@ -55,14 +70,14 @@
                             <?php if($deal->image != null  &&  file_exists(public_path('images/deals/'  . $deal->image))): ?>
                                 <a href="<?php echo e(url('restaurant/'.$data->slug).'?deal='.$deal->id); ?>"
                                    title="<?php echo e($data->name); ?>" data-url="" style="position: relative;">
-                                    <img src="<?php echo e(url('images/deals/' . $deal->image)); ?>" alt="<?php echo e($data->name); ?>" class="thumbnails" />
+                                    <img width="100%" src="<?php echo e(url('images/deals/' . $deal->image)); ?>" alt="<?php echo e($data->name); ?>" class="img-responsive" />
 
                                 </a>
                             <?php else: ?>
                                 <a href="<?php echo e(url('restaurant/'.$data->slug).'?deal='.$deal->id); ?>"
                                    title="<?php echo e($data->name); ?>" data-url="" style="position: relative;">
-                                    <img src="<?php echo e(url('images/placeholdimagerest.png')); ?>" alt="<?php echo e($data->name); ?>"
-                                         class="thumbnails"/>
+                                    <img width="100%" src="<?php echo e(url('images/placeholdimagerest.png')); ?>" alt="<?php echo e($data->name); ?>"
+                                         class="img-responsive"/>
                                 </a>
                         <?php endif; ?>
                     <?php endif; ?>
@@ -99,7 +114,8 @@
                             <?php endif; ?>
                     <?php endif; ?> -->
                     </div>
-                    <div class="text3" style="min-height: 310px;">
+                    <div class="col-sm-7 col-xs-12">
+                    <div class="text3" style="padding: 20px;">
                         <strong>
                             <?php if($count_persons >= $deal->total_amount): ?>
                                 <?php echo e($deal->name); ?>
@@ -119,37 +135,39 @@
 				</span>
 
 
-                        <span class="stars"><img src="<?php echo e(asset('images/stars.png')); ?>" alt="stars">5.00</span>
+                        <?php /*<span class="stars"><img src="<?php echo e(asset('images/stars.png')); ?>" alt="stars">5.00</span>*/ ?>
 
                         <?php
                         if ($data->kitchens != 'null' && $data->kitchens != NULL && $data->kitchens != '[""]') {
                             $kitchens = json_decode($data->kitchens);
-                            echo '<a href="' . url('search?q=' . $kitchens[0]) . '"><i class="food icon"></i> ' . ucfirst($kitchens[0]) . '</a>';
+                            echo '<a href="' . url('search?q=' . $kitchens[0]) . '" style="color: #000"><i class="food icon"></i> ' . ucfirst($kitchens[0]) . '</a>';
                         }
                         ?>
 
                         <?php if(isset($onFavoritePage)): ?>
                             <a href="<?php echo e(url('account/favorite/companies/remove/'.$data->id.'/'.$data->slug)); ?>">
-                                <span><i class="empty star red icon"></i> Verwijder van favorieten</span>
+                                <span style="color: #000"><i class="empty star red icon"></i> Verwijder van favorieten</span>
                             </a>
                         <?php else: ?>
                             <?php if($userAuth == TRUE): ?>
                                 <a class="save button"
                                    href="<?php echo e(url('account/favorite/companies/add/'.$data->id.'/'.$data->slug)); ?>">
-                                    <span><i class="save icon"></i> Bewaren</span>
+                                    <span style="color: #000"><i class="save icon"></i> Bewaren</span>
                                 </a>
                             <?php else: ?>
                                 <a class="login save button"
                                    href="<?php echo e(url('account/favorite/companies/add/'.$data->id.'/'.$data->slug)); ?>"
                                    data-type-redirect="1"
                                    data-type="login"
+                                   style="color: #000"
                                    data-redirect="<?php echo e(url('account/favorite/companies/add/'.$data->id.'/'.$data->slug)); ?>">
                                     <span><i class="save icon"></i> Bewaren</span>
                                 </a>
                             <?php endif; ?>
                         <?php endif; ?>
 
-                        <p class="hidden-xs"><b><?php echo strip_tags($deal->description); ?></b></p>
+                        <?php /*  <p class="hidden-xs"><?php echo strip_tags($deal->description, '<b><font>'); ?></p>  */ ?>
+                         <p class="hidden-xs"><?php echo str_limit(strip_tags($deal->description,'<b>'), (isset($limitChar) ? $limitChar : 500)); ?></p>
                         <?php if($count_persons < $deal->total_amount): ?>
                             <div class="wr">
                                 <?php
@@ -199,7 +217,8 @@
                             <?php endif; ?>
 
                         <?php endif; ?>
-
+                    </div>
+                    </div>
                     </div>
                 </div>
             </li>
