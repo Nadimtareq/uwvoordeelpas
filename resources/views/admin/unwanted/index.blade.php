@@ -47,8 +47,8 @@
     					  	<label></label>
     					</div>
     				</th>
-                    <th data-slug="title" class="six wide">woord</th>
-                    <th>Word Kort</th>
+                    <th data-slug="word" class="six wide">woord</th>
+                    <th data-slug="short" class="six wide">Word Kort</th>
                     <th></th>
             	</tr>
             </thead>

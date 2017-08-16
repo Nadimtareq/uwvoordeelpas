@@ -80,6 +80,7 @@ class SettingsController extends Controller
             'zanox_name',
             'zanox_pw',
             'hotspot_pw',
+			'mailgun_key',
             'callcenter_reminder',
             'callcenter_reminder_status'
         );
@@ -114,6 +115,7 @@ class SettingsController extends Controller
             'zanox_name',
             'zanox_pw',
             'hotspot_pw',
+			'mailgun_key',
             'callcenter_reminder',
             'newsletter_dealmail',
             'callcenter_reminder_status',
@@ -270,6 +272,10 @@ class SettingsController extends Controller
                 break;
 
             case 'hotspot':
+                Setting::set('cronjobs.wifi_guest', 1);
+                break;
+			
+			case 'mailgun':
                 Setting::set('cronjobs.wifi_guest', 1);
                 break;
         }
