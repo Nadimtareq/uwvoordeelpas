@@ -2417,6 +2417,12 @@ ul.side-nav2 li:hover {
     margin: 0 0 18px 0;
 }
 
+h3.new {
+    font: 24px 'LatoBold';
+    color: #333399;
+    margin: 20px 0 18px 20px;
+}
+
 .menu .left_m .price {
     background: #333399;
     position: absolute;
