@@ -64,7 +64,7 @@
     <?php echo Form::close(); ?><br />
 
     <div id="formList">
-        <table class="ui very basic collapsing sortable celled table list" style="width: 100%;">
+        <table class="ui collapsing sortable celled table list" style="width: 100%;">
             <thead>
                 <tr>
                     <th data-slug="date" class="three wide">Datum</th>
@@ -110,7 +110,7 @@
                                     Goedgekeurd
                                 <?php elseif($fetch['status'] == 'open'): ?>
                                     In behandeling
-                                <?php elseif($fetch['status'] == 'open'): ?>
+                                <?php elseif($fetch['status'] == 'expired'): ?>
                                    Verlopen
                                 <?php elseif($fetch['status'] == 'rejected'): ?>
                                     Afgekeurd
