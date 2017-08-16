@@ -1,400 +1,457 @@
 <?php $__env->startSection('content'); ?>
+<div class="container">
+    <?php echo $__env->make('admin.template.breadcrumb', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <style>
+        .skill-panel-text{
+                color: white;
+            }
+            .skill-title{
+                
+                font-size: 3em;
+                font-weight: bold;
+                padding-bottom: 30px;
+            }
 
+            .skill-sub{
+                font-size: 1.2em;
+                font-weight: bold;
+            }
+            .chart-box{
+                background: #fff;
+                border: 1px solid #eee;
+            }
+            li h3, li h4{
+                padding: 0;
+                margin: 0;
+                line-height: 11px;
+            }
+            thead tr{
+                background: #2BBBAD;
+            }
+            .btn-danger{
+                background: #C64333;
+            }
+            .btn-danger:hover{
+                background: #DD4B39;
+            }
+            .btn-primary{
+                background: #0650A2;
+            }
+            .btn-primary:hover{
+                background: #146ABC;
+            }
 
-    <div class="content">
-        <?php echo $__env->make('admin.template.breadcrumb', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+            .skill-panel-box, .chart-blog{
+                margin-bottom: 10px;
+            }
+            .stats-table{
+                height: 400px;
+            }
+    </style>
+    <div class="side_menus">
+        <?php echo e(Form::open(array('url' => 'preferences', 'method' => 'post', 'class' => 'ui form'))); ?>
 
-
-        <div class="skill-blog">
-            <div class="skill-panel">
-                <div class="container">
-                    <div class="row">
-
-                        <div class="col-md-3 col-sm-6 col-xs-6 skill-panel-blog">
-                            <div class="skill-panel-box massage">
-                                <div class="skill-panel-inner-icon">
-                                    <i class="fa fa-comments"></i>
-                                </div>
-                                <div class="skill-panel-text">
-                                    <h2>26</h2>
-                                    <h5>Visits Today</h5>
-                                    <h5>Pages / Visit</h5>
-                                </div>
-                                <div class="skill-panel-icon">
-                                    <i class="fa fa-angle-right"></i>
-                                </div>
+        <div class="content">
+            <div class="row">
+                <div class="jsearch col-md-3 col-sm-3 col-xs-6">
+                    <div class="ui normal floating basic search selection dropdown">
+                        <input name="source" type="hidden" value="<?php echo e(Request::input('source')); ?>">
+                            <div class="text">
+                                Partij
                             </div>
-                        </div>
+                            <i class="dropdown icon">
+                            </i>
+                            <div class="menu">
+                                <a class="item" data-value="seatme" href="<?php echo e(url('admin/statistics/reservations?'.http_build_query(array_add($queryString, 'source', 'seatme')))); ?>">
+                                    SeatMe
+                                </a>
+                                <a class="item" data-value="eetnu" href="<?php echo e(url('admin/statistics/reservations?'.http_build_query(array_add($queryString, 'source', 'eetnu')))); ?>">
+                                    EetNU
+                                </a>
+                                <a class="item" data-value="couverts" href="<?php echo e(url('admin/statistics/reservations?'.http_build_query(array_add($queryString, 'source', 'couverts')))); ?>">
+                                    Couverts
+                                </a>
+                                <a class="item" data-value="wifi" href="<?php echo e(url('admin/statistics/reservations?'.http_build_query(array_add($queryString, 'source', 'wifi')))); ?>">
+                                    Wi-Fi
+                                </a>
+                                <?php if(count($sources) >= 1): ?>
+                            <?php foreach($sources as $source): ?>
+                                <a class="item" data-value="<?php echo e($source); ?>" href="<?php echo e(url('admin/statistics/reservations?'.http_build_query(array_add($queryString, 'source', str_slug($source))))); ?>">
+                                    <?php echo e($source); ?>
 
-                        <div class="col-md-3 col-sm-6 col-xs-6 skill-panel-blog">
-                            <div class="skill-panel-box usar">
-                                <div class="skill-panel-inner-icon">
-                                    <i class="fa fa-user"></i>
-                                </div>
-                                <div class="skill-panel-text">
-                                    <h2>12</h2>
-                                    <h5>% Unique Visitors</h5>
-                                    <h5>Avg. Visit Duration</h5>
-                                </div>
-                                <div class="skill-panel-icon">
-                                    <i class="fa fa-angle-right"></i>
-                                </div>
+                                </a>
+                                <?php endforeach; ?>
+                        <?php endif; ?>
                             </div>
-                        </div>
-
-                        <div class="col-md-3 col-sm-6 col-xs-6 skill-panel-blog">
-                            <div class="skill-panel-box email">
-                                <div class="skill-panel-inner-icon">
-                                    <i class="fa fa-envelope-o"></i>
-                                </div>
-                                <div class="skill-panel-text">
-                                    <h2>124</h2>
-                                    <h5>Page Views</h5>
-                                    <h5>% Bounce Rate</h5>
-                                </div>
-                                <div class="skill-panel-icon">
-                                    <i class="fa fa-angle-right"></i>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 col-sm-6 col-xs-6 skill-panel-blog">
-                            <div class="skill-panel-box note">
-                                <div class="skill-panel-inner-icon">
-                                    <i class="fa fa-pencil-square-o"></i>
-                                </div>
-                                <div class="skill-panel-text">
-                                    <h2>13</h2>
-                                    <h5>Today's Earnings</h5>
-                                    <h5>Pages Today's</h5>
-                                </div>
-                                <div class="skill-panel-icon">
-                                    <i class="fa fa-angle-right"></i>
-                                </div>
-                            </div>
-                        </div>
-
+                        </input>
                     </div>
                 </div>
-            </div>
-
-            <div class="chart-panel">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-3 chart-blog">
-                            <div class="chart-box">
-                                <div class="chart-text">
-                                    <h5>Most Browser Used</h5>
-                                    <p>Duis autem vel eum iriure dolor in hendrerit in vulputate...</p>
-                                </div>
-                                <div id="donut-example" style="height: 250px;"></div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 chart-blog">
-                            <div class="chart-box">
-                                <div class="chart-text">
-                                    <h5>Most Browser Used</h5>
-                                    <p>Duis autem vel eum iriure dolor in hendrerit in vulputate...</p>
-                                </div>
-                                <div id="donut-example1" style="height: 250px;"></div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 chart-blog">
-                            <div class="chart-box">
-                                <div class="chart-text">
-                                    <h5>Most Browser Used</h5>
-                                    <p>Duis autem vel eum iriure dolor in hendrerit in vulputate...</p>
-                                </div>
-                                <div id="donut-example2" style="height: 250px;"></div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 chart-blog">
-                            <div class="chart-box">
-                                <div class="chart-text">
-                                    <h5>Most Browser Used</h5>
-                                    <p>Duis autem vel eum iriure dolor in hendrerit in vulputate...</p>
-                                </div>
-                                <div id="donut-example3" style="height: 250px;"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-12 chart-button">
-                            <button>more info</button>
-                            <button>active</button>
-                        </div>
+                <div class="jsearch col-md-3 col-sm-3 col-xs-6">
+                    <?php echo Form::open(array('method' =>
+                    'get')) ?>
+                    <div class="ui input">
+                        <?php
+                    echo Form::text(
+                        'from',
+                        '',
+                        array(
+                            'class' =>
+                        'datepicker_no_min_date',
+                            'placeholder' => 'Startdatum'
+                        )
+                    );
+                    ?>
                     </div>
                 </div>
-            </div>
-
-            <div class="chart-skill-panel">
-                <div class="container">
-                    <div class="row">
-
-                        <div class="col-md-8 chart-skill-panel-blog">
-                            <div class="chart-skill-panel-chart">
-                                <div class="chart-skill-panel-text">
-                                    <h4>Overchart Report</h4>
-                                </div>
-                                <div id="area-example" style="height: 300px;"></div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4 chart-skill-panel-blog">
-                            <div class="chart-skill-panel-box">
-                                <div class="chart-skill-panel-text">
-                                    <h4>Edit</h4>
-                                </div>
-                                <div class="chart-skill-panel-inner">
-                                    <ul>
-                                        <li><h3><i class="fa fa-comment"></i> New Comment</h3> <h4>Dec 10</h4></li>
-                                        <li><h3><i class="fa fa-twitter"></i> I Followers</h3> <h4>Dec 10</h4></li>
-                                        <li><h3><i class="fa fa-envelope"></i> Massage Sent</h3> <h4>Dec 10</h4></li>
-                                        <li><h3><i class="fa fa-credit-card-alt"></i> New Comment</h3> <h4>Dec 10</h4></li>
-                                        <li><h3><i class="fa fa-download"></i> New Task</h3> <h4>Dec 10</h4></li>
-                                        <li><h3><i class="fa fa-pie-chart"></i> Service Password</h3> <h4>Dec 10</h4></li>
-                                        <li><h3><i class="fa fa-shopping-cart"></i> service not available</h3> <h4>Dec 10</h4></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                <div class="jsearch col-md-3 col-sm-3 col-xs-6">
+                    <div class="ui input">
+                        <?php
+                    echo Form::text(
+                        'to',
+                        '',
+                        array(
+                            'class' =>
+                        'datepicker_no_min_date',
+                            'placeholder' => 'Einddatum'
+                        )
+                    );
+                    ?>
                     </div>
                 </div>
+                <div class="jsearch col-md-2 col-sm-2 col-xs-6">
+                    <button class="ui button btn-primary" type="submit">
+                        <i class="search icon">
+                        </i>
+                    </button>
+                </div>
             </div>
-
-            <div class="chart-teble">
-
-
-                        <div class="col-md-12 wrap">
-                            <div class="table-responsive_wrap">
-                                <table id="mytable" class="table table-bordred table-striped">
-                                    <thead>
-                                    <th><input type="checkbox" id="checkall" /></th>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Designation</th>
-                                    <th>Mobile Numberl</th>
-                                    <th>Action</th>
-                                    <th>Delete</th>
-                                    </thead>
-                                    <tbody>
-                                    <tr class="checkbox-inner">
-                                        <td><input type="checkbox" class="checkthis" /></td>
-                                        <td>1</td>
-                                        <td>Irshad</td>
-                                        <td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>
-                                        <td>isometric.mohsin@gmail.com</td>
-                                        <td>+923335586757</td>
-                                        <td class="table-icon"><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="fa fa-pencil"></span></button></p></td>
-                                        <td class="table-icon"><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="fa fa-trash"></span></button></p></td>
-                                    </tr>
-
-                                    <tr class="checkbox-inner">
-                                        <td><input type="checkbox" class="checkthis" /></td>
-                                        <td>2</td>
-                                        <td>Irshad</td>
-                                        <td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>
-                                        <td>isometric.mohsin@gmail.com</td>
-                                        <td>+923335586757</td>
-                                        <td class="table-icon"><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="fa fa-pencil"></span></button></p></td>
-                                        <td class="table-icon"><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="fa fa-trash"></span></button></p></td>
-                                    </tr>
-
-                                    <tr class="checkbox-inner">
-                                        <td><input type="checkbox" class="checkthis" /></td>
-                                        <td>3</td>
-                                        <td>Irshad</td>
-                                        <td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>
-                                        <td>isometric.mohsin@gmail.com</td>
-                                        <td>+923335586757</td>
-                                        <td class="table-icon"><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="fa fa-pencil"></span></button></p></td>
-                                        <td class="table-icon"><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="fa fa-trash"></span></button></p></td>
-                                    </tr>
-
-                                    <tr class="checkbox-inner">
-                                        <td><input type="checkbox" class="checkthis" /></td>
-                                        <td>4</td>
-                                        <td>Irshad</td>
-                                        <td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>
-                                        <td>isometric.mohsin@gmail.com</td>
-                                        <td>+923335586757</td>
-                                        <td class="table-icon"><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="fa fa-pencil"></span></button></p></td>
-                                        <td class="table-icon"><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="fa fa-trash"></span></button></p></td>
-                                    </tr>
-
-                                    <tr class="checkbox-inner">
-                                        <td><input type="checkbox" class="checkthis" /></td>
-                                        <td>5</td>
-                                        <td>Irshad</td>
-                                        <td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>
-                                        <td>isometric.mohsin@gmail.com</td>
-                                        <td>+923335586757</td>
-                                        <td class="table-icon"><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="fa fa-pencil"></span></button></p></td>
-                                        <td class="table-icon"><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="fa fa-trash"></span></button></p></td>
-                                    </tr>
-
-                                    <tr class="checkbox-inner">
-                                        <td><input type="checkbox" class="checkthis" /></td>
-                                        <td>6</td>
-                                        <td>Irshad</td>
-                                        <td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>
-                                        <td>isometric.mohsin@gmail.com</td>
-                                        <td>+923335586757</td>
-                                        <td class="table-icon"><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="fa fa-pencil"></span></button></p></td>
-                                        <td class="table-icon"><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="fa fa-trash"></span></button></p></td>
-                                    </tr>
-
-                                    <tr class="checkbox-inner">
-                                        <td><input type="checkbox" class="checkthis" /></td>
-                                        <td>7</td>
-                                        <td>Irshad</td>
-                                        <td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>
-                                        <td>isometric.mohsin@gmail.com</td>
-                                        <td>+923335586757</td>
-                                        <td class="table-icon"><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="fa fa-pencil"></span></button></p></td>
-                                        <td class="table-icon"><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="fa fa-trash"></span></button></p></td>
-                                    </tr>
-
-                                    <tr class="checkbox-inner">
-                                        <td><input type="checkbox" class="checkthis" /></td>
-                                        <td>8</td>
-                                        <td>Irshad</td>
-                                        <td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>
-                                        <td>isometric.mohsin@gmail.com</td>
-                                        <td>+923335586757</td>
-                                        <td class="table-icon"><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="fa fa-pencil"></span></button></p></td>
-                                        <td class="table-icon"><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="fa fa-trash"></span></button></p></td>
-                                    </tr>
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
         </div>
+        <?php echo Form::close(); ?>
+    </div>
+    <div class="skill-blog" style="background: transparent !important;">
+        <div class="skill-panel">
+            <div class="row">
+                <div class="col-md-3 col-xs-12">
+                    <div class="skill-panel-box massage">
+                        <div class="skill-panel-inner-icon">
+                            <i class="fa fa-comments">
+                            </i>
+                        </div>
+                        <div class="skill-panel-text">
+                            <div class="skill-title">
+                                <?php echo e(count(\App\User::all())); ?>
+
+                            </div>
+                            <div class="skill-sub">
+                                gebruikers
+                            </div>
+                        </div>
+                        <div class="skill-panel-icon">
+                            <i class="fa fa-angle-right">
+                            </i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-xs-12">
+                    <div class="skill-panel-box usar">
+                        <div class="skill-panel-inner-icon">
+                            <i class="fa fa-user">
+                            </i>
+                        </div>
+                        <div class="skill-panel-text">
+                            <div class="skill-title">
+                                <?php /*<?php echo e($topStatistics->topCompanies); ?>*/ ?>
+                                    <?php echo e(count(\App\Models\Company::all())); ?>
+
+                            </div>
+                            <div class="skill-sub">
+                                bedrijven
+                            </div>
+                        </div>
+                        <div class="skill-panel-icon">
+                            <i class="fa fa-angle-right">
+                            </i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-xs-12">
+                    <div class="skill-panel-box email">
+                        <div class="skill-panel-inner-icon">
+                            <i class="fa fa-envelope-o">
+                            </i>
+                        </div>
+                        <div class="skill-panel-text">
+                            <div class="skill-title">
+                                <?php /*<?php echo e($topStatistics->topAffiliate); ?>*/ ?>
+                                    <?php echo e(count(\App\Models\Affiliate::all())); ?>
+
+                            </div>
+                            <div class="skill-sub">
+                                affiliaties
+                            </div>
+                        </div>
+                        <div class="skill-panel-icon">
+                            <i class="fa fa-angle-right">
+                            </i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-xs-12">
+                    <div class="skill-panel-box note">
+                        <div class="skill-panel-inner-icon">
+                            <i class="fa fa-pencil-square-o">
+                            </i>
+                        </div>
+                        <div class="skill-panel-text">
+                            <div class="skill-title">
+                                <?php /*<?php echo e($topStatistics->topReservations); ?>*/ ?>
+                                    <?php echo e($totalReservation); ?>
+
+                            </div>
+                            <div class="skill-sub">
+                                reserveringens
+                            </div>
+                        </div>
+                        <div class="skill-panel-icon">
+                            <i class="fa fa-angle-right">
+                            </i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <?php
+// echo count($topDays);
+if (count($topDays) >= 1):
+    $topDaysList=[];
+    foreach ($topDays as $index=>$topDay):
+        $topDaysList[] = [$dayName[$topDay->nameRow + 1], $topDay->countRow];
+        if($index >= 6) { break;}
+    endforeach;
+
+endif;
+
+// Top times chart
+if (count($topTimes) >= 1):
+    $topTimesList=[];
+    foreach ($topTimes as $index=>$topTime):
+        $topTimesList[] = [date('H:i', strtotime($topTime->nameRow)), $topTime->countRow];
+        if($index >= 6) { break;}
+    endforeach;
+
+endif;
 
 
+// Top Persons chart
+if (count($topPersons) >= 1):
+    $topPersonsList=[];
+    foreach ($topPersons as $index=>$topPerson):
+        $topPersonsList[] = [ $topPerson->nameRow.' '.$topPerson->nameRow == 1 ? 'persoon' : 'personen', $topPerson->countRow];
+        if($index >= 6) { break;}
+    endforeach;
+
+endif;
+
+
+
+?>
+        </div>
+    </div>
+    <style>
+        .chart-box{
+            min-height: 300px;
+        }
+    </style>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load("current", {packages:["corechart"]});
+      google.charts.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Year');
+        data.addColumn('number', 'Balance');
+        data.addRows(<?= json_encode($topDaysList) ?>);
+
+        var options = {
+          is3D: true,
+          slices: {  0: {offset: 0.2},
+                    1: {offset: 0.25},
+                    2: {offset: 0.3},
+          },
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('topDaysChart'));
+        chart.draw(data, options);   
+
+         var dataTime = new google.visualization.DataTable();
+        dataTime.addColumn('string', 'Year');
+        dataTime.addColumn('number', 'Balance');
+        dataTime.addRows(<?= json_encode($topTimesList) ?>);
+        
+        var chartTime = new google.visualization.PieChart(document.getElementById('topTimesChart'));
+        chartTime.draw(dataTime, options);
+
+        var dataPerson = new google.visualization.DataTable();
+        dataPerson.addColumn('string', 'Year');
+        dataPerson.addColumn('number', 'Balance');
+        dataPerson.addRows(<?= json_encode($topPersonsList) ?>);
+        
+        var chartPerson = new google.visualization.PieChart(document.getElementById('topPersonsChart'));
+        chartPerson.draw(dataPerson, options);    
+      }
+
+      
+    </script>
+    <div class="chart-panel">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 chart-blog">
+                    <div class="chart-box">
+                        <div class="chart-text text-center">
+                            <h5>
+                                Top reservering: dagen
+                            </h5>
+                        </div>
+                        
+                        <div id="donut-example" style="height: 250px;">
+                            <div id="topDaysChart"></div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 chart-blog">
+                    <div class="chart-box">
+                        <div class="chart-text text-center">
+                            <h5>
+                               Top reservering: tijden
+                            </h5>
+                            
+                        </div>
+                        <div id="donut-example1">
+                         <div id="donut-example" style="height: 250px;">
+                            <div id="topTimesChart">
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 chart-blog">
+                    <div class="chart-box">
+                        <div class="chart-text text-center">
+                            <h5>
+                               Top reservering: personen
+                            </h5>
+                            
+                        </div>
+                        <div id="donut-example2">
+                        <div id="topPersonsChart">
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
     </div>
 
+    <div class="row">
+                   
+                    <div class="col-md-4">
+                        <div class="stats-table ui red segment bg-success">
+                            
+                               <h5>Top kliks: bedrijven</h5>                         
+                          
+                                <div class="ui divider">
+                                </div>
+                                <table class="table table-striped">
+                                   <tbody>
+                                        <?php if(count($topClicksCompanies) >= 1): ?>
+                                <?php foreach($topClicksCompanies as $index =>$topClicksCompany): ?>
+                                        <tr>
+                                            <td>
+                                                <?php echo e($topClicksCompany->nameRow); ?>
 
-        <script src="js/jquery.min.js"></script>
-        <script src="js/bootstrap.js"></script>
-        <script src="js/slick.js"></script>
-        <script src="js/morris.min.js"></script>
-        <script src="js/raphael-min.js"></script>
-        <script src="js/scrolling-nav.js"></script>
+                                            </td>   
+                                            <td>
+                                                <?php echo e($topClicksCompany->countRow); ?>x
+                                            </td>                                         
+                                        </tr>
+                                          <?php if($index >=6){ break;} ?>
+                                        <?php endforeach; ?>
+                            <?php endif; ?>
+                            </tbody>
+                                  
+                                </table>
+                            </br>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="stats-table ui green segment">
+                            <h5 class="">
+                                Top kliks: FAQ
+                            </h5>
+                            
+                                <div class="ui divider">
+                                </div>
+                                <table class="table table-striped">
+                                  <tbody>
+                                        <?php if(count($topClicksFaqs) >= 1): ?>
+                                <?php foreach($topClicksFaqs as $index=> $topClicksFaq): ?>
+                                        <tr>
+                                            <td>
+                                                <?php echo e($topClicksFaq->nameRow); ?>
 
+                                            </td>
+                                            <td>
+                                                <?php echo e($topClicksFaq->countRow); ?>x
+                                            </td>
+                                        </tr>
+                                          <?php if($index >=6){ break;} ?>
+                                        <?php endforeach; ?>
+                            <?php endif; ?>
+                                    </tbody>
+                                </table>
+                            </br>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="stats-table ui red segment">
+                            <h5 class="">
+                                Top kliks: affiliaties
+                            </h5>
+                       
+                                <div class="ui divider">
+                                </div>
+                                <table class="table table-striped">
+                                    
+                                    <tbody>
+                                        <?php if(count($topClicksAffiliates) >= 1): ?>
+                                <?php foreach($topClicksAffiliates as $index=>$topClicksAffiliate): ?>
+                                        <tr>
+                                            <td>
+                                                <?php echo e($topClicksAffiliate->nameRow); ?>
 
-        <script type="text/javascript">
-            $(function(){
-                $(".dropdown").hover(
-                    function() {
-                        $('.dropdown-menu', this).stop( true, true ).fadeIn("fast");
-                        $(this).toggleClass('open');
-                        $('b', this).toggleClass("caret caret-up");
-                    },
-                    function() {
-                        $('.dropdown-menu', this).stop( true, true ).fadeOut("fast");
-                        $(this).toggleClass('open');
-                        $('b', this).toggleClass("caret caret-up");
-                    });
-            });
-        </script>
+                                            </td>
+                                            <td>
+                                                <?php echo e($topClicksAffiliate->countRow); ?>x
+                                            </td>
+                                        </tr>
+                                        <?php if($index >=6){ break;} ?>
+                                        <?php endforeach; ?>
+                            <?php endif; ?>
+                                    </tbody>
+                                </table>
+                            </br>
+                        </div>
+                    </div>
+                </div>
+            
 
-        <script>
+    <?php $__env->stopSection(); ?>
+</div>
 
-            Morris.Donut({
-                element: 'donut-example',
-                data: [
-                    {label: "Android", value: 30},
-                    {label: "Firefox", value: 10},
-                    {label: "Safari", value: 20},
-                    {label: "iPhone", value: 20},
-                    {label: "Chrome", value: 20}
-                ]
-            });
-
-            Morris.Donut({
-                element: 'donut-example1',
-                data: [
-                    {label: "Android", value: 30},
-                    {label: "Firefox", value: 10},
-                    {label: "Safari", value: 20},
-                    {label: "iPhone", value: 20},
-                    {label: "Chrome", value: 20}
-                ]
-            });
-
-            Morris.Donut({
-                element: 'donut-example2',
-                data: [
-                    {label: "Android", value: 30},
-                    {label: "Firefox", value: 10},
-                    {label: "Safari", value: 20},
-                    {label: "iPhone", value: 20},
-                    {label: "Chrome", value: 20}
-                ]
-            });
-
-            Morris.Donut({
-                element: 'donut-example3',
-                data: [
-                    {label: "Android", value: 30},
-                    {label: "Firefox", value: 10},
-                    {label: "Safari", value: 20},
-                    {label: "iPhone", value: 20},
-                    {label: "Chrome", value: 20}
-                ]
-            });
-        </script>
-
-        <script>
-            Morris.Area({
-                element: 'area-example',
-                data: [
-                    { y: '1.1.', a: 100, b: 90 },
-                    { y: '2.1.', a: 75,  b: 65 },
-                    { y: '3.1.', a: 50,  b: 40 },
-                    { y: '4.1.', a: 75,  b: 65 },
-                    { y: '5.1.', a: 50,  b: 40 },
-                    { y: '6.1.', a: 75,  b: 65 },
-                    { y: '7.1.', a: 100, b: 90 }
-                ],
-                xkey: 'y',
-                ykeys: ['a', 'b'],
-                labels: ['Series A', 'Series B']
-            });
-
-            $(document).ready(function(){
-                $("#mytable #checkall").click(function () {
-                    if ($("#mytable #checkall").is(':checked')) {
-                        $("#mytable input[type=checkbox]").each(function () {
-                            $(this).prop("checked", true);
-                        });
-
-                    } else {
-                        $("#mytable input[type=checkbox]").each(function () {
-                            $(this).prop("checked", false);
-                        });
-                    }
-                });
-
-                $("[data-toggle=tooltip]").tooltip();
-            });
-
-        </script>
-
-
-
-
-    <div class="clear"></div>
-
-
-
-
-
-
-<?php $__env->stopSection(); ?>
 <?php echo $__env->make('template.theme', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
