@@ -11,9 +11,7 @@
 @inject('FileHelper', 'App\Helpers\FileHelper')
 
 {{--*/ $pageTitle = (isset($contentBlock[1]) ? strip_tags($contentBlock[1]) : '') /*--}}
-@section("header_picture")
-    @include('pages._search-slider')
-@endsection
+
 @section('content')
 
     <?php
