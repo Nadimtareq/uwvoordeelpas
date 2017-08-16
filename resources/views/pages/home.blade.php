@@ -1,16 +1,24 @@
 @extends('template.theme',['search_header' => ($userAuth != FALSE) ])
 
 
+
+
+
+
+
 @inject('affiliate', 'App\Models\Affiliate')
 @inject('strHelper', 'App\Helpers\StrHelper')
 @inject('FileHelper', 'App\Helpers\FileHelper')
 
 {{--*/ $pageTitle = (isset($contentBlock[1]) ? strip_tags($contentBlock[1]) : '') /*--}}
-
+@section("header_picture")
+    @include('pages._search-slider')
+@endsection
 @section('content')
 
     <?php
-    $breadcrumbArray1 = (Request::has('preference') ? Request::get('preference') : ($userAuth && count($user->preferences) >= 1 && $user->preferences != 'null' && $user->preferences != null ? json_decode($user->preferences) : array()));
+    $breadcrumbArray1 = (Request::has('preference') ? Request::get('preference') : ($userAuth && count
+    ($user->preferences) >= 1 && $user->preferences != 'null' && $user->preferences != null ? json_decode($user->preferences) : array()));
     $breadcrumbArray2 = (Request::has('kitchen') ? Request::get('kitchen') : ($userAuth && count($user->kitchens) >= 1 && $user->kitchens != 'null' && $user->kitchens != null ? json_decode($user->kitchens) : array()));
     $breadcrumbArray3 = (Request::has('price') ? Request::get('price') : ($userAuth && count($user->price) >= 1 && $user->price != 'null' && $user->price != null ? json_decode($user->price) : array()));
     $breadcrumbArray4 = (Request::has('discount') ? Request::get('discount') : ($userAuth && count($user->discount) >= 1 && $user->discount != 'null' && $user->discount != null ? json_decode($user->discount) : array()));
@@ -21,6 +29,7 @@
 
     @if ($userAuth == FALSE)
         <div class="clear"></div>
+
         {{--<h2  style="color: blue" class="home login header" data-type="login">"Meld je nu aan en spaar direct!"</h2>--}}
         <div id="cities">
             <div class="container">
