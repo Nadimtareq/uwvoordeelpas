@@ -242,8 +242,12 @@ while ($st->lte($dt)) {
                                         </div>
                                         <br>
                                         <b class="up">
-                                            <?php echo strip_tags($deal->description); ?>
+                                            <?php  echo strip_tags($deal->description); ?>
+                                          
                                         </b>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                    <br>
                                     
                                     @if(!is_null($deal->getApprovedReviews))
                                         <?php
@@ -268,6 +272,8 @@ while ($st->lte($dt)) {
                                             <?php $count++; ?>
                                         @endforeach
                                     @endif
+                                    </div>
+                                    </div>
                                     </div>
                                     </div>
                                     <div class="row">
