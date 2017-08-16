@@ -162,5 +162,5 @@
 
 <!-- .container end -->
 </header>
- @yield("header_picture")
+ {{--  @yield("header_picture")  --}}
 	    

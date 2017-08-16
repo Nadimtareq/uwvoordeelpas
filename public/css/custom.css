@@ -294,17 +294,32 @@ body {
 }
 
 .search_slider {
-    background-attachment: fixed;
+    /* background-attachment: fixed; */
     background-image: url("../images/header.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-repeat: repeat-y;
+    background-size: 102vw;
+    /* backg  */
     float: left;
-    /* margin-top: 76px; */
+    margin-top: 20px;
     /* padding: 60px 0; */
-    width: 100%;
-    margin-top: 0px;
+    /* width: 100%; */
+    width: 100vw;
+    /* padding-top: 60px; */
     height: 400px;
     /* padding-top: 100px; */
+}
+
+.image-overlay:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    transition: all 0.8s;
+    opacity: 0.5;
+    background: #138BC6;
+    background-size: 100% 100%;
 }
 
 .search_slider h1 {
