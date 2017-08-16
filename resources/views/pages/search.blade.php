@@ -10,7 +10,9 @@
         var searchPage = 1;
     </script>
     <div class="clearfix"></div>
-     @include('pages.search-filter')
+     {{--  @include('pages.search-filter')  --}}
+
+     @include('pages._top-filter')
 
     <div class="clearfix"></div>
     <!--

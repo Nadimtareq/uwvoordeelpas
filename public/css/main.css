@@ -1862,6 +1862,19 @@ ul.side-nav2 li:hover {
     text-decoration: line-through;
 }
 
+.col5 .text3 .prices {
+    padding: 20px 10px;
+    text-align: center;
+}
+
+.col5 .text3 .price-new {
+    font: 18px 'LatoLight';
+    color: #cccccc;
+    display: inline-block;
+    padding-right: 10px;
+    text-decoration: line-through;
+}
+
 .col5 .text3 .price2 {
     font: 30px 'LatoBold';
     color: #273398;
@@ -2325,7 +2338,7 @@ ul.side-nav2 li:hover {
     border-radius: 5px;
     background: #333399;
     display: inline-block;
-    padding: 8px 31px;
+    padding: 8px 10px;
     width: 100%;
     text-align: center;
     -webkit-box-shadow: 3px 4px 5px 0px rgba(0, 0, 0, 0.15);
