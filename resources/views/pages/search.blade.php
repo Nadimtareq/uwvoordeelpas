@@ -1,4 +1,4 @@
-@extends('template.theme', ['search_header' => 'true'])
+@extends('template.theme')
 
 {{--*/ $pageTitle = 'Zoeken' /*--}}
 @section("header_picture")
@@ -63,7 +63,7 @@
     </section>
     -->
 
-    <section  id="prices" >
+    <section  id="search-list" >
         <div class="container">
             <div class="col-sm-12 col-ms1">
                 <div class="col-sm-3 col5">

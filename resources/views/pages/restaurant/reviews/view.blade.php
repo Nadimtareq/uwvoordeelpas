@@ -17,6 +17,8 @@
  			<span class="addthis_sharing_toolbox"></span>
  		</div>
 
+		 
+
  		<div class="sixteen wide mobile one wide tablet six wide computer column">
 
  			<div class="ui vertically grid reviews">
@@ -38,9 +40,9 @@
 			 			<p>{{ $review->content }}</p>
 
 			 			<div class="score">
-			 				Eten <div class="ui star tiny orange rating no-rating" data-rating="{{ $review->food }}"></div><br />
-			 				Service <div class="ui star tiny orange rating no-rating" data-rating="{{ $review->service }}"></div><br />
-			 				decor <div class="ui star tiny orange rating no-rating" data-rating="{{ $review->decor }}"></div> 
+			 				Eten <div class="ui star tiny orange rating no-rating whitee" data-rating="{{ $review->food }}"></div><br />
+			 				Service <div class="ui star tiny orange rating no-rating whitee" data-rating="{{ $review->service }}"></div><br />
+			 				decor <div class="ui star tiny orange rating no-rating whitee" data-rating="{{ $review->decor }}"></div>
 			 			</div>
 			 		</div>
 			 	</div>
@@ -49,6 +51,7 @@
 			<div class="clear"></div><br />
 		</div>
 	</div>
+
 
 	<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5751e9a264890504"></script>
 	<script type="text/javascript">

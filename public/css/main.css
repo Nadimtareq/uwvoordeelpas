@@ -2,12 +2,12 @@ html {
     font-size: 1em;
 }
 
-::-moz-selection {
+ ::-moz-selection {
     background: #b3d4fc;
     text-shadow: none;
 }
 
-::selection {
+ ::selection {
     background: #b3d4fc;
     text-shadow: none;
 }
@@ -849,10 +849,11 @@ header.nav li a:hover {
     background: linear-gradient(to top, #2c3ea0, #3350b9);
     color: white;
     padding-bottom: 62px;
+    margin-top: 20px;
 }
 
 .space-header {
-    min-height: 600px;
+    /*min-height: 600px;*/
 }
 
 #footer h3 {
@@ -1770,7 +1771,7 @@ ul.side-nav2 li:hover {
     background: #fff;
     padding: 13px 0 25px 0px;
     margin-bottom: 36px;
-    /*	padding-left:470px;*/
+    /*  padding-left:470px;*/
 }
 
 .col5 .text3 strong,
@@ -1997,10 +1998,10 @@ ul.side-nav2 li:hover {
     text-transform: uppercase;
     text-align: center;
     color: #fff;
-    font: 24px 'LatoRegular';
+    font: 18px 'LatoRegular';
     display: inline-block;
     vertical-align: top;
-    padding: 15px 35px;
+    padding: 21px 5px;
     margin: 0 0 0 -2px;
     background-color: transparent;
     border: none;
@@ -2065,7 +2066,7 @@ ul.side-nav2 li:hover {
     border: none;
     height: auto;
     border-radius: 0px;
-    padding: 21px 0;
+    padding: 20px 0;
     width: 60px;
 }
 
@@ -2405,7 +2406,8 @@ ul.side-nav2 li:hover {
 
 .menu .left_m {
     float: left;
-    margin: 0 21px 0 0;
+    /* margin: 0 21px 0 0; */
+    margin: 0;
     position: relative;
 }
 
@@ -2446,13 +2448,13 @@ ul.side-nav2 li:hover {
 }
 
 .menu .right_m {
-    margin: 31px 0 28px 0;
+    margin: 1px 0 28px 0;
 }
 
 .menu .right_m span {
     font: 18px 'LatoBold';
     color: #cccccc;
-    display: block;
+    /* display: block; */
     text-decoration: line-through;
     margin-bottom: 16px;
 }
@@ -4706,7 +4708,7 @@ ul.side-nav2 li:hover {
 }
 
 .icon {
-    float: left;
+    /*float: center;*/
     /*margin: 15px;*/
 }
 
@@ -5058,8 +5060,8 @@ img.thumbnails {
 }
 
 .space-header {
-    padding-top: 70px;
-    padding-bottom: 50px;
+    padding-top: 20px;
+    padding-bottom: 0px;
 }
 
 .wnwrap {
@@ -5157,12 +5159,12 @@ img.thumbnails {
 }
 
 .deals-list-page .left_m {
-    width: 48%;
+    /* width: 48%; */
     float: left;
 }
 
 .deals-list-page .right_m {
-    width: 48%;
+    /* width: 48%; */
     float: left;
 }
 
@@ -5478,7 +5480,10 @@ tbody tr td {
 .table>thead>tr>td,
 .table>tbody>tr>td,
 .table>tfoot>tr>td {
-    padding: 12px 8px;
+    padding-left: 5px;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0px;
 }
 
 .table.table-bordred {
@@ -5547,14 +5552,44 @@ tbody tr td {
 
 .parallax {
     position: relative;
+    background: url("../images/home-bg-small.png") no-repeat fixed center;
     width: 100%;
     height: 360px;
-    background: url("../images/home-bg-small.png") no-repeat fixed center;
     background-size: cover;
 }
 
-.parallax .black-overlay {
+.parallax .black-overlay,
+.parallax-advert .black-overlay,
+.parallax-aansluiten .black-overlay,
+.parallax-food .black-overlay {
     background: rgba(0, 0, 0, .6);
     width: 100%;
     height: 100%;
+}
+
+.parallax-advert {
+    position: relative;
+    background: url("../images/advertisement.jpg") no-repeat fixed center;
+    width: 100%;
+    height: 360px;
+    background-size: cover;
+}
+
+.parallax-aansluiten {
+    position: relative;
+    background: url("../images/restaurant.jpg") no-repeat fixed center;
+    width: 100%;
+    height: 360px;
+    background-size: cover;
+}
+
+.whitee {
+    background: transparent !important;
+}
+
+.parallax-food {
+    position: relative;
+    background: url("../images/food.jpg") no-repeat fixed center / cover;
+    width: 100%;
+    height: 390px;
 }

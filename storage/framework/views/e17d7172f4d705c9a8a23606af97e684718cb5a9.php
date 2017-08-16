@@ -6,72 +6,87 @@
 <div class="content">
     <?php echo $__env->make('admin.template.breadcrumb', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
-    <div class="buttonToolbar">  
-        <div class="ui grid">
-            <div class="row">                
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <a href="<?php echo e(url('admin/'.$slugController.'/create')); ?>" class="ui icon blue button" style="width:130px"><i
+                            class="plus icon"></i> Nieuw</a>
+
+                <button id="removeButton" type="submit" name="action" value="remove" class="ui disabled icon grey button">
+                    <i class="trash icon"></i> Verwijderen
+                </button>
+                <a href="<?php echo e(url('admin/'.$slugController.'/list')); ?>" class="ui blue button" style="width: 130px">
+                    Lijst</a>
+            </div>
+
+            <div class="col-md-2">
                 <div class="sixteen wide mobile four wide computer column">
-                    <a href="<?php echo e(url('admin/'.$slugController.'/create')); ?>" class="ui icon blue button"><i class="plus icon"></i> Nieuw</a>
+                    <div class="ui normal  search selection fluid dropdown"> <!-- icon class deleted-->
+                        <input type="hidden" name="companiesId">
+                        <i class="filter icon"></i>
 
-                    <button id="removeButton" type="submit" name="action" value="remove" class="ui disabled icon grey button">
-                        <i class="trash icon"></i> Verwijderen
-                    </button>
-                </div>
+                        <span class="text">Bedrijf</span>
 
-                <div class="sixteen wide mobile twelve wide computer column">
-                    <div class="ui grid">
-                        <div class="three column row">
-                            <div class="sixteen wide mobile four wide computer column">
-                                <div class="ui normal  search selection fluid dropdown"> <!-- icon class deleted-->
-                                    <input type="hidden" name="companiesId">
-                                    <i class="filter icon"></i>
+                        <i class="dropdown icon"></i>
 
-                                    <span class="text">Bedrijf</span>
+                        <div class="menu">
+                            <?php foreach($companies as $company): ?>
+                                <a class="item" href="<?php echo e(url('admin/guests/'.$company->slug)); ?>" data-value="<?php echo e($company->id); ?>">
+                                    <?php echo e($company->name); ?>
 
-                                    <i class="dropdown icon"></i>
-
-                                    <div class="menu">
-                                        <?php foreach($companies as $company): ?>
-                                        <a class="item" href="<?php echo e(url('admin/guests/'.$company->slug)); ?>" data-value="<?php echo e($company->id); ?>">
-                                            <?php echo e($company->name); ?>
-
-                                        </a>
-                                        <?php endforeach; ?>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="sixteen wide mobile four wide computer column">
-                                <?php echo Form::select('city', (isset($preference[9]) ? $preference[9] : array()), Request::input('city'), array('id' => 'cityRedirect', 'class' => 'ui normal search fluid dropdown')); ?>
-                            </div>
-
-                            <div class="sixteen wide mobile four wide computer column">
-                                <div class="ui normal floating basic search selection dropdown">
-                                    <input type="hidden" name="source" value="<?php echo e(Request::input('source')); ?>">
-
-                                    <div class="text">Partij</div>
-                                    <i class="dropdown icon"></i>
-
-                                    <div class="menu">
-                                        <a href="<?php echo e(url('admin/users?'.http_build_query(array_add($queryString, 'source', 'seatme')))); ?>" data-value="seatme" class="item">SeatMe</a>
-                                        <a href="<?php echo e(url('admin/users?'.http_build_query(array_add($queryString, 'source', 'eetnu')))); ?>" data-value="eetnu" class="item">EetNU</a>
-                                        <a href="<?php echo e(url('admin/users?'.http_build_query(array_add($queryString, 'source', 'couverts')))); ?>" data-value="couverts" class="item">Couverts</a>
-                                        <a href="<?php echo e(url('admin/users?'.http_build_query(array_add($queryString, 'source', 'wifi')))); ?>" data-value="wifi" class="item">Wi-Fi</a>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="sixteen wide mobile three wide computer column">
-                                <?php echo $__env->make('admin.template.limit', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-                            </div>
-
-                            <div class="sixteen wide mobile one wide computer column">
-                                <?php echo $__env->make('admin.template.search.form', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-                            </div>
+                                </a>
+                            <?php endforeach; ?>
                         </div>
                     </div>
                 </div>
-            </div>            
-            <div class="row">                
+            </div>
+            <div class="col-md-2">
+                <div class="sixteen wide mobile four wide computer column">
+                    <?php echo Form::select('city', (isset($preference[9]) ? $preference[9] : array()), Request::input('city'), array('id' => 'cityRedirect', 'class' => 'ui normal search fluid dropdown')); ?>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="sixteen wide mobile four wide computer column">
+                    <div class="ui normal floating basic search selection dropdown">
+                        <input type="hidden" name="source" value="<?php echo e(Request::input('source')); ?>">
+
+                        <div class="text">Partij</div>
+                        <i class="dropdown icon"></i>
+
+                        <div class="menu">
+                            <a href="<?php echo e(url('admin/users?'.http_build_query(array_add($queryString, 'source', 'seatme')))); ?>" data-value="seatme" class="item">SeatMe</a>
+                            <a href="<?php echo e(url('admin/users?'.http_build_query(array_add($queryString, 'source', 'eetnu')))); ?>" data-value="eetnu" class="item">EetNU</a>
+                            <a href="<?php echo e(url('admin/users?'.http_build_query(array_add($queryString, 'source', 'couverts')))); ?>" data-value="couverts" class="item">Couverts</a>
+                            <a href="<?php echo e(url('admin/users?'.http_build_query(array_add($queryString, 'source', 'wifi')))); ?>" data-value="wifi" class="item">Wi-Fi</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div><br>
+
+        <div class="row">
+            <div class="col-lg-2">
+                <div class="sixteen wide mobile four wide computer column">
+                    <div class="ui normal floating basic search selection dropdown">
+                        <input type="hidden" name="role" value="<?php echo e(Request::input('role')); ?>">
+
+                        <div class="text">Soort</div>
+                        <i class="dropdown icon"></i>
+
+                        <div class="menu">
+                            <a href="<?php echo e(url('admin/users?role=admin')); ?>" data-value="admin" class="item">Admin</a>
+                            <a href="<?php echo e(url('admin/users?role=bedrijf')); ?>" data-value="bedrijf" class="item">Bedrijf</a>
+                            <a href="<?php echo e(url('admin/users?role=barcode_user')); ?>" data-value="barcode_user" class="item">Barcode</a>
+                            <a href="<?php echo e(url('admin/users?role=bediening')); ?>" data-value="bediening" class="item">Bediening</a>
+                            <a href="<?php echo e(url('admin/users?role=callcenter')); ?>" data-value="callcenter" class="item">Call Center</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2">
                 <div class="sixteen wide mobile four wide computer column">
                     <div class="ui normal floating basic search selection dropdown">
                         <input type="hidden" name="has_saving" value="<?php echo e(Request::input('has_saving')); ?>">
@@ -79,17 +94,48 @@
                         <div class="text">Spaarhulp</div>
                         <i class="dropdown icon"></i>
 
-                        <div class="menu">                            
+                        <div class="menu">
                             <a href="<?php echo e(url('admin/users?'.http_build_query(array_add($queryString, 'has_saving', '1')))); ?>" data-value="1" class="item">Ja</a>
                             <a href="<?php echo e(url('admin/users?'.http_build_query(array_add($queryString, 'has_saving', '0')))); ?>" data-value="0" class="item">Nee</a>
-                            
+
                             <a href="<?php echo e(url('admin/users?'.http_build_query(array_add($queryString, 'has_saving', '2')))); ?>" data-value="2" class="item">Mislukt</a>
                         </div>
+
                     </div>
                 </div>
             </div>
+            <div class="col-lg-2">
+                <div class="sixteen wide mobile four wide computer column">
+                    <div class="ui normal floating basic search selection dropdown">
+                        <input type="hidden" name="user_from" value="<?php echo e(Request::input('user_from')); ?>">
+
+                        <div class="text">Type gebruikers</div>
+                        <i class="dropdown icon"></i>
+
+                        <div class="menu">
+                            <a href="<?php echo e(url('admin/'.$slugController)); ?>" data-value="1" class="item">gebruikers</a>
+                            <a href="<?php echo e(url('admin/'.$slugController.'/guestwifi')); ?>" data-value="2" class="item">Gast wifi</a>
+
+                            <a href="<?php echo e(url('admin/'.$slugController.'/guestthirdparty')); ?>" data-value="3" class="item">Derde partij</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2">
+                <div class="sixteen wide mobile one wide computer column">
+                    <?php echo $__env->make('admin.template.search.form', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                </div>
+            </div>
+
         </div>
-    </div><br />
+        <?php /*<div class="row">*/ ?>
+            <?php /**/ ?>
+            <?php /**/ ?>
+        <?php /*</div>*/ ?>
+    </div>
+
+
 
     <?php echo Form::open(array('id' => 'formList', 'url' => 'admin/' . $slugController . '/delete', 'method' => 'post')) ?>
     <table class="ui very basic sortable collapsing celled table list" style="width: 100%;">
@@ -130,7 +176,7 @@
 
                     </a>
                 </td>
-                <td>
+               <td>
                     <?php if(is_array(json_decode($result->city)) >= 1): ?>
                     <?php foreach(json_decode($result->city) as $city): ?>
                     <?php if(isset($regio[$city])): ?>
@@ -189,9 +235,18 @@
         </tbody>
     </table>
     <?php echo Form::close(); ?>
+    <br>
+    <div class="ui grid container">
+        <div class="row">
+            <div class="col-lg-8 offset-l">
+                <?php echo with(new \App\Presenter\Pagination($data->appends($paginationQueryString)))->render(); ?>
 
-    <?php echo with(new \App\Presenter\Pagination($data->appends($paginationQueryString)))->render(); ?>
-
+            </div>
+            <div class="col-lg-2">
+                    <?php echo $__env->make('admin.template.limit', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+            </div>
+        </div>
+    </div>
 </div>
 <div class="clear"></div>
 <?php $__env->stopSection(); ?>

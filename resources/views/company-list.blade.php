@@ -3,6 +3,15 @@
 .thumbnails{
 		width: 300px !important;
 	}
+    
+    .deal-img{
+            padding: 0px;
+        }
+    @media screen and (min-width: 750px){
+        .deal-img{
+            padding: 30px 0px 0 20px;
+        }
+    }
 </style>
 
 @inject('discountHelper', 'App\Helpers\DiscountHelper')
@@ -28,7 +37,7 @@
                      data-city="{{ $data->city }}"
                      data-zipcode="{{ $data->zipcode }}">
                     <div class="row"  style="background: white; padding: 0px; margin: 10px;">
-                    <div class="col-sm-6 col-xs-12">
+                    <div class="col-sm-5 col-xs-12 deal-img" >
                         @if (isset($media[0]) && isset($media[0]->file_name) && file_exists(public_path($media[0]->disk. DIRECTORY_SEPARATOR . $media[0]->id . DIRECTORY_SEPARATOR . $media[0]->file_name)) )
                             @if($count_persons >= $deal->total_amount)
                                 <img width="420" src="{{ url('media/'.$media[0]->id.'/'.$media[0]->file_name) }}"
@@ -105,7 +114,7 @@
                             @endif
                     @endif -->
                     </div>
-                    <div class="col-sm-6 col-xs-12">
+                    <div class="col-sm-7 col-xs-12">
                     <div class="text3" style="padding: 20px;">
                         <strong>
                             @if($count_persons >= $deal->total_amount)

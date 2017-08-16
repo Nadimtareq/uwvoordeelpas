@@ -16,9 +16,13 @@ return [
     */
 
     'driver' => env('MAIL_DRIVER', 'mailgun'),
+<<<<<<< HEAD
     // 'driver' => env('MAIL_DRIVER', 'smtp'),
 	'domain' => env('MAILGUN_DOMAIN','mail.uwvoordeelpas.nl'),
     'secret' => env('MAILGUN_SECRET','key-8378350c7d06d7a86342aca80ae6fc9d'),
+=======
+    //'driver' => env('MAIL_DRIVER', 'smtp'),
+>>>>>>> 28612163500ba092e62d19f76fbe9219f4523238
 
     /*
     |--------------------------------------------------------------------------

@@ -262,10 +262,18 @@ body {
     background-size: cover;
     float: left;
     /* margin-top: 76px; */
-    padding: 60px 0;
     width: 100%;
     margin-top: 0px;
     height: 400px;
+    padding-top: 100px;
+}
+
+.search_slider .black-overlay {
+    background: rgba(0, 0, 0, .6);
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    padding: 60px 0;
     padding-top: 100px;
 }
 
@@ -278,6 +286,51 @@ body {
 }
 
 .back_slideer_mnu p {
+    color: #fff;
+    float: left;
+    font-size: 30px;
+    margin: 15px 0;
+    width: 100%;
+}
+
+.search_slider {
+    /* background-attachment: fixed; */
+    background-image: url("../images/header.jpg");
+    background-repeat: repeat-y;
+    background-size: 102vw;
+    /* backg  */
+    float: left;
+    margin-top: 20px;
+    /* padding: 60px 0; */
+    /* width: 100%; */
+    width: 100vw;
+    /* padding-top: 60px; */
+    height: 400px;
+    /* padding-top: 100px; */
+}
+
+.image-overlay:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    transition: all 0.8s;
+    opacity: 0.5;
+    background: #138BC6;
+    background-size: 100% 100%;
+}
+
+.search_slider h1 {
+    color: #dadaf6;
+    float: left;
+    font-size: 45px;
+    margin: 0;
+    width: 100%;
+}
+
+.search_slider p {
     color: #fff;
     float: left;
     font-size: 30px;
@@ -536,6 +589,13 @@ body {
         width: 100%;
         padding-top: 100px;
     }
+    .search_slider {
+        background-attachment: local;
+        /* margin-top: 76px; */
+        /* padding: 60px 0; */
+        width: 100%;
+        /* padding-top: 100px; */
+    }
 }
 
 @media screen and (max-width:991px) {
@@ -555,13 +615,6 @@ body {
         margin-left: 10px;
         margin-top: 10px;
     }
-    .back_slideer_mnu {
-        background-attachment: local;
-        /* margin-top: 76px; */
-        padding: 30px 0;
-        width: 100%;
-        padding-top: 100px;
-    }
     .drop_icon_show {
         bottom: -60px;
         float: left;
@@ -573,6 +626,13 @@ body {
         font-size: 29px;
     }
     .back_slideer_mnu p {
+        font-size: 20px;
+        margin: 11px 0;
+    }
+    .search_slider h1 {
+        font-size: 29px;
+    }
+    .search_slider p {
         font-size: 20px;
         margin: 11px 0;
     }
@@ -593,6 +653,15 @@ body {
         padding: 30px 0;
         width: 100%;
         padding-top: 100px;
+    }
+    .search_slider {
+        background-attachment: local;
+        background-size: cover;
+        height: 100%;
+        /* margin-top: 76px; */
+        /* padding: 30px 0; */
+        width: 100%;
+        /* padding-top: 100px; */
     }
 }
 
