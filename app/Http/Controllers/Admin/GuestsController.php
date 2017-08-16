@@ -108,8 +108,11 @@ class GuestsController extends Controller
                                 $newUser->name = $row->name;
                                 $newUser->phone = $row->phone;
                                 $newUser->gender = $row->gender;
-                                $newUser->source = 'newsletter';
+                                $newUser->source = 'csv';
+                                $newUser->extension_downloaded = 0;
+								$newUser->reference_code = str_random(64);
                                 $newUser->expire_code = str_random(64);
+                                $newUser->lang = 'NL';
 
                                 if ($companyOwner['regio'] != NULL) {
                                     $newUser->city = json_encode((array) $companyOwner['regio']);
@@ -149,14 +152,14 @@ class GuestsController extends Controller
                             }
                         }else{
 							// chheck user already exits or not
-							$user = DB::table('third_party_user')
+							$user = DB::table('blocked_users_csv')
 							->where('email', $row->email)
 							->first();
 							// insert user if not exists
 							if(count($user)==0){
 								// user password
 								//$pass = Hash::make('simple2568');
-								DB::table('third_party_user')->insert(array('name'=>$row->name, 'email'=>$row->email, 'company_id'=>$companyOwner['company_id'],'phone'=>$row->phone));
+								DB::table('blocked_users_csv')->insert(array('name'=>$row->name, 'email'=>$row->email, 'company_id'=>$companyOwner['company_id'],'phone'=>$row->phone));
 							}
 						}
                     });
