@@ -159,14 +159,14 @@
             <?php else: ?>
                 <?php echo $__env->make('template.header', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
             <?php endif; ?>
-<?php /*              
+             
             <section>
                 <?php if(isset($__env->getSections()['slider'])): ?>
                     <?php echo $__env->yieldContent('slider'); ?>
                 <?php else: ?>
                     <?php echo $__env->make('template.slider', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
                 <?php endif; ?>
-            </section>  */ ?>
+            </section> 
          <?php endif; ?> 
 
     <?php endif; ?>

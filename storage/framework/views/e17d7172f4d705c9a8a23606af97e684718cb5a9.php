@@ -127,16 +127,8 @@
                     <?php echo $__env->make('admin.template.search.form', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
                 </div>
             </div>
-
         </div>
-        <?php /*<div class="row">*/ ?>
-            <?php /**/ ?>
-            <?php /**/ ?>
-        <?php /*</div>*/ ?>
     </div>
-
-
-
     <?php echo Form::open(array('id' => 'formList', 'url' => 'admin/' . $slugController . '/delete', 'method' => 'post')) ?>
     <table class="ui very basic sortable collapsing celled table list" style="width: 100%;">
         <thead>
@@ -236,15 +228,16 @@
     </table>
     <?php echo Form::close(); ?>
     <br>
-    <div class="ui grid container">
+    <div class="clearfix"></div>
+   <div class="ui grid container">
         <div class="row">
-            <div class="col-lg-8 offset-l">
+            <div class="col-md-9">
                 <?php echo with(new \App\Presenter\Pagination($data->appends($paginationQueryString)))->render(); ?>
 
+                <div class="col-sm-2 pull-right" style="padding-top: 20px"> <?php echo $__env->make('admin.template.limit', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?></div>
             </div>
-            <div class="col-lg-2">
-                    <?php echo $__env->make('admin.template.limit', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-            </div>
+
+
         </div>
     </div>
 </div>
