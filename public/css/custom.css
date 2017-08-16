@@ -295,9 +295,9 @@ body {
 
 .search_slider {
     /* background-attachment: fixed; */
-    background-image: url("../images/header.jpg");
+    background-image: url("../images/home-bg-sq2.jpg");
     background-repeat: repeat-y;
-    background-size: 102vw;
+    background-size: 100vw;
     /* backg  */
     float: left;
     margin-top: 0px;
@@ -305,7 +305,7 @@ body {
     /* width: 100%; */
     width: 100vw;
     /* padding-top: 60px; */
-    height: 400px;
+    height: 430px;
     /* padding-top: 100px; */
 }
 

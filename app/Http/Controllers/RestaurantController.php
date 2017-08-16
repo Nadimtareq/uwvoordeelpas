@@ -542,17 +542,20 @@ class RestaurantController extends Controller {
 
                 $referrals = App\Models\Referral::pendingReferrals(Sentinel::getUser()->id);
                 $referral = $referrals->first();
-                $referral->deals = $referral->deals + $persons;
+                if($referral){
+                    $referral->deals = $referral->deals + $persons;
 
-                if($referral->deals >= 2){
-                    $reference =  $referral->referrer_id;
-                    $referral->due = Carbon::now()->addDays(14);
-                    $referral->status ="Complete";
-                   
-                }elseif($referral->deals ==1){
-                    $reference =  $referral->referrer_id;
-                    $referral->status ="Partial";
-                   
+                    if($referral->deals >= 2){
+                        $reference =  $referral->referrer_id;
+                        $referral->due = Carbon::now()->addDays(14);
+                        $referral->status ="Complete";
+                    
+                    }elseif($referral->deals ==1){
+                        $reference =  $referral->referrer_id;
+                        $referral->status ="Partial";
+                    
+                    }
+                    $referral->save();
                 }else{
                      $reference = Null;
                 }
@@ -618,7 +621,7 @@ class RestaurantController extends Controller {
                 }
 
                 // Update Referral Table
-                $referral->save();
+                
 
 
 
