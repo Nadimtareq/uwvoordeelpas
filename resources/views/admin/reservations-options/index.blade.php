@@ -29,8 +29,8 @@
                 </button>
                 @endif
             </div>
-
-            <div class="right floated sixteen wide mobile nine wide computer column">
+			 <div class=" row">
+            <div class="right floated sixteen wide mobile  wide computer column">
                 <div class="ui grid">
                     <div class="five column row" id="reservation-option-dropdown">
                         <div class="column">
@@ -88,6 +88,7 @@
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
             <div class="sixteen wide mobile sixteen wide computer column" id="reservation-option-search-form">
             <form method="get" action="{{ url('admin/'.$slugController.'?'.http_build_query($queryString)) }}">
