@@ -51,7 +51,7 @@
         </div>
         </th>
         <th data-slug="email_extension">Uitbreiding</th>
-        <th>Total Emails</th>
+        <th data-slug="total_email">Total Emails</th>
       
         <th data-slug="action">Actie</th>
       

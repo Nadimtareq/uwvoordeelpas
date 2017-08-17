@@ -62,6 +62,17 @@ $(document).ready(function() {
 	            </div>
 	        </div>
     </div><br>
+	<style>
+		.tables thead tr th {
+			background: #ffffff;
+			color: #000;
+			font-weight: bold;
+			text-align: center;
+			padding-bottom: 10px;
+			
+		}
+
+	</style>
 
 	<div class="container">
 		<div class="row">
@@ -78,7 +89,7 @@ $(document).ready(function() {
 										<label></label>
 									</div>
 								</th>
-								<th data-slug="company" class="four wide">Bedrijf</th>
+								<th data-slug="company" class="four wide" style="padding-bottom: 7px;">Bedrijf</th>
 									<th data-slug="dealname" class="four wide">Gereserveerd Deal</th>
 								<th data-slug="created_at" class="four wide">Datum en tijd</th>
 								<th data-slug="persons" class="two wide">Personen</th>
@@ -105,14 +116,14 @@ $(document).ready(function() {
 								);
 								?>
 								<tr>
-									{{--<td {!! $data->is_cancelled ? 'class="disabled"' : '' !!}>--}}
-									<td>
-										{{--@if (new DateTime() < new DateTime($data->cancelBeforeTime) && $data->is_cancelled == 0)--}}
+									<td {!! $data->is_cancelled ? 'class="disabled"' : '' !!}>
+
+										@if (new DateTime() < new DateTime($data->cancelBeforeTime) && $data->is_cancelled == 0)
 										<div class="ui child checkbox">
 											<input type="checkbox" name="id[]" value="{{ $data->id }}">
 											<label></label>
 										</div>
-										{{--@endif--}}
+										@endif
 									</td>
 									<td><a href="{{ url('restaurant/'.$data->slug) }}">{{ $data->company }}</a></td>
 																<td>{{ $data->dealname }}</td>
