@@ -147,6 +147,7 @@
                     </div>
                 </div>
                 <div class="five column row">
+                    <div class="col-md-2">
                         <div class="sixteen wide mobile two wide computer column">
                             <div class="ui normal icon selection fluid dropdown">
                                 <input type="hidden" name="aff" value="{{ Request::input('aff') }}">
@@ -160,9 +161,8 @@
                                 </div>
                             </div>
                         </div>
-
-                        
                     </div>
+                </div>
             </div>
         </div>
     </div><br>

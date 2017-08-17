@@ -1,6 +1,6 @@
 <?php /**/ $pageTitle = 'Zoeken' /**/ ?>
 <?php $__env->startSection("header_picture"); ?>
-   <?php /*<?php echo $__env->make('pages._search-slider', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>*/ ?>
+   <?php echo $__env->make('pages._search-slider', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 <?php $__env->stopSection(); ?> 
 <?php $__env->startSection('content'); ?>
     
@@ -8,7 +8,7 @@
         var searchPage = 1;
     </script>
     <div class="clearfix"></div>
-     <?php /*<?php echo $__env->make('pages.search-filter', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>*/ ?>
+     <?php echo $__env->make('pages.search-filter', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
     <div class="clearfix"></div>
     <!--
