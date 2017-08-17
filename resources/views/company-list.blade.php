@@ -127,11 +127,11 @@
                         </strong>
                         {{--<span> Van: <strike>{{ $data->price_from }}</strike> | Voor: {{ $data->price }}</span>--}}
 
-                        <span class="city">
-					<a href="{{ url('search?q='.$data->city) }}">{{ $data->name }} | <span>
-					   <i class="marker icon"></i> {{ $data->city }}&nbsp;</span>
-					</a>
-				</span>
+                        <span>
+                            <a href="{{ url('search?q='.$data->city) }}">{{ $data->name }} | <span>
+                            <i class="marker icon"></i> {{ ucfirst($data->city) }}&nbsp;</span>
+                            </a>
+                        </span>
 
 
                         {{--<span class="stars"><img src="{{ asset('images/stars.png') }}" alt="stars">5.00</span>--}}
@@ -188,18 +188,27 @@
                         $count_persons = $getRec[0]->total_persons;
                         ?>
 
+                        <div class="row">
+                            <div class="col-xs-12 col-md-5">
+                                <div class="prices">
+                                    @if($deal->price_from >= 1)
+                                        <span class="price-new">
+                                        &euro; {{ $deal->price_from }}
+                                        </span>
+                                    {{--  @else
+                                        <span class="price_min_box"></span>
+        --}}
+                                    @endif
 
-                        @if($deal->price_from >= 1)
-                            <span class="price">
-                             &euro; {{ $deal->price_from }}
-                            </span>
-                        @else
-                            <span class="price price_min_box"></span>
-                        @endif
+                                    <span class="price2">
+                                        &euro; {{ $deal->price }}
+                                    </span>
+                                    
+                                </div>
+                            </div>
 
-                        <span class="price2">
-                            &euro; {{ $deal->price }}
-                        </span>
+                            <div class="col-xs-12 col-md-7" style="padding-top: 20px; text-align: center">
+                           
                         @if($count_persons >= $deal->total_amount)
                             <a class="more" href="javascript:void(0)">Uitverkocht</a>
                         @else
@@ -213,6 +222,8 @@
                             @endif
 
                         @endif
+                         </div>
+                        </div>
                     </div>
                     </div>
                     </div>

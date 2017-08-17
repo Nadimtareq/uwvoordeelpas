@@ -15,8 +15,8 @@ class CreateGuestListExtensionTable extends Migration {
             Schema::create('guest_list_extension', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('email_extension');
-                $table->int('id1');
-                $table->timestamps();
+                $table->integer('id1');
+                
             });
         }
     }
