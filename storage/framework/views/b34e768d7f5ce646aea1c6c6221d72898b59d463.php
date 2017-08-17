@@ -212,20 +212,24 @@ while ($st->lte($dt)) {
                     <div id="t2" style="display: none;">
                     <?php if(isset($deals) && count($deals)): ?>
                         <?php foreach($deals as $deal): ?>
+                        <div class="row">
                             <!-- Menu -->
+                                <div class="col-sm-12">
                                 <div class="menu deals-list-page">
+                                   <h3 class="new"><?php echo e($deal->name); ?></h3> 
+                                  <div class="col-sm-5">
                                     <div class="left_m">
-                                        <h2><?php echo e($deal->name); ?></h2>
+
                                         <?php if($deal->image!=''): ?>
                                             <a href="<?php echo e(url('future-deal/'.$company->slug).'?deal='.$deal->id); ?>"> <img
                                                         src="<?php echo e(asset('images/deals/'.$deal->image)); ?>"
-                                                        alt="No Image Found" width="400px">
+                                                        alt="No Image Found" class="img-responsive">
                                             </a>
 
                                         <?php else: ?>
                                             <a href="<?php echo e(url('future-deal/'.$company->slug).'?deal='.$deal->id); ?>"> <img
                                                         src="<?php echo e(asset('images/deals/no-img.jpg')); ?>"
-                                                        alt="No Image Found" width="400px">
+                                                        alt="No Image Found" class="img-responsive">
                                             </a>
 
                                         <?php endif; ?>
@@ -234,16 +238,27 @@ while ($st->lte($dt)) {
                                                     <li><span>Korting<i>50%</i></span></li>
                                                         </ul>*/ ?>
                                     </div>
-                                    <div class="right_m">
-                                        <?php if($deal->price_from > 0.00): ?>
-                                            <span>&euro; <?php echo e($deal->price_from); ?>
-
-                                        <?php endif; ?>
-                                        <strong>&euro; <?php echo e($deal->price); ?></strong></span>
-                                        <b class="up">
-                                            <?php echo html_entity_decode($deal->description); ?>
-                                        </b>
                                     </div>
+                                <div class="col-sm-7">
+                                <div class="row">
+                                <div class="col-xs-12">
+                                    <b class="right_m">
+                                    <div style="display: block">
+                                        <?php if($deal->price_from > 0.00): ?>
+                                          <span class="old">  &euro; <?php echo e($deal->price_from); ?></span>
+                                        <?php endif; ?>
+                                        <strong class="new">&euro; <?php echo e($deal->price); ?></strong>
+                                        </div>
+                                        <br>
+                                        <b class="up">
+                                            <?php  echo strip_tags($deal->short_description,'<p>'); ?>
+                                            
+                                          
+                                        </b>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                    <br>
+                                    
                                     <?php if(!is_null($deal->getApprovedReviews)): ?>
                                         <?php
                                         $count = 1;
@@ -263,9 +278,16 @@ while ($st->lte($dt)) {
                                                     </div>
                                                 </div>
                                             </div>
+                                    
                                             <?php $count++; ?>
                                         <?php endforeach; ?>
                                     <?php endif; ?>
+                                    </div>
+                                    </div>
+                                    </div>
+                                    </div>
+                                    <div class="row">
+                                    <div class="col-xs-12">
                                     <?php if(count($deals)==1): ?>
                                         <div id="koop">
                                             <a class="more"
@@ -279,6 +301,11 @@ while ($st->lte($dt)) {
                                                 </a>
                                             <?php endif; ?>
                                         </div>
+                                        </div>
+                                </div>
+                                </div>
+                                </div>
+                                </div><!-- End of ROw -->
                                         <?php endforeach; ?>
                                     <?php endif; ?>
                                 </div>

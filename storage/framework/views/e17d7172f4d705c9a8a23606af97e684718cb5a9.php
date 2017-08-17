@@ -8,7 +8,7 @@
 
     <div class="container">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 col-sm-4 col-xs-6">
                 <a href="<?php echo e(url('admin/'.$slugController.'/create')); ?>" class="ui icon blue button" style="width:130px"><i
                             class="plus icon"></i> Nieuw</a>
 
@@ -19,7 +19,7 @@
                     Lijst</a>
             </div>
 
-            <div class="col-md-2">
+            <div class="col-md-2 col-sm-2 col-xs-6">
                 <div class="sixteen wide mobile four wide computer column">
                     <div class="ui normal  search selection fluid dropdown"> <!-- icon class deleted-->
                         <input type="hidden" name="companiesId">
@@ -40,13 +40,13 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2 col-sm-2 col-xs-6">
                 <div class="sixteen wide mobile four wide computer column">
                     <?php echo Form::select('city', (isset($preference[9]) ? $preference[9] : array()), Request::input('city'), array('id' => 'cityRedirect', 'class' => 'ui normal search fluid dropdown')); ?>
                 </div>
             </div>
 
-            <div class="col-md-2">
+            <div class="col-md-2 col-sm-2 col-xs-6">
                 <div class="sixteen wide mobile four wide computer column">
                     <div class="ui normal floating basic search selection dropdown">
                         <input type="hidden" name="source" value="<?php echo e(Request::input('source')); ?>">
@@ -68,7 +68,7 @@
         </div><br>
 
         <div class="row">
-            <div class="col-lg-2">
+            <div class="col-md-2 col-sm-2 col-xs-6">
                 <div class="sixteen wide mobile four wide computer column">
                     <div class="ui normal floating basic search selection dropdown">
                         <input type="hidden" name="role" value="<?php echo e(Request::input('role')); ?>">
@@ -86,7 +86,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2">
+            <div class="col-md-2 col-sm-2 col-xs-6">
                 <div class="sixteen wide mobile four wide computer column">
                     <div class="ui normal floating basic search selection dropdown">
                         <input type="hidden" name="has_saving" value="<?php echo e(Request::input('has_saving')); ?>">
@@ -104,7 +104,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2">
+            <div class="col-md-2 col-sm-2 col-xs-6">
                 <div class="sixteen wide mobile four wide computer column">
                     <div class="ui normal floating basic search selection dropdown">
                         <input type="hidden" name="user_from" value="<?php echo e(Request::input('user_from')); ?>">
@@ -122,7 +122,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2">
+            <div class="col-md-2 col-sm-2 col-xs-8">
                 <div class="sixteen wide mobile one wide computer column">
                     <?php echo $__env->make('admin.template.search.form', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
                 </div>
@@ -231,10 +231,10 @@
     <div class="clearfix"></div>
    <div class="ui grid container">
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-9 col-sm-9 col-xs-12">
                 <?php echo with(new \App\Presenter\Pagination($data->appends($paginationQueryString)))->render(); ?>
 
-                <div class="col-sm-2 pull-right" style="padding-top: 20px"> <?php echo $__env->make('admin.template.limit', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?></div>
+                <div class="col-sm-2 col-md-2 col-xs-6 pull-right" style="padding-top: 20px"> <?php echo $__env->make('admin.template.limit', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?></div>
             </div>
 
 

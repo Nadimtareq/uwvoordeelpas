@@ -3,9 +3,7 @@
 <?php $FileHelper = app('App\Helpers\FileHelper'); ?>
 
 <?php /**/ $pageTitle = (isset($contentBlock[1]) ? strip_tags($contentBlock[1]) : '') /**/ ?>
-<?php $__env->startSection("header_picture"); ?>
-    <?php echo $__env->make('pages._search-slider', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-<?php $__env->stopSection(); ?>
+
 <?php $__env->startSection('content'); ?>
 
     <?php

@@ -308,7 +308,7 @@ endif;
     <div class="chart-panel">
         <div class="container">
             <div class="row">
-                <div class="col-md-4 chart-blog">
+                <div class="col-md-4 col-sm-4 col-xs-12 chart-blog">
                     <div class="chart-box">
                         <div class="chart-text text-center">
                             <h5>
@@ -316,13 +316,13 @@ endif;
                             </h5>
                         </div>
                         
-                        <div id="donut-example" style="height: 250px;">
+                        <div id="donut-example" style="height: 250px; padding-right: 20px;">
                             <div id="topDaysChart"></div>
                             
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 chart-blog">
+                <div class="col-md-4 col-sm-4 col-xs-12 chart-blog">
                     <div class="chart-box">
                         <div class="chart-text text-center">
                             <h5>
@@ -338,7 +338,7 @@ endif;
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 chart-blog">
+                <div class="col-md-4 col-sm-4 col-xs-12 chart-blog">
                     <div class="chart-box">
                         <div class="chart-text text-center">
                             <h5>
@@ -360,7 +360,7 @@ endif;
 
     <div class="row">
                    
-                    <div class="col-md-4">
+                    <div class="col-md-4 col-sm-4 col-xs-12">
                         <div class="stats-table ui red segment bg-success">
                             
                                <h5>Top kliks: bedrijven</h5>                         
@@ -389,7 +389,7 @@ endif;
                             </br>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 col-sm-4 col-xs-12">
                         <div class="stats-table ui green segment">
                             <h5 class="">
                                 Top kliks: FAQ
@@ -418,7 +418,7 @@ endif;
                             </br>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 col-sm-4 col-xs-12">
                         <div class="stats-table ui red segment">
                             <h5 class="">
                                 Top kliks: affiliaties
