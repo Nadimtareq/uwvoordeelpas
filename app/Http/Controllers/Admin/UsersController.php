@@ -493,7 +493,7 @@ class UsersController extends Controller
         $regio = $preferences->getRegio();
 
        
-		$data  = DB::select(DB::raw("SELECT lower(substring_index(email, '@', -1)) domain, COUNT(*) email_count FROM guests_wifi GROUP BY substring_index(email, '@', -1) HAVING domain NOT IN (SELECT email_extension FROM guest_list_extension ) ORDER BY email_count DESC, domain")
+		$data  = DB::select(DB::raw("SELECT lower(substring_index(email, '@', -1)) AS domain, COUNT(*) AS email_count FROM guests_wifi GROUP BY substring_index(email, '@', -1) HAVING domain NOT IN (SELECT email_extension FROM guest_list_extension ) ")
 		);
 		if(count($data)>0){
 			foreach($data as $d){
@@ -510,12 +510,24 @@ class UsersController extends Controller
             );
         }
 		
-		if ($request->has('sort') && $request->has('order')) {
-            $data_ext = $data_ext->orderBy('guest_list_extension.'.$request->input('sort'), $request->input('order'));
-            session(['sort' => $request->input('sort'), 'order' => $request->input('order')]);
+		
+		if ($request->has('sort') && $request->has('order') ) {
+			if($request->input('sort')=="total_email"){ echo "a";
+				if(count($data)>0){
+					foreach($data as $d){ echo "b";
+						$data_ext = $data_ext->orderBy('guests_wifi.'.$d->email_count, $request->input('order'));			
+					}
+				}
+				session(['sort' => $request->input('sort'), 'order' => $request->input('order')]);
+			}else{ echo "c";
+				$data_ext = $data_ext->orderBy('guest_list_extension.'.$request->input('sort'), $request->input('order'));
+				session(['sort' => $request->input('sort'), 'order' => $request->input('order')]);
+			}
         } else {
             $data_ext = $data_ext->orderBy('guest_list_extension.id', 'desc');
         }
+		
+				
         $dataCount = $data_ext->count();
 		$data_ext = $data_ext->paginate($request->input('limit', 15));
         $data_ext->setPath('list');
@@ -536,10 +548,12 @@ class UsersController extends Controller
 
 		// get total of emails
 		for($i=0; $i<count($data_ext); $i++){
+			
 			$data  = DB::select(DB::raw("SELECT COUNT(*) AS total FROM guests_wifi WHERE lower(substring_index(email, '@', -1)) IN (SELECT email_extension FROM guest_list_extension WHERE id='{$data_ext[$i]->id}')"));
 			
 			$data_ext[$i]->total_email = $data[0]->total;
 		}
+		
         return view('admin/'.$this->slugController.'/extensionlist', [
             'data' => $data_ext,
             'regio' => $regio['regio'],
