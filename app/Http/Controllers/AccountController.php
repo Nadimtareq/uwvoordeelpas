@@ -732,6 +732,12 @@ class AccountController extends Controller {
         $user->id)->where('expired_at', '>=', date('Y-m-d'))->first();
         
         if ($futureDeal) {
+
+            if($futureDeal->status =="pending"){
+                 alert()->error('Fonds alsjeblieft uw account om de reservering te voltooien','Onvoldoende saldo')->html()->persistent('Sluiten');
+
+            return Redirect::to('/payment/charge');
+            }
             $deal = ReservationOption::find($futureDeal->deal_id);
             $company = Company::find($deal->company_id);
             if ($input_persons <= $futureDeal->persons_remain) {

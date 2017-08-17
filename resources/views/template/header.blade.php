@@ -12,7 +12,7 @@
  @if($headerImg)
  	<header> <!--   -->
 	 @else
-		 <header id=navigation" class="root-sec white nav header">
+		 <header id="navigation" class="root-sec white nav header">
 	 @endif
 	 @if($headerImg)
      	<div class="header">

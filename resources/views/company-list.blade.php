@@ -166,7 +166,14 @@
                         @endif
 
                         {{--  <p class="hidden-xs">{!! strip_tags($deal->description, '<b><font>')!!}</p>  --}}
-                         <p class="hidden-xs">{!! str_limit(strip_tags($deal->description,'<b>'), (isset($limitChar) ? $limitChar : 500)) !!}</p>
+                         <p class="hidden-xs">
+
+                         {!! $deal->description !!}
+
+                          {{--  {!! str_limit(strip_tags($deal->description,'<p>'), (isset($limitChar) ? $limitChar : 500)) !!}</p>   --}}
+                   
+                         </p>
+                         
                         @if($count_persons < $deal->total_amount)
                             <div class="wr">
                                 <?php
