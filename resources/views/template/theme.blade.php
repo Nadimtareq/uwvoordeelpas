@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="{{ asset('css/materialize.min.css') }}" />
 
 	<link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}" />
-	<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
+	{{--  <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />  --}}
 	<link rel="stylesheet" href="{{ asset('css/animate.min.css') }}" />
 	<link rel="stylesheet" href="{{ asset('css/main.css') }}">
 	<link rel="stylesheet" href="{{ asset('css/flexslider.css') }}">
@@ -206,7 +206,7 @@
 <script src="{{ asset('js/jquery.serialize-object.js') }} "></script>
 <script src="{{ asset('js/app.js?version=1') }}"></script>
 <script src="{{ asset('js/jquery-1.11.3.min.js') }} "></script>
-{{--<script src="{{ asset('js/bootstrap.min.js') }} "></script>--}}
+<script src="{{ asset('js/bootstrap.min.js') }} "></script> 
 <script src="{{ asset('js/jquery.serialize-object.js') }} "></script>
 
 @if (!Request::has('iframe') )
