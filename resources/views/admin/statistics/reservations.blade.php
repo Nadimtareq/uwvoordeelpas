@@ -54,7 +54,7 @@
         {{Form::open(array('url' => 'preferences', 'method' => 'post', 'class' => 'ui form'))}}
         <div class="content">
             <div class="row">
-                <div class="jsearch col-md-3 col-sm-3 col-xs-6">
+                <div class="jsearch col-md-3 col-sm-3 col-xs-12">
                     <div class="ui normal floating basic search selection dropdown">
                         <input name="source" type="hidden" value="{{ Request::input('source') }}">
                             <div class="text">
@@ -140,6 +140,7 @@
                         <div class="skill-panel-text">
                             <div class="skill-title">
                                 {{ count(\App\User::all()) }}
+
                             </div>
                             <div class="skill-sub">
                                 gebruikers

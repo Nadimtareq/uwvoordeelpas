@@ -131,11 +131,12 @@
 				</strong>
                 <?php /*<span> Van: <strike><?php echo e($data->price_from); ?></strike> | Voor: <?php echo e($data->price); ?></span>*/ ?>
 
-			    <span class="city">
-					<a href="<?php echo e(url('search?q='.$data->city)); ?>"><?php echo e($data->name); ?> | <span>
-					   <i class="marker icon"></i> <?php echo e($data->city); ?>&nbsp;</span>
-					</a>
-				</span>
+			    <span>
+                            <a href="<?php echo e(url('search?q='.$data->city)); ?>"><?php echo e($data->name); ?> | <span>
+                            <i class="marker icon"></i> <?php echo e(ucfirst($data->city)); ?>&nbsp;</span>
+                            </a>
+                        </span>
+						<br>
 
 				<span class="stars"><img src="<?php echo e(asset('images/stars.png')); ?>" alt="stars">5.00</span>
 

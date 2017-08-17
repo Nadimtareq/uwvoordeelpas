@@ -148,7 +148,7 @@
  </div>
  <div class="container">
     <div class="row">
-        <div class="col-lg-12 offset-l">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 offset-l">
             <div class="table-responsive">
                 <div id="formList">
                     <table id="tableClients" class="table table-striped table-hover table-bordered tables">
@@ -196,11 +196,11 @@
 
     <div class="ui grid container">
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                 <div class="left floated sixteen wide mobile ten wide computer column">
                     {!! with(new \App\Presenter\Pagination($data->appends($paginationQueryString)))->render() !!}
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-4 col-md-4 col-sn-4 col-xs-8">
                     <div class="right floated sixteen wide mobile sixteen wide tablet three wide computer column">
                         @include('admin.template.limit')
                     </div>

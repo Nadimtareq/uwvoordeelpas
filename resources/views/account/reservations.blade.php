@@ -61,127 +61,149 @@ $(document).ready(function() {
 	                </button>
 	            </div>
 	        </div>
+    </div><br>
 
-	    	<table id="account_reservations" class="ui very basic collapsing sortable celled table list" style="width: 100%;">
-	            <thead>
-	            	<tr>
-	            		<th data-slug="disabled" class="one wide">
-	            			<div class="ui master checkbox">
-	    					  	<input type="checkbox">
-	    					  	<label></label>
-	    					</div>
-	    				</th>
-	                    <th data-slug="company" class="four wide">Bedrijf</th>
-                            <th data-slug="dealname" class="four wide">Gereserveerd Deal</th>
-	                    <th data-slug="created_at" class="four wide">Datum en tijd</th>
-	                    <th data-slug="persons" class="two wide">Personen</th>
-	                    <th data-slug="disabled" class="four wide">Persoonsgegevens</th>
-	                    <th data-slug="saldo" class="eight wide">Saldo</th>
-	                    <th data-slug="disabled" class="eight wide">Korting</th>
-	                    <th data-slug="allergies" class="one wide">Allergie&euml;n</th>
-	                    <th data-slug="preferences" class="one wide">Voorkeuren</th>
-	                    <th data-slug="disabled" class="three wide">Opmerking</th>
-	                    <th data-slug="disabled" class="one wide"></th>
-	            	</tr>
-	            </thead>
-	            <tbody class="list search">
-	                @if(isset($reservationDate))
-	                	@foreach($reservationDate as $data)
-		                <?php
-		                $date = \Carbon\Carbon::create(
-		                	date('Y', strtotime($data->date)), 
-		                	date('m', strtotime($data->date)), 
-		                	date('d', strtotime($data->date)), 
-		                	date('H', strtotime($data->time)), 
-		                	date('i', strtotime($data->time)), 
-		                	date('s', strtotime($data->time))
-		                );
-		                ?>
-						<tr>
-							<td {!! $data->is_cancelled ? 'class="disabled"' : '' !!}>
-								@if (new DateTime() < new DateTime($data->cancelBeforeTime) && $data->is_cancelled == 0) 
-								<div class="ui child checkbox">
-									<input type="checkbox" name="id[]" value="{{ $data->id }}">
-									<label></label>
-								</div>
-								@endif
-							</td>
-							<td><a href="{{ url('restaurant/'.$data->slug) }}">{{ $data->company }}</a></td>
-                                                        <td>{{ $data->dealname }}</td>
-							<td {!! $data->is_cancelled ? 'class="disabled"' : '' !!}>
-								<i class="calendar icon"></i> {{ $date->formatLocalized('%d %B %Y') }}<br />
-								<i class="clock icon"></i> {{ date('H:i', strtotime($data->time)) }}
-							</td>
-							<td {!! $data->is_cancelled ? 'class="disabled"' : '' !!}>
-								{{ $data->persons }} personen
-							</td>
-							<td {!! $data->is_cancelled ? 'class="disabled"' : '' !!}>
-								<i class="user icon"></i> {{ $data->name }}<br />
-								<i class="envelope icon"></i> {{ $data->email }}<br />
-								<i class="phone icon"></i> {{ $data->phone }}
-							</td>
-							<td {!! $data->is_cancelled ? 'class="disabled"' : '' !!}>
-								<i class="euro icon"></i>{{ $data->saldo }} betaald
-							</td>
-							<td {!! $data->is_cancelled ? 'class="disabled"' : '' !!}>
-								@if ($data->barcode == 1) 
-									@if ($data->discount != 'null' && $data->discount != NULL && $data->discount != '[""]')
-										{{ urldecode(json_decode($data->discount)[0]) }}
-									@endif
-								@endif
-        					</td>
-							<td {!! $data->is_cancelled ? 'class="disabled"' : '' !!}>
-								@if($data->allergies != 'null' && $data->allergies != NULL && $data->allergies != '[""]')   
-									@foreach(json_decode($data->allergies) as $allergies)
-										<span class="ui label">{{ $allergies }}</span>
-									@endforeach
-								@endif
-							</td>
-							<td {!! $data->is_cancelled ? 'class="disabled"' : '' !!}>
-								@if($data->preferences != 'null' && $data->preferences != NULL && $data->preferences != '[""]')
-									@foreach(json_decode($data->preferences) as $pref)
-										{{ $pref }}
-									@endforeach
-								@endif
-							</td>
-							<td {!! $data->is_cancelled ? 'class="disabled"' : '' !!}>
-								<div style="width: 80px; word-wrap: break-word;">{{ $data->comment }}</div>
-							</td>
-							<td>
-								@if (new DateTime() < new DateTime($data->updateBeforeTime)) 
-									@if(!$date->isPast() && $data->is_cancelled == 0)
-										<a href="{{ url('reservation/edit/'.$data->id) }}" class="ui fluid tiny button">Wijzigen</a><br />
-											
-										<button class="ui fluid grey button tiny removeButton" type="button" name="action" value="remove">
-											Annuleren
-										</button>
-									@endif
-								@endif
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 offset-l">
+				<div class="table-responsive">
+					<div id="formList">
+						<table id="account_reservations" class="table table-striped table-hover table-bordered tables">
+							{{--<table id="account_reservations" class="ui very basic collapsing sortable celled table list" style="width: 100%;">--}}
+						<thead>
+							<tr>
+								<th data-slug="disabled" class="one wide">
+									<div class="ui master checkbox">
+										<input type="checkbox">
+										<label></label>
+									</div>
+								</th>
+								<th data-slug="company" class="four wide">Bedrijf</th>
+									<th data-slug="dealname" class="four wide">Gereserveerd Deal</th>
+								<th data-slug="created_at" class="four wide">Datum en tijd</th>
+								<th data-slug="persons" class="two wide">Personen</th>
+								<th data-slug="disabled" class="four wide">Persoonsgegevens</th>
+								<th data-slug="saldo" class="eight wide">Saldo</th>
+								<th data-slug="disabled" class="eight wide">Korting</th>
+								<th data-slug="allergies" class="one wide">Allergie&euml;n</th>
+								<th data-slug="preferences" class="one wide">Voorkeuren</th>
+								<th data-slug="disabled" class="three wide">Opmerking</th>
+								<th data-slug="disabled" class="one wide"></th>
+							</tr>
+						</thead>
+						<tbody class="list search">
+							@if(isset($reservationDate))
+								@foreach($reservationDate as $data)
+								<?php
+								$date = \Carbon\Carbon::create(
+									date('Y', strtotime($data->date)),
+									date('m', strtotime($data->date)),
+									date('d', strtotime($data->date)),
+									date('H', strtotime($data->time)),
+									date('i', strtotime($data->time)),
+									date('s', strtotime($data->time))
+								);
+								?>
+								<tr>
+									{{--<td {!! $data->is_cancelled ? 'class="disabled"' : '' !!}>--}}
+									<td>
+										{{--@if (new DateTime() < new DateTime($data->cancelBeforeTime) && $data->is_cancelled == 0)--}}
+										<div class="ui child checkbox">
+											<input type="checkbox" name="id[]" value="{{ $data->id }}">
+											<label></label>
+										</div>
+										{{--@endif--}}
+									</td>
+									<td><a href="{{ url('restaurant/'.$data->slug) }}">{{ $data->company }}</a></td>
+																<td>{{ $data->dealname }}</td>
+									<td {!! $data->is_cancelled ? 'class="disabled"' : '' !!}>
+										<i class="calendar icon"></i> {{ $date->formatLocalized('%d %B %Y') }}<br />
+										<i class="clock icon"></i> {{ date('H:i', strtotime($data->time)) }}
+									</td>
+									<td {!! $data->is_cancelled ? 'class="disabled"' : '' !!}>
+										{{ $data->persons }} personen
+									</td>
+									<td {!! $data->is_cancelled ? 'class="disabled"' : '' !!}>
+										<i class="user icon"></i> {{ $data->name }}<br />
+										<i class="envelope icon"></i> {{ $data->email }}<br />
+										<i class="phone icon"></i> {{ $data->phone }}
+									</td>
+									<td {!! $data->is_cancelled ? 'class="disabled"' : '' !!}>
+										<i class="euro icon"></i>{{ $data->saldo }} betaald
+									</td>
+									<td {!! $data->is_cancelled ? 'class="disabled"' : '' !!}>
+										@if ($data->barcode == 1)
+											@if ($data->discount != 'null' && $data->discount != NULL && $data->discount != '[""]')
+												{{ urldecode(json_decode($data->discount)[0]) }}
+											@endif
+										@endif
+									</td>
+									<td {!! $data->is_cancelled ? 'class="disabled"' : '' !!}>
+										@if($data->allergies != 'null' && $data->allergies != NULL && $data->allergies != '[""]')
+											@foreach(json_decode($data->allergies) as $allergies)
+												<span class="ui label">{{ $allergies }}</span>
+											@endforeach
+										@endif
+									</td>
+									<td {!! $data->is_cancelled ? 'class="disabled"' : '' !!}>
+										@if($data->preferences != 'null' && $data->preferences != NULL && $data->preferences != '[""]')
+											@foreach(json_decode($data->preferences) as $pref)
+												{{ $pref }}
+											@endforeach
+										@endif
+									</td>
+									<td {!! $data->is_cancelled ? 'class="disabled"' : '' !!}>
+										<div style="width: 80px; word-wrap: break-word;">{{ $data->comment }}</div>
+									</td>
+									<td>
+										@if (new DateTime() < new DateTime($data->updateBeforeTime))
+											@if(!$date->isPast() && $data->is_cancelled == 0)
+												<a href="{{ url('reservation/edit/'.$data->id) }}" class="ui fluid tiny button">Wijzigen</a><br />
 
-								@if($data->is_cancelled == 1)
-									<span class="ui red label">Geannuleerd</span>
-								@endif
+												<button class="ui fluid grey button tiny removeButton" type="button" name="action" value="remove">
+													Annuleren
+												</button>
+											@endif
+										@endif
 
-								@if($data->status == 'refused')
-									<span class="ui red label">Geweigerd</span>
-								@endif
+										@if($data->is_cancelled == 1)
+											<span class="ui red label">Geannuleerd</span>
+										@endif
 
-								@if($data->status == 'iframe-pending' OR $data->status == 'reserved-pending' && $data->is_cancelled == 0)
-									<span class="ui orange label">Aanvraag</span>
-								@endif
-							</td>
-						</tr>
-	                	@endforeach
-	           		@endif
-	        	</tbody>
-	    	</table>
+										@if($data->status == 'refused')
+											<span class="ui red label">Geweigerd</span>
+										@endif
+
+										@if($data->status == 'iframe-pending' OR $data->status == 'reserved-pending' && $data->is_cancelled == 0)
+											<span class="ui orange label">Aanvraag</span>
+										@endif
+									</td>
+								</tr>
+								@endforeach
+							@endif
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
 		<?php echo Form::close(); ?>
+<div class="ui grid container">
+	<div class="row">
+		<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+			<div class="left floated sixteen wide mobile ten wide computer column">
 	    {!! with(new \App\Presenter\Pagination($reservationDate->appends($paginationQueryString)))->render() !!}
+			</div>
+		</div>
+	</div>
+</div>
 
 
 	@else
 	Er zijn nog geen reserveringen door u geplaatst.
 	@endif
-</div>
+
 <div class="clear"></div>
 @stop
