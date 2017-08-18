@@ -38,6 +38,7 @@ use DateTime;
 use Mail;
 use Redirect;
 use App\Models\GiftcardUse;
+use App\Helpers\MoneyHelper;
 
 class AccountController extends Controller {
 
@@ -733,10 +734,30 @@ class AccountController extends Controller {
         
         if ($futureDeal) {
 
-            if($futureDeal->status =="pending"){
-                 alert()->error('Fonds alsjeblieft uw account om de reservering te voltooien','Onvoldoende saldo')->html()->persistent('Sluiten');
 
-            return Redirect::to('/payment/charge');
+            $user_saldo = (float) MoneyHelper::getAmount($user->saldo);
+            $deal_saldo = $futureDeal->extra_pay;
+            if ($deal_saldo > $user_saldo) {
+                $enough_balance = false;
+                //$rest_amount = $deal_saldo - $user_saldo;
+            } else {
+                $enough_balance = true;
+                $user->saldo = $user_saldo - $deal_saldo;
+            }
+
+            //return "Pending amount: ".$futureDeal->extra_pay;
+
+            if($futureDeal->status =="pending"){
+                if(!$enough_balance){
+                    alert()->error('Fonds alsjeblieft uw account om de reservering te voltooien','Onvoldoende saldo')->html()->persistent('Sluiten');
+                    return Redirect::to('/payment/charge');
+                }else{
+                    $futureDeal->extra_pay = 0;
+                    $futureDeal->status = "purchased";
+                    $futureDeal->save();
+                    $user->save();
+                    // return "You have Enough Balance";
+                }
             }
             $deal = ReservationOption::find($futureDeal->deal_id);
             $company = Company::find($deal->company_id);
