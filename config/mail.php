@@ -15,8 +15,14 @@ return [
     |
     */
 
+
     'driver' => env('MAIL_DRIVER', 'mailgun'),
+    //'driver' => env('MAIL_DRIVER', 'smtp'),
+
     // 'driver' => env('MAIL_DRIVER', 'smtp'),
+	'domain' => env('MAILGUN_DOMAIN','mail.uwvoordeelpas.nl'),
+    'secret' => env('MAILGUN_SECRET','key-8378350c7d06d7a86342aca80ae6fc9d'),
+
 
     /*
     |--------------------------------------------------------------------------
@@ -29,8 +35,8 @@ return [
     |
     */
 
-    //'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
-    'host' => env('MAIL_HOST', 'mail.uwvoordeelpas.nl'),
+	'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+    //'host' => env('MAIL_HOST', 'mail.uwvoordeelpas.nl'),
 
     /*
     |--------------------------------------------------------------------------
@@ -43,8 +49,8 @@ return [
     |
     */
 
-    //'port' => env('MAIL_PORT', 587),
-    'port' => env('MAIL_PORT', 25),
+    'port' => env('MAIL_PORT', 587),
+    //'port' => env('MAIL_PORT', 25),
 
     /*
     |--------------------------------------------------------------------------

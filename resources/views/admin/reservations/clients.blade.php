@@ -145,50 +145,69 @@
             </div>
         </div>
     </div><br>
+ </div>
+ <div class="container">
+    <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 offset-l">
+            <div class="table-responsive">
+                <div id="formList">
+                    <table id="tableClients" class="table table-striped table-hover table-bordered tables">
+                        <thead>
+                        <tr>
+                            <th data-slug="disabled" class="one wide">Tafel</th>
+                            <th data-slug="time" class="four wide">Datum reservering</th>
+                            <th data-slug="persons" class="one wide">Gasten</th>
+                            <th data-slug="name" class="four wide">Gereserveerd als</th>
+                            <th data-slug="deal" class="four wide">Gereserveerd Deal</th>
 
-    <div id="formList">
-        <table id="tableClients" class="ui sortable very basic collapsing celled unstackable table" style="width: 100%;">
-            <thead>
-                <tr>
-                    <th data-slug="disabled" class="one wide">Tafel</th>
-                    <th data-slug="time" class="four wide">Datum reservering</th>
-                    <th data-slug="persons" class="one wide">Gasten</th>
-                    <th data-slug="name" class="four wide">Gereserveerd als</th>
-                    <th data-slug="deal" class="four wide">Gereserveerd Deal</th>
-                    <th data-slug="allergies" class="one wide">Allergie&euml;n</th>
-                    <th data-slug="preferences" class="one wide">Voorkeuren</th>
-                    <th data-slug="comment" class="two wide">Opmerking</th>
-                    <th data-slug="saldo" class="one wide">Saldo</th>
-                    <th data-slug="discount" class="one wide">Korting</th>
-                    <th data-slug="restaurant_is_paid" class="one wide">Betaald</th>
-                    @if ($company == NULL)
-                    <th data-slug="name" class="two wide">Bedrijf</th>
-                    @endif
-                    <th data-slig="disabled" class="four wide" style="pointer-events: none;cursor: default;">Opties</th>
-                </tr>
-            </thead>
-            <tbody class="list search">
-                @if(count($data) >= 1)
-                    @include('admin/reservations.list-clients')
-                @else
-                    <tr>
-                        <td colspan="2"><div class="ui error message">Er is geen data gevonden.</div></td>
-                    </tr>
-                @endif
-            </tbody>
-        </table><br /><br />
+                            <th data-slug="allergies" class="one wide">Allergie&euml;n</th>
+                            <th data-slug="preferences" class="one wide">Voorkeuren</th>
+                            <th data-slug="comment" class="two wide">Opmerking</th>
+
+                            <th data-slug="saldo" class="one wide">Saldo</th>
+                            <th data-slug="discount" class="one wide">Korting</th>
+                            <th data-slug="restaurant_is_paid" class="one wide">Betaald</th>
+                            @if ($company == NULL)
+                                <th data-slug="name" class="two wide">Bedrijf</th>
+                            @endif
+                            <th data-slig="disabled" class="four wide" style="pointer-events: none;cursor: default;">Opties</th>
+                        </tr>
+                        </thead>
+                        <tbody class="list search">
+                        @if(count($data) >= 1)
+                            @include('admin/reservations.list-clients')
+                        @else
+                            <tr>
+                                <td colspan="2"><div class="ui error message">Er is geen data gevonden.</div></td>
+                            </tr>
+                        @endif
+                        </tbody>
+                    </table><br /><br />
+                </div>
+            </div>
+
+        </div>
     </div>
+
+</div>
+
+
+
 
     <div class="ui grid container">
-        <div class="left floated sixteen wide mobile ten wide computer column">
-    {!! with(new \App\Presenter\Pagination($data->appends($paginationQueryString)))->render() !!}
-        </div>
-
-        <div class="right floated sixteen wide mobile sixteen wide tablet three wide computer column">
-            @include('admin.template.limit')
+        <div class="row">
+            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                <div class="left floated sixteen wide mobile ten wide computer column">
+                    {!! with(new \App\Presenter\Pagination($data->appends($paginationQueryString)))->render() !!}
+                </div>
+                <div class="col-lg-4 col-md-4 col-sn-4 col-xs-8">
+                    <div class="right floated sixteen wide mobile sixteen wide tablet three wide computer column">
+                        @include('admin.template.limit')
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
 <div class="clear"></div>
 
 @stop

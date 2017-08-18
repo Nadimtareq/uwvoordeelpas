@@ -34,8 +34,8 @@ class NewsController extends Controller
         )
             ->leftJoin('companies', 'companies.id', '=', 'news.company_id')
         ;
-
-        if (Sentinel::inRole('bedrijf')) {
+		
+        if (Sentinel::inRole('admin')) { 
             $data = $data->where('companies.user_id', Sentinel::getUser()->id);
         }
 

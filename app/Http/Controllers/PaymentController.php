@@ -171,6 +171,8 @@ class PaymentController extends Controller {
     }
 
     public function validatePayment(Request $request) {
+
+        
         setlocale(LC_ALL, 'nl_NL', 'Dutch');
         $payment_user_id = $temp_transaction_id = 0;
         $obj_tr = $deal = $future_deal = NULL;
@@ -191,15 +193,20 @@ class PaymentController extends Controller {
                 $payment_user_id = $future_deal->user_id;
             }
         }
+
         $userPayments = Payment::where(
                         'user_id', $payment_user_id
                 )
                 ->where('mollie_id', '!=', '')
-                ->where('type', '=', 'mollie')
+                ->where('type', '=', 'opwaardering')
                 ->where('status', 'open')
                 ->orderBy('created_at', 'desc')
                 ->first()
         ;
+
+       // return "Yes";
+
+       
 
         if ($userPayments == null) {
             Alert::error(

@@ -10,7 +10,8 @@
 @section('scripts')
 	<script type="text/javascript">
 		$(document).ready(function() {
-		    closeBrowser();  
+		    closeBrowser(); 
+		
 		});
 	</script>
 	
@@ -37,7 +38,7 @@
 		clearValues: true,
 		afterAdd: function() {
 			i++;
-
+			
 		    $('.timepicker').pickatime({
 		        format: 'H:i',
 		        formatLabel: 'H:i',
@@ -49,6 +50,8 @@
 			$('#days' + i).select({
 				maxOptionsInLabel: 1
 			});
+			$('#days' + i).parent().parent().parent().find('.r-btnRemove').removeClass('hide');
+			
 		}
 	});
 	</script>
@@ -109,6 +112,7 @@
 
 			<div id="dateAppend">
 				@for ($i = 0; $i < 1; $i++)
+					
 				<div class="r-group form-vertical">
 				<br>
 				<div class="row">					
@@ -150,16 +154,17 @@
 						</div>						
 					</div>
 					<div class="col-sm-1">
-						<label>Opties</label>	
+						<label>Opties</label>
 						<br>				
 							<div class="ui buttons">
 								<button type="button" class="r-btnAdd ui icon button">
 									<i class="add icon"></i>
 								</button>
-
-								<button type="button" class="r-btnRemove ui red button icon">
+								
+								<button type="button" class="r-btnRemove ui red button icon hide">
 									<i class="trash icon"></i>
 								</button>
+								
 							</div>						
 					</div>
 				</div>

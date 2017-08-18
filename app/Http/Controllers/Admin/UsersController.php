@@ -493,7 +493,7 @@ class UsersController extends Controller
         $regio = $preferences->getRegio();
 
        
-		$data  = DB::select(DB::raw("SELECT lower(substring_index(email, '@', -1)) domain, COUNT(*) email_count FROM guests_wifi GROUP BY substring_index(email, '@', -1) HAVING domain NOT IN (SELECT email_extension FROM guest_list_extension ) ORDER BY email_count DESC, domain")
+		$data  = DB::select(DB::raw("SELECT lower(substring_index(email, '@', -1)) AS domain, COUNT(*) AS email_count FROM guests_wifi GROUP BY substring_index(email, '@', -1) HAVING domain NOT IN (SELECT email_extension FROM guest_list_extension ) ")
 		);
 		if(count($data)>0){
 			foreach($data as $d){
@@ -510,12 +510,24 @@ class UsersController extends Controller
             );
         }
 		
-		if ($request->has('sort') && $request->has('order')) {
-            $data_ext = $data_ext->orderBy('guest_list_extension.'.$request->input('sort'), $request->input('order'));
-            session(['sort' => $request->input('sort'), 'order' => $request->input('order')]);
+		
+		if ($request->has('sort') && $request->has('order') ) {
+			if($request->input('sort')=="total_email"){ echo "a";
+				if(count($data)>0){
+					foreach($data as $d){ echo "b";
+						$data_ext = $data_ext->orderBy('guests_wifi.'.$d->email_count, $request->input('order'));			
+					}
+				}
+				session(['sort' => $request->input('sort'), 'order' => $request->input('order')]);
+			}else{ echo "c";
+				$data_ext = $data_ext->orderBy('guest_list_extension.'.$request->input('sort'), $request->input('order'));
+				session(['sort' => $request->input('sort'), 'order' => $request->input('order')]);
+			}
         } else {
             $data_ext = $data_ext->orderBy('guest_list_extension.id', 'desc');
         }
+		
+				
         $dataCount = $data_ext->count();
 		$data_ext = $data_ext->paginate($request->input('limit', 15));
         $data_ext->setPath('list');
@@ -536,10 +548,12 @@ class UsersController extends Controller
 
 		// get total of emails
 		for($i=0; $i<count($data_ext); $i++){
+			
 			$data  = DB::select(DB::raw("SELECT COUNT(*) AS total FROM guests_wifi WHERE lower(substring_index(email, '@', -1)) IN (SELECT email_extension FROM guest_list_extension WHERE id='{$data_ext[$i]->id}')"));
 			
 			$data_ext[$i]->total_email = $data[0]->total;
 		}
+		
         return view('admin/'.$this->slugController.'/extensionlist', [
             'data' => $data_ext,
             'regio' => $regio['regio'],
@@ -637,9 +651,51 @@ class UsersController extends Controller
 		
 		$preferences = new Preference();
         $regio = $preferences->getRegio();
-		$data  =DB::table('guests_wifi');
+		$data  =DB::table('guests_wifi')->select(
+				'guests_wifi.id',
+				'guests_wifi.name',
+				'guests_wifi.email',
+				'guests_wifi.phone',
+				'guests_wifi.created_at',
+				'guests_wifi.updated_at',
+				'companies.name as companyName',
+				'companies.regio'
+			)->leftJoin('companies', 'guests_wifi.company_id', '=', 'companies.id');
+		
+		
 			$dataCount = $data->count();
+			$data->groupBy('guests_wifi.id');
+			
+			if ($request->has('city')) {
+				 $regioName = $request->input('city');
 
+				if (isset($regio['regioNumber'][$regioName])) {
+					$data = $data->whereNotNull(
+						'companies.regio'
+					)
+						->where('companies.regio', 'REGEXP', '"([^"]*)'.$regio['regioNumber'][$regioName].'([^"]*)"')
+					;
+				}
+			}
+			
+			if ($request->has('company')) {
+				$companyName = $request->input('company');
+				$data = $data->where('companies.slug', '=', $companyName);
+			}
+			
+			if ($request->has('sort') && $request->has('order')) {
+				if($request->input('sort')=="city"){
+					$data = $data->orderBy('companies.'.$request->input('sort'), $request->input('order'));
+				}else if($request->input('sort')=="company"){
+					$data = $data->orderBy('companies.name', $request->input('order'));
+				}else{
+					$data = $data->orderBy('guests_wifi.'.$request->input('sort'), $request->input('order'));
+				}
+				session(['sort' => $request->input('sort'), 'order' => $request->input('order')]);
+			} else {
+				$data = $data->orderBy('guests_wifi.id', 'desc');
+			}
+			
 			$data = $data->paginate($request->input('limit', 15));
 			$data->setPath($this->slugController);
 
@@ -672,7 +728,16 @@ class UsersController extends Controller
     {
 		$preferences = new Preference();
         $regio = $preferences->getRegio();
-		$data  =DB::table('third_party_user');
+		$data  =DB::table('guests_third_party')->select(
+				'guests_third_party.id',
+				'guests_third_party.name',
+				'guests_third_party.email',
+				'guests_third_party.phone',
+				'guests_third_party.created_at',
+				'guests_third_party.updated_at',
+				'companies.name as companyName',
+				'companies.regio'
+			)->leftJoin('companies', 'guests_third_party.restaurant_id', '=', 'companies.id');
 			$dataCount = $data->count();
 
 			$data = $data->paginate($request->input('limit', 15));
@@ -690,7 +755,7 @@ class UsersController extends Controller
 			unset($queryString['source']);
 			unset($queryString['has_saving']);
 			unset($queryString['limit']);
-			return view('admin/'.$this->slugController.'/guestwifi', [
+			return view('admin/'.$this->slugController.'/guestthirdparty', [
 			'data' => $data,
             'regio' => $regio['regio'],
             'countItems' => $dataCount,

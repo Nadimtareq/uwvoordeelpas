@@ -130,11 +130,12 @@
 				</strong>
                 {{--<span> Van: <strike>{{ $data->price_from }}</strike> | Voor: {{ $data->price }}</span>--}}
 
-			    <span class="city">
-					<a href="{{ url('search?q='.$data->city) }}">{{ $data->name }} | <span>
-					   <i class="marker icon"></i> {{ $data->city }}&nbsp;</span>
-					</a>
-				</span>
+			    <span>
+                            <a href="{{ url('search?q='.$data->city) }}">{{ $data->name }} | <span>
+                            <i class="marker icon"></i> {{ ucfirst($data->city) }}&nbsp;</span>
+                            </a>
+                        </span>
+						<br>
 
 				<span class="stars"><img src="{{ asset('images/stars.png') }}" alt="stars">5.00</span>
 

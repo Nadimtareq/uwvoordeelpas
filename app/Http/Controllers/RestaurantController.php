@@ -432,23 +432,27 @@ class RestaurantController extends Controller {
         $company = Company::query()
             ->where('slug', '=', $slug)
             ->where('no_show', '=', 0)->first();
+        
+        
 
-        if ($company) {
+        if ($company) {            
             if ($deal_id) {
                 $deal = ReservationOption::where([['id', '=', $deal_id], ['company_id',
                                 '=', $company->id]])->first();
                 /* echo "<pre>";
-                  print_r($deal);exit; */
+                  print_r($deal);exit; */                
                 if (!$deal) {
                     alert()->error('',
                             'Het is niet mogelijk om op dit tijdstip te reserveren of er zijn geen plaatsen beschikbaar.')->html()->persistent('Sluiten');
                     return Redirect::to('/');
-                }
+                }                
             } else {
                 alert()->error('',
                         'Het is niet mogelijk om op dit tijdstip te reserveren of er zijn geen plaatsen beschikbaar.')->html()->persistent('Sluiten');
                 return Redirect::to('/');
-            }
+            }       
+            
+               
 
             if ($request->isMethod('post')) {
                 if (Sentinel::check()) {
@@ -500,6 +504,8 @@ class RestaurantController extends Controller {
                     return redirect('future-deal/' . $slug . '?deal=' . $deal_id);
                 }
 
+                
+
                 $persons = $request->input('persons');
 
                 //$deal_saldo = (float) MoneyHelper::getAmount($request->input('saldo'));
@@ -533,17 +539,42 @@ class RestaurantController extends Controller {
                 if ($request->input('newsletter') == 1) {
                     $user->newsletter = 1;
                 }
-                $user->reference_code = session('reference');
+                // $user->reference_code = session('reference');
                 $user->save();
 
                 if (Sentinel::check() == FALSE) {
                     Sentinel::login($user);
                 }
 
-                $referred = FutureDeal::where('reference_id', session('referer'))->first();
-                $ref_id = !is_null($referred) ? NULL : session('referer');
-                $reference = ($persons >= 2) ? session('referer') != Sentinel::getUser()->id ? $ref_id : NULL : NULL;
+                
 
+                $referrals = App\Models\Referral::pendingReferrals(Sentinel::getUser()->id);
+                $referral = $referrals->first();
+                if($referral){
+                    $referral->deals = $referral->deals + $persons;
+
+                    if($referral->deals >= 2){
+                        $reference =  $referral->referrer_id;
+                        $referral->due = Carbon::now()->addDays(14);
+                        $referral->status ="Complete";
+                    
+                    }elseif($referral->deals ==1){
+                        $reference =  $referral->referrer_id;
+                        $referral->status ="Partial";
+                    
+                    }
+                    $referral->save();
+                }else{
+                     $reference = Null;
+                }
+                 
+                 
+               // return $referral;
+
+                // $referred = FutureDeal::where('reference_id', session('referer'))->first();
+                // $ref_id = !is_null($referred) ? NULL : session('referer');
+                // $reference = ($persons >= 2) ? session('referer') != Sentinel::getUser()->id ? $ref_id : NULL : NULL;
+                // $reference = ($persons >= 2 || !is_null($referred)) ? session('referer'): NULL;
                 if ($enough_balance && !$rest_amount) {
 
                     $fd_exists = FutureDeal::where('deal_id', $deal_id)->where('status', 'purchased')->where('user_id', $user->id)->first();
@@ -576,7 +607,7 @@ class RestaurantController extends Controller {
                         $request->session()->pull('reference');
                         $request->session()->pull('referer');
                     }
-                } else {
+                }else {
                     $future_deal = new FutureDeal();
                     $future_deal->deal_id = $deal_id;
                     $future_deal->user_id = $user->id;
@@ -597,6 +628,11 @@ class RestaurantController extends Controller {
 
                     $future_deal->save();
                 }
+
+                // Update Referral Table
+                
+
+
 
 
                 if (!$enough_balance && $rest_amount) {

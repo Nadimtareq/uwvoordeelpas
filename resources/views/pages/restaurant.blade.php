@@ -207,10 +207,10 @@ while ($st->lte($dt)) {
                             <!-- Menu -->
                                 <div class="col-sm-12">
                                 <div class="menu deals-list-page">
-                                  <h2 class="title">{{ $deal->name }}</h2> 
+                                   <h3 class="new">{{ $deal->name }}</h3> 
                                   <div class="col-sm-5">
                                     <div class="left_m">
-                                       
+
                                         @if($deal->image!='')
                                             <a href="{{ url('future-deal/'.$company->slug).'?deal='.$deal->id }}"> <img
                                                         src="{{ asset('images/deals/'.$deal->image) }}"
@@ -240,9 +240,15 @@ while ($st->lte($dt)) {
                                         @endif
                                         <strong class="new">&euro; {{ $deal->price }}</strong>
                                         </div>
+                                        <br>
                                         <b class="up">
-                                            <?php echo strip_tags($deal->description); ?>
+                                            <?php  echo strip_tags($deal->description); ?>
+                                            
+                                          
                                         </b>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                    <br>
                                     
                                     @if(!is_null($deal->getApprovedReviews))
                                         <?php
@@ -267,6 +273,8 @@ while ($st->lte($dt)) {
                                             <?php $count++; ?>
                                         @endforeach
                                     @endif
+                                    </div>
+                                    </div>
                                     </div>
                                     </div>
                                     <div class="row">

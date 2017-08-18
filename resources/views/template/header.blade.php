@@ -12,7 +12,7 @@
  @if($headerImg)
  	<header> <!--   -->
 	 @else
-		 <header id=navigation" class="root-sec white nav header">
+		 <header id="navigation" class="root-sec white nav header">
 	 @endif
 	 @if($headerImg)
      	<div class="header">
@@ -70,6 +70,7 @@
 	@if($headerImg)
 		</div>
  	@endif
-@yield("header_picture")
+
 <!-- .container end -->
 </header>
+@yield("header_picture")

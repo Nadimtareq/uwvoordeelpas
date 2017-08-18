@@ -3,6 +3,15 @@
 .thumbnails{
 		width: 300px !important;
 	}
+    
+    .deal-img{
+            padding: 0px;
+        }
+    @media screen and (min-width: 750px){
+        .deal-img{
+            padding: 30px 0px 0 20px;
+        }
+    }
 </style>
 
 @inject('discountHelper', 'App\Helpers\DiscountHelper')
@@ -28,7 +37,7 @@
                      data-city="{{ $data->city }}"
                      data-zipcode="{{ $data->zipcode }}">
                     <div class="row"  style="background: white; padding: 0px; margin: 10px;">
-                    <div class="col-sm-6 col-xs-12">
+                    <div class="col-sm-5 col-xs-12 deal-img" >
                         @if (isset($media[0]) && isset($media[0]->file_name) && file_exists(public_path($media[0]->disk. DIRECTORY_SEPARATOR . $media[0]->id . DIRECTORY_SEPARATOR . $media[0]->file_name)) )
                             @if($count_persons >= $deal->total_amount)
                                 <img width="420" src="{{ url('media/'.$media[0]->id.'/'.$media[0]->file_name) }}"
@@ -105,7 +114,7 @@
                             @endif
                     @endif -->
                     </div>
-                    <div class="col-sm-6 col-xs-12">
+                    <div class="col-sm-7 col-xs-12">
                     <div class="text3" style="padding: 20px;">
                         <strong>
                             @if($count_persons >= $deal->total_amount)
@@ -118,11 +127,11 @@
                         </strong>
                         {{--<span> Van: <strike>{{ $data->price_from }}</strike> | Voor: {{ $data->price }}</span>--}}
 
-                        <span class="city">
-					<a href="{{ url('search?q='.$data->city) }}">{{ $data->name }} | <span>
-					   <i class="marker icon"></i> {{ $data->city }}&nbsp;</span>
-					</a>
-				</span>
+                        <span>
+                            <a href="{{ url('search?q='.$data->city) }}">{{ $data->name }} | <span>
+                            <i class="marker icon"></i> {{ ucfirst($data->city) }}&nbsp;</span>
+                            </a>
+                        </span>
 
 
                         {{--<span class="stars"><img src="{{ asset('images/stars.png') }}" alt="stars">5.00</span>--}}
@@ -157,7 +166,14 @@
                         @endif
 
                         {{--  <p class="hidden-xs">{!! strip_tags($deal->description, '<b><font>')!!}</p>  --}}
-                         <p class="hidden-xs">{!! str_limit(strip_tags($deal->description,'<b>'), (isset($limitChar) ? $limitChar : 500)) !!}</p>
+                         <p class="hidden-xs">
+
+                         {!! $deal->description !!}
+
+                          {{--  {!! str_limit(strip_tags($deal->description,'<p>'), (isset($limitChar) ? $limitChar : 500)) !!}</p>   --}}
+                   
+                         </p>
+                         
                         @if($count_persons < $deal->total_amount)
                             <div class="wr">
                                 <?php
@@ -179,18 +195,27 @@
                         $count_persons = $getRec[0]->total_persons;
                         ?>
 
+                        <div class="row">
+                            <div class="col-xs-12 col-md-5">
+                                <div class="prices">
+                                    @if($deal->price_from >= 1)
+                                        <span class="price-new">
+                                        &euro; {{ $deal->price_from }}
+                                        </span>
+                                    {{--  @else
+                                        <span class="price_min_box"></span>
+        --}}
+                                    @endif
 
-                        @if($deal->price_from >= 1)
-                            <span class="price">
-                             &euro; {{ $deal->price_from }}
-                            </span>
-                        @else
-                            <span class="price price_min_box"></span>
-                        @endif
+                                    <span class="price2">
+                                        &euro; {{ $deal->price }}
+                                    </span>
+                                    
+                                </div>
+                            </div>
 
-                        <span class="price2">
-                            &euro; {{ $deal->price }}
-                        </span>
+                            <div class="col-xs-12 col-md-7" style="padding-top: 20px; text-align: center">
+                           
                         @if($count_persons >= $deal->total_amount)
                             <a class="more" href="javascript:void(0)">Uitverkocht</a>
                         @else
@@ -204,6 +229,8 @@
                             @endif
 
                         @endif
+                         </div>
+                        </div>
                     </div>
                     </div>
                     </div>

@@ -35,6 +35,9 @@ class ReviewsController extends Controller
         if ($slug != null) {
             $data = $data->where('companies.slug', $slug);
         }
+		if (Sentinel::inRole('admin'))  {
+			 $data = $data->where('companies.user_id', Sentinel::getUser()->id);
+		}
 
          if (!Sentinel::inRole('admin'))  {
             if (Sentinel::inRole('bedrijf'))  {

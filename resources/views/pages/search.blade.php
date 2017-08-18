@@ -1,4 +1,4 @@
-@extends('template.theme', ['search_header' => 'true'])
+@extends('template.theme')
 
 {{--*/ $pageTitle = 'Zoeken' /*--}}
 @section("header_picture")
@@ -10,8 +10,10 @@
         var searchPage = 1;
     </script>
     <div class="clearfix"></div>
-     @include('pages.search-filter')
-   
+     {{--  @include('pages.search-filter')  --}}
+
+     @include('pages._top-filter')
+
     <div class="clearfix"></div>
     <!--
     <section id="prices">
@@ -124,5 +126,5 @@
 @stop
 
 @section("after_styles")
-    <link href="{{ asset("css/custom.css") }}" rel="stylesheet">
+     <link href="{{ asset("css/custom.css") }}" rel="stylesheet"> 
 @endsection

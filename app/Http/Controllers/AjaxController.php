@@ -955,28 +955,26 @@ class AjaxController extends Controller
 								
 							}
 							$pass = Hash::make('simple2568');
-							DB::table('users')->insert(array('name'=>$d->name, 'email'=>$d->email, 'from_company_id'=>$d->company_id, 'password'=>$pass));
+							$reference_code = str_random(64);
+							DB::table('users')->insert(array('name'=>$d->name, 'email'=>$d->email, 'from_company_id'=>$d->company_id, 'password'=>$pass,'source'=>'wifi','reference_code'=>$reference_code,'extension_downloaded'=>0,'lang'=>'NL'));
+							DB::table('guests_wifi')->where('email',$d->email)->delete();
 						}
 						$i++;
 					}
 				}
-			}
-			echo 'success';
-		}else{
-			
-			$data1  = DB::select(DB::raw("SELECT email, name, company_id,phone FROM guests_wifi WHERE lower(substring_index(email, '@', -1)) IN (SELECT email_extension FROM guest_list_extension WHERE id='{$extension_id}')"));
+				$thirdpartyusers  = DB::select(DB::raw("SELECT email, name, restaurant_id FROM guests_third_party WHERE lower(substring_index(email, '@', -1)) IN (SELECT email_extension FROM guest_list_extension WHERE id='{$extension_id}')"));
 				
-				if(count($data1)>0){
+				if(count($thirdpartyusers)>0){
 					$i=0;
-					foreach($data1 as $d){
+					foreach($thirdpartyusers as $d){
 						// chheck user already exits or not
-						$user = DB::table('third_party_user')
+						$user = DB::table('users')
 						->where('email', $d->email)
 						->first();
+						
 						// insert user if not exists
 						if(count($user)==0){
 							// user password
-							//$pass = Hash::make('simple2568');
 							$extensions = explode("@",$d->email);						
 							$unwanted=DB::table('unwanted_word')->get();
 							foreach($unwanted as $unw){
@@ -985,11 +983,19 @@ class AjaxController extends Controller
 								}
 								
 							}
-							DB::table('third_party_user')->insert(array('name'=>$d->name, 'email'=>$d->email, 'company_id'=>$d->company_id,'phone'=>$d->phone));
+							$reference_code = str_random(64);
+							$pass = Hash::make('simple2568');
+							DB::table('users')->insert(array('name'=>$d->name, 'email'=>$d->email, 'from_company_id'=>$d->restaurant_id, 'password'=>$pass,'source'=>'guest third party','reference_code'=>$reference_code,'extension_downloaded'=>0,'lang'=>'NL'));
+							DB::table('guests_third_party')->where('email',$d->email)->delete();
 						}
 						$i++;
 					}
 				}
+			}
+			echo 'success';
+		}else{
+			
+			
 			echo 'fail';
 		}
 	}

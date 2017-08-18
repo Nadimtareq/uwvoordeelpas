@@ -20,7 +20,7 @@
         <?php elseif (isset($future_deal_id) && !empty($future_deal_id)): ?>
             <?php echo Form::open(array('id' => 'paymentForm', 'url' => 'payment/pay?buy=future_deal', 'method' => 'post', 'class' => 'ui form')) ?>        
             <input type="hidden" name="future_deal_id" value="<?php echo $future_deal_id; ?>">
-        <?php endif; ?>        
+        <?php endif; ?>           
         <input id="actionMan" type="hidden" name="action">
         <input type="hidden" name="amount" class="amount" id="charge_amount" value="<?php echo $amount; ?>">        
         <?php echo Form::close(); ?>

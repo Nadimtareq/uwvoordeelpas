@@ -1,6 +1,6 @@
 @extends('template.theme')
 @section('content')
-<div class="clear" style="height: 80px;">&nbsp;</div>
+<div class="clear" style="height: 0px;">&nbsp;</div>
 <div class="container" style="min-height: 500px">
     <div class="ui breadcrumb">
         <a href="{{ url('/') }}" class="section">Home</a>
