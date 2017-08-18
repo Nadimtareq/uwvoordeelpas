@@ -432,6 +432,8 @@ class RestaurantController extends Controller {
         $company = Company::query()
             ->where('slug', '=', $slug)
             ->where('no_show', '=', 0)->first();
+        
+        
 
         if ($company) {            
             if ($deal_id) {
@@ -448,7 +450,9 @@ class RestaurantController extends Controller {
                 alert()->error('',
                         'Het is niet mogelijk om op dit tijdstip te reserveren of er zijn geen plaatsen beschikbaar.')->html()->persistent('Sluiten');
                 return Redirect::to('/');
-            }            
+            }       
+            
+               
 
             if ($request->isMethod('post')) {
                 if (Sentinel::check()) {
@@ -500,6 +504,8 @@ class RestaurantController extends Controller {
                     return redirect('future-deal/' . $slug . '?deal=' . $deal_id);
                 }
 
+                
+
                 $persons = $request->input('persons');
 
                 //$deal_saldo = (float) MoneyHelper::getAmount($request->input('saldo'));
@@ -540,6 +546,8 @@ class RestaurantController extends Controller {
                     Sentinel::login($user);
                 }
 
+                
+
                 $referrals = App\Models\Referral::pendingReferrals(Sentinel::getUser()->id);
                 $referral = $referrals->first();
                 if($referral){
@@ -559,6 +567,7 @@ class RestaurantController extends Controller {
                 }else{
                      $reference = Null;
                 }
+                 
                  
                // return $referral;
 
@@ -598,7 +607,7 @@ class RestaurantController extends Controller {
                         $request->session()->pull('reference');
                         $request->session()->pull('referer');
                     }
-                } else {
+                }else {
                     $future_deal = new FutureDeal();
                     $future_deal->deal_id = $deal_id;
                     $future_deal->user_id = $user->id;
