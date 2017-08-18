@@ -11,11 +11,11 @@
         <div class="ui grid">
             <div class="sixteen wide mobile six wide computer column">
                 <button id="openButton" type="submit" value="accept" data-text="Weet u zeker dat u deze recensie wil plaatsen?" class="ui icon green button">
-                    <i class="check mark icon"></i>
+                    <i class="check  icon"></i>
                 </button>
 
                 <button id="closeButton" type="submit" value="decline" class="ui icon red button">
-                    <i class="remove mark icon"></i>
+                    <i class="remove icon"></i>
                 </button>
             </div>
 

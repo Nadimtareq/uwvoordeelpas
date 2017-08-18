@@ -84,7 +84,7 @@
     <br />
 
     <?php echo Form::open(array('url' => 'admin/invoices/action', 'method' => 'post', 'id' => 'formList', 'class' => 'ui form')) ?>
-    <div>
+    
         <table class="ui sortable very basic collapsing celled unstackable table" style="width: 100%;">
             <thead>
                 <tr>
@@ -207,7 +207,7 @@
                 @endif
             </tbody>
         </table>
-    </div>
+    
     <?php echo Form::close(); ?>
 
     {!! with(new \App\Presenter\Pagination($invoices->appends($paginationQueryString)))->render() !!}
