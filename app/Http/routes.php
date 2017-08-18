@@ -14,6 +14,7 @@ Route::group(array('middleware' => 'userInfo'), function () {
     Route::get('/testcronjob', 'TestcronjobController@index');
     Route::get('aansluiten/callmeback', 'Admin\CompaniesCallcenterController@callMeBack');
     Route::get('contact', 'HomeController@contact');
+    Route::get('contact/faq', 'HomeController@contactFAQAction');
     Route::get('contact/conversation/{id}/{email}', 'Admin\ContactController@conversation');
     Route::post('contact/conversation/{id}/{email}', 'Admin\ContactController@saveConversation');
     Route::get('review/{id}', 'HomeController@review');

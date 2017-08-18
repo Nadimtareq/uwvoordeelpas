@@ -74,6 +74,9 @@ class ContactController extends Controller
     {
         $data = Contact::find($id);
 
+        $data->status = "read";
+        $data->save();
+
         if ($data) {
             return view('admin/' . $this->slugController . '/read', [
                 'data' => $data,
@@ -89,6 +92,9 @@ class ContactController extends Controller
     public function replyAction($id, Request $request)
     {
         $contact = Contact::find($id);
+
+        $contact->status = "replied";
+        $contact->save();
 
         if ($contact) {
 
@@ -113,12 +119,16 @@ class ContactController extends Controller
             ];
             try {
                 Mail::send('emails.contact-reply', $data, function ($message) use ($contact) {
-                    $message->to('wizston@gmail.com')
+                    $message->to($contact->email)
                         ->subject("Antwoord: " . $contact->subject);
                 });
             } catch (\Swift_RfcComplianceException $e) {
 //                return $e;
             }
+
+            Alert::success('', 'Uw bericht is succesvol verzonden.  Wij hopen u zo snel mogelijk antwoord te kunnen geven.')->persistent('Sluiten');
+
+            return Redirect::to('/');
         }
         else
             abort(404);

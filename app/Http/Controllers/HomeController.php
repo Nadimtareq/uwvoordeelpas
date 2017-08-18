@@ -5,6 +5,7 @@ use Alert;
 use App;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
+use App\models\Contact;
 use App\Models\Review;
 use App\Models\Page;
 use App\Models\Reservation;
@@ -21,7 +22,7 @@ use App\Models\Barcode;
 use App\Models\News;
 use App\Helpers\SmsHelper;
 use App\Helpers\BrowerHelper;
-use Sentinel; 
+use Sentinel;
 use Reminder;
 use Redirect;
 use Mail;
@@ -33,11 +34,11 @@ use League\Csv\Reader;
 use Session;
 use Setting;
 
-class HomeController extends Controller 
+class HomeController extends Controller
 {
 
-    public function __construct() 
-    {  
+    public function __construct()
+    {
 
        $browser = new BrowerHelper();
        Session::set('browser',$browser->detect()->getInfo());
@@ -90,7 +91,7 @@ class HomeController extends Controller
         foreach ($this->affiliates as $i => $affiliatesFetch) {
             $this->affiliates[$i]['comissions'] = $affiliateHelper->commissionMaxValue($affiliatesFetch->compensations);
         }
-        
+
     }
 
     public function test()
@@ -142,7 +143,7 @@ class HomeController extends Controller
 
         $cities = $cities->get();
         // Companies
-        $companies = Company::select(           
+        $companies = Company::select(
             'companies.id',
             'companies.name',
             'companies.slug',
@@ -159,9 +160,9 @@ class HomeController extends Controller
             && $this->user->city != NULL
             && $this->user->city != '[""]'
         ) {
-            $userCities = json_decode($this->user->city);            
+            $userCities = json_decode($this->user->city);
             if (is_array($userCities)) {
-                foreach ($userCities as $userCity) {  
+                foreach ($userCities as $userCity) {
                     //$companies = $companies->orderByRaw('companies.regio REGEXP "[[:<:]]'.$userCity.'[[:>:]]" desc, companies.clicks asc');
                 }
             } else {
@@ -256,9 +257,9 @@ class HomeController extends Controller
             } else  {
                 if (
                     $request->has('filter') == FALSE
-                    && Sentinel::check() 
-                    && $this->user->allergies != 'null' 
-                    && $this->user->allergies != NULL 
+                    && Sentinel::check()
+                    && $this->user->allergies != 'null'
+                    && $this->user->allergies != NULL
                     && $this->user->allergies != '[""]'
                 ) {
                     $userAllergies = json_decode($this->user->allergies);
@@ -289,9 +290,9 @@ class HomeController extends Controller
             } else  {
                 if (
                     $request->has('filter') == FALSE
-                    && Sentinel::check() 
-                    && $this->user->price != 'null' 
-                    && $this->user->price != NULL 
+                    && Sentinel::check()
+                    && $this->user->price != 'null'
+                    && $this->user->price != NULL
                     && $this->user->price != '[""]'
                 ) {
                     $userPrices = json_decode($this->user->price);
@@ -324,7 +325,7 @@ class HomeController extends Controller
             } else {
                 if (
                     $request->has('filter') == FALSE
-                    && Sentinel::check() 
+                    && Sentinel::check()
                     && $this->user->discount != 'null'
                     && $this->user->discount != NULL
                     && $this->user->discount != '[""]'
@@ -348,7 +349,7 @@ class HomeController extends Controller
             $companies = $companies
                 ->join('company_reservations', 'company_reservations.company_id', '=', 'companies.id')
                 ->where('company_reservations.date', '=', $request->input('date'));
-        } 
+        }
 
         $companies = $companies
             ->where('no_show', 0)
@@ -357,21 +358,21 @@ class HomeController extends Controller
 
         $countCompanies = $companies->count();
         $companies = $companies->paginate($request->input('limit', 15));
-        
+
         foreach($companies as $company) {
             if($company->ReservationOptions()){
                 foreach($company->ReservationOptions()->get() as $deal) {
                     $companyIds[] = $company->id;
                 }
-            }            
+            }
         }
         $reservationDate = date('Y-m-d');
         $tomorrowDate = date('Y-m-d', strtotime('+1 days'));
-        
+
         if (isset($companyIds)) {
             $reservationTimesArray = CompanyReservation::getReservationTimesArray(
                 array(
-                    'company_id' => $companyIds, 
+                    'company_id' => $companyIds,
                     'date' => $reservationDate,
                     'selectPersons' => NULL
                 )
@@ -379,7 +380,7 @@ class HomeController extends Controller
 
             $tomorrowArray = CompanyReservation::getReservationTimesArray(
                 array(
-                    'company_id' => $companyIds, 
+                    'company_id' => $companyIds,
                     'date' => $tomorrowDate,
                     'selectPersons' => NULL
                 )
@@ -397,10 +398,10 @@ class HomeController extends Controller
 
         foreach ($cities as $city) {
             $media = $city->getMedia();
-            
+
 
             //Check of file exits with file_exits() against using CURL in app/Helpers/FileHelper.php
-            if (isset($media[0]) && file_exists(public_path().$media[0]->getUrl('thumb')))               
+            if (isset($media[0]) && file_exists(public_path().$media[0]->getUrl('thumb')))
                     $city->media = url(''.$media[0]->getUrl('thumb'));
             else
                 $city->media = url('images/placeholdimage.png');
@@ -420,7 +421,7 @@ class HomeController extends Controller
             'reservationTimesArray' => (isset($reservationTimesArray) ? $reservationTimesArray : array()),
             'paginationQueryString' => $request->query()
         ]);
-    } 
+    }
 
     public function indexHome(Request $request)
     {
@@ -440,7 +441,7 @@ class HomeController extends Controller
 
         $cities = $cities->get();
         // Companies
-        $companies = Company::select(           
+        $companies = Company::select(
             'companies.id',
             'companies.name',
             'companies.slug',
@@ -458,7 +459,7 @@ class HomeController extends Controller
             && $this->user->city != '[""]'
         ) {
             $userCities = json_decode($this->user->city);
-            
+
             if (is_array($userCities)) {
                 foreach ($userCities as $userCity) {
                     //return $userCity;
@@ -560,9 +561,9 @@ class HomeController extends Controller
             } else  {
                 if (
                     $request->has('filter') == FALSE
-                    && Sentinel::check() 
-                    && $this->user->allergies != 'null' 
-                    && $this->user->allergies != NULL 
+                    && Sentinel::check()
+                    && $this->user->allergies != 'null'
+                    && $this->user->allergies != NULL
                     && $this->user->allergies != '[""]'
                 ) {
                     $userAllergies = json_decode($this->user->allergies);
@@ -593,9 +594,9 @@ class HomeController extends Controller
             } else  {
                 if (
                     $request->has('filter') == FALSE
-                    && Sentinel::check() 
-                    && $this->user->price != 'null' 
-                    && $this->user->price != NULL 
+                    && Sentinel::check()
+                    && $this->user->price != 'null'
+                    && $this->user->price != NULL
                     && $this->user->price != '[""]'
                 ) {
                     $userPrices = json_decode($this->user->price);
@@ -628,7 +629,7 @@ class HomeController extends Controller
             } else {
                 if (
                     $request->has('filter') == FALSE
-                    && Sentinel::check() 
+                    && Sentinel::check()
                     && $this->user->discount != 'null'
                     && $this->user->discount != NULL
                     && $this->user->discount != '[""]'
@@ -652,30 +653,30 @@ class HomeController extends Controller
             $companies = $companies
                 ->join('company_reservations', 'company_reservations.company_id', '=', 'companies.id')
                 ->where('company_reservations.date', '=', $request->input('date'));
-        } 
+        }
 
         $companies = $companies
             ->where('no_show', 0)
             ->with('media')
         ;
-        
+
         $countCompanies = $companies->count();
         $companies = $companies->paginate($request->input('limit', 15));
-        
+
         foreach($companies as $company) {
             if($company->ReservationOptions()){
                 foreach($company->ReservationOptions()->get() as $deal) {
                     $companyIds[] = $company->id;
                 }
-            }            
+            }
         }
         $reservationDate = date('Y-m-d');
         $tomorrowDate = date('Y-m-d', strtotime('+1 days'));
-        
+
         if (isset($companyIds)) {
             $reservationTimesArray = CompanyReservation::getReservationTimesArray(
                 array(
-                    'company_id' => $companyIds, 
+                    'company_id' => $companyIds,
                     'date' => $reservationDate,
                     'selectPersons' => NULL
                 )
@@ -683,7 +684,7 @@ class HomeController extends Controller
 
             $tomorrowArray = CompanyReservation::getReservationTimesArray(
                 array(
-                    'company_id' => $companyIds, 
+                    'company_id' => $companyIds,
                     'date' => $tomorrowDate,
                     'selectPersons' => NULL
                 )
@@ -694,7 +695,7 @@ class HomeController extends Controller
             alert()->error('', 'Er zijn geen zoekresultaten gevonden met uw selectiecriteria.<br /> <br /><small>Klik <a href=\''.URL::to('account').'\'> hier</a> om uw criteria aan te passen.</small>')->html()->persistent('Sluiten');
 
             return Redirect::to('/?no_filter=1'.($request->has('mobilefilter') ? '&mobilefilter=1' : ''));
-        }   
+        }
 
         $queryString = $request->query();
         unset($queryString['limit']);
@@ -713,10 +714,10 @@ class HomeController extends Controller
             'reservationTimesArray' => (isset($reservationTimesArray) ? $reservationTimesArray : array()),
             'paginationQueryString' => $request->query()
         ]);
-    } 
+    }
 
 
-    public function review($id) 
+    public function review($id)
     {
         $data = Review::select(
             'reviews.*',
@@ -734,17 +735,17 @@ class HomeController extends Controller
         ]);
     }
 
-    public function searchRedirect(Request $request) 
+    public function searchRedirect(Request $request)
     {
         switch ($request->input('page')) {
             case 'faq':
                 $redirectTo = 'faq';
                 break;
-            
+
             case 'restaurant':
                 $redirectTo = 'search';
                 break;
-            
+
             case 'saldo':
                 $redirectTo = 'tegoed-sparen/search';
                 break;
@@ -753,7 +754,7 @@ class HomeController extends Controller
         return Redirect::to($redirectTo.'?q='.$request->input('q'));
     }
 
-    public function preferences(Request $request) 
+    public function preferences(Request $request)
     {
         $dataSearch = array(
             'filter' => 1,
@@ -793,7 +794,7 @@ class HomeController extends Controller
         if ($request->has('q') || $request->has('date')) {
             return Redirect::to('search?'.http_build_query($dataSearch));
         } else {
-           return Redirect::to('/?'.http_build_query($data)); 
+           return Redirect::to('/?'.http_build_query($data));
         }
     }
 
@@ -811,7 +812,7 @@ class HomeController extends Controller
         return Redirect::to($request->has('redirect') ? $request->input('redirect') : '/');
     }
 
-    public function times(Request $request) 
+    public function times(Request $request)
     {
         $getTimes = CompanyReservation::getAllTimes();
         sort($getTimes);
@@ -820,13 +821,13 @@ class HomeController extends Controller
         foreach($getTimes as $time)
         {
             $timeCarbon = Carbon::create(date('Y', strtotime($request->input('date'))), date('m', strtotime($request->input('date'))), date('d', strtotime($request->input('date'))), date('H', strtotime($time)), date('i', strtotime($time)), 0);
-            
+
             if(!$timeCarbon->isPast())
             {
                 $disabled[] = $time;
             }
         }
-        
+
         return view('pages/times', [
             'times' => $getTimes,
             'disabled' => $disabled
@@ -836,10 +837,10 @@ class HomeController extends Controller
     public function faq(Request $request, $id = null, $slug = null)
     {
         if ($request->has('q')) {
-            $searchHistory = new SearchHistory(); 
+            $searchHistory = new SearchHistory();
             $searchHistory->addTerm($request->input('q'), '/faq');  // Add to Search History
         }
-        
+
         if ($request->has('slug') && $request->has('step')) {
             $company = Company::where('slug', $request->input('slug'))->first();
 
@@ -970,7 +971,7 @@ class HomeController extends Controller
 
         $companiesLimit = $request->input('limit', 15);
 
-        $companies = Company::select(           
+        $companies = Company::select(
             'companies.id',
             'companies.name',
             'companies.slug',
@@ -1026,7 +1027,7 @@ class HomeController extends Controller
                 }
             });
         }
-        
+
         if ($request->has('allergies')) {
             $companies = $companies->where(function ($query) use($request) {
                 foreach ($request->input('allergies') as $key => $option) {
@@ -1064,7 +1065,7 @@ class HomeController extends Controller
             });
         }
 
-        if ($request->has('q')) {         
+        if ($request->has('q')) {
             $termDivider = str_replace(' ', '|', $request->input('q'));
 
             $companies->where(function ($query) use($request, $termDivider) {
@@ -1084,7 +1085,7 @@ class HomeController extends Controller
             });
         }
 
-        if ($request->has('regio')) {     
+        if ($request->has('regio')) {
             $preferences = new Preference();
             $regio = $preferences->getRegio();
             $companies = $companies
@@ -1103,13 +1104,13 @@ class HomeController extends Controller
                 ->where('company_reservations.available_persons', 'REGEXP', '"([^"]*)'.$request->input('sltime').'([^"]*)"')
                 ->groupBy('companies.id')
             ;
-        } 
+        }
 
         $time = date('H:i', strtotime($request->input('sltime')));
-        
+
         $reservationDate = ($request->has('date') ? date('Y-m-d', strtotime($request->input('date'))) : date('Y-m-d'));
         $tomorrowDate = date('Y-m-d', strtotime('+1 days'));
-     
+
         if ($request->has('sltime') && $request->has('date')) {
             if (isset($reservationTimesArray[$time])) {
                 foreach ($reservationTimesArray[$time] as $key => $reservation) {
@@ -1121,7 +1122,7 @@ class HomeController extends Controller
                  $companies = $companies->whereIn('companies.id', $newCompanyId);
             }
         }
-        
+
 
         $companies = $companies->where('no_show', 0 )->with('media');
 
@@ -1135,7 +1136,7 @@ class HomeController extends Controller
 
         // Recommended
         if ($request->has('sltime')) {
-            $recommended = Company::select(           
+            $recommended = Company::select(
                 'companies.id',
                 'companies.name',
                 'companies.slug',
@@ -1150,7 +1151,7 @@ class HomeController extends Controller
                 ->where('company_reservations.date', '=', trim($request->input('date')) != '' ? date('Y-m-d', strtotime($request->input('date'))) : date('Y-m-d'))
             ;
 
-             if ($request->has('q')) {         
+             if ($request->has('q')) {
                 $termDivider = str_replace(' ', '|', $request->input('q'));
 
                 $recommended->where(function ($query) use($request, $termDivider) {
@@ -1174,7 +1175,7 @@ class HomeController extends Controller
                 $recommended = $recommended
                     ->where('company_reservations.date', '=', trim($request->input('date')) != '' ? date('Y-m-d', strtotime($request->input('date'))) : date('Y-m-d'))
                 ;
-            } 
+            }
 
             $recommended = $recommended
                 ->limit(10)
@@ -1187,25 +1188,25 @@ class HomeController extends Controller
             foreach($recommended as $key => $company)  {
                 $companyId[] = $company->id;
             }
-        } 
+        }
 
         $reservationTimesArray = CompanyReservation::getReservationTimesArray(
             array(
-                'company_id' => $companyId, 
+                'company_id' => $companyId,
                 'date' => $reservationDate,
                'selectPersons' => ($request->has('persons') ? $request->input('persons') : null)
             )
         );
         $tomorrowArray = CompanyReservation::getReservationTimesArray(
             array(
-                'company_id' => $companyId, 
+                'company_id' => $companyId,
                 'date' => $tomorrowDate,
                 'selectPersons' => ($request->has('persons') ? $request->input('persons') : null)
             )
         );
 
         if (
-            count($companies) == 0 
+            count($companies) == 0
             OR date('Y-m-d') == date('Y-m-d', strtotime($request->input('date')))
             && date('H:i') >= date('H:i', strtotime($request->input('sltime')))
         ) {
@@ -1233,14 +1234,14 @@ class HomeController extends Controller
             'reservationTimesArray' => (isset($reservationTimesArray) ? $reservationTimesArray : array()),
             'tomorrowArray' => (isset($tomorrowArray) ? $tomorrowArray : array()),
             'paginationQueryString' => $request->query()
-        ]); 
+        ]);
     }
 
     public function createIcs(Request $request)
     {
         header('Content-type: text/calendar; charset=utf-8');
         header('Content-Disposition: attachment; filename='.'event-uwvoordeelpas.ics');
-        
+
         return view('template/ics', array(
             'title' => $request->input('title'),
             'location' => $request->input('location'),
@@ -1290,52 +1291,84 @@ class HomeController extends Controller
 
     public function contactAction(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required|min:2',
-            'email' => 'required|email',
-            'content' => 'required|min:10',
-            'subject' => 'required|min:5',
-            'CaptchaCode' => 'required|valid_captcha'
-        ]);
-        $answer = Company::checkQuestion($request->content);
+            $this->validate($request, [
+                'name' => 'required|min:2',
+                'email' => 'required|email',
+                'content' => 'required|min:10',
+                'subject' => 'required|min:5',
+                'CaptchaCode' => 'required|valid_captcha'
+            ]);
 
-        Alert::success('', 'Uw bericht is succesvol verzonden.  Wij hopen u zo snel mogelijk antwoord te kunnen geven.')->persistent('Sluiten');
-        $data['name'] = $request->input('name');
-        $data['email'] = $request->input('email');
-        $data['content'] = $request->input('content');
-        $data['subject'] = $request->input('subject');
-        $data['created_at'] = date('Y-m-d H:i:s');
-        $id = Company::saveContact($data);
+            $data[ 'name' ] = $request->input('name');
+            $data[ 'email' ] = $request->input('email');
+            $data[ 'content' ] = $request->input('content');
+            $data[ 'subject' ] = $request->input('subject');
+            $data[ 'status' ] = "new";
+            $data[ 'created_at' ] = date('Y-m-d H:i:s');
 
-        $mail = array(
-            'request' => $request
-        );
+            $answer = Company::checkQuestion($request->subject, $request->content);
 
-        Mail::send('emails.contact_site', $mail, function ($message) use ($request) {
-            $message
-                ->to('sseymor@roc-dev.com')
-                ->subject($request->input('subject'))
-                ->from($request->input('email'))
-            ;
-        });
-        if(!empty($answer)) {
-            $mail_user = array(
-                'request' => $request,
-                'body' => $answer->answer
-            );
-            Mail::send('emails.contact_site_user', $mail_user, function ($message) use ($request) {
-                $message
-                    ->to($request->email)
-                    ->subject($request->input('subject'))
-                    ->from('sseymor@roc-dev.com');
-            });
+            if(count($answer) > 0) {
+
+                $data[ 'status' ] = "replied";
+                $id = Company::saveContact($data);
+                $data[ 'id' ] = $id;
+                session()->put("contact_data", $data);
+
+                $data[ 'questions' ] = $answer;
+
+                return view('pages/contact-faq', $data);
+            }
+            else {
+
+                $id = Company::saveContact($data);
+
+                Alert::success('', 'Uw bericht is succesvol verzonden.  Wij hopen u zo snel mogelijk antwoord te kunnen geven.')->persistent('Sluiten');
+
+                return Redirect::to('/');
+            }
+//        $mail = array(
+//            'request' => $request
+//        );
+//
+//        Mail::send('emails.contact_site', $mail, function ($message) use ($request) {
+//            $message
+//                ->to('sseymor@roc-dev.com')
+//                ->subject($request->input('subject'))
+//                ->from($request->input('email'))
+//            ;
+//        });
+
+    }
+
+    public function contactFAQAction(Request $request)
+    {
+
+        if (! session()->has('contact_data')) {
+//            $mail_user = array(
+//                'request' => $request,
+//                'body' => $answer
+//            );
+//            Mail::send('emails.contact_site_user', $mail_user, function ($message) use ($request) {
+//                $message
+//                    ->to($request->email)
+//                    ->subject($request->input('subject'))
+//                    ->from('sseymor@roc-dev.com');
+//            });
+            $data = session()->pull('contact_data');
+            $contact = Contact::find($data[ 'id' ]);
+            $contact->status = "new";
+            $contact->save();
+
+            Alert::success('',
+                'Uw bericht is succesvol verzonden.  Wij hopen u zo snel mogelijk antwoord te kunnen geven.')->persistent('Sluiten');
+
         }
-
-        return Redirect::to('contact');
+            return Redirect::to('/');
     }
 
     public function redirectTo(Request $request)
-    {   
+    {
         if ($request->has('p')) {
             switch ($request->input('p')) {
                 case 2:
@@ -1345,7 +1378,7 @@ class HomeController extends Controller
                 case 3:
                     Setting::set('discount.views3', Setting::get('discount.views3') + 1);
                     break;
-                
+
                 default:
                     Setting::set('discount.views', Setting::get('discount.views') + 1);
                     break;
@@ -1356,7 +1389,7 @@ class HomeController extends Controller
     }
 
     public function sourceRedirect(Request $request)
-    {   
+    {
         $websiteSettings = json_decode(json_encode(Setting::get('website')), true);
 
         if (isset($websiteSettings['source'])) {
@@ -1371,13 +1404,13 @@ class HomeController extends Controller
             }
         }
     }
-    
+
     public static function getPersons($option_id){
-        
+
         $data = DB::table('reservations')->select(DB::raw('SUM(persons) as total_persons'))->where("option_id",$option_id)->get();
-         
+
          return $data;
-         
+
     }
 
     /**
