@@ -304,9 +304,45 @@ class Company extends Model implements SluggableInterface, HasMediaConversions
         }
     }
 
-    static function checkQuestion($question)
+    static function checkQuestion($subject, $question = "")
     {
-        return Faq::where('title',$question)->get()->first();
+        $faq = Faq::where('title', 'like', '%' . $subject . '%')
+            ->orWhere("answer", "LIKE", '%' . $subject . '%')
+            ->orWhere("title", "LIKE", '%' . $question . '%')
+            ->orWhere("answer", "LIKE", '%' . $question . '%')
+            ->get();
+
+        if ($faq) {
+            return $faq;
+        }else {
+            $search = collect();
+
+            $question_arr = explode(" ", $subject, 15);
+
+            for ($i = 0; $i < count($question_arr); $i++) {
+                if (strlen($subject[ $i ]) > 5) {
+                    $search = $search->merge(Faq::where("title", $subject[ $i ])->get());
+                }
+            }
+
+            if ( ! $search || isEmpty($search) ) {
+                if ($question !== "") {
+                    $question_arr = explode(" ", $question, 15);
+
+                    for ($i = 0; $i < count($question_arr); $i++) {
+                        if (count($question[ $i ]) > 4) {
+                            $search = $search->merge(Faq::where("title", $question[ $i ])->get());
+                        }
+                    }
+                }
+            }
+
+            if ($search || ! isEmpty($search) )
+                return $search->unique("id");
+        }
+
+        return null;
+
     }
 
     static function saveContact($data){

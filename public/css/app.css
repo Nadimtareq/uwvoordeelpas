@@ -46841,3 +46841,7 @@ li.sidebar-dropdown {
 .sidebar-dropdown:hover .sidebar-dropdown-content {
     display: block;
 }
+.ui.form > font > font:first-child {
+    
+    display: none;
+}

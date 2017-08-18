@@ -83,9 +83,7 @@
 
     <br />
 
-    <?php echo Form::open(array('url' => 'admin/invoices/action', 'method' => 'post', 'id' => 'formList', 'class' => 'ui form')) ?>
-    
-        <table class="ui sortable very basic collapsing celled unstackable table" style="width: 100%;">
+    <?php echo Form::open(array('url' => 'admin/invoices/action', 'method' => 'post', 'id' => 'formList', 'class' => 'ui form')) ?><table class="ui sortable very basic collapsing celled unstackable table" style="width: 100%;">
             <thead>
                 <tr>
                     @if ($userAdmin)

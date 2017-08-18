@@ -5079,7 +5079,7 @@ img.thumbnails {
 }
 
 .space-header {
-    padding-top: 20px;
+    padding-top: 55px;
     padding-bottom: 0px;
 }
 
@@ -5612,3 +5612,6 @@ tbody tr td {
     width: 100%;
     height: 390px;
 }
+    .ui.basic.table th {
+        background: #f9f9f9 !important;
+    }

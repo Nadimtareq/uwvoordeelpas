@@ -66,6 +66,8 @@ class ReservationsOptionsController extends Controller
             'companies.name as company_name',
             'reservations_options.company_id',
             'companies.city',
+            'companies.slug',
+            'companies.id as company_id',
             DB::raw('sum(reservations.persons) as total_res'),
             DB::raw('sum(reservations.id) as reservated')
         )->leftJoin('companies', 'companies.id', '=', 'reservations_options.company_id')

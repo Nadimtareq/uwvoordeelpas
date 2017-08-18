@@ -53711,7 +53711,7 @@ $(document).ready(function() {
 	});
 
 	var i = -1;
-	$('#products').on('click', '.r-btnAdd', function() {
+	$('#products').on('click', '.r-btnAdd', function() { alert();
 		i++;
 		ajaxFramework.refreshServices($('#products'), i);
 
