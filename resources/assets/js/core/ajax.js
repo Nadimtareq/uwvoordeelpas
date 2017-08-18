@@ -301,7 +301,7 @@ $(document).ready(function() {
 	});
 
 	var i = -1;
-	$('#products').on('click', '.r-btnAdd', function() {
+	$('#products').on('click', '.r-btnAdd', function() { 
 		i++;
 		ajaxFramework.refreshServices($('#products'), i);
 
