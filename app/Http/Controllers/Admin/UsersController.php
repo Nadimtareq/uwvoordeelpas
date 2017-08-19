@@ -512,14 +512,14 @@ class UsersController extends Controller
 		
 		
 		if ($request->has('sort') && $request->has('order') ) {
-			if($request->input('sort')=="total_email"){ echo "a";
+			if($request->input('sort')=="total_email"){ 
 				if(count($data)>0){
 					foreach($data as $d){ echo "b";
 						$data_ext = $data_ext->orderBy('guests_wifi.'.$d->email_count, $request->input('order'));			
 					}
 				}
 				session(['sort' => $request->input('sort'), 'order' => $request->input('order')]);
-			}else{ echo "c";
+			}else{ 
 				$data_ext = $data_ext->orderBy('guest_list_extension.'.$request->input('sort'), $request->input('order'));
 				session(['sort' => $request->input('sort'), 'order' => $request->input('order')]);
 			}
