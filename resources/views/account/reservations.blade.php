@@ -39,7 +39,7 @@ $(document).ready(function() {
 @stop
 
 @section('content')
-<div class="content">
+<div class="container">
 	<div class="ui breadcrumb">
 		<a href="{{ url('/') }}" class="section">Home</a>
 		<i class="right chevron icon divider"></i>
@@ -62,47 +62,38 @@ $(document).ready(function() {
 	            </div>
 	        </div>
     </div><br>
-	<style>
-		.tables thead tr th {
-			background: #ffffff;
-			color: #000;
-			font-weight: bold;
-			text-align: center;
-			padding-bottom: 10px;
-			
-		}
-
-	</style>
+	
 
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 offset-l">
 				<div class="table-responsive">
 					<div id="formList">
-						<table id="account_reservations" class="table table-striped table-hover table-bordered tables">
-							{{--<table id="account_reservations" class="ui very basic collapsing sortable celled table list" style="width: 100%;">--}}
+						<table id="account_reservations" class="table table-striped">
+							
 						<thead>
 							<tr>
-								<th data-slug="disabled" class="one wide">
+								<th data-slug="disabled" >
 									<div class="ui master checkbox">
 										<input type="checkbox">
-										<label></label>
+										
 									</div>
 								</th>
-								<th data-slug="company" class="four wide" style="padding-bottom: 7px;">Bedrijf</th>
-									<th data-slug="dealname" class="four wide">Gereserveerd Deal</th>
-								<th data-slug="created_at" class="four wide">Datum en tijd</th>
-								<th data-slug="persons" class="two wide">Personen</th>
-								<th data-slug="disabled" class="four wide">Persoonsgegevens</th>
-								<th data-slug="saldo" class="eight wide">Saldo</th>
-								<th data-slug="disabled" class="eight wide">Korting</th>
-								<th data-slug="allergies" class="one wide">Allergie&euml;n</th>
-								<th data-slug="preferences" class="one wide">Voorkeuren</th>
-								<th data-slug="disabled" class="three wide">Opmerking</th>
-								<th data-slug="disabled" class="one wide"></th>
+								<th data-slug="company"  >Bedrijf</th>
+								<th data-slug="dealname" >Gereserveerd Deal</th>
+								<th data-slug="created_at" >Datum en tijd</th>
+								<th data-slug="persons" >Personen</th>
+								<th data-slug="disabled" >Persoonsgegevens</th>
+								<th data-slug="saldo" >Saldo</th>
+								<th data-slug="disabled" >Korting</th>
+								<th data-slug="allergies" >Allergie&euml;n</th>
+								<th data-slug="preferences" >Voorkeuren</th>
+								<th data-slug="disabled" >Opmerking</th>
+								<th data-slug="disabled" ></th>
 							</tr>
 						</thead>
-						<tbody class="list search">
+						<tbody >
+								
 							@if(isset($reservationDate))
 								@foreach($reservationDate as $data)
 								<?php
@@ -121,7 +112,7 @@ $(document).ready(function() {
 										@if (new DateTime() < new DateTime($data->cancelBeforeTime) && $data->is_cancelled == 0)
 										<div class="ui child checkbox">
 											<input type="checkbox" name="id[]" value="{{ $data->id }}">
-											<label></label>
+											
 										</div>
 										@endif
 									</td>

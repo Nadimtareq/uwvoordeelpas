@@ -123,7 +123,7 @@ class Reservation extends Model {
         if ($source) {
             if($source == 'wifi'){
                 $reservations->join('users', 'users.id', '=', 'reservations.user_id');
-                $reservations->join('guests_wifi', 'guests_wifi.email', '=', 'users.email');                
+                //$reservations->join('guests_wifi', 'guests_wifi.email', '=', 'users.email');                
             }
             else{
                 $reservations->where('source', $source);
