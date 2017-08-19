@@ -14,6 +14,9 @@ Route::group(array('middleware' => 'userInfo'), function () {
     Route::get('/testcronjob', 'TestcronjobController@index');
     Route::get('aansluiten/callmeback', 'Admin\CompaniesCallcenterController@callMeBack');
     Route::get('contact', 'HomeController@contact');
+    Route::get('contact/faq', 'HomeController@contactFAQAction');
+    Route::get('contact/conversation/{id}/{email}', 'Admin\ContactController@conversation');
+    Route::post('contact/conversation/{id}/{email}', 'Admin\ContactController@saveConversation');
     Route::get('review/{id}', 'HomeController@review');
     Route::get('create-ics', 'HomeController@createIcs');
     Route::get('open-menu', 'HomeController@index');
@@ -744,6 +747,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('adminowner', 'aut
 
         Route::get('/','Admin\ContactController@index');
         Route::get('/read/{id}','Admin\ContactController@readAction');
+        Route::post('reply/{id}', 'Admin\ContactController@replyAction');
         Route::post('delete', 'Admin\ContactController@deleteAction');
     });
     Route::group(array('prefix' => 'unwanted'), function () {

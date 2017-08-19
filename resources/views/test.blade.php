@@ -12,6 +12,7 @@
 
 @section("content")
 
+
     <h1 style="color: #0D47A1;text-align: center;">Overeenkomst</h1>
 
     <table style="width: 100%;">
@@ -110,7 +111,9 @@
 <div style="page-break-before:always">&nbsp;</div>
 
 <h4>Algemene Voorwaarden</h4>
-{!! isset($contentBlock[43]) ? $contentBlock[43].'<br /><br />' : '' !!}
+    <div style="padding-top: 30%;">
+{!! isset($contentBlock[43]) ? str_replace('<strong>4: Aansprakelijkheid UWvoordeelpas B.V.:</strong>', '<div style="page-break-before:always; padding-top: 35%;">&nbsp;</div><strong>4: Aansprakelijkheid UWvoordeelpas B.V.:</strong>', $contentBlock[43].'<br /><br />') : '' !!}
+    </div>
 
 <table>
     <tr>

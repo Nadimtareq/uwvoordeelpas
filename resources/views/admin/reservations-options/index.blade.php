@@ -275,9 +275,16 @@
 
                         @endif
                         <td>
+                            <div class="ui buttons">
+                                <a href="{{ url('admin/companies/contract/'.$result->company_id.'/'.$result->slug) }}"
+                                   target="_blank"
+                                   class="ui icon tiny {{ (trim($result->signature_url) != '' ? 'red' : '') }} button">
+                                    <i class="file pdf icon"></i>
+                                </a>
                             <a href="{{ url('admin/'.$slugController.'/update/'.$result->id) }}" class="ui icon tiny button">
                                 <i class="pencil icon"></i>
                             </a>
+                            </div>
                         </td>
                     </tr>
                     @endforeach
