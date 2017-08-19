@@ -53,7 +53,7 @@
         <th data-slug="email_extension">Uitbreiding</th>
         <th data-slug="total_email">Total Emails</th>
       
-        <th data-slug="action">Actie</th>
+        <th data-slug="id1">Actie</th>
       
         </tr>
         </thead>
@@ -78,9 +78,9 @@
                 <td>
 				@if($result->id1==1)
 				
-				<a href="#" class="ui red button extension_update" data-extension="{{ $result->id }}" data-status="0"> Disable</a>
+				<a href="#" class="ui red button extension_update" data-extension="{{ $result->id }}" data-status="0"> in staat stellen</a>
 				@else
-					<a href="#" class="ui green button extension_update" data-extension="{{ $result->id }}" data-status="1">Enable</a>
+					<a href="#" class="ui green button extension_update" data-extension="{{ $result->id }}" data-status="1">onbruikbaar maken</a>
 				@endif
 				</td>
                
