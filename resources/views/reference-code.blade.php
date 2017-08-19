@@ -48,15 +48,10 @@
                 </a>
 
                 <h4>Deel deze link</h4>
- 			        <span class="addthis_sharing_toolbox"></span>
+ 			 
+                     <span class=\'addthis_sharing_toolbox\'></span>
 
-                <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5751e9a264890504"></script>
-                    <script type="text/javascript">
-                    var addthis_share = {
-                    url: "{{ url("source?reference={$reference->reference_code}") }}",
-                    title: "Reserveer in enkele stappen met uw spaartegoed!"
-                    }
-                </script>
+          
                 
             </div>
         </div>

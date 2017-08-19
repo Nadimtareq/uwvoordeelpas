@@ -1,9 +1,9 @@
 @if(isset($userAuth->lang) && !empty($userAuth->lang))
-    {{-- */$lang=$userAuth->lang;/* --}}
+    <?php $lang=$userAuth->lang; ?>
 @elseif(Session::has('language'))
-    {{-- */$lang=Session::get('language');/* --}}
+    <?php $lang=Session::get('language'); ?>
 @else
-    {{-- */$lang='nl';/* --}}
+    <?php $lang='nl'; ?>
 @endif
 <script type="text/javascript">
     $.cookie('googtrans', '/nl/{{ $lang == 'nl' ? '' : $lang }}' );

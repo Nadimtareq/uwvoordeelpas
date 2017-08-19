@@ -3,7 +3,7 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
-<html  class="no-js" lang="nl">
+<html  class="no-js" lang="en">
 <head>
     <title>{{ isset($pageTitle) ? $pageTitle : 'Reserveer in enkele stappen met uw spaartegoed!' }} - UwVoordeelpas</title>
 
@@ -149,16 +149,18 @@
 <div class="pusher">
     @if (!Request::has('iframe'))
 
-         @if(isset($search_header) && $search_header)
+         {{--  @if(isset($search_header) && $search_header)
             @include('template.header-search')
-            {{--  @include('template.slider')  --}}
-        @else 
-            @if(!Auth::guest() && Sentinel::inRole('admin') != FALSE)
+
+        @else   --}}
+            {{--  @if(!Auth::guest() && Sentinel::inRole('admin') != FALSE)
                 @include('template.header-search')
             @else
                 @include('template.header')
-            @endif
+            @endif  --}}
              
+
+             @include('template.header')
             <section>
                 @if (isset($__env->getSections()['slider']))
                     @yield('slider')
@@ -166,7 +168,7 @@
                     @include('template.slider')
                 @endif
             </section> 
-         @endif 
+         {{--  @endif   --}}
 
     @endif
 

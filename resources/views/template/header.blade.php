@@ -61,6 +61,7 @@
 										</li>
 									</ul>
 
+
 							</div>
 						</nav>
 					</div>
@@ -74,3 +75,42 @@
 <!-- .container end -->
 </header>
 @yield("header_picture")
+
+@push('inner_scripts')
+<script type="text/javascript">
+
+$(".lang-button").click(function(){
+	
+	swal({
+  title: "Are you sure..",
+	text: "..you want to set your default language as English?",
+  type: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes!',
+  cancelButtonText: 'No!'
+  
+}).then(function () {
+  swal(
+    'Deleted!',
+    'Your file has been deleted.',
+    'success'
+  )
+}, function (dismiss) {
+  // dismiss can be 'cancel', 'overlay',
+  // 'close', and 'timer'
+  if (dismiss === 'cancel') {
+    swal(
+      'Cancelled',
+      'Your imaginary file is safe :)',
+      'error'
+    )
+  }
+})
+
+});
+
+
+</script>
+@endpush

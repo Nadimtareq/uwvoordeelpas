@@ -801,6 +801,8 @@ class HomeController extends Controller
 
     public function setLang(Request $request, $locale)
     {
+
+        // return $locale;
 //        $request->session()->put('locale', $locale);
 //
 //        App::setLocale($locale);
@@ -810,7 +812,9 @@ class HomeController extends Controller
         }
         session(['language' => $locale]);
 
-        return Redirect::to($request->has('redirect') ? $request->input('redirect') : '/');
+        return redirect('/home');
+
+        // return Redirect::to($request->has('redirect') ? $request->input('redirect') : '/');
     }
 
     public function times(Request $request)
