@@ -75,8 +75,9 @@
                     <div class="column" style="position: relative; left: -14px;">
                         <div class="field">
                             <label>Uw regio</label>
-                            <?php echo Form::select('city[]', (isset($regio) && !empty($regio)) ? $regio : [], '', array('class' => 'regionSelect regionSelectResponse', 'multiple' => 'multiple', 'data-placeholder' => 'Maak uw keuze')); ?>
-                        </div>
+                            <input type="hidden" name="city" value="{{ ucfirst($regio) }}">
+                            <input type="text" name="city" value="{{ ucfirst($regio) }}" disabled>
+                      </div>
                     </div>
                 @else
                     <div class="column"> &nbsp;</div>

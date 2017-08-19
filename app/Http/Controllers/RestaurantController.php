@@ -347,17 +347,20 @@ class RestaurantController extends Controller {
         setlocale(LC_ALL, 'nl_NL', 'Dutch');
         $preferences = new Preference();
         $regio = $preferences->getRegio();
+        
         $rest_amount = 0;
 
         $mediaItems = NULL;
         $company = Company::with('media')->select(
                         'id', 'slug', 'name', 'kitchens', 'days', 'discount',
-                        'preferences', 'allergies'
+                        'preferences', 'allergies','city'
                 )
                 ->where('slug', '=', $slug)
                 ->where('no_show', '=', 0)
                 ->first();
+        
         if ($company) {
+            
             if ($request->input('deal')) {
                 $deal = ReservationOption::where('id', $request->input('deal'))->first();
                 if ($deal) {
@@ -407,6 +410,7 @@ class RestaurantController extends Controller {
                     }
                 }
             }
+            
             return view('pages/restaurant/future-deal',
                     [
                 'company' => $company,
@@ -414,7 +418,8 @@ class RestaurantController extends Controller {
                 'mediaItems' => $mediaItems,
                 'userAuth' => Sentinel::check(),
                 'userInfo' => Sentinel::getUser(),
-                'regio' => $regio['regio']
+                'regio' => $company->city
+                
             ]);
         } else {
             App::abort(404);

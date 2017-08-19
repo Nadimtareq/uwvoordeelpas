@@ -37,7 +37,7 @@ Route::group(array('middleware' => 'userInfo'), function () {
     Route::post('contact', 'HomeController@contactAction');
     Route::post('search-redirect', 'HomeController@searchRedirect');
 
-    Route::get('reference_code', 'HomeController@referenceCode');
+    Route::get('reference_code', 'HomeController@referenceCode')->middleware(['auth']);
     Route::get('source', 'HomeController@buyDealByReference');
 });
 

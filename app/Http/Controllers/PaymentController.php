@@ -351,7 +351,11 @@ class PaymentController extends Controller {
                                 )->html()->persistent('Sluiten');
                             } else {
                                 Alert::success(
-                                        'Uw reservering bij ' . $company->name . ' op ' . $carbon_date->formatLocalized('%A %d %B %Y') . ' om ' . date('H:i', strtotime($data->time)) . ' met ' . $data->persons . ' ' . ($data->persons == 1 ? 'persoon' : 'personen') . ' wordt doorgegeven aan het restaurant, welke contact met u opneemt.<br /><br /> U heeft aangegeven &euro;' . $data->saldo . ' korting op de rekening te willen. Klopt dit niet? <a href=\'' . URL::to('account/reservations') . '\' target=\'_blank\'>Klik hier</a><br /><br /> ' . $calendar . '<br /><br /> <span class=\'addthis_sharing_toolbox\'></span>', 'Bedankt ' . $oUser->name
+                                        'U heeft succesvol '. ($data->persons == 1 ? 'persoon' : 'personen').'x de deal: ' . $deal->name . ' in uw account. 
+                        <br /><br /><span class="text-center"><small>* Deze zijn pas geldig na reservering vanuit uw account. </small></span> 
+                        ','Bedankt ' . $user->name
+                        
+                                        // 'Uw reservering bij ' . $company->name . ' op ' . $carbon_date->formatLocalized('%A %d %B %Y') . ' om ' . date('H:i', strtotime($data->time)) . ' met ' . $data->persons . ' ' . ($data->persons == 1 ? 'persoon' : 'personen') . ' wordt doorgegeven aan het restaurant, welke contact met u opneemt.<br /><br /> U heeft aangegeven &euro;' . $data->saldo . ' korting op de rekening te willen. Klopt dit niet? <a href=\'' . URL::to('account/reservations') . '\' target=\'_blank\'>Klik hier</a><br /><br /> ' . $calendar . '<br /><br /> <span class=\'addthis_sharing_toolbox\'></span>', 'Bedankt ' . $oUser->name
                                 )->html()->persistent('Sluiten');
                             }
                             return Redirect::to('restaurant/' . $company->slug);
@@ -385,9 +389,12 @@ class PaymentController extends Controller {
                         $deal = DB::table('reservations_options')->where('id', '=', $future_deal->deal_id)->first();
                     }
                     $persons = $future_deal->persons;
-                    $link = '<a href = "' . URL::to('account/future-deals') . '" target="_blank">Klik hier</a>';
-                    Alert::success('U heeft succesvol ' . $persons . 'x de deal: ' . $deal->name . ' gekocht voor een prijs van &euro;' . $future_deal->deal_price . ' <br /><br /> ' . $link . ' als u direct een reservering wilt maken. <br /><br />' . '<span class=\'addthis_sharing_toolbox\'></span>', 'Bedankt ' . $oUser->name
-                    )->html()->persistent('Sluiten');
+                     Alert::success('U heeft succesvol '. $persons.'x de deal: ' . $deal->name . ' in uw account. 
+                        <br /><br /><span class="text-center"><small>* Deze zijn pas geldig na reservering vanuit uw account. </small></span> 
+                        ','')->html()->persistent('Sluiten');
+                    // $link = '<a href = "' . URL::to('account/future-deals') . '" target="_blank">Klik hier</a>';
+                    // Alert::success('U heeft succesvol ' . $persons . 'x de deal: ' . $deal->name . ' gekocht voor een prijs van &euro;' . $future_deal->deal_price . ' <br /><br /> ' . $link . ' als u direct een reservering wilt maken. <br /><br />' . '<span class=\'addthis_sharing_toolbox\'></span>', 'Bedankt ' . $oUser->name
+                    // )->html()->persistent('Sluiten');
                     $company = Company::find($deal->company_id);
                     return Redirect::to('restaurant/' . $company->slug);
                 } else {

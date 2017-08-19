@@ -130,7 +130,7 @@ class ReservationController extends Controller {
     }
 
     public function reservationAction(ReservationTwoRequest $request, $slug) {
-        return json_encode($request->input);
+       
 
         setlocale(LC_ALL, 'nl_NL', 'Dutch');
         $this->validate($request, []);
@@ -153,6 +153,8 @@ class ReservationController extends Controller {
                                             ? 1 : NULL)
                             )
             );
+
+            
 
             if (isset($reservationTimes[$time])) {
 
