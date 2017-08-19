@@ -77,6 +77,9 @@ class AffiliateHelper
 
     public function amountAsUnit($amount, $unit, $noUnit = NULL) 
     {
+        if(!is_numeric($amount)){
+            return "Not Available";
+        }
         $isPercentage = $unit == '%' ? 1 : 0;
         $maxAmount = $isPercentage == 1 ? ($amount / 100 * 70) : number_format($amount / 100 * 70, 2, ',', ' ');
 

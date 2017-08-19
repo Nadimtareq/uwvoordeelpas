@@ -733,8 +733,6 @@ class AccountController extends Controller {
         $user->id)->where('expired_at', '>=', date('Y-m-d'))->first();
         
         if ($futureDeal) {
-
-
             $user_saldo = (float) MoneyHelper::getAmount($user->saldo);
             $deal_saldo = $futureDeal->extra_pay;
             if ($deal_saldo > $user_saldo) {

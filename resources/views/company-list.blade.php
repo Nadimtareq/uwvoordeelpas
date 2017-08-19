@@ -168,9 +168,9 @@
                         {{--  <p class="hidden-xs">{!! strip_tags($deal->description, '<b><font>')!!}</p>  --}}
                          <p class="hidden-xs">
 
-                         {!! $deal->description !!}
+                         {{--  {!! $deal->description !!}  --}}
 
-                          {{--  {!! str_limit(strip_tags($deal->description,'<p>'), (isset($limitChar) ? $limitChar : 500)) !!}</p>   --}}
+                           {!! str_limit(strip_tags($deal->description,'<p>'), (isset($limitChar) ? $limitChar : 500)) !!}</p>  
                    
                          </p>
                          
