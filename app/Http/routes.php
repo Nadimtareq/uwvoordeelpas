@@ -372,6 +372,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', '
     Route::group(array('prefix' => 'settings'), function () {
         Route::get('/', 'Admin\SettingsController@index');
         Route::get('run/{slug}', 'Admin\SettingsController@run');
+        Route::post('hotspotAPI', 'Admin\SettingsController@hotspotAction');
 
         Route::post('/', 'Admin\SettingsController@indexAction');
         Route::resource('website', 'Admin\SettingsController@websiteAction');
@@ -380,6 +381,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', '
         Route::resource('cronjobs', 'Admin\SettingsController@cronjobsAction');
         Route::resource('invoices', 'Admin\SettingsController@invoicesAction');
         Route::resource('newsletter', 'Admin\SettingsController@newsletterAction');
+      
     });
 
     # Transactions #

@@ -155,12 +155,13 @@
 			    <?php echo Form::text('zanox_pw', isset($apiSettings['zanox_pw']) ? $apiSettings['zanox_pw'] : ''); ?>
 			</div>
 		</div>
-
+	<?php echo Form::close() ?>
+	<?php echo Form::open(array('url' => 'admin/settings/hotspotAPI', 'method' => 'post', 'class' => 'ui form')) ?>
 	   	<h4>Hotspot</h4>
 		<div class="fields">
 			<div class="two wide field">
 			   	<label>Uitvoeren</label>
-			   	<a href="{{ url('admin/settings/run/hotspot') }}" class="ui icon button"><i class="refresh icon"></i></a>
+			   	<button type="submit" class="ui icon button"><i class="refresh icon"></i></button>
 			</div>
 
 			<div class="twelve wide field">
@@ -172,7 +173,7 @@
 		<div class="fields">
 			<div class="two wide field">
 			   	<label>Uitvoeren</label>
-			   	<a href="{{ url('admin/settings/run/mailgun') }}" class="ui icon button"><i class="refresh icon"></i></a>
+			   	<a  href="{{ url('admin/settings/run/mailgun') }}" class="ui icon button"><i class="refresh icon"></i></a>
 			</div>
 
 			<div class="twelve wide field">
