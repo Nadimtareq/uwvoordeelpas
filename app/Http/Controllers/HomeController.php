@@ -1344,6 +1344,12 @@ class HomeController extends Controller
 
     public function contactFAQAction(Request $request)
     {
+        if($request->has("req") && $request->get("req") == "complete")
+        {
+            Alert::success('',
+                'Uw bericht is succesvol verzonden.  Wij hopen u zo snel mogelijk antwoord te kunnen geven.')->persistent('Sluiten');
+            return Redirect::to('/');
+        }
 
         if (! session()->has('contact_data')) {
 //            $mail_user = array(
