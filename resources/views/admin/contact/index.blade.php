@@ -7,6 +7,7 @@
 @section('content')
 <div class="content">
     @include('admin.template.breadcrumb')
+    <?php echo Form::open(array('id' => 'formList', 'url' => 'admin/'.$slugController.'/delete', 'method' => 'post')) ?>
     <div class="buttonToolbar">
         <div class="ui grid">
             <div class="left floated sixteen wide mobile nine wide computer column">
@@ -15,9 +16,7 @@
                     <i class="trash icon"></i> Verwijderen
                 </button>
 
-                {{--<a href="{{ url('admin/faq/categories') }}" class="ui icon button">--}}
-                    {{--<i class="list icon"></i> Categorie&euml;n--}}
-                {{--</a>--}}
+                <input type="hidden" name="action" value="remove">
             </div>
 
             <div class="right floated sixteen wide mobile six wide computer column">
@@ -36,7 +35,6 @@
         </div>
     </div>
 
-    <?php echo Form::open(array('id' => 'formList', 'url' => 'admin/'.$slugController.'/delete', 'method' => 'post')) ?>
         <table class="ui sortable very basic collapsing celled table list" style="width: 100%;">
             <thead>
             	<tr>

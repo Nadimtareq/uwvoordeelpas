@@ -67,6 +67,10 @@ class ContactController extends Controller
                 Alert::success('De gekozen selectie is succesvol verwijderd.')->persistent("Sluiten");
                 return Redirect::to('admin/'.$this->slugController);
                 break;
+            default:
+                alert()->message('Please choose an action')->persistent("Ok");
+                return Redirect::to('admin/'.$this->slugController);
+                break;
         }
     }
 
