@@ -174,6 +174,7 @@
         </div>
 	<?php echo Form::close() ?>
 	<?php echo Form::open(array('url' => 'admin/settings/hotspotAPI', 'method' => 'post', 'class' => 'ui form')) ?>
+	
 	   	<h4>Hotspot</h4>
 		<div class="fields">
 			<div class="two wide field">
@@ -186,11 +187,13 @@
 			    <?php echo Form::text('hotspot_pw', isset($apiSettings['hotspot_pw']) ? $apiSettings['hotspot_pw'] : ''); ?>
 			</div>
 		</div>
+		<?php echo Form::close() ?>
+		<?php echo Form::open(array('url' => 'admin/settings/maingun', 'method' => 'post', 'class' => 'ui form')) ?>
 		<h4>Mailgun</h4>
 		<div class="fields">
 			<div class="two wide field">
 			   	<label>Uitvoeren</label>
-			   	<a  href="{{ url('admin/settings/run/mailgun') }}" class="ui icon button"><i class="refresh icon"></i></a>
+			   	<button type="submit" class="ui icon button"><i class="refresh icon"></i></button>
 			</div>
 
 			<div class="twelve wide field">

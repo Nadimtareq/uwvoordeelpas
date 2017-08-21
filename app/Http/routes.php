@@ -376,6 +376,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', '
         Route::get('/', 'Admin\SettingsController@index');
         Route::get('run/{slug}', 'Admin\SettingsController@run');
         Route::post('hotspotAPI', 'Admin\SettingsController@hotspotAction');
+        Route::post('maingun', 'Admin\SettingsController@sendNewsletter');
 
         Route::post('/', 'Admin\SettingsController@indexAction');
         Route::resource('website', 'Admin\SettingsController@websiteAction');
