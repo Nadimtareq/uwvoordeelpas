@@ -1034,11 +1034,12 @@ class ReservationsController extends Controller
 
     public function update(Request $request, $company, $date = null)
     {
+		
         $limit = $request->input('limit', 15);
 
         $companyOwner = Company::isCompanyUser($company, Sentinel::getUser()->id);
         $companyInfo = Company::find($company);
-
+		
         $reservations = CompanyReservation::select(
             'company_reservations.*',
             'companies.name as companyName',
@@ -1069,7 +1070,7 @@ class ReservationsController extends Controller
             }
 
             return view('admin/'.$this->slugController.'/update', array(
-                'data' => $reservations,
+                'reservations' => $reservations,
                 'date' => $date,
                 'company' => $company,
                 'slugController' => $this->slugController.'/settings/'.$company.($date != null ? '/'.$date : ''),

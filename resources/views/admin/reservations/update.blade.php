@@ -60,7 +60,7 @@
 
 @section('content')
 <div class="content">
-    @if($data != '')
+    @if($reservations != '')
 	    @if (isset($success))
 	    <div class="ui success message">{{ $success }}</div>
 	    @elseif (count($errors) > 0)
@@ -79,7 +79,7 @@
         	<a href="#" class="sidebar open">Admin</a>
 	        <i class="right chevron icon divider"></i>
 
-	        <a href="{{ url('admin/reservations/'.$data->slug) }}" class="section">Reserveringen - {{ $data->companyName }}</a>
+	        <a href="{{ url('admin/reservations/'.$reservations->slug) }}" class="section">Reserveringen - {{ $reservations->companyName }}</a>
 
 			<i class="right arrow icon divider"></i>
 
@@ -87,7 +87,7 @@
 	            <div class="ui normal scrolling bread pointing dropdown item">
 	                <div class="text">Instellingen</div>
 
-	                <div class="menu">
+	            <div class="menu">
 	                    @if($userCompanies)
 	                         @include('template/navigation/company')
 	                    @endif
@@ -186,7 +186,7 @@
 					echo Form::select(
 						'closed_before_time',
 						Config::get('preferences.closed_time'),
-						$data->closed_before_time,
+						//$reservations->closed_before_time,
 						array(
 							'class' => 'ui normal search dropdown selection fluid visible'
 						)
@@ -197,10 +197,10 @@
 				<div class="field">
 					<label>Periode dat een gast vooraf een reservering mag annuleren</label>
 					<?php
-					echo Form::select(
+				echo Form::select(
 						'cancel_before_time',
 						Config::get('preferences.closed_time'),
-						$data->cancel_before_time,
+						$reservations->cancel_before_time,
 						array(
 							'class' => 'ui normal search dropdown selection fluid visible'
 						)
@@ -216,7 +216,7 @@
 					echo Form::select(
 						'update_before_time',
 						Config::get('preferences.closed_time'),
-						$data->update_before_time,
+						$reservations->update_before_time,
 						array(
 							'class' => 'ui normal search dropdown selection fluid visible'
 						)
@@ -237,7 +237,7 @@
 							4 => '4 uur',
 							5 => '5 uur'
 						),
-						$data->reminder_before_date,
+						$reservations->reminder_before_date,
 						array(
 							'class' => 'ui normal search dropdown selection fluid visible'
 						)
@@ -264,13 +264,13 @@
 				<div class="field">
 					<label>Wilt u de reserveringen automatisch goedkeuren?</label><br>
 					<?php
-					echo Form::select(
+				echo Form::select(
 						'is_manual',
 						array(
 							0 => 'Ja',
 							1 => 'Nee'
 						),
-						$data->is_manual,
+						$reservations->is_manual,
 						array(
 							'class' => ' ui normal search dropdown selection fluid visible'
 						)
@@ -287,7 +287,7 @@
 							1 => 'Ja',
 							0 => 'Nee'
 						),
-						$data->extra_reservations,
+						$reservations->extra_reservations,
 						array(
 							'class' => ' ui normal search dropdown selection fluid visible'
 						)
@@ -305,7 +305,7 @@
 						<?php
 						echo Form::text(
 							'closed_at_time',
-							$data->closed_at_time != null ? date('H:i', strtotime($data->closed_at_time)) : '',
+							$reservations->closed_at_time != null ? date('H:i', strtotime($reservations->closed_at_time)) : '',
 							array(
 								'class' => 'timepicker',
 								'placeholder' => 'Selecteer een tijd'
@@ -318,7 +318,7 @@
 				<div class="clearfix"></div>
 				<div class="field">
 					<label>Minimum spaartegoed</label>
-					<?php echo Form::text('min_saldo', $data->min_saldo) ?>
+					<?php echo Form::text('min_saldo', $reservations->min_saldo) ?>
 				</div>
 			</div>
 			@endif
