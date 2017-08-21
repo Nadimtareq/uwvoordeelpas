@@ -38,6 +38,7 @@ use DateTime;
 use Mail;
 use Redirect;
 use App\Models\GiftcardUse;
+use App\Helpers\MoneyHelper;
 
 class AccountController extends Controller {
 
@@ -54,6 +55,7 @@ class AccountController extends Controller {
         $this->slugController = 'all-future-deals';
         $this->limit = $request->input('limit', 5);
         unset($this->queryString['limit']);
+		$this->companies = Company::where('no_show', '=', 0)->get();
     }
 
     public function settings() {
@@ -587,6 +589,7 @@ class AccountController extends Controller {
                         'future_deals.deal_price as future_deal_price',
                         'future_deals.persons as total_persons',
                         'future_deals.persons_remain as remain_persons',
+                        'future_deals.created_at',
                         'future_deals.expired_at as expired_at')
                 ->addSelect('companies.id as company_id',
                         'companies.name as company_name',
@@ -616,6 +619,11 @@ class AccountController extends Controller {
                     ->whereYear('future_deals.expired_at', '=',
                     $request->input('year'))
             ;
+        }
+		if ($request->has('company')) {
+            $data = $data->where('companies.id', '=',
+                            $request->input('company'));
+            
         }
         $data = $data->groupby('future_deals.id')->orderBy('future_deals.expired_at',
                         'desc')
@@ -652,7 +660,8 @@ class AccountController extends Controller {
             'paginationQueryString' => $request->query(),
             'queryString' => $queryString,
             'limit' => $this->limit,
-            'slugController' => $this->slugController
+            'slugController' => $this->slugController,
+			'companies' => $this->companies,
         ]);
     }
 
@@ -732,11 +741,29 @@ class AccountController extends Controller {
         $user->id)->where('expired_at', '>=', date('Y-m-d'))->first();
         
         if ($futureDeal) {
+            $user_saldo = (float) MoneyHelper::getAmount($user->saldo);
+            $deal_saldo = $futureDeal->extra_pay;
+            if ($deal_saldo > $user_saldo) {
+                $enough_balance = false;
+                //$rest_amount = $deal_saldo - $user_saldo;
+            } else {
+                $enough_balance = true;
+                $user->saldo = $user_saldo - $deal_saldo;
+            }
+
+            //return "Pending amount: ".$futureDeal->extra_pay;
 
             if($futureDeal->status =="pending"){
-                 alert()->error('Fonds alsjeblieft uw account om de reservering te voltooien','Onvoldoende saldo')->html()->persistent('Sluiten');
-
-            return Redirect::to('/payment/charge');
+                if(!$enough_balance){
+                    alert()->error('Fonds alsjeblieft uw account om de reservering te voltooien','Onvoldoende saldo')->html()->persistent('Sluiten');
+                    return Redirect::to('/payment/charge');
+                }else{
+                    $futureDeal->extra_pay = 0;
+                    $futureDeal->status = "purchased";
+                    $futureDeal->save();
+                    $user->save();
+                    // return "You have Enough Balance";
+                }
             }
             $deal = ReservationOption::find($futureDeal->deal_id);
             $company = Company::find($deal->company_id);

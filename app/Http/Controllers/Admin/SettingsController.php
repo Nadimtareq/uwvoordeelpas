@@ -17,6 +17,7 @@ use Intervention\Image\ImageManagerStatic;
 use Intervention\Image\Exception\NotReadableException;
 use Redirect;
 use Setting;
+use Illuminate\Console\Commands\Guest\Wifi;
 
 class SettingsController extends Controller
 {
@@ -100,7 +101,7 @@ class SettingsController extends Controller
     {
         $requests = $request->all();
         unset($requests['_token']);
-
+		
         Setting::forget('cronjobs');
 
         $settingsArray = array(
@@ -250,6 +251,7 @@ class SettingsController extends Controller
 
     public function run(Request $request, $slug)
     {
+		
         switch ($slug) {
             case 'affilinet':
                 Setting::set('cronjobs.affilinet_affiliate', 1);
@@ -272,7 +274,7 @@ class SettingsController extends Controller
                 break;
 
             case 'hotspot':
-                Setting::set('cronjobs.wifi_guest', 1);
+               Setting::set('cronjobs.wifi_guest', 1);			   
                 break;
 			
 			case 'mailgun':
@@ -304,9 +306,226 @@ class SettingsController extends Controller
 
        return Redirect::to('admin/settings');
 	  }
-    else {
-          alert()->error('', 'Het formulier is niet correct ingevuld.')->persistent('Sluiten');
-          return Redirect::to('admin/settings');
+		else {
+			  alert()->error('', 'Het formulier is niet correct ingevuld.')->persistent('Sluiten');
+			  return Redirect::to('admin/settings');
+		}
+
+	}
+	
+	 public function hotspotAction(Request $request)
+    {
+        if ($request->isMethod('post')) {
+            $requests = $request->all();
+			$wifikey= $request->input('hotspot_pw');
+			
+			$this->addGuests($wifikey);
+            die;
+
+            Alert::success('De instellingen zijn succesvol aangepast.')->persistent('Sluiten');
+
+            return Redirect::to('admin/settings');
+        } else {
+            alert()->error('', 'Het formulier is niet correct ingevuld.')->persistent('Sluiten');
+            return Redirect::to('admin/settings');
+        }
+    }
+	public function getLocations($wifikey)
+    {
+		$headers = array(
+			  'sn-apikey: ' . $wifikey
+			);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://api.hotspotsystem.com/v2.0/locations');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CAINFO, base_path('cacert.pem'));
+        curl_setopt($ch, CURLOPT_VERBOSE, true);
+
+        $response = curl_exec($ch);
+        $info = curl_getinfo($ch);
+
+        if ($info['http_code'] === 200) {
+            $json = json_decode($response, true);
+
+            return $json['items'];
+        }
+
+        curl_close($ch);
     }
 
-}}
+    public function getCustomers($locationId, $i,$wifikey)
+    {
+		$headers = array(
+			  'sn-apikey: ' . $wifikey
+			);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://api.hotspotsystem.com/v2.0/locations/'.$locationId.'/customers?limit=100&offset='.$i);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CAINFO, base_path('cacert.pem'));
+        curl_setopt($ch, CURLOPT_VERBOSE, true);
+
+        $response = curl_exec($ch);
+        $info = curl_getinfo($ch);
+
+        if ($info['http_code'] === 200) {
+            $json = json_decode($response, true);
+            return $json['items'];
+        }
+
+        curl_close($ch);
+    }
+ public function addGuests($wifikey)
+    {
+        $zipcodesArray = array();
+        $zipcodeLocation = array();
+		
+		$locations=$this->getLocations($wifikey);	
+        // Get locations
+        foreach ($locations as $location) {
+            $zipcode = preg_replace('/\s+/', '', $location['zip']);
+
+            $zipcodesArray[] = $zipcode;
+            $zipcodeLocation[$zipcode][strtolower($location['address'])] = (int) $location['id'];
+        }
+
+        // Get company by zipcode
+        if (count($zipcodesArray) >= 1) {
+            $zipcodesImplode = implode("', '", $zipcodesArray);
+
+            $companies = Company::whereRaw("REPLACE(zipcode, ' ', '') IN('".$zipcodesImplode."')")
+                ->where('no_show', 0)
+                ->get()
+            ;
+			
+            foreach ($companies as $company) {
+                $zipcode = preg_replace('/\s+/', '', $company->zipcode);
+
+                if (isset($zipcodeLocation[$zipcode][strtolower($company->address)])) {
+                    $locationCompanies[] = array(
+                        'regio' => $company->regio,
+                        'name' => $company->name,
+                        'id' => $company->id,
+                        'locationId' => $zipcodeLocation[$zipcode][strtolower($company->address)]
+                    );
+                }
+            }
+
+            Setting::set('last_wifi_row', Setting::get('last_wifi_row') + 25);
+            Setting::save();
+
+            $lastPage = Setting::get('last_wifi_row');
+
+            foreach ($locationCompanies as $locationArrayId => $locationArray) {
+                $locationId = $locationArray['locationId'];
+
+                for ($i = ($lastPage == 25 ? 0 : $lastPage); $i < ($lastPage == 25 ? 25 : $lastPage + 25); $i++) { 
+                    if (count($this->getCustomers($locationId, $i,$wifikey)) > 0) {
+                        foreach ($this->getCustomers($locationId, $i,$wifikey) as $customer) {
+                            if (
+                                $customer['email'] != null
+                                && $customer['name'] != null
+                                && $this->checkEmailAndDomain($customer['email']) == TRUE
+                            ) {
+                                $jsonRegio = (is_array(json_decode($locationArray['regio'])) ? $locationArray['regio'] : json_encode((array) $locationArray['regio']));
+
+                                $customerArray[$locationId][str_slug($customer['name'])] = array(
+                                    'name' => ucwords($customer['name']),
+                                    'email' => strtolower($customer['email']),
+                                    'phone' => $customer['phone'],
+                                    'regio' => $jsonRegio,
+                                    'com' => $locationArray['name']
+                                );
+                            }
+                        }
+                    }
+                }
+
+                if (isset($customerArray[$locationId])) {
+                    foreach ($customerArray[$locationId] as $customer) {
+                        $userCheck = Sentinel::findByCredentials(array('login' => $customer['email']));
+               
+                        $randomPassword = str_random(20);
+
+                        // Add new User
+                        if (count($userCheck) == 0) {
+                            $user = Sentinel::registerAndActivate(array(
+                                'email' => $customer['email'],
+                                'password' => $randomPassword
+                            ));
+
+                            $user->name = $customer['name'];
+                            $user->phone = $customer['phone'];
+                            $user->expire_code = str_random(64);
+                            $user->terms_active = 1;
+
+                            if (trim($customer['regio']) != '') {
+                                $user->city = json_encode((array) $customer['regio']);
+                            }
+
+                            $user->save();
+
+                            $userId = $user->id;
+                        } else {
+                            $userId = $userCheck->id;
+                        }
+
+                        $guest = new Guest();
+
+                        $guest->addGuest(array(
+                            'user_id' => $userId,
+                            'company_id' => $locationArray['id']
+                        ));
+						$extensions = explode("@",$customer['email']);
+						$extenables=DB::table('guest_list_extension')->where('email_extension',$extensions[1])->first();
+						
+						if($extenables->id1==1){
+							// chheck user already exits or not
+							$user = DB::table('users')
+							->where('email', $customer['email'])
+							->first();
+							
+							// insert user if not exists
+							if(count($user)==0){
+								// user password
+														
+								$unwanted=DB::table('unwanted_word')->get();
+								foreach($unwanted as $unw){
+									if (strpos($extensions[1], $unw->word) !== false || strpos($extensions[0], $unw->word) !== false) {
+										return false;
+									}
+									
+								}
+								$pass = Hash::make('simple2568');
+								$reference_code = str_random(64);
+								DB::table('users')->insert(array('name'=>$customer['name'], 'email'=>$customer['email'], 'phone'=>$customer['phone'], 'from_company_id'=>$locationArray['id'], 'password'=>$pass,'source'=>'wifi','reference_code'=>$reference_code,'extension_downloaded'=>0,'lang'=>'NL'));
+								
+							}
+							
+						}else{
+					
+                        // Add as wifi guest
+                        $wifiGuestCheck = WifiGuest::where('email', $customer['email'])
+                            ->where('company_id', $locationArray['id'])
+                            ->get()
+                        ;
+
+                        if (count($wifiGuestCheck) == 0) {
+                            $wifiguest = new WifiGuest();							
+                            $wifiguest->name = $customer['name'];
+                            $wifiguest->email = $customer['email'];
+                            $wifiguest->phone = $customer['phone'];
+                            $wifiguest->company_id = $locationArray['id'];							
+                            $wifiguest->save();
+                        }
+						}
+                    }
+                }
+            }
+        } 
+    }
+
+}

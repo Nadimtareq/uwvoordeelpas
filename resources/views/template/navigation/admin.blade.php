@@ -10,12 +10,12 @@
     <li><a href="{{ url('admin/translations') }}" ><i class="material-icons notranslate">flag</i> Talen</a></li>
     <li><a href="{{ url('admin/affiliates') }}" ><i class="material-icons notranslate">account_balance_wallet</i> Affiliaties</a></li>
     <li><a href="{{ url('admin/companies') }}" ><i class="material-icons notranslate">store_mall_directory</i> Bedrijven</a></li>
-    <li><a href="{{ url('admin/companies/callcenter') }}" ><i class="material-iconsnotranslate">phone</i> Bellijst</a></li>
+    <li><a href="{{ url('admin/companies/callcenter') }}" ><i class="material-icons notranslate">contact_phone</i> Bellijst</a></li>
     <li><a href="{{ url('admin/users') }}" ><i class="material-icons notranslate">supervisor_account</i> Gebruikers</a></li>
     <li><a href="{{ url('admin/bans') }}" ><i class="material-icons notranslate">signal_cellular_no_sim</i> Waarschuwingen</a></li>
     <li><a href="{{ url('admin/roles') }}" ><i class="material-icons notranslate">dvr</i> Rollen</a></li>
-    <li><a href="{{ url('admin/barcodes') }}" ><i class="material-icons notranslate">crop_landscape</i> Barcodes</a></li>
-    <li><a href="{{ url('admin/giftcards') }}" ><i class="material-icons notranslate">crop_landscape</i> Giftcards</a></li>
+    <li><a href="{{ url('admin/barcodes') }}" ><i class="material-icons notranslate">line_weight</i> Barcodes</a></li>
+    <li><a href="{{ url('admin/giftcards') }}" ><i class="material-icons notranslate">card_membership</i> Giftcards</a></li>
     <li><a href="{{ url('admin/tables') }}" ><i class="material-icons notranslate">crop_landscape</i> Tafelbeheer</a></li>
     <li><a href="{{ url('admin/services') }}" ><i class="material-icons notranslate">room_service</i> Diensten</a></li>
     <li><a href="{{ url('admin/preferences') }}" ><i class="material-icons notranslate">assignment_turned_in</i> Voorkeuren</a></li>

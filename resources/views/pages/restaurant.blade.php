@@ -183,8 +183,8 @@ while ($st->lte($dt)) {
             </div>
             <div class="tabs-all">
                 <ul class="tabs-link">
-                    <li><a href="#t1" class="">Over ons</a></li>
-                    <li><a href="#t2" class="active">Menu</a></li>
+                    <li><a href="#t1" class="active">Over ons</a></li>
+                    <li><a href="#t2" class="">Menu</a></li>
                     <li><a href="#t3" class="">Details</a></li>
                     <li><a href="#t4" class="">Contact</a></li>
                     <li><a href="#t5" class="">Nieuws</a></li>
@@ -192,7 +192,7 @@ while ($st->lte($dt)) {
                     <li><a href="#t7" class="">Reviews</a></li>
                 </ul>
                 <div class="tabs-content">
-                    <div id="t1" style="display: block;">
+                    <div id="t1" style="display: none;">
                         <div class="text3">
                             <strong>{!! $company->name !!}</strong>
                             <span class="city"><i class="material-icons">place</i>{{ $company->city }}</span>
@@ -200,110 +200,110 @@ while ($st->lte($dt)) {
                             <p>    {!! $company->about_us !!}</p>
                         </div>
                     </div>
-                    <div id="t2" style="display: none;">
+                    <div id="t2" style="display: block;">
                     @if(isset($deals) && count($deals))
-                        @foreach($deals as $deal)
-                        <div class="row">
-                            <!-- Menu -->
-                                <div class="col-sm-12">
-                                <div class="menu deals-list-page">
-                                   <h3 class="new">{{ $deal->name }}</h3> 
-                                  <div class="col-sm-5">
-                                    <div class="left_m">
-
-                                        @if($deal->image!='')
-                                            <a href="{{ url('future-deal/'.$company->slug).'?deal='.$deal->id }}"> <img
-                                                        src="{{ asset('images/deals/'.$deal->image) }}"
-                                                        alt="No Image Found" class="img-responsive">
-                                            </a>
-
-                                        @else
-                                            <a href="{{ url('future-deal/'.$company->slug).'?deal='.$deal->id }}"> <img
-                                                        src="{{ asset('images/deals/no-img.jpg') }}"
-                                                        alt="No Image Found" class="img-responsive">
-                                            </a>
-
-                                        @endif
-                                        {{--                            <ul class="price">
-                                        <li><span>Verkocht<i>  &euro; {{ $deal->price_from }}  </i></span></li>
-                                                    <li><span>Korting<i>50%</i></span></li>
-                                                        </ul>--}}
-                                    </div>
-                                    </div>
-                                <div class="col-sm-7">
+                        @foreach($deals as $deal)                        
+                            <!-- Menu -->                            
+                            <div class="menu deals-list-page">
                                 <div class="row">
-                                <div class="col-xs-12">
-                                    <b class="right_m">
-                                    <div style="display: block">
-                                        @if($deal->price_from > 0.00)
-                                          <span class="old">  &euro; {{ $deal->price_from }}</span>
-                                        @endif
-                                        <strong class="new">&euro; {{ $deal->price }}</strong>
-                                        </div>
-                                        <br>
-                                        <b class="up">
-                                            <?php  echo strip_tags($deal->description); ?>
-                                            
-                                          
-                                        </b>
+                                    <div class="col-sm-12">
+                                        <h3 class="new">{{ $deal->name }}</h3> 
+                                    </div>
+                                </div>
                                 <div class="row">
-                                    <div class="col-xs-12">
-                                    <br>
-                                    
-                                    @if(!is_null($deal->getApprovedReviews))
-                                        <?php
-                                        $count = 1;
-                                        $total = 0;
-                                        ?>
-                                        @foreach($deal->getApprovedReviews as $review)
-                                            <?php
-                                            $avg = floor(($review->food + $review->service + $review->decor) / 3);
-                                            $total += $avg;
-                                            ?>
-                                            <div style="float: left;">
-                                                <div class="score">
-                                                    Recencies:
-                                                    <div class="ui star tiny rating no-rating disabled"
-                                                         data-rating="{{ $total/$count }}">
-                                                        <i class="icon-star active"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                    
-                                            <?php $count++; ?>
-                                        @endforeach
-                                    @endif
-                                    </div>
-                                    </div>
-                                    </div>
-                                    </div>
-                                    <div class="row">
-                                    <div class="col-xs-12">
-                                    @if(count($deals)==1)
-                                        <div id="koop">
-                                            <a class="more"
-                                               href="{{ url('future-deal/'.$company->slug).'?deal='.$deal->id }}">
-                                                Koop nu, reserveer later.
-                                            </a>
-                                            @else
-                                                <a class="more"
-                                                   href="{{ url('future-deal/'.$company->slug).'?deal='.$deal->id }}">
-                                                    Koop nu, reserveer later.
+                                    <div class="col-sm-5">
+                                        <div class="left_m">
+                                            @if($deal->image!='')
+                                                <a href="{{ url('future-deal/'.$company->slug).'?deal='.$deal->id }}"> <img
+                                                            src="{{ asset('images/deals/'.$deal->image) }}"
+                                                            alt="No Image Found" class="img-responsive">
                                                 </a>
+
+                                            @else
+                                                <a href="{{ url('future-deal/'.$company->slug).'?deal='.$deal->id }}"> <img
+                                                            src="{{ asset('images/deals/no-img.jpg') }}"
+                                                            alt="No Image Found" class="img-responsive">
+                                                </a>
+
                                             @endif
+                                            {{--                            <ul class="price">
+                                            <li><span>Verkocht<i>  &euro; {{ $deal->price_from }}  </i></span></li>
+                                                        <li><span>Korting<i>50%</i></span></li>
+                                                            </ul>--}}
                                         </div>
+                                    </div>
+
+                                    <div class="col-sm-7">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <b class="right_m">
+                                                    <div style="display: block">
+                                                        @if($deal->price_from > 0.00)
+                                                        <span class="old">  &euro; {{ $deal->price_from }}</span>
+                                                        @endif
+                                                        <strong class="new">&euro; {{ $deal->price }}</strong>
+                                                    </div>
+                                                        <br>
+                                                        <b class="up">
+                                                            <?php  echo strip_tags($deal->description); ?>                                           
+                                                        </b>
+                                                </b>
+                                            </div>
                                         </div>
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <br>                                    
+                                                @if(!is_null($deal->getApprovedReviews))
+                                                    <?php
+                                                    $count = 1;
+                                                    $total = 0;
+                                                    ?>
+                                                    @foreach($deal->getApprovedReviews as $review)
+                                                        <?php
+                                                        $avg = floor(($review->food + $review->service + $review->decor) / 3);
+                                                        $total += $avg;
+                                                        ?>
+                                                        <div style="float: left;">
+                                                            <div class="score">
+                                                                Recencies:
+                                                                <div class="ui star tiny rating no-rating disabled"
+                                                                    data-rating="{{ $total/$count }}">
+                                                                    <i class="icon-star active"></i>
+                                                                </div>
+                                                            </div>
+                                                        </div>                                    
+                                                        <?php $count++; ?>
+                                                    @endforeach
+                                                @endif
+                                            </div>
+                                        </div>                                    
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <div id="koop">
+                                                    @if(count($deals)==1)                                                   
+                                                        <a class="more"
+                                                        href="{{ url('future-deal/'.$company->slug).'?deal='.$deal->id }}">
+                                                            Koop nu, reserveer later.
+                                                        </a>
+                                                    @else
+                                                        <a class="more"
+                                                        href="{{ url('future-deal/'.$company->slug).'?deal='.$deal->id }}">
+                                                            Koop nu, reserveer later.
+                                                        </a>                                                   
+                                                    @endif  
+                                                </div>                                                  
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                </div>
-                                </div>
-                                </div><!-- End of ROw -->
-                                        @endforeach
-                                    @endif
-                                </div>
+
+                            </div><!-- End of ROw -->
+                        @endforeach
+                    @endif
                     </div>
+                    
                     <div id="t3" style="display: none;">
                         <div class="info">
-
                             @if ($company->preferences != NULL && $company->preferences != NULL && $company->preferences != '[""]')
                                 <span>Voorkeuren</span>
                                 <strong>
@@ -314,7 +314,6 @@ while ($st->lte($dt)) {
                                     @endforeach
                                 </strong>
                             @endif
-
                             @if ($company->kitchens != NULL && $company->kitchens != NULL && $company->kitchens != '[""]')
                                 <span>Keuken</span>
                                 <strong>
@@ -323,7 +322,6 @@ while ($st->lte($dt)) {
                                     @endforeach
                                 </strong>
                             @endif
-
                             @if ($company->price != NULL && $company->price != NULL && $company->price != '[""]')
                                 <span>Soort</span>
                                 <strong>
@@ -332,7 +330,6 @@ while ($st->lte($dt)) {
                                     @endforeach
                                 </strong>
                             @endif
-
                             @if ($company->sustainability != NULL && $company->sustainability != NULL && $company->sustainability != '[""]')
                                 <span>Duurzaamheid</span>
                                 <strong>

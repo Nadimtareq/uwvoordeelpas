@@ -347,17 +347,20 @@ class RestaurantController extends Controller {
         setlocale(LC_ALL, 'nl_NL', 'Dutch');
         $preferences = new Preference();
         $regio = $preferences->getRegio();
+        
         $rest_amount = 0;
 
         $mediaItems = NULL;
         $company = Company::with('media')->select(
                         'id', 'slug', 'name', 'kitchens', 'days', 'discount',
-                        'preferences', 'allergies'
+                        'preferences', 'allergies','city'
                 )
                 ->where('slug', '=', $slug)
                 ->where('no_show', '=', 0)
                 ->first();
+        
         if ($company) {
+            
             if ($request->input('deal')) {
                 $deal = ReservationOption::where('id', $request->input('deal'))->first();
                 if ($deal) {
@@ -407,6 +410,7 @@ class RestaurantController extends Controller {
                     }
                 }
             }
+            
             return view('pages/restaurant/future-deal',
                     [
                 'company' => $company,
@@ -414,7 +418,8 @@ class RestaurantController extends Controller {
                 'mediaItems' => $mediaItems,
                 'userAuth' => Sentinel::check(),
                 'userInfo' => Sentinel::getUser(),
-                'regio' => $regio['regio']
+                'regio' => $company->city
+                
             ]);
         } else {
             App::abort(404);
@@ -673,7 +678,17 @@ class RestaurantController extends Controller {
                     $deal = ReservationOption::find($future_deal->deal_id);
 
                     $url = URL::to('/account/future-deals');
-                    Alert::success('U heeft succesvol '.$request->get('persons').'x de deal: ' . $deal->name . ' in uw account. <br /><br /><span class="text-center"><small>* Deze zijn pas geldig na reservering vanuit uw account.</small></span> <br /><br /> <a href="' . $url . '">Klik hier als u direct een reservering wilt maken. </a> <br /><br />' . '<span class=\'addthis_sharing_toolbox\'></span>', 'Bedankt ' . $user->name)->html()->persistent('Sluiten');
+                    Alert::success(
+                        'U heeft succesvol '.$request->get('persons').'x de deal: ' . $deal->name . ' in uw account. 
+                        <br /><br /><span class="text-center"><small>* Deze zijn pas geldig na reservering vanuit uw account. </small></span> <br /><br />'.'<span class=\'addthis_sharing_toolbox\'></span>',
+                        // 'U heeft succesvol '.$request->get('persons').'x de deal: ' . $deal->name . ' in uw account. 
+                        // <br /><br /><span class="text-center"><small>* Deze zijn pas geldig na reservering vanuit uw account.</small></span> <br /><br /> 
+                        // <a href="' . $url . '">Klik hier als u direct een reservering wilt maken. </a> <br /><br />' 
+                        // . '<span class=\'addthis_sharing_toolbox\'></span>', 
+
+                        'Bedankt ' . $user->name
+                        
+                        )->html()->persistent('Sluiten');
                     $company = Company::find($deal->company_id);
                     return Redirect::to('restaurant/' . $company->slug);
                 }

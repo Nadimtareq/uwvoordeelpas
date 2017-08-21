@@ -130,6 +130,7 @@ class ReservationController extends Controller {
     }
 
     public function reservationAction(ReservationTwoRequest $request, $slug) {
+       
 
         setlocale(LC_ALL, 'nl_NL', 'Dutch');
         $this->validate($request, []);
@@ -152,6 +153,8 @@ class ReservationController extends Controller {
                                             ? 1 : NULL)
                             )
             );
+
+            
 
             if (isset($reservationTimes[$time])) {
 
@@ -408,11 +411,16 @@ class ReservationController extends Controller {
                     ));
                 } elseif ($request->has('iframe')) {
                     Alert::success(
-                            'Uw reservering voor ' . $company->name . ' op ' . $date->formatLocalized('%A %d %B %Y') . ' om ' . date('H:i',
-                                    strtotime($request->input('time'))) . ' met ' . $request->input('persons') . ' ' . ($request->input('persons') ==
-                            1 ? 'persoon' : 'personen') . ' is succesvol geplaatst. <br /><br />' . $calendar . '<br /><br /> <span class=\'addthis_sharing_toolbox\'></span>',
-                            'Bedankt ' . $request->input('name') . '!'
-                    )->html()->persistent("Sluit");
+                        'U heeft succesvol '. $request->input('persons') . ' ' . ($request->input('persons') ==
+                            1 ? 'persoon' : 'personen') . ' x de deal: '.$company->name .' in uw account <br><br>
+                        * Deze zijn pas geldig na reservering vanuit uw account.','Bedankt ' . $request->input('name') . '!'
+                    )->html()->persistent('Sluiten');
+                    // Alert::success(
+                    //         'Uw reservering voor ' . $company->name . ' op ' . $date->formatLocalized('%A %d %B %Y') . ' om ' . date('H:i',
+                    //                 strtotime($request->input('time'))) . ' met ' . $request->input('persons') . ' ' . ($request->input('persons') ==
+                    //         1 ? 'persoon' : 'personen') . ' is succesvol geplaatst. <br /><br />' . $calendar . '<br /><br /> <span class=\'addthis_sharing_toolbox\'></span>',
+                    //         'Bedankt ' . $request->input('name') . '!'
+                    // )->html()->persistent("Sluit");
                     // Send mail to user
                     $mailtemplate->sendMail(array(
                         'email' => $request->input('email'),
@@ -441,11 +449,17 @@ class ReservationController extends Controller {
                     ));
                 } else {
                     Alert::success(
-                            'Uw reservering voor ' . $company->name . ' op ' . $date->formatLocalized('%A %d %B %Y') . ' om ' . date('H:i',
-                                    strtotime($request->input('time'))) . ' met ' . $request->input('persons') . ' ' . ($request->input('persons') ==
-                            1 ? 'persoon' : 'personen') . ' is succesvol geplaatst. <br /><br /> U heeft aangegeven &euro;' . $request->input('saldo') . ' korting op de rekening te willen. Klopt dit niet? <a href=\'' . URL::to('account/reservations') . '\' target=\'_blank\'>Klik hier</a><br /><br />' . $calendar . '<br /><br /> <span class=\'addthis_sharing_toolbox\'></span>',
-                            'Bedankt ' . $request->input('name') . '!'
+                        'U heeft succesvol '. $request->input('persons') . ' ' . ($request->input('persons') ==
+                            1 ? 'persoon' : 'personen') . ' x de deal: '.$company->name .' in uw account <br><br>
+                        * Deze zijn pas geldig na reservering vanuit uw account.','Bedankt ' . $request->input('name') . '!'
                     )->html()->persistent('Sluiten');
+
+                    // Alert::success(
+                    //         'Uw reservering voor ' . $company->name . ' op ' . $date->formatLocalized('%A %d %B %Y') . ' om ' . date('H:i',
+                    //                 strtotime($request->input('time'))) . ' met ' . $request->input('persons') . ' ' . ($request->input('persons') ==
+                    //         1 ? 'persoon' : 'personen') . ' is succesvol geplaatst. <br /><br /> U heeft aangegeven &euro;' . $request->input('saldo') . ' korting op de rekening te willen. Klopt dit niet? <a href=\'' . URL::to('account/reservations') . '\' target=\'_blank\'>Klik hier</a><br /><br />' . $calendar . '<br /><br /> <span class=\'addthis_sharing_toolbox\'></span>',
+                    //         'Bedankt ' . $request->input('name') . '!'
+                    // )->html()->persistent('Sluiten');
 
                     // Send mail to user
                     $mailtemplate->sendMail(array(

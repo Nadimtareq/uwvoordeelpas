@@ -132,7 +132,7 @@
         <div class="skill-panel">
             <div class="row">
                 <div class="col-md-3 col-xs-12">
-                    <div class="skill-panel-box massage">
+                   <a href="{{ url('admin/users') }}"> <div class="skill-panel-box massage">
                         <div class="skill-panel-inner-icon">
                             <i class="fa fa-comments">
                             </i>
@@ -150,10 +150,10 @@
                             <i class="fa fa-angle-right">
                             </i>
                         </div>
-                    </div>
+                    </div></a>
                 </div>
                 <div class="col-md-3 col-xs-12">
-                    <div class="skill-panel-box usar">
+                     <a href="{{ url('admin/companies') }}"><div class="skill-panel-box usar">
                         <div class="skill-panel-inner-icon">
                             <i class="fa fa-user">
                             </i>
@@ -171,10 +171,10 @@
                             <i class="fa fa-angle-right">
                             </i>
                         </div>
-                    </div>
+                    </div></a>
                 </div>
                 <div class="col-md-3 col-xs-12">
-                    <div class="skill-panel-box email">
+                     <a href="{{ url('admin/affiliates') }}"><div class="skill-panel-box email">
                         <div class="skill-panel-inner-icon">
                             <i class="fa fa-envelope-o">
                             </i>
@@ -192,10 +192,10 @@
                             <i class="fa fa-angle-right">
                             </i>
                         </div>
-                    </div>
+                    </div></a>
                 </div>
                 <div class="col-md-3 col-xs-12">
-                    <div class="skill-panel-box note">
+                   <a href="{{ url('admin/reservations/clients') }}"> <div class="skill-panel-box note">
                         <div class="skill-panel-inner-icon">
                             <i class="fa fa-pencil-square-o">
                             </i>
@@ -213,7 +213,7 @@
                             <i class="fa fa-angle-right">
                             </i>
                         </div>
-                    </div>
+                    </div></a>
                 </div>
             </div>
         </div>

@@ -1,7 +1,7 @@
 @extends('template.theme')
 @inject('affiliate', 'App\Models\Affiliate')
 
-<div class="shop">
+<div class="sho">
     <div class="container">
         <div class="ui breadcrumb">
             <a href="{{ url('/') }}" class="section">Home</a>
@@ -33,33 +33,32 @@
             </div>
         </div>
         <div class="ui divider"></div>
-        <div class="ui grid container">
-            <span></span>
-            <div class="center floated sixteen wide mobile ten wide computer column">
-                uw persoonlijke link&nbsp;
-                <div class="ui label">
-                    <a href="{{url("source?reference={$reference->reference_code}")}}" id="reference-code" style="opacity: 1;">
-                        {{ url("source?reference={$reference->reference_code}") }}
+        <div class="ui grid container text-center">           
+            <div class="row">
+                <div class="col-md-12">
+                   {{ucfirst('uw persoonlijke link ')}} 
+                    <div class="ui label" style="padding: 15px;">
+                        <a href="{{url("source?reference={$reference->reference_code}")}}" id="reference-code" style="opacity: 1;">
+                            {{ url("source?reference={$reference->reference_code}") }}
+                        </a>                    
+                    </div>
+                    <a href="javascript:;" class="ui green button large" data-clipboard-target="#reference-code" id="clipboard">
+                        <i class="clipboard icon"></i>
+                        {{ucfirst('kopieer link') }}
                     </a>
                 </div>
-                <a href="javascript:;" class="ui green button mini" data-clipboard-target="#reference-code" id="clipboard">
-                    <i class="clipboard icon"></i>
-                    kopieer link
-                </a>
-
-                <h4>Deel deze link</h4>
- 			        <span class="addthis_sharing_toolbox"></span>
-
-                <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5751e9a264890504"></script>
-                    <script type="text/javascript">
-                    var addthis_share = {
-                    url: "{{ url("source?reference={$reference->reference_code}") }}",
-                    title: "Reserveer in enkele stappen met uw spaartegoed!"
-                    }
-                </script>
                 
             </div>
+            <div class="col-md-12 text-center">
+
+                <h4>Deel deze link</h4> 			 
+                <span class='addthis_sharing_toolbox'></span>
+            </div>
+
+                    
         </div>
+        <div class="space-header"></div>
+<div class="ui divider"></div>
         <div class="ui grid container">
             <div class="col-md-12">
                 <table class="ui very basic sortable collapsing celled table list" style="width: 100%;">

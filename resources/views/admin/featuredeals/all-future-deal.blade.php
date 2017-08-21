@@ -10,9 +10,17 @@
     @include('admin.template.breadcrumb')
     <div class="buttonToolbar">  
         <div class="ui grid">
-            <div class="left floated nine wide computer sixteen wide mobile column">
+            <div class="left floated  wide computer sixteen wide mobile column">
                 <?php echo Form::open(array('method' => 'GET', 'class' => 'ui form')); ?>
-                <div class="three fields">
+                <div class="four fields">
+					<div class="three field">
+						<select name="company" class="multipleSelect">
+						 @foreach ($companies as $company)
+						  <option value="{{ $company->id }}">{{ $company->name }}</option>
+						  @endforeach
+						</select>
+                       
+                        </div>
                     <div class="field">
                         <?php 
                         echo Form::select(
@@ -21,7 +29,7 @@
                             Request::has('month') ? Request::has('month') : date('m'), 
                             array(
                                 'class' => 'multipleSelect', 
-                                'data-placeholder' => 'Maand'
+                                'data-placeholder' => 'Bedrijf'
                                 )
                             ); 
                             ?>
@@ -30,7 +38,7 @@
                         <div class="field">
                            <?php echo Form::select('year', array_unique($years), (Request::has('year') ? Request::get('year') : date('Y')), array('class' => 'multipleSelect', 'data-placeholder' => 'Jaar')); ?>
                        </div>
-
+						
                        <div class="field">
                         <input type="submit" class="ui blue fluid filter button" value="Filteren" />
                     </div>
@@ -62,6 +70,7 @@
             <th data-slug="user_name" class="two wide" width="30%">Gebruikersnaam</th>
             <th data-slug="company_name" class="seven wide" width="30%">Deal naam</th>
             <th data-slug="future_deal_price" class="three wide" width="10%">Bedrijfsnaam</th>
+            <th data-slug="created_at" class="two wide" width="10%">Gemaakt tijd</th>
             <th data-slug="expired_at" class="one wide" width="10%">Deal bedrag</th>
             <th data-slug="mollie_id" class="two wide" width="10%">Vervaldatum</th>
             <th data-slug="total_persons" class="two wide" width="5%">aantal</th>
@@ -80,8 +89,10 @@
         </td>
         <td>{{ $futureDeal->user_name }}</td>
         <td>{{ ucfirst($futureDeal->deal_name) }}</td>       
-        <td>{{ ucfirst($futureDeal->company_name) }}</td>        
+        <td>{{ ucfirst($futureDeal->company_name) }}</td> 
+		<td>{{ date('d-m-Y', strtotime($futureDeal->created_at)) }}</td>		
         <td>&euro; {{ $futureDeal->future_deal_price }}</td>
+       
         <td>{{ date('d-m-Y', strtotime($futureDeal->expired_at)) }}</td>
         <td>{{ $futureDeal->total_persons }}</td>
         <!-- <td>{{ $futureDeal->remain_persons }}</td>        -->

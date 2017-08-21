@@ -1,16 +1,16 @@
 @extends('template.theme',['search_header' => ($userAuth != FALSE) ])
 
-
-
-
-
-
-
 @inject('affiliate', 'App\Models\Affiliate')
 @inject('strHelper', 'App\Helpers\StrHelper')
 @inject('FileHelper', 'App\Helpers\FileHelper')
 
 {{--*/ $pageTitle = (isset($contentBlock[1]) ? strip_tags($contentBlock[1]) : '') /*--}}
+
+@if (Route::getCurrentRoute()->uri() != '/')
+    @section("header_picture")
+        @include('pages._search-slider')
+    @endsection
+@endif
 
 @section('content')
 
@@ -259,3 +259,8 @@
     @endif
 
 @stop
+
+
+@section("after_styles")
+     <link href="{{ asset("css/custom.css") }}" rel="stylesheet"> 
+@endsection
