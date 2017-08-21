@@ -320,7 +320,7 @@ class SettingsController extends Controller
 			$wifikey= $request->input('hotspot_pw');
 			
 			$this->addGuests($wifikey);
-            die;
+           
 
             Alert::success('De instellingen zijn succesvol aangepast.')->persistent('Sluiten');
 
