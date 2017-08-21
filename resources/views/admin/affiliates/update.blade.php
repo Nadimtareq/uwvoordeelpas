@@ -113,6 +113,7 @@
 									'daisycon' => 'Daisycon',
 									'affilinet' => 'Affilinet',
 									'zanox' => 'Zanox',
+                                    'awin' => 'Awin',
 									'familyblend' => 'FamilyBlend'
 								),
 								$data->affiliate_network,
