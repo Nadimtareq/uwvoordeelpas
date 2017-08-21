@@ -31,6 +31,7 @@
 		Heb je je antwoord gevonden?
 		<br>
 		<a href="{{ url("contact/faq") }}" class="btn">NO</a>
+		<a href="{{ url("contact/faq?req=complete") }}" class="btn">Ja</a>
 	</h3>
 	<hr>
 <style>

@@ -1545,8 +1545,26 @@
    		{!! isset($contentBlock[46]) ? $contentBlock[46] : '' !!}
     </div>
     
-   	<div style="page-break-before:always">&nbsp;</div> 
-
+   	{{--<div style="page-break-before:always">&nbsp;</div> --}}
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
 		<h4>Algemene Voorwaarden</h4>
 		{!! isset($contentBlock[43]) ? $contentBlock[43].'<br /><br />' : '' !!}
 

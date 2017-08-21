@@ -80,6 +80,8 @@ class SettingsController extends Controller
             'tradedoubler_pw',
             'zanox_name',
             'zanox_pw',
+            'awin_name',
+            'awin_pw',
             'hotspot_pw',
 			'mailgun_key',
             'callcenter_reminder',
@@ -104,23 +106,6 @@ class SettingsController extends Controller
 		
         Setting::forget('cronjobs');
 
-        $settingsArray = array(
-            'affilinet_name',
-            'affilinet_pw',
-            'daisycon_name',
-            'daisycon_pw',
-            'tradetracker_name',
-            'tradetracker_pw',
-            'tradedoubler_name',
-            'tradedoubler_pw',
-            'zanox_name',
-            'zanox_pw',
-            'hotspot_pw',
-			'mailgun_key',
-            'callcenter_reminder',
-            'newsletter_dealmail',
-            'callcenter_reminder_status',
-        );
 
         foreach ($requests as $key => $value) {
             Setting::set('cronjobs.'.$key, 1);

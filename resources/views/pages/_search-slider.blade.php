@@ -12,7 +12,7 @@
 $compatible_browser_array = array('Chrome', 'Firefox', 'Opera');
 ?>
  
- @if ($userAuth && $userInfo->extension_downloaded == 0)
+ {{--  @if ($userAuth && $userInfo->extension_downloaded == 0)  --}}
  <div class="search_slider">
     <div class="black-overlay">
         <div class="container">
@@ -51,5 +51,5 @@ $compatible_browser_array = array('Chrome', 'Firefox', 'Opera');
         </div>
     </div>
 </div>
-@endif
+{{--  @endif  --}}
 

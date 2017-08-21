@@ -185,8 +185,8 @@ class PaymentsController extends Controller
         $payments = $payments
         ->where('payments.mollie_id', '!=', '')
         ->where('status', '=', 'paid')
-        ->where('type', '=', 'mollie')
-        ->where('type', '=', 'opwaardering')
+        ->whereIn('type', ['mollie','opwaardering'])
+        // ->where('type', '=', 'opwaardering')
         ->orWhere('type', 'LIKE', '%invoice_%')
         ->paginate($this->limit)
         ;

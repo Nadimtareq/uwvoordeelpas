@@ -98,7 +98,7 @@
 </div>
 
 <div class="sixteen wide mobile four wide computer column">
-    @include('admin.template.search.form')
+     @include('admin.template.search.form') 
 </div>
 </div>
 </div>
