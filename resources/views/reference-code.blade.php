@@ -16,20 +16,29 @@
         <div class="up">
             <div class="start">
                 <h2>Promoot ons nu! U gaat toch ook liever volledig gratis uiteten?</h2>
+				<div class="row">
                 <ul class="list">
+				 <div class="col-md-4 col-lg-4">
                     <li>
                         <div class="wrap"><img src="{{asset('images/l1.png')}}" alt="l" /></div>
                         <p>1: Klik op de groene knop en plak de link op uw Social-Media, denk aan Facebook of WhatsApp!</p>
                     </li>
+					</div>
+					 <div class="col-md-4 col-lg-4">
                     <li>
                         <div class="wrap"><img src="{{asset('images/l2.png')}}" alt="l" /></div>
                         <p>2: Klikt er iemand op uw link en hij koopt 2 of meer deals zonder te annuleren, dan ontvangt u €5.- tegoed!</p>
                     </li>
+					</div>
+					 <div class="col-md-4 col-lg-4">
                     <li>
                         <div class="wrap"><img src="{{asset('images/l3.png')}}" alt="l" /></div>
                         <p>3: Er zit geen limiet aan het aantal nieuwe kopers, €5.- betalen we na 14 dgn. i.v.m. retourrecht! U krijgt eindeloos €5.- tegoed voor iedere nieuwe koper van 2 deals of meer!</p>
                     </li>
+					</div>
+					 
                 </ul>
+				</div>
             </div>
         </div>
         <div class="ui divider"></div>
