@@ -1,4 +1,8 @@
-<?php @$browser = Session::get('browser'); ?>
+ @if (($userAuth && $userInfo->extension_downloaded == 0) || $userAuth == FALSE)  
+<?php 
+@$browser = Session::get('browser'); 
+
+?>
 <div class="extension-install-overlay" style="display: none;">
     <div class="extension-install-fade">
         <div class="text {{$browser['name']}}">
@@ -12,7 +16,7 @@
 $compatible_browser_array = array('Chrome', 'Firefox', 'Opera');
 ?>
  
- {{--  @if ($userAuth && $userInfo->extension_downloaded == 0)  --}}
+
  <div class="search_slider">
     <div class="black-overlay">
         <div class="container">
@@ -22,6 +26,7 @@ $compatible_browser_array = array('Chrome', 'Firefox', 'Opera');
                         <h1 align="center">Activeer de spaarhulp en ontvang direct €5.-</h1>
                         <p align="center">Spaar nu automatisch bij wel 2500+ webshops.
                             Deze betalen u tot wel 10% dinertegoed bij iedere aankoop!</p>
+                        
                            <?php if(in_array($browser['name'], $compatible_browser_array)):?>
                                     <?php if ($userAuth == FALSE): ?>
                                     <button data-browser="{{$browser['name']}}"
@@ -51,5 +56,5 @@ $compatible_browser_array = array('Chrome', 'Firefox', 'Opera');
         </div>
     </div>
 </div>
-{{--  @endif  --}}
+  @endif  
 

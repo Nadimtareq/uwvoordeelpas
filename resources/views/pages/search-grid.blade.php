@@ -11,6 +11,10 @@
 @endsection  
 
 @section('content')
+<script type="javascript">
+        var searchPage = 1;
+    </script>
+
 <div class="clearfix"></div>
      @include('pages.search-filter')
     <div class="clearfix"></div>
@@ -104,9 +108,7 @@
                                                         @if($deal->price_from >= 1)
                                                             <del class="price">
                                                                 &euro; {{ $deal->price_from }}
-                                                            </del> &nbsp; &nbsp;
-                                                        @else
-                                                            <span class="price price_min_box"></span>
+                                                            </del> &nbsp; &nbsp;                                                       
                                                         @endif
 
                                                         <span class="price2">
@@ -119,12 +121,13 @@
                                                         {{--Save</a>--}}
 
                                                         {{--<span class="stars"><img src="{{ asset('images/stars.png') }}" alt="stars" style="width: initial;">5.00</span>--}}
-                                                        {{ $data->name }}
+                                                        {{--  {{ $data->name }} | <span><i class="marker icon"></i> {{ ucfirst($data->city) }}&nbsp;</span>  --}}
+                                                        <a style="font-size: 0.9em;" href="{{ url('search?q='.$data->city) }}">{{ $data->name }} | <span><i class="marker icon"></i> {{ ucfirst($data->city) }}</span></a>
                                                         <?php
-                                                        if ($data->kitchens != 'null' && $data->kitchens != NULL && $data->kitchens != '[""]') {
+                                                       /* if ($data->kitchens != 'null' && $data->kitchens != NULL && $data->kitchens != '[""]') {
                                                             $kitchens = json_decode($data->kitchens);
                                                             echo '<a href="' . url('search?q=' . $kitchens[0]) . '"><i class="food icon"></i> ' . ucfirst($kitchens[0]) . '</a>';
-                                                        }
+                                                        } */
                                                         ?>
 
                                                         @if(isset($onFavoritePage))
@@ -150,16 +153,42 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="heading_price_sec">
-                                                <h1>@if($count_persons >= $deal->total_amount)
-                                                        {{ $deal->name }} 
+                                            <style>
+                                                .deal-details{
+                                                    padding: 10px;
+                                                }
+                                                .deal-details a.title, .deal-details h1{
+                                                    color: #273398;
+                                                    font-size: 1.8em;
+                                                    padding-top: 10px;
+                                                    display: inline-block;
+                                                    white-space: pre-wrap;
+                                                    line-height: 1.2em;
+                                                }
+
+                                                 .deal-details a.title:hover{
+                                                     color: #1E70BF;
+                                                 }
+
+                                                .deal-details p{
+                                                    color: #999;
+                                                }
+                                            </style>
+                                            <div class="deal-details">
+                                                @if($count_persons >= $deal->total_amount)
+                                                       <h1> {{ $deal->name }} </h1>
                                                     @else
-                                                        <a href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}"
-                                                           title="{{ $data->name }}">{{ $deal->name }}</a>
+                                                       <a href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}"
+                                                           title="{{ $data->name }}" class="title">{{ $deal->name }}</a>
+                                                         
 
-                                                    @endif</h1>
-
-                                                <p class="hidden-xs0" style="color: #666; min-height: 40px;"> <em>{!! substr(strip_tags($deal->description,'<em>'), 0, 107) !!}</em></p>
+                                                    @endif
+                                                <span>
+                            <a href="{{ url('search?q='.$data->city) }}">{{ $data->name }} | <span>
+                            <i class="marker icon"></i> {{ ucfirst($data->city) }}&nbsp;</span>
+                            </a>
+                        </span>
+                                                <p class="hidden-xs0" style="color: #666; "> <em>{!! substr(strip_tags($deal->description,'<em>'), 0, 107) !!}</em></p>
 
                                                 {{--<div class="avilable_to_people">--}}
                                                 {{--<i class="fa fa-caret-left" aria-hidden="true"></i>--}}
@@ -172,7 +201,7 @@
                                                 {{--</div>--}}
 
                                                 {{--  <div style="display: block; padding-top; 20px;">  --}}
-                                                <br><br>
+                                              
                             
                                                 <div class="row">
                                                     
@@ -279,8 +308,8 @@
 
 @section("after_styles")
 
-    <link href="{{ asset("css/custom.css") }}" rel="stylesheet">
-    <link href="{{ asset("css/animate-min.css") }}" rel="stylesheet">
+    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/animate-min.css') }}" rel="stylesheet">
 
     <style>
         .header {
@@ -293,9 +322,9 @@
 @endsection
 
 @section("after_scripts")
-    <script src="{{ asset('js/bootstrap.min.js') }} "></script>
-    <script src="{{ asset("js/wow.js") }}"></script>
-    <script src="{{ asset("js/script.js") }}"></script>
+    {{--  <script src="{{ asset('js/bootstrap.min.js') }} "></script>  --}}
+    {{--  <script src="{{ asset('js/wow.js') }}"></script>
+    <script src="{{ asset('js/script.js') }}"></script>  --}}
 
     <script>
         $(function() {
@@ -309,6 +338,6 @@
                 c = !c;
                 e.preventDefault();
             });
-        }
+        } 
     </script>
 @endsection

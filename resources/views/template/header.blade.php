@@ -11,12 +11,12 @@
  @endif
  @if($headerImg)
  	<header> <!--   -->
-	 @else
+@else
 		 <header id="navigation" class="root-sec white nav header">
-	 @endif
-	 @if($headerImg)
+@endif
+@if($headerImg)
      	<div class="header">
-	 @endif
+@endif
 			<div class="container">
 				<div class="row">
 					<div class="col-sm-12">

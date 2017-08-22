@@ -68,16 +68,19 @@
                                     <div class="partner">
                                         <a href="{{ url('tegoed-sparen/company/'.$data['name']) }}">
                                             <span class="partner2"><h1>{{ $data['comissions'] }}</h1>Max. spaartegoed</span>
-                                            @if (isset($media[0]) && $FileHelper::is_url_exist(url(''.$media[0]->getUrl())))
-                                                <img src="{{ asset('images/affiliates/'.$data['affiliate_network'].'/'.$data['program_id'].'.'.$data['image_extension']) }}" alt="p1">
+                                            <?php $mediaUrl =  'images/affiliates/'. $data->affiliate_network .'/'.$data->program_id.'.'.$data->image_extension; ?>
+                                            @if (isset($data->image_extension) && $FileHelper::is_url_exist(url($mediaUrl)))
+                                                <img src="{{ url($mediaUrl) }}" alt="more" />
+                   
                                             @else
-                                                <img src="{{ url('images/placeholdimage.png') }}" alt="p1">
+                                                <img src="{{ url('images/placeholdimage.png') }}" alt="p1"> 
                                             @endif
                                         </a>
                                     </div>
                                 </div>
                             @endforeach
                         </div>
+
                     </div>
                 </div>
             </section>

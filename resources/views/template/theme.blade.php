@@ -149,18 +149,18 @@
 <div class="pusher">
     @if (!Request::has('iframe'))
 
-         {{--  @if(isset($search_header) && $search_header)
+          @if(isset($search_header) && $search_header)
             @include('template.header-search')
 
-        @else   --}}
-            {{--  @if(!Auth::guest() && Sentinel::inRole('admin') != FALSE)
+        @else  
+             @if(!Auth::guest() && Sentinel::inRole('admin') != FALSE)
                 @include('template.header-search')
             @else
                 @include('template.header')
-            @endif  --}}
+            @endif 
              
 
-             @include('template.header')
+             {{--  @include('template.header')  --}}
             <section>
                 @if (isset($__env->getSections()['slider']))
                     @yield('slider')
@@ -168,7 +168,7 @@
                     @include('template.slider')
                 @endif
             </section> 
-         {{--  @endif   --}}
+          @endif  
 
     @endif
 

@@ -52,7 +52,11 @@
             <div class="col-md-12 text-center">
 
                 <h4>Deel deze link</h4> 			 
-                <span class='addthis_sharing_toolbox'></span>
+                {{--  <span class='addthis_sharing_toolbox'></span>  --}}
+                <!-- Go to www.addthis.com/dashboard to customize your tools --> 
+                <div class="addthis_inline_share_toolbox"></div>
+                <!-- Go to www.addthis.com/dashboard to customize your tools --> <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-59932f986f1f86f2"></script>
+    
             </div>
 
                     
@@ -99,7 +103,7 @@
 </div>
 
 @section('scripts')
-    <script type="text/javascript">
+<script type="text/javascript">
         $(document).ready(function() {
             var clipboard = new Clipboard('#clipboard');
             clipboard.on('success', function(e) {

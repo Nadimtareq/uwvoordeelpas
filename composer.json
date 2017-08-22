@@ -36,7 +36,8 @@
         "giggsey/libphonenumber-for-php": "^7.6",
         "captcha-com/laravel-captcha": "^4.1",
 		"guzzlehttp/guzzle": "~4.0",
-        "mobiledetect/mobiledetectlib": "^2.8"
+        "mobiledetect/mobiledetectlib": "^2.8",
+        "jorenvanhocht/laravel-share": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

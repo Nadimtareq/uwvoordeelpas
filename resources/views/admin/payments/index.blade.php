@@ -105,8 +105,9 @@
 </div>
 </div>
 
-<div class="ui grid">
-    <div class="five wide column">
+<div class="col-xs-12">
+
+    <div class="col-sm-6">
         <div class="ui normal icon selection fluid dropdown">
             <input type="hidden" name="source" value="{{ Request::input('source') }}">
 
@@ -122,7 +123,7 @@
         </div>
     </div>
 
-    <div class="five wide column">
+    <div class="col-sm-6">
         <?php echo Form::select('city', (isset($preference[9]) ? $preference[9] : array()), Request::input('city'), array('id' => 'cityRedirect', 'class' => 'ui normal search fluid dropdown')); ?>
     </div>
 </div>
