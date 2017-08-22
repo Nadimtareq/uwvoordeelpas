@@ -1595,10 +1595,6 @@
 
     @endif
 
-    <div style="page-break-before:always">&nbsp;</div>
-    {!! isset($contentBlock[43]) ? $contentBlock[43] : '' !!}
-
-
 </div>
 <img src="{{ public_path() . '/pdf/pdf-footer.jpg' }}" alt="footer-img" class="footer-last">
 </body>

@@ -155,8 +155,26 @@
 			    <?php echo Form::text('zanox_pw', isset($apiSettings['zanox_pw']) ? $apiSettings['zanox_pw'] : ''); ?>
 			</div>
 		</div>
+        <h4>Awin</h4>
+        <div class="fields">
+            <div class="two wide field">
+                <label>Uitvoeren</label>
+                <a href="{{ url('admin/settings/run/awin') }}" class="ui icon button"><i class="refresh icon"></i></a>
+            </div>
+
+            <div class="four wide field">
+                <label>ConnectID</label>
+                <?php echo Form::text('awin_name', isset($apiSettings['awin_name']) ? $apiSettings['awin_name'] : ''); ?>
+            </div>
+
+            <div class="twelve wide field">
+                <label>Access Token</label>
+                <?php echo Form::text('awin_pw', isset($apiSettings['awin_pw']) ? $apiSettings['awin_pw'] : ''); ?>
+            </div>
+        </div>
 	<?php echo Form::close() ?>
 	<?php echo Form::open(array('url' => 'admin/settings/hotspotAPI', 'method' => 'post', 'class' => 'ui form')) ?>
+	
 	   	<h4>Hotspot</h4>
 		<div class="fields">
 			<div class="two wide field">
@@ -169,11 +187,13 @@
 			    <?php echo Form::text('hotspot_pw', isset($apiSettings['hotspot_pw']) ? $apiSettings['hotspot_pw'] : ''); ?>
 			</div>
 		</div>
+		<?php echo Form::close() ?>
+		<?php echo Form::open(array('url' => 'admin/settings/maingun', 'method' => 'post', 'class' => 'ui form')) ?>
 		<h4>Mailgun</h4>
 		<div class="fields">
 			<div class="two wide field">
 			   	<label>Uitvoeren</label>
-			   	<a  href="{{ url('admin/settings/run/mailgun') }}" class="ui icon button"><i class="refresh icon"></i></a>
+			   	<button type="submit" class="ui icon button"><i class="refresh icon"></i></button>
 			</div>
 
 			<div class="twelve wide field">

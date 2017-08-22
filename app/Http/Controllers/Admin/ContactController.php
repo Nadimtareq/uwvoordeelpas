@@ -67,6 +67,10 @@ class ContactController extends Controller
                 Alert::success('De gekozen selectie is succesvol verwijderd.')->persistent("Sluiten");
                 return Redirect::to('admin/'.$this->slugController);
                 break;
+            default:
+                alert()->message('Please choose an action')->persistent("Ok");
+                return Redirect::to('admin/'.$this->slugController);
+                break;
         }
     }
 
@@ -137,23 +141,24 @@ class ContactController extends Controller
     public function conversation($id, $email)
     {
         $contactForm = ContactFormMessage::where("id", $id)->where("recipient_email", $email)->first();
-        $contact = Contact::find($contactForm->contact_reply_id);
 
-        if ($contactForm && $contact)
-        {
-            $conversations = ContactFormMessage::where("id", $id)->where("recipient_email", $email)->get();
+        if($contactForm) {
+            $contact = Contact::find($contactForm->contact_reply_id);
 
-            return view('admin/' . $this->slugController . '/messages', [
-                'data' => $conversations,
-                'contact' => $contact,
-                'slugController' => $this->slugController,
-                'section' => $this->section,
-                'currentPage' => 'Contact Conversation',
-                'id' => $id,
-                "email" => $email
-            ]);
+            if ($contactForm && $contact) {
+                $conversations = ContactFormMessage::where("id", $id)->where("recipient_email", $email)->get();
+
+                return view('admin/' . $this->slugController . '/messages', [
+                    'data' => $conversations,
+                    'contact' => $contact,
+                    'slugController' => $this->slugController,
+                    'section' => $this->section,
+                    'currentPage' => 'Contact Conversation',
+                    'id' => $id,
+                    "email" => $email
+                ]);
+            }
         }
-
         exit(404);
     }
 

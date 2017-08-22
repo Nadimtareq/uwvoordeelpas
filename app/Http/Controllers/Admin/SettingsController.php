@@ -18,6 +18,11 @@ use Intervention\Image\Exception\NotReadableException;
 use Redirect;
 use Setting;
 use Illuminate\Console\Commands\Guest\Wifi;
+use Mail;
+use DB;
+use URL;
+use App\Models\TempAuthRedirectUrl;
+use App\Models\TemporaryAuth;
 
 class SettingsController extends Controller
 {
@@ -80,6 +85,8 @@ class SettingsController extends Controller
             'tradedoubler_pw',
             'zanox_name',
             'zanox_pw',
+            'awin_name',
+            'awin_pw',
             'hotspot_pw',
 			'mailgun_key',
             'callcenter_reminder',
@@ -104,23 +111,6 @@ class SettingsController extends Controller
 		
         Setting::forget('cronjobs');
 
-        $settingsArray = array(
-            'affilinet_name',
-            'affilinet_pw',
-            'daisycon_name',
-            'daisycon_pw',
-            'tradetracker_name',
-            'tradetracker_pw',
-            'tradedoubler_name',
-            'tradedoubler_pw',
-            'zanox_name',
-            'zanox_pw',
-            'hotspot_pw',
-			'mailgun_key',
-            'callcenter_reminder',
-            'newsletter_dealmail',
-            'callcenter_reminder_status',
-        );
 
         foreach ($requests as $key => $value) {
             Setting::set('cronjobs.'.$key, 1);
@@ -320,7 +310,7 @@ class SettingsController extends Controller
 			$wifikey= $request->input('hotspot_pw');
 			
 			$this->addGuests($wifikey);
-            die;
+           
 
             Alert::success('De instellingen zijn succesvol aangepast.')->persistent('Sluiten');
 
@@ -527,5 +517,78 @@ class SettingsController extends Controller
             }
         } 
     }
+	
+	 private function sendNewsletter()
+	  {
+		$newsletterJobs = NewsletterJob::all()->where('status',1);
+		//dd($newsletterJobs);
+		$newsletters = [];
+		mail('rushabhmadhu@gmail.com','Deal Email','Deal email is called'.date('Y-m-d H:i:s'));
+		foreach ($newsletterJobs as $job) {
+			$deals = $this->getDeals($job->city_id);
+			$users = $this->getSubscribedUsers($job->city_id);
+			if(count($deals)>0 && count($users)>0) $this->sendDealsToUser($deals,$users);
+		}
+	 }
+	 private function getDeals($city_id)
+	  {
+		# code...
+		$deals = array();
+		
+		$data = DB::table('companies')->select('companies.*')->join('users','companies.user_id','=','users.id')->where('users.city','LIKE','%"'.$city_id.'"%')->get();
+		foreach ($data as $company) {
+		  # code...
+		  $deals[$company->slug] = DB::table('reservations_options')->where([['company_id',$company->id],['newsletter', 1]])->get();
+		}
+		return $deals;
+	  }
+	  
+	  private function getSubscribedUsers($city_id)
+  {
+    # code...
+    $users = DB::table('users')->where([['city','LIKE','%"'.$city_id.'"%'],['newsletter',1]])->get(['id','email','name','saldo','extension_downloaded']);
+    return $users;
+  }
+
+  /**
+   * Queue Mail for sending deals.
+   * @param array $deals, $users
+   */
+  private function sendDealsToUser($deals=[],$users=[])
+  {
+    # code...
+    if(!empty($deals) && !empty($users)){
+      foreach ($users as $user) {
+        # code...
+        $data = $this->createTempAuth($user,$deals);
+        Mail::queue('emails.deals',['user' => $data[0],'deals' => $data[1]],function($message) use ($user){
+          $message->to($user->email)->subject('UW Voordeelpas - De beste deals');
+        });
+      }
+    }
+  }
+
+  
+  private function createTempAuth($user,$deals)
+  {
+    # code...
+    if(!empty($user) && !empty($deals)){
+      $tempAuth = new TemporaryAuth;
+      $user->{'saldo_url'}=$tempAuth->createCode($user->id,'account/reservations/saldo');
+      $user->{'unsubscribe_url'}=$tempAuth->createCode($user->id,'unsubscribe/'.$user->id);
+      $user->{'extension_download_url'}=$tempAuth->createCode($user->id,'?extension_download_btn=1');
+      foreach ($deals as $key => $restaurant) {
+        # code...
+        foreach ($restaurant as $index => $deal) {
+          # code...
+          $url = 'future-deal/'.$key.'?deal='.$deal->id;
+          $deals[$key][$index]->{'deal_url'} = $tempAuth->createCode($user->id,$url);
+        }
+      }
+
+    }
+    $data = [$user,$deals];
+    return $data;
+  }
 
 }

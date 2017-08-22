@@ -111,6 +111,7 @@
 									'daisycon' => 'Daisycon',
 									'affilinet' => 'Affilinet',
 									'zanox' => 'Zanox',
+									'awin' => 'Awin',
 									'familyblend' => 'FamilyBlend'
 								),
 								'',

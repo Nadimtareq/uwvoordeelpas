@@ -312,7 +312,7 @@ class Company extends Model implements SluggableInterface, HasMediaConversions
             ->orWhere("answer", "LIKE", '%' . $question . '%')
             ->get();
 
-        if ($faq) {
+        if ($faq->count()) {
             return $faq;
         }else {
             $search = collect();
@@ -320,12 +320,12 @@ class Company extends Model implements SluggableInterface, HasMediaConversions
             $question_arr = explode(" ", $subject, 15);
 
             for ($i = 0; $i < count($question_arr); $i++) {
-                if (strlen($subject[ $i ]) > 5) {
-                    $search = $search->merge(Faq::where("title", $subject[ $i ])->get());
+                if (strlen($question_arr[ $i ]) > 5) {
+                    $search = $search->merge(Faq::where("title", "LIKE", "%" . $question_arr[ $i ] . "%")->get());
                 }
             }
 
-            if ( ! $search || isEmpty($search) ) {
+            if ( $search->count() < 1 ) {
                 if ($question !== "") {
                     $question_arr = explode(" ", $question, 15);
 
@@ -337,7 +337,7 @@ class Company extends Model implements SluggableInterface, HasMediaConversions
                 }
             }
 
-            if ($search || ! isEmpty($search) )
+            if ($search->count())
                 return $search->unique("id");
         }
 
