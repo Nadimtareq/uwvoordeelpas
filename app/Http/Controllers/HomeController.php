@@ -971,6 +971,7 @@ class HomeController extends Controller
 
     public function search(Request $request)
     {
+		
         $searchHistory = new SearchHistory();
         $searchHistory->addTerm($request->input('q'), '/search');
 
@@ -1225,7 +1226,7 @@ class HomeController extends Controller
             $searchPage = "pages/search-grid";
         else
             $searchPage = "pages/search";
-
+		
         return view($searchPage, [
             'companies' => $companies,
             'affiliates' => $this->affiliates,

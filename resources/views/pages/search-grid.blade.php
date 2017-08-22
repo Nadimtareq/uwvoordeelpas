@@ -10,7 +10,7 @@
    {{--  @include('pages._search-slider')  --}}
 @endsection  
 
-@section('content')
+@section('content') 
 <div class="clearfix"></div>
      @include('pages.search-filter')
     <div class="clearfix"></div>

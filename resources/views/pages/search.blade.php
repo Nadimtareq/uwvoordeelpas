@@ -94,7 +94,7 @@
 
                             @include('company-list-more', ['viewType' => 'more'])
                         @endif
-
+					
                         @if($countCompanies >= 16)
                             <div id="limitSelect" class="ui basic segment">
                                 <div class="ui normal floating icon selection dropdown">
