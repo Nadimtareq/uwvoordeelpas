@@ -17,7 +17,7 @@
 @inject('discountHelper', 'App\Helpers\DiscountHelper')
 @inject('companyReservation', 'App\Models\companyReservation')
 @inject('FileHelper', 'App\Helpers\FileHelper')
-<ul>
+<ul> 
     @foreach ($companies as $data)
         @foreach ($data->ReservationOptions2()->get() as $deal)
             <li>
