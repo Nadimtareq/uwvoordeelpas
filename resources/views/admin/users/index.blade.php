@@ -78,12 +78,81 @@
                         <div class="text">Soort</div>
                         <i class="dropdown icon"></i>
 
+<<<<<<< HEAD
                         <div class="menu">
                             <a href="{{ url('admin/users?role=admin') }}" data-value="admin" class="item">Admin</a>
                             <a href="{{ url('admin/users?role=bedrijf') }}" data-value="bedrijf" class="item">Bedrijf</a>
                             <a href="{{ url('admin/users?role=barcode_user') }}" data-value="barcode_user" class="item">Barcode</a>
                             <a href="{{ url('admin/users?role=bediening') }}" data-value="bediening" class="item">Bediening</a>
                             <a href="{{ url('admin/users?role=callcenter') }}" data-value="callcenter" class="item">Call Center</a>
+=======
+                <div class="sixteen wide mobile twelve wide computer column">
+                    <div class="ui grid">
+                        <div class="three column row">
+                            <div class="sixteen wide mobile four wide computer column">
+                                <div class="ui normal  search selection fluid dropdown"> <!-- icon class deleted-->
+                                    <input type="hidden" name="companiesId">
+                                    <i class="filter icon"></i>
+
+                                    <span class="text">Bedrijf</span>
+
+                                    <i class="dropdown icon"></i>
+
+                                    <div class="menu">
+                                        @foreach ($companies as $company)
+                                        <a class="item" href="{{ url('admin/guests/'.$company->slug) }}" data-value="{{ $company->id }}">
+                                            {{ $company->name }}
+                                        </a>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="sixteen wide mobile four wide computer column">
+                                <?php echo Form::select('city', (isset($preference[9]) ? $preference[9] : array()), Request::input('city'), array('id' => 'cityRedirect', 'class' => 'ui normal search fluid dropdown')); ?>
+                            </div>
+
+                            <div class="sixteen wide mobile four wide computer column">
+                                <div class="ui normal floating basic search selection dropdown">
+                                    <input type="hidden" name="source" value="{{ Request::input('source') }}">
+
+                                    <div class="text">Partij</div>
+                                    <i class="dropdown icon"></i>
+
+                                    <div class="menu">
+                                        <a href="{{ url('admin/users?'.http_build_query(array_add($queryString, 'source', 'seatme'))) }}" data-value="seatme" class="item">SeatMe</a>
+                                        <a href="{{ url('admin/users?'.http_build_query(array_add($queryString, 'source', 'eetnu'))) }}" data-value="eetnu" class="item">EetNU</a>
+                                        <a href="{{ url('admin/users?'.http_build_query(array_add($queryString, 'source', 'couverts'))) }}" data-value="couverts" class="item">Couverts</a>
+                                        <a href="{{ url('admin/users?'.http_build_query(array_add($queryString, 'source', 'wifi'))) }}" data-value="wifi" class="item">Wi-Fi</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="sixteen wide mobile four wide computer column">
+                                <div class="ui normal floating basic search selection dropdown">
+                                    <input type="hidden" name="role" value="{{ Request::input('role') }}">
+
+                                    <div class="text">Soort</div>
+                                    <i class="dropdown icon"></i>
+
+                                    <div class="menu">
+                                        <a href="{{ url('admin/users?role=admin') }}" data-value="admin" class="item">Admin</a>
+                                        <a href="{{ url('admin/users?role=bedrijf') }}" data-value="bedrijf" class="item">Bedrijf</a>
+                                        <a href="{{ url('admin/users?role=barcode_user') }}" data-value="barcode_user" class="item">Barcode</a>
+                                        <a href="{{ url('admin/users?role=bediening') }}" data-value="bediening" class="item">Bediening</a>
+                                        <a href="{{ url('admin/users?role=callcenter') }}" data-value="callcenter" class="item">Call Center</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="sixteen wide mobile three wide computer column">
+                                @include('admin.template.limit')
+                            </div>
+
+                            <div class="sixteen wide mobile one wide computer column">
+                                @include('admin.template.search.form')
+                            </div>
+>>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
                         </div>
                     </div>
                 </div>

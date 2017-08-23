@@ -786,6 +786,7 @@ public function updateAction(Request $request, $id, $slug)
 
     public function contract($id, $slug)
     {
+<<<<<<< HEAD
 //        $attachment_location= './pdf/contract1.pdf';
 //        if (file_exists($attachment_location)) {
 //
@@ -798,6 +799,20 @@ public function updateAction(Request $request, $id, $slug)
 //            readfile($attachment_location);
 //            die();
 //        }
+=======
+        $attachment_location= './pdf/contract1.pdf';
+        if (file_exists($attachment_location)) {
+
+            header($_SERVER["SERVER_PROTOCOL"] . " 200 OK");
+            header("Cache-Control: public"); // needed for internet explorer
+            header("Content-Type: application/pdf");
+            header("Content-Transfer-Encoding: Binary");
+            header("Content-Length:".filesize($attachment_location));
+            header("Content-Disposition: attachment; filename=contract1.pdf");
+            readfile($attachment_location);
+            die();
+        }
+>>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
         $data = Company::where('id','=', $id);
 
         if (Sentinel::inRole('bedrijf') && Sentinel::inRole('admin') == FALSE)  {
@@ -807,8 +822,9 @@ public function updateAction(Request $request, $id, $slug)
         $data = $data->first();
 
         if (count($data) == 1) {
-            $company = new Company();
-            return $company->createContract($id);
+//            $attachment_location =
+//            $company = new Company();
+//            return $company->createContract($id);
         } else {
             Alert::error('Dit bedrijf bestaat helaas niet of u heeft niet genoeg rechten.')->persistent("Sluiten");
             return Redirect::to('/');

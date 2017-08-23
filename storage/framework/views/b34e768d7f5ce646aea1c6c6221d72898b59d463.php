@@ -212,6 +212,7 @@ while ($st->lte($dt)) {
                     <div id="t2" style="display: none;">
                     <?php if(isset($deals) && count($deals)): ?>
                         <?php foreach($deals as $deal): ?>
+<<<<<<< HEAD
                         <div class="row">
                             <!-- Menu -->
                                 <div class="col-sm-12">
@@ -224,12 +225,26 @@ while ($st->lte($dt)) {
                                             <a href="<?php echo e(url('future-deal/'.$company->slug).'?deal='.$deal->id); ?>"> <img
                                                         src="<?php echo e(asset('images/deals/'.$deal->image)); ?>"
                                                         alt="No Image Found" class="img-responsive">
+=======
+                            <!-- Menu -->
+                                <div class="menu deals-list-page">
+                                    <div class="left_m">
+                                        <h2><?php echo e($deal->name); ?></h2>
+                                        <?php if($deal->image!=''): ?>
+                                            <a href="<?php echo e(url('future-deal/'.$company->slug).'?deal='.$deal->id); ?>"> <img
+                                                        src="<?php echo e(asset('images/deals/'.$deal->image)); ?>"
+                                                        alt="No Image Found" width="400px">
+>>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
                                             </a>
 
                                         <?php else: ?>
                                             <a href="<?php echo e(url('future-deal/'.$company->slug).'?deal='.$deal->id); ?>"> <img
                                                         src="<?php echo e(asset('images/deals/no-img.jpg')); ?>"
+<<<<<<< HEAD
                                                         alt="No Image Found" class="img-responsive">
+=======
+                                                        alt="No Image Found" width="400px">
+>>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
                                             </a>
 
                                         <?php endif; ?>
@@ -238,6 +253,7 @@ while ($st->lte($dt)) {
                                                     <li><span>Korting<i>50%</i></span></li>
                                                         </ul>*/ ?>
                                     </div>
+<<<<<<< HEAD
                                     </div>
                                 <div class="col-sm-7">
                                 <div class="row">
@@ -259,6 +275,16 @@ while ($st->lte($dt)) {
                                     <div class="col-xs-12">
                                     <br>
                                     
+=======
+                                    <div class="right_m">
+                                        <?php if($deal->price_from > 0.00): ?>
+                                            <span>&euro; <?php echo e($deal->price_from); ?>
+
+                                        <?php endif; ?>
+                                        <strong>&euro; <?php echo e($deal->price); ?></strong></span>
+                                        <b class="up"><?php echo $deal->description; ?></b>
+                                    </div>
+>>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
                                     <?php if(!is_null($deal->getApprovedReviews)): ?>
                                         <?php
                                         $count = 1;
@@ -278,6 +304,7 @@ while ($st->lte($dt)) {
                                                     </div>
                                                 </div>
                                             </div>
+<<<<<<< HEAD
                                     
                                             <?php $count++; ?>
                                         <?php endforeach; ?>
@@ -288,6 +315,11 @@ while ($st->lte($dt)) {
                                     </div>
                                     <div class="row">
                                     <div class="col-xs-12">
+=======
+                                            <?php $count++; ?>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+>>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
                                     <?php if(count($deals)==1): ?>
                                         <div id="koop">
                                             <a class="more"
@@ -301,11 +333,14 @@ while ($st->lte($dt)) {
                                                 </a>
                                             <?php endif; ?>
                                         </div>
+<<<<<<< HEAD
                                         </div>
                                 </div>
                                 </div>
                                 </div>
                                 </div><!-- End of ROw -->
+=======
+>>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
                                         <?php endforeach; ?>
                                     <?php endif; ?>
                                 </div>

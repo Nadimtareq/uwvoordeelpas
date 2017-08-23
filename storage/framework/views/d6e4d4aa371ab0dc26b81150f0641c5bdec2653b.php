@@ -124,7 +124,11 @@
                     <td>
                         <?php echo e($resDate->formatLocalized('%d %b %Y')); ?> <?php echo e(date('H:i', strtotime($reservation->reservation_date))); ?>
 
+<<<<<<< HEAD
                     </td>z
+=======
+                    </td>
+>>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
                     <td>
                         <?php if($reservation->network_status == 'confirmed'): ?>
                         <span class="ui green fluid label">Reservering</span>

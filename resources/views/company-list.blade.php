@@ -56,12 +56,20 @@
 
                             {{--					@if($count_persons >= $deal->total_amount)
 
+<<<<<<< HEAD
                                                     <img src="{{ url('images/placeholdimagerest.png') }}" alt="{{ $data->name }}" class="img-responsive"  />
+=======
+                                                    <img src="{{ url('images/placeholdimagerest.png') }}" alt="{{ $data->name }}" class="thumbnails"  />
+>>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
 
                                                 @else
 
                                                     <a href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}" title="{{ $data->name }}" data-url="">
+<<<<<<< HEAD
                                                         <img src="{{ url('images/placeholdimagerest.png') }}" alt="{{ $data->name }}" class="img-responsive"  />
+=======
+                                                        <img src="{{ url('images/placeholdimagerest.png') }}" alt="{{ $data->name }}" class="thumbnails"  />
+>>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
                                                     </a>
                                                     @endif
                                                 @endif--}}
@@ -70,7 +78,11 @@
                             @if($deal->image != null  &&  file_exists(public_path('images/deals/'  . $deal->image)))
                                 <a href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}"
                                    title="{{ $data->name }}" data-url="" style="position: relative;">
+<<<<<<< HEAD
                                     <img width="100%" src="{{ url('images/deals/' . $deal->image) }}" alt="{{ $data->name }}" class="img-responsive" />
+=======
+                                    <img src="{{ url('images/deals/' . $deal->image) }}" alt="{{ $data->name }}" class="thumbnails" />
+>>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
 
                                 </a>
                             @else

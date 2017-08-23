@@ -51,6 +51,7 @@
                                 </a>
                             <?php endif; ?>
                         <?php else: ?>
+<<<<<<< HEAD:storage/framework/views/45c852a7a5466e879a6a87cc6ee3ba3bc72c8f84.php
 
 
 
@@ -68,6 +69,9 @@
 
 
                             <?php if($deal->image != null  &&  file_exists(public_path('images/deals/'  . $deal->image))): ?>
+=======
+                            <?php if($count_persons >= $deal->total_amount): ?>
+>>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657:storage/framework/views/39de85729fe048fffb6e7466081baf86804ec621.php
                                 <a href="<?php echo e(url('restaurant/'.$data->slug).'?deal='.$deal->id); ?>"
                                    title="<?php echo e($data->name); ?>" data-url="" style="position: relative;">
                                     <img width="100%" src="<?php echo e(url('images/deals/' . $deal->image)); ?>" alt="<?php echo e($data->name); ?>" class="img-responsive" />

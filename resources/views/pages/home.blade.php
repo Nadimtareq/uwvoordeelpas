@@ -144,6 +144,7 @@
                                         (Request::has('preference') ? Request::get('preference') : ''),
                                         array('class' => 'multipleSelect', 'data-placeholder' => 'Voorkeuren', 'multiple' => 'multiple')) }}
 
+<<<<<<< HEAD
                     </div>
                     <div class="jsearch col-md-2 col-sm-2 col-xs-6">
                         {{  Form::select('kitchen[]',
@@ -158,6 +159,22 @@
                                                 array('class' => 'multipleSelect', 'data-placeholder' => 'Soort', 'multiple' => 'multiple')) }}
                     </div>
                 <!--
+=======
+            </div>
+            <div class="jsearch col-md-2 col-sm-2 col-xs-6">
+                {{  Form::select('kitchen[]',
+								(isset($preference[2]) ? $preference[2] : array()),
+								(Request::has('kitchen') ? Request::get('kitchen') : ($user && $user->kitchens != NULL ? json_decode($user->kitchens) : '')),
+								array('class' => 'multipleSelect', 'data-placeholder' => 'Keuken', 'multiple' => 'multiple')) }}
+            </div>
+            <div class="jsearch col-md-2 col-sm-2 col-xs-6">
+                {{ Form::select('price[]',
+                                        (isset($preference[4]) ? $preference[4] : array()),
+                                        (Request::has('price') ? Request::get('price') : ($user && $user->price != NULL ? json_decode($user->price) : '')),
+                                        array('class' => 'multipleSelect', 'data-placeholder' => 'Soort', 'multiple' => 'multiple')) }}
+            </div>
+            <!--
+>>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
             <div class="jsearch col-md-2 col-sm-2 col-xs-6">
                 {{ Form::select('discount[]',
                                         (isset($preference[5]) ? $preference[5] : array()),

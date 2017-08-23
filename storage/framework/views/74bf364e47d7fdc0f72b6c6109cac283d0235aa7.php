@@ -215,6 +215,7 @@ while ($st->lte($dt)) {
                         </div>
                     </div>
                     <div id="t2" style="display: none;">
+<<<<<<< HEAD
                     <?php if(isset($deals) && count($deals)): ?>
                         <?php foreach($deals as $deal): ?>
                             <!-- Menu -->
@@ -283,6 +284,98 @@ while ($st->lte($dt)) {
                                         <?php endforeach; ?>
                                     <?php endif; ?>
                                 </div>
+=======
+                        <?php if(isset($deals) && count($deals)): ?>
+                            <?php foreach($deals as $deal): ?>
+<<<<<<< HEAD
+                        <!-- Menu -->
+                        <div class="menu deals-list-page">
+=======
+                            <!-- Menu -->
+                            <div class="menu deals-list-page">
+>>>>>>> 0721ce7... REstaurant bug
+                                <div class="left_m">
+                                    <h2><?php echo e($deal->name); ?></h2>
+                                    <?php if($deal->image!=''): ?>
+                                        <a href="<?php echo e(url('future-deal/'.$company->slug).'?deal='.$deal->id); ?>"> <img
+                                                    src="<?php echo e(asset('images/deals/'.$deal->image)); ?>"
+                                                    alt="No Image Found" width="400px">
+                                        </a>
+
+                                    <?php else: ?>
+                                        <a href="<?php echo e(url('future-deal/'.$company->slug).'?deal='.$deal->id); ?>"> <img
+                                                    src="<?php echo e(asset('images/deals/no-img.jpg')); ?>"
+                                                    alt="No Image Found" width="400px">
+                                        </a>
+
+                                    <?php endif; ?>
+                                    <?php /*                            <ul class="price">
+                                    <li><span>Verkocht<i>  &euro; <?php echo e($deal->price_from); ?>  </i></span></li>
+                                                <li><span>Korting<i>50%</i></span></li>
+                                                    </ul>*/ ?>
+                                </div>
+                                <div class="right_m">
+                                    <span>&euro; <?php echo e($deal->price_from); ?>
+
+                                        <strong>&euro; <?php echo e($deal->price); ?></strong></span>
+<<<<<<< HEAD
+                                    <b class="up"><?php echo strip_tags( $deal->description ); ?></b>
+                                </div>
+
+                                <?php /*<?php echo e( ); ?>*/ ?>
+=======
+                                    <b class="up"><?php echo $deal->description; ?></b>
+                                </div>
+>>>>>>> 0721ce7... REstaurant bug
+                                <?php if(!is_null($deal->getApprovedReviews)): ?>
+                                    <?php
+                                    $count = 1;
+                                    $total = 0;
+                                    ?>
+                                    <?php foreach($deal->getApprovedReviews as $review): ?>
+                                        <?php
+                                        $avg = floor(($review->food + $review->service + $review->decor) / 3);
+                                        $total += $avg;
+                                        ?>
+                                        <div style="float: left;">
+                                            <div class="score">
+                                                Recencies:
+                                                <div class="ui star tiny rating no-rating disabled"
+                                                     data-rating="<?php echo e($total/$count); ?>">
+                                                    <i class="icon-star active"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <?php $count++; ?>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                                <?php if(count($deals)==1): ?>
+                                <div id="koop">
+                                    <a class="more"
+<<<<<<< HEAD
+                                       href="<?php echo e(url('future-deal/'.$company->slug).'?deal='.$deal->id); ?>">KOOP
+                                        DEAL
+                                    </a>
+                                <?php else: ?>
+                                    <a class="more"
+                                       href="<?php echo e(url('future-deal/'.$company->slug).'?deal='.$deal->id); ?>">KOOP
+                                        DEAL
+=======
+                                       href="<?php echo e(url('future-deal/'.$company->slug).'?deal='.$deal->id); ?>">
+                                        Koop nu, reserveer later.
+                                    </a>
+                                <?php else: ?>
+                                    <a class="more"
+                                       href="<?php echo e(url('future-deal/'.$company->slug).'?deal='.$deal->id); ?>">
+                                        Koop nu, reserveer later.
+>>>>>>> 0721ce7... REstaurant bug
+                                    </a>
+                                <?php endif; ?>
+                                </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
+                            </div>
+>>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
                     </div>
                     <div id="t3" style="display: none;">
                         <div class="info">
@@ -670,6 +763,7 @@ while ($st->lte($dt)) {
         </div>
     </div>
     <script>
+<<<<<<< HEAD
         var activateAjax = 'restaurant';
         //		$('body').on('keydown','#idcontent',function(){
         function checkWords() {
@@ -696,6 +790,41 @@ while ($st->lte($dt)) {
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('scripts'); ?>
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5751e9a264890504"></script>
+=======
+            var activateAjax = 'restaurant';
+            //		$('body').on('keydown','#idcontent',function(){
+            function checkWords() {
+                var data = $('#reviews').serializeArray();
+                console.log(data);
+                var token = $('#csrf-token').val();
+                $.ajax({
+                    type: 'post',
+                    data: data,
+                    url: "<?php echo e(url('restaurant/unwanted/getUnwantedWords')); ?>",
+                    dataType: "json"
+                }).done(function (result) {
+                    if (result.length > 0) {
+                        $('#msg').html('Helaas het woord ...... is niet toegestaan');
+                        $(this).css('color', 'red');
+                    } else {
+                        console.log("abcd");
+                        $('#reviews').submit();
+                    }
+                }).fail(function () {
+                });
+            }
+        </script>
+<?php $__env->stopSection(); ?>
+<<<<<<< HEAD
+    <?php $__env->startSection('scripts'); ?>
+        <script type="text/javascript"
+                src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5751e9a264890504">
+        </script>
+=======
+<?php $__env->startSection('scripts'); ?>
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5751e9a264890504"></script>
+>>>>>>> 0721ce7... REstaurant bug
+>>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('template.theme', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

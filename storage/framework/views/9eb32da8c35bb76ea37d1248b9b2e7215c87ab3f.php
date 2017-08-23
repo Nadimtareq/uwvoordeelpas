@@ -73,6 +73,13 @@
                                         <a href="<?php echo e(url('admin/users?role=barcode_user')); ?>" data-value="barcode_user" class="item">Barcode</a>
                                         <a href="<?php echo e(url('admin/users?role=bediening')); ?>" data-value="bediening" class="item">Bediening</a>
                                         <a href="<?php echo e(url('admin/users?role=callcenter')); ?>" data-value="callcenter" class="item">Call Center</a>
+<<<<<<< HEAD
+=======
+                                        <a href="<?php echo e(url('admin/users?'.http_build_query(array_add($queryString, 'role', 'bedrijf')))); ?>" data-value="bedrijf" class="item">Bedrijf</a>
+                                        <a href="<?php echo e(url('admin/users?'.http_build_query(array_add($queryString, 'role', 'barcode_user')))); ?>" data-value="barcode_user" class="item">Barcode</a>
+                                        <a href="<?php echo e(url('admin/users?'.http_build_query(array_add($queryString, 'role', 'bediening')))); ?>" data-value="bediening" class="item">Bediening</a>
+                                        <a href="<?php echo e(url('admin/users?'.http_build_query(array_add($queryString, 'role', 'callcenter')))); ?>" data-value="callcenter" class="item">Callcenter</a>
+>>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
                                     </div>
                                 </div>
                             </div>

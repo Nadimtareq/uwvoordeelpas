@@ -52,7 +52,14 @@ while ($st->lte($dt)) {
                                                         </a>
                                                 @else
                                                     <li style="float: left; list-style: outside none none; position: relative; width: 674px;">
+<<<<<<< HEAD
                                                         <img src="{{ asset('images/r.png') }}" alt="s" class="materialboxed">
+=======
+                                                        <!--Edited by Team AIT -->
+                                                        <img src="{{ asset('images/r.png') }}" alt="s"
+
+                                                             class="materialboxed">
+>>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
                                                         @endif
                                                         {!! $discountHelper->replaceKeys(
                                                         $company,
@@ -192,7 +199,11 @@ while ($st->lte($dt)) {
                     <li><a href="#t7" class="">Reviews</a></li>
                 </ul>
                 <div class="tabs-content">
+<<<<<<< HEAD
                     <div id="t1" style="display: none;">
+=======
+                    <div id="t1" style="display: block;">
+>>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
                         <div class="text3">
                             <strong>{!! $company->name !!}</strong>
                             <span class="city"><i class="material-icons">place</i>{{ $company->city }}</span>
@@ -200,6 +211,7 @@ while ($st->lte($dt)) {
                             <p>    {!! $company->about_us !!}</p>
                         </div>
                     </div>
+<<<<<<< HEAD
                     <div id="t2" style="display: block;">
                     @if(isset($deals) && count($deals))
                         @foreach($deals as $deal)                        
@@ -294,9 +306,262 @@ while ($st->lte($dt)) {
                                                 </div>                                                  
                                             </div>
                                         </div>
-                                    </div>
+=======
+                    <div id="t2" style="display: none;">
+                        @if(isset($deals) && count($deals))
+                            @foreach($deals as $deal)
+                        <!-- Menu -->
+                        <div class="menu deals-list-page">
+                                <div class="left_m">
+                                    <h2>{{ $deal->name }}</h2>
+                                    @if($deal->image!='')
+                                        <a href="{{ url('future-deal/'.$company->slug).'?deal='.$deal->id }}"> <img
+                                                    src="{{ asset('images/deals/'.$deal->image) }}"
+                                                    alt="No Image Found" width="400px">
+                                        </a>
+
+                                    @else
+                                        <a href="{{ url('future-deal/'.$company->slug).'?deal='.$deal->id }}"> <img
+                                                    src="{{ asset('images/deals/no-img.jpg') }}"
+                                                    alt="No Image Found" width="400px">
+                                        </a>
+
+                                    @endif
+                                    {{--                            <ul class="price">
+                                    <li><span>Verkocht<i>  &euro; {{ $deal->price_from }}  </i></span></li>
+                                                <li><span>Korting<i>50%</i></span></li>
+                                                    </ul>--}}
+                                </div>
+                                <div class="right_m">
+                                    <span>&euro; {{ $deal->price_from }}
+                                        <strong>&euro; {{ $deal->price }}</strong></span>
+                                    <b class="up">{!! $deal->description !!}</b>
                                 </div>
 
+                                {{--{{  }}--}}
+                                @if(!is_null($deal->getApprovedReviews))
+                                    <?php
+                                    $count = 1;
+                                    $total = 0;
+                                    ?>
+                                    @foreach($deal->getApprovedReviews as $review)
+                                        <?php
+                                        $avg = floor(($review->food + $review->service + $review->decor) / 3);
+                                        $total += $avg;
+                                        ?>
+                                        <div style="float: left;">
+                                            <div class="score">
+                                                Recencies:
+                                                <div class="ui star tiny rating no-rating disabled"
+                                                     data-rating="{{ $total/$count }}">
+                                                    <i class="icon-star active"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <?php $count++; ?>
+                                    @endforeach
+                                @endif
+                                @if(count($deals)==1)
+                                <div id="koop">
+                                    <a class="more"
+                                       href="{{ url('future-deal/'.$company->slug).'?deal='.$deal->id }}">KOOP
+                                        DEAL
+                                    </a>
+                                @else
+                                    <a class="more"
+                                       href="{{ url('future-deal/'.$company->slug).'?deal='.$deal->id }}">KOOP
+                                        DEAL
+                                    </a>
+                                @endif
+                                </div>
+                        @endforeach
+                    @endif
+                            </div>
+                    </div>
+                    <div id="t3" style="display: none;">
+                        <div class="info">
+
+                            @if ($company->preferences != NULL && $company->preferences != NULL && $company->preferences != '[""]')
+                                <span>Voorkeuren</span>
+                                <strong>
+                                    @foreach (json_decode($company->preferences) as $id => $preferencesr)
+                                        @if (isset($preferences[1][$preferencesr]))
+                                            {{ ucfirst($preferences[1][$preferencesr]) }},
+                                        @endif
+                                    @endforeach
+                                </strong>
+                            @endif
+
+                            @if ($company->kitchens != NULL && $company->kitchens != NULL && $company->kitchens != '[""]')
+                                <span>Keuken</span>
+                                <strong>
+                                    @foreach (json_decode($company->kitchens) as $id => $kitchen)
+                                        {{ ucfirst($preferences[2][$kitchen]) }},
+                                    @endforeach
+                                </strong>
+                            @endif
+
+                            @if ($company->price != NULL && $company->price != NULL && $company->price != '[""]')
+                                <span>Soort</span>
+                                <strong>
+                                    @foreach (json_decode($company->price) as $id => $price)
+                                        {{ ucfirst($preferences[4][$price]) }},
+                                    @endforeach
+                                </strong>
+                            @endif
+
+                            @if ($company->sustainability != NULL && $company->sustainability != NULL && $company->sustainability != '[""]')
+                                <span>Duurzaamheid</span>
+                                <strong>
+                                    @foreach (json_decode($company->sustainability) as $id => $sustainability)
+                                        {{ ucfirst($preferences[8][$sustainability]) }},
+                                    @endforeach
+                                </strong>
+                            @endif
+                            <?php $discount = json_decode($company->discount);
+                            foreach ($discount as $key => $value) {
+                                if (is_null($value) || $value == 'NULL')
+                                    unset($discount[$key]);
+                            }?>
+                            @if (!empty($discount))
+                                <span>Korting</span>
+                                <strong>
+                                {{ $company->discount_comment }}
+                                @foreach (json_decode($company->discount) as $id => $discount)
+                                    {{ $discount }}
+                                    <!-- 	@if (isset($preferences[5][$discount]))
+                                        {{ ucfirst($preferences[5][$discount]) }}%
+                                                    @endif -->
+                                    @endforeach
+                                </strong>
+
+                                <span>Kortingsdagen</span>
+                                <strong>
+                                    <?php $dayNames = Config::get('preferences.days'); ?>
+                                    @if ($company->days != 'null' && $company->days != NULL && $company->days != '[""]')
+                                        <?php $i = 0; ?>
+                                        @foreach (json_decode($company->days) as $id => $days)
+                                            <?php $i++; ?>
+                                            {{ $dayNames[$days] }}
+                                            <?php echo($i < count(json_decode($company->days)) ? '-' : ''); ?>
+                                        @endforeach
+                                    @endif
+                                </strong>
+                            @endif
+
+                        </div>
+                        <a href="#" class="more">Een Tafel Reserveren</a>
+                    </div>
+                    <div id="t4" style="display: none;">
+                        <div class="map">
+                            <h3>{!! $company->zipcode !!}  {!! $company->city !!}</h3>
+                            <span>{!! $company->address !!}<br/></span>
+                            <span><a href="tel:{!! $company->phone !!}"
+                                     target="_blank">{!! $company->phone !!} </a>
+                                @if($company->website)
+                                    <a href="http://{!! $company->website !!}"
+                                       target="_blank">{!! " | ".$company->website !!} </a>
+                                @endif
+                                            </span>
+
+                            @if(trim($company->contact_email) != '' || trim($company->email) != '')
+                                <div class="send">
+                                    {{ Form::open(array('url' => 'contact/'.$company->slug, 'method' => 'post', 'class' => 'form')) }}
+                                    <label for="name">
+                                        <span>Naam</span>
+                                        {{ Form::text('name', (Sentinel::check() ? Sentinel::getUser()->name : ''), [ 'id' => 'name']) }}
+                                    </label>
+
+
+                                    <label for="email">
+                                        <span>E-mail</span>
+                                        {{ Form::text('email',  (Sentinel::check() ? Sentinel::getUser()->email : ''), ['id' =>'email']) }}
+                                    </label>
+
+                                    <label for="subject">
+                                        <span>Onderwerp</span>
+                                        {{ Form::text('subject',null,['id' => 'subject' ]) }}
+                                    </label>
+
+                                    <label for="content">
+                                        <span>Bericht</span>
+                                        {{ Form::textarea('content',null, ['id' => 'content']) }}
+                                    </label>
+
+                                    <label class="two fields">
+                                        <!-- <div class="six wide field"> -->
+                                    {!! captcha_image_html('ContactCaptcha') !!}
+                                    <!-- </div> -->
+
+                                        <label>
+                                            <span>Typ de beveiligingscode over:</span>
+                                            {{ Form::text('CaptchaCode', '', array('id' => 'CaptchaCode', 'placeholder' => 'beveiligingscode' )) }}
+                                        </label>
+                                    </label>
+
+                                    <button type="submit" class="ui small blue button">VERZENDEN</button>
+                                    {{ Form::close() }}
+                                </div>
+                            @endif
+                            <div class="maps">
+                                <div id="map"
+                                     data-kitchen="{{ is_array(json_decode($company->kitchens)) ? str_slug(json_decode($company->kitchens)[0]) : '' }}"
+                                     data-url="{{ url('restaurant/'.$company->slug) }}"
+                                     data-name="{{ $company->name }}"
+                                     data-address="{{ $company->address }}"
+                                     data-city="{{ $company->city }}"
+                                     data-zipcode="{{ $company->zipcode }}"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="t5" style="display: none;">
+                    @if($news->count() >= 1)
+                        @foreach($news as $article)
+                            <?php $newsMedia = $article->getMedia(); ?>
+                            <!-- News -->
+                                <div class="news">
+                                    <div class="ob">
+                                        @if($newsMedia != '[]')
+                                            <img class="ui small image"
+                                                 src="{{ url('public/'.$newsMedia->last()->getUrl()) }}"/>
+                                        @elseif($media != '[]')
+                                            <img class="ui small image"
+                                                 src="{{ url('public/'.$media->last()->getUrl()) }}"/>
+                                        @endif
+                                    </div>
+                                    <div class="in">
+                                        <h2><a href="{{ url('news/'. $article->slug) }}"
+                                               class="header">{{ $article->title }}</a></h2>
+
+                                        <span>Geplaatst op {{ date('d-m-Y H:i:s', strtotime($article->created_at)) }}</span>
+                                        <p>{{ implode(' ', array_slice(explode(' ', strip_tags($article->content)), 0, 100)) }}
+                                            ... <a href="{{ url('news/'. $article->slug) }}">Read more</a>
+                                        </p>
+>>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
+                                    </div>
+                                </div>
+                                <!-- Pages -->
+                            {!! $news->appends($paginationQueryString)->render() !!}
+
+                            <!--<div class="pages">
+                                            <a href="#" class="prev2">&lt;</a>
+                                            <ul>
+                                    <li><a href="#">1</a></li>
+                                                    <li><a href="#" class="active">2</a></li>
+                                                    <li><a href="#">...</a></li>
+                                                    <li><a href="#">8</a></li>
+                                            </ul>
+                                            <a href="#" class="next2">&gt;</a>
+                                    </div> -->
+                            @endforeach
+                        @else
+                            <span>Er zijn geen nieuwsberichten gevonden.</span>
+                        @endif
+                    </div>
+                    <div id="t6" style="display: none;">
+                        <div class="send">
+
+<<<<<<< HEAD
                             </div><!-- End of ROw -->
                         @endforeach
                     @endif
@@ -392,12 +657,22 @@ while ($st->lte($dt)) {
                                         {{ Form::text('name', (Sentinel::check() ? Sentinel::getUser()->name : ''), [ 'id' => 'name']) }}
                                     </label>
 
+=======
+                            {!! Form::open(array('id' => 'reservationForm', 'url' => 'restaurant/reservation/'.$company->slug, 'method' => 'PUT', 'class' => 'form')) !!}
+                            {{ Form::hidden('group_reservation', 1) }}
+                            {{ Form::hidden('setTimeBack', 0) }}
+                            {!! Form::hidden('company_id', $company->id) !!}
+                            {{ Form::hidden('date') }}
+
+                            {!! isset($contentBlock[59]) ? $contentBlock[59] : '' !!}
+>>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
 
                                     <label for="email">
                                         <span>E-mail</span>
                                         {{ Form::text('email',  (Sentinel::check() ? Sentinel::getUser()->email : ''), ['id' =>'email']) }}
                                     </label>
 
+<<<<<<< HEAD
                                     <label for="subject">
                                         <span>Onderwerp</span>
                                         {{ Form::text('subject',null,['id' => 'subject' ]) }}
@@ -535,6 +810,54 @@ while ($st->lte($dt)) {
                             <button type="submit" class="ui small blue button">Reserveren</button>
                             {{ Form::close() }}
 
+=======
+                            <label for="date">
+                                <span>Datum</span>
+                                {{ Form::text('date_input', '', array('data-datepicker-ajax' => 'true','data-timeselect' => '#time-dropdown', 'data-group' => '1', 'data-persons' => '#persons-dropdown','id' => 'datepicker-dropdown')) }}
+
+                            </label>
+
+                            <label for="time-dropdown">
+                                <span>Tijm</span>
+                                <div class="details">
+                                {{ Form::select("time",[],Request::get('time'),[ 'class' => 'quantity2', 'id' => 'time-dropdown']) }}
+                                <!-- <select id="time-dropdown" name="time" class="quantity2"></select>-->
+                                </div>
+                            </label>
+
+                            <label for="persons">
+                                <span>Personen</span>
+                                <div class="details">
+                                    {{ Form::select("persons",$person_list,1,[ 'class' => 'quantity2', 'id' => 'persons-dropdown']) }}
+                                </div>
+                                <!-- Form::text('persons') -->
+                            </label>
+
+                            <label for="name">
+                                <span>Naam</span>
+                                {!! Form::text('name', (Sentinel::check() ? Sentinel::getUser()->name : '')) !!}
+                            </label>
+
+                            <label for="email">
+                                <span>E-mail</span>
+                                {!! Form::text('email',  (Sentinel::check() ? Sentinel::getUser()->email : '')) !!}
+                            </label>
+
+                            <label for="phone">
+                                <span>Telefoon</span>
+                                {!! Form::text('phone',  (Sentinel::check() ? Sentinel::getUser()->phone : '')) !!}
+                            </label>
+
+
+                            <label for="comment">
+                                <span>Opmerking</span>
+                                {!! Form::textarea('comment') !!}
+                            </label>
+
+                            <button type="submit" class="ui small blue button">Reserveren</button>
+                            {{ Form::close() }}
+
+>>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
                         </div>
                     </div>
                     <div id="t7" style="display: none;">
@@ -545,6 +868,7 @@ while ($st->lte($dt)) {
                                         <div class="wr"><img src="images/a1.png" alt="a"></div>
                                         <span>{{ $review->name }}</span>
                                         <span>{{ $reviewModel->countReviews($review->user_id) }} {{ $reviewModel->countReviews($review->user_id) == 1 ? 'recensie' : 'recensies' }}</span>
+<<<<<<< HEAD
                                     </div>
                                     <div class="rev">
                                         <p>{{ $review->content }}</p>
@@ -566,6 +890,29 @@ while ($st->lte($dt)) {
                                             </div>
                                         </div>
                                     </div>
+=======
+                                    </div>
+                                    <div class="rev">
+                                        <p>{{ $review->content }}</p>
+                                        <div class="rr">
+                                            <span>{{ date('d-m-Y', strtotime($review->created_at)) }}</span>
+                                            <i>{{ $reviewModel->getAverage(array($review->food,  $review->service, $review->decor)) }}</i>
+                                            <div class="score">
+                                                Eten
+                                                <div class="ui star tiny rating no-rating"
+                                                     data-rating="{{ $review->food }}"></div>
+                                                <br/>
+                                                Service
+                                                <div class="ui star tiny rating no-rating"
+                                                     data-rating="{{ $review->service }}"></div>
+                                                <br/>
+                                                decor
+                                                <div class="ui star tiny rating no-rating"
+                                                     data-rating="{{ $review->decor }}"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+>>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
                                 </div>
                             @endforeach
                         @else
@@ -650,6 +997,7 @@ while ($st->lte($dt)) {
         </div>
     </div>
     <script>
+<<<<<<< HEAD
         var activateAjax = 'restaurant';
         //		$('body').on('keydown','#idcontent',function(){
         function checkWords() {
@@ -673,6 +1021,31 @@ while ($st->lte($dt)) {
             });
         }
     </script>
+=======
+            var activateAjax = 'restaurant';
+            //		$('body').on('keydown','#idcontent',function(){
+            function checkWords() {
+                var data = $('#reviews').serializeArray();
+                console.log(data);
+                var token = $('#csrf-token').val();
+                $.ajax({
+                    type: 'post',
+                    data: data,
+                    url: "{{ url('restaurant/unwanted/getUnwantedWords') }}",
+                    dataType: "json"
+                }).done(function (result) {
+                    if (result.length > 0) {
+                        $('#msg').html('Helaas het woord ...... is niet toegestaan');
+                        $(this).css('color', 'red');
+                    } else {
+                        console.log("abcd");
+                        $('#reviews').submit();
+                    }
+                }).fail(function () {
+                });
+            }
+        </script>
+>>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
 @stop
 @section('scripts')
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5751e9a264890504"></script>

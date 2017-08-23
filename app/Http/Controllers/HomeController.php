@@ -1473,16 +1473,26 @@ class HomeController extends Controller
             return redirect('/');
         }
 
+<<<<<<< HEAD
         if (is_null($reference->reference_code) || $reference->reference_code =="") {
+=======
+        if (is_null($reference->reference_code)) {
+>>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
             $reference->reference_code = str_random(17);
             $reference->save();
         }
 
         if (Sentinel::inRole('admin') != FALSE) {
             $friends = App\Models\FutureDeal::where('reference_id', '!=', null)
+<<<<<<< HEAD
                 ->where('user_id', '!=', Sentinel::getUser()->id)->get();
         } else {
             $friends = App\Models\FutureDeal::where('reference_id', $reference->id)
+=======
+                ->where('user_id', '!=', Sentinel::getUSer()->id)->get();
+        } else {
+            $friends = App\Models\FutureDeal::where('user_id', $reference->id)
+>>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
                 ->groupBy('user_id')->distinct()->get();
         }
         return view('reference-code', compact('reference', 'friends'));

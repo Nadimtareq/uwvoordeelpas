@@ -59,6 +59,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     {
         return $this->belongsToMany('App\Role', 'role_users');
     }
+<<<<<<< HEAD
 
     public function scopeHasRole($query, $role)
     {
@@ -66,4 +67,6 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
             $query->where('role', $role);
         });
     }
+=======
+>>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
 }

@@ -46,6 +46,7 @@ class UsersController extends Controller
 		
         $preferences = new Preference();
         $regio = $preferences->getRegio();
+<<<<<<< HEAD
 		
 		
 		
@@ -140,6 +141,101 @@ class UsersController extends Controller
 				});
 			}
 		
+=======
+
+        $data = Sentinel::getUserRepository()->select(
+            'users.id',
+            'users.name',
+            'users.email',
+            'users.phone',
+            'users.created_at',
+            'users.gender',
+            'users.updated_at',
+            'users.saldo',
+            'users.newsletter',
+            'users.city',
+            'preferences.name as cityName'
+        )
+            ->leftJoin('preferences', 'users.city', '=', 'preferences.id');
+
+        if ($request->has('q')) {
+            $data = $data->where(
+                'users.name', 'LIKE', '%'.$request->input('q').'%'
+            )
+               ->orWhere('users.email', 'LIKE', '%'.$request->input('q').'%')
+               ->orWhere('users.saldo', 'LIKE', '%'.$request->input('q').'%')
+               ->orWhere('preferences.name', 'LIKE', '%'.$request->input('q').'%')
+            ;
+
+            $regioName = $request->input('q');
+
+            if (isset($regio['regioNumber'][$regioName])) {
+                $data = $data->orWhere('users.city', 'REGEXP', '"([^"]*)'.$regio['regioNumber'][$regioName].'([^"]*)"');
+            }
+        }
+
+        if ($request->has('source')) {
+            switch ($request->input('source')) {
+                case 'wifi':
+                    $data = $data
+                        ->rightJoin('guests_wifi', 'guests_wifi.email', '=', 'users.email')
+                    ;
+                    break;
+
+                default:
+                     $data = $data
+                        ->leftJoin('reservations', 'reservations.user_id', '=', 'users.id')
+                        ->join('guests_third_party', 'guests_third_party.email','=','users.email')
+                        ->where('guests_third_party.network', '=', $request->input('source'))
+                        ->groupBy('users.id')
+                    ;
+                    break;
+            }
+        }
+        echo $request->input('source');
+        if ($request->has('has_saving')) {
+            switch ($request->input('has_saving')) {
+                case '0':
+                    $data = $data->where('users.extension_downloaded', '=', 0);
+                    break;
+                case '1':
+                    $data = $data->where('users.extension_downloaded', '=', 1);
+                    break;
+                case '2':
+                    $data = $data->where('users.extension_downloaded', '=', 2);
+                    break;
+                    
+            }
+        }
+        if ($request->has('sort') && $request->has('order')) {
+            $data = $data->orderBy('users.'.$request->input('sort'), $request->input('order'));
+            session(['sort' => $request->input('sort'), 'order' => $request->input('order')]);
+        } else {
+            $data = $data->orderBy('users.id', 'desc');
+        }
+
+        if ($request->has('city')) {
+             $regioName = $request->input('city');
+
+            if (isset($regio['regioNumber'][$regioName])) {
+                $data = $data->whereNotNull(
+                    'users.city'
+                )
+                    ->where('users.city', 'REGEXP', '"([^"]*)'.$regio['regioNumber'][$regioName].'([^"]*)"')
+                ;
+            }
+        }
+
+        if($request->has('role')){
+            $role= $request->input('role');
+
+            $data=User::whereHas('roles', function ($q) use ($role){
+                $q->where('name', $role);
+            });
+
+        }
+
+>>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
         $dataCount = $data->count();
 
         $data = $data->paginate($request->input('limit', 15));
