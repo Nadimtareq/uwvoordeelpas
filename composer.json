@@ -6,14 +6,7 @@
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "5.2.*",
-        "cartalyst/sentinel": "2.0.*",
-        "laravelcollective/html": "5.2.*",
-        "spatie/laravel-medialibrary": "~3.2",
-        "cviebrock/eloquent-sluggable": "~3.0",
-        "milon/barcode": "~1.0",
-        "uxweb/sweet-alert": "~1.1",
-        "barryvdh/laravel-debugbar": "~2.0",
-      
+       
       
     },
     "require-dev": {
