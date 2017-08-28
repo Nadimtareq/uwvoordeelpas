@@ -52,14 +52,14 @@ while ($st->lte($dt)) {
                                                         </a>
                                                 @else
                                                     <li style="float: left; list-style: outside none none; position: relative; width: 674px;">
-<<<<<<< HEAD
+
                                                         <img src="{{ asset('images/r.png') }}" alt="s" class="materialboxed">
-=======
+
                                                         <!--Edited by Team AIT -->
                                                         <img src="{{ asset('images/r.png') }}" alt="s"
 
                                                              class="materialboxed">
->>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
+
                                                         @endif
                                                         {!! $discountHelper->replaceKeys(
                                                         $company,
@@ -199,11 +199,11 @@ while ($st->lte($dt)) {
                     <li><a href="#t7" class="">Reviews</a></li>
                 </ul>
                 <div class="tabs-content">
-<<<<<<< HEAD
+
                     <div id="t1" style="display: none;">
-=======
+
                     <div id="t1" style="display: block;">
->>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
+
                         <div class="text3">
                             <strong>{!! $company->name !!}</strong>
                             <span class="city"><i class="material-icons">place</i>{{ $company->city }}</span>
@@ -211,7 +211,7 @@ while ($st->lte($dt)) {
                             <p>    {!! $company->about_us !!}</p>
                         </div>
                     </div>
-<<<<<<< HEAD
+
                     <div id="t2" style="display: block;">
                     @if(isset($deals) && count($deals))
                         @foreach($deals as $deal)                        
@@ -306,7 +306,7 @@ while ($st->lte($dt)) {
                                                 </div>                                                  
                                             </div>
                                         </div>
-=======
+
                     <div id="t2" style="display: none;">
                         @if(isset($deals) && count($deals))
                             @foreach($deals as $deal)
@@ -537,7 +537,7 @@ while ($st->lte($dt)) {
                                         <p>{{ implode(' ', array_slice(explode(' ', strip_tags($article->content)), 0, 100)) }}
                                             ... <a href="{{ url('news/'. $article->slug) }}">Read more</a>
                                         </p>
->>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
+
                                     </div>
                                 </div>
                                 <!-- Pages -->
@@ -561,7 +561,7 @@ while ($st->lte($dt)) {
                     <div id="t6" style="display: none;">
                         <div class="send">
 
-<<<<<<< HEAD
+
                             </div><!-- End of ROw -->
                         @endforeach
                     @endif
@@ -657,7 +657,7 @@ while ($st->lte($dt)) {
                                         {{ Form::text('name', (Sentinel::check() ? Sentinel::getUser()->name : ''), [ 'id' => 'name']) }}
                                     </label>
 
-=======
+
                             {!! Form::open(array('id' => 'reservationForm', 'url' => 'restaurant/reservation/'.$company->slug, 'method' => 'PUT', 'class' => 'form')) !!}
                             {{ Form::hidden('group_reservation', 1) }}
                             {{ Form::hidden('setTimeBack', 0) }}
@@ -665,14 +665,14 @@ while ($st->lte($dt)) {
                             {{ Form::hidden('date') }}
 
                             {!! isset($contentBlock[59]) ? $contentBlock[59] : '' !!}
->>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
+
 
                                     <label for="email">
                                         <span>E-mail</span>
                                         {{ Form::text('email',  (Sentinel::check() ? Sentinel::getUser()->email : ''), ['id' =>'email']) }}
                                     </label>
 
-<<<<<<< HEAD
+
                                     <label for="subject">
                                         <span>Onderwerp</span>
                                         {{ Form::text('subject',null,['id' => 'subject' ]) }}
@@ -810,7 +810,7 @@ while ($st->lte($dt)) {
                             <button type="submit" class="ui small blue button">Reserveren</button>
                             {{ Form::close() }}
 
-=======
+
                             <label for="date">
                                 <span>Datum</span>
                                 {{ Form::text('date_input', '', array('data-datepicker-ajax' => 'true','data-timeselect' => '#time-dropdown', 'data-group' => '1', 'data-persons' => '#persons-dropdown','id' => 'datepicker-dropdown')) }}
@@ -857,7 +857,7 @@ while ($st->lte($dt)) {
                             <button type="submit" class="ui small blue button">Reserveren</button>
                             {{ Form::close() }}
 
->>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
+
                         </div>
                     </div>
                     <div id="t7" style="display: none;">
@@ -868,7 +868,7 @@ while ($st->lte($dt)) {
                                         <div class="wr"><img src="images/a1.png" alt="a"></div>
                                         <span>{{ $review->name }}</span>
                                         <span>{{ $reviewModel->countReviews($review->user_id) }} {{ $reviewModel->countReviews($review->user_id) == 1 ? 'recensie' : 'recensies' }}</span>
-<<<<<<< HEAD
+
                                     </div>
                                     <div class="rev">
                                         <p>{{ $review->content }}</p>
@@ -890,7 +890,7 @@ while ($st->lte($dt)) {
                                             </div>
                                         </div>
                                     </div>
-=======
+
                                     </div>
                                     <div class="rev">
                                         <p>{{ $review->content }}</p>
@@ -912,7 +912,7 @@ while ($st->lte($dt)) {
                                             </div>
                                         </div>
                                     </div>
->>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
+
                                 </div>
                             @endforeach
                         @else
@@ -997,7 +997,7 @@ while ($st->lte($dt)) {
         </div>
     </div>
     <script>
-<<<<<<< HEAD
+
         var activateAjax = 'restaurant';
         //		$('body').on('keydown','#idcontent',function(){
         function checkWords() {
@@ -1021,7 +1021,7 @@ while ($st->lte($dt)) {
             });
         }
     </script>
-=======
+
             var activateAjax = 'restaurant';
             //		$('body').on('keydown','#idcontent',function(){
             function checkWords() {
@@ -1045,7 +1045,7 @@ while ($st->lte($dt)) {
                 });
             }
         </script>
->>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
+
 @stop
 @section('scripts')
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5751e9a264890504"></script>

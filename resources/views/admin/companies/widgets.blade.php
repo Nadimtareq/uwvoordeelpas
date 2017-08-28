@@ -20,7 +20,7 @@
 		<div class="col-md-6 col-lg-6 ">
 		<h3>Reserveer kalender</h3>
     <div class="ui form">
-<<<<<<< HEAD
+
 	     <script type="text/javascript">
         $(document).ready(function() {
             var clipboard = new Clipboard('#clipboard12');
@@ -49,7 +49,7 @@
             });
         });
     </script>
-=======
+
 	    <div class="two fields">
 		    <div class="field">
 			  	<textarea><iframe src="{{ url('widget/calendar/restaurant/'.$company->slug) }}" width="500" height="550" frameborder="0"></iframe></textarea><br />
@@ -66,7 +66,7 @@
 
 
                </div>
->>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
+
 		    <div class="field">
 				
 			  	<textarea id="bk_cal"><iframe src="{{ url('widget/calendar/restaurant/'.$company->slug) }}" width="500" height="550" frameborder="0"></iframe></textarea><br />

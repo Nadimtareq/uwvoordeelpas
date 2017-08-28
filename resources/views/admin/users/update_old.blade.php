@@ -61,6 +61,7 @@
 				?>
 			</div>
 		</div>
+
 		<div class="two fields">
 			<div class="field">
 				<label>Geboortedatum</label>
@@ -84,6 +85,11 @@
 					@endforeach
 				</select>
 			</div>
+
+		<div class="field">
+			<label>Geboortedatum</label>
+			<?php echo Form::text('birthday_at', '', array('class' => 'bdy-datepicker', 'data-value' => $data->birthday_at)); ?>
+
 		</div>
 
 		<div class="field">

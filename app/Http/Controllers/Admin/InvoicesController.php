@@ -402,7 +402,7 @@ class InvoicesController extends Controller
 
     public function downloadInvoice($id)
     {
-<<<<<<< HEAD
+
 //        $attachment_location= './pdf/invoice.pdf';
 //        if (file_exists($attachment_location)) {
 //
@@ -415,7 +415,7 @@ class InvoicesController extends Controller
 //            readfile($attachment_location);
 //            die();
 //        }
-=======
+
         $attachment_location= './pdf/invoice.pdf';
         if (file_exists($attachment_location)) {
 
@@ -428,7 +428,7 @@ class InvoicesController extends Controller
             readfile($attachment_location);
             die();
         }
->>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
+
         $contentBlock = Content::getBlocks();
         
         $invoice = Invoice::select(

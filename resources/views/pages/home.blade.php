@@ -144,7 +144,7 @@
                                         (Request::has('preference') ? Request::get('preference') : ''),
                                         array('class' => 'multipleSelect', 'data-placeholder' => 'Voorkeuren', 'multiple' => 'multiple')) }}
 
-<<<<<<< HEAD
+
                     </div>
                     <div class="jsearch col-md-2 col-sm-2 col-xs-6">
                         {{  Form::select('kitchen[]',

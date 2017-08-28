@@ -786,7 +786,7 @@ public function updateAction(Request $request, $id, $slug)
 
     public function contract($id, $slug)
     {
-<<<<<<< HEAD
+
 //        $attachment_location= './pdf/contract1.pdf';
 //        if (file_exists($attachment_location)) {
 //
@@ -799,7 +799,7 @@ public function updateAction(Request $request, $id, $slug)
 //            readfile($attachment_location);
 //            die();
 //        }
-=======
+
         $attachment_location= './pdf/contract1.pdf';
         if (file_exists($attachment_location)) {
 
@@ -812,7 +812,7 @@ public function updateAction(Request $request, $id, $slug)
             readfile($attachment_location);
             die();
         }
->>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
+
         $data = Company::where('id','=', $id);
 
         if (Sentinel::inRole('bedrijf') && Sentinel::inRole('admin') == FALSE)  {

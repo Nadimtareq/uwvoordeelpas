@@ -215,7 +215,7 @@ while ($st->lte($dt)) {
                         </div>
                     </div>
                     <div id="t2" style="display: none;">
-<<<<<<< HEAD
+
                     <?php if(isset($deals) && count($deals)): ?>
                         <?php foreach($deals as $deal): ?>
                             <!-- Menu -->
@@ -284,16 +284,16 @@ while ($st->lte($dt)) {
                                         <?php endforeach; ?>
                                     <?php endif; ?>
                                 </div>
-=======
+
                         <?php if(isset($deals) && count($deals)): ?>
                             <?php foreach($deals as $deal): ?>
-<<<<<<< HEAD
+
                         <!-- Menu -->
                         <div class="menu deals-list-page">
-=======
+
                             <!-- Menu -->
                             <div class="menu deals-list-page">
->>>>>>> 0721ce7... REstaurant bug
+
                                 <div class="left_m">
                                     <h2><?php echo e($deal->name); ?></h2>
                                     <?php if($deal->image!=''): ?>
@@ -318,15 +318,15 @@ while ($st->lte($dt)) {
                                     <span>&euro; <?php echo e($deal->price_from); ?>
 
                                         <strong>&euro; <?php echo e($deal->price); ?></strong></span>
-<<<<<<< HEAD
+
                                     <b class="up"><?php echo strip_tags( $deal->description ); ?></b>
                                 </div>
 
                                 <?php /*<?php echo e( ); ?>*/ ?>
-=======
+
                                     <b class="up"><?php echo $deal->description; ?></b>
                                 </div>
->>>>>>> 0721ce7... REstaurant bug
+
                                 <?php if(!is_null($deal->getApprovedReviews)): ?>
                                     <?php
                                     $count = 1;
@@ -352,7 +352,7 @@ while ($st->lte($dt)) {
                                 <?php if(count($deals)==1): ?>
                                 <div id="koop">
                                     <a class="more"
-<<<<<<< HEAD
+
                                        href="<?php echo e(url('future-deal/'.$company->slug).'?deal='.$deal->id); ?>">KOOP
                                         DEAL
                                     </a>
@@ -360,22 +360,22 @@ while ($st->lte($dt)) {
                                     <a class="more"
                                        href="<?php echo e(url('future-deal/'.$company->slug).'?deal='.$deal->id); ?>">KOOP
                                         DEAL
-=======
-                                       href="<?php echo e(url('future-deal/'.$company->slug).'?deal='.$deal->id); ?>">
+
+                                       <a href="<?php echo e(url('future-deal/'.$company->slug).'?deal='.$deal->id); ?>">
                                         Koop nu, reserveer later.
                                     </a>
                                 <?php else: ?>
                                     <a class="more"
                                        href="<?php echo e(url('future-deal/'.$company->slug).'?deal='.$deal->id); ?>">
                                         Koop nu, reserveer later.
->>>>>>> 0721ce7... REstaurant bug
+
                                     </a>
                                 <?php endif; ?>
                                 </div>
                         <?php endforeach; ?>
                     <?php endif; ?>
                             </div>
->>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
+
                     </div>
                     <div id="t3" style="display: none;">
                         <div class="info">
@@ -763,7 +763,7 @@ while ($st->lte($dt)) {
         </div>
     </div>
     <script>
-<<<<<<< HEAD
+
         var activateAjax = 'restaurant';
         //		$('body').on('keydown','#idcontent',function(){
         function checkWords() {
@@ -790,7 +790,7 @@ while ($st->lte($dt)) {
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('scripts'); ?>
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5751e9a264890504"></script>
-=======
+
             var activateAjax = 'restaurant';
             //		$('body').on('keydown','#idcontent',function(){
             function checkWords() {
@@ -815,16 +815,15 @@ while ($st->lte($dt)) {
             }
         </script>
 <?php $__env->stopSection(); ?>
-<<<<<<< HEAD
+
     <?php $__env->startSection('scripts'); ?>
         <script type="text/javascript"
                 src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5751e9a264890504">
         </script>
-=======
+
 <?php $__env->startSection('scripts'); ?>
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5751e9a264890504"></script>
->>>>>>> 0721ce7... REstaurant bug
->>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
+
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('template.theme', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
