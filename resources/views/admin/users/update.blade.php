@@ -21,14 +21,14 @@
 					5 => 'Callcenter'				
 				), 
 				$data->default_role_id, 
-				array('class' => 'multipleSelect')
+				array('class' => 'multipleSelect dropdown ui normal search fluid')
 			); 
 			?>
 		</div>
 		<div class="fields">
 			<div class="four wide field">
 			   	<label>Aanhef</label>
-				<?php echo Form::select('gender',  array(1 => 'Dhr', 2 => 'Mvr'), $data->gender, array('class' => 'multipleSelect')); ?>
+				<?php echo Form::select('gender',  array(1 => 'Dhr', 2 => 'Mvr'), $data->gender, array('class' => 'multipleSelect dropdown ui normal search fluid')); ?>
 			</div>
 
 			<div class="twelve wide field">
@@ -56,7 +56,7 @@
 					0,
 					10,
 					$data->attempts,
-					array('class' => 'multipleSelect')
+					array('class' => 'multipleSelect dropdown ui normal search fluid')
 				);
 				?>
 			</div>
@@ -122,14 +122,14 @@
 			<div class="field">
 				<label>Voorkeuren</label>
 				<?php
-				echo Form::select('preferences[]', (isset($preference[1]) ? $preference[1] : array()), json_decode($data->preferences), array('multiple' => true, 'class' => 'multipleSelect')); 
+				echo Form::select('preferences[]', (isset($preference[1]) ? $preference[1] : array()), json_decode($data->preferences), array('multiple' => true, 'class' => 'multipleSelect dropdown ui normal search fluid')); 
 				?>
 			</div>
 
 			<div class="field">
 				<label>Duurzaamheid</label>
 				<?php
-				echo Form::select('sustainability[]', (isset($preference[8]) ? $preference[8] : array()), json_decode($data->sustainability), array('multiple' => true, 'class' => 'multipleSelect')); 
+				echo Form::select('sustainability[]', (isset($preference[8]) ? $preference[8] : array()), json_decode($data->sustainability), array('multiple' => true, 'class' => 'multipleSelect dropdown ui normal search fluid')); 
 				?>
 			</div>
 		</div>
@@ -138,14 +138,14 @@
 			<div class="field">
 				<label>Keuken</label>
 				<?php
-				echo Form::select('kitchens[]',  (isset($preference[2]) ? $preference[2] : array()), json_decode($data->kitchens), array('multiple' => true, 'class' => 'multipleSelect')); 
+				echo Form::select('kitchens[]',  (isset($preference[2]) ? $preference[2] : array()), json_decode($data->kitchens), array('multiple' => true, 'class' => 'multipleSelect dropdown ui normal search fluid')); 
 				?>
 			</div>		  		  
 
 			<div class="field">
 				<label>Allergie&euml;n</label>
 				<?php
-				echo Form::select('allergies[]', (isset($preference[3]) ? $preference[3] : array()), json_decode($data->allergies), array('multiple' => true, 'class' => 'multipleSelect')); 
+				echo Form::select('allergies[]', (isset($preference[3]) ? $preference[3] : array()), json_decode($data->allergies), array('multiple' => true, 'class' => 'multipleSelect dropdown ui normal search fluid')); 
 				?>
 			</div>		  		  	
 		</div>
@@ -154,14 +154,14 @@
 			<div class="field">
 				<label>Faciliteiten</label>
 				<?php
-				echo Form::select('facilities[]', (isset($preference[7]) ? $preference[7] : array()), json_decode($data->facilities), array('multiple' => true, 'class' => 'multipleSelect')); 
+				echo Form::select('facilities[]', (isset($preference[7]) ? $preference[7] : array()), json_decode($data->facilities), array('multiple' => true, 'class' => 'multipleSelect dropdown ui normal search fluid')); 
 				?>
 			</div>		  		  
 
 			<div class="field">
 				<label>Kinderen</label>
 				<?php
-				echo Form::select('kids[]', (isset($preference[6]) ? $preference[6] : array()), json_decode($data->kids), array('multiple' => true, 'class' => 'multipleSelect')); 
+				echo Form::select('kids[]', (isset($preference[6]) ? $preference[6] : array()), json_decode($data->kids), array('multiple' => true, 'class' => 'multipleSelect dropdown ui normal search fluid')); 
 				?>
 			</div>		  		  	
 		</div>
@@ -170,14 +170,14 @@
 			<div class="field">
 				<label>Korting</label>
 				<?php
-				echo Form::select('discount[]', (isset($preference[5]) ? $preference[5] : array()), json_decode($data->discount), array('multiple' => true, 'class' => 'multipleSelect')); 
+				echo Form::select('discount[]', (isset($preference[5]) ? $preference[5] : array()), json_decode($data->discount), array('multiple' => true, 'class' => 'multipleSelect dropdown ui normal search fluid')); 
 				?>
 			</div>		  		  
 
 			<div class="field">
 				<label>Soort</label>
 				<?php
-				echo Form::select('price[]', (isset($preference[4]) ? $preference[4] : array()), json_decode($data->price), array('multiple' => true, 'class' => 'multipleSelect')); 
+				echo Form::select('price[]', (isset($preference[4]) ? $preference[4] : array()), json_decode($data->price), array('multiple' => true, 'class' => 'multipleSelect dropdown ui normal search fluid')); 
 				?>
 			</div>		  		  	
 		</div>

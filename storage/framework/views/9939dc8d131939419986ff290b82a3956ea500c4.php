@@ -14,13 +14,10 @@
 	.col5 .ob {
 		margin-top: 10px;
 	}
-<<<<<<< HEAD
 
 	.thumbnails{
 		width: 300px !important;
 	}
-=======
->>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
 </style>
  <ul>
 
@@ -134,20 +131,12 @@
 				</strong>
                 <?php /*<span> Van: <strike><?php echo e($data->price_from); ?></strike> | Voor: <?php echo e($data->price); ?></span>*/ ?>
 
-<<<<<<< HEAD
 			    <span>
                             <a href="<?php echo e(url('search?q='.$data->city)); ?>"><?php echo e($data->name); ?> | <span>
                             <i class="marker icon"></i> <?php echo e(ucfirst($data->city)); ?>&nbsp;</span>
                             </a>
                         </span>
 						<br>
-=======
-			    <span class="city">
-					<a href="<?php echo e(url('search?q='.$data->city)); ?>"><?php echo e($data->name); ?> | <span>
-					   <i class="marker icon"></i> <?php echo e($data->city); ?>&nbsp;</span>
-					</a>
-				</span>
->>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
 
 				<span class="stars"><img src="<?php echo e(asset('images/stars.png')); ?>" alt="stars">5.00</span>
 
@@ -179,17 +168,10 @@
 					<?php endif; ?>
 				<?php endif; ?>
 
-<<<<<<< HEAD
               <p class="hidden-xs"><?php echo strip_tags($deal->description,'<br>'); ?></p>
               <?php if($count_persons < $deal->total_amount): ?>
 			  <div class="wr">
 			  <?php
-=======
-              <p class="hidden-xs"><?php echo $deal->description; ?></p>
-              <?php if($count_persons < $deal->total_amount): ?>
-			  <div class="wr">
-			  <?php 
->>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
              	  $returnval = $companyReservation->getTimeCarouselHTML(
                         isset($reservationDate) ? $reservationDate : NULL,
                         $data,
@@ -208,32 +190,18 @@
                     $getRec        = HomeController::getPersons($deal->id);
                     $count_persons = $getRec[0]->total_persons;
                 ?>
-<<<<<<< HEAD
 
 			   <?php if($deal->price_from >= 1): ?>
 			   <span class="price">
-=======
-                
-			   <?php if($deal->price_from >= 1): ?>
-			   <span class="price">			    
->>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
 			     &euro; <?php echo e($deal->price_from); ?>
 
 			   </span>
 			    <?php else: ?>
-<<<<<<< HEAD
 			    <span class="price price_min_box">
 
 			    </span>
 			    <?php endif; ?>
 
-=======
-			    <span class="price price_min_box">			    
-			     
-			    </span>
-			    <?php endif; ?>
-			  
->>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
 
 			  <span class="price2">
 			     &euro; <?php echo e($deal->price); ?>
@@ -247,11 +215,7 @@
 							<a class="more"  href="<?php echo e(url('restaurant/'.$data->slug).'?deal='.$deal->id); ?>">MEER INFO</a>&nbsp;
 							<a class="more"  href="<?php echo e(url('future-deal/'.$data->slug).'?deal='.$deal->id); ?>">KOOP DEAL</a>
 						</div>
-<<<<<<< HEAD
 					<?php endif; ?>
-=======
-					<?php endif; ?>					
->>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
 				<?php endif; ?>
 
            </div>

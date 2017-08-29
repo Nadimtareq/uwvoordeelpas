@@ -54,7 +54,6 @@
 
 
 
-
                             <?php /*					<?php if($count_persons >= $deal->total_amount): ?>
 
                                                     <img src="<?php echo e(url('images/placeholdimagerest.png')); ?>" alt="<?php echo e($data->name); ?>" class="img-responsive"  />
@@ -69,9 +68,6 @@
 
 
                             <?php if($deal->image != null  &&  file_exists(public_path('images/deals/'  . $deal->image))): ?>
-
-                            <?php if($count_persons >= $deal->total_amount): ?>
-
                                 <a href="<?php echo e(url('restaurant/'.$data->slug).'?deal='.$deal->id); ?>"
                                    title="<?php echo e($data->name); ?>" data-url="" style="position: relative;">
                                     <img width="100%" src="<?php echo e(url('images/deals/' . $deal->image)); ?>" alt="<?php echo e($data->name); ?>" class="img-responsive" />

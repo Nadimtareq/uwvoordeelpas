@@ -402,7 +402,6 @@ class InvoicesController extends Controller
 
     public function downloadInvoice($id)
     {
-
 //        $attachment_location= './pdf/invoice.pdf';
 //        if (file_exists($attachment_location)) {
 //
@@ -415,20 +414,6 @@ class InvoicesController extends Controller
 //            readfile($attachment_location);
 //            die();
 //        }
-
-        $attachment_location= './pdf/invoice.pdf';
-        if (file_exists($attachment_location)) {
-
-            header($_SERVER["SERVER_PROTOCOL"] . " 200 OK");
-            header("Cache-Control: public"); // needed for internet explorer
-            header("Content-Type: application/pdf");
-            header("Content-Transfer-Encoding: Binary");
-            header("Content-Length:".filesize($attachment_location));
-            header("Content-Disposition: attachment; filename=invoice.pdf");
-            readfile($attachment_location);
-            die();
-        }
-
         $contentBlock = Content::getBlocks();
         
         $invoice = Invoice::select(

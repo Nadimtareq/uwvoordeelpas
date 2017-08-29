@@ -46,7 +46,6 @@ class UsersController extends Controller
 		
         $preferences = new Preference();
         $regio = $preferences->getRegio();
-
 		
 		
 		
@@ -141,11 +140,6 @@ class UsersController extends Controller
 				});
 			}
 		
-
-
-        
-
-
         $dataCount = $data->count();
 
         $data = $data->paginate($request->input('limit', 15));
@@ -361,7 +355,7 @@ class UsersController extends Controller
         if ($request->input('id') != '') {
             foreach ($request->input('id') as $id) {
                 $data = Sentinel::findById($id);
-                if ($data != '')  {
+                if ($data != '')  { 
                     $data->delete();
                 }
             }

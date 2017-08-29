@@ -70,15 +70,6 @@ class ReservationsOptionsController extends Controller
             'companies.id as company_id',
             DB::raw('sum(reservations.persons) as total_res'),
             DB::raw('sum(reservations.id) as reservated')
-
-            )->leftJoin('companies', 'companies.id', '=', 'reservations_options.company_id')
-        ->leftJoin('reservations', function ($join) {
-            $join
-            ->on('reservations.company_id', '=', 'reservations_options.company_id')
-            ->on('reservations.option_id', '=', 'reservations_options.id')
-            ;
-        });
-
         )->leftJoin('companies', 'companies.id', '=', 'reservations_options.company_id')
             ->leftJoin('reservations', function ($join) {
                 $join
@@ -101,13 +92,8 @@ class ReservationsOptionsController extends Controller
         if ($request->has('regio')) {
             $data = $data
                 ->whereRaw('reservations_options.id REGEXP "[[:<:]]'.$request->input('regio').'[[:>:]]"')
-
                 ->orWhere('reservations_options.id', '=', $request->input('regio'));
-
-                ->orWhere('reservations_options.regio', '=', $request->input('regio'));
-
         }
-
 
 
 
@@ -279,23 +265,11 @@ class ReservationsOptionsController extends Controller
         $data->price = $request->input('price');
         $data->time_to = $request->input('time_to');
         $data->time_from = $request->input('time_from');
-
         $data->date_from = Carbon::parse($request->input('date_from'));
         $data->date_to = Carbon::parse($request->input('date_to'));
         $data->newsletter = Sentinel::inRole('admin') == true ? $request->input('newsletter') : 0;
         $data->no_show = Sentinel::inRole('admin') == true ? $request->input('no_show') : 0;
         $data->price_per_guest = $request->input('price_per_guest');
-
-        $data->date_from = $request->input('date_from');
-        $data->newsletter = $request->input('newsletter');
-
-        $data->date_from = Carbon::parse($request->input('date_from'));
-        $data->date_to = Carbon::parse($request->input('date_to'));
-        $data->newsletter = Sentinel::inRole('admin') == true ? $request->input('newsletter') : 0;
-
-        $data->price_per_guest = $request->input('price_per_guest');
-        $data->company_id = ($slug != NULL ? $this->isCompanyOwner($slug)['id'] : $request->input('company_id'));
-
         $data->company_id = ($slug != NULL ? $this->isCompanyOwner($slug)['id'] : $request->input('company_id'));
         $data->no_show = Sentinel::inRole('admin') == true ? 1 : 0;
         $data->ip_address = $request->getClientIp();
@@ -372,7 +346,6 @@ class ReservationsOptionsController extends Controller
     public function updateAction(Request $request, $id,$slug=null)
     {
 
-
         //Added price_per_person by Ocean
         $data = ReservationOption::select(
             'reservations_options.id',
@@ -393,30 +366,6 @@ class ReservationsOptionsController extends Controller
             'companies.slug',
             'reservations_options.image'
         )
-
-        public function updateAction(Request $request, $id,$slug=null)
-        {
-
-            //Added price_per_person by Ocean
-            $data = ReservationOption::select(
-                'reservations_options.id',
-                'reservations_options.company_id',
-                'reservations_options.total_amount',
-                'reservations_options.price_from',
-                'reservations_options.price',
-                'reservations_options.price_per_guest',
-                'reservations_options.time_from',
-                'reservations_options.time_to',
-                'reservations_options.date_to',
-                'reservations_options.date_from',
-                'reservations_options.description',
-                'reservations_options.short_description',
-                'reservations_options.name',
-                'reservations_options.newsletter',
-                'companies.slug',
-                'reservations_options.image'
-                )
-
             ->leftJoin('companies', 'reservations_options.company_id', '=', 'companies.id')
             ->where('reservations_options.id', $id)
             ->first()
@@ -446,28 +395,6 @@ class ReservationsOptionsController extends Controller
                 File::delete($destinationPath.$data->image);
                 Input::file('image')->move($destinationPath, $fileName);
                 chmod($destinationPath.$fileName,0777);
-
-
-                $data->name = $request->input('name');
-                $data->description = $request->input('content');
-                $data->short_description = $request->input('short_content');
-                $data->total_amount = $request->input('total_amount');
-                $data->price_from = $request->input('price_from');
-                $data->price = $request->input('price');
-                $data->price_per_guest = $request->input('price_per_guest');
-                $data->time_to = $request->input('time_to');
-                $data->time_from = $request->input('time_from');
-                $data->date_from = Carbon::parse($request->input('date_from'));
-                $data->date_to = Carbon::parse($request->input('date_to'));
-                $data->newsletter = $request->input('newsletter');
-                $data->company_id = $request->input('company_id');
-                $data->image = $fileName;
-                $data->save();
-                Alert::success('U heeft deze aanbieding veranderd')->html()->persistent('Sluiten');
-
-                
-                return Redirect::to('admin/'.$this->slugController.'/update/'.$id);
-                
 
             }
 

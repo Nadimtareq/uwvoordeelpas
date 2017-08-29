@@ -40,6 +40,7 @@ class HomeController extends Controller
 
     public function __construct()
     {
+//        dd($this->dcrypt('mohsaniqbal387'));
 
        $browser = new BrowerHelper();
        Session::set('browser',$browser->detect()->getInfo());
@@ -1473,29 +1474,18 @@ class HomeController extends Controller
             return redirect('/');
         }
 
-
         if (is_null($reference->reference_code) || $reference->reference_code =="") {
-
-        if (is_null($reference->reference_code)) {
-
             $reference->reference_code = str_random(17);
             $reference->save();
         }
 
         if (Sentinel::inRole('admin') != FALSE) {
             $friends = App\Models\FutureDeal::where('reference_id', '!=', null)
-
                 ->where('user_id', '!=', Sentinel::getUser()->id)->get();
-        /*} else  {
-            $friends = App\Models\FutureDeal::where('reference_id', $reference->id)
-
-                ->where('user_id', '!=', Sentinel::getUSer()->id)->get();*/
         } else {
-            $friends = App\Models\FutureDeal::where('user_id', $reference->id)
-
+            $friends = App\Models\FutureDeal::where('reference_id', $reference->id)
                 ->groupBy('user_id')->distinct()->get();
         }
         return view('reference-code', compact('reference', 'friends'));
     }
-}
 }

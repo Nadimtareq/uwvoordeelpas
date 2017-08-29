@@ -42,6 +42,129 @@ class AuthController extends Controller
         return Redirect::to('/');
     }
 
+    public function authRemove(Request $request)
+    {
+        $authCheck = TemporaryAuth::where('code', '=', $request->input('code'))->first();
+        
+        if ($authCheck) {
+            $date = Carbon\Carbon::create(
+                date('Y', strtotime($authCheck->created_at)), 
+                date('m', strtotime($authCheck->created_at)), 
+                date('d', strtotime($authCheck->created_at)), 
+                date('H', strtotime($authCheck->created_at)), 
+                date('i', strtotime($authCheck->created_at))
+            );
+            
+            $expireDate = $date->addDays(2);
+
+            if ($expireDate->isPast() == FALSE) {
+                $authCheck->terms_active = 1;
+                $authCheck->save();
+
+                return Redirect::to($request->input('redirectTo'));
+            } else {
+                return Redirect::to('/');
+            }
+        } else {
+            return Redirect::to('/');
+        }
+    }
+
+    public function authSet(Request $request, $authCode) 
+    {
+        $authCheck = TemporaryAuth::where('code', '=', $authCode)->first();
+
+        if ($authCheck) {
+            $date = Carbon\Carbon::create(
+                date('Y', strtotime($authCheck->created_at)), 
+                date('m', strtotime($authCheck->created_at)), 
+                date('d', strtotime($authCheck->created_at)), 
+                date('H', strtotime($authCheck->created_at)), 
+                date('i', strtotime($authCheck->created_at))
+            );
+
+            $user = Sentinel::findById($authCheck->user_id);
+
+            $authCheckCount = TemporaryAuth::where('user_id', '=', $authCheck->user_id)
+                ->where('terms_active', '=', 1)
+                ->count()
+            ;
+
+            if ($user) {
+                if ($request->has('confirm')) {
+                    $expireDate = $date->addDays(7);
+
+                    if ($expireDate->isPast() == FALSE) {
+                        Sentinel::login($user);
+
+                        return redirect()->action(
+                            'Auth\AuthController@authRemove', 
+                            array(
+                                'code' => $authCode,
+                                'redirectTo' => $authCheck->redirect_to
+                            )
+                        );
+                    }
+                } else {
+                    if ($authCheckCount == 0) {
+                        return view('account/auth/alert', array(
+                            'name' => $user->name
+                        ));
+                    } else {
+                        $expireDate = $date->addDays(7);
+
+                        if ($expireDate->isPast() == FALSE) {
+                            Sentinel::login($user);
+
+                            return redirect()->action(
+                                'Auth\AuthController@authRemove', 
+                                array(
+                                    'code' => $authCode,
+                                    'redirectTo' => $authCheck->redirect_to
+                                )
+                            );
+                        }
+                    }
+                }
+            } else {
+                return Redirect::to('/');
+            }
+        } else {
+            return Redirect::to('/');
+        }
+    }
+
+    public function logout() 
+    {
+        Sentinel::logout();
+        return Redirect::to('/');
+    }
+
+    public function forgotPassword() 
+    {
+        return view('account/forgot-password');
+    }
+
+    public function activate($code) 
+    {
+        $userId = Activation::where(
+            'code', $code
+        )
+            ->first()
+            ->user_id
+        ;
+
+        $user = Sentinel::findById($userId);
+
+        if (Activation::complete($user, $code)) {       
+            Alert::success(
+                'Uw account is succesvol geactiveerd.'
+            )
+                ->persistent('Sluiten')
+            ;   
+        }
+
+        return Redirect::to('/');
     }
 
     public function sendMailAgain($code)
@@ -74,7 +197,43 @@ class AuthController extends Controller
         }
 
         return Redirect::to('/');
-  
+    }
+
+    public function activateEmail($code)
+    {
+        $user = Sentinel::getUserRepository()->where(
+            'new_email_code', $code
+        )
+            ->first()
+        ;
+
+        if ($user) {       
+            $user->email = $user->new_email;
+            $user->new_email = '';
+            $user->new_email_code = '';
+            $user->save();
+        }
+
+        return Redirect::to('account');
+    }
+
+    public function activatePassword($code)
+    {
+        $newPassword = str_random(10);
+
+        $reminder = Reminder::where(
+            'code', $code
+        )
+            ->where('completed', 0)
+            ->first()
+        ;
+
+        if ($reminder) {       
+             return view('account/new-password');
+        } else {
+            App::abort(404);
+        }
+    }
 
     public function activatePasswordAction(ResetPasswordRequest $request, $code)
     {
@@ -126,7 +285,8 @@ class AuthController extends Controller
 
         $ip=$_SERVER['REMOTE_ADDR'];
         $attempts = User::select('attempts','id')->where('email',$email)->first();
-        if($attempts) {
+        if($attempts >1) {
+            return 'inside';
             if ($attempts->attempts < 10 || $attempts->attempts == '') {
                 $data = array(
                     'secret' => env('CAPTCHA_SECRET'),

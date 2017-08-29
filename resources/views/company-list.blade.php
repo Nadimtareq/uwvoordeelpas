@@ -17,7 +17,7 @@
 @inject('discountHelper', 'App\Helpers\DiscountHelper')
 @inject('companyReservation', 'App\Models\companyReservation')
 @inject('FileHelper', 'App\Helpers\FileHelper')
-<ul> 
+<ul>
     @foreach ($companies as $data)
         @foreach ($data->ReservationOptions2()->get() as $deal)
             <li>
@@ -56,20 +56,12 @@
 
                             {{--					@if($count_persons >= $deal->total_amount)
 
-
                                                     <img src="{{ url('images/placeholdimagerest.png') }}" alt="{{ $data->name }}" class="img-responsive"  />
-
-                                                    <img src="{{ url('images/placeholdimagerest.png') }}" alt="{{ $data->name }}" class="thumbnails"  />
-
 
                                                 @else
 
                                                     <a href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}" title="{{ $data->name }}" data-url="">
-
                                                         <img src="{{ url('images/placeholdimagerest.png') }}" alt="{{ $data->name }}" class="img-responsive"  />
-
-                                                        <img src="{{ url('images/placeholdimagerest.png') }}" alt="{{ $data->name }}" class="thumbnails"  />
-
                                                     </a>
                                                     @endif
                                                 @endif--}}
@@ -78,11 +70,7 @@
                             @if($deal->image != null  &&  file_exists(public_path('images/deals/'  . $deal->image)))
                                 <a href="{{ url('restaurant/'.$data->slug).'?deal='.$deal->id }}"
                                    title="{{ $data->name }}" data-url="" style="position: relative;">
-
                                     <img width="100%" src="{{ url('images/deals/' . $deal->image) }}" alt="{{ $data->name }}" class="img-responsive" />
-
-                                    <img src="{{ url('images/deals/' . $deal->image) }}" alt="{{ $data->name }}" class="thumbnails" />
-
 
                                 </a>
                             @else

@@ -10,15 +10,15 @@
    {{--  @include('pages._search-slider')  --}}
 @endsection  
 
-
+<<<<<<< HEAD
 @section('content') 
-
-
+=======
+@section('content')
 <script type="javascript">
         var searchPage = 1;
     </script>
 
-
+>>>>>>> f84b2d14f090b801ced03b7c38216ba8f1098505
 <div class="clearfix"></div>
      @include('pages.search-filter')
     <div class="clearfix"></div>

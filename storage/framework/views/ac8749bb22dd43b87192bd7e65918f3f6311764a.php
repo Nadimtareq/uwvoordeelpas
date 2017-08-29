@@ -80,7 +80,6 @@
                         </a>
                         <a class="item"
                             href="<?php echo e(url('admin/'.$slugController.'?'.http_build_query(array_add($queryString, 'status', 'cancelled')))); ?>"
-<<<<<<< HEAD
                             data-value="Cancelled">
                             <div class="ui red empty circular label "></div>
                             Geannuleerd
@@ -88,15 +87,6 @@
                     <a class="item" 
                     href="<?php echo e(url('admin/'.$slugController.'?'.http_build_query(array_add($queryString, 'status', 'expired')))); ?>"
                     data-value="Expired">
-=======
-                            data-value="SS">
-                            <div class="ui red empty circular label"></div>
-                            SS
-                        </a>
-                    <a class="item" 
-                    href="<?php echo e(url('admin/'.$slugController.'?'.http_build_query(array_add($queryString, 'status', 'expired')))); ?>"
-                    data-value="Verlopen">
->>>>>>> e20a69d79303e58f20bd1154ee512f7d322bb657
                     <div class="ui light-red empty circular label"></div>
                     Verlopen
                 </a>
