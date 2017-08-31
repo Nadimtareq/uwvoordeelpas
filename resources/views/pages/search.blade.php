@@ -109,7 +109,7 @@
                                 </div>
                             </div>
                         @endif
-                        {!! $companies->appends($paginationQueryString)->render() !!}
+                       
                     @else
                         Er zijn geen restaurants gevonden met uw selectiecreteria.
                     @endif

@@ -18,7 +18,6 @@ use Intervention\Image\Exception\NotReadableException;
 use Redirect;
 use Setting;
 use Illuminate\Console\Commands\Guest\Wifi;
-use Mail;
 use DB;
 use URL;
 use App\Models\TempAuthRedirectUrl;

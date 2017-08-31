@@ -18,7 +18,7 @@ $compatible_browser_array = array('Chrome', 'Firefox', 'Opera');
 <div id="sliderImage" class="slider{{ Request::is('admin/*') == TRUE ? ' admin' : '' }}">
 
 
-    @if (Route::getCurrentRoute()->uri() == '/')
+    @if (Route::getCurrentRoute()->uri() == '/' || Route::getCurrentRoute()->uri() == 'home')
         @if(isset($userInfo))
             @if($userInfo->extension_downloaded == 0)
         <section id="home" class="scroll-section root-sec grey lighten-5 home-wrap" >
@@ -130,7 +130,7 @@ $compatible_browser_array = array('Chrome', 'Firefox', 'Opera');
             @endif
     @endif
 
-    @if ((Route::getCurrentRoute()->uri() == '/') && (($userAuth == FALSE) OR ( $userAuth && $userInfo->extension_downloaded == 0)))
+    @if ((Route::getCurrentRoute()->uri() == '/')  || Route::getCurrentRoute()->uri() == 'home' && (($userAuth == FALSE) OR ( $userAuth && $userInfo->extension_downloaded == 0)))
         <section id="activation">
             <div class="container">
                 <div class="row">
@@ -170,7 +170,7 @@ $compatible_browser_array = array('Chrome', 'Firefox', 'Opera');
 
 
 
-    @if (Route::getCurrentRoute()->uri() == '/' && $userAuth == FALSE)
+    @if (Route::getCurrentRoute()->uri() == '/' || Route::getCurrentRoute()->uri() == 'home' && $userAuth == FALSE)
         <section id="how_it_works">
             <div class="container">
                 <div class="row">

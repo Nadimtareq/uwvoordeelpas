@@ -285,8 +285,7 @@ class AuthController extends Controller
 
         $ip=$_SERVER['REMOTE_ADDR'];
         $attempts = User::select('attempts','id')->where('email',$email)->first();
-        if($attempts >1) {
-            return 'inside';
+        if($attempts) {
             if ($attempts->attempts < 10 || $attempts->attempts == '') {
                 $data = array(
                     'secret' => env('CAPTCHA_SECRET'),

@@ -6,11 +6,11 @@
 
 {{--*/ $pageTitle = (isset($contentBlock[1]) ? strip_tags($contentBlock[1]) : '') /*--}}
 
-@if (Route::getCurrentRoute()->uri() != '/')
+{{-- @if (Route::getCurrentRoute()->uri() != '/')
     @section("header_picture")
         @include('pages._search-slider')
     @endsection
-@endif
+@endif --}}
 
 @section('content')
 

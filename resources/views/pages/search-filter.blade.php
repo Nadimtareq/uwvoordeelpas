@@ -1,4 +1,13 @@
-
+<?php
+    $user = Sentinel::getUser();
+    $breadcrumbArray1 = (Request::has('preference') ? Request::get('preference') : ($userAuth && count
+    ($user->preferences) >= 1 && $user->preferences != 'null' && $user->preferences != null ? json_decode($user->preferences) : array()));
+    $breadcrumbArray2 = (Request::has('kitchen') ? Request::get('kitchen') : ($userAuth && count($user->kitchens) >= 1 && $user->kitchens != 'null' && $user->kitchens != null ? json_decode($user->kitchens) : array()));
+    $breadcrumbArray3 = (Request::has('price') ? Request::get('price') : ($userAuth && count($user->price) >= 1 && $user->price != 'null' && $user->price != null ? json_decode($user->price) : array()));
+    $breadcrumbArray4 = (Request::has('discount') ? Request::get('discount') : ($userAuth && count($user->discount) >= 1 && $user->discount != 'null' && $user->discount != null ? json_decode($user->discount) : array()));
+    $breadcrumbArray5 = (Request::has('allergies') ? Request::get('allergies') : ($userAuth && count($user->allergies) >= 1 && $user->allergies != 'null' && $user->allergies != null ? json_decode($user->allergies) : array()));
+    $arrayMerge = array_filter(array_merge($breadcrumbArray1, $breadcrumbArray2, $breadcrumbArray3, $breadcrumbArray4, $breadcrumbArray5));
+?>
 <div class="side_menus">
 
   {{Form::open(array('url' => 'preferences', 'method' => 'post', 'class' => 'ui form'))}}
@@ -25,6 +34,17 @@
 
             <div class="content">
                 <div class="static-menu row">
+				<div class="jsearch col-md-2 col-sm-2 col-xs-6">
+                        <?php $data=''; ?>
+                        @if(isset($preference[9]))
+                            <select name="discount[]" class = 'multipleSelect' id='city' onchange="javascript:handleSelect(this)">
+                                <option value=""><a href="#" >Stad</a></option>
+                                @foreach ($preference[9] as $key=>$pre)
+                                    <option value="{{$key}}"><a href="#" >{{$pre}}</a></option>
+                                @endforeach
+                            </select>
+                        @endif
+                    </div>
                 <div class="jsearch col-md-2 col-sm-2 col-xs-6">
                 <div class="drop-menu">
                     {{ Form::select('preference[]',
@@ -49,14 +69,14 @@
                                             array('class' => 'multipleSelect', 'data-placeholder' => 'Soort', 'multiple' => 'multiple')) }}
                 </div>
                 </div>
-                <div class="jsearch col-md-2 col-sm-2 col-xs-6">
+              <!--  <div class="jsearch col-md-2 col-sm-2 col-xs-6">
                 <div class="drop-menu">
                     {{ Form::select('discount[]',
                        (isset($preference[5]) ? $preference[5] : array()),
                        (Request::has('discount') ? Request::get('discount') : ''),
                        array('class' => 'multipleSelect', 'data-placeholder' => 'Korting', 'multiple' => 'multiple')) }}
                 </div>
-                </div>
+                </div>-->
                 <div class="jsearch col-md-2 col-sm-2 col-xs-6">
                    <div class="drop-menu">
 
