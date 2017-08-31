@@ -76,26 +76,46 @@ use App\Models\Company;
         </div>
     </div>
     <div class='row'>
+		<?php if(Sentinel::getUser()->roles[0]->id == 1) { ?>
         <div class='col-lg-3'>
             <div class='form-group'>
                 {!! Form::label('comp_id', 'COMPANY', ['class' => 'control-label']) !!}
                 {!! Form::select('comp_id',$company ,0,array('class' => 'form-control')) !!}
             </div>
         </div>
+		<?php  } ?>
         <div class='col-lg-3'>
             <div class="form-group">
                 {!! Form::label("duration", "duur in min ( In Minutes )", ["class" => "control-label"]) !!}
                 {!! Form::text("duration", null, ["class" => "form-control"]) !!}
             </div>
         </div>
+		<?php if(Sentinel::getUser()->roles[0]->id != 1) { ?>
+		<div class='col-lg-6'>
+            <div class="form-group">
+                {!! Form::label("description", "omschrijving", ["class" => "control-label"]) !!}
+                {!! Form::textarea("description", null, ["class" => "form-control"]) !!}
+            </div>
+        </div>
+		<?php  } ?>
     </div>
     <div class='row'>
+	<?php if(Sentinel::getUser()->roles[0]->id == 1) { ?>
         <div class='col-lg-9'>
             <div class="form-group">
                 {!! Form::label("description", "omschrijving", ["class" => "control-label"]) !!}
                 {!! Form::textarea("description", null, ["class" => "form-control"]) !!}
             </div>
         </div>
+	<?php  } ?>
+	
+        <div class='col-lg-9'>
+            <div class="form-group">
+                {!! Form::label("status", "status", ["class" => "control-label"]) !!}
+                {!! Form::select('status', array(''=>'Select','0'=>'Blue','1'=>'Yellow', '2'=>'Red', '3'=>'Green'),$status, array('class' => 'form-control')) !!}
+            </div>
+        </div>
+	
         <div class='col-lg-12'>
             <div class="form-group">{!! Form::submit('Aanpassen', ['class' => 'btn btn-primary']) !!}
             </div>

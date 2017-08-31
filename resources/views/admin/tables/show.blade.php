@@ -44,10 +44,12 @@ use App\Models\Company;
                     <th>DESCRIPTION</th>
                     <td>{{$model->duration}} Mins</td>
                 </tr>
+					<?php if(Sentinel::getUser()->roles[0]->id == 1) { ?>
                 <tr>
                     <th>COMPANY</th>
                     <td>{{Company::find($model->comp_id)->name}}</td>
                 </tr>
+					<?php } ?>
             </table>
         </div>
     </div>

@@ -97,6 +97,9 @@ function sortPriority(data) {
             </div>
         </div>
     </div>
+	
+		
+	
     <div class="row">
         <div class="col-lg-12">
             <form action="" name="searchform" id="searchform" method="GET" >
@@ -107,25 +110,32 @@ function sortPriority(data) {
                             <th><a href="{{str_replace("tables/?","tables?",request()->fullUrlWithQuery(["orderby"=>(request()->input('orderby')=="seating asc")?"seating desc":"seating asc"]))}}">SEATING</th>
                             <th><a href="{{str_replace("tables/?","tables?",request()->fullUrlWithQuery(["orderby"=>(request()->input('orderby')=="priority asc")?"priority desc":"priority asc"]))}}">PRIORITY</th>
                             <th><a href="{{str_replace("tables/?","tables?",request()->fullUrlWithQuery(["orderby"=>(request()->input('orderby')=="duration asc")?"duration desc":"duration asc"]))}}">DURATION</th>
+                            <?php if(Sentinel::getUser()->roles[0]->id == 1) { ?>
+							<th>Company</th>
+							<?php } ?>
                             <th>ACTIES</th>
                         </tr>
-
+				<?php if(Sentinel::getUser()->roles[0]->id == 1) { ?>
                         <tr>
                             <th><input class="form-control" type="text" name="table_number" value="{{request()->input('table_number')}}" ></th>
                             <th><input class="form-control" type="text" name="seating" value="{{request()->input('seating')}}" ></th>
                             <th><input class="form-control" type="text" name="priority" value="{{request()->input('priority')}}" ></th>
                             <th><input class="form-control" type="text" name="duration" value="{{request()->input('duration')}}" ></th>
+                            <th><?php echo Form::select('comp_id', $companies, "", array('class' => 'ui normal search dropdown'));  ?></th>
                             <th><input type="submit" value='Search'  class="btn btn-primary"></th>
                         </tr>
-
+				<?php } ?>
                     </thead>
                     <tbody>
+				<?php if(Sentinel::getUser()->roles[0]->id == 1) { ?>
                         @foreach($model as $key=>$val)
+							
                         <tr class='stable' data-id='{{$val->id}}'>
                             <td>{{$val->table_number}}</td>
                             <td>{{$val->seating}}</td>
                             <td>{{$val->priority}}</td>
                             <td>{{$val->duration}}</td>
+                            <td><?php if($val->Company->name){ echo $val->Company->name;}?></td>
                             <td>
                                 <a href="{{ url("admin/tables/edit",$val->id) }}" class="btn btn-warning btn-sm">wijzigen</a>
                                 <a href="{{ url("admin/tables/show",$val->id) }}" class="btn btn-info btn-sm">tonen</a>
@@ -133,11 +143,31 @@ function sortPriority(data) {
                             </td>
                         </tr>
                         @endforeach
+				<?php }else{?>
+					  @foreach($model as $key=>$val)
+							
+                        <tr class='stable' data-id='{{$val->id}}'>
+                            <td>{{$val->table_number}}</td>
+                            <td>{{$val->seating}}</td>
+                            <td>{{$val->priority}}</td>
+                            <td>{{$val->duration}}</td>
+                          
+                            <td>
+                                <a href="{{ url("admin/tables/edit",$val->id) }}" class="btn btn-warning btn-sm">wijzigen</a>
+                                <a href="{{ url("admin/tables/show",$val->id) }}" class="btn btn-info btn-sm">tonen</a>
+                                <a onclick="return confirm('Do you really want to delete this record?');" href="{{ url("admin/tables/destroy",$val->id) }}" class="btn btn-danger btn-sm">verwijderen</a>
+                            </td>
+                        </tr>
+                        @endforeach
+				<?php } ?>
                     </tbody>
                 </table>
             </form>
+			<?php if(Sentinel::getUser()->roles[0]->id == 1) { ?>
             {{ $model->appends(request()->input())->links() }}
+			<?php }?>
         </div>
     </div>
 </div>
+	
 @stop

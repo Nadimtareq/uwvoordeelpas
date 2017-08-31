@@ -76,24 +76,36 @@ use App\Models\Company;
 
     </div>
     <div class='row'>
+	<?php if(Sentinel::getUser()->roles[0]->id == 1) { ?>
         <div class='col-lg-3'>
             <div class='form-group'>
                 {!! Form::label('comp_id', 'COMPANY', ['class' => 'control-label']) !!}
-                {!! Form::select('comp_id', $company,0,array('class' => 'form-control')) !!}
+                {!! Form::select('comp_id', $companies,0,array('class' => 'form-control')) !!}
             </div>
         </div>
+	<?php } ?>
         <div class='col-lg-3'>
             <div class='form-group'>
                 {!! Form::label('duration', 'DURATION ( In Minutes )', ['class' => 'control-label']) !!}
                 {!! Form::text('duration', null, ['class' => 'form-control']) !!}
             </div>
         </div>
+		<?php if(Sentinel::getUser()->roles[0]->id == 1) { ?>
         <div class='col-lg-9'>
             <div class='form-group'>
                 {!! Form::label('description', 'DESCRIPTION', ['class' => 'control-label']) !!}
                 {!! Form::textarea('description', null, ['class' => 'form-control']) !!}
             </div>
         </div>
+		<?php  }else{ ?>
+			 <div class='col-lg-6'>
+            <div class='form-group'>
+                {!! Form::label('description', 'DESCRIPTION', ['class' => 'control-label']) !!}
+                {!! Form::textarea('description', null, ['class' => 'form-control']) !!}
+            </div>
+        </div>
+		<?php } ?>
+
         <div class='col-lg-12'>
             <div class='form-group'>
                 {!! Form::submit('ADD NEW TABLE', ['class' => 'btn btn-primary']) !!}
