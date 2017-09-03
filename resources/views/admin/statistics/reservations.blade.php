@@ -51,7 +51,7 @@
             }
     </style>
     <div class="side_menus">
-        {{Form::open(array('url' => 'preferences', 'method' => 'post', 'class' => 'ui form'))}}
+        {!! Form::open(array('url' => 'preferences', 'method' => 'post', 'class' => 'ui form')) !!}
         <div class="content">
             <div class="row">
                 <div class="jsearch col-md-3 col-sm-3 col-xs-12">
