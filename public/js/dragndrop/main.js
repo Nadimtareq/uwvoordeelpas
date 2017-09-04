@@ -8,7 +8,8 @@ $(function($){
 		.drag("start",function( ev, dd ){ 
 
 			dd.limit = $divField.offset();
-			dd.limit.top = 230;
+			dd.limit.top = 0;
+			dd.limit.left = 0;
 			//alert(dd.limit.toSource());
 			dd.limit.bottom = dd.limit.top + $divField.outerHeight() - $( this ).outerHeight();
 			dd.limit.right = dd.limit.left + $divField.outerWidth() - $( this ).outerWidth();
@@ -52,8 +53,8 @@ $(function($){
 		})
 		.drag(function( ev, dd ){ //alert('drop');
 			$( this ).css({
-				top: Math.min( dd.limit.bottom, Math.max( dd.limit.top, dd.offsetY ) ),
-				left: Math.min( dd.limit.right, Math.max( dd.limit.left, dd.offsetX ) )
+				top: Math.min( dd.limit.bottom, Math.max( dd.limit.top, dd.offsetY - $divField.offset().top ) ),
+				left: Math.min( dd.limit.right, Math.max( dd.limit.left, dd.offsetX - $divField.offset().left ) )
 			});   
 					
 			
@@ -129,10 +130,12 @@ $(function($){
 	        var company_id = $("#company_id").val();
 	        var pos = $(this).offset(); 
 			//alert(pos.toSource());
-			var pos_top = parseInt(pos.top -60);
-			var pos_left = pos.left;
+			var pos_top = pos.top - $divField.offset().top;
+			//console.log(pos_top);
+			var pos_left = pos.left - $divField.offset().left;
 			
-			var json_object = {"pageX": ev.pageX, "pageY":ev.pageY, "screenY":ev.screenY, "screenX":ev.screenX, "clientY":ev.clientY, "clientX":ev.clientX, "table_id":table_id, "company_id":company_id, "reservation_id":reservation_id, "offsetX":pos_top, "offsetY":pos_left};
+			var json_object = {"pageX": ev.pageX, "pageY":ev.pageY, "screenY":ev.screenY, "screenX":ev.screenX, "clientY":ev.clientY, "clientX":ev.clientX, "table_id":table_id, "company_id":company_id, "reservation_id":reservation_id, "offsetY":pos_top, "offsetX":pos_left};
+			console.log(json_object);
 			$.ajax({
 				    headers: {
 						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

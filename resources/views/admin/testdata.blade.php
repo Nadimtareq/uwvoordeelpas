@@ -1,10 +1,10 @@
 <html>
 
 <body>
- {{ Form::open(array('url' => url('/dev/rundata'), 'method' => 'post')) }}
+ {!! Form::open(array('url' => url('/dev/rundata'), 'method' => 'post')) !!}
 	 {{ Form::text('sql') }}
-	 {{ Form::submit() }}
- {{ Form::close() }} 
+	 {{ Form::submit() !!}
+ {!! Form::close() }} 
  
  @if ( isset($sql))
 	{!! $sql !!}

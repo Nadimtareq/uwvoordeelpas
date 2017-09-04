@@ -18,10 +18,8 @@
 @inject('companyReservation', 'App\Models\companyReservation')
 @inject('FileHelper', 'App\Helpers\FileHelper')
 <ul>
-    {{ $companies }}
     @foreach ($companies as $data)
         @foreach ($data->ReservationOptions2()->get() as $deal)
-        <!--{{2}}-->
             <li>
                 <?php
                 $media = $data->getMedia('default');

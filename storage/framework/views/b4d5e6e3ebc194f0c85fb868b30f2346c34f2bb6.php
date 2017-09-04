@@ -1,5 +1,4 @@
 <script>
-	
 	$(document).ready(function() {
 
 		$('#searchModal').on('click', function() {

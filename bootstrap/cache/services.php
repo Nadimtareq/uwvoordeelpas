@@ -43,6 +43,7 @@
     39 => 'Cviebrock\\ImageValidator\\ImageValidatorServiceProvider',
     40 => 'Barryvdh\\TranslationManager\\ManagerServiceProvider',
     41 => 'LaravelCaptcha\\Providers\\LaravelCaptchaServiceProvider',
+    42 => 'Barryvdh\\Debugbar\\ServiceProvider',
   ),
   'eager' => 
   array (
@@ -72,6 +73,7 @@
     23 => 'Cviebrock\\ImageValidator\\ImageValidatorServiceProvider',
     24 => 'Barryvdh\\TranslationManager\\ManagerServiceProvider',
     25 => 'LaravelCaptcha\\Providers\\LaravelCaptchaServiceProvider',
+    26 => 'Barryvdh\\Debugbar\\ServiceProvider',
   ),
   'deferred' => 
   array (

@@ -10,7 +10,7 @@
 @section('scripts')
 	<script type="text/javascript">
 		$(document).ready(function() {
-		    closeBrowser();  
+		    closeBrowser();
 		});
 	</script>
 
@@ -58,7 +58,7 @@
 @section('content')
 <div class="content">
  	@include('admin.template.breadcrumb')
-	
+
 	@if (Request::has('step'))
 	<div class="ui three mini steps">
 		<a href="{{ url('admin/companies/update/'.$company.'/'.$slug.'?step=1') }}" class="link step">
@@ -91,7 +91,7 @@
      		 	OPGELET!
     		</div>
     		<p>
-    			Met het onderstaande formulier kunt u nieuwe reserveringstijden opgegeven. Deze tijden kunt u gemakkelijk weer aanpassen op de pagina 
+    			Met het onderstaande formulier kunt u nieuwe reserveringstijden opgegeven. Deze tijden kunt u gemakkelijk weer aanpassen op de pagina
     			<strong>Instellingen</strong>.
     		</p>
 	  	</div>
@@ -103,16 +103,16 @@
 		<div class="field">
 			<label>Bedrijf</label>
 			<?php echo Form::select('company', $companies, $company, array('class' => 'ui normal search dropdown'));  ?>
-		</div>	
+		</div>
 		@endif
-		
+
 		@if (Request::has('step'))
 			<?php echo Form::hidden('company', $company); ?>
 			<?php echo Form::hidden('start_date', date('Y-m-d')); ?>
 			<?php echo Form::hidden('end_date', date('Y-m-d', strtotime('+1 year'))); ?>
-			
+
 			<div id="dateAppend">
-				@for ($i = 0; $i < 1; $i++) 
+				@for ($i = 0; $i < 1; $i++)
 				<div class="r-group four fields">
 					<div class="field">
 						<label>Dag(en)</label>
@@ -129,7 +129,7 @@
 								'data-pattern-id' => 'days++'
 							)
 						) ?>
-					</div>	
+					</div>
 
 					<div class="field">
 						<label>Begin tijd</label>
@@ -137,7 +137,7 @@
 							<?php echo Form::text('start_time[0]', '', array('class' => 'timepicker', 'placeholder' => 'Selecteer een tijd', 'data-pattern-name' => 'start_time[++]','data-pattern-id' => 'start_time++')); ?>
 							<i class="clock icon"></i>
 						</div>
-					</div>	
+					</div>
 
 					<div class="field">
 						<label>Eind tijd</label>
@@ -145,7 +145,7 @@
 							<?php echo Form::text('end_time[0]', '', array('class' => 'timepicker', 'placeholder' => 'Selecteer een tijd', 'data-pattern-name' => 'end_time[++]','data-pattern-id' => 'end_time++')); ?>
 							<i class="clock icon"></i>
 						</div>
-					</div>	
+					</div>
 
 					<div class="field">
 						<label>Opties</label>
@@ -153,25 +153,25 @@
 							<button type="button" class="r-btnAdd ui icon button">
 								<i class="add icon"></i>
 							</button>
-							
+
 							<button type="button" class="r-btnRemove ui red button icon">
 								<i class="trash icon"></i>
 							</button>
-						</div>	
-					</div>	
-				</div>	
+						</div>
+					</div>
+				</div>
 				@endfor
 			</div>
 		@endif
 <br />
 		<div class="two fields">
 			@if (!Request::has('step'))
-				@for ($i = 0; $i < 1; $i++) 
+				@for ($i = 0; $i < 1; $i++)
 				<div class="two fields">
 					<div class="field">
 						<label>Dag(en)</label>
 						<?php echo Form::select('days['.$i.'][]', Config::get('preferences.days'), '', array('multiple' => true, 'id' => 'day', 'class' => 'multipleSelect')) ?>
-					</div>	
+					</div>
 
 					<div class="field">
 						<label>Begin tijd</label>
@@ -179,7 +179,7 @@
 							<?php echo Form::text('start_time['.$i.']', '', array('class' => 'timepicker', 'placeholder' => 'Selecteer een tijd')); ?>
 							<i class="clock icon"></i>
 						</div>
-					</div>	
+					</div>
 
 					<div class="field">
 						<label>Eind tijd</label>
@@ -187,11 +187,11 @@
 							<?php echo Form::text('end_time['.$i.']', '', array('class' => 'timepicker', 'placeholder' => 'Selecteer een tijd')); ?>
 							<i class="clock icon"></i>
 						</div>
-					</div>	
-				</div>	
+					</div>
+				</div>
 				@endfor
 			@endif
-		</div>	
+		</div>
 
 		@if (!Request::has('step'))
 		<div class="two fields">
@@ -201,7 +201,7 @@
 					<?php echo Form::text('start_date', '', array('class' => 'datepicker', 'placeholder' => 'Selecteer een datum')); ?>
 					<i class="calendar icon"></i>
 				</div>
-			</div>	
+			</div>
 
 			<div class="field">
 				<label>Eind datum</label>
@@ -209,92 +209,92 @@
 					<?php echo Form::text('end_date', '', array('class' => 'datepicker', 'placeholder' => 'Selecteer een datum')); ?>
 					<i class="calendar icon"></i>
 				</div>
-			</div>	
-		</div>	
+			</div>
+		</div>
 		@endif
 
 		<div class="two fields">
 			<div class="field">
 				<label>Periode dat een gast vooraf moet reserveren</label>
-				<?php 
+				<?php
 				echo Form::select(
-					'closed_before_time', 
-					Config::get('preferences.closed_time'), 
+					'closed_before_time',
+					Config::get('preferences.closed_time'),
 					'',
 					array(
 						'class' => 'ui normal search dropdown'
 					)
-				) 
+				)
 				?>
 			</div>
 
 			<div class="field">
 				<label>Dagelijks reserveren kan tot:</label>
 				<div class="ui icon input">
-					<?php 
+					<?php
 					echo Form::text(
-						'closed_at_time', 
+						'closed_at_time',
 						'',
 						array(
-							'class' => 'timepicker', 
+							'class' => 'timepicker',
 							'placeholder' => 'Selecteer een tijd'
 						)
 					);
 					?>
 					<i class="clock icon"></i>
 				</div>
-			</div>	
+			</div>
 		</div>
 
 		<div class="two fields">
 			<div class="field">
 				<label>Periode dat een gast vooraf een reservering mag annuleren</label>
-				<?php 
+				<?php
 				echo Form::select(
-					'cancel_before_time', 
-					Config::get('preferences.closed_time'), 
+					'cancel_before_time',
+					Config::get('preferences.closed_time'),
 					'',
 					array(
 						'class' => 'ui normal search dropdown'
 					)
-				) 
+				)
 				?>
 			</div>
 
 			<div class="field">
 				<label>Aantal plaatsen <strong>per uur</strong></label>
 				<div class="ui icon input">
-					<?php 
+					<?php
 					echo Form::text(
-						'max_persons', 
+						'max_persons',
 						''
 					);
 					?>
 					<i class="users icon"></i>
 				</div>
-			</div>	
-		</div>	
+			</div>
+		</div>
 
 		<div class="two fields">
 			<div class="field">
 				<label>Periode dat een gast vooraf een reservering mag wijzigen</label>
-				<?php 
+				<?php
 				echo Form::select(
-					'update_before_time', 
-					Config::get('preferences.closed_time'), 
+					'update_before_time',
+					Config::get('preferences.closed_time'),
 					'',
 					array(
 						'class' => 'ui normal search dropdown'
 					)
-				) 
+				)
 				?>
 			</div>
 
 			<div class="field">
 				<label>Wilt u de reserveringen automatisch goedkeuren?</label>
-				<?php 
+				<?php
 				echo Form::select(
-					'is_manual', 
+					'is_manual',
 					array(
 						0 => 'Ja',
 						1 => 'Nee'
@@ -303,17 +303,17 @@
 					array(
 						'class' => 'ui normal search dropdown'
 					)
-				) 
+				)
 				?>
 			</div>
 		</div>
-		
+
 		<div class="two fields">
 			<div class="field">
 				<label>Periode voor de reservering een herinnering ontvangen (klant)?</label>
-				<?php 
+				<?php
 				echo Form::select(
-					'reminder_before_date', 
+					'reminder_before_date',
 					array(
 						0 => 'Uit',
 						1 => '1 uur',
@@ -321,15 +321,15 @@
 						3 => '3 uur',
 						4 => '4 uur',
 						5 => '5 uur'
-					), 
+					),
 					'',
 					array(
 						'class' => 'ui normal search dropdown'
 					)
-				) 
+				)
 				?>
 			</div>
-			
+
 			<div class="field">
 				<label>Aantal plekken beschikbaar</label>
 				<?php echo Form::number('available_persons', 1, array('min' => 2)) ?>
@@ -342,7 +342,7 @@
 			<div class="field">
 				<label>Plaatsen per</label>
 				<?php echo Form::select('per_time',  array(60 => 'Per uur', 30 => 'Per halfuur', 15 => 'Per kwartier'), '', array('class' => 'ui normal search dropdown')) ?>
-			</div>	
+			</div>
 			@else
 			<?php echo Form::hidden('per_time', 15) ?>
 			@endif
@@ -351,9 +351,9 @@
 			<div class="field">
 				<label>Aantal actie plaatsen</label>
 				<?php echo Form::number('available_deals', 1, array('min' => 1)) ?>
-			</div>	
+			</div>
 			@endif
-		</div>	
+		</div>
 
 		<button class="ui tiny button" type="submit"><i class="plus icon"></i> Aanmaken</button>
 	<?php echo Form::close(); ?>

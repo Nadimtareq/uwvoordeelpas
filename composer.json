@@ -12,7 +12,6 @@
         "cviebrock/eloquent-sluggable": "~3.0",
         "milon/barcode": "~1.0",
         "uxweb/sweet-alert": "~1.1",
-        "barryvdh/laravel-debugbar": "~2.0",
         "anlutro/curl": "~1.4",
         "barryvdh/laravel-snappy": "0.2.x",
         "vsmoraes/laravel-pdf": "^1.0",
@@ -35,9 +34,10 @@
         "barryvdh/laravel-translation-manager": "^0.2.3",
         "giggsey/libphonenumber-for-php": "^7.6",
         "captcha-com/laravel-captcha": "^4.1",
-		"guzzlehttp/guzzle": "~4.0",
+		"guzzlehttp/guzzle": "~6.3.0",
         "mobiledetect/mobiledetectlib": "^2.8",
-        "jorenvanhocht/laravel-share": "^1.0"
+        "jorenvanhocht/laravel-share": "^1.0",
+        "appstract/laravel-opcache": "^1.2"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
@@ -45,7 +45,8 @@
         "phpunit/phpunit": "~4.0",
         "symfony/dom-crawler": "~3.0",
         "symfony/css-selector": "~3.0",
-        "phpspec/phpspec": "~2.1"
+        "phpspec/phpspec": "~2.1",
+        "barryvdh/laravel-debugbar": "^2.4"
     },
     "autoload": {
         "classmap": [
