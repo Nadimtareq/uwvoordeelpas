@@ -132,6 +132,19 @@ class AccountController extends Controller {
     }
 
     public function reviews() {
+		/*$user = new Review;
+
+		$user->user_id = 215;
+		$user->company_id = 1;
+		$user->deal_id = '8';
+		$user->content = "Loevdeep test";
+		$user->food = 7;
+		$user->service =5;
+		$user->decor = 3;
+		$user->is_approved = 2;
+		$user->created_at = date('Y-m-d H:i:s');
+		$user->updated_at = date('Y-m-d H:i:s');
+		$user->save();*/
         $data = Review::select(
                         'reviews.*', 'companies.name as companySlug',
                         'companies.name as companyName'

@@ -26,7 +26,7 @@ return [
     |
      */
 
-    'url'             => env('APP_URL', 'https://www.uwvoordeelpas.nl'),
+    'url'             => env('APP_URL', 'https://localhost/uwvoordeelpas'),
 
     'env'             => env('APP_ENV', 'production'),
 
