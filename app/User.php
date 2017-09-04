@@ -19,7 +19,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     use Authenticatable, Authorizable, CanResetPassword;
 
     protected $table = 'users';
-    protected $fillable = ['name', 'email', 'password', 'reference_code', 'lang'];
+    protected $fillable = ['id', 'name', 'email', 'password', 'reference_code', 'lang', 'attempts'];
     protected $hidden = ['password', 'remember_token'];
 
     public static function getRoleErrorPopup() 

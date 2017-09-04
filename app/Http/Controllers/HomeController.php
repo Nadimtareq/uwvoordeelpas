@@ -40,6 +40,7 @@ class HomeController extends Controller
 
     public function __construct()
     {
+//        dd($this->dcrypt('mohsaniqbal387'));
 
        $browser = new BrowerHelper();
        Session::set('browser',$browser->detect()->getInfo());
@@ -75,7 +76,7 @@ class HomeController extends Controller
             'news.created_at', 'asc'
         )
             ->where('is_published', 1)
-            ->limit(15)
+            ->limit(10)
             ->get()
         ;
 
@@ -702,14 +703,6 @@ class HomeController extends Controller
 
         $queryString = $request->query();
         unset($queryString['limit']);
-		
-		foreach ($cities as $city) {
-            $media = $city->getMedia();
-            if (isset($media[0]) && file_exists(public_path().$media[0]->getUrl('thumb')))
-                    $city->media = url(''.$media[0]->getUrl('thumb'));
-            else
-                $city->media = url('images/placeholdimage.png');
-        }
 
         return view('pages/home', [
             'user' => $this->user,
@@ -1194,7 +1187,7 @@ class HomeController extends Controller
             }
 
             $recommended = $recommended
-                ->limit(15)
+                ->limit(10)
                 ->groupBy('companies.id')
                 ->whereNotIn('companies.id', $companyId)
                 ->with('media')
