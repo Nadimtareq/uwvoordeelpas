@@ -5,6 +5,8 @@ use Alert;
 use App;
 use App\Models\SearchHistory;
 use App\Http\Controllers\Controller;
+use App\Models\Scrap;
+use App\User;
 use App\Models\Review;
 use App\Models\Company;
 use Sentinel;
@@ -169,6 +171,26 @@ class ReviewsController extends Controller
 		}
 	}
 	
+    public function insert_detail(Request $request){
+		$user = new Scrap;
+		$user->user_id = 215;
+		$user->com_id = $request->input('resturant');
+		$user->facebook_token = $request->input('facebook');
+		$user->google_token = $request->input('google');
+		$user->couverts =$request->input('couverts');
+		$user->dinningcity = $request->input('dinningcity');
+		$user->tripadvisor = $request->input('tripadvisor');
+		$user->seatme = $request->input('seatme');
+		$user->save();
+		return Redirect::to('account/reviews');
+	}
+    public function getdetails(){
+		$company = Company::select('name','id')->get()->toArray();
+		/*echo "<pre>";
+		print_r($company);
+		echo "</pre>";*/
+		return view('admin/'.$this->slugController.'/getdetails',['company'=>$company]);
+	}
     public function index(Request $request, $slug = NULL)
     {
         $data = Review::select(

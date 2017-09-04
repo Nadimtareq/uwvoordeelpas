@@ -618,6 +618,8 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', '
     Route::group(array('prefix' => 'reviews'), function () {
         Route::get('/', 'Admin\ReviewsController@index');
         Route::get('/scraping', 'Admin\ReviewsController@scraping');
+        Route::get('/getdetails', 'Admin\ReviewsController@getdetails');
+        Route::post('/insert/getdetails', 'Admin\ReviewsController@insert_detail');
 
         ## Post routes - Reviews ##
         Route::post('update', 'Admin\ReviewsController@updateAction');
