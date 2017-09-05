@@ -129,8 +129,6 @@ class HomeController extends Controller
 
     public function index(Request $request)
     {
-		//$hashedPassword = $password = bcrypt('JohnDoe');;
-		//echo $hashedPassword;die;
 //        $deals = App\Models\ReservationOption::all();
         // Preferences cities
         $cities = Preference::where('category_id', 9)
