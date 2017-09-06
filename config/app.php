@@ -26,7 +26,7 @@ return [
     |
      */
 
-    'url'             => env('APP_URL', 'https://www.uwvoordeelpas.nl'),
+    'url'             => env('APP_URL', 'localhost'),
 
     'env'             => env('APP_ENV', 'production'),
 
@@ -163,6 +163,7 @@ return [
         'Barryvdh\TranslationManager\ManagerServiceProvider',
         LaravelCaptcha\Providers\LaravelCaptchaServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+//        Appstract\Opcache\OpcacheServiceProvider::class,
 //        Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
 
     ],
