@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "devDependencies": {
+    "gulp-plumber": "^1.1.0"
+  },
+  "dependencies": {
+    "bootstrap-sass": "^3.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-minifier": "^0.2.2",
+    "gulp-notify": "^3.0.0",
+    "gulp-sass": "^3.1.0",
+    "laravel-elixir": "^3.0.0",
+    "streamqueue": "^1.1.1"
+  }
+}
