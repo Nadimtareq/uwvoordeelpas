@@ -30,6 +30,16 @@
     .stable{
         cursor: move;
     }
+    div.breadcrumb{
+        font-size: 14px !important;
+        padding: 0px;
+        background-color: transparent;
+        border-radius: 0px;
+    }
+
+    thead tr {
+        background-color: #fff;
+    }
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script type="text/javascript" src="{{ asset('js/jquery-sortable.js') }}"></script>
@@ -88,11 +98,17 @@ function sortPriority(data) {
 }
 
 </script>
+<div class="content">
+    <div class="ui breadcrumb">
+        <div class="active section">Tafelmanagement</div>
+    </div>
+    <div class="ui divider"></div>
+</div>
 <div class='container'>
     <div class='row'>
         <div class='col-lg-12'>
             <div  style='padding:15px 15px 15px 0px;'>
-                <h4>Tables Management <a  href="{{ url("admin/tables/create") }}" class="btn btn-info btn-sm" style='font-size: 16px;'>Add New</a></h4>
+                <h4>Tables Management <a  href="{{ url("admin/tables/create") }}" class="btn btn-info btn-sm" style='font-size: 16px;'>Toevoegen</a></h4>
                 <hr/>
             </div>
         </div>

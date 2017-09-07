@@ -73,7 +73,7 @@ class TablesController extends Controller {
 		}
 		else{
 			$company = Company::where('user_id', Sentinel::getUser()->id)->first();
-			$data = DB::table('dinning_tables')->where('comp_id',$company->id )->get();
+			$data = DB::table('dinning_tables')->where('comp_id',$company->id )->orderBy('priority')->get();
 			$data["model"] = $data;	 
 		}
         return view("admin/tables.index", $data);
@@ -84,7 +84,7 @@ class TablesController extends Controller {
         $priority = json_decode($input['priority']);
         foreach ($priority[0] as $key => $val) {
             $tbl = Table::findOrFail($val->id);
-            $tbl->priority = $key;
+            $tbl->priority = $key+1;
             $tbl->save();
         }
         return "1";
@@ -113,13 +113,32 @@ class TablesController extends Controller {
     }
 
     public function store(Request $request) {
+        $messages = array(
+            'table_number.required'=>'Het tafelnummer is verplicht.',
+            'seating.required'=>'Het aantal stoelen is verplicht.',
+            'description.required'=>'Het omschrijving veld is verplicht.',
+            'priority.required'=>'Het veld prioriteit is verplicht.',
+            'duration.required'=>'Het veld tijd is verplicht.'
+        );
         $this->validate($request, ["table_number" => "required", "seating" => "required", "description" => "required", "priority" => "required", "duration" => "required",]);
         $input = $request->all();
 		if(Sentinel::getUser()->roles[0]->id != 1){
 			$company = Company::where('user_id', Sentinel::getUser()->id)->first();
 			$input['comp_id'] = $company->id; 
 			$input['created_at'] = date('Y-m-d'); 
-		} 
+		}
+        if($company != null) {
+            $countTable = Table::where('comp_id', $company->id)->where('table_number', $input['table_number'])->count();
+            $priorityExist = Table::where('comp_id', $company->id)->where('priority', $input['priority'])->count();
+            $errorString = [];
+            if ($countTable > 0)
+                $errorString[] = 'OEPS! U heeft tafel nummer ' . $input['table_number'] . ' al eerder toegevoegd';
+            if ($priorityExist > 0)
+                $errorString[] = 'OEPS! U heeft prioriteit ' . $input['priority'] . ' al eerder toegevoegd';
+            if(count($errorString) > 0)
+                return redirect()->back()->withErrors($errorString);
+        }
+
         Table::create($input);
         Session::flash("flash_message", "Tables successfully added!");
         Alert::success("Table Added successfully");

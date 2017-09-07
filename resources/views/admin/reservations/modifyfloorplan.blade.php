@@ -15,10 +15,41 @@
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('js/dragndrop/owl.carousel.js') }}"></script>
 
+<style>
+    #container-floor {
+        -webkit-background-size:cover !important;
+        background-size:cover !important;
+    }
+    .btn.btn-drop-carousel {
+        margin-bottom: 0;
+    }
+    .btn.btn-drop-carousel:hover {
+        color: #fff;
+    }
+    .carousel-container {
+        display: none;
+        position: relative;
+    }
+
+    .customNavigation {
+        margin-bottom:30px;
+    }
+
+    .customNavigation a{
+        position: relative;
+    }
+
+    .prev span, .next span {
+        margin-top: 0;
+    }
+</style>
+
 @section('fixedMenu') <a href="{{ url('faq/8/reserveren') }}" class="ui black icon big launch right attached fixed button"> <i class="question mark icon"></i> <span class="text">Veelgestelde vragen</span> </a><br />
 <script type="text/javascript">
 //var base_img_url = <?php echo url('images/dragndrop/'); ?>;
 $("#pageLoader").fadeOut('slow');
+
+
 </script>
 @stop
 @section('content')
@@ -32,12 +63,13 @@ $directory = $_public.'/images/dragndrop/bg';
     @else
     <div class="active section">Alle reserveringen</div>
     @endif </div>
+    <div class="pull-right">
+        <div class="btn blue darken-4 btn-drop-carousel">Kies achtergrond</div>
+    </div>
   <div class="ui divider"></div>
-  
-  <br>
-  <div class="col-md-4">&nbsp;</div>
-  <div class="col-md-8" style="padding:0px;">
-<div class="customNavigation"><a id="prev" class="btn prev"><span>Previous</span></a> <a id="next" class="btn next"><span>Next</span></a></div>
+  {{--<div class="col-md-4">&nbsp;</div>--}}
+  <div class="carousel-container">
+
         <div id="owl-demo" class="owl-carousel">
               <?php
                 //$directory = File::directories();
@@ -56,6 +88,7 @@ $directory = $_public.'/images/dragndrop/bg';
                 }
               ?>
         </div>
+      <div class="customNavigation"><a id="prev" class="btn prev"><span>Previous</span></a> <a id="next" class="btn next"><span>Next</span></a></div>
     </div>
   
   <!--<div style="float:right;">
@@ -63,14 +96,15 @@ $directory = $_public.'/images/dragndrop/bg';
     <img src="<?php echo url('images/dragndrop/bg/gray-1.jpg'); ?>" id="imgDemo" alt="HTML5 Icon" width="128" height="128">
     <button onclick="prvs()" id="btnTwo"> previous</button>
   </div>-->
-  <div class="col-md-12">
+    <div style="position: relative">
+  <div class="clearfix">
     <input type="hidden" id="totalDrop" value="0">
     <input type="hidden" name="redirectUrl" value="{{ url('admin/reservations/clients'.(isset($companyInfo->name) ? '/'.$companyInfo->id : '')) }}">
   <input type="hidden" name="company" id="company_id" value="{{ isset($companyInfo->id) ? $companyInfo->id : '' }}">
   <input type="hidden" name="date" value="{{ $date }}">
     <div id="lock"></div>
-    <div id="container-table" class="col-md-3"></div>
-    <div id="container-floor" class="col-md-9"></div>
+    {{--<div id="container-table" class="col-md-3"></div>--}}
+    <div id="container-floor"></div>
     
   </div>
   <?php
@@ -147,11 +181,11 @@ $style_left = [];
       $sl = $margin_top = 0 ;
       //print "<br> $i => ".($arrName_xposition[$i]);continue;
       if( $arrName_xposition[$i] > 0 ){
-           $margin_top      = ($arrName_xposition[$i]);
-           $sl              = $arrName_yposition[$i];
+           $margin_top      = ($arrName_yposition[$i]);
+           $sl              = $arrName_xposition[$i];
         }else{
-               $margin_top      = 230+($x*90);
-               $style_left[$x] += 80;
+               $margin_top      = ($x*90);
+               $style_left[$x] += 0;
                $sl              = $style_left[$x];
       }
                ?>
@@ -181,6 +215,7 @@ $(function($){
 });
 </script>
   @endfor </div>
+</div>
 <div class="clear"></div>
 <script>
 	/*var img = new Array("<?php echo url('images/dragndrop/bg/gray-1.jpg'); ?>","<?php echo url('images/dragndrop/bg/yellow-2.jpg'); ?>");
@@ -264,6 +299,12 @@ $('.carousel .item').each(function(){
      
   }
 });*/
+    $(".btn-drop-carousel").click(function() {
+        if($(".carousel-container").is(":hidden"))
+            $(".carousel-container").slideDown();
+        else
+            $(".carousel-container").slideUp();
+    });
 });
 </script>
 @stop 
