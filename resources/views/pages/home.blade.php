@@ -71,9 +71,9 @@
                                             <?php $mediaUrl =  'images/affiliates/'. $data->affiliate_network .'/'.$data->program_id.'.'.$data->image_extension; ?>
                                             @if (isset($data->image_extension) && $FileHelper::is_url_exist(url($mediaUrl)))
                                                 <img src="{{ url($mediaUrl) }}" alt="more" />
-                   
+
                                             @else
-                                                <img src="{{ url('images/placeholdimage.png') }}" alt="p1"> 
+                                                <img src="{{ url('images/placeholdimage.png') }}" alt="p1">
                                             @endif
                                         </a>
                                     </div>
@@ -265,5 +265,5 @@
 
 
 @section("after_styles")
-     <link href="{{ asset("css/custom.css") }}" rel="stylesheet"> 
+     <link href="{{ asset("css/custom.css") }}" rel="stylesheet">
 @endsection

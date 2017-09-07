@@ -26,7 +26,7 @@ return [
     |
      */
 
-    'url'             => env('APP_URL', 'https://localhost/uwvoordeelpas'),
+    'url'             => env('APP_URL', 'localhost'),
 
     'env'             => env('APP_ENV', 'production'),
 
@@ -162,7 +162,8 @@ return [
         'Cviebrock\ImageValidator\ImageValidatorServiceProvider',
         'Barryvdh\TranslationManager\ManagerServiceProvider',
         LaravelCaptcha\Providers\LaravelCaptchaServiceProvider::class,
-        
+        Barryvdh\Debugbar\ServiceProvider::class,
+//        Appstract\Opcache\OpcacheServiceProvider::class,
 //        Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
 
     ],
@@ -224,6 +225,6 @@ return [
         'Bugsnag'     => Bugsnag\BugsnagLaravel\Facades\Bugsnag::class,
         'Account'     => App\Helpers\AccountHelper::class,
         'Newsletters' => App\Helpers\DealHelper::class,
-        
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
     ],
 ];

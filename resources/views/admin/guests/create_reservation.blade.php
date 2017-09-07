@@ -5,7 +5,7 @@
 @section('scripts')
 	<script type="text/javascript">
 		$(document).ready(function() {
-		    closeBrowser();  
+		    closeBrowser();
 		});
 	</script>
 @stop
@@ -26,7 +26,7 @@
 	 	<div class="three fields">
 				<div class="field">
 				    <label>Datum</label>
-				    <?php echo Form::text('date', '', array('class' => 'reservationDatepicker'));  ?>
+<?php echo Form::text('date', '', array('class' => 'reservationDatepicker'));  ?>
 				</div>	
 
 				<div class="field">

@@ -83,7 +83,7 @@
 	</footer>
 <!--Start of Tawk.to Script-->
 
-<script type="text/javascript">
+<!--<script type="text/javascript">
     var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
     (function(){
         var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
@@ -100,5 +100,5 @@
 			jQuery('a.login')[0].click();
 		}, 500);
 	}
-</script>
+</script>-->
 <!--End of Tawk.to Script-->

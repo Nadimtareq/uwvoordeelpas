@@ -338,11 +338,12 @@ while ($st->lte($dt)) {
                                     @endforeach
                                 </strong>
                             @endif
-                            <?php $discount = json_decode($company->discount);
-                            foreach ($discount as $key => $value) {
-                                if (is_null($value) || $value == 'NULL')
-                                    unset($discount[$key]);
-                            }?>
+                            //<?php
+//                            $discount = json_decode($company->discount);
+//                            foreach ($discount as $key => $value) {
+//                                if (is_null($value) || $value == 'NULL')
+//                                    unset($discount[$key]);
+//                            }?>
                             @if (!empty($discount))
                                 <span>Korting</span>
                                 <strong>

@@ -40,12 +40,12 @@
                     <div class="col-sm-5 col-xs-12 deal-img" >
                         <?php if(isset($media[0]) && isset($media[0]->file_name) && file_exists(public_path($media[0]->disk. DIRECTORY_SEPARATOR . $media[0]->id . DIRECTORY_SEPARATOR . $media[0]->file_name)) ): ?>
                             <?php if($count_persons >= $deal->total_amount): ?>
-                                <img width="420" src="<?php echo e(url('media/'.$media[0]->id.'/'.$media[0]->file_name)); ?>"
+                                <img src="<?php echo e(url('media/'.$media[0]->id.'/'.$media[0]->file_name)); ?>"
                                      alt="<?php echo e($data->name); ?>" class="img-responsive"/>
                             <?php else: ?>
                                 <a href="<?php echo e(url('restaurant/'.$data->slug).'?deal='.$deal->id); ?>"
                                    title="<?php echo e($data->name); ?>" style="position: relative;">
-                                    <img width="420" src="<?php echo e(url('media/'.$media[0]->id.'/'.$media[0]->file_name)); ?>"
+                                    <img src="<?php echo e(url('media/'.$media[0]->id.'/'.$media[0]->file_name)); ?>"
                                          alt="<?php echo e($data->name); ?>" class="img-responsive" style="opacity: .7;"/>
                                     <span style="position: absolute; left: 0px; right: 0px; top: 50%; text-align: center; display: block; color: #fff; font-weight: 700; text-transform: uppercase;">Uitverkocht</span>
                                 </a>
@@ -128,11 +128,11 @@
                         </strong>
                         <?php /*<span> Van: <strike><?php echo e($data->price_from); ?></strike> | Voor: <?php echo e($data->price); ?></span>*/ ?>
 
-                        <span class="city">
-					<a href="<?php echo e(url('search?q='.$data->city)); ?>"><?php echo e($data->name); ?> | <span>
-					   <i class="marker icon"></i> <?php echo e($data->city); ?>&nbsp;</span>
-					</a>
-				</span>
+                        <span>
+                            <a href="<?php echo e(url('search?q='.$data->city)); ?>"><?php echo e($data->name); ?> | <span>
+                            <i class="marker icon"></i> <?php echo e(ucfirst($data->city)); ?>&nbsp;</span>
+                            </a>
+                        </span>
 
 
                         <?php /*<span class="stars"><img src="<?php echo e(asset('images/stars.png')); ?>" alt="stars">5.00</span>*/ ?>
@@ -167,7 +167,14 @@
                         <?php endif; ?>
 
                         <?php /*  <p class="hidden-xs"><?php echo strip_tags($deal->description, '<b><font>'); ?></p>  */ ?>
-                         <p class="hidden-xs"><?php echo str_limit(strip_tags($deal->description,'<b>'), (isset($limitChar) ? $limitChar : 500)); ?></p>
+                         <p class="hidden-xs">
+
+                         <?php /*  <?php echo $deal->description; ?>  */ ?>
+
+                           <?php echo str_limit(strip_tags($deal->description,'<p>'), (isset($limitChar) ? $limitChar : 500)); ?></p>  
+                   
+                         </p>
+                         
                         <?php if($count_persons < $deal->total_amount): ?>
                             <div class="wr">
                                 <?php
@@ -190,20 +197,29 @@
                         $count_persons = $getRec[0]->total_persons;
                         ?>
 
+                        <div class="row">
+                            <div class="col-xs-12 col-md-5">
+                                <div class="prices">
+                                    <?php if($deal->price_from >= 1): ?>
+                                        <span class="price-new">
+                                        &euro; <?php echo e($deal->price_from); ?>
 
-                        <?php if($deal->price_from >= 1): ?>
-                            <span class="price">
-                             &euro; <?php echo e($deal->price_from); ?>
+                                        </span>
+                                    <?php /*  <?php else: ?>
+                                        <span class="price_min_box"></span>
+        */ ?>
+                                    <?php endif; ?>
 
-                            </span>
-                        <?php else: ?>
-                            <span class="price price_min_box"></span>
-                        <?php endif; ?>
+                                    <span class="price2">
+                                        &euro; <?php echo e($deal->price); ?>
 
-                        <span class="price2">
-                            &euro; <?php echo e($deal->price); ?>
+                                    </span>
+                                    
+                                </div>
+                            </div>
 
-                        </span>
+                            <div class="col-xs-12 col-md-7" style="padding-top: 20px; text-align: center">
+                           
                         <?php if($count_persons >= $deal->total_amount): ?>
                             <a class="more" href="javascript:void(0)">Uitverkocht</a>
                         <?php else: ?>
@@ -217,6 +233,8 @@
                             <?php endif; ?>
 
                         <?php endif; ?>
+                         </div>
+                        </div>
                     </div>
                     </div>
                     </div>
