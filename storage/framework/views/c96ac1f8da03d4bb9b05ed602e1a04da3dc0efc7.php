@@ -11,12 +11,12 @@
  <?php endif; ?>
  <?php if($headerImg): ?>
  	<header> <!--   -->
-	 <?php else: ?>
-		 <header id=navigation" class="root-sec white nav header">
-	 <?php endif; ?>
-	 <?php if($headerImg): ?>
+<?php else: ?>
+		 <header id="navigation" class="root-sec white nav header">
+<?php endif; ?>
+<?php if($headerImg): ?>
      	<div class="header">
-	 <?php endif; ?>
+<?php endif; ?>
 			<div class="container">
 				<div class="row">
 					<div class="col-sm-12">
@@ -61,6 +61,7 @@
 										</li>
 									</ul>
 
+
 							</div>
 						</nav>
 					</div>
@@ -74,3 +75,42 @@
 <!-- .container end -->
 </header>
 <?php echo $__env->yieldContent("header_picture"); ?>
+
+<?php $__env->startPush('inner_scripts'); ?>
+<script type="text/javascript">
+
+$(".lang-button").click(function(){
+	
+	swal({
+  title: "Are you sure..",
+	text: "..you want to set your default language as English?",
+  type: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Yes!',
+  cancelButtonText: 'No!'
+  
+}).then(function () {
+  swal(
+    'Deleted!',
+    'Your file has been deleted.',
+    'success'
+  )
+}, function (dismiss) {
+  // dismiss can be 'cancel', 'overlay',
+  // 'close', and 'timer'
+  if (dismiss === 'cancel') {
+    swal(
+      'Cancelled',
+      'Your imaginary file is safe :)',
+      'error'
+    )
+  }
+})
+
+});
+
+
+</script>
+<?php $__env->stopPush(); ?>

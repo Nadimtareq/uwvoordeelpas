@@ -4,6 +4,12 @@
 
 <?php /**/ $pageTitle = (isset($contentBlock[1]) ? strip_tags($contentBlock[1]) : '') /**/ ?>
 
+<?php /* <?php if(Route::getCurrentRoute()->uri() != '/'): ?>
+    <?php $__env->startSection("header_picture"); ?>
+        <?php echo $__env->make('pages._search-slider', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <?php $__env->stopSection(); ?>
+<?php endif; ?> */ ?>
+
 <?php $__env->startSection('content'); ?>
 
     <?php
@@ -61,8 +67,10 @@
                                     <div class="partner">
                                         <a href="<?php echo e(url('tegoed-sparen/company/'.$data['name'])); ?>">
                                             <span class="partner2"><h1><?php echo e($data['comissions']); ?></h1>Max. spaartegoed</span>
-                                            <?php if(isset($media[0]) && $FileHelper::is_url_exist(url(''.$media[0]->getUrl()))): ?>
-                                                <img src="<?php echo e(asset('images/affiliates/'.$data['affiliate_network'].'/'.$data['program_id'].'.'.$data['image_extension'])); ?>" alt="p1">
+                                            <?php $mediaUrl =  'images/affiliates/'. $data->affiliate_network .'/'.$data->program_id.'.'.$data->image_extension; ?>
+                                            <?php if(isset($data->image_extension) && $FileHelper::is_url_exist(url($mediaUrl))): ?>
+                                                <img src="<?php echo e(url($mediaUrl)); ?>" alt="more" />
+
                                             <?php else: ?>
                                                 <img src="<?php echo e(url('images/placeholdimage.png')); ?>" alt="p1">
                                             <?php endif; ?>
@@ -71,6 +79,7 @@
                                 </div>
                             <?php endforeach; ?>
                         </div>
+
                     </div>
                 </div>
             </section>
@@ -260,6 +269,11 @@
 
     <?php endif; ?>
 
+<?php $__env->stopSection(); ?>
+
+
+<?php $__env->startSection("after_styles"); ?>
+     <link href="<?php echo e(asset("css/custom.css")); ?>" rel="stylesheet">
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('template.theme',['search_header' => ($userAuth != FALSE) ], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

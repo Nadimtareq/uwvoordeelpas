@@ -8,7 +8,7 @@
                 color: white;
             }
             .skill-title{
-                
+
                 font-size: 3em;
                 font-weight: bold;
                 padding-bottom: 30px;
@@ -281,13 +281,13 @@ endif;
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('topDaysChart'));
-        chart.draw(data, options);   
+        chart.draw(data, options);
 
          var dataTime = new google.visualization.DataTable();
         dataTime.addColumn('string', 'Year');
         dataTime.addColumn('number', 'Balance');
         dataTime.addRows(<?= json_encode($topTimesList) ?>);
-        
+
         var chartTime = new google.visualization.PieChart(document.getElementById('topTimesChart'));
         chartTime.draw(dataTime, options);
 
@@ -295,12 +295,12 @@ endif;
         dataPerson.addColumn('string', 'Year');
         dataPerson.addColumn('number', 'Balance');
         dataPerson.addRows(<?= json_encode($topPersonsList) ?>);
-        
+
         var chartPerson = new google.visualization.PieChart(document.getElementById('topPersonsChart'));
-        chartPerson.draw(dataPerson, options);    
+        chartPerson.draw(dataPerson, options);
       }
 
-      
+
     </script>
     <div class="chart-panel">
         <div class="container">
@@ -312,10 +312,10 @@ endif;
                                 Top reservering: dagen
                             </h5>
                         </div>
-                        
+
                         <div id="donut-example" style="height: 250px; padding-right: 20px;">
                             <div id="topDaysChart"></div>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -325,7 +325,7 @@ endif;
                             <h5>
                                Top reservering: tijden
                             </h5>
-                            
+
                         </div>
                         <div id="donut-example1">
                          <div id="donut-example" style="height: 250px;">
@@ -341,27 +341,27 @@ endif;
                             <h5>
                                Top reservering: personen
                             </h5>
-                            
+
                         </div>
                         <div id="donut-example2">
                         <div id="topPersonsChart">
                             </div>
-                           
+
                         </div>
                     </div>
                 </div>
             </div>
-            
+
         </div>
     </div>
 
     <div class="row">
-                   
+
                     <div class="col-md-4 col-sm-4 col-xs-12">
                         <div class="stats-table ui red segment bg-success">
-                            
-                               <h5>Top kliks: bedrijven</h5>                         
-                          
+
+                               <h5>Top kliks: bedrijven</h5>
+
                                 <div class="ui divider">
                                 </div>
                                 <table class="table table-striped">
@@ -371,16 +371,16 @@ endif;
                                         <tr>
                                             <td>
                                                 {{ $topClicksCompany->nameRow }}
-                                            </td>   
+                                            </td>
                                             <td>
                                                 {{ $topClicksCompany->countRow }}x
-                                            </td>                                         
+                                            </td>
                                         </tr>
                                           <?php if($index >=6){ break;} ?>
                                         @endforeach
                             @endif
                             </tbody>
-                                  
+
                                 </table>
                             </br>
                         </div>
@@ -390,7 +390,7 @@ endif;
                             <h5 class="">
                                 Top kliks: FAQ
                             </h5>
-                            
+
                                 <div class="ui divider">
                                 </div>
                                 <table class="table table-striped">
@@ -418,11 +418,11 @@ endif;
                             <h5 class="">
                                 Top kliks: affiliaties
                             </h5>
-                       
+
                                 <div class="ui divider">
                                 </div>
                                 <table class="table table-striped">
-                                    
+
                                     <tbody>
                                         @if (count($topClicksAffiliates) >= 1)
                                 @foreach ($topClicksAffiliates as $index=>$topClicksAffiliate)
@@ -443,7 +443,7 @@ endif;
                         </div>
                     </div>
                 </div>
-            
+
 
     @endsection
 </div>

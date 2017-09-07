@@ -8,7 +8,9 @@
         var searchPage = 1;
     </script>
     <div class="clearfix"></div>
-     <?php echo $__env->make('pages.search-filter', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+     <?php /*  <?php echo $__env->make('pages.search-filter', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>  */ ?>
+
+     <?php echo $__env->make('pages._top-filter', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
     <div class="clearfix"></div>
     <!--
@@ -90,7 +92,7 @@
 
                             <?php echo $__env->make('company-list-more', ['viewType' => 'more'], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
                         <?php endif; ?>
-
+					
                         <?php if($countCompanies >= 16): ?>
                             <div id="limitSelect" class="ui basic segment">
                                 <div class="ui normal floating icon selection dropdown">
@@ -105,8 +107,7 @@
                                 </div>
                             </div>
                         <?php endif; ?>
-                        <?php echo $companies->appends($paginationQueryString)->render(); ?>
-
+                       
                     <?php else: ?>
                         Er zijn geen restaurants gevonden met uw selectiecreteria.
                     <?php endif; ?>
@@ -123,6 +124,6 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection("after_styles"); ?>
-    <link href="<?php echo e(asset("css/custom.css")); ?>" rel="stylesheet">
+     <link href="<?php echo e(asset("css/custom.css")); ?>" rel="stylesheet"> 
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('template.theme', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
