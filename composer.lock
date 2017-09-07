@@ -4,13 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-<<<<<<< HEAD
-    "hash": "9d1e5a7ce4afb42e0fd61c03f4ca4fc9",
-    "content-hash": "b884d2c96d279efe6a52d4bc10e1186f",
-=======
-    "hash": "0d39a68d79f7ee84f1843f14b86c1d5c",
-    "content-hash": "b4905761653322a95c6970a0b514dcd7",
->>>>>>> 7aacdd75a3417649cdf12f3704eb55d542f062c5
+    "hash": "398e5d8337322a046e64b7af4f94849c",
+    "content-hash": "569cf56a614e27eea521f29e0772cd7b",
     "packages": [
         {
             "name": "anahkiasen/underscore-php",
@@ -147,37 +142,44 @@
             ],
             "description": "Persistent settings in Laravel.",
             "time": "2016-08-24 14:06:54"
-<<<<<<< HEAD
-=======
         },
         {
-            "name": "barryvdh/laravel-debugbar",
-            "version": "v2.4.3",
+            "name": "appstract/laravel-opcache",
+            "version": "1.2.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/barryvdh/laravel-debugbar.git",
-                "reference": "d7c88f08131f6404cb714f3f6cf0642f6afa3903"
+                "url": "https://github.com/appstract/laravel-opcache.git",
+                "reference": "237cebc7a8af75d564af9bc3a842d0957857f591"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-debugbar/zipball/d7c88f08131f6404cb714f3f6cf0642f6afa3903",
-                "reference": "d7c88f08131f6404cb714f3f6cf0642f6afa3903",
+                "url": "https://api.github.com/repos/appstract/laravel-opcache/zipball/237cebc7a8af75d564af9bc3a842d0957857f591",
+                "reference": "237cebc7a8af75d564af9bc3a842d0957857f591",
                 "shasum": ""
             },
             "require": {
-                "illuminate/support": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*",
-                "maximebf/debugbar": "~1.13.0",
-                "php": ">=5.5.9",
-                "symfony/finder": "~2.7|~3.0"
+                "appstract/lush-http": "^0.2",
+                "illuminate/console": ">=5.1",
+                "illuminate/routing": ">=5.1",
+                "illuminate/support": ">=5.1",
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^3.3",
+                "phpunit/phpunit": "5.*"
             },
             "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Appstract\\Opcache\\OpcacheServiceProvider"
+                    ]
+                }
+            },
             "autoload": {
                 "psr-4": {
-                    "Barryvdh\\Debugbar\\": "src/"
-                },
-                "files": [
-                    "src/helpers.php"
-                ]
+                    "Appstract\\Opcache\\": "src"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -185,20 +187,72 @@
             ],
             "authors": [
                 {
-                    "name": "Barry vd. Heuvel",
-                    "email": "barryvdh@gmail.com"
+                    "name": "Olav van Schie",
+                    "email": "hello@appstract.team",
+                    "homepage": "https://appstract.team",
+                    "role": "Developer"
                 }
             ],
-            "description": "PHP Debugbar integration for Laravel",
+            "description": "OPcache helper for Laravel.",
+            "homepage": "https://github.com/appstract/laravel-opcache",
             "keywords": [
-                "debug",
-                "debugbar",
+                "Opcache",
+                "appstract",
                 "laravel",
-                "profiler",
-                "webprofiler"
+                "php"
             ],
-            "time": "2017-07-21 11:56:48"
->>>>>>> 7aacdd75a3417649cdf12f3704eb55d542f062c5
+            "time": "2017-07-28 08:52:23"
+        },
+        {
+            "name": "appstract/lush-http",
+            "version": "0.2.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/appstract/lush-http.git",
+                "reference": "1da5e8f3cd3bd55269fe8bd11822df044a7450a5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/appstract/lush-http/zipball/1da5e8f3cd3bd55269fe8bd11822df044a7450a5",
+                "reference": "1da5e8f3cd3bd55269fe8bd11822df044a7450a5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Appstract\\LushHttp\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Olav van Schie",
+                    "email": "hello@appstract.team",
+                    "homepage": "https://appstract.team",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Smart Http Client for PHP.",
+            "homepage": "https://github.com/appstract/lush-http",
+            "keywords": [
+                "appstract",
+                "client",
+                "curl",
+                "http",
+                "lush",
+                "lush-http",
+                "php"
+            ],
+            "time": "2017-08-17 21:20:21"
         },
         {
             "name": "barryvdh/laravel-snappy",
@@ -1423,70 +1477,44 @@
             "time": "2017-04-07 18:45:42"
         },
         {
-            "name": "guzzle/guzzle",
-            "version": "v3.9.3",
+            "name": "guzzlehttp/guzzle",
+            "version": "6.3.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/guzzle/guzzle3.git",
-                "reference": "0645b70d953bc1c067bbc8d5bc53194706b628d9"
+                "url": "https://github.com/guzzle/guzzle.git",
+                "reference": "f4db5a78a5ea468d4831de7f0bf9d9415e348699"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle3/zipball/0645b70d953bc1c067bbc8d5bc53194706b628d9",
-                "reference": "0645b70d953bc1c067bbc8d5bc53194706b628d9",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/f4db5a78a5ea468d4831de7f0bf9d9415e348699",
+                "reference": "f4db5a78a5ea468d4831de7f0bf9d9415e348699",
                 "shasum": ""
             },
             "require": {
-                "ext-curl": "*",
-                "php": ">=5.3.3",
-                "symfony/event-dispatcher": "~2.1"
-            },
-            "replace": {
-                "guzzle/batch": "self.version",
-                "guzzle/cache": "self.version",
-                "guzzle/common": "self.version",
-                "guzzle/http": "self.version",
-                "guzzle/inflection": "self.version",
-                "guzzle/iterator": "self.version",
-                "guzzle/log": "self.version",
-                "guzzle/parser": "self.version",
-                "guzzle/plugin": "self.version",
-                "guzzle/plugin-async": "self.version",
-                "guzzle/plugin-backoff": "self.version",
-                "guzzle/plugin-cache": "self.version",
-                "guzzle/plugin-cookie": "self.version",
-                "guzzle/plugin-curlauth": "self.version",
-                "guzzle/plugin-error-response": "self.version",
-                "guzzle/plugin-history": "self.version",
-                "guzzle/plugin-log": "self.version",
-                "guzzle/plugin-md5": "self.version",
-                "guzzle/plugin-mock": "self.version",
-                "guzzle/plugin-oauth": "self.version",
-                "guzzle/service": "self.version",
-                "guzzle/stream": "self.version"
+                "guzzlehttp/promises": "^1.0",
+                "guzzlehttp/psr7": "^1.4",
+                "php": ">=5.5"
             },
             "require-dev": {
-                "doctrine/cache": "~1.3",
-                "monolog/monolog": "~1.0",
-                "phpunit/phpunit": "3.7.*",
-                "psr/log": "~1.0",
-                "symfony/class-loader": "~2.1",
-                "zendframework/zend-cache": "2.*,<2.3",
-                "zendframework/zend-log": "2.*,<2.3"
+                "ext-curl": "*",
+                "phpunit/phpunit": "^4.0 || ^5.0",
+                "psr/log": "^1.0"
             },
             "suggest": {
-                "guzzlehttp/guzzle": "Guzzle 5 has moved to a new package name. The package you have installed, Guzzle 3, is deprecated."
+                "psr/log": "Required for using the Log middleware"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "3.9-dev"
+                    "dev-master": "6.2-dev"
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "Guzzle": "src/",
-                    "Guzzle\\Tests": "tests/"
+                "files": [
+                    "src/functions_include.php"
+                ],
+                "psr-4": {
+                    "GuzzleHttp\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1498,13 +1526,9 @@
                     "name": "Michael Dowling",
                     "email": "mtdowling@gmail.com",
                     "homepage": "https://github.com/mtdowling"
-                },
-                {
-                    "name": "Guzzle Community",
-                    "homepage": "https://github.com/guzzle/guzzle/contributors"
                 }
             ],
-            "description": "PHP HTTP client. This library is deprecated in favor of https://packagist.org/packages/guzzlehttp/guzzle",
+            "description": "Guzzle is a PHP HTTP client library",
             "homepage": "http://guzzlephp.org/",
             "keywords": [
                 "client",
@@ -1515,52 +1539,40 @@
                 "rest",
                 "web service"
             ],
-<<<<<<< HEAD
             "time": "2017-06-22 18:50:49"
-=======
-            "abandoned": "guzzlehttp/guzzle",
-            "time": "2015-03-18 18:23:50"
->>>>>>> 7aacdd75a3417649cdf12f3704eb55d542f062c5
         },
         {
-            "name": "guzzlehttp/guzzle",
-            "version": "4.2.4",
+            "name": "guzzlehttp/promises",
+            "version": "v1.3.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "13a8e5acff26b0a87d353042170b48976da004a1"
+                "url": "https://github.com/guzzle/promises.git",
+                "reference": "a59da6cf61d80060647ff4d3eb2c03a2bc694646"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/13a8e5acff26b0a87d353042170b48976da004a1",
-                "reference": "13a8e5acff26b0a87d353042170b48976da004a1",
+                "url": "https://api.github.com/repos/guzzle/promises/zipball/a59da6cf61d80060647ff4d3eb2c03a2bc694646",
+                "reference": "a59da6cf61d80060647ff4d3eb2c03a2bc694646",
                 "shasum": ""
             },
             "require": {
-                "ext-json": "*",
-                "guzzlehttp/streams": "~2.1",
-                "php": ">=5.4.0"
+                "php": ">=5.5.0"
             },
             "require-dev": {
-                "ext-curl": "*",
-                "phpunit/phpunit": "~4.0",
-                "psr/log": "~1.0"
-            },
-            "suggest": {
-                "ext-curl": "Guzzle will use specific adapters if cURL is present"
+                "phpunit/phpunit": "^4.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.2-dev"
+                    "dev-master": "1.4-dev"
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "GuzzleHttp\\": "src/"
+                    "GuzzleHttp\\Promise\\": "src/"
                 },
                 "files": [
-                    "src/functions.php"
+                    "src/functions_include.php"
                 ]
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1574,22 +1586,11 @@
                     "homepage": "https://github.com/mtdowling"
                 }
             ],
-            "description": "Guzzle is a PHP HTTP client library and framework for building RESTful web service clients",
-            "homepage": "http://guzzlephp.org/",
+            "description": "Guzzle promises library",
             "keywords": [
-                "client",
-                "curl",
-                "framework",
-                "http",
-                "http client",
-                "rest",
-                "web service"
+                "promise"
             ],
-<<<<<<< HEAD
             "time": "2016-12-20 10:07:11"
-=======
-            "time": "2016-07-15 17:44:18"
->>>>>>> 7aacdd75a3417649cdf12f3704eb55d542f062c5
         },
         {
             "name": "guzzlehttp/psr7",
@@ -1655,62 +1656,6 @@
                 "url"
             ],
             "time": "2017-03-20 17:10:46"
-<<<<<<< HEAD
-=======
-        },
-        {
-            "name": "guzzlehttp/streams",
-            "version": "2.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/guzzle/streams.git",
-                "reference": "f91b721d73f0e561410903b3b3c90a5d0e40b534"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/streams/zipball/f91b721d73f0e561410903b3b3c90a5d0e40b534",
-                "reference": "f91b721d73f0e561410903b3b3c90a5d0e40b534",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "GuzzleHttp\\Stream\\": "src/"
-                },
-                "files": [
-                    "src/functions.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Michael Dowling",
-                    "email": "mtdowling@gmail.com",
-                    "homepage": "https://github.com/mtdowling"
-                }
-            ],
-            "description": "Provides a simple abstraction over streams of data (Guzzle 4+)",
-            "homepage": "http://guzzlephp.org/",
-            "keywords": [
-                "Guzzle",
-                "stream"
-            ],
-            "time": "2014-08-17 21:15:53"
->>>>>>> 7aacdd75a3417649cdf12f3704eb55d542f062c5
         },
         {
             "name": "intervention/image",
@@ -1929,7 +1874,6 @@
         },
         {
             "name": "jorenvanhocht/laravel-share",
-<<<<<<< HEAD
             "version": "1.0.3",
             "source": {
                 "type": "git",
@@ -1940,18 +1884,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/jorenvh/laravel-share/zipball/a689c60724d2473395e25f6674850685e48a4476",
                 "reference": "a689c60724d2473395e25f6674850685e48a4476",
-=======
-            "version": "1.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/jorenvh/laravel-share.git",
-                "reference": "10b357254d93be793316efb747865df6300f6623"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/jorenvh/laravel-share/zipball/10b357254d93be793316efb747865df6300f6623",
-                "reference": "10b357254d93be793316efb747865df6300f6623",
->>>>>>> 7aacdd75a3417649cdf12f3704eb55d542f062c5
                 "shasum": ""
             },
             "require": {
@@ -1962,7 +1894,6 @@
                 "phpunit/phpunit": "5.*"
             },
             "type": "library",
-<<<<<<< HEAD
             "extra": {
                 "laravel": {
                     "providers": [
@@ -1973,8 +1904,6 @@
                     }
                 }
             },
-=======
->>>>>>> 7aacdd75a3417649cdf12f3704eb55d542f062c5
             "autoload": {
                 "psr-4": {
                     "Jorenvh\\Share\\": "src"
@@ -1987,13 +1916,8 @@
             "authors": [
                 {
                     "name": "Joren Van Hocht",
-<<<<<<< HEAD
                     "email": "joren@codeswitch.be",
                     "homepage": "https://codeswitch.be",
-=======
-                    "email": "jorenvh@gmail.com",
-                    "homepage": "http://jorenvanhocht.be",
->>>>>>> 7aacdd75a3417649cdf12f3704eb55d542f062c5
                     "role": "Developer"
                 }
             ],
@@ -2005,11 +1929,7 @@
                 "social links",
                 "social share links"
             ],
-<<<<<<< HEAD
             "time": "2017-08-30 12:22:26"
-=======
-            "time": "2017-06-30 20:00:07"
->>>>>>> 7aacdd75a3417649cdf12f3704eb55d542f062c5
         },
         {
             "name": "knplabs/knp-snappy",
@@ -2208,20 +2128,20 @@
         },
         {
             "name": "laravel/socialite",
-            "version": "v2.0.4",
+            "version": "v2.0.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/socialite.git",
-                "reference": "3d5f6560f8642c4973b5e54a67b1368ee81ff24d"
+                "reference": "c4e4337e5b70149fdbefbb95b2c9e93d0749c413"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/socialite/zipball/3d5f6560f8642c4973b5e54a67b1368ee81ff24d",
-                "reference": "3d5f6560f8642c4973b5e54a67b1368ee81ff24d",
+                "url": "https://api.github.com/repos/laravel/socialite/zipball/c4e4337e5b70149fdbefbb95b2c9e93d0749c413",
+                "reference": "c4e4337e5b70149fdbefbb95b2c9e93d0749c413",
                 "shasum": ""
             },
             "require": {
-                "guzzlehttp/guzzle": "~4.0|~5.0",
+                "guzzlehttp/guzzle": "~5.0|~6.0",
                 "illuminate/contracts": "~5.0",
                 "illuminate/http": "~5.0",
                 "illuminate/support": "~5.0",
@@ -2230,12 +2150,12 @@
             },
             "require-dev": {
                 "mockery/mockery": "~0.9",
-                "phpunit/phpunit": "~4.0"
+                "phpunit/phpunit": "~4.0|~5.0"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0-dev"
+                    "dev-master": "3.0-dev"
                 }
             },
             "autoload": {
@@ -2258,11 +2178,7 @@
                 "laravel",
                 "oauth"
             ],
-<<<<<<< HEAD
             "time": "2017-03-27 21:32:28"
-=======
-            "time": "2015-03-13 02:40:10"
->>>>>>> 7aacdd75a3417649cdf12f3704eb55d542f062c5
         },
         {
             "name": "laravelcollective/html",
@@ -2522,26 +2438,26 @@
         },
         {
             "name": "league/oauth1-client",
-            "version": "1.6.2",
+            "version": "1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/oauth1-client.git",
-                "reference": "e8f1e7e419cbc40ec34a48c7068f5b4d50fa180a"
+                "reference": "fca5f160650cb74d23fc11aa570dd61f86dcf647"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/oauth1-client/zipball/e8f1e7e419cbc40ec34a48c7068f5b4d50fa180a",
-                "reference": "e8f1e7e419cbc40ec34a48c7068f5b4d50fa180a",
+                "url": "https://api.github.com/repos/thephpleague/oauth1-client/zipball/fca5f160650cb74d23fc11aa570dd61f86dcf647",
+                "reference": "fca5f160650cb74d23fc11aa570dd61f86dcf647",
                 "shasum": ""
             },
             "require": {
-                "guzzle/guzzle": "3.*",
-                "php": ">=5.3.0"
+                "guzzlehttp/guzzle": "^6.0",
+                "php": ">=5.5.0"
             },
             "require-dev": {
-                "mockery/mockery": "~0.9",
-                "phpunit/phpunit": "~4.0",
-                "squizlabs/php_codesniffer": "~2.0"
+                "mockery/mockery": "^0.9",
+                "phpunit/phpunit": "^4.0",
+                "squizlabs/php_codesniffer": "^2.0"
             },
             "type": "library",
             "extra": {
@@ -2581,31 +2497,27 @@
                 "tumblr",
                 "twitter"
             ],
-<<<<<<< HEAD
             "time": "2016-08-17 00:36:58"
-=======
-            "time": "2016-07-06 03:52:25"
->>>>>>> 7aacdd75a3417649cdf12f3704eb55d542f062c5
         },
         {
             "name": "maatwebsite/excel",
-            "version": "2.1.20",
+            "version": "2.1.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Maatwebsite/Laravel-Excel.git",
-                "reference": "a8baf7de1030d261318f90fa5c273a47ef616b59"
+                "reference": "bb7b3d9a72f56ddab974e6a629e4f5e51cd945a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Maatwebsite/Laravel-Excel/zipball/a8baf7de1030d261318f90fa5c273a47ef616b59",
-                "reference": "a8baf7de1030d261318f90fa5c273a47ef616b59",
+                "url": "https://api.github.com/repos/Maatwebsite/Laravel-Excel/zipball/bb7b3d9a72f56ddab974e6a629e4f5e51cd945a2",
+                "reference": "bb7b3d9a72f56ddab974e6a629e4f5e51cd945a2",
                 "shasum": ""
             },
             "require": {
-                "illuminate/cache": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*",
-                "illuminate/config": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*",
-                "illuminate/filesystem": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*",
-                "illuminate/support": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*",
+                "illuminate/cache": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*|5.5.*",
+                "illuminate/config": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*|5.5.*",
+                "illuminate/filesystem": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*|5.5.*",
+                "illuminate/support": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*|5.5.*",
                 "jeremeamia/superclosure": "^2.3",
                 "nesbot/carbon": "~1.0",
                 "php": ">=5.5",
@@ -2619,10 +2531,10 @@
                 "phpunit/phpunit": "~4.0"
             },
             "suggest": {
-                "illuminate/http": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*",
-                "illuminate/queue": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*",
-                "illuminate/routing": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*",
-                "illuminate/view": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*"
+                "illuminate/http": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*|5.5.*",
+                "illuminate/queue": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*|5.5.*",
+                "illuminate/routing": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*|5.5.*",
+                "illuminate/view": "5.0.*|5.1.*|5.2.*|5.3.*|5.4.*|5.5.*"
             },
             "type": "library",
             "extra": {
@@ -2663,71 +2575,7 @@
                 "import",
                 "laravel"
             ],
-            "time": "2017-07-26 18:04:04"
-<<<<<<< HEAD
-=======
-        },
-        {
-            "name": "maximebf/debugbar",
-            "version": "1.13.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/maximebf/php-debugbar.git",
-                "reference": "afee79a236348e39a44cb837106b7c5b4897ac2a"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/maximebf/php-debugbar/zipball/afee79a236348e39a44cb837106b7c5b4897ac2a",
-                "reference": "afee79a236348e39a44cb837106b7c5b4897ac2a",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0",
-                "psr/log": "^1.0",
-                "symfony/var-dumper": "^2.6|^3.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.0|^5.0"
-            },
-            "suggest": {
-                "kriswallsmith/assetic": "The best way to manage assets",
-                "monolog/monolog": "Log using Monolog",
-                "predis/predis": "Redis storage"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.13-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "DebugBar\\": "src/DebugBar/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Maxime Bouroumeau-Fuseau",
-                    "email": "maxime.bouroumeau@gmail.com",
-                    "homepage": "http://maximebf.com"
-                },
-                {
-                    "name": "Barry vd. Heuvel",
-                    "email": "barryvdh@gmail.com"
-                }
-            ],
-            "description": "Debug bar in the browser for php application",
-            "homepage": "https://github.com/maximebf/php-debugbar",
-            "keywords": [
-                "debug",
-                "debugbar"
-            ],
-            "time": "2017-01-05 08:46:19"
->>>>>>> 7aacdd75a3417649cdf12f3704eb55d542f062c5
+            "time": "2017-08-31 14:52:24"
         },
         {
             "name": "messagebird/php-rest-api",
@@ -2859,7 +2707,6 @@
         },
         {
             "name": "mobiledetect/mobiledetectlib",
-<<<<<<< HEAD
             "version": "2.8.26",
             "source": {
                 "type": "git",
@@ -2870,18 +2717,6 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/serbanghita/Mobile-Detect/zipball/a0ed86c9d7c04ae27fa6418b55e3beb04dfe3297",
                 "reference": "a0ed86c9d7c04ae27fa6418b55e3beb04dfe3297",
-=======
-            "version": "2.8.25",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/serbanghita/Mobile-Detect.git",
-                "reference": "f0896b5c7274d1450023b0b376240be902c3251c"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/serbanghita/Mobile-Detect/zipball/f0896b5c7274d1450023b0b376240be902c3251c",
-                "reference": "f0896b5c7274d1450023b0b376240be902c3251c",
->>>>>>> 7aacdd75a3417649cdf12f3704eb55d542f062c5
                 "shasum": ""
             },
             "require": {
@@ -2920,11 +2755,7 @@
                 "mobile detector",
                 "php mobile detect"
             ],
-<<<<<<< HEAD
             "time": "2017-08-29 18:23:54"
-=======
-            "time": "2017-03-29 13:59:30"
->>>>>>> 7aacdd75a3417649cdf12f3704eb55d542f062c5
         },
         {
             "name": "mollie/mollie-api-php",
@@ -4159,11 +3990,7 @@
             ],
             "description": "Symfony CssSelector Component",
             "homepage": "https://symfony.com",
-<<<<<<< HEAD
-            "time": "2017-05-01 15:01:29"
-=======
             "time": "2017-07-29 21:54:42"
->>>>>>> 7aacdd75a3417649cdf12f3704eb55d542f062c5
         },
         {
             "name": "symfony/debug",
@@ -4224,27 +4051,30 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v2.8.27",
+            "version": "v3.3.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
-                "reference": "1377400fd641d7d1935981546aaef780ecd5bf6d"
+                "reference": "54ca9520a00386f83bca145819ad3b619aaa2485"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/1377400fd641d7d1935981546aaef780ecd5bf6d",
-                "reference": "1377400fd641d7d1935981546aaef780ecd5bf6d",
+                "url": "https://api.github.com/repos/symfony/event-dispatcher/zipball/54ca9520a00386f83bca145819ad3b619aaa2485",
+                "reference": "54ca9520a00386f83bca145819ad3b619aaa2485",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.9"
+                "php": "^5.5.9|>=7.0.8"
+            },
+            "conflict": {
+                "symfony/dependency-injection": "<3.3"
             },
             "require-dev": {
                 "psr/log": "~1.0",
-                "symfony/config": "^2.0.5|~3.0.0",
-                "symfony/dependency-injection": "~2.6|~3.0.0",
-                "symfony/expression-language": "~2.6|~3.0.0",
-                "symfony/stopwatch": "~2.3|~3.0.0"
+                "symfony/config": "~2.8|~3.0",
+                "symfony/dependency-injection": "~3.3",
+                "symfony/expression-language": "~2.8|~3.0",
+                "symfony/stopwatch": "~2.8|~3.0"
             },
             "suggest": {
                 "symfony/dependency-injection": "",
@@ -4253,7 +4083,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.8-dev"
+                    "dev-master": "3.3-dev"
                 }
             },
             "autoload": {
@@ -4280,11 +4110,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "https://symfony.com",
-<<<<<<< HEAD
-            "time": "2017-06-09 14:53:08"
-=======
-            "time": "2017-06-02 07:47:27"
->>>>>>> 7aacdd75a3417649cdf12f3704eb55d542f062c5
+            "time": "2017-07-29 21:54:42"
         },
         {
             "name": "symfony/finder",
@@ -4527,11 +4353,7 @@
                 "portable",
                 "shim"
             ],
-<<<<<<< HEAD
-            "time": "2017-06-09 14:24:12"
-=======
             "time": "2017-06-14 15:44:48"
->>>>>>> 7aacdd75a3417649cdf12f3704eb55d542f062c5
         },
         {
             "name": "symfony/polyfill-php56",
@@ -4587,11 +4409,7 @@
                 "portable",
                 "shim"
             ],
-<<<<<<< HEAD
-            "time": "2017-06-09 08:25:21"
-=======
             "time": "2017-06-14 15:44:48"
->>>>>>> 7aacdd75a3417649cdf12f3704eb55d542f062c5
         },
         {
             "name": "symfony/polyfill-util",
@@ -4643,11 +4461,7 @@
                 "polyfill",
                 "shim"
             ],
-<<<<<<< HEAD
-            "time": "2017-06-09 08:25:21"
-=======
             "time": "2017-07-05 15:09:33"
->>>>>>> 7aacdd75a3417649cdf12f3704eb55d542f062c5
         },
         {
             "name": "symfony/process",
@@ -4953,11 +4767,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-<<<<<<< HEAD
-            "time": "2017-07-23 12:43:26"
-=======
             "time": "2017-07-29 21:54:42"
->>>>>>> 7aacdd75a3417649cdf12f3704eb55d542f062c5
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -5493,11 +5303,7 @@
                 "faker",
                 "fixtures"
             ],
-<<<<<<< HEAD
-            "time": "2016-04-29 12:21:54"
-=======
             "time": "2017-08-15 16:48:10"
->>>>>>> 7aacdd75a3417649cdf12f3704eb55d542f062c5
         },
         {
             "name": "hamcrest/hamcrest-php",
@@ -5543,7 +5349,6 @@
                 "test"
             ],
             "time": "2015-05-11 14:41:42"
-<<<<<<< HEAD
         },
         {
             "name": "maximebf/debugbar",
@@ -5605,8 +5410,6 @@
                 "debugbar"
             ],
             "time": "2017-01-05 08:46:19"
-=======
->>>>>>> 7aacdd75a3417649cdf12f3704eb55d542f062c5
         },
         {
             "name": "mockery/mockery",
@@ -5933,22 +5736,22 @@
         },
         {
             "name": "phpspec/prophecy",
-            "version": "v1.7.0",
+            "version": "v1.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpspec/prophecy.git",
-                "reference": "93d39f1f7f9326d746203c7c056f300f7f126073"
+                "reference": "c9b8c6088acd19d769d4cc0ffa60a9fe34344bd6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/93d39f1f7f9326d746203c7c056f300f7f126073",
-                "reference": "93d39f1f7f9326d746203c7c056f300f7f126073",
+                "url": "https://api.github.com/repos/phpspec/prophecy/zipball/c9b8c6088acd19d769d4cc0ffa60a9fe34344bd6",
+                "reference": "c9b8c6088acd19d769d4cc0ffa60a9fe34344bd6",
                 "shasum": ""
             },
             "require": {
                 "doctrine/instantiator": "^1.0.2",
                 "php": "^5.3|^7.0",
-                "phpdocumentor/reflection-docblock": "^2.0|^3.0.2",
+                "phpdocumentor/reflection-docblock": "^2.0|^3.0.2|^4.0",
                 "sebastian/comparator": "^1.1|^2.0",
                 "sebastian/recursion-context": "^1.0|^2.0|^3.0"
             },
@@ -5959,7 +5762,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.6.x-dev"
+                    "dev-master": "1.7.x-dev"
                 }
             },
             "autoload": {
@@ -5992,7 +5795,7 @@
                 "spy",
                 "stub"
             ],
-            "time": "2017-03-02 20:05:34"
+            "time": "2017-09-04 11:05:03"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -6796,11 +6599,7 @@
             ],
             "description": "Symfony DomCrawler Component",
             "homepage": "https://symfony.com",
-<<<<<<< HEAD
-            "time": "2017-05-25 23:10:31"
-=======
             "time": "2017-08-15 13:31:09"
->>>>>>> 7aacdd75a3417649cdf12f3704eb55d542f062c5
         },
         {
             "name": "webmozart/assert",
