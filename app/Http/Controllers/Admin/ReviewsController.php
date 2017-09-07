@@ -5,6 +5,7 @@ use Alert;
 use App;
 use App\Models\SearchHistory;
 use App\Http\Controllers\Controller;
+use App\Models\Iframe;
 use App\Models\Scrap;
 use App\User;
 use App\Models\Review;
@@ -53,12 +54,6 @@ class ReviewsController extends Controller
 			$reviews[$i]['rating'] =  array('eat'=>$eat,'service' => $service,'feer'=>$feer);
 			$i++;
 		}
-		/*
-		$i = 0;
-		foreach($html->find('div.medium-10medium-offset-1 div.medium-12 span.reviewer') as $e){
-			$reviews[$i]['company'] =  trim($e->innertext);
-			$i++;
-		}*/
 		$i = 0;
 		foreach($html->find('div.medium-10medium-offset-1 div.medium-12 span.review-date span') as $e){
 			
@@ -67,8 +62,6 @@ class ReviewsController extends Controller
 		}
 		$k = $i;
 		$url = 'https://www.couverts.nl/restaurant/eindhoven/berlage';
-
-		//$content = file_get_contents($url);
 		$html = HtmlDomParser::file_get_html( $url, false,null, 0 );
 		$i=$k;
 		foreach($html->find('div.l-text-container div.m-lees-meer') as $e){
@@ -140,14 +133,6 @@ class ReviewsController extends Controller
 			$reviews[$i]['date'] =  trim($e->attr['title']);
 			$i++;
 		}
-		
-		/*$data = Review::select('id')->where('content','Goedd')->where('user_id'=> 215);
-		echo $dataCount = $data->count();
-		die;*/
-		echo "<pre>";
-		print_r($reviews);
-		echo "</pre>";
-		//die;
 		foreach($reviews as $review){
 			$data_c = Review::select('count(id)');
 			$data_c->where('content',$review['review']);
@@ -171,6 +156,50 @@ class ReviewsController extends Controller
 		}
 	}
 	
+    public function iframecall($id, Request $request){
+		
+		$iframe = Iframe::select('*')->where(array('id'=>$id))->first()->toArray();
+		$resturant_review = Review::select('reviews.*','companies.name')
+		->join('iframes', 'iframes.resturant_url', '=', 'reviews.company_id')
+		->join('companies', 'companies.id', '=', 'iframes.resturant_url');
+		$resturant_array = $resturant_review->where('companies.id', $iframe['resturant_url'])->get()->toArray();	
+		return view('admin/'.$this->slugController.'/iframecall',['iframe'=>$iframe,'resturant_review'=>$resturant_array]);
+	}
+    public function iframecreate($id=""){
+		$company = Company::select('name','id')->get()->toArray();
+		if($id>0){
+			$iframe = Iframe::select('*')->where(array('id'=>$id))->first()->toArray();
+		}else{
+			$iframe = [];
+		}
+		return view('admin/'.$this->slugController.'/iframecreate',['company'=>$company,'iframe'=>$iframe]);
+	}
+    public function createiframe($id="",Request $request){
+		if($id>0){
+			$iframe = Iframe::find($id);
+		}else{
+			$iframe = new Iframe;
+		}
+		$iframe->user_id = Sentinel::getUser()->id;
+		$iframe->resturant_url = $request->input('resturant_url');
+		$iframe->title_color =  $request->input('title_color');
+		$iframe->title_font_size  =  $request->input('title_font_size');
+		$iframe->text_font_size  =  $request->input('text_font_size');
+		$iframe->font_family  =  $request->input('font_family');
+		$iframe->star_color  =  $request->input('star_color');
+		$iframe->text_color =  $request->input('text_color');
+		$iframe->border_color =  $request->input('border_color');
+		$iframe->border_size =  $request->input('border_size');
+		$iframe->border_style =  $request->input('border_style');
+		$iframe->created_at = date('Y-m-d H:i:s');
+		$iframe->updated_at = date('Y-m-d H:i:s');
+		$iframe->save();
+		if($id>0){
+			return Redirect::to('admin/reviews/iframecreate/'.$id);
+		}else{
+			return Redirect::to('admin/reviews/iframecreate');
+		}
+	}
     public function insert_detail(Request $request){
 		$user = new Scrap;
 		$user->user_id = 215;

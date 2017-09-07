@@ -619,6 +619,9 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', '
         Route::get('/', 'Admin\ReviewsController@index');
         Route::get('/scraping', 'Admin\ReviewsController@scraping');
         Route::get('/getdetails', 'Admin\ReviewsController@getdetails');
+        Route::get('/iframecreate/{id?}', 'Admin\ReviewsController@iframecreate');
+        Route::get('/iframecall/{id}', 'Admin\ReviewsController@iframecall');
+        Route::post('/createiframe/{id?}', 'Admin\ReviewsController@createiframe');
         Route::post('/insert/getdetails', 'Admin\ReviewsController@insert_detail');
 
         ## Post routes - Reviews ##
