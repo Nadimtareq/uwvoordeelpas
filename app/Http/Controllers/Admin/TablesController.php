@@ -171,7 +171,23 @@ class TablesController extends Controller {
         $data->fill($input)->save();
         Session::flash("flash_message", "Deze tafel is succesvol aangepast!");
         Alert::success("Deze tafel is succesvol aangepast");
-        return redirect()->back();
+
+        if(Sentinel::getUser()->roles[0]->id != 1){
+            $company = Company::where('user_id', Sentinel::getUser()->id)->first();
+        }
+        if($company != null) {
+            $countTable = Table::where('comp_id', $company->id)->where('table_number', $input['table_number'])->count();
+            $priorityExist = Table::where('comp_id', $company->id)->where('priority', $input['priority'])->count();
+            $errorString = [];
+            if ($countTable > 0)
+                $errorString[] = 'OEPS! U heeft tafel nummer ' . $input['table_number'] . ' al eerder toegevoegd';
+            if ($priorityExist > 0)
+                $errorString[] = 'OEPS! U heeft prioriteit ' . $input['priority'] . ' al eerder toegevoegd';
+            if (count($errorString) > 0)
+                return redirect()->back()->withErrors($errorString);
+        }
+
+        return redirect('admin/tables');
     }
 
     public function destroy($id) {

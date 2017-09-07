@@ -137,6 +137,7 @@ $directory = $_public.'/images/dragndrop/bg';
     array_push( $arrTableId,  $data->table_id );
 	array_push( $arrName_table,  $data->seating );
     array_push( $arrtable_number, $data->table_number );
+    array_push( $arrTable_status, $data->table_status );
 	$_cnt++;
     ?>
   @endforeach
@@ -191,7 +192,7 @@ $style_left = [];
                ?>
       @endif
   @endfor  
-  <div class="drag2" id="drag{{$i}}" table_id="{{  $arrTableId[$i] }}" table_number="{{  $arrtable_number[$i] }}" reservation_id="{{ $arrName_reservation_id[$i] }}" style="left:{{  $sl }}px;top:{{  $margin_top }}px;" status="0"> <a class="boxclose" id="back{{  $i }}" number="{{  $i }}" top="" left=""  table_id="{{  $arrTableId[$i] }}" table_number="{{  $arrtable_number[$i] }}" reservation_id="{{ $arrName_reservation_id[$i] }}"> <img src="{{ url('images/dragndrop/back.png') }}" width="20"> </a>
+  <div class="drag2" id="drag{{$i}}" table_id="{{  $arrTableId[$i] }}" table_number="{{  $arrtable_number[$i] }}" reservation_id="{{ $arrName_reservation_id[$i] }}" style="left:{{  $sl }}px;top:{{  $margin_top }}px;" status="{{ $arrTable_status[$i] }}"> <a class="boxclose" id="back{{  $i }}" number="{{  $i }}" top="" left=""  table_id="{{  $arrTableId[$i] }}" table_number="{{  $arrtable_number[$i] }}" reservation_id="{{ $arrName_reservation_id[$i] }}"> <img src="{{ url('images/dragndrop/back.png') }}" width="20"> </a>
     <div class="name">{{  $arrName[$i] }}</div>
   </div>
   <script>
@@ -199,13 +200,19 @@ $(function($){
     setTimeout(function () { 
       var text = watermark.text;
 	  //watermark([ '<?php echo url('images/dragndrop/table.png') ?>'])
-	  watermark([ '<?php 
-				 if($arrName_reservation_id[$i] > 0){
-				 	echo url('images/dragndrop/1/'.$arrName_table[$i].'.png'); 
-				 } else {
-					 echo url('images/dragndrop/0/'.$arrName_table[$i].'.png'); 
-				 }
-				 ?>'])
+	  watermark([ '<?php
+              if($arrTable_status[$i] == 0){
+                  echo url('images/dragndrop/0/'.$arrName_table[$i].'.png');
+              } elseif($arrTable_status[$i] == 1) {
+                  echo url('images/dragndrop/1/'.$arrName_table[$i].'.png');
+              }elseif($arrTable_status[$i] == 2) {
+                  echo url('images/dragndrop/2/'.$arrName_table[$i].'.png');
+              }elseif($arrTable_status[$i] == 3) {
+                  echo url('images/dragndrop/3/'.$arrName_table[$i].'.png');
+              }else {
+                  echo url('images/dragndrop/4/'.$arrName_table[$i].'.png');
+              }
+              ?>'])
         .image(text.center('{{  $i }}', '18px Josefin Slab', '#000', 1, 48))
         .then(function (img) {
           $('#drag{{  $i }}').css("background","url('"+img.src+"') no-repeat");
