@@ -68,11 +68,6 @@ class TablesController extends Controller {
         if (!isset($_GET['orderby'])) {
             $dbobj = $dbobj->with('company')->orderBy('priority', 'asc');
         }
-<<<<<<< .mine
-
-=======
-
->>>>>>> .theirs
         $dbobj = $dbobj->paginate(20);
 	    	$data["model"] = $dbobj;
 		}
