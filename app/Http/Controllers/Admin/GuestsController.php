@@ -12,6 +12,7 @@ use App\Models\BarcodeUser;
 use App\Models\MailTemplate;
 use App\Models\Preference;
 use App\Models\CompanyReservation;
+use App\Models\Table;
 use App\Helpers\StrHelper;
 use App\User;
 use Sentinel;
@@ -380,6 +381,8 @@ class GuestsController extends Controller
             ->get()
         ;
 
+        $tables = Table::where('comp_id',$companyOwner['company_id'])->get();
+
         return view('admin/'.$this->slugController.'/create_reservation', [
             'section' => $this->section, 
             'slugController' => $this->slugController,
@@ -389,12 +392,13 @@ class GuestsController extends Controller
             'guests' => $guests,
             'slugParam' => '/'.$slug,
             'company' => $company,
-            'roles' => $this->roles
+            'roles' => $this->roles,
+            'tables' => $tables
         ]);
     }
 
     public function createReservationAction(AdminCreateReservationRequest $request, $slug)
-    {   
+    {
         $this->validate($request, []);
 
         $companyOwner = Company::isCompanyUserBySlug($slug, Sentinel::getUser()->id);

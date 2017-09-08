@@ -39,6 +39,9 @@ Route::group(array('middleware' => 'userInfo'), function () {
 
     Route::get('reference_code', 'HomeController@referenceCode')->middleware(['auth']);
     Route::get('source', 'HomeController@buyDealByReference');
+
+
+    Route::get('embed-floorplan/{company}', 'HomeController@embedFloorplan');
 });
 
 Route::get('foor', function() {
