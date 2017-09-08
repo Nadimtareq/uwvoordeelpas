@@ -376,6 +376,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', '
         Route::get('/', 'Admin\SettingsController@index');
         Route::get('run/{slug}', 'Admin\SettingsController@run');
         Route::post('hotspotAPI', 'Admin\SettingsController@hotspotAction');
+        Route::post('maingun', 'Admin\SettingsController@sendNewsletter');
 
         Route::post('/', 'Admin\SettingsController@indexAction');
         Route::resource('website', 'Admin\SettingsController@websiteAction');
@@ -616,6 +617,12 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('admin', 'auth', '
     # Reviews #
     Route::group(array('prefix' => 'reviews'), function () {
         Route::get('/', 'Admin\ReviewsController@index');
+        Route::get('/scraping', 'Admin\ReviewsController@scraping');
+        Route::get('/getdetails', 'Admin\ReviewsController@getdetails');
+        Route::get('/iframecreate/{id?}', 'Admin\ReviewsController@iframecreate');
+        Route::get('/iframecall/{id}', 'Admin\ReviewsController@iframecall');
+        Route::post('/createiframe/{id?}', 'Admin\ReviewsController@createiframe');
+        Route::post('/insert/getdetails', 'Admin\ReviewsController@insert_detail');
 
         ## Post routes - Reviews ##
         Route::post('update', 'Admin\ReviewsController@updateAction');
@@ -677,7 +684,6 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('waiter', 'auth', 
         Route::get('clients/{company}/{date?}', 'Admin\ReservationsController@listClients');
         Route::get('{slug?}', 'Admin\ReservationsController@index');
         Route::get('create/{company?}', 'Admin\ReservationsController@create');
-		Route::get('modifyfloorplan/{company}/{date?}', 'Admin\ReservationsController@modifyfloorplan');
 
         ## Post routes - Reservations ##
         Route::post('create/{company?}', 'Admin\ReservationsController@createAction');
@@ -686,10 +692,6 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('waiter', 'auth', 
         Route::post('clients', 'Admin\ReservationsController@listClientsAction');
         Route::post('clients/{company}/{date?}', 'Admin\ReservationsController@listClientsAction');
         Route::post('date/{company}/{date}/time/update', 'Admin\ReservationsController@timeUpdateAction');
-		Route::post('updatefloorplans/{company}', 'Admin\ReservationsController@updatefloorplan');
-		Route::post('removefloorplan/{company}', 'Admin\ReservationsController@removefloorplan');
-		Route::post('updatebgfloor', 'Admin\ReservationsController@updatebgfloor');
-		Route::post('uploadfloorbackground', 'Admin\ReservationsController@uploadfloorbackground');
     });
 
     # Reservations #
@@ -769,17 +771,6 @@ Route::group(array('prefix' => 'admin', 'middleware' => array('adminowner', 'aut
 
     # Widgets #
     Route::get('widgets/{slug}', 'Admin\CompaniesController@widgets');
-	
-	 # Tables #
-    Route::get('tables', 'Admin\TablesController@index');
-    Route::get('tables/create', 'Admin\TablesController@create');
-    Route::post('tables/store', 'Admin\TablesController@store');
-    Route::get('tables/edit/{id}', 'Admin\TablesController@edit');
-    Route::get('tables/show/{id}', 'Admin\TablesController@show');
-    Route::post('tables/update/{id}', 'Admin\TablesController@update');
-    Route::get('tables/destroy/{id}', 'Admin\TablesController@destroy');
-    Route::post('tables/setpriority','Admin\TablesController@setpriority');
-	
 
     # News #
     Route::group(array('prefix' => 'news'), function () {

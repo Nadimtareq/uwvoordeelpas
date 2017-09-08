@@ -91,3 +91,79 @@ INSERT INTO `floorplans` (`id`, `reservation_id`, `table_id`, `table_number`, `c
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+--
+-- Table structure for table `iframes`
+--
+
+CREATE TABLE IF NOT EXISTS `iframes` (
+  `id` int(10) unsigned NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `resturant_url` text COLLATE utf8_unicode_ci NOT NULL,
+  `title_color` text COLLATE utf8_unicode_ci NOT NULL,
+  `title_font_size` text COLLATE utf8_unicode_ci NOT NULL,
+  `font_family` text COLLATE utf8_unicode_ci NOT NULL,
+  `star_color` text COLLATE utf8_unicode_ci NOT NULL,
+  `user_image` text COLLATE utf8_unicode_ci NOT NULL,
+  `text_color` text COLLATE utf8_unicode_ci NOT NULL,
+  `text_font_size` text COLLATE utf8_unicode_ci NOT NULL,
+  `border_color` text COLLATE utf8_unicode_ci NOT NULL,
+  `border_size` text COLLATE utf8_unicode_ci NOT NULL,
+  `border_style` text COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `scraps`
+--
+
+CREATE TABLE IF NOT EXISTS `scraps` (
+  `id` int(10) unsigned NOT NULL,
+  `com_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `facebook_token` text COLLATE utf8_unicode_ci NOT NULL,
+  `google_token` text COLLATE utf8_unicode_ci NOT NULL,
+  `couverts` text COLLATE utf8_unicode_ci NOT NULL,
+  `dinningcity` text COLLATE utf8_unicode_ci NOT NULL,
+  `tripadvisor` text COLLATE utf8_unicode_ci NOT NULL,
+  `seatme` text COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `iframes`
+--
+ALTER TABLE `iframes`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `scraps`
+--
+ALTER TABLE `scraps`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `iframes`
+--
+ALTER TABLE `iframes`
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `scraps`
+--
+ALTER TABLE `scraps`
+  MODIFY `id` int(10) unsigned NOT NULL AUTO_INCREMENT;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
