@@ -31,7 +31,7 @@ use App\Models\Company;
     <div class='row'>
         <div class='col-lg-12'>
             <div  style='padding:15px 15px 15px 0px;'>
-                <h4>CREATE NEW TABLE  </h4>
+                <h4>CREATE NEW TABLE  <a  href="{{ url("admin/tables") }}" class="btn btn-info btn-sm" style='font-size: 16px;'>BACK</a></h4>
                 <hr/>
             </div>
         </div>
@@ -57,59 +57,46 @@ use App\Models\Company;
     <div class='row'>
         <div class='col-lg-3'>
             <div class='form-group'>
-                {!! Form::label('table_number', 'Tafelnummer', ['class' => 'control-label']) !!}
+                {!! Form::label('table_number', 'TABLE NUMBER', ['class' => 'control-label']) !!}
                 {!! Form::text('table_number', null, ['class' => 'form-control']) !!}
             </div>
         </div>
         <div class='col-lg-3'>
             <div class='form-group'>
-                {!! Form::label('seating', 'Personen ( Aantal stoelen )', ['class' => 'control-label']) !!}
+                {!! Form::label('seating', 'SEATING ( No of persons )', ['class' => 'control-label']) !!}
                 {!! Form::text('seating', null, ['class' => 'form-control']) !!}
             </div>
         </div>
         <div class='col-lg-3'>
             <div class='form-group'>
-                {!! Form::label('priority', 'Prioriteit ( Prioriteit 1 = meeste prioriteit )', ['class' => 'control-label']) !!}
+                {!! Form::label('priority', 'PRIORITY ( less number has high priority )', ['class' => 'control-label']) !!}
                 {!! Form::text('priority', null, ['class' => 'form-control']) !!}
             </div>
         </div>
 
     </div>
     <div class='row'>
-	<?php if(Sentinel::getUser()->roles[0]->id == 1) { ?>
         <div class='col-lg-3'>
             <div class='form-group'>
                 {!! Form::label('comp_id', 'COMPANY', ['class' => 'control-label']) !!}
-                {!! Form::select('comp_id', $companies,0,array('class' => 'form-control')) !!}
+                {!! Form::select('comp_id', $company,0,array('class' => 'form-control')) !!}
             </div>
         </div>
-	<?php } ?>
         <div class='col-lg-3'>
             <div class='form-group'>
-                {!! Form::label('duration', 'Duur in minuten', ['class' => 'control-label']) !!}
+                {!! Form::label('duration', 'DURATION ( In Minutes )', ['class' => 'control-label']) !!}
                 {!! Form::text('duration', null, ['class' => 'form-control']) !!}
             </div>
         </div>
-		<?php if(Sentinel::getUser()->roles[0]->id == 1) { ?>
         <div class='col-lg-9'>
             <div class='form-group'>
-                {!! Form::label('description', 'Omschrijving', ['class' => 'control-label']) !!}
+                {!! Form::label('description', 'DESCRIPTION', ['class' => 'control-label']) !!}
                 {!! Form::textarea('description', null, ['class' => 'form-control']) !!}
             </div>
         </div>
-		<?php  }else{ ?>
-			 <div class='col-lg-6'>
-            <div class='form-group'>
-                {!! Form::label('description', 'Omschrijving', ['class' => 'control-label']) !!}
-                {!! Form::textarea('description', null, ['class' => 'form-control']) !!}
-            </div>
-        </div>
-		<?php } ?>
-
         <div class='col-lg-12'>
             <div class='form-group'>
                 {!! Form::submit('ADD NEW TABLE', ['class' => 'btn btn-primary']) !!}
-                <a  href="{{ url("admin/tables") }}" class="btn btn-info btn-sm" style='font-size: 16px;'>BACK</a>
             </div>
         </div>
     </div>

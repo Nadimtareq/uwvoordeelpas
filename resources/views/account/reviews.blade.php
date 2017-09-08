@@ -76,7 +76,7 @@ use App\Models\Company;
                     </div>
                 </td>
                 <td><a href="{{ url('restaurant/'.$data->companySlug) }}">{{ $data->companyName }}</a></td>
-                <td>{{ $data->content }}</td>
+                <td>{!! $data->content !!}</td>
                 <td><div class="ui star medium  rating no-rating" data-rating="{{ $data->food }}"></div></td>
                 <td><div class="ui star medium  rating no-rating" data-rating="{{ $data->service }}"></div></td>
                 <td><div class="ui star medium  rating no-rating" data-rating="{{ $data->decor }}"></div></td>

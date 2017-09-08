@@ -8,7 +8,6 @@ use App\Helpers\MoneyHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\CompanyReservation;
-use App\Models\Table;
 use App\Models\Content;
 use App\Models\Preference;
 use App\Models\GuestThirdParty;
@@ -25,8 +24,6 @@ use PDF;
 use Redirect;
 use DB;
 use URL;
-use Session;
-use File;
 
 class ReservationsController extends Controller
 {
@@ -171,6 +168,7 @@ class ReservationsController extends Controller
 
     public function listSaldo(Request $request, $company = null)
     {
+
     	//Added price_per_guest by Ocean
         $reservations = Reservation::select(
             DB::raw('month(reservations.date) as month'),
@@ -1036,11 +1034,12 @@ class ReservationsController extends Controller
 
     public function update(Request $request, $company, $date = null)
     {
+		
         $limit = $request->input('limit', 15);
 
         $companyOwner = Company::isCompanyUser($company, Sentinel::getUser()->id);
         $companyInfo = Company::find($company);
-
+		
         $reservations = CompanyReservation::select(
             'company_reservations.*',
             'companies.name as companyName',
@@ -1071,7 +1070,7 @@ class ReservationsController extends Controller
             }
 
             return view('admin/'.$this->slugController.'/update', array(
-                'data' => $reservations,
+                'reservations' => $reservations,
                 'date' => $date,
                 'company' => $company,
                 'slugController' => $this->slugController.'/settings/'.$company.($date != null ? '/'.$date : ''),
@@ -1758,309 +1757,5 @@ class ReservationsController extends Controller
 
         return Redirect::to('admin/reservations/emails');
     }
-	public function modifyfloorplanUpdate(Request $request, $companyId = null)
-    {
-        $reservation = Reservation::select(
-            'companies.name as companyName',
-            'companies.allergies as companyAllergies',
-            'companies.preferences as companyPreferences',
-            'companies.user_id as companyOwner',
-            'companies.id as companyId',
-            'reservations.*'
-        )
-            ->leftJoin('companies', 'reservations.company_id', '=', 'companies.id')
-            ->whereIn('reservations.status', array('reserved-pending', 'pending', 'iframe-pending'))
-            ->find($companyId)
-        ;
 
-        if (count($reservation) == 1) {
-            if(
-                $reservation->companyOwner == Sentinel::getUser()->id
-                OR Sentinel::inRole('admin')
-            ) {
-                $user = Sentinel::findById($reservation->user_id);
-                $mailtemplate = new MailTemplate();
-
-                switch ($request->input('status')) {
-                    case 'refused':
-                        $reservation->status = 'refused';
-
-                        $mailtemplate->sendMail(array(
-                            'email' => $reservation->email,
-                            'template_id' => 'reservation-refused',
-                            'company_id' => $reservation->company_id,
-                            'reservation_id' => $reservation->id,
-                            'replacements' => array(
-                                '%name%' => $reservation->name,
-                                '%saldo%' => $reservation->saldo,
-                                '%phone%' => $reservation->phone,
-                                '%email%' => $reservation->email,
-                                '%date%' => date('d-m-Y', strtotime($reservation->date)),
-                                '%time%' => date('H:i', strtotime($reservation->time)),
-                                '%persons%' => $reservation->persons,
-                                '%comment%' => $reservation->comment,
-                                '%allergies%' => (count(json_decode($reservation->allergies)) >= 1 ? implode(",", json_decode($reservation->allergies)) : ''),
-                                '%preferences%' => (count(json_decode($reservation->preferences)) >= 1 ? implode(",", json_decode($reservation->preferences)) : '')
-                            )
-                        ));
-
-                        // Give user cash back when the user is not coming.
-                        if ($reservation->user_is_paid_back == 0) {
-                            if ($reservation->saldo > 0) {
-                                $user->saldo = $user->saldo + $reservation->saldo;
-                                $user->save();
-                            }
-                        }
-
-                        Alert::success('Deze reservering staat nu als geweigerd.')
-                            ->persistent('Sluiten')
-                        ;
-
-                        $reservation->user_is_paid_back = 1;
-                    break;
-
-                    case 'reserved-pending':
-                        $reservation->status = 'reserved';
-
-                        // Send to client
-                        $mailtemplate->sendMail(array(
-                            'email' => $reservation->email,
-                            'template_id' => 'reservation-pending-client',
-                            'company_id' => $reservation->company_id,
-                            'reservation_id' => $reservation->id,
-                            'replacements' => array(
-                                '%name%' => $reservation->name,
-                                '%saldo%' => $reservation->saldo,
-                                '%phone%' => $reservation->phone,
-                                '%email%' => $reservation->email,
-                                '%date%' => date('d-m-Y', strtotime($reservation->date)),
-                                '%time%' => date('H:i', strtotime($reservation->time)),
-                                '%persons%' => $reservation->persons,
-                                '%comment%' => $reservation->comment,
-                                '%allergies%' => (count(json_decode($reservation->allergies)) >= 1 ? implode(",", json_decode($reservation->allergies)) : ''),
-                                '%preferences%' => (count(json_decode($reservation->preferences)) >= 1 ? implode(",", json_decode($reservation->preferences)) : '')
-                            )
-                        ));
-
-                        Alert::success('Deze reservering is succesvol geaccepteerd.')
-                            ->persistent('Sluiten')
-                        ;
-                    break;
-                }
-
-                $reservation->save();
-
-                return Redirect::to('admin/reservations/clients/'.$reservation->companyId);
-            } else {
-                Alert::error('U heeft niet genoeg rechten om deze reservering te wijzigen.')->persistent('Sluiten');
-
-                return Redirect::to('admin/reservations/clients/'.$reservation->companyId);
-            }
-        } else {
-            Alert::error('Deze reservering bestaat niet.')->persistent('Sluiten');
-
-            return Redirect::to('/');
-        }
-    }
-	
-	public function modifyfloorplan(Request $request, $companyId = null, $date = null)
-    {
-        $preferences = new Preference();
-
-        $regio = $preferences->getRegio();
-        $regioName = $request->input('city');
-        /*$data = Table::select(
-					'companies.name as companyName',
-					'companies.slug as companySlug',
-					'companies.id as companyId',
-					'companies.user_id as owner',
-					'companies.days',
-					'companies.discount',
-					'reservations.id as reservation_id',
-					'reservations_options.name as deal',
-					
-					'dinning_tables.table_number',
-					'dinning_tables.description as table_description',
-					'dinning_tables.priority',
-					'dinning_tables.duration as table_duration',
-					'dinning_tables.status as table_status',
-					'dinning_tables.seating'
-				)
-            ->leftJoin('reservations', 'reservations.table_nr', '=', 'dinning_tables.table_number')
-            ->leftJoin('companies', 'reservations.company_id', '=', 'companies.id')
-            ->leftJoin('reservations_options','reservations.option_id', '=', 'reservations_options.id')
-            ->leftJoin('users', 'reservations.user_id', '=', 'users.id')
-            ->groupBy('dinning_tables.table_number')
-			 ;
-			 # Filter by column
-        if ($request->has('sort') && $request->has('order')) {
-            if ($request->has('time')) {
-                $data = $data->orderBy('date, time', $request->input('order'));
-            } else {
-                $data = $data->orderBy($request->input('sort'), $request->input('order'));
-            }
-
-            session(['sort' => $request->input('sort'), 'order' => $request->input('order')]);
-        } else {
-            if ($request->has('date')) {
-                $d = Carbon::parse('20170812');
-                $date = date('Y-m-d', strtotime($request->input('date')));
-                $data = $data
-                    ->where('reservations.date', date('Y-m-d', strtotime($request->input('date'))))
-                    ->orderBy('reservations.time', 'asc')
-                ;
-            } else {
-                $data = $data->orderBy('reservations.created_at', 'desc');
-            }
-         }
-
-        $data = $data
-            ->where('companies.id', $companyId)
-			//->where('reservations.is_cancelled', ($request->has('cancelled') ? 1 : 0))
-            ->paginate($this->limit);
-		if ($request->input('page') > $data->lastPage()) {
-            $lastPageQueryString = json_decode(json_encode($request->query()), true);
-            $lastPageQueryString['page'] = $data->lastPage();
-
-            return Redirect::to($request->url().'?'.http_build_query($lastPageQueryString));
-        }*/
-		$sql = "select `companies`.`name` as `companyName`, `companies`.`slug` as `companySlug`, `companies`.`id` as `companyId`, `companies`.`user_id` as `owner`, `companies`.`days`, `companies`.`discount`, `reservations`.`id` as `reservation_id`, `reservations_options`.`name` as `deal`, `dinning_tables`.`id` as `table_id`, `dinning_tables`.`table_number`, `dinning_tables`.`description` as `table_description`, `dinning_tables`.`priority`, `dinning_tables`.`duration` as `table_duration`, `dinning_tables`.`status` as `table_status`, `dinning_tables`.`seating`, 
-		floor_plan_position
-		FROM `dinning_tables` 
-		left join `reservations` on `reservations`.`table_nr` = `dinning_tables`.`table_number` AND `reservations`.`company_id` = $companyId
-		left join `companies` on `companies`.`id` = `dinning_tables`.`comp_id`  left join `reservations_options` on `reservations`.`option_id` = `reservations_options`.`id`
-		left join `users` on `reservations`.`user_id` = `users`.`id` 
-		left join `floorplans` on `floorplans`.`table_id` = `dinning_tables`.`id`
-		WHERE `companies`.`id` = $companyId GROUP BY `dinning_tables`.`table_number`
-		ORDER BY `reservations`.`created_at` DESC ";
-		//"SELECT * FROM dinning_tables WHERE id = '$companyId'"
-		$data = DB::select( DB::raw($sql) );
-		
-        if ($companyId != null) {
-            $companyInfo = Company::where('id', '=', $companyId);
-        }
-$session_data = Session::all();
-#echo "<pre>";print_r(json_decode($data[0]->floor_plan_position));echo "</pre>";exit;
-        if (Sentinel::inRole('admin') == FALSE && Sentinel::inRole('bediening')) {
-            $companyInfo = $companyInfo->orWhere('waiter_user_id', Sentinel::getUser()->id);
-        } else if (Sentinel::inRole('admin') == FALSE && Sentinel::inRole('bedrijf')) {
-            $companyInfo = $companyInfo->where('user_id', Sentinel::getUser()->id);
-        }
-
-        if ($companyId != null) {
-            $companyInfo = $companyInfo->first();
-        }
-        if (isset($companyInfo) || $companyId == null) {
-			$_public = public_path();
-			$saved_background_src = "";
-			$background_src = $_public.'/images/dragndrop/background_src/'.( isset($companyInfo->id) ? $companyInfo->id : '' ).'.txt';
-			if (File::exists($background_src))
-			{
-				try
-				{
-					$contents = File::get($background_src);
-					$saved_background_src = URL::to('').'/images/dragndrop/bg/'.($contents);
-				}
-				catch (Illuminate\Filesystem\FileNotFoundException $exception)
-				{
-					#die("The file doesn't exist");
-				}
-			}
-			#echo $saved_background_src ; exit;
-            $queryString = $request->query();
-            unset($queryString['limit']);
-            unset($queryString['source']);
-            unset($queryString['city']);
-            return view('admin/'.$this->slugController.'/modifyfloorplan', [
-                'data' => $data,
-                'date' => $date,
-                'companyInfo' => isset($companyInfo) ? $companyInfo : '',
-                'company' => $companyId,
-				'saved_background_src'=>$saved_background_src,
-                'filterCompanies' => Company::select('id', 'slug', 'name')->get(),
-                'companyParam' => (isset($companyInfo) && trim($companyInfo['slug']) != '' ? '/'.$companyInfo['slug'] : ''),
-                'slugController' => 'reservations/clients/'.$companyId.(trim($date) != null ? '/'.$date : ''),
-                'sessionSort' => $request->session()->get('sort'),
-                'sessionOrder' => $request->session()->get('order'),
-                'queryString' => $queryString,
-                'paginationQueryString' => $request->query(),
-                'limit' => $this->limit,
-            ]);
-        } else  {
-            App::abort(404);
-        }
-    }
-	
-	public function updatefloorplan(Request $request)
-    {
-		$data['table_id'] = (isset($_POST['mydata']['table_id']))?$_POST['mydata']['table_id']:0;
-		$data['floor_plan_position'] =  json_encode($_POST['mydata']);
-		$data['reservation_id'] = (isset($_POST['mydata']['reservation_id']))?$_POST['mydata']['reservation_id']:0;
-		$data['company_id'] = (isset($_POST['mydata']['company_id']))?$_POST['mydata']['company_id']:0;
-		$data['status'] = 1;
-		
-		if($data['table_id']>0){
-		$check = DB::table('floorplans')->select('id')->where('table_id',$data['table_id'])->get();
-			if($check){
-				 DB::table('floorplans')
-					->where('table_id', $data['table_id'])
-					->update($data);
-			}else{
-				DB::table('floorplans')->insert($data);
-			}
-		}
-    }
-	
-	public function removefloorplan(Request $request)
-    {
-		$data['table_id'] = (isset($_POST['mydata']['table_id']))?$_POST['mydata']['table_id']:0;
-		$data['floor_plan_position'] =  json_encode($_POST['mydata']);
-		$data['reservation_id'] = (isset($_POST['mydata']['reservation_id']))?$_POST['mydata']['reservation_id']:0;
-		$data['company_id'] = (isset($_POST['mydata']['company_id']))?$_POST['mydata']['company_id']:0;
-		$data['status'] = 1;
-		
-		if($data['table_id']>0){
-		$check = DB::table('floorplans')->select('id')->where('table_id',$data['table_id'], 'company_id',$data['company_id'])->get();
-			if($check){
-				$check = DB::table('floorplans')->delete()->where('table_id',$data['table_id'], 'company_id',$data['company_id']);
-			}
-		}
-    }
-	
-	public function updatebgfloor(Request $request)
-    {
-		$_public = public_path();
-		$directory = $_public.'/images/dragndrop/background_src';
-		$background_src = basename ($request->input('background_src'));
-		$company_id = $request->input('company_id');
-		//Usage
-		$path = $_public.'/images/dragndrop/background_src/'. $company_id.'.txt';
-		$background_src =  str_replace(array($directory, '\\'), array("",""),$background_src);
-		File::put($path, $background_src);
-		exit;	
-	}
-	
-	public function uploadfloorbackground(Request $request){
-		/*$rules = [
-			'backgroundimg' => 'mimes:txt|max:2000'
-		];
-	
-		$images = count($request->file('backgroundimg')) - 1;
-		$files  = $request->file('backgroundimg');
-	
-		if ($request->hasFile('backgroundimg')) {
-			foreach (range(0, $images) as $index)  {
-				$rule['backgroundimg.'.$index] = 'required|mimes:txt';
-			}
-		}
-		$this->validate($request, $rules);
-		$pdfCode = str_random(5);
-		$pdfName = $company_id.'.pdf';
-	
-		if($request->hasFile('pdf')) {
-			foreach($request->file('pdf') as $pdf) {
-				$data->addMedia($pdf)->toCollection('documents');
-			}
-		}*/	
-	}
 }

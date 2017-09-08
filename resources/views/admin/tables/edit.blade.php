@@ -26,22 +26,11 @@ use App\Models\Company;
         transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s !important;
     }
 </style>
-<div class="content">
-    <div class="ui breadcrumb">
-        <a href="{{ url('admin/tables/') }}" class="section">Tafelmanagement
-        </a>
-
-        <i class="right chevron icon divider"></i>
-
-        <div class="active section">Alle reserveringen</div>
-    </div>
-    <div class="ui divider"></div>
-</div>
 <div class='container'>
     <div class='row'>
         <div class='col-lg-12'>
             <div style='padding:15px 15px 15px 0px;'>
-                <h4>UPDATE TABLE  </h4>
+                <h4>UPDATE TABLE  <a  href="{{ url("admin/tables") }}" class="btn btn-info btn-sm" style='font-size: 16px;'>BACK</a></h4>
                 <hr/>
             </div>
         </div>
@@ -69,67 +58,46 @@ use App\Models\Company;
             {!! Form::hidden("id", null, ["class" => "form-control"]) !!}
 
             <div class="form-group">
-                {!! Form::label("table_number", "Tafelnummer", ["class" => "control-label"]) !!}
+                {!! Form::label("table_number", "tafelnummer", ["class" => "control-label"]) !!}
                 {!! Form::text("table_number", null, ["class" => "form-control"]) !!}
             </div>
         </div>
         <div class='col-lg-3'>
             <div class="form-group">
-                {!! Form::label("seating", "Personen ( Aantal stoelen )", ["class" => "control-label"]) !!}
+                {!! Form::label("seating", "personen ( No of persons )", ["class" => "control-label"]) !!}
                 {!! Form::text("seating", null, ["class" => "form-control"]) !!}
             </div>
         </div>
         <div class='col-lg-3'>
             <div class="form-group">
-                {!! Form::label("priority", "Prioriteit ( Prioriteit 1 = meeste prioriteit )", ["class" => "control-label"]) !!}
+                {!! Form::label("priority", "Prioriteit ( less number has high priority )", ["class" => "control-label"]) !!}
                 {!! Form::text("priority", null, ["class" => "form-control"]) !!}
             </div>
         </div>
     </div>
     <div class='row'>
-		<?php if(Sentinel::getUser()->roles[0]->id == 1) { ?>
         <div class='col-lg-3'>
             <div class='form-group'>
                 {!! Form::label('comp_id', 'COMPANY', ['class' => 'control-label']) !!}
                 {!! Form::select('comp_id',$company ,0,array('class' => 'form-control')) !!}
             </div>
         </div>
-		<?php  } ?>
         <div class='col-lg-3'>
             <div class="form-group">
-                {!! Form::label("duration", "Duur in minuten", ["class" => "control-label"]) !!}
+                {!! Form::label("duration", "duur in min ( In Minutes )", ["class" => "control-label"]) !!}
                 {!! Form::text("duration", null, ["class" => "form-control"]) !!}
             </div>
         </div>
-		<?php if(Sentinel::getUser()->roles[0]->id != 1) { ?>
-		<div class='col-lg-6'>
-            <div class="form-group">
-                {!! Form::label("description", "Omschrijving", ["class" => "control-label"]) !!}
-                {!! Form::textarea("description", null, ["class" => "form-control"]) !!}
-            </div>
-        </div>
-		<?php  } ?>
     </div>
     <div class='row'>
-	<?php if(Sentinel::getUser()->roles[0]->id == 1) { ?>
         <div class='col-lg-9'>
             <div class="form-group">
-                {!! Form::label("description", "Omschrijving", ["class" => "control-label"]) !!}
+                {!! Form::label("description", "omschrijving", ["class" => "control-label"]) !!}
                 {!! Form::textarea("description", null, ["class" => "form-control"]) !!}
             </div>
         </div>
-	<?php  } ?>
-	
-        <div class='col-lg-9'>
-            <div class="form-group">
-                {!! Form::label("status", "Status", ["class" => "control-label"]) !!}
-                {!! Form::select('status', array(''=>'Select','0'=>'Blue','1'=>'Yellow', '2'=>'Red', '3'=>'Green'),$status, array('class' => 'form-control')) !!}
-            </div>
-        </div>
-	
         <div class='col-lg-12'>
             <div class="form-group">{!! Form::submit('Aanpassen', ['class' => 'btn btn-primary']) !!}
-                <a  href="{{ url("admin/tables") }}" class="btn btn-info btn-sm" style='font-size: 16px;'>BACK</a>
             </div>
         </div>
     </div>
