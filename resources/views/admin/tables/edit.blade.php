@@ -28,7 +28,7 @@ use App\Models\Company;
 </style>
 <div class="content">
     <div class="ui breadcrumb">
-        <a href="{{ url('admin/tables/) }}" class="section">Tafelmanagement
+        <a href="{{ url('admin/tables/') }}" class="section">Tafelmanagement
         </a>
 
         <i class="right chevron icon divider"></i>

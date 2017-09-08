@@ -7,6 +7,14 @@
 		$(document).ready(function() {
 		    closeBrowser();
 		});
+
+		$('.timepicker').pickatime({
+			format: 'H:i',
+			formatLabel: 'H:i',
+			formatSubmit: 'H:i',
+			interval: 15,
+			clear: 'verwijderen'
+		});
 	</script>
 @stop
 
@@ -33,7 +41,7 @@
 				    <label>Tijd</label>
 					<div id="timeField" class="ui normal selection dropdown time timeRefresh">
 					  	<input id="timeInput" name="time" type="hidden">
-					  	
+
 					  	<i class="time icon"></i>
 					  	<div class="default text">Tijd</div>
 					  	<i class="dropdown icon"></i>
@@ -115,7 +123,61 @@
 				<label>Wilt u de nieuwsbrief van Uwvoordeelpas en {{ $company->name }} ontvangen?</label>
 			</div>
 		</div>
-	
+
+		<div id="dateAppend" class="four fields">
+			<div class="field">
+				<label>Tafelnummer</label>
+				<select name="table_number">
+					@foreach($tables as $table)
+						<option class="item" value="<?php echo $table->id; ?>"><?php echo $table->table_number; ?></option>
+					@endforeach
+				</select>
+			</div>
+
+			<div class="field">
+				<label>Begin tijd</label>
+				<div class="ui icon input">
+					<?php echo Form::text('start_time', '', array('class' => 'timepicker', 'placeholder' => 'Selecteer een tijd', 'data-pattern-name' => 'start_time[++]','data-pattern-id' => 'start_time++')); ?>
+					<i class="clock icon"></i>
+				</div>
+			</div>
+
+			<div class="field">
+				<label>Duur in minuten</label>
+				<input class="duration" disabled>
+				<input class="duration" name="end_time" type="hidden">
+<!--				--><?php //echo Form::text('duration');  ?>
+			</div>
+
+			<div class="field">
+				<label>Eind Tijd</label>
+				<div class="ui icon input">
+					<input class="endtime" disabled>
+					<input class="endtime" name="end_time" type="hidden">
+<!--					--><?php //echo Form::text('end_time', '', array('class' => 'timepicker', 'placeholder' => 'Selecteer een tijd', 'data-pattern-name' => 'end_time[++]','data-pattern-id' => 'end_time++')); ?>
+					<i class="clock icon"></i>
+				</div>
+			</div>
+		</div>
+
+		<div class="four fields">
+			<div class="field">
+				<label>Description</label>
+				<?php echo Form::text('description');  ?>
+			</div>
+
+			<div class="field">
+				<label>Status</label>
+				<select type="hidden" name="status">
+					<option class="item" value="0">Vrij</option>
+					<option class="item" value="1">Gast onderweg</option>
+					<option class="item" value="2">Gereserveerd</option>
+					<option class="item" value="3">Handmatig toegevoegd</option>
+					<option class="item" value="4">In option</option>
+				</select>
+			</div>
+		</div>
+
 		<button class="ui tiny button" type="submit"><i class="plus icon"></i> Aanmaken</button>
 	<?php echo Form::close(); ?>
 </div>

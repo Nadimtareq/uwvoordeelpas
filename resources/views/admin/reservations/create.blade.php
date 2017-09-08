@@ -170,7 +170,9 @@
 				<div class="two fields">
 					<div class="field">
 						<label>Dag(en)</label>
+						<div class="field">
 						<?php echo Form::select('days['.$i.'][]', Config::get('preferences.days'), '', array('multiple' => true, 'id' => 'day', 'class' => 'multipleSelect')) ?>
+						</div>
 					</div>
 
 					<div class="field">
