@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -60,7 +59,7 @@ class TablesController extends Controller {
         if (!isset($_GET['orderby'])) {
             $dbobj = $dbobj->orderBy('priority', 'asc');
         }
-        
+
         $dbobj = $dbobj->paginate(20);
 
         $data["model"] = $dbobj;
@@ -93,10 +92,31 @@ class TablesController extends Controller {
     }
 
     public function store(Request $request) {
-        $this->validate($request, [
-            "table_number" => "required", "seating" => "required", "description" => "required", "priority" => "required", "duration" => "required",]);
-
+        $messages = array(
+            'table_number.required'=>'Het tafelnummer is verplicht.',
+            'seating.required'=>'Het aantal stoelen is verplicht.',
+            'description.required'=>'Het omschrijving veld is verplicht.',
+            'priority.required'=>'Het veld prioriteit is verplicht.',
+            'duration.required'=>'Het veld tijd is verplicht.'
+        );
+        $this->validate($request, ["table_number" => "required", "seating" => "required", "description" => "required", "priority" => "required", "duration" => "required",]);
         $input = $request->all();
+		if(Sentinel::getUser()->roles[0]->id != 1){
+			$company = Company::where('user_id', Sentinel::getUser()->id)->first();
+			$input['comp_id'] = $company->id; 
+			$input['created_at'] = date('Y-m-d'); 
+		}
+        if($company != null) {
+            $countTable = Table::where('comp_id', $company->id)->where('table_number', $input['table_number'])->count();
+            $priorityExist = Table::where('comp_id', $company->id)->where('priority', $input['priority'])->count();
+            $errorString = [];
+            if ($countTable > 0)
+                $errorString[] = 'OEPS! U heeft tafel nummer ' . $input['table_number'] . ' al eerder toegevoegd';
+            if ($priorityExist > 0)
+                $errorString[] = 'OEPS! U heeft prioriteit ' . $input['priority'] . ' al eerder toegevoegd';
+            if(count($errorString) > 0)
+                return redirect()->back()->withErrors($errorString);
+        }
 
         Table::create($input);
 
@@ -114,7 +134,9 @@ class TablesController extends Controller {
 
     public function edit($id) {
         $data["model"] = Table::findOrFail($id);
-
+		
+		$data["status"] = $data["model"]->status;
+		
         if (Sentinel::getUser()->default_role_id == 1) {
             $data["company"] = Company::lists('name', 'id');
         } else {
@@ -126,16 +148,30 @@ class TablesController extends Controller {
 
     public function update($id, Request $request) {
         $data = Table::findOrFail($id);
-
-        $this->validate($request, [
-            "table_number" => "required", "seating" => "required", "description" => "required", "priority" => "required", "duration" => "required",]);
+        $this->validate($request, ["table_number" => "required", "seating" => "required", "description" => "required", "priority" => "required", "duration" => "required",]);
         $input = $request->all();
 
         $data->fill($input)->save();
 
         Session::flash("flash_message", "Deze tafel is succesvol aangepast!");
         Alert::success("Deze tafel is succesvol aangepast");
-        return redirect()->back();
+
+        if(Sentinel::getUser()->roles[0]->id != 1){
+            $company = Company::where('user_id', Sentinel::getUser()->id)->first();
+        }
+        if($company != null) {
+            $countTable = Table::where('comp_id', $company->id)->where('table_number', $input['table_number'])->count();
+            $priorityExist = Table::where('comp_id', $company->id)->where('priority', $input['priority'])->count();
+            $errorString = [];
+            if ($countTable > 0)
+                $errorString[] = 'OEPS! U heeft tafel nummer ' . $input['table_number'] . ' al eerder toegevoegd';
+            if ($priorityExist > 0)
+                $errorString[] = 'OEPS! U heeft prioriteit ' . $input['priority'] . ' al eerder toegevoegd';
+            if (count($errorString) > 0)
+                return redirect()->back()->withErrors($errorString);
+        }
+
+        return redirect('admin/tables');
     }
 
     public function destroy($id) {
