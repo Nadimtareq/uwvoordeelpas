@@ -478,7 +478,7 @@ img {
     display: inline-block;
     vertical-align: top;
     width: 29%;
-    margin-left: 29px;
+    /*margin-left: 29px;*/
 }
 
 .container .up .start ul.list li p {
@@ -2012,7 +2012,7 @@ footer .ui.accordion .title .dropdown.icon,
 }
 
 footer .footer {
-    /*background: #5e80b2; */
+    background: transparent;
     width: 100%;
     padding-top: 20px;
 }
