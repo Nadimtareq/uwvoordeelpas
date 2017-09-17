@@ -70,9 +70,9 @@
                                             <?php $mediaUrl =  'images/affiliates/'. $data->affiliate_network .'/'.$data->program_id.'.'.$data->image_extension; ?>
                                             <?php if(isset($data->image_extension) && $FileHelper::is_url_exist(url($mediaUrl))): ?>
                                                 <img src="<?php echo e(url($mediaUrl)); ?>" alt="more" />
-
+                   
                                             <?php else: ?>
-                                                <img src="<?php echo e(url('images/placeholdimage.png')); ?>" alt="p1">
+                                                <img src="<?php echo e(url('images/placeholdimage.png')); ?>" alt="p1"> 
                                             <?php endif; ?>
                                         </a>
                                     </div>
@@ -273,7 +273,7 @@
 
 
 <?php $__env->startSection("after_styles"); ?>
-     <link href="<?php echo e(asset("css/custom.css")); ?>" rel="stylesheet">
+     <link href="<?php echo e(asset("css/custom.css")); ?>" rel="stylesheet"> 
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('template.theme',['search_header' => ($userAuth != FALSE) ], array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -3,7 +3,7 @@
 <?php $__env->startSection('scripts'); ?>
 	<script type="text/javascript">
 		$(document).ready(function() {
-		    closeBrowser();
+		    closeBrowser();  
 		});
 	</script>
 <?php $__env->stopSection(); ?>
@@ -24,7 +24,7 @@
 	 	<div class="three fields">
 				<div class="field">
 				    <label>Datum</label>
-<?php echo Form::text('date', '', array('class' => 'reservationDatepicker'));  ?>
+				    <?php echo Form::text('date', '', array('class' => 'reservationDatepicker'));  ?>
 				</div>	
 
 				<div class="field">
@@ -75,7 +75,7 @@
 			<div class="field">
 				<label>Bestaande gast</label>
 
-				<div id="guestsSearch" style="width: auto" class="ui guests search">
+				<div id="guestsSearch" class="ui guests search">
 				  	<div class="ui icon input">
 				    	<input class="prompt" type="text" placeholder="Typ een naam in..">
 				    	<i class="search icon"></i>

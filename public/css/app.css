@@ -2012,7 +2012,7 @@ footer .ui.accordion .title .dropdown.icon,
 }
 
 footer .footer {
-    background: transparent;
+    /*background: #5e80b2; */
     width: 100%;
     padding-top: 20px;
 }

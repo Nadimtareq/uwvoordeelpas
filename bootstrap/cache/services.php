@@ -27,23 +27,21 @@
     23 => 'App\\Providers\\EventServiceProvider',
     24 => 'App\\Providers\\RouteServiceProvider',
     25 => 'Roumen\\Sitemap\\SitemapServiceProvider',
-    26 => 'Laravel\\Socialite\\SocialiteServiceProvider',
-    27 => 'Collective\\Html\\HtmlServiceProvider',
-    28 => 'Spatie\\MediaLibrary\\MediaLibraryServiceProvider',
-    29 => 'Nathanmac\\Utilities\\Parser\\ParserServiceProvider',
-    30 => 'Barryvdh\\Snappy\\ServiceProvider',
-    31 => 'Cartalyst\\Sentinel\\Laravel\\SentinelServiceProvider',
-    32 => 'Cviebrock\\EloquentSluggable\\SluggableServiceProvider',
-    33 => 'UxWeb\\SweetAlert\\SweetAlertServiceProvider',
-    34 => 'Barryvdh\\Debugbar\\ServiceProvider',
-    35 => 'Vsmoraes\\Pdf\\PdfServiceProvider',
-    36 => 'App\\Providers\\HelperServiceProvider',
-    37 => 'anlutro\\LaravelSettings\\ServiceProvider',
-    38 => 'Maatwebsite\\Excel\\ExcelServiceProvider',
-    39 => 'Cviebrock\\ImageValidator\\ImageValidatorServiceProvider',
-    40 => 'Barryvdh\\TranslationManager\\ManagerServiceProvider',
-    41 => 'LaravelCaptcha\\Providers\\LaravelCaptchaServiceProvider',
-    42 => 'Barryvdh\\Debugbar\\ServiceProvider',
+    26 => 'Spatie\\MediaLibrary\\MediaLibraryServiceProvider',
+    27 => 'Nathanmac\\Utilities\\Parser\\ParserServiceProvider',
+    28 => 'Barryvdh\\Snappy\\ServiceProvider',
+    29 => 'Cartalyst\\Sentinel\\Laravel\\SentinelServiceProvider',
+    30 => 'Cviebrock\\EloquentSluggable\\SluggableServiceProvider',
+    31 => 'UxWeb\\SweetAlert\\SweetAlertServiceProvider',
+    32 => 'Barryvdh\\Debugbar\\ServiceProvider',
+    33 => 'Vsmoraes\\Pdf\\PdfServiceProvider',
+    34 => 'App\\Providers\\HelperServiceProvider',
+    35 => 'anlutro\\LaravelSettings\\ServiceProvider',
+    36 => 'Maatwebsite\\Excel\\ExcelServiceProvider',
+    37 => 'Cviebrock\\ImageValidator\\ImageValidatorServiceProvider',
+    38 => 'Barryvdh\\TranslationManager\\ManagerServiceProvider',
+    39 => 'LaravelCaptcha\\Providers\\LaravelCaptchaServiceProvider',
+    40 => 'Collective\\Html\\HtmlServiceProvider',
   ),
   'eager' => 
   array (
@@ -73,7 +71,6 @@
     23 => 'Cviebrock\\ImageValidator\\ImageValidatorServiceProvider',
     24 => 'Barryvdh\\TranslationManager\\ManagerServiceProvider',
     25 => 'LaravelCaptcha\\Providers\\LaravelCaptchaServiceProvider',
-    26 => 'Barryvdh\\Debugbar\\ServiceProvider',
   ),
   'deferred' => 
   array (
@@ -162,13 +159,12 @@
     'validation.presence' => 'Illuminate\\Validation\\ValidationServiceProvider',
     'sitemap' => 'Roumen\\Sitemap\\SitemapServiceProvider',
     'Roumen\\Sitemap\\Sitemap' => 'Roumen\\Sitemap\\SitemapServiceProvider',
-    'Laravel\\Socialite\\Contracts\\Factory' => 'Laravel\\Socialite\\SocialiteServiceProvider',
+    'anlutro\\LaravelSettings\\SettingsManager' => 'anlutro\\LaravelSettings\\ServiceProvider',
+    'anlutro\\LaravelSettings\\SettingStore' => 'anlutro\\LaravelSettings\\ServiceProvider',
     'html' => 'Collective\\Html\\HtmlServiceProvider',
     'form' => 'Collective\\Html\\HtmlServiceProvider',
     'Collective\\Html\\HtmlBuilder' => 'Collective\\Html\\HtmlServiceProvider',
     'Collective\\Html\\FormBuilder' => 'Collective\\Html\\HtmlServiceProvider',
-    'anlutro\\LaravelSettings\\SettingsManager' => 'anlutro\\LaravelSettings\\ServiceProvider',
-    'anlutro\\LaravelSettings\\SettingStore' => 'anlutro\\LaravelSettings\\ServiceProvider',
   ),
   'when' => 
   array (
@@ -211,13 +207,10 @@
     'Roumen\\Sitemap\\SitemapServiceProvider' => 
     array (
     ),
-    'Laravel\\Socialite\\SocialiteServiceProvider' => 
+    'anlutro\\LaravelSettings\\ServiceProvider' => 
     array (
     ),
     'Collective\\Html\\HtmlServiceProvider' => 
-    array (
-    ),
-    'anlutro\\LaravelSettings\\ServiceProvider' => 
     array (
     ),
   ),

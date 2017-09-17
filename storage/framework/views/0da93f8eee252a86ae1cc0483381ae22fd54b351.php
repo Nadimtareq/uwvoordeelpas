@@ -5,7 +5,6 @@
 		<li><a href="<?php echo e(url('admin/companies/update/'.$company->id.'/'.$company->slug)); ?>" class="item"><strong><?php echo e($company->name); ?></strong></a></li>
 
 	    <li><a class="item fixed-row "> Reserveringen</a></li>
-		<li><a href="<?php echo e(url('admin/tables')); ?>" ><i class="material-icons notranslate">check_box_outline_blank</i>Tafelmanagement</a></li>
 		<li><a href="<?php echo e(url('admin/reservations/clients/'.$company->id)); ?>" ><i class="material-icons notranslate">check_box_outline_blank</i> Reserveringen</a></li>
 	    <li><a href="<?php echo e(url('admin/reservations-options/'.$company->slug)); ?>" ><i class="material-icons notranslate">check_box_outline_blank</i> Aanbiedingen</a></li>
 		<li><a href="<?php echo e(url('admin/reservations/saldo/'.$company->slug)); ?>" ><i class="material-icons notranslate">check_box_outline_blank</i> Financieel</a></li>

@@ -26,7 +26,7 @@ return [
     |
      */
 
-    'url'             => env('APP_URL', 'localhost'),
+    'url'             => env('APP_URL', 'https://www.uwvoordeelpas.nl'),
 
     'env'             => env('APP_ENV', 'production'),
 
@@ -146,8 +146,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Roumen\Sitemap\SitemapServiceProvider::class,
-        Laravel\Socialite\SocialiteServiceProvider::class,
-        Collective\Html\HtmlServiceProvider::class,
+        //Laravel\Socialite\SocialiteServiceProvider::class,
         Spatie\MediaLibrary\MediaLibraryServiceProvider::class,
         Nathanmac\Utilities\Parser\ParserServiceProvider::class,
         Barryvdh\Snappy\ServiceProvider::class,
@@ -162,9 +161,9 @@ return [
         'Cviebrock\ImageValidator\ImageValidatorServiceProvider',
         'Barryvdh\TranslationManager\ManagerServiceProvider',
         LaravelCaptcha\Providers\LaravelCaptchaServiceProvider::class,
-        Barryvdh\Debugbar\ServiceProvider::class,
-//        Appstract\Opcache\OpcacheServiceProvider::class,
+        
 //        Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
 
     ],
 
@@ -196,10 +195,8 @@ return [
         'Event'       => Illuminate\Support\Facades\Event::class,
         'Excel'       => 'Maatwebsite\Excel\Facades\Excel',
         'File'        => Illuminate\Support\Facades\File::class,
-        'Form'        => Collective\Html\FormFacade::class,
         'Gate'        => Illuminate\Support\Facades\Gate::class,
         'Hash'        => Illuminate\Support\Facades\Hash::class,
-        'Html'        => Collective\Html\HtmlFacade::class,
         'Lang'        => Illuminate\Support\Facades\Lang::class,
         'Log'         => Illuminate\Support\Facades\Log::class,
         'Mail'        => Illuminate\Support\Facades\Mail::class,
@@ -225,6 +222,8 @@ return [
         'Bugsnag'     => Bugsnag\BugsnagLaravel\Facades\Bugsnag::class,
         'Account'     => App\Helpers\AccountHelper::class,
         'Newsletters' => App\Helpers\DealHelper::class,
-        'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
+		
     ],
 ];

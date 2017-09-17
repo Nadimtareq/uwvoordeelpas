@@ -15,41 +15,10 @@
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('js/dragndrop/owl.carousel.js') }}"></script>
 
-<style>
-    #container-floor {
-        -webkit-background-size:cover !important;
-        background-size:cover !important;
-    }
-    .btn.btn-drop-carousel {
-        margin-bottom: 0;
-    }
-    .btn.btn-drop-carousel:hover {
-        color: #fff;
-    }
-    .carousel-container {
-        display: none;
-        position: relative;
-    }
-
-    .customNavigation {
-        margin-bottom:30px;
-    }
-
-    .customNavigation a{
-        position: relative;
-    }
-
-    .prev span, .next span {
-        margin-top: 0;
-    }
-</style>
-
 @section('fixedMenu') <a href="{{ url('faq/8/reserveren') }}" class="ui black icon big launch right attached fixed button"> <i class="question mark icon"></i> <span class="text">Veelgestelde vragen</span> </a><br />
 <script type="text/javascript">
 //var base_img_url = <?php echo url('images/dragndrop/'); ?>;
 $("#pageLoader").fadeOut('slow');
-
-
 </script>
 @stop
 @section('content')
@@ -63,13 +32,12 @@ $directory = $_public.'/images/dragndrop/bg';
     @else
     <div class="active section">Alle reserveringen</div>
     @endif </div>
-    <div class="pull-right">
-        <div class="btn blue darken-4 btn-drop-carousel">Kies achtergrond</div>
-    </div>
   <div class="ui divider"></div>
-  {{--<div class="col-md-4">&nbsp;</div>--}}
-  <div class="carousel-container">
-
+  
+  <br>
+  <div class="col-md-4">&nbsp;</div>
+  <div class="col-md-8" style="padding:0px;">
+<div class="customNavigation"><a id="prev" class="btn prev"><span>Previous</span></a> <a id="next" class="btn next"><span>Next</span></a></div>
         <div id="owl-demo" class="owl-carousel">
               <?php
                 //$directory = File::directories();
@@ -88,7 +56,6 @@ $directory = $_public.'/images/dragndrop/bg';
                 }
               ?>
         </div>
-      <div class="customNavigation"><a id="prev" class="btn prev"><span>Previous</span></a> <a id="next" class="btn next"><span>Next</span></a></div>
     </div>
   
   <!--<div style="float:right;">
@@ -96,15 +63,14 @@ $directory = $_public.'/images/dragndrop/bg';
     <img src="<?php echo url('images/dragndrop/bg/gray-1.jpg'); ?>" id="imgDemo" alt="HTML5 Icon" width="128" height="128">
     <button onclick="prvs()" id="btnTwo"> previous</button>
   </div>-->
-    <div style="position: relative">
-  <div class="clearfix">
+  <div class="col-md-12">
     <input type="hidden" id="totalDrop" value="0">
     <input type="hidden" name="redirectUrl" value="{{ url('admin/reservations/clients'.(isset($companyInfo->name) ? '/'.$companyInfo->id : '')) }}">
   <input type="hidden" name="company" id="company_id" value="{{ isset($companyInfo->id) ? $companyInfo->id : '' }}">
   <input type="hidden" name="date" value="{{ $date }}">
     <div id="lock"></div>
-    {{--<div id="container-table" class="col-md-3"></div>--}}
-    <div id="container-floor"></div>
+    <div id="container-table" class="col-md-3"></div>
+    <div id="container-floor" class="col-md-9"></div>
     
   </div>
   <?php
@@ -137,7 +103,6 @@ $directory = $_public.'/images/dragndrop/bg';
     array_push( $arrTableId,  $data->table_id );
 	array_push( $arrName_table,  $data->seating );
     array_push( $arrtable_number, $data->table_number );
-    array_push( $arrTable_status, $data->table_status );
 	$_cnt++;
     ?>
   @endforeach
@@ -182,17 +147,17 @@ $style_left = [];
       $sl = $margin_top = 0 ;
       //print "<br> $i => ".($arrName_xposition[$i]);continue;
       if( $arrName_xposition[$i] > 0 ){
-           $margin_top      = ($arrName_yposition[$i]);
-           $sl              = $arrName_xposition[$i];
+           $margin_top      = ($arrName_xposition[$i]);
+           $sl              = $arrName_yposition[$i];
         }else{
-               $margin_top      = ($x*90);
-               $style_left[$x] += 0;
+               $margin_top      = 230+($x*90);
+               $style_left[$x] += 80;
                $sl              = $style_left[$x];
       }
                ?>
       @endif
   @endfor  
-  <div class="drag2" id="drag{{$i}}" table_id="{{  $arrTableId[$i] }}" table_number="{{  $arrtable_number[$i] }}" reservation_id="{{ $arrName_reservation_id[$i] }}" style="left:{{  $sl }}px;top:{{  $margin_top }}px;" status="{{ $arrTable_status[$i] }}"> <a class="boxclose" id="back{{  $i }}" number="{{  $i }}" top="" left=""  table_id="{{  $arrTableId[$i] }}" table_number="{{  $arrtable_number[$i] }}" reservation_id="{{ $arrName_reservation_id[$i] }}"> <img src="{{ url('images/dragndrop/back.png') }}" width="20"> </a>
+  <div class="drag2" id="drag{{$i}}" table_id="{{  $arrTableId[$i] }}" table_number="{{  $arrtable_number[$i] }}" reservation_id="{{ $arrName_reservation_id[$i] }}" style="left:{{  $sl }}px;top:{{  $margin_top }}px;" status="0"> <a class="boxclose" id="back{{  $i }}" number="{{  $i }}" top="" left=""  table_id="{{  $arrTableId[$i] }}" table_number="{{  $arrtable_number[$i] }}" reservation_id="{{ $arrName_reservation_id[$i] }}"> <img src="{{ url('images/dragndrop/back.png') }}" width="20"> </a>
     <div class="name">{{  $arrName[$i] }}</div>
   </div>
   <script>
@@ -200,19 +165,13 @@ $(function($){
     setTimeout(function () { 
       var text = watermark.text;
 	  //watermark([ '<?php echo url('images/dragndrop/table.png') ?>'])
-	  watermark([ '<?php
-              if($arrTable_status[$i] == 0){
-                  echo url('images/dragndrop/0/'.$arrName_table[$i].'.png');
-              } elseif($arrTable_status[$i] == 1) {
-                  echo url('images/dragndrop/1/'.$arrName_table[$i].'.png');
-              }elseif($arrTable_status[$i] == 2) {
-                  echo url('images/dragndrop/2/'.$arrName_table[$i].'.png');
-              }elseif($arrTable_status[$i] == 3) {
-                  echo url('images/dragndrop/3/'.$arrName_table[$i].'.png');
-              }else {
-                  echo url('images/dragndrop/4/'.$arrName_table[$i].'.png');
-              }
-              ?>'])
+	  watermark([ '<?php 
+				 if($arrName_reservation_id[$i] > 0){
+				 	echo url('images/dragndrop/1/'.$arrName_table[$i].'.png'); 
+				 } else {
+					 echo url('images/dragndrop/0/'.$arrName_table[$i].'.png'); 
+				 }
+				 ?>'])
         .image(text.center('{{  $i }}', '18px Josefin Slab', '#000', 1, 48))
         .then(function (img) {
           $('#drag{{  $i }}').css("background","url('"+img.src+"') no-repeat");
@@ -222,7 +181,6 @@ $(function($){
 });
 </script>
   @endfor </div>
-</div>
 <div class="clear"></div>
 <script>
 	/*var img = new Array("<?php echo url('images/dragndrop/bg/gray-1.jpg'); ?>","<?php echo url('images/dragndrop/bg/yellow-2.jpg'); ?>");
@@ -306,12 +264,6 @@ $('.carousel .item').each(function(){
      
   }
 });*/
-    $(".btn-drop-carousel").click(function() {
-        if($(".carousel-container").is(":hidden"))
-            $(".carousel-container").slideDown();
-        else
-            $(".carousel-container").slideUp();
-    });
 });
 </script>
 @stop 

@@ -6,7 +6,7 @@
                 color: white;
             }
             .skill-title{
-
+                
                 font-size: 3em;
                 font-weight: bold;
                 padding-bottom: 30px;
@@ -49,7 +49,7 @@
             }
     </style>
     <div class="side_menus">
-        <?php echo Form::open(array('url' => 'preferences', 'method' => 'post', 'class' => 'ui form')); ?>
+        <?php echo e(Form::open(array('url' => 'preferences', 'method' => 'post', 'class' => 'ui form'))); ?>
 
         <div class="content">
             <div class="row">
@@ -132,7 +132,7 @@
         <div class="skill-panel">
             <div class="row">
                 <div class="col-md-3 col-xs-12">
-                   <a href="<?php echo e(url('admin/users')); ?>"> <div class="skill-panel-box massage">
+                    <div class="skill-panel-box massage">
                         <div class="skill-panel-inner-icon">
                             <i class="fa fa-comments">
                             </i>
@@ -151,10 +151,10 @@
                             <i class="fa fa-angle-right">
                             </i>
                         </div>
-                    </div></a>
+                    </div>
                 </div>
                 <div class="col-md-3 col-xs-12">
-                     <a href="<?php echo e(url('admin/companies')); ?>"><div class="skill-panel-box usar">
+                    <div class="skill-panel-box usar">
                         <div class="skill-panel-inner-icon">
                             <i class="fa fa-user">
                             </i>
@@ -173,10 +173,10 @@
                             <i class="fa fa-angle-right">
                             </i>
                         </div>
-                    </div></a>
+                    </div>
                 </div>
                 <div class="col-md-3 col-xs-12">
-                     <a href="<?php echo e(url('admin/affiliates')); ?>"><div class="skill-panel-box email">
+                    <div class="skill-panel-box email">
                         <div class="skill-panel-inner-icon">
                             <i class="fa fa-envelope-o">
                             </i>
@@ -195,10 +195,10 @@
                             <i class="fa fa-angle-right">
                             </i>
                         </div>
-                    </div></a>
+                    </div>
                 </div>
                 <div class="col-md-3 col-xs-12">
-                   <a href="<?php echo e(url('admin/reservations/clients')); ?>"> <div class="skill-panel-box note">
+                    <div class="skill-panel-box note">
                         <div class="skill-panel-inner-icon">
                             <i class="fa fa-pencil-square-o">
                             </i>
@@ -217,7 +217,7 @@
                             <i class="fa fa-angle-right">
                             </i>
                         </div>
-                    </div></a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -285,13 +285,13 @@ endif;
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('topDaysChart'));
-        chart.draw(data, options);
+        chart.draw(data, options);   
 
          var dataTime = new google.visualization.DataTable();
         dataTime.addColumn('string', 'Year');
         dataTime.addColumn('number', 'Balance');
         dataTime.addRows(<?= json_encode($topTimesList) ?>);
-
+        
         var chartTime = new google.visualization.PieChart(document.getElementById('topTimesChart'));
         chartTime.draw(dataTime, options);
 
@@ -299,12 +299,12 @@ endif;
         dataPerson.addColumn('string', 'Year');
         dataPerson.addColumn('number', 'Balance');
         dataPerson.addRows(<?= json_encode($topPersonsList) ?>);
-
+        
         var chartPerson = new google.visualization.PieChart(document.getElementById('topPersonsChart'));
-        chartPerson.draw(dataPerson, options);
+        chartPerson.draw(dataPerson, options);    
       }
 
-
+      
     </script>
     <div class="chart-panel">
         <div class="container">
@@ -316,10 +316,10 @@ endif;
                                 Top reservering: dagen
                             </h5>
                         </div>
-
+                        
                         <div id="donut-example" style="height: 250px; padding-right: 20px;">
                             <div id="topDaysChart"></div>
-
+                            
                         </div>
                     </div>
                 </div>
@@ -329,7 +329,7 @@ endif;
                             <h5>
                                Top reservering: tijden
                             </h5>
-
+                            
                         </div>
                         <div id="donut-example1">
                          <div id="donut-example" style="height: 250px;">
@@ -345,27 +345,27 @@ endif;
                             <h5>
                                Top reservering: personen
                             </h5>
-
+                            
                         </div>
                         <div id="donut-example2">
                         <div id="topPersonsChart">
                             </div>
-
+                           
                         </div>
                     </div>
                 </div>
             </div>
-
+            
         </div>
     </div>
 
     <div class="row">
-
+                   
                     <div class="col-md-4 col-sm-4 col-xs-12">
                         <div class="stats-table ui red segment bg-success">
-
-                               <h5>Top kliks: bedrijven</h5>
-
+                            
+                               <h5>Top kliks: bedrijven</h5>                         
+                          
                                 <div class="ui divider">
                                 </div>
                                 <table class="table table-striped">
@@ -376,16 +376,16 @@ endif;
                                             <td>
                                                 <?php echo e($topClicksCompany->nameRow); ?>
 
-                                            </td>
+                                            </td>   
                                             <td>
                                                 <?php echo e($topClicksCompany->countRow); ?>x
-                                            </td>
+                                            </td>                                         
                                         </tr>
                                           <?php if($index >=6){ break;} ?>
                                         <?php endforeach; ?>
                             <?php endif; ?>
                             </tbody>
-
+                                  
                                 </table>
                             </br>
                         </div>
@@ -395,7 +395,7 @@ endif;
                             <h5 class="">
                                 Top kliks: FAQ
                             </h5>
-
+                            
                                 <div class="ui divider">
                                 </div>
                                 <table class="table table-striped">
@@ -424,11 +424,11 @@ endif;
                             <h5 class="">
                                 Top kliks: affiliaties
                             </h5>
-
+                       
                                 <div class="ui divider">
                                 </div>
                                 <table class="table table-striped">
-
+                                    
                                     <tbody>
                                         <?php if(count($topClicksAffiliates) >= 1): ?>
                                 <?php foreach($topClicksAffiliates as $index=>$topClicksAffiliate): ?>
@@ -450,7 +450,7 @@ endif;
                         </div>
                     </div>
                 </div>
-
+            
 
     <?php $__env->stopSection(); ?>
 </div>
