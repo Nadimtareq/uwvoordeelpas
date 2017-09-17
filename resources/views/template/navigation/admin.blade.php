@@ -43,8 +43,6 @@
     <li><a href="{{ url('admin/settings') }}" ><i class="material-icons notranslate">settings</i> Instellingen</a></li>
     <li><a href="{{ url('admin/newsletter') }}" ><i class="material-icons notranslate">crop_landscape</i> Nieuwsbrief</a></li>
     <li><a href="{{ url('admin/appointments') }}" ><i class="material-icons notranslate">crop_landscape</i> Afspraken</a></li>
-    <li><a href="{{ url('admin/mailtemplates/createPackage') }}" ><i class="material-icons notranslate">crop_landscape</i> Packages</a></li>
-    <li><a href="{{ url('admin/mailtemplates/assignPackage') }}" ><i class="material-icons notranslate">crop_landscape</i>Assign Package</a></li>
     <li><a href="{{ url('admin/notifications') }}" ><i class="material-icons notranslate">crop_landscape</i> Notificaties</a></li>
     <li><a href="{{ url('admin/notifications/groups') }}" ><i class="material-icons notranslate">crop_landscape</i> Notificatie groepn</a></li>
     <li><a href="{{ url('admin/news') }}" ><i class="material-icons notranslate">crop_landscape</i> Nieuwsberichten</a></li>

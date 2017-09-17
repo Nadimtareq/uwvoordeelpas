@@ -149,7 +149,7 @@ class Preference extends Model implements SluggableInterface,  HasMediaConversio
 
         return array(
             'regio' => $regio, 
-            'regioNumber' => $regioNumber, 
+           // 'regioNumber' => $regioNumber, 
             'regioName' => $regioName
         );
     }

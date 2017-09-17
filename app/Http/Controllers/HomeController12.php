@@ -697,18 +697,10 @@ class HomeController extends Controller
 
             return Redirect::to('/?no_filter=1'.($request->has('mobilefilter') ? '&mobilefilter=1' : ''));
         }
-
+		
         $queryString = $request->query();
         unset($queryString['limit']);
-		
-		foreach ($cities as $city) {
-            $media = $city->getMedia();
-            if (isset($media[0]) && file_exists(public_path().$media[0]->getUrl('thumb')))
-                    $city->media = url(''.$media[0]->getUrl('thumb'));
-            else
-                $city->media = url('images/placeholdimage.png');
-        }
-
+		 
         return view('pages/home', [
             'user' => $this->user,
             'cities' => $cities,
@@ -983,8 +975,7 @@ class HomeController extends Controller
         $searchHistory = new SearchHistory();
         $searchHistory->addTerm($request->input('q'), '/search');
 
-       $companiesLimit = $request->input('limit', 15);
-        
+        $companiesLimit = $request->input('limit', 15);
 
         $companies = Company::select(
             'companies.id',
@@ -1100,7 +1091,7 @@ class HomeController extends Controller
             });
         }
 
-        if ($request->has('regio')) { 
+        if ($request->has('regio')) {
             $preferences = new Preference();
             $regio = $preferences->getRegio();
             $companies = $companies
@@ -1141,7 +1132,7 @@ class HomeController extends Controller
 
         $companies = $companies->where('no_show', 0 )->with('media');
 
-		$countCompanies = $companies->count();
+        $countCompanies = $companies->count();
         $companies = $companies->paginate($companiesLimit);
         $queryString = $request->query();
 
@@ -1472,12 +1463,11 @@ class HomeController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function referenceCode(Request $request)
+    public function referenceCode()
     {
-		
-        /*if (Sentinel::check() == FALSE) {
+        if (Sentinel::check() == FALSE) {
                     Sentinel::login($user);
-                }*/
+                }
         $reference = Sentinel::getUser();
         if (!$reference) {
             return redirect('/');
@@ -1495,7 +1485,6 @@ class HomeController extends Controller
             $friends = App\Models\FutureDeal::where('reference_id', $reference->id)
                 ->groupBy('user_id')->distinct()->get();
         }
-	
         return view('reference-code', compact('reference', 'friends'));
     }
 }
